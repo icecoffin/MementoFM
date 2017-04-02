@@ -31,4 +31,13 @@ class RealmMilestones: Object {
     return Milestones(didReceiveInitialCollection: didReceiveInitialCollection,
                       didReceiveInitialArtistTags: didReceiveInitialArtistTags)
   }
+
+  func registerMilestone(ofType type: MilestoneType) {
+    switch type {
+    case .initialCollection:
+      didReceiveInitialCollection = true
+    case .initialArtistTags:
+      didReceiveInitialArtistTags = true
+    }
+  }
 }

@@ -62,10 +62,10 @@ class LibraryViewModel {
   }
 
   func requestData() {
-    if lastUpdateTimestamp == 0 {
-      getFullLibrary()
-    } else {
+    if realmGateway.milestones().didReceiveInitialCollection {
       getLibraryUpdates()
+    } else {
+      getFullLibrary()
     }
   }
 
@@ -77,6 +77,7 @@ class LibraryViewModel {
     }).then { [unowned self] artists -> Void in
       self.updateLastUpdateTimestamp()
       let realmArtists = artists.map { RealmArtist.from(artist: $0) }
+      self.realmGateway.registerMilestone(ofType: .initialCollection)
       self.realmGateway.save(objects: realmArtists) { [unowned self] in
         self.onDidFinishLoading?()
       }

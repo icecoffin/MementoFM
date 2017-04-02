@@ -8,6 +8,10 @@
 
 import Foundation
 
+enum MilestoneType {
+  case initialCollection, initialArtistTags
+}
+
 struct Milestones {
   let didReceiveInitialCollection: Bool
   let didReceiveInitialArtistTags: Bool

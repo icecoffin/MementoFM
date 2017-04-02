@@ -78,4 +78,17 @@ extension RealmGateway {
     }
     return Milestones(didReceiveInitialCollection: false, didReceiveInitialArtistTags: false)
   }
+
+  func registerMilestone(ofType type: MilestoneType, completion: (() -> Void)? = nil) {
+    write(block: { realm in
+      let milestones: RealmMilestones
+      if let realmMilestones = realm.object(ofType: RealmMilestones.self, forPrimaryKey: RealmMilestones.uuid) {
+        milestones = realmMilestones
+      } else {
+        milestones = RealmMilestones()
+        realm.add(milestones)
+      }
+      milestones.registerMilestone(ofType: type)
+    }, completion: completion)
+  }
 }
