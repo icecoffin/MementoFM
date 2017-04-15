@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import PromiseKit
 
 protocol LibraryViewModelDelegate: class {
   func libraryViewModel(_ viewModel: LibraryViewModel, didSelectArtist artist: Artist)
@@ -62,16 +63,22 @@ class LibraryViewModel {
   }
 
   func requestData() {
-    if realmGateway.milestones().didReceiveInitialCollection {
-      getLibraryUpdates()
-    } else {
-      getFullLibrary()
+    requestLibrary().catch { [unowned self] error in
+      self.onError?(error)
     }
   }
 
-  private func getFullLibrary() {
+  func requestLibrary() -> Promise<Any> {
+    if realmGateway.milestones().didReceiveInitialCollection {
+      return getLibraryUpdates()
+    } else {
+      return getFullLibrary()
+    }
+  }
+
+  private func getFullLibrary() -> Promise<Any> {
     onDidStartLoading?()
-    networkService.getLibrary(for: username, progress: { progress in
+    return networkService.getLibrary(for: username, progress: { progress in
       let percent = round(Double(progress.completedUnitCount) / Double(progress.totalUnitCount) * 100)
       log.debug("\(percent)%")
     }).then { [unowned self] artists -> Void in
@@ -81,18 +88,20 @@ class LibraryViewModel {
       self.realmGateway.save(objects: realmArtists) { [unowned self] in
         self.onDidFinishLoading?()
       }
-    }.catch { [unowned self] error -> Void in
-      self.onError?(error)
     }
+  }
+
+  private func getArtistsTags() {
+
   }
 
   private func updateLastUpdateTimestamp(date: Date = Date()) {
     userDataStorage.lastUpdateTimestamp = floor(date.timeIntervalSince1970)
   }
 
-  private func getLibraryUpdates() {
+  private func getLibraryUpdates() -> Promise<Any> {
     onDidStartLoading?()
-    networkService.getRecentTracks(for: username, from: lastUpdateTimestamp) { progress in
+    return networkService.getRecentTracks(for: username, from: lastUpdateTimestamp) { progress in
       let percent = round(Double(progress.completedUnitCount) / Double(progress.totalUnitCount) * 100)
       log.debug("\(percent)%")
     }.then { [unowned self] tracks -> Void in
@@ -102,8 +111,6 @@ class LibraryViewModel {
         log.debug("got \(newArtists.count) new artists")
         self.onDidFinishLoading?()
       }
-    }.catch { [unowned self] error -> Void in
-      self.onError?(error)
     }
   }
 

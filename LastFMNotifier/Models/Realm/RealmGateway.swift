@@ -54,41 +54,8 @@ class RealmGateway {
     }
   }
 
-  fileprivate func deleteObjects<T: Object>(_ type: T.Type, in realm: Realm) {
+  func deleteObjects<T: Object>(_ type: T.Type, in realm: Realm) {
     let objects = realm.objects(type)
     realm.delete(objects)
-  }
-}
-
-// MARK: User
-extension RealmGateway {
-  func clearLocalData(completion: (() -> Void)?) {
-    write(block: { realm in
-    self.deleteObjects(RealmArtist.self, in: realm)
-    self.deleteObjects(RealmMilestones.self, in: realm)
-    }, completion: completion)
-  }
-}
-
-// MARK: Milestones
-extension RealmGateway {
-  func milestones() -> Milestones {
-    if let realmMilestones = defaultRealm.object(ofType: RealmMilestones.self, forPrimaryKey: RealmMilestones.uuid) {
-      return realmMilestones.toTransient()
-    }
-    return Milestones(didReceiveInitialCollection: false, didReceiveInitialArtistTags: false)
-  }
-
-  func registerMilestone(ofType type: MilestoneType, completion: (() -> Void)? = nil) {
-    write(block: { realm in
-      let milestones: RealmMilestones
-      if let realmMilestones = realm.object(ofType: RealmMilestones.self, forPrimaryKey: RealmMilestones.uuid) {
-        milestones = realmMilestones
-      } else {
-        milestones = RealmMilestones()
-        realm.add(milestones)
-      }
-      milestones.registerMilestone(ofType: type)
-    }, completion: completion)
   }
 }

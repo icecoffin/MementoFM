@@ -21,7 +21,7 @@ enum ErrorConverter {
   private static func displayMessage(for mapperError: MapperError) -> String {
     switch mapperError {
     case .convertibleError(let value, let type):
-      return "Mapping error: can't convert value \(value) to type \(type)"
+      return "Mapping error: can't convert value \(String(describing: value)) to type \(type)"
     case .customError(_, let message):
       return "Mapping error: \(message)"
     case .invalidRawValueError(let field, let value, let type):
