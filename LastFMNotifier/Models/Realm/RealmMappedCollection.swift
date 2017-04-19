@@ -13,17 +13,17 @@ class RealmMappedCollection<Element: Object, Transformed> {
   typealias Transform = (Element) -> Transformed
 
   private let realm: Realm
-  lazy private var results: Results<Element> = self.fetchResults()
+  lazy private var results: Results<Element> = {
+    return self.fetchResults()
+  }()
   private var transform: Transform
   private var notificationToken: NotificationToken?
-  lazy private var mappedItemProvider: AnyRealmMappedItemProvider<Transformed> = self.createMappedItemProvider()
 
   // This is basically a sparse array - keys are indexes
   private var transformedCache: [Int: Transformed] = [:]
 
-  var sort: SortDescriptor {
+  var sortDescriptors: [SortDescriptor] {
     didSet {
-      mappedItemProvider.clear()
       results = fetchResults()
       subscribeToResultsNotifications()
     }
@@ -31,16 +31,15 @@ class RealmMappedCollection<Element: Object, Transformed> {
 
   var predicate: NSPredicate? {
     didSet {
-      mappedItemProvider.clear()
       results = fetchResults()
     }
   }
 
   var notificationBlock: ((RealmCollectionChange<Results<Element>>) -> Void)?
 
-  init(realm: Realm, sort: SortDescriptor, transform: @escaping Transform) {
+  init(realm: Realm, sortDescriptors: [SortDescriptor], transform: @escaping Transform) {
     self.realm = realm
-    self.sort = sort
+    self.sortDescriptors = sortDescriptors
     self.transform = transform
 
     subscribeToResultsNotifications()
@@ -48,35 +47,20 @@ class RealmMappedCollection<Element: Object, Transformed> {
 
   deinit {
     notificationToken?.stop()
-  }
-
-  private func createMappedItemProvider() -> AnyRealmMappedItemProvider<Transformed> {
-    let provider: ((Int) -> Transformed) = { [unowned self] index in
-      return self.transform(self.results[index])
-    }
-    return RealmMappedItemProviderFactory().provider(for: .recreate, using: provider)
+    print("deinit RealmMappedCollection")
   }
 
   private func fetchResults() -> Results<Element> {
+    let results = realm.objects(Element.self).sorted(by: sortDescriptors)
     if let predicate = predicate {
-      return realm.objects(Element.self).sorted(byKeyPath: sort.keyPath, ascending: sort.ascending).filter(predicate)
+      return results.filter(predicate)
     } else {
-      return realm.objects(Element.self).sorted(byKeyPath: sort.keyPath, ascending: sort.ascending)
+      return results
     }
   }
 
   private func subscribeToResultsNotifications() {
     notificationToken = results.addNotificationBlock { [unowned self] changes in
-      switch changes {
-      case .initial:
-        break
-      case .update(_, let deletions, let insertions, let modifications):
-        self.mappedItemProvider.handleUpdate(insertions: insertions, deletions: deletions, modifications: modifications)
-        break
-      case .error(let error):
-        log.debug(ErrorConverter.displayMessage(for: error))
-        break
-      }
       self.notificationBlock?(changes)
     }
   }
@@ -86,6 +70,6 @@ class RealmMappedCollection<Element: Object, Transformed> {
   }
 
   subscript(index: Int) -> Transformed {
-    return mappedItemProvider[index]
+    return transform(results[index])
   }
 }

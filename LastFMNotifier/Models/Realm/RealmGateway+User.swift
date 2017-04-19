@@ -7,13 +7,13 @@
 //
 
 import Foundation
+import PromiseKit
 
 // MARK: User
 extension RealmGateway {
-  func clearLocalData(completion: (() -> Void)?) {
-    write(block: { realm in
+  func clearLocalData() -> Promise<Void> {
+    return write(block: { realm in
       self.deleteObjects(RealmArtist.self, in: realm)
-      self.deleteObjects(RealmMilestones.self, in: realm)
-    }, completion: completion)
+    })
   }
 }

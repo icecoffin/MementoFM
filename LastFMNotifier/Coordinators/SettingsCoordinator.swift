@@ -21,10 +21,16 @@ class SettingsCoordinator: NavigationFlowCoordinator {
 
   weak var delegate: SettingsCoordinatorDelegate?
 
-  init(navigationController: UINavigationController, realmGateway: RealmGateway, userDataStorage: UserDataStorage = UserDataStorage()) {
+  init(navigationController: UINavigationController,
+       realmGateway: RealmGateway,
+       userDataStorage: UserDataStorage = UserDataStorage()) {
     self.navigationController = navigationController
     self.realmGateway = realmGateway
     self.userDataStorage = userDataStorage
+  }
+
+  deinit {
+    print("deinit SettingsCoordinator")
   }
 
   func start() {

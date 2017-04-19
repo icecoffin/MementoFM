@@ -24,7 +24,7 @@ extension NetworkService: LibraryNetworkService {
   func getLibrary(for user: String, limit: Int, progress: ((Progress) -> Void)?) -> Promise<[Artist]> {
     return Promise { fulfill, reject in
       let initialIndex = 1
-      getLibraryPage(withIndex: initialIndex, for: user, limit: limit).then { page -> Void in
+      getLibraryPage(withIndex: initialIndex, for: user, limit: limit).then { [unowned self] page -> Void in
 
         if page.totalPages <= initialIndex {
           fulfill(page.artists)

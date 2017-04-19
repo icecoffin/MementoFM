@@ -30,7 +30,7 @@ class RecentTracksProcessor {
 
     var newArtists = [Artist]()
 
-    realmGateway.write(block: { realm in
+    _ = realmGateway.write(block: { realm in
       for (artist, playCount) in artistNamesWithPlayCounts {
         let realmArtist: RealmArtist
         if let existingArtist = realm.object(ofType: RealmArtist.self, forPrimaryKey: artist.name) {
@@ -42,8 +42,8 @@ class RecentTracksProcessor {
         }
         realmArtist.playcount += playCount
       }
-    }, completion: {
+    }).then {
       completion(newArtists)
-    })
+    }
   }
 }

@@ -27,7 +27,7 @@ extension NetworkService: UserNetworkService {
   func getRecentTracks(for user: String, from: TimeInterval, limit: Int, progress: ((Progress) -> Void)?) -> Promise<[Track]> {
     return Promise { fulfill, reject in
       let initialIndex = 1
-      getRecentTracksPage(withIndex: initialIndex, for: user, from: from, limit: limit).then { page -> Void in
+      getRecentTracksPage(withIndex: initialIndex, for: user, from: from, limit: limit).then { [unowned self] page -> Void in
 
         if page.totalPages <= initialIndex {
           fulfill(page.tracks)

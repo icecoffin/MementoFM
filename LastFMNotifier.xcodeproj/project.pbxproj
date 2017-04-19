@@ -34,7 +34,6 @@
 		01462BCF1E2B8FC80070CC83 /* RealmFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01462BCE1E2B8FC80070CC83 /* RealmFetcher.swift */; };
 		01637A1B1E272F15000DA611 /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01637A1A1E272F15000DA611 /* ArtistViewController.swift */; };
 		01637A1E1E275C1A000DA611 /* ArtistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01637A1D1E275C1A000DA611 /* ArtistViewModel.swift */; };
-		01637A201E275D52000DA611 /* RealmMappedItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01637A1F1E275D52000DA611 /* RealmMappedItemProvider.swift */; };
 		0189E0FA1DE1BF810068E831 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0189E0E31DE1BF810068E831 /* AppDelegate.swift */; };
 		0189E0FB1DE1BF810068E831 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0189E0E41DE1BF810068E831 /* Keys.swift */; };
 		0189E0FF1DE1BF810068E831 /* RealmFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0189E0EB1DE1BF810068E831 /* RealmFactory.swift */; };
@@ -65,11 +64,9 @@
 		655827681E8EB42C00C54ADC /* MappingHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655827671E8EB42C00C54ADC /* MappingHelpers.swift */; };
 		65B058171E8D6FE000F88503 /* ErrorConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B058161E8D6FE000F88503 /* ErrorConverter.swift */; };
 		65C093001EA273F400BF8FEA /* RealmArtist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C092F41EA273F400BF8FEA /* RealmArtist.swift */; };
-		65C093011EA273F400BF8FEA /* RealmMilestones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C092F51EA273F400BF8FEA /* RealmMilestones.swift */; };
 		65C093021EA273F400BF8FEA /* RealmTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C092F61EA273F400BF8FEA /* RealmTag.swift */; };
 		65C093031EA273F400BF8FEA /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C092F81EA273F400BF8FEA /* Artist.swift */; };
 		65C093041EA273F400BF8FEA /* LibraryPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C092F91EA273F400BF8FEA /* LibraryPage.swift */; };
-		65C093051EA273F400BF8FEA /* Milestones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C092FA1EA273F400BF8FEA /* Milestones.swift */; };
 		65C093061EA273F400BF8FEA /* RecentTracksPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C092FB1EA273F400BF8FEA /* RecentTracksPage.swift */; };
 		65C093071EA273F400BF8FEA /* SettingConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C092FC1EA273F400BF8FEA /* SettingConfiguration.swift */; };
 		65C093081EA273F400BF8FEA /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C092FD1EA273F400BF8FEA /* Tag.swift */; };
@@ -77,7 +74,6 @@
 		65C0930A1EA273F400BF8FEA /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C092FF1EA273F400BF8FEA /* Track.swift */; };
 		65C0930C1EA2741800BF8FEA /* RealmGateway+Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C0930B1EA2741800BF8FEA /* RealmGateway+Artist.swift */; };
 		65C0930E1EA2742800BF8FEA /* RealmGateway+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C0930D1EA2742800BF8FEA /* RealmGateway+User.swift */; };
-		65C093101EA2745F00BF8FEA /* RealmGateway+Milestones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C0930F1EA2745F00BF8FEA /* RealmGateway+Milestones.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,7 +114,6 @@
 		01462BCE1E2B8FC80070CC83 /* RealmFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmFetcher.swift; sourceTree = "<group>"; };
 		01637A1A1E272F15000DA611 /* ArtistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistViewController.swift; sourceTree = "<group>"; };
 		01637A1D1E275C1A000DA611 /* ArtistViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistViewModel.swift; sourceTree = "<group>"; };
-		01637A1F1E275D52000DA611 /* RealmMappedItemProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmMappedItemProvider.swift; sourceTree = "<group>"; };
 		0189E0E31DE1BF810068E831 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0189E0E41DE1BF810068E831 /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		0189E0EB1DE1BF810068E831 /* RealmFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmFactory.swift; sourceTree = "<group>"; };
@@ -153,11 +148,9 @@
 		655827671E8EB42C00C54ADC /* MappingHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MappingHelpers.swift; sourceTree = "<group>"; };
 		65B058161E8D6FE000F88503 /* ErrorConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorConverter.swift; sourceTree = "<group>"; };
 		65C092F41EA273F400BF8FEA /* RealmArtist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmArtist.swift; sourceTree = "<group>"; };
-		65C092F51EA273F400BF8FEA /* RealmMilestones.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmMilestones.swift; sourceTree = "<group>"; };
 		65C092F61EA273F400BF8FEA /* RealmTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmTag.swift; sourceTree = "<group>"; };
 		65C092F81EA273F400BF8FEA /* Artist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
 		65C092F91EA273F400BF8FEA /* LibraryPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryPage.swift; sourceTree = "<group>"; };
-		65C092FA1EA273F400BF8FEA /* Milestones.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Milestones.swift; sourceTree = "<group>"; };
 		65C092FB1EA273F400BF8FEA /* RecentTracksPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentTracksPage.swift; sourceTree = "<group>"; };
 		65C092FC1EA273F400BF8FEA /* SettingConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingConfiguration.swift; sourceTree = "<group>"; };
 		65C092FD1EA273F400BF8FEA /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
@@ -165,7 +158,6 @@
 		65C092FF1EA273F400BF8FEA /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		65C0930B1EA2741800BF8FEA /* RealmGateway+Artist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmGateway+Artist.swift"; sourceTree = "<group>"; };
 		65C0930D1EA2742800BF8FEA /* RealmGateway+User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmGateway+User.swift"; sourceTree = "<group>"; };
-		65C0930F1EA2745F00BF8FEA /* RealmGateway+Milestones.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmGateway+Milestones.swift"; sourceTree = "<group>"; };
 		7D2D2255AF2A192DD77241EC /* Pods_LastFMNotifier.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LastFMNotifier.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DA0674F9B99F1C73DD95155 /* Pods-LastFMNotifierTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LastFMNotifierTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LastFMNotifierTests/Pods-LastFMNotifierTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D1EB62EA0D8FE3964F218DE8 /* Pods-LastFMNotifierTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LastFMNotifierTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LastFMNotifierTests/Pods-LastFMNotifierTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -308,11 +300,9 @@
 				0189E0EB1DE1BF810068E831 /* RealmFactory.swift */,
 				0189E0EC1DE1BF810068E831 /* RealmGateway.swift */,
 				0189E0EE1DE1BF810068E831 /* RealmMappedCollection.swift */,
-				01637A1F1E275D52000DA611 /* RealmMappedItemProvider.swift */,
 				01462BCE1E2B8FC80070CC83 /* RealmFetcher.swift */,
 				65C0930B1EA2741800BF8FEA /* RealmGateway+Artist.swift */,
 				65C0930D1EA2742800BF8FEA /* RealmGateway+User.swift */,
-				65C0930F1EA2745F00BF8FEA /* RealmGateway+Milestones.swift */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -519,7 +509,6 @@
 			isa = PBXGroup;
 			children = (
 				65C092F41EA273F400BF8FEA /* RealmArtist.swift */,
-				65C092F51EA273F400BF8FEA /* RealmMilestones.swift */,
 				65C092F61EA273F400BF8FEA /* RealmTag.swift */,
 			);
 			path = Persistent;
@@ -530,7 +519,6 @@
 			children = (
 				65C092F81EA273F400BF8FEA /* Artist.swift */,
 				65C092F91EA273F400BF8FEA /* LibraryPage.swift */,
-				65C092FA1EA273F400BF8FEA /* Milestones.swift */,
 				65C092FB1EA273F400BF8FEA /* RecentTracksPage.swift */,
 				65C092FC1EA273F400BF8FEA /* SettingConfiguration.swift */,
 				65C092FD1EA273F400BF8FEA /* Tag.swift */,
@@ -786,13 +774,11 @@
 				014095391E03DDE200FBFA1A /* SettingsViewModel.swift in Sources */,
 				014095351E03DCF000FBFA1A /* SettingsCoordinator.swift in Sources */,
 				0117B7661DD2132200EE88DF /* NetworkConstants.swift in Sources */,
-				01637A201E275D52000DA611 /* RealmMappedItemProvider.swift in Sources */,
 				01A4EEAA1DF58945000A12A6 /* Fonts.swift in Sources */,
 				013AD8C41E229F7E00316183 /* RecentTracksProcessor.swift in Sources */,
 				65C0930A1EA273F400BF8FEA /* Track.swift in Sources */,
 				01637A1B1E272F15000DA611 /* ArtistViewController.swift in Sources */,
 				650DF31C1E87CEE500E5C587 /* RecentTracksPageResponse.swift in Sources */,
-				65C093011EA273F400BF8FEA /* RealmMilestones.swift in Sources */,
 				6507714B1E8FA73900D5788F /* Mappable+FromAny.swift in Sources */,
 				65C093031EA273F400BF8FEA /* Artist.swift in Sources */,
 				65C093021EA273F400BF8FEA /* RealmTag.swift in Sources */,
@@ -808,7 +794,6 @@
 				0140B5F71E0D71B90094B1C9 /* SettingCellViewModel.swift in Sources */,
 				65B058171E8D6FE000F88503 /* ErrorConverter.swift in Sources */,
 				0138867C1DFAB97E000DB2E3 /* EnterUsernameViewController.swift in Sources */,
-				65C093051EA273F400BF8FEA /* Milestones.swift in Sources */,
 				01637A1E1E275C1A000DA611 /* ArtistViewModel.swift in Sources */,
 				0189E0FF1DE1BF810068E831 /* RealmFactory.swift in Sources */,
 				65109E421E9138CE000E48C4 /* NetworkService+Artist.swift in Sources */,
@@ -826,7 +811,6 @@
 				0140953B1E03DDF100FBFA1A /* SettingsViewController.swift in Sources */,
 				65C093061EA273F400BF8FEA /* RecentTracksPage.swift in Sources */,
 				0189E1171DE1D5770068E831 /* LibraryCellViewModel.swift in Sources */,
-				65C093101EA2745F00BF8FEA /* RealmGateway+Milestones.swift in Sources */,
 				0140953D1E03EA4400FBFA1A /* Colors.swift in Sources */,
 				012F7AF61DF706DB0060E66D /* CellReusable.swift in Sources */,
 				65C093041EA273F400BF8FEA /* LibraryPage.swift in Sources */,

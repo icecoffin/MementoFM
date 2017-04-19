@@ -19,6 +19,10 @@ class LibraryCoordinator: NavigationFlowCoordinator {
     self.realmGateway = realmGateway
   }
 
+  deinit {
+    print("deinit LibraryCoordinator")
+  }
+
   func start() {
     let libraryViewModel = LibraryViewModel(realmGateway: realmGateway)
     libraryViewModel.delegate = self

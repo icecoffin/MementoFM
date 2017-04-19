@@ -20,7 +20,9 @@ class LibraryViewModel {
   private let userDataStorage: UserDataStorage
 
   private(set) var isLoading = false
-  fileprivate lazy var cellViewModels: RealmMappedCollection<RealmArtist, LibraryCellViewModel> = self.createCellViewModels()
+  fileprivate lazy var cellViewModels: RealmMappedCollection<RealmArtist, LibraryCellViewModel> = {
+    return self.createCellViewModels()
+  }()
 
   private var searchState = SearchState()
 
@@ -38,24 +40,19 @@ class LibraryViewModel {
     self.realmGateway = realmGateway
     self.networkService = networkService
     self.userDataStorage = userDataStorage
+  }
 
-    cellViewModels.notificationBlock = { [unowned self] change in
-      switch change {
-      case .initial(_):
-        break
-      case .error(let error):
-        self.onError?(error)
-      case .update(_):
-        self.onDidFinishLoading?()
-      }
-    }
+  deinit {
+    print("deinit LibraryViewModel")
   }
 
   private func createCellViewModels() -> RealmMappedCollection<RealmArtist, LibraryCellViewModel> {
-    let sortDescriptor = SortDescriptor(keyPath: "playcount", ascending: false)
-    return RealmMappedCollection(realm: realmGateway.defaultRealm, sort: sortDescriptor, transform: { artist -> LibraryCellViewModel in
+    let playcountSort = SortDescriptor(keyPath: "playcount", ascending: false)
+    return RealmMappedCollection(realm: realmGateway.defaultRealm,
+                                 sortDescriptors: [playcountSort],
+                                 transform: { [unowned self] artist -> LibraryCellViewModel in
       let viewModel = LibraryCellViewModel(artist: artist.toTransient())
-      viewModel.onSelection = { [unowned self] artist in
+      viewModel.onSelection = { artist in
         self.delegate?.libraryViewModel(self, didSelectArtist: artist)
       }
       return viewModel
@@ -68,38 +65,30 @@ class LibraryViewModel {
     }
   }
 
-  func requestLibrary() -> Promise<Any> {
-    if realmGateway.milestones().didReceiveInitialCollection {
+  func requestLibrary() -> Promise<Void> {
+    if userDataStorage.didReceiveInitialCollection {
       return getLibraryUpdates()
     } else {
       return getFullLibrary()
     }
   }
 
-  private func getFullLibrary() -> Promise<Any> {
+  private func getFullLibrary() -> Promise<Void> {
     onDidStartLoading?()
     return networkService.getLibrary(for: username, progress: { progress in
       let percent = round(Double(progress.completedUnitCount) / Double(progress.totalUnitCount) * 100)
       log.debug("\(percent)%")
-    }).then { [unowned self] artists -> Void in
+    }).then { [unowned self] artists -> Promise<Void> in
       self.updateLastUpdateTimestamp()
       let realmArtists = artists.map { RealmArtist.from(artist: $0) }
-      self.realmGateway.registerMilestone(ofType: .initialCollection)
-      self.realmGateway.save(objects: realmArtists) { [unowned self] in
-        self.onDidFinishLoading?()
-      }
+      self.userDataStorage.didReceiveInitialCollection = true
+      return self.realmGateway.save(objects: realmArtists)
+    }.then { [unowned self] _ in
+      self.onDidFinishLoading?()
     }
   }
 
-  private func getArtistsTags() {
-
-  }
-
-  private func updateLastUpdateTimestamp(date: Date = Date()) {
-    userDataStorage.lastUpdateTimestamp = floor(date.timeIntervalSince1970)
-  }
-
-  private func getLibraryUpdates() -> Promise<Any> {
+  private func getLibraryUpdates() -> Promise<Void> {
     onDidStartLoading?()
     return networkService.getRecentTracks(for: username, from: lastUpdateTimestamp) { progress in
       let percent = round(Double(progress.completedUnitCount) / Double(progress.totalUnitCount) * 100)
@@ -107,11 +96,19 @@ class LibraryViewModel {
     }.then { [unowned self] tracks -> Void in
       self.updateLastUpdateTimestamp()
       let processor = RecentTracksProcessor()
-      processor.process(tracks: tracks, usingRealmGateway: self.realmGateway) { newArtists in
+      processor.process(tracks: tracks, usingRealmGateway: self.realmGateway) { [unowned self] newArtists in
         log.debug("got \(newArtists.count) new artists")
         self.onDidFinishLoading?()
       }
     }
+  }
+
+  private func updateLastUpdateTimestamp(date: Date = Date()) {
+    userDataStorage.lastUpdateTimestamp = floor(date.timeIntervalSince1970)
+  }
+
+  private func getArtistsTags() {
+
   }
 
   private var username: String {
@@ -133,6 +130,7 @@ class LibraryViewModel {
     return NSLocalizedString("Search", comment: "")
   }
 
+  // TODO: empty data set view
   var itemCount: Int {
     return cellViewModels.count
   }

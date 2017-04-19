@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import PromiseKit
 
 class RealmGateway {
   let defaultRealm: Realm
@@ -18,16 +19,21 @@ class RealmGateway {
     self.getWriteRealm = getWriteRealm
   }
 
-  func write(block: @escaping (Realm) -> Void, completion: (() -> Void)? = nil) {
-    DispatchQueue.global(qos: .default).async {
+  func write(block: @escaping (Realm) -> Void) -> Promise<Void> {
+    return dispatch_promise(DispatchQueue.global(qos: .utility)) {
       let backgroundRealm = self.getWriteRealm()
       self.write(to: backgroundRealm) { realm in
         block(realm)
       }
-      DispatchQueue.main.async {
-        self.defaultRealm.refresh()
-        completion?()
-      }
+    }.then(on: DispatchQueue.main) { [unowned self] in
+      return self.refreshDefaultRealm()
+    }
+  }
+
+  private func refreshDefaultRealm() -> Promise<Void> {
+    return Promise { resolve, _ in
+      defaultRealm.refresh()
+      resolve()
     }
   }
 
@@ -41,15 +47,17 @@ class RealmGateway {
     }
   }
 
-  func save(objects: [Object], completion: (() -> Void)?) {
-    DispatchQueue.global(qos: .default).async {
-      let backgroundRealm = self.getWriteRealm()
-      self.write(to: backgroundRealm) { realm in
-        realm.add(objects, update: true)
-      }
-      DispatchQueue.main.async {
-        self.defaultRealm.refresh()
-        completion?()
+  func save(objects: [Object]) -> Promise<Void> {
+    return Promise { resolve, _ in
+      DispatchQueue.global(qos: .default).async {
+        let backgroundRealm = self.getWriteRealm()
+        self.write(to: backgroundRealm) { realm in
+          realm.add(objects, update: true)
+        }
+        DispatchQueue.main.async {
+          self.defaultRealm.refresh()
+          resolve()
+        }
       }
     }
   }

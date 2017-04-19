@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PromiseKit
 
 protocol EnterUsernameViewModelDelegate: class {
   func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel)
@@ -44,7 +45,7 @@ class EnterUsernameViewModel {
     let oldUsername = userDataStorage.username
     userDataStorage.username = username
     if oldUsername != username {
-      clearLocalData {
+      _ = clearLocalData().then {
         self.delegate?.enterUsernameViewModelDidFinish(self)
       }
     } else {
@@ -52,9 +53,9 @@ class EnterUsernameViewModel {
     }
   }
 
-  private func clearLocalData(completion: @escaping () -> Void) {
-    realmGateway.clearLocalData(completion: completion)
-    userDataStorage.lastUpdateTimestamp = 0
+  private func clearLocalData() -> Promise<Void> {
+    userDataStorage.reset()
+    return realmGateway.clearLocalData()
   }
 
   func close() {
