@@ -21,10 +21,6 @@ class UserDataStorage {
     self.userDefaults = userDefaults
   }
 
-  deinit {
-    print("deinit UserDataStorage")
-  }
-
   var username: String? {
     get {
       return userDefaults.string(forKey: UserDefaultsKeys.username)

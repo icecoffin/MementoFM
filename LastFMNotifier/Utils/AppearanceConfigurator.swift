@@ -26,7 +26,10 @@ enum AppearanceConfigurator {
   }
 
   private static func configureSearchBarAppearance() {
-    let appearance = UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self])
-    appearance.defaultTextAttributes = [NSFontAttributeName: Fonts.raleway(withSize: 14)]
+    let textFieldAppearance = UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self])
+    textFieldAppearance.defaultTextAttributes = [NSFontAttributeName: Fonts.raleway(withSize: 14)]
+
+    let barButtonItemAppearance = UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self])
+    barButtonItemAppearance.setTitleTextAttributes([NSFontAttributeName: Fonts.raleway(withSize: 16)], for: .normal)
   }
 }

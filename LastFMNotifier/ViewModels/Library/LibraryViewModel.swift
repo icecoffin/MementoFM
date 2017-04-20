@@ -28,6 +28,7 @@ class LibraryViewModel {
 
   var onDidStartLoading: (() -> Void)?
   var onDidFinishLoading: (() -> Void)?
+  var onDidUpdateData: ((_ isEmpty: Bool) -> Void)?
   var onError: ((Error) -> Void)?
 
   init(realmGateway: RealmGateway,
@@ -36,10 +37,6 @@ class LibraryViewModel {
     self.realmGateway = realmGateway
     self.networkService = networkService
     self.userDataStorage = userDataStorage
-  }
-
-  deinit {
-    print("deinit LibraryViewModel")
   }
 
   private func createCellViewModels() -> RealmMappedCollection<RealmArtist, LibraryCellViewModel> {
@@ -56,7 +53,11 @@ class LibraryViewModel {
   }
 
   func requestData() {
-    requestLibrary().catch { [unowned self] error in
+    requestLibrary().then { [unowned self] _ -> Promise<Void> in
+      self.onDidFinishLoading?()
+      self.onDidUpdateData?(self.cellViewModels.isEmpty)
+      return .void
+    }.catch { [unowned self] error in
       self.onError?(error)
     }
   }
@@ -79,8 +80,6 @@ class LibraryViewModel {
       let realmArtists = artists.map { RealmArtist.from(artist: $0) }
       self.userDataStorage.didReceiveInitialCollection = true
       return self.realmGateway.save(objects: realmArtists)
-    }.then { [unowned self] _ in
-      self.onDidFinishLoading?()
     }
   }
 
@@ -89,13 +88,10 @@ class LibraryViewModel {
     return networkService.getRecentTracks(for: username, from: lastUpdateTimestamp) { progress in
       let percent = round(Double(progress.completedUnitCount) / Double(progress.totalUnitCount) * 100)
       log.debug("\(percent)%")
-    }.then { [unowned self] tracks -> Void in
+    }.then { [unowned self] tracks -> Promise<Void> in
       self.updateLastUpdateTimestamp()
       let processor = RecentTracksProcessor()
-      processor.process(tracks: tracks, usingRealmGateway: self.realmGateway) { [unowned self] newArtists in
-        log.debug("got \(newArtists.count) new artists")
-        self.onDidFinishLoading?()
-      }
+      return processor.process(tracks: tracks, usingRealmGateway: self.realmGateway).asVoid()
     }
   }
 
@@ -126,7 +122,6 @@ class LibraryViewModel {
     return NSLocalizedString("Search", comment: "")
   }
 
-  // TODO: empty data set view
   var itemCount: Int {
     return cellViewModels.count
   }
@@ -142,6 +137,6 @@ class LibraryViewModel {
 
   func finishSearching(withText text: String) {
     cellViewModels.predicate = NSPredicate(format: "name CONTAINS[cd] %@", text)
-    onDidFinishLoading?()
+    self.onDidUpdateData?(cellViewModels.isEmpty)
   }
 }

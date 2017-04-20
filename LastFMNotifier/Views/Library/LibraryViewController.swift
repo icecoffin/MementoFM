@@ -20,14 +20,11 @@ class LibraryViewController: UIViewController {
   private let searchController = UISearchController(searchResultsController: nil)
   private let tableView = TPKeyboardAvoidingTableView()
   private let loadingView = LoadingView()
+  private let emptyLibraryView = EmptyLibraryView()
 
   init(viewModel: LibraryViewModel) {
     self.viewModel = viewModel
     super.init(nibName: nil, bundle: nil)
-  }
-
-  deinit {
-    print("deinit LibraryViewController")
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -44,8 +41,6 @@ class LibraryViewController: UIViewController {
     addTableView()
     addLoadingView()
     bindToViewModel()
-
-    requestData()
   }
 
   private func addTableView() {
@@ -63,6 +58,9 @@ class LibraryViewController: UIViewController {
     tableView.estimatedRowHeight = Constants.estimatedRowHeight
     tableView.tableFooterView = UIView()
     tableView.tableHeaderView = searchController.searchBar
+
+    tableView.backgroundView = emptyLibraryView
+    tableView.backgroundView?.isHidden = true
   }
 
   private func addLoadingView() {
@@ -88,16 +86,18 @@ class LibraryViewController: UIViewController {
 
     viewModel.onDidFinishLoading = { [unowned self] in
       self.loadingView.isHidden = true
+    }
+
+    viewModel.onDidUpdateData = { [unowned self] isEmpty in
       self.tableView.reloadData()
+      self.tableView.backgroundView?.isHidden = !isEmpty
     }
 
     viewModel.onError = { [unowned self] error in
       self.showAlert(for: error)
       self.loadingView.isHidden = true
     }
-  }
 
-  private func requestData() {
     viewModel.requestData()
   }
 }

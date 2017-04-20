@@ -47,7 +47,6 @@ class RealmMappedCollection<Element: Object, Transformed> {
 
   deinit {
     notificationToken?.stop()
-    print("deinit RealmMappedCollection")
   }
 
   private func fetchResults() -> Results<Element> {
@@ -71,5 +70,9 @@ class RealmMappedCollection<Element: Object, Transformed> {
 
   subscript(index: Int) -> Transformed {
     return transform(results[index])
+  }
+
+  var isEmpty: Bool {
+    return results.isEmpty
   }
 }

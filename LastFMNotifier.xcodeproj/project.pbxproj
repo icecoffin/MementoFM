@@ -29,7 +29,6 @@
 		0140953B1E03DDF100FBFA1A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0140953A1E03DDF100FBFA1A /* SettingsViewController.swift */; };
 		0140953D1E03EA4400FBFA1A /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0140953C1E03EA4400FBFA1A /* Colors.swift */; };
 		0140B5F71E0D71B90094B1C9 /* SettingCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0140B5F61E0D71B90094B1C9 /* SettingCellViewModel.swift */; };
-		014222AF1DF95B1F00E55056 /* SearchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014222AE1DF95B1F00E55056 /* SearchState.swift */; };
 		01436C6B1E1013ED00EC8164 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01436C6A1E1013ED00EC8164 /* SettingCell.swift */; };
 		01462BCF1E2B8FC80070CC83 /* RealmFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01462BCE1E2B8FC80070CC83 /* RealmFetcher.swift */; };
 		01637A1B1E272F15000DA611 /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01637A1A1E272F15000DA611 /* ArtistViewController.swift */; };
@@ -61,6 +60,8 @@
 		650DF31C1E87CEE500E5C587 /* RecentTracksPageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650DF31B1E87CEE500E5C587 /* RecentTracksPageResponse.swift */; };
 		65109E3E1E9136E6000E48C4 /* TopTagsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65109E3D1E9136E6000E48C4 /* TopTagsResponse.swift */; };
 		65109E421E9138CE000E48C4 /* NetworkService+Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65109E411E9138CE000E48C4 /* NetworkService+Artist.swift */; };
+		654917B41EA914CF00792CFC /* Promise+Void.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654917B31EA914CF00792CFC /* Promise+Void.swift */; };
+		654917B61EA91B0600792CFC /* EmptyLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654917B51EA91B0600792CFC /* EmptyLibraryView.swift */; };
 		655827681E8EB42C00C54ADC /* MappingHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655827671E8EB42C00C54ADC /* MappingHelpers.swift */; };
 		65B058171E8D6FE000F88503 /* ErrorConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B058161E8D6FE000F88503 /* ErrorConverter.swift */; };
 		65C093001EA273F400BF8FEA /* RealmArtist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C092F41EA273F400BF8FEA /* RealmArtist.swift */; };
@@ -109,7 +110,6 @@
 		0140953A1E03DDF100FBFA1A /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		0140953C1E03EA4400FBFA1A /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		0140B5F61E0D71B90094B1C9 /* SettingCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingCellViewModel.swift; sourceTree = "<group>"; };
-		014222AE1DF95B1F00E55056 /* SearchState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchState.swift; sourceTree = "<group>"; };
 		01436C6A1E1013ED00EC8164 /* SettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		01462BCE1E2B8FC80070CC83 /* RealmFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmFetcher.swift; sourceTree = "<group>"; };
 		01637A1A1E272F15000DA611 /* ArtistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistViewController.swift; sourceTree = "<group>"; };
@@ -145,6 +145,8 @@
 		650DF31B1E87CEE500E5C587 /* RecentTracksPageResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentTracksPageResponse.swift; sourceTree = "<group>"; };
 		65109E3D1E9136E6000E48C4 /* TopTagsResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopTagsResponse.swift; sourceTree = "<group>"; };
 		65109E411E9138CE000E48C4 /* NetworkService+Artist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NetworkService+Artist.swift"; sourceTree = "<group>"; };
+		654917B31EA914CF00792CFC /* Promise+Void.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Promise+Void.swift"; sourceTree = "<group>"; };
+		654917B51EA91B0600792CFC /* EmptyLibraryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyLibraryView.swift; sourceTree = "<group>"; };
 		655827671E8EB42C00C54ADC /* MappingHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MappingHelpers.swift; sourceTree = "<group>"; };
 		65B058161E8D6FE000F88503 /* ErrorConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorConverter.swift; sourceTree = "<group>"; };
 		65C092F41EA273F400BF8FEA /* RealmArtist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmArtist.swift; sourceTree = "<group>"; };
@@ -379,6 +381,7 @@
 				0189E10F1DE1C45D0068E831 /* LibraryViewController.swift */,
 				012CA52F1DE482BF00AF97F2 /* LibraryArtistCell.swift */,
 				013DB61E1DF87C3700B97F21 /* SearchOverlayView.swift */,
+				654917B51EA91B0600792CFC /* EmptyLibraryView.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -388,7 +391,6 @@
 			children = (
 				0189E1141DE1C6B90068E831 /* LibraryViewModel.swift */,
 				0189E1161DE1D5770068E831 /* LibraryCellViewModel.swift */,
-				014222AE1DF95B1F00E55056 /* SearchState.swift */,
 				013AD8C31E229F7E00316183 /* RecentTracksProcessor.swift */,
 			);
 			path = Library;
@@ -482,6 +484,7 @@
 			children = (
 				650771491E8FA73900D5788F /* Mappable+FromAny.swift */,
 				6507714A1E8FA73900D5788F /* UIViewController+Alert.swift */,
+				654917B31EA914CF00792CFC /* Promise+Void.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -758,6 +761,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				650DF31A1E877FA000E5C587 /* LibraryPageResponse.swift in Sources */,
+				654917B61EA91B0600792CFC /* EmptyLibraryView.swift in Sources */,
 				0189E1021DE1BF810068E831 /* RealmMappedCollection.swift in Sources */,
 				013841EC1E1FC2F900B3ADE9 /* NetworkService+User.swift in Sources */,
 				65C093071EA273F400BF8FEA /* SettingConfiguration.swift in Sources */,
@@ -788,6 +792,7 @@
 				0189E1121DE1C45D0068E831 /* LibraryViewController.swift in Sources */,
 				65C0930E1EA2742800BF8FEA /* RealmGateway+User.swift in Sources */,
 				013841EA1E1FC2F000B3ADE9 /* NetworkService+Library.swift in Sources */,
+				654917B41EA914CF00792CFC /* Promise+Void.swift in Sources */,
 				65C093081EA273F400BF8FEA /* Tag.swift in Sources */,
 				013044761DDCBD6B00331BEF /* Coordinator.swift in Sources */,
 				0189E0FB1DE1BF810068E831 /* Keys.swift in Sources */,
@@ -814,7 +819,6 @@
 				0140953D1E03EA4400FBFA1A /* Colors.swift in Sources */,
 				012F7AF61DF706DB0060E66D /* CellReusable.swift in Sources */,
 				65C093041EA273F400BF8FEA /* LibraryPage.swift in Sources */,
-				014222AF1DF95B1F00E55056 /* SearchState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

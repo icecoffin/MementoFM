@@ -14,8 +14,4 @@ class NetworkService {
   init(baseURL: URL = NetworkConstants.LastFM.baseURL) {
     self.baseURL = baseURL
   }
-
-  deinit {
-    print("deinit NetworkService")
-  }
 }

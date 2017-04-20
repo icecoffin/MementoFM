@@ -7,11 +7,11 @@
 //
 
 import Foundation
+import PromiseKit
 
 class RecentTracksProcessor {
   func process(tracks: [Track],
-               usingRealmGateway realmGateway: RealmGateway,
-               completion: @escaping (([Artist]) -> Void)) {
+               usingRealmGateway realmGateway: RealmGateway) -> Promise<[Artist]> {
     log.debug("processing \(tracks.count) tracks")
     var artistNamesWithPlayCounts = [Artist: Int]()
 
@@ -30,7 +30,7 @@ class RecentTracksProcessor {
 
     var newArtists = [Artist]()
 
-    _ = realmGateway.write(block: { realm in
+    return realmGateway.write(block: { realm in
       for (artist, playCount) in artistNamesWithPlayCounts {
         let realmArtist: RealmArtist
         if let existingArtist = realm.object(ofType: RealmArtist.self, forPrimaryKey: artist.name) {
@@ -42,8 +42,8 @@ class RecentTracksProcessor {
         }
         realmArtist.playcount += playCount
       }
-    }).then {
-      completion(newArtists)
-    }
+    }).then(execute: { _ -> Promise<[Artist]> in
+      return Promise(value: newArtists)
+    })
   }
 }

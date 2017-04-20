@@ -29,10 +29,6 @@ class SettingsCoordinator: NavigationFlowCoordinator {
     self.userDataStorage = userDataStorage
   }
 
-  deinit {
-    print("deinit SettingsCoordinator")
-  }
-
   func start() {
     let settingsViewModel = SettingsViewModel()
     settingsViewModel.delegate = self
