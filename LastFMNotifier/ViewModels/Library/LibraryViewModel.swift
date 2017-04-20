@@ -24,15 +24,11 @@ class LibraryViewModel {
     return self.createCellViewModels()
   }()
 
-  private var searchState = SearchState()
-
   weak var delegate: LibraryViewModelDelegate?
 
   var onDidStartLoading: (() -> Void)?
   var onDidFinishLoading: (() -> Void)?
   var onError: ((Error) -> Void)?
-
-  var onSearchTextUpdate: ((String) -> Void)?
 
   init(realmGateway: RealmGateway,
        networkService: LibraryNetworkService & UserNetworkService = NetworkService(),
@@ -144,23 +140,8 @@ class LibraryViewModel {
     viewModel.handleSelection()
   }
 
-  // MARK: Search
-  func cancelSearching() {
-    searchState.currentSearch = searchState.previousSearch
-    onSearchTextUpdate?(searchState.currentSearch)
-  }
-
-  func searchTextDidChange(_ searchText: String) {
-    if searchText.isEmpty && searchState.hasPreviousSearch {
-      finishSearching(withText: searchText)
-    }
-  }
-
   func finishSearching(withText text: String) {
-    searchState.currentSearch = text
-    searchState.finishCurrentSearch()
-
-    cellViewModels.predicate = searchState.predicate
+    cellViewModels.predicate = NSPredicate(format: "name CONTAINS[cd] %@", text)
     onDidFinishLoading?()
   }
 }

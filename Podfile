@@ -10,6 +10,7 @@ target 'LastFMNotifier' do
   pod 'SnapKit'
   pod 'SVProgressHUD'
   pod 'SwiftyBeaver'
+  pod 'TPKeyboardAvoiding'
 
   target 'LastFMNotifierTests' do
     inherit! :search_paths

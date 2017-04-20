@@ -8,21 +8,18 @@
 
 import UIKit
 import SnapKit
-
-// TODO: rework search (use UISearchController)
+import TPKeyboardAvoiding
 
 class LibraryViewController: UIViewController {
   private struct Constants {
     static let estimatedRowHeight: CGFloat = 60
-    static let searchBarHeight: CGFloat = 44
   }
 
   fileprivate let viewModel: LibraryViewModel
 
-  private let searchBar = UISearchBar()
-  private let tableView = UITableView()
+  private let searchController = UISearchController(searchResultsController: nil)
+  private let tableView = TPKeyboardAvoidingTableView()
   private let loadingView = LoadingView()
-  fileprivate let overlayView = SearchOverlayView()
 
   init(viewModel: LibraryViewModel) {
     self.viewModel = viewModel
@@ -40,6 +37,10 @@ class LibraryViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    definesPresentationContext = true
+    automaticallyAdjustsScrollViewInsets = false
+
+    configureSearchController()
     addTableView()
     addLoadingView()
     bindToViewModel()
@@ -47,18 +48,11 @@ class LibraryViewController: UIViewController {
     requestData()
   }
 
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
-
-    overlayView.snp.updateConstraints { make in
-      make.top.equalToSuperview().offset(-tableView.contentOffset.y + Constants.searchBarHeight)
-    }
-  }
-
   private func addTableView() {
     view.addSubview(tableView)
     tableView.snp.makeConstraints { make in
-      make.edges.equalToSuperview()
+      make.leading.trailing.bottom.equalToSuperview()
+      make.top.equalTo(topLayoutGuide.snp.bottom)
     }
 
     tableView.register(LibraryArtistCell.self, forCellReuseIdentifier: LibraryArtistCell.reuseIdentifier)
@@ -68,35 +62,7 @@ class LibraryViewController: UIViewController {
 
     tableView.estimatedRowHeight = Constants.estimatedRowHeight
     tableView.tableFooterView = UIView()
-
-    addSearchBar()
-    addOverlayView()
-  }
-
-  private func addSearchBar() {
-    searchBar.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: Constants.searchBarHeight)
-
-    searchBar.isTranslucent = false
-    searchBar.barTintColor = .groupTableViewBackground
-    searchBar.backgroundImage = UIImage()
-    searchBar.delegate = self
-    searchBar.enablesReturnKeyAutomatically = false
-
-    tableView.tableHeaderView = searchBar
-  }
-
-  private func addOverlayView() {
-    view.addSubview(overlayView)
-    overlayView.snp.makeConstraints { make in
-      make.leading.trailing.bottom.equalToSuperview()
-      make.top.equalToSuperview().offset(-tableView.contentOffset.y + Constants.searchBarHeight)
-    }
-
-    overlayView.onTap = { [unowned self] in
-      self.overlayView.hide()
-      self.viewModel.cancelSearching()
-      self.searchBar.resignFirstResponder()
-    }
+    tableView.tableHeaderView = searchController.searchBar
   }
 
   private func addLoadingView() {
@@ -106,9 +72,15 @@ class LibraryViewController: UIViewController {
     }
   }
 
+  private func configureSearchController() {
+    searchController.searchBar.delegate = self
+    searchController.searchResultsUpdater = self
+    searchController.dimsBackgroundDuringPresentation = false
+  }
+
   private func bindToViewModel() {
     title = viewModel.title
-    searchBar.placeholder = viewModel.searchBarPlaceholder
+    searchController.searchBar.placeholder = viewModel.searchBarPlaceholder
 
     viewModel.onDidStartLoading = { [unowned self] in
       self.loadingView.isHidden = false
@@ -122,10 +94,6 @@ class LibraryViewController: UIViewController {
     viewModel.onError = { [unowned self] error in
       self.showAlert(for: error)
       self.loadingView.isHidden = true
-    }
-
-    viewModel.onSearchTextUpdate = { [unowned self] text in
-      self.searchBar.text = text
     }
   }
 
@@ -161,20 +129,15 @@ extension LibraryViewController: UITableViewDelegate {
   }
 }
 
+extension LibraryViewController: UISearchResultsUpdating {
+  func updateSearchResults(for searchController: UISearchController) {
+    viewModel.finishSearching(withText: searchController.searchBar.text ?? "")
+  }
+}
+
 // MARK: UISearchBarDelegate
 extension LibraryViewController: UISearchBarDelegate {
-
-  func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-    overlayView.show()
-  }
-
-  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    viewModel.searchTextDidChange(searchText)
-  }
-
   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-    viewModel.finishSearching(withText: searchBar.text ?? "")
-    overlayView.hide()
     searchBar.resignFirstResponder()
   }
 }

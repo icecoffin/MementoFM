@@ -15,6 +15,7 @@ PODS:
   - SnapKit (3.2.0)
   - SVProgressHUD (2.1.2)
   - SwiftyBeaver (1.1.4)
+  - TPKeyboardAvoiding (1.3.1)
 
 DEPENDENCIES:
   - Kingfisher
@@ -25,6 +26,7 @@ DEPENDENCIES:
   - SnapKit
   - SVProgressHUD
   - SwiftyBeaver
+  - TPKeyboardAvoiding
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
@@ -37,7 +39,8 @@ SPEC CHECKSUMS:
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   SwiftyBeaver: 9216b6e163c145628ccc7c0126df4287880d6e1e
+  TPKeyboardAvoiding: 0d6af20e95e2850f4c621841225b59ec7d8dd852
 
-PODFILE CHECKSUM: 385c8a4be65522a62365560ba07b2f772ab492f5
+PODFILE CHECKSUM: db54f07c607f4ce35f9b074201221a1cae8a5d88
 
 COCOAPODS: 1.2.0
