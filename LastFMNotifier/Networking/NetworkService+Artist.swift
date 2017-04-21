@@ -37,9 +37,21 @@ extension NetworkService: ArtistNetworkService {
                                      "artist": artist,
                                      "format": "json"]
 
-    return Alamofire.request(baseURL, parameters: parameters).responseJSON().then { json in
-      let topTagsResponse = try TopTagsResponse.from(json)
-      return Promise(value: topTagsResponse.topTagsList)
+    return Promise { fulfill, reject in
+      let operation = NetworkOperation(url: baseURL, parameters: parameters) { response in
+        switch response.result {
+        case .success(let value):
+          do {
+            let topTagsResponse = try TopTagsResponse.from(value)
+            fulfill(topTagsResponse.topTagsList)
+          } catch {
+            reject(error)
+          }
+        case .failure(let error):
+          reject(error)
+        }
+      }
+      queue.addOperation(operation)
     }
   }
 }
