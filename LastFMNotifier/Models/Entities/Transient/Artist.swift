@@ -31,7 +31,7 @@ struct Artist: Mappable, Hashable {
   let imageURLString: String?
 
   let needsTagsUpdate: Bool
-  var tags: [Tag]
+  let tags: [Tag]
 
   var hashValue: Int {
     return name.hashValue
@@ -46,13 +46,13 @@ struct Artist: Mappable, Hashable {
     tags = []
   }
 
-  init(name: String, playcount: Int, urlString: String, imageURLString: String?, needsTagsUpdate: Bool, tags: [Tag]?) {
+  init(name: String, playcount: Int, urlString: String, imageURLString: String?, needsTagsUpdate: Bool, tags: [Tag]) {
     self.name = name
     self.playcount = playcount
     self.urlString = urlString
     self.imageURLString = imageURLString
     self.needsTagsUpdate = needsTagsUpdate
-    self.tags = tags ?? []
+    self.tags = tags
   }
 }
 

@@ -15,8 +15,10 @@ protocol LibraryViewModelDelegate: class {
 }
 
 class LibraryViewModel {
+  typealias LibraryViewModelNetworkService = LibraryNetworkService & UserNetworkService & ArtistNetworkService
+
   private let realmGateway: RealmGateway
-  private let networkService: LibraryNetworkService & UserNetworkService
+  private let networkService: LibraryViewModelNetworkService
   private let userDataStorage: UserDataStorage
 
   private(set) var isLoading = false
@@ -32,7 +34,7 @@ class LibraryViewModel {
   var onError: ((Error) -> Void)?
 
   init(realmGateway: RealmGateway,
-       networkService: LibraryNetworkService & UserNetworkService = NetworkService(),
+       networkService: LibraryViewModelNetworkService = NetworkService(),
        userDataStorage: UserDataStorage = UserDataStorage()) {
     self.realmGateway = realmGateway
     self.networkService = networkService
@@ -53,12 +55,17 @@ class LibraryViewModel {
   }
 
   func requestData() {
-    requestLibrary().then { [unowned self] _ -> Promise<Void> in
-      self.onDidFinishLoading?()
-      self.onDidUpdateData?(self.cellViewModels.isEmpty)
-      return .void
-    }.catch { [unowned self] error in
-      self.onError?(error)
+    requestLibrary()
+      .then {
+        return self.getArtistsTags()
+      }
+      .then { [unowned self] _ -> Promise<Void> in
+        self.onDidFinishLoading?()
+        self.onDidUpdateData?(self.cellViewModels.isEmpty)
+        return .void
+      }
+      .catch { [unowned self] error in
+        self.onError?(error)
     }
   }
 
@@ -99,8 +106,11 @@ class LibraryViewModel {
     userDataStorage.lastUpdateTimestamp = floor(date.timeIntervalSince1970)
   }
 
-  private func getArtistsTags() {
-
+  private func getArtistsTags() -> Promise<Void> {
+    let artists = realmGateway.artistsNeedingTagsUpdate()
+    return networkService.getTopTags(for: artists, progress: { artist, tagsList in
+      log.debug("tags for \(artist.name): \(tagsList.tags.map({$0.name}))\n\n\n")
+    })
   }
 
   private var username: String {

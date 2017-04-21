@@ -59,20 +59,9 @@ extension NetworkService: LibraryNetworkService {
                                      "page": index,
                                      "limit": limit]
 
-    return Promise { fulfill, reject in
-      Alamofire.request(baseURL, parameters: parameters).responseJSON { response in
-        switch response.result {
-        case .success(let value):
-          do {
-            let pageResponse = try LibraryPageResponse.from(value)
-            fulfill(pageResponse.libraryPage)
-          } catch {
-            reject(error)
-          }
-        case .failure(let error):
-          reject(error)
-        }
-      }
+    return Alamofire.request(baseURL, parameters: parameters).responseJSON().then { json in
+      let pageResponse = try LibraryPageResponse.from(json)
+      return Promise(value: pageResponse.libraryPage)
     }
   }
 }

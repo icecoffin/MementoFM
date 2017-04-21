@@ -9,5 +9,8 @@
 import Foundation
 
 extension RealmGateway {
-
+  func artistsNeedingTagsUpdate() -> [Artist] {
+    let predicate = NSPredicate(format: "needsTagsUpdate == \(true)")
+    return defaultRealm.objects(RealmArtist.self).filter(predicate).map({ $0.toTransient() })
+  }
 }

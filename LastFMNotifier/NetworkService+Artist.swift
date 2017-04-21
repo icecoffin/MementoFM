@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Alamofire
 import PromiseKit
 
 protocol ArtistNetworkService {
@@ -22,7 +23,7 @@ extension NetworkService: ArtistNetworkService {
         }
       }
 
-      when(fulfilled: promises).then { _ in
+      when(fulfilled: promises.makeIterator(), concurrently: 1).then { _ in
         fulfill()
       }.catch { error in
         reject(error)
@@ -36,20 +37,9 @@ extension NetworkService: ArtistNetworkService {
                                      "artist": artist,
                                      "format": "json"]
 
-    return Promise { fulfill, reject in
-      Alamofire.request(baseURL, parameters: parameters).responseJSON { response in
-        switch response.result {
-        case .success(let value):
-          do {
-            let topTagsResponse = try TopTagsResponse.from(value)
-            fulfill(topTagsResponse.topTagsList)
-          } catch {
-            reject(error)
-          }
-        case .failure(let error):
-          reject(error)
-        }
-      }
+    return Alamofire.request(baseURL, parameters: parameters).responseJSON().then { json in
+      let topTagsResponse = try TopTagsResponse.from(json)
+      return Promise(value: topTagsResponse.topTagsList)
     }
   }
 }
