@@ -108,9 +108,15 @@ class LibraryViewModel {
 
   private func getArtistsTags() -> Promise<Void> {
     let artists = realmGateway.artistsNeedingTagsUpdate()
-    return networkService.getTopTags(for: artists, progress: { artist, tagsList in
-      log.debug("tags for \(artist.name): \(tagsList.tags.map({$0.name}))\n\n\n")
+    return networkService.getTopTags(for: artists, progress: { requestProgress in
+      self.handleTopTagsRequestProgress(requestProgress)
     })
+  }
+
+  private func handleTopTagsRequestProgress(_ requestProgress: TopTagsRequestProgress) {
+    realmGateway.updateArtist(requestProgress.artist, with: requestProgress.topTagsList.tags)
+    log.debug("\(requestProgress.artist.name) " +
+      "(\(requestProgress.progress.completedUnitCount) out of \(requestProgress.progress.totalUnitCount))\n")
   }
 
   private var username: String {
@@ -119,9 +125,10 @@ class LibraryViewModel {
 
   // TODO: returns lastUpdateTimestamp minus one day for testing purposes
   private var lastUpdateTimestamp: TimeInterval {
-    let lastUpdateTimestamp = userDataStorage.lastUpdateTimestamp
-    let oneDay: TimeInterval = 30 * 24 * 3600
-    return lastUpdateTimestamp > oneDay ? lastUpdateTimestamp - oneDay : lastUpdateTimestamp
+    return userDataStorage.lastUpdateTimestamp
+//    let lastUpdateTimestamp = userDataStorage.lastUpdateTimestamp
+//    let oneDay: TimeInterval = 30 * 24 * 3600
+//    return lastUpdateTimestamp > oneDay ? lastUpdateTimestamp - oneDay : lastUpdateTimestamp
   }
 
   var title: String {

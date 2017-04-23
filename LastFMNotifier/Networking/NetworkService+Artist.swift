@@ -10,16 +10,26 @@ import Foundation
 import Alamofire
 import PromiseKit
 
+struct TopTagsRequestProgress {
+  let progress: Progress
+  let artist: Artist
+  let topTagsList: TopTagsList
+}
+
 protocol ArtistNetworkService {
-  func getTopTags(for artists: [Artist], progress: @escaping ((Artist, TopTagsList) -> Void)) -> Promise<Void>
+  func getTopTags(for artists: [Artist], progress: @escaping ((TopTagsRequestProgress) -> Void)) -> Promise<Void>
 }
 
 extension NetworkService: ArtistNetworkService {
-  func getTopTags(for artists: [Artist], progress: @escaping ((Artist, TopTagsList) -> Void)) -> Promise<Void> {
+  func getTopTags(for artists: [Artist], progress: @escaping ((TopTagsRequestProgress) -> Void)) -> Promise<Void> {
     return Promise { fulfill, reject in
+      let totalProgress = Progress(totalUnitCount: Int64(artists.count))
+
       let promises = artists.map { artist in
-        return getTopTags(for: artist.name).then { topTagsList in
-          progress(artist, topTagsList)
+        return getTopTags(for: artist.name).then { topTagsList -> Promise<Void> in
+          totalProgress.completedUnitCount += 1
+          progress(TopTagsRequestProgress(progress: totalProgress, artist: artist, topTagsList: topTagsList))
+          return .void
         }
       }
 

@@ -8,6 +8,9 @@ import UIKit
 class ArtistViewController: UIViewController {
   fileprivate let viewModel: ArtistViewModel
 
+  private let imageView = UIImageView()
+  let tagsLabel = UILabel()
+
   init(viewModel: ArtistViewModel) {
     self.viewModel = viewModel
     super.init(nibName: nil, bundle: nil)
@@ -26,9 +29,28 @@ class ArtistViewController: UIViewController {
 
   private func configureView() {
     view.backgroundColor = UIColor.white
+
+    view.addSubview(imageView)
+    imageView.snp.makeConstraints { make in
+      make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(16)
+      make.centerX.equalToSuperview()
+      make.width.height.equalTo(120)
+    }
+    imageView.layer.cornerRadius = 60
+    imageView.layer.masksToBounds = true
+
+    view.addSubview(tagsLabel)
+    tagsLabel.snp.makeConstraints { make in
+      make.top.equalTo(imageView.snp.bottom).offset(16)
+      make.leading.trailing.equalToSuperview().inset(16)
+    }
+
+    tagsLabel.numberOfLines = 0
   }
 
   private func bindToViewModel() {
     title = viewModel.title
+    tagsLabel.text = viewModel.tags
+    imageView.kf.setImage(with: viewModel.imageURL)
   }
 }

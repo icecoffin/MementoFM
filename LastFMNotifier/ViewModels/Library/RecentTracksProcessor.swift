@@ -12,7 +12,6 @@ import PromiseKit
 class RecentTracksProcessor {
   func process(tracks: [Track],
                usingRealmGateway realmGateway: RealmGateway) -> Promise<[Artist]> {
-    log.debug("processing \(tracks.count) tracks")
     var artistNamesWithPlayCounts = [Artist: Int]()
 
     for track in tracks {
@@ -23,10 +22,6 @@ class RecentTracksProcessor {
         artistNamesWithPlayCounts[artist] = 1
       }
     }
-
-    log.debug(artistNamesWithPlayCounts.map {
-      return ($0.key.name, $0.value)
-    })
 
     var newArtists = [Artist]()
 
