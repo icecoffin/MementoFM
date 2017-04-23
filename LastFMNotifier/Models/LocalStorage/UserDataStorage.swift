@@ -8,6 +8,16 @@
 
 import Foundation
 
+protocol UserDataInnerStorage: class {
+  func set(_ value: Any?, forKey key: String)
+
+  func string(forKey key: String) -> String?
+  func double(forKey key: String) -> Double
+  func bool(forKey key: String) -> Bool
+}
+
+extension UserDefaults: UserDataInnerStorage { }
+
 class UserDataStorage {
   private struct UserDefaultsKeys {
     static let username = "username"
@@ -15,36 +25,36 @@ class UserDataStorage {
     static let didReceiveInitialCollection = "didReceiveInitialCollection"
   }
 
-  private let userDefaults: UserDefaults
+  private let innerStorage: UserDataInnerStorage
 
-  init(userDefaults: UserDefaults = UserDefaults.standard) {
-    self.userDefaults = userDefaults
+  init(innerStorage: UserDataInnerStorage = UserDefaults.standard) {
+    self.innerStorage = innerStorage
   }
 
   var username: String? {
     get {
-      return userDefaults.string(forKey: UserDefaultsKeys.username)
+      return innerStorage.string(forKey: UserDefaultsKeys.username)
     }
     set {
-      userDefaults.set(newValue, forKey: UserDefaultsKeys.username)
+      innerStorage.set(newValue, forKey: UserDefaultsKeys.username)
     }
   }
 
   var lastUpdateTimestamp: TimeInterval {
     get {
-      return userDefaults.double(forKey: UserDefaultsKeys.lastUpdateTimestamp)
+      return innerStorage.double(forKey: UserDefaultsKeys.lastUpdateTimestamp)
     }
     set {
-      userDefaults.set(newValue, forKey: UserDefaultsKeys.lastUpdateTimestamp)
+      innerStorage.set(newValue, forKey: UserDefaultsKeys.lastUpdateTimestamp)
     }
   }
 
   var didReceiveInitialCollection: Bool {
     get {
-      return userDefaults.bool(forKey: UserDefaultsKeys.didReceiveInitialCollection)
+      return innerStorage.bool(forKey: UserDefaultsKeys.didReceiveInitialCollection)
     }
     set {
-      userDefaults.set(newValue, forKey: UserDefaultsKeys.didReceiveInitialCollection)
+      innerStorage.set(newValue, forKey: UserDefaultsKeys.didReceiveInitialCollection)
     }
   }
 
