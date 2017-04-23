@@ -11,8 +11,10 @@ import UIKit
 class ArtistViewController: UIViewController {
   fileprivate let viewModel: ArtistViewModel
 
+  private let scrollView = UIScrollView()
   private let imageView = UIImageView()
-  let tagsLabel = UILabel()
+  private let tagsLabel = UILabel()
+  private let similarArtistsLabel = UILabel()
 
   init(viewModel: ArtistViewModel) {
     self.viewModel = viewModel
@@ -33,27 +35,40 @@ class ArtistViewController: UIViewController {
   private func configureView() {
     view.backgroundColor = UIColor.white
 
-    view.addSubview(imageView)
+    view.addSubview(scrollView)
+    scrollView.snp.makeConstraints { make in
+      make.edges.equalToSuperview()
+    }
+
+    scrollView.addSubview(imageView)
     imageView.snp.makeConstraints { make in
-      make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(16)
+      make.top.equalToSuperview().offset(16)
       make.centerX.equalToSuperview()
       make.width.height.equalTo(120)
     }
     imageView.layer.cornerRadius = 60
     imageView.layer.masksToBounds = true
 
-    view.addSubview(tagsLabel)
+    scrollView.addSubview(tagsLabel)
     tagsLabel.snp.makeConstraints { make in
+      make.centerX.equalToSuperview()
       make.top.equalTo(imageView.snp.bottom).offset(16)
       make.leading.trailing.equalToSuperview().inset(16)
     }
-
     tagsLabel.numberOfLines = 0
+
+    scrollView.addSubview(similarArtistsLabel)
+    similarArtistsLabel.snp.makeConstraints { make in
+      make.top.equalTo(tagsLabel.snp.bottom).offset(16)
+      make.leading.trailing.bottom.equalToSuperview().inset(16)
+    }
+    similarArtistsLabel.numberOfLines = 0
   }
 
   private func bindToViewModel() {
     title = viewModel.title
-    tagsLabel.text = viewModel.tags
     imageView.kf.setImage(with: viewModel.imageURL)
+    tagsLabel.text = viewModel.tags
+    similarArtistsLabel.text = viewModel.similarArtists
   }
 }

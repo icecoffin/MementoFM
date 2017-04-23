@@ -12,7 +12,7 @@ class LibraryCoordinator: NavigationFlowCoordinator {
   var childCoordinators: [Coordinator] = []
 
   let navigationController: UINavigationController
-  private let realmGateway: RealmGateway
+  fileprivate let realmGateway: RealmGateway
 
   init(navigationController: UINavigationController, realmGateway: RealmGateway) {
     self.navigationController = navigationController
@@ -29,7 +29,8 @@ class LibraryCoordinator: NavigationFlowCoordinator {
 
 extension LibraryCoordinator: LibraryViewModelDelegate {
   func libraryViewModel(_ viewModel: LibraryViewModel, didSelectArtist artist: Artist) {
-    let artistViewModel = ArtistViewModel(artist: artist)
+    let artistViewModel = ArtistViewModel(artist: artist, realmGateway: realmGateway)
+
     let artistViewController = ArtistViewController(viewModel: artistViewModel)
     artistViewController.navigationItem.leftBarButtonItem = createBackButton()
     artistViewController.hidesBottomBarWhenPushed = true
