@@ -19,7 +19,7 @@ class SettingsViewModel {
   weak var delegate: SettingsViewModelDelegate?
 
   var title: String {
-    return NSLocalizedString("Settings", comment: "")
+    return "Settings".unlocalized
   }
 
   var itemCount: Int {
@@ -27,15 +27,15 @@ class SettingsViewModel {
   }
 
   private func createCellViewModels() -> [SettingCellViewModel] {
-    let ignoredTagsConfiguration = SettingConfiguration(title: NSLocalizedString("Ignored tags", comment: "")) { [unowned self] in
+    let ignoredTagsConfiguration = SettingConfiguration(title: "Ignored tags".unlocalized) { [unowned self] in
       self.delegate?.settingsViewModelDidRequestOpenIgnoredTags(self)
     }
 
-    let changeUserConfiguration = SettingConfiguration(title: NSLocalizedString("Change user", comment: "")) { [unowned self] in
+    let changeUserConfiguration = SettingConfiguration(title: "Change user".unlocalized) { [unowned self] in
       self.delegate?.settingsViewModelDidRequestChangeUser(self)
     }
 
-    let aboutConfiguration = SettingConfiguration(title: NSLocalizedString("About", comment: "")) { [unowned self] in
+    let aboutConfiguration = SettingConfiguration(title: "About".unlocalized) { [unowned self] in
       self.delegate?.settingsViewModelDidRequestOpenAbout(self)
     }
 

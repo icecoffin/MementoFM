@@ -43,7 +43,7 @@ class LoadingView: UIView {
       make.leading.trailing.bottom.equalToSuperview()
     }
 
-    messageLabel.text = NSLocalizedString("LOADING", comment: "")
+    messageLabel.text = "LOADING".unlocalized
     messageLabel.font = UIFont.systemFont(ofSize: 12)
     messageLabel.textColor = UIColor.gray
   }

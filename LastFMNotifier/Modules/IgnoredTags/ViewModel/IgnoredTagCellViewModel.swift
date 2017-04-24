@@ -18,7 +18,7 @@ class IgnoredTagCellViewModel {
   }
 
   var placeholder: String {
-    return NSLocalizedString("Enter tag here", comment: "")
+    return "Enter tag here".unlocalized
   }
 
   var text: String {

@@ -25,17 +25,17 @@ class EnterUsernameViewModel {
     self.userDataStorage = userDataStorage
   }
 
-  var usernameTextFieldPlacerholder: String {
-    return NSLocalizedString("Enter your last.fm username", comment: "")
+  var usernameTextFieldPlaceholder: String {
+    return "Enter your last.fm username".unlocalized
   }
 
   var submitButtonTitle: String {
-    return NSLocalizedString("Submit", comment: "")
+    return "Submit".unlocalized
   }
 
   var currentUsernameText: String {
     if let username = userDataStorage.username {
-      return NSLocalizedString("Current username:", comment: "") + " \(username)"
+      return "Current username:".unlocalized + " \(username)"
     } else {
       return ""
     }

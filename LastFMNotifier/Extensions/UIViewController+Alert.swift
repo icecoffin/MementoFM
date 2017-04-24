@@ -17,6 +17,6 @@ extension UIViewController {
   }
 
   private func okAction() -> UIAlertAction {
-    return UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: nil)
+    return UIAlertAction(title: "OK".unlocalized, style: .default, handler: nil)
   }
 }

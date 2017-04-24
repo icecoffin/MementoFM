@@ -41,6 +41,7 @@
 		6511E6A41EADD752005BCF6A /* RealmGateway+IgnoredTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6511E6A31EADD752005BCF6A /* RealmGateway+IgnoredTag.swift */; };
 		6511E6A81EAE2E63005BCF6A /* UITableView+HeaderVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6511E6A71EAE2E63005BCF6A /* UITableView+HeaderVIew.swift */; };
 		6511E6AB1EAE33DB005BCF6A /* EmptyDataSetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6511E6AA1EAE33DB005BCF6A /* EmptyDataSetView.swift */; };
+		6511E6AF1EAE580D005BCF6A /* String+Unlocalized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6511E6AE1EAE580D005BCF6A /* String+Unlocalized.swift */; };
 		6514708D1EAA6A4300F949DC /* AsynchronousOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514708C1EAA6A4300F949DC /* AsynchronousOperation.swift */; };
 		6514709F1EAA6A9100F949DC /* NetworkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514709A1EAA6A9100F949DC /* NetworkConstants.swift */; };
 		651470A01EAA6A9100F949DC /* NetworkService+Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514709B1EAA6A9100F949DC /* NetworkService+Artist.swift */; };
@@ -135,6 +136,7 @@
 		6511E6A31EADD752005BCF6A /* RealmGateway+IgnoredTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmGateway+IgnoredTag.swift"; sourceTree = "<group>"; };
 		6511E6A71EAE2E63005BCF6A /* UITableView+HeaderVIew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+HeaderVIew.swift"; sourceTree = "<group>"; };
 		6511E6AA1EAE33DB005BCF6A /* EmptyDataSetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyDataSetView.swift; sourceTree = "<group>"; };
+		6511E6AE1EAE580D005BCF6A /* String+Unlocalized.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Unlocalized.swift"; sourceTree = "<group>"; };
 		6514708C1EAA6A4300F949DC /* AsynchronousOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsynchronousOperation.swift; sourceTree = "<group>"; };
 		6514709A1EAA6A9100F949DC /* NetworkConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkConstants.swift; sourceTree = "<group>"; };
 		6514709B1EAA6A9100F949DC /* NetworkService+Artist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NetworkService+Artist.swift"; sourceTree = "<group>"; };
@@ -395,6 +397,7 @@
 				6507714A1E8FA73900D5788F /* UIViewController+Alert.swift */,
 				654917B31EA914CF00792CFC /* Promise+Void.swift */,
 				6511E6A71EAE2E63005BCF6A /* UITableView+HeaderVIew.swift */,
+				6511E6AE1EAE580D005BCF6A /* String+Unlocalized.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -857,6 +860,7 @@
 				651470A21EAA6A9100F949DC /* NetworkService+User.swift in Sources */,
 				651470A01EAA6A9100F949DC /* NetworkService+Artist.swift in Sources */,
 				6551C5801EAC6585008CA291 /* AboutViewController.swift in Sources */,
+				6511E6AF1EAE580D005BCF6A /* String+Unlocalized.swift in Sources */,
 				6551C58A1EAC6585008CA291 /* LibraryCellViewModel.swift in Sources */,
 				6511E6A41EADD752005BCF6A /* RealmGateway+IgnoredTag.swift in Sources */,
 				650DF31A1E877FA000E5C587 /* LibraryPageResponse.swift in Sources */,

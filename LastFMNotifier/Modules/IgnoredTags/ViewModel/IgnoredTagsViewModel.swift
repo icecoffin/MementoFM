@@ -27,7 +27,7 @@ class IgnoredTagsViewModel {
   }
 
   var title: String {
-    return NSLocalizedString("Ignored Tags", comment: "")
+    return "Ignored Tags".unlocalized
   }
 
   var numberOfIgnoredTags: Int {

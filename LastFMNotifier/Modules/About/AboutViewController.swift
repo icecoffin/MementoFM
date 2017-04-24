@@ -19,7 +19,7 @@ class AboutViewController: UIViewController {
 
   private func configureView() {
     view.backgroundColor = UIColor.white
-    title = NSLocalizedString("About", comment: "")
+    title = "About".unlocalized
 
     view.addSubview(textView)
     textView.snp.makeConstraints { make in

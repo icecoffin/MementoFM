@@ -20,7 +20,7 @@ class LibraryViewController: UIViewController {
   private let searchController = UISearchController(searchResultsController: nil)
   private let tableView = TPKeyboardAvoidingTableView()
   private let loadingView = LoadingView()
-  private let emptyLibraryView = EmptyDataSetView(text: NSLocalizedString("No artists found", comment: ""))
+  private let emptyLibraryView = EmptyDataSetView(text: "No artists found".unlocalized)
 
   init(viewModel: LibraryViewModel) {
     self.viewModel = viewModel

@@ -128,11 +128,11 @@ class LibraryViewModel {
   }
 
   var title: String {
-    return NSLocalizedString("Library", comment: "")
+    return "Library".unlocalized
   }
 
   var searchBarPlaceholder: String {
-    return NSLocalizedString("Search", comment: "")
+    return "Search".unlocalized
   }
 
   var itemCount: Int {

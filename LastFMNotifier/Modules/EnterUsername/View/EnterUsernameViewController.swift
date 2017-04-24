@@ -29,6 +29,7 @@ class EnterUsernameViewController: UIViewController {
     super.viewDidLoad()
 
     configureView()
+    bindToViewModel()
   }
 
   private func configureView() {
@@ -58,7 +59,6 @@ class EnterUsernameViewController: UIViewController {
     stackView.addArrangedSubview(currentUsernameLabel)
 
     currentUsernameLabel.font = Fonts.raleway(withSize: 16)
-    currentUsernameLabel.text = viewModel.currentUsernameText
   }
 
   private func addUsernameTextField() {
@@ -74,7 +74,6 @@ class EnterUsernameViewController: UIViewController {
     usernameTextField.returnKeyType = .done
     usernameTextField.delegate = self
 
-    usernameTextField.placeholder = NSLocalizedString("Enter your last.fm username", comment: "")
     usernameTextField.textAlignment = .center
     usernameTextField.font = Fonts.raleway(withSize: 16)
   }
@@ -86,7 +85,6 @@ class EnterUsernameViewController: UIViewController {
       make.height.equalTo(40)
     }
 
-    submitButton.setTitle(NSLocalizedString("Submit", comment: ""), for: .normal)
     submitButton.setTitleColor(UIColor.white, for: .normal)
     submitButton.titleLabel?.font = Fonts.ralewayBold(withSize: 18)
     submitButton.backgroundColor = Colors.gold
@@ -102,6 +100,12 @@ class EnterUsernameViewController: UIViewController {
   fileprivate func submitUsername() {
     let username = usernameTextField.text ?? ""
     viewModel.submitUsername(username)
+  }
+
+  private func bindToViewModel() {
+    usernameTextField.placeholder = viewModel.usernameTextFieldPlaceholder
+    submitButton.setTitle(viewModel.submitButtonTitle, for: .normal)
+    currentUsernameLabel.text = viewModel.currentUsernameText
   }
 }
 

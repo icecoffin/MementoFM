@@ -32,7 +32,7 @@ class MainFlowCoordinator: Coordinator {
     tabBarController.tabBar.isTranslucent = false
 
     let libraryNavigationController = UINavigationController()
-    let libraryTabBarItem = UITabBarItem(title: NSLocalizedString("Library", comment: ""),
+    let libraryTabBarItem = UITabBarItem(title: "Library".unlocalized,
                                          image: #imageLiteral(resourceName: "icon_library"),
                                          selectedImage: nil)
     libraryNavigationController.tabBarItem = libraryTabBarItem
@@ -40,7 +40,7 @@ class MainFlowCoordinator: Coordinator {
     addChildCoordinator(libraryCoordinator)
 
     let settingsNavigationController = UINavigationController()
-    let settingsTabBarItem = UITabBarItem(title: NSLocalizedString("Settings", comment: ""),
+    let settingsTabBarItem = UITabBarItem(title: "Settings".unlocalized,
                                           image: #imageLiteral(resourceName: "icon_settings"),
                                           selectedImage: nil)
     settingsNavigationController.tabBarItem = settingsTabBarItem
