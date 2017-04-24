@@ -9,6 +9,7 @@
 import Foundation
 
 protocol SettingsViewModelDelegate: class {
+  func settingsViewModelDidRequestOpenIgnoredTags(_ viewModel: SettingsViewModel)
   func settingsViewModelDidRequestChangeUser(_ viewModel: SettingsViewModel)
   func settingsViewModelDidRequestOpenAbout(_ viewModel: SettingsViewModel)
 }
@@ -26,6 +27,10 @@ class SettingsViewModel {
   }
 
   private func createCellViewModels() -> [SettingCellViewModel] {
+    let ignoredTagsConfiguration = SettingConfiguration(title: NSLocalizedString("Ignored tags", comment: "")) { [unowned self] in
+      self.delegate?.settingsViewModelDidRequestOpenIgnoredTags(self)
+    }
+
     let changeUserConfiguration = SettingConfiguration(title: NSLocalizedString("Change user", comment: "")) { [unowned self] in
       self.delegate?.settingsViewModelDidRequestChangeUser(self)
     }
@@ -34,7 +39,8 @@ class SettingsViewModel {
       self.delegate?.settingsViewModelDidRequestOpenAbout(self)
     }
 
-    return [SettingCellViewModel(configuration: changeUserConfiguration),
+    return [SettingCellViewModel(configuration: ignoredTagsConfiguration),
+            SettingCellViewModel(configuration: changeUserConfiguration),
             SettingCellViewModel(configuration: aboutConfiguration)]
   }
 

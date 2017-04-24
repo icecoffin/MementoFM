@@ -14,7 +14,7 @@ enum Fonts {
   }
 
   static func ralewayMedium(withSize size: CGFloat) -> UIFont {
-    return font(withName: "Raleway-Regular", size: size)
+    return font(withName: "Raleway-Medium", size: size)
   }
 
   static func ralewayBold(withSize size: CGFloat) -> UIFont {

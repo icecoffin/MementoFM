@@ -123,12 +123,8 @@ class LibraryViewModel {
     return userDataStorage.username ?? ""
   }
 
-  // TODO: returns lastUpdateTimestamp minus one day for testing purposes
   private var lastUpdateTimestamp: TimeInterval {
     return userDataStorage.lastUpdateTimestamp
-//    let lastUpdateTimestamp = userDataStorage.lastUpdateTimestamp
-//    let oneDay: TimeInterval = 30 * 24 * 3600
-//    return lastUpdateTimestamp > oneDay ? lastUpdateTimestamp - oneDay : lastUpdateTimestamp
   }
 
   var title: String {

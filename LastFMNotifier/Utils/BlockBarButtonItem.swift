@@ -1,5 +1,5 @@
 //
-//  BarButtonItemHolder.swift
+//  BlockBarButtonItem.swift
 //  LastFMNotifier
 //
 //  Created by Daniel on 05/01/2017.

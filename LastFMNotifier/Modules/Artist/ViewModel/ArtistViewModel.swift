@@ -38,7 +38,7 @@ class ArtistViewModel {
     let topTags = artist.tags.prefix(5)
     let topTagNames = topTags.map({ $0.name })
     print("Top tags: \(topTagNames)")
-    let predicate = NSPredicate(format: "ANY tags.name IN %@ AND name != %@", topTagNames, artist.name)
+    let predicate = NSPredicate(format: "ANY topTags.name IN %@ AND name != %@", topTagNames, artist.name)
     let realmArtists = realmGateway.defaultRealm.objects(RealmArtist.self).filter(predicate)
     for realmArtist in realmArtists {
       let realmArtistTags = realmArtist.tags.map({ $0.name }).prefix(5)

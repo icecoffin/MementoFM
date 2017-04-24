@@ -23,7 +23,7 @@ class RealmFactory {
 
   static func inMemoryRealm() -> Realm {
     do {
-      let config = Realm.Configuration(inMemoryIdentifier: "GlossLite")
+      let config = Realm.Configuration(inMemoryIdentifier: "InMemory")
       let realm = try Realm(configuration: config)
       return realm
     } catch {

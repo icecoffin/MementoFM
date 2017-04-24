@@ -1,5 +1,5 @@
 //
-//  EmptyLibraryView.swift
+//  EmptyDataSetView.swift
 //  LastFMNotifier
 //
 //  Created by Daniel on 20/04/2017.
@@ -8,10 +8,12 @@
 
 import UIKit
 
-class EmptyLibraryView: UIView {
+class EmptyDataSetView: UIView {
+  private let text: String
   private let textLabel = UILabel()
 
-  init() {
+  init(text: String) {
+    self.text = text
     super.init(frame: .zero)
     setup()
   }
@@ -29,7 +31,7 @@ class EmptyLibraryView: UIView {
 
     textLabel.numberOfLines = 0
     textLabel.textAlignment = .center
-    textLabel.text = NSLocalizedString("No artists found", comment: "")
+    textLabel.text = text
     textLabel.font = Fonts.ralewayMedium(withSize: 16)
   }
 }
