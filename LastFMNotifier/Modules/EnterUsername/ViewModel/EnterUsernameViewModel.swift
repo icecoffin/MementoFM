@@ -9,9 +9,12 @@
 import Foundation
 import PromiseKit
 
+enum EnterUsernameViewModelAction {
+  case submit, cancel
+}
+
 protocol EnterUsernameViewModelDelegate: class {
-  func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel)
-  func enterUsernameViewModelDidRequestToClose(_ viewModel: EnterUsernameViewModel)
+  func enterUsernameViewModel(_ viewModel: EnterUsernameViewModel, didFinishWithAction action: EnterUsernameViewModelAction)
 }
 
 class EnterUsernameViewModel {
@@ -46,10 +49,10 @@ class EnterUsernameViewModel {
     userDataStorage.username = username
     if oldUsername != username {
       _ = clearLocalData().then {
-        self.delegate?.enterUsernameViewModelDidFinish(self)
+        self.delegate?.enterUsernameViewModel(self, didFinishWithAction: .submit)
       }
     } else {
-      delegate?.enterUsernameViewModelDidFinish(self)
+      delegate?.enterUsernameViewModel(self, didFinishWithAction: .submit)
     }
   }
 
@@ -59,6 +62,6 @@ class EnterUsernameViewModel {
   }
 
   func close() {
-    delegate?.enterUsernameViewModelDidRequestToClose(self)
+    delegate?.enterUsernameViewModel(self, didFinishWithAction: .cancel)
   }
 }

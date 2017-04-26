@@ -75,8 +75,13 @@ extension NetworkService: UserNetworkService {
             reject(error)
           }
         case .failure(let error):
-          reject(error)
+          if !error.isCancelledError {
+            reject(error)
+          }
         }
+      }
+      operation.onCancel = {
+        reject(NSError.cancelledError())
       }
       queue.addOperation(operation)
     }

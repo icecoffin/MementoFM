@@ -76,13 +76,11 @@ extension SettingsCoordinator: SettingsViewModelDelegate {
 }
 
 extension SettingsCoordinator: EnterUsernameViewModelDelegate {
-  func enterUsernameViewModelDidRequestToClose(_ viewModel: EnterUsernameViewModel) {
+  func enterUsernameViewModel(_ viewModel: EnterUsernameViewModel, didFinishWithAction action: EnterUsernameViewModelAction) {
     navigationController.dismiss(animated: true, completion: nil)
-  }
-
-  func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel) {
-    navigationController.dismiss(animated: true, completion: nil)
-    delegate?.settingsCoordinatorDidChangeUsername(self)
+    if case .submit = action {
+      delegate?.settingsCoordinatorDidChangeUsername(self)
+    }
   }
 }
 

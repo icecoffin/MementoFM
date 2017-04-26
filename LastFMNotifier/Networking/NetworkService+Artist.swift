@@ -30,6 +30,8 @@ extension NetworkService: ArtistNetworkService {
           totalProgress.completedUnitCount += 1
           progress(TopTagsRequestProgress(progress: totalProgress, artist: artist, topTagsList: topTagsList))
           return .void
+        }.catch { error in
+          reject(error)
         }
       }
 
@@ -58,8 +60,13 @@ extension NetworkService: ArtistNetworkService {
             reject(error)
           }
         case .failure(let error):
-          reject(error)
+          if !error.isCancelledError {
+            reject(error)
+          }
         }
+      }
+      operation.onCancel = {
+        reject(NSError.cancelledError())
       }
       queue.addOperation(operation)
     }

@@ -67,7 +67,6 @@ class LibraryArtistCell: UITableViewCell {
     photoImageView.layer.cornerRadius = photoSize / 2
     photoImageView.layer.masksToBounds = true
     photoImageView.backgroundColor = .groupTableViewBackground
-
   }
 
   private func configureNameLabel() {
@@ -84,8 +83,15 @@ class LibraryArtistCell: UITableViewCell {
   func configure(with viewModel: LibraryCellViewModel) {
     nameLabel.text = viewModel.name
     playcountLabel.text = viewModel.playcount
+    // TODO: leak
     if let url = viewModel.imageURL {
       photoImageView.kf.setImage(with: url)
     }
+  }
+
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    photoImageView.kf.cancelDownloadTask()
+    photoImageView.image = nil
   }
 }

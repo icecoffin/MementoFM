@@ -49,6 +49,7 @@
 		651470A21EAA6A9100F949DC /* NetworkService+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514709D1EAA6A9100F949DC /* NetworkService+User.swift */; };
 		651470A31EAA6A9100F949DC /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514709E1EAA6A9100F949DC /* NetworkService.swift */; };
 		651470A51EAA6AA700F949DC /* NetworkOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651470A41EAA6AA700F949DC /* NetworkOperation.swift */; };
+		651552001EAFA1AF00F1EE37 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651551FF1EAFA1AF00F1EE37 /* OnboardingCoordinator.swift */; };
 		654917B41EA914CF00792CFC /* Promise+Void.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654917B31EA914CF00792CFC /* Promise+Void.swift */; };
 		6551C5801EAC6585008CA291 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6551C5631EAC6585008CA291 /* AboutViewController.swift */; };
 		6551C5811EAC6585008CA291 /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6551C5661EAC6585008CA291 /* ArtistViewController.swift */; };
@@ -144,6 +145,7 @@
 		6514709D1EAA6A9100F949DC /* NetworkService+User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NetworkService+User.swift"; sourceTree = "<group>"; };
 		6514709E1EAA6A9100F949DC /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		651470A41EAA6AA700F949DC /* NetworkOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkOperation.swift; sourceTree = "<group>"; };
+		651551FF1EAFA1AF00F1EE37 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
 		654917B31EA914CF00792CFC /* Promise+Void.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Promise+Void.swift"; sourceTree = "<group>"; };
 		6551C5631EAC6585008CA291 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		6551C5661EAC6585008CA291 /* ArtistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistViewController.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 				0189E1081DE1C05D0068E831 /* LibraryCoordinator.swift */,
 				014095341E03DCF000FBFA1A /* SettingsCoordinator.swift */,
 				012D74AA1E1E27040009657B /* NavigationFlowCoordinator.swift */,
+				651551FF1EAFA1AF00F1EE37 /* OnboardingCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -915,6 +918,7 @@
 				6507714C1E8FA73900D5788F /* UIViewController+Alert.swift in Sources */,
 				013886851DFB0373000DB2E3 /* MainFlowCoordinator.swift in Sources */,
 				6551C59F1EACBEEF008CA291 /* IgnoredTag.swift in Sources */,
+				651552001EAFA1AF00F1EE37 /* OnboardingCoordinator.swift in Sources */,
 				6551C58C1EAC6585008CA291 /* RecentTracksProcessor.swift in Sources */,
 				6511E6A81EAE2E63005BCF6A /* UITableView+HeaderVIew.swift in Sources */,
 				65C093061EA273F400BF8FEA /* RecentTracksPage.swift in Sources */,

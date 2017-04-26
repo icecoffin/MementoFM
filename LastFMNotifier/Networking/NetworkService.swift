@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Alamofire
 
 class NetworkService {
   let baseURL: URL
@@ -15,5 +16,15 @@ class NetworkService {
   init(baseURL: URL = NetworkConstants.LastFM.baseURL) {
     self.baseURL = baseURL
     queue.maxConcurrentOperationCount = 10
+  }
+
+  func cancelPendingRequests() {
+    // TODO: deal with "PromiseKit: Pending Promise deallocated! This is usually a bug"
+    queue.cancelAllOperations()
+
+    let sessionManager = Alamofire.SessionManager.default
+    sessionManager.session.getAllTasks { tasks in
+      tasks.forEach({ $0.cancel() })
+    }
   }
 }

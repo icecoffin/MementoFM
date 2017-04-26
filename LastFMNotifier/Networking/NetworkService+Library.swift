@@ -25,7 +25,6 @@ extension NetworkService: LibraryNetworkService {
     return Promise { fulfill, reject in
       let initialIndex = 1
       getLibraryPage(withIndex: initialIndex, for: user, limit: limit).then { [unowned self] page -> Void in
-
         if page.totalPages <= initialIndex {
           fulfill(page.artists)
           return
@@ -40,12 +39,12 @@ extension NetworkService: LibraryNetworkService {
         }
 
         when(fulfilled: pagePromises).then { pages -> Void in
-            let artists = ([page] + pages).flatMap { $0.artists }
-            fulfill(artists)
-          }.catch { error in
-            reject(error)
-          }
+          let artists = ([page] + pages).flatMap { $0.artists }
+          fulfill(artists)
         }.catch { error in
+          reject(error)
+        }
+      }.catch { error in
           reject(error)
       }
     }
@@ -70,8 +69,13 @@ extension NetworkService: LibraryNetworkService {
             reject(error)
           }
         case .failure(let error):
-          reject(error)
+          if !error.isCancelledError {
+            reject(error)
+          }
         }
+      }
+      operation.onCancel = {
+        reject(NSError.cancelledError())
       }
       queue.addOperation(operation)
     }

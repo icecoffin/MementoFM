@@ -18,6 +18,7 @@ class NetworkOperation: AsynchronousOperation {
   private let completionHandler: (DataResponse<Any>) -> Void
 
   weak var request: Request?
+  var onCancel: (() -> Void)?
 
   init(url: URLConvertible,
        method: HTTPMethod = .get,
@@ -43,6 +44,7 @@ class NetworkOperation: AsynchronousOperation {
   }
 
   override func cancel() {
+    onCancel?()
     request?.cancel()
     super.cancel()
   }

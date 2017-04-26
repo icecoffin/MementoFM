@@ -34,7 +34,7 @@ class LibraryViewModel {
   var onError: ((Error) -> Void)?
 
   init(realmGateway: RealmGateway,
-       networkService: LibraryViewModelNetworkService = NetworkService(),
+       networkService: LibraryViewModelNetworkService,
        userDataStorage: UserDataStorage = UserDataStorage()) {
     self.realmGateway = realmGateway
     self.networkService = networkService
@@ -110,7 +110,9 @@ class LibraryViewModel {
     let artists = realmGateway.artistsNeedingTagsUpdate()
     return networkService.getTopTags(for: artists, progress: { requestProgress in
       self.handleTopTagsRequestProgress(requestProgress)
-    })
+    }).catch { error in
+      print(error)
+    }
   }
 
   private func handleTopTagsRequestProgress(_ requestProgress: TopTagsRequestProgress) {

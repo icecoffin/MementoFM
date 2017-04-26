@@ -13,14 +13,16 @@ class LibraryCoordinator: NavigationFlowCoordinator {
 
   let navigationController: UINavigationController
   fileprivate let realmGateway: RealmGateway
+  fileprivate let networkService: NetworkService
 
-  init(navigationController: UINavigationController, realmGateway: RealmGateway) {
+  init(navigationController: UINavigationController, realmGateway: RealmGateway, networkService: NetworkService) {
     self.navigationController = navigationController
     self.realmGateway = realmGateway
+    self.networkService = networkService
   }
 
   func start() {
-    let libraryViewModel = LibraryViewModel(realmGateway: realmGateway)
+    let libraryViewModel = LibraryViewModel(realmGateway: realmGateway, networkService: networkService)
     libraryViewModel.delegate = self
     let libraryViewController = LibraryViewController(viewModel: libraryViewModel)
     navigationController.pushViewController(libraryViewController, animated: false)

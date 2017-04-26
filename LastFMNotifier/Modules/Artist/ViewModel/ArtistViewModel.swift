@@ -38,15 +38,16 @@ class ArtistViewModel {
     let topTags = artist.tags.prefix(5)
     let topTagNames = topTags.map({ $0.name })
     print("Top tags: \(topTagNames)")
-    let predicate = NSPredicate(format: "ANY topTags.name IN %@ AND name != %@", topTagNames, artist.name)
+    let predicate = NSPredicate(format: "ANY tags.name IN %@ AND name != %@", topTagNames, artist.name)
     let realmArtists = realmGateway.defaultRealm.objects(RealmArtist.self).filter(predicate)
-    for realmArtist in realmArtists {
+
+    let filteredArtists = realmArtists.filter({ realmArtist in
       let realmArtistTags = realmArtist.tags.map({ $0.name }).prefix(5)
       let commonTags = topTagNames.filter({ realmArtistTags.contains($0) })
-      if !commonTags.isEmpty {
-        print("\(commonTags.count) common tags between \(artist.name) and \(realmArtist.name): \(commonTags.joined(separator: ", "))")
-      }
-    }
-    return "Similar artists: " + realmArtists.map({ $0.name }).joined(separator: ", ")
+      return commonTags.count >= 3
+    }).sorted(by: { artist1, artist2 -> Bool in
+      return artist1.name < artist2.name
+    })
+    return "Similar artists: " + filteredArtists.map({ $0.name }).joined(separator: ", ")
   }
 }

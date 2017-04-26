@@ -25,6 +25,7 @@ class SettingCell: UITableViewCell {
   private func setup() {
     addContainerView()
     addTitleLabel()
+    accessoryType = .disclosureIndicator
   }
 
   private func addContainerView() {

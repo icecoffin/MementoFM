@@ -15,14 +15,20 @@ class AppCoordinator: Coordinator {
   private let realmGateway = RealmGateway(defaultRealm: RealmFactory.realm(), getWriteRealm: {
     return RealmFactory.realm()
   })
-  fileprivate let userDataStorage: UserDataStorage
 
-  init(window: UIWindow, userDataStorage: UserDataStorage = UserDataStorage()) {
+  fileprivate let userDataStorage: UserDataStorage
+  fileprivate let networkService: NetworkService
+
+  init(window: UIWindow,
+       userDataStorage: UserDataStorage = UserDataStorage(),
+       networkService: NetworkService = NetworkService()) {
     self.window = window
     self.userDataStorage = userDataStorage
+    self.networkService = networkService
   }
 
   func start() {
+    networkService.cancelPendingRequests()
     removeAllChildren()
 
     if userDataStorage.username != nil {
@@ -33,7 +39,7 @@ class AppCoordinator: Coordinator {
   }
 
   func startMainFlow() {
-    let mainFlowCoordinator = MainFlowCoordinator(window: window, realmGateway: realmGateway)
+    let mainFlowCoordinator = MainFlowCoordinator(window: window, realmGateway: realmGateway, networkService: networkService)
     mainFlowCoordinator.delegate = self
     addChildCoordinator(mainFlowCoordinator)
     startChildren()
@@ -49,12 +55,10 @@ class AppCoordinator: Coordinator {
 }
 
 extension AppCoordinator: EnterUsernameViewModelDelegate {
-  func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel) {
-    start()
-  }
-
-  func enterUsernameViewModelDidRequestToClose(_ viewModel: EnterUsernameViewModel) {
-
+  func enterUsernameViewModel(_ viewModel: EnterUsernameViewModel, didFinishWithAction action: EnterUsernameViewModelAction) {
+    if case .submit = action {
+      start()
+    }
   }
 }
 
