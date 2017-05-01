@@ -13,6 +13,6 @@ struct TopTagsResponse: Mappable {
   let topTagsList: TopTagsList
 
   init(map: Mapper) throws {
-    try topTagsList = map.from("toptags")
+    topTagsList = map.optionalFrom("toptags") ?? TopTagsList(tags: [])
   }
 }

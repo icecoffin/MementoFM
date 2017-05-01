@@ -110,7 +110,6 @@ class EnterUsernameViewController: UIViewController {
   }
 
   private func bindToViewModel() {
-    title = viewModel.title
     usernameTextField.placeholder = viewModel.usernameTextFieldPlaceholder
     submitButton.setTitle(viewModel.submitButtonTitle, for: .normal)
     currentUsernameLabel.text = viewModel.currentUsernameText
@@ -133,27 +132,6 @@ class EnterUsernameViewController: UIViewController {
   private func enableSubmitButton() {
     submitButton.isEnabled = true
     submitButton.backgroundColor = Colors.gold
-  }
-}
-
-// MARK: Modal presentation configuration
-extension EnterUsernameViewController {
-  func configureForModalPresentation() {
-    let closeButton = UIButton(type: .system)
-    view.addSubview(closeButton)
-    closeButton.snp.makeConstraints { make in
-      make.leading.equalToSuperview().offset(16)
-      make.top.equalToSuperview().offset(36)
-    }
-
-    closeButton.setImage(#imageLiteral(resourceName: "icon_close"), for: .normal)
-    closeButton.tintColor = Colors.gold
-
-    closeButton.addTarget(self, action: #selector(closeButtonTapped(_:)), for: .touchUpInside)
-  }
-
-  func closeButtonTapped(_ sender: UIButton) {
-    viewModel.close()
   }
 }
 

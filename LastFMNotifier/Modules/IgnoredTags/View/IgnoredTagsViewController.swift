@@ -33,6 +33,8 @@ class IgnoredTagsViewController: UIViewController {
   }
 
   private func configureView() {
+    view.backgroundColor = .white
+
     addTableView()
   }
 
@@ -55,8 +57,6 @@ class IgnoredTagsViewController: UIViewController {
   }
 
   private func bindToViewModel() {
-    title = viewModel.title
-
     viewModel.onWillSaveChanges = { [unowned self] in
       self.view.endEditing(true)
     }
@@ -72,6 +72,12 @@ class IgnoredTagsViewController: UIViewController {
     viewModel.onDidUpdateTagCount = { [unowned self] isEmpty in
       self.tableView.backgroundView?.isHidden = !isEmpty
     }
+
+    viewModel.onDidAddDefaultTags = { [unowned self] in
+      self.tableView.reloadData()
+    }
+
+    tableView.backgroundView?.isHidden = viewModel.numberOfIgnoredTags > 0
   }
 }
 

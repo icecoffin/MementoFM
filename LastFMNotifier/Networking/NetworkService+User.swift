@@ -46,10 +46,14 @@ extension NetworkService: UserNetworkService {
           let tracks = ([page] + pages).flatMap { $0.tracks }
           fulfill(tracks)
           }.catch { error in
-            reject(error)
+            if !error.isCancelledError {
+              reject(error)
+            }
           }
         }.catch { error in
-          reject(error)
+          if !error.isCancelledError {
+            reject(error)
+          }
       }
     }
   }

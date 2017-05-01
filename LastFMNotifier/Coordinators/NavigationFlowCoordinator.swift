@@ -13,7 +13,7 @@ protocol NavigationFlowCoordinator: Coordinator {
 }
 
 extension NavigationFlowCoordinator {
-  func createBackButton() -> BlockBarButtonItem {
+  func makeBackButton() -> BlockBarButtonItem {
     let button = BlockBarButtonItem(image: #imageLiteral(resourceName: "icon_back"), style: .plain) { [unowned self] in
       self.navigationController.popViewController(animated: true)
     }

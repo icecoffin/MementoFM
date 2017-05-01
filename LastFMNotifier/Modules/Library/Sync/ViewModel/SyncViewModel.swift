@@ -1,5 +1,5 @@
 //
-//  FirstSyncViewModel.swift
+//  SyncViewModel.swift
 //  LastFMNotifier
 //
 //  Created by Daniel on 30/04/2017.
@@ -8,17 +8,17 @@
 
 import Foundation
 
-protocol FirstSyncViewModelDelegate: class {
-  func firstSyncViewModelDidFinishLoading(_ viewModel: FirstSyncViewModel)
+protocol SyncViewModelDelegate: class {
+  func syncViewModelDidFinishLoading(_ viewModel: SyncViewModel)
 }
 
-class FirstSyncViewModel {
+class SyncViewModel {
   typealias Dependencies = HasLibraryNetworkService & HasUserNetworkService & HasArtistNetworkService & HasRealmGateway & HasUserDataStorage
 
   private let dependencies: Dependencies
   private let libraryUpdater: LibraryUpdater
 
-  weak var delegate: FirstSyncViewModelDelegate?
+  weak var delegate: SyncViewModelDelegate?
 
   var onDidChangeStatus: ((String) -> Void)?
   var onDidReceiveError: ((Error) -> Void)?
@@ -31,7 +31,7 @@ class FirstSyncViewModel {
 
   private func setup() {
     libraryUpdater.onDidFinishLoading = { [unowned self] in
-      self.delegate?.firstSyncViewModelDidFinishLoading(self)
+      self.delegate?.syncViewModelDidFinishLoading(self)
     }
     libraryUpdater.onDidChangeStatus = { [unowned self] status in
       self.onDidChangeStatus?(self.stringFromStatus(status))

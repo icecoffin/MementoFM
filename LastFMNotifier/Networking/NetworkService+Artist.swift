@@ -31,14 +31,18 @@ extension NetworkService: ArtistNetworkService {
           progress(TopTagsRequestProgress(progress: totalProgress, artist: artist, topTagsList: topTagsList))
           return .void
         }.catch { error in
-          reject(error)
+          if !error.isCancelledError {
+            reject(error)
+          }
         }
       }
 
       when(fulfilled: promises).then { _ in
         fulfill()
       }.catch { error in
-        reject(error)
+        if !error.isCancelledError {
+          reject(error)
+        }
       }
     }
   }

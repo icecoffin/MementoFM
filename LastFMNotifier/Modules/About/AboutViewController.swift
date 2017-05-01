@@ -18,8 +18,7 @@ class AboutViewController: UIViewController {
   }
 
   private func configureView() {
-    view.backgroundColor = UIColor.white
-    title = "About".unlocalized
+    view.backgroundColor = .white
 
     view.addSubview(textView)
     textView.snp.makeConstraints { make in

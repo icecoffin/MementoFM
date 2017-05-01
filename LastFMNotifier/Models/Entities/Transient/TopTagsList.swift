@@ -12,6 +12,10 @@ import Mapper
 struct TopTagsList: Mappable {
   let tags: [Tag]
 
+  init(tags: [Tag]) {
+    self.tags = tags
+  }
+
   init(map: Mapper) throws {
     try tags = map.from("tag")
   }

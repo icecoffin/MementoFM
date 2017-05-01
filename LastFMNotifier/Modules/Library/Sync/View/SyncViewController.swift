@@ -1,5 +1,5 @@
 //
-//  FirstSyncViewController.swift
+//  SyncViewController.swift
 //  LastFMNotifier
 //
 //  Created by Daniel on 30/04/2017.
@@ -8,14 +8,13 @@
 
 import UIKit
 
-// TODO: check error handling
-class FirstSyncViewController: UIViewController {
-  private let viewModel: FirstSyncViewModel
+class SyncViewController: UIViewController {
+  private let viewModel: SyncViewModel
 
   private let progressView = SyncProgressView()
   private let errorView = SyncErrorView()
 
-  init(viewModel: FirstSyncViewModel) {
+  init(viewModel: SyncViewModel) {
     self.viewModel = viewModel
     super.init(nibName: nil, bundle: nil)
   }

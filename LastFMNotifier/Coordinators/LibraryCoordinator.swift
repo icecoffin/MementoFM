@@ -23,6 +23,7 @@ class LibraryCoordinator: NavigationFlowCoordinator {
     let libraryViewModel = LibraryViewModel(dependencies: dependencies)
     libraryViewModel.delegate = self
     let libraryViewController = LibraryViewController(viewModel: libraryViewModel)
+    libraryViewController.title = "Library".unlocalized
     navigationController.pushViewController(libraryViewController, animated: false)
   }
 }
@@ -32,7 +33,8 @@ extension LibraryCoordinator: LibraryViewModelDelegate {
     let artistViewModel = ArtistViewModel(artist: artist, dependencies: dependencies)
 
     let artistViewController = ArtistViewController(viewModel: artistViewModel)
-    artistViewController.navigationItem.leftBarButtonItem = createBackButton()
+    artistViewController.title = artistViewModel.title
+    artistViewController.navigationItem.leftBarButtonItem = makeBackButton()
     artistViewController.hidesBottomBarWhenPushed = true
 
     navigationController.pushViewController(artistViewController, animated: true)

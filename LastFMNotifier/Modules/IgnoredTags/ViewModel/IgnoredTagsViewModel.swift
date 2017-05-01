@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PromiseKit
 
 protocol IgnoredTagsViewModelDelegate: class {
   func ignoredTagsViewModelDidSaveChanges(_ viewModel: IgnoredTagsViewModel)
@@ -27,14 +28,22 @@ class IgnoredTagsViewModel {
   var onWillSaveChanges: (() -> Void)?
   var onDidAddNewTag: ((IndexPath) -> Void)?
   var onDidUpdateTagCount: ((_ isEmpty: Bool) -> Void)?
+  var onDidAddDefaultTags: (() -> Void)?
 
-  init(dependencies: Dependencies) {
+  init(dependencies: Dependencies, shouldAddDefaultTags: Bool) {
     self.dependencies = dependencies
     self.ignoredTags = dependencies.realmGateway.ignoredTags()
+    if self.ignoredTags.isEmpty && shouldAddDefaultTags {
+      addDefaultTags()
+    }
   }
 
-  var title: String {
-    return "Ignored Tags".unlocalized
+  private func addDefaultTags() {
+    _ = dependencies.realmGateway.createDefaultIgnoredTags().then { [unowned self] _ -> Promise<Void> in
+      self.ignoredTags = self.dependencies.realmGateway.ignoredTags()
+      self.onDidAddDefaultTags?()
+      return .void
+    }
   }
 
   var numberOfIgnoredTags: Int {
@@ -79,7 +88,7 @@ class IgnoredTagsViewModel {
       return result + [ignoredTag]
     }
 
-    print(filteredTags.map({ $0.name }))
+    log.debug(filteredTags.map({ $0.name }))
     _ = dependencies.realmGateway.updateIgnoredTags(filteredTags).then { [unowned self] in
       self.delegate?.ignoredTagsViewModelDidSaveChanges(self)
     }

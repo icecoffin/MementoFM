@@ -32,13 +32,14 @@ class SettingsCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter {
     let settingsViewModel = SettingsViewModel()
     settingsViewModel.delegate = self
     let settingsViewController = SettingsViewController(viewModel: settingsViewModel)
+    settingsViewController.title = "Settings".unlocalized
     navigationController.pushViewController(settingsViewController, animated: false)
   }
 }
 
 extension SettingsCoordinator: SettingsViewModelDelegate {
   func settingsViewModelDidRequestOpenIgnoredTags(_ viewModel: SettingsViewModel) {
-    let viewController = makeIgnoredTagsViewController(dependencies: dependencies)
+    let viewController = makeIgnoredTagsViewController(dependencies: dependencies, shouldAddDefaultTags: false)
     navigationController.pushViewController(viewController, animated: true)
   }
 
@@ -46,25 +47,25 @@ extension SettingsCoordinator: SettingsViewModelDelegate {
     let viewModel = EnterUsernameViewModel(dependencies: dependencies)
     viewModel.delegate = self
     let viewController = EnterUsernameViewController(viewModel: viewModel)
-    viewController.configureForModalPresentation()
-    navigationController.present(viewController, animated: true, completion: nil)
+    viewController.title = "Change Username".unlocalized
+    viewController.navigationItem.leftBarButtonItem = makeBackButton()
+    navigationController.pushViewController(viewController, animated: true)
   }
 
   func settingsViewModelDidRequestOpenAbout(_ viewModel: SettingsViewModel) {
     let viewController = AboutViewController()
-    viewController.navigationItem.leftBarButtonItem = createBackButton()
+    viewController.title = "About".unlocalized
+    viewController.navigationItem.leftBarButtonItem = makeBackButton()
     viewController.hidesBottomBarWhenPushed = true
     navigationController.pushViewController(viewController, animated: true)
   }
 }
 
 extension SettingsCoordinator: EnterUsernameViewModelDelegate {
-  func enterUsernameViewModel(_ viewModel: EnterUsernameViewModel, didFinishWithAction action: EnterUsernameViewModelAction) {
+  func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel) {
     navigationController.dismiss(animated: true, completion: nil)
-    if case .submit = action {
-      dependencies.generalNetworkService.cancelPendingRequests()
-      delegate?.settingsCoordinatorDidChangeUsername(self)
-    }
+    dependencies.generalNetworkService.cancelPendingRequests()
+    delegate?.settingsCoordinatorDidChangeUsername(self)
   }
 }
 

@@ -14,8 +14,7 @@ protocol LibraryViewModelDelegate: class {
   func libraryViewModel(_ viewModel: LibraryViewModel, didSelectArtist artist: Artist)
 }
 
-// TODO: better progress display
-
+// TODO: check why photos are not displayed when opening after onboarding
 class LibraryViewModel {
   typealias Dependencies = HasLibraryNetworkService & HasUserNetworkService & HasArtistNetworkService & HasRealmGateway & HasUserDataStorage
 
@@ -61,8 +60,9 @@ class LibraryViewModel {
       self.onDidFinishLoading?()
       self.onDidUpdateData?(self.cellViewModels.isEmpty)
     }
+    // TODO: better progress display
     libraryUpdater.onDidChangeStatus = { /*[unowned self]*/ status in
-      print(status)
+      log.debug(status)
     }
     libraryUpdater.onDidReceiveError = { [unowned self] error in
       self.onDidReceiveError?(error)
@@ -79,10 +79,6 @@ class LibraryViewModel {
 
   private var lastUpdateTimestamp: TimeInterval {
     return dependencies.userDataStorage.lastUpdateTimestamp
-  }
-
-  var title: String {
-    return "Library".unlocalized
   }
 
   var searchBarPlaceholder: String {

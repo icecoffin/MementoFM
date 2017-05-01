@@ -39,8 +39,6 @@
 		650DF31A1E877FA000E5C587 /* LibraryPageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650DF3191E877FA000E5C587 /* LibraryPageResponse.swift */; };
 		650DF31C1E87CEE500E5C587 /* RecentTracksPageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650DF31B1E87CEE500E5C587 /* RecentTracksPageResponse.swift */; };
 		65109E3E1E9136E6000E48C4 /* TopTagsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65109E3D1E9136E6000E48C4 /* TopTagsResponse.swift */; };
-		6510E1991EB5B1DB004D7BD1 /* FirstSyncViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6510E1981EB5B1DB004D7BD1 /* FirstSyncViewController.swift */; };
-		6510E19B1EB5B208004D7BD1 /* FirstSyncViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6510E19A1EB5B208004D7BD1 /* FirstSyncViewModel.swift */; };
 		6511E6A41EADD752005BCF6A /* RealmGateway+IgnoredTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6511E6A31EADD752005BCF6A /* RealmGateway+IgnoredTag.swift */; };
 		6511E6A81EAE2E63005BCF6A /* UITableView+HeaderVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6511E6A71EAE2E63005BCF6A /* UITableView+HeaderVIew.swift */; };
 		6511E6AB1EAE33DB005BCF6A /* EmptyDataSetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6511E6AA1EAE33DB005BCF6A /* EmptyDataSetView.swift */; };
@@ -63,6 +61,9 @@
 		651F6AAB1EB46E1B00520B68 /* NetworkService+General.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F6AAA1EB46E1B00520B68 /* NetworkService+General.swift */; };
 		651F6AAE1EB4D6A200520B68 /* LibraryUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F6AAD1EB4D6A200520B68 /* LibraryUpdater.swift */; };
 		654917B41EA914CF00792CFC /* Promise+Void.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654917B31EA914CF00792CFC /* Promise+Void.swift */; };
+		655091141EB7140200E05CC1 /* SyncViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655091111EB7140200E05CC1 /* SyncViewController.swift */; };
+		655091151EB7140200E05CC1 /* SyncViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655091131EB7140200E05CC1 /* SyncViewModel.swift */; };
+		655091171EB7180700E05CC1 /* SyncPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655091161EB7180700E05CC1 /* SyncPresenter.swift */; };
 		6551C5801EAC6585008CA291 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6551C5631EAC6585008CA291 /* AboutViewController.swift */; };
 		6551C5811EAC6585008CA291 /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6551C5661EAC6585008CA291 /* ArtistViewController.swift */; };
 		6551C5821EAC6585008CA291 /* ArtistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6551C5681EAC6585008CA291 /* ArtistViewModel.swift */; };
@@ -141,8 +142,6 @@
 		650DF3191E877FA000E5C587 /* LibraryPageResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryPageResponse.swift; sourceTree = "<group>"; };
 		650DF31B1E87CEE500E5C587 /* RecentTracksPageResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentTracksPageResponse.swift; sourceTree = "<group>"; };
 		65109E3D1E9136E6000E48C4 /* TopTagsResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopTagsResponse.swift; sourceTree = "<group>"; };
-		6510E1981EB5B1DB004D7BD1 /* FirstSyncViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstSyncViewController.swift; sourceTree = "<group>"; };
-		6510E19A1EB5B208004D7BD1 /* FirstSyncViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstSyncViewModel.swift; sourceTree = "<group>"; };
 		6511E6A31EADD752005BCF6A /* RealmGateway+IgnoredTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmGateway+IgnoredTag.swift"; sourceTree = "<group>"; };
 		6511E6A71EAE2E63005BCF6A /* UITableView+HeaderVIew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+HeaderVIew.swift"; sourceTree = "<group>"; };
 		6511E6AA1EAE33DB005BCF6A /* EmptyDataSetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyDataSetView.swift; sourceTree = "<group>"; };
@@ -165,6 +164,9 @@
 		651F6AAA1EB46E1B00520B68 /* NetworkService+General.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NetworkService+General.swift"; sourceTree = "<group>"; };
 		651F6AAD1EB4D6A200520B68 /* LibraryUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryUpdater.swift; sourceTree = "<group>"; };
 		654917B31EA914CF00792CFC /* Promise+Void.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Promise+Void.swift"; sourceTree = "<group>"; };
+		655091111EB7140200E05CC1 /* SyncViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncViewController.swift; sourceTree = "<group>"; };
+		655091131EB7140200E05CC1 /* SyncViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncViewModel.swift; sourceTree = "<group>"; };
+		655091161EB7180700E05CC1 /* SyncPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncPresenter.swift; sourceTree = "<group>"; };
 		6551C5631EAC6585008CA291 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		6551C5661EAC6585008CA291 /* ArtistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistViewController.swift; sourceTree = "<group>"; };
 		6551C5681EAC6585008CA291 /* ArtistViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistViewModel.swift; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 			children = (
 				012F7AF51DF706DB0060E66D /* CellReusable.swift */,
 				650AC52A1EB23148006D314A /* IgnoredTagsPresenter.swift */,
+				655091161EB7180700E05CC1 /* SyncPresenter.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -429,33 +432,6 @@
 			path = Responses;
 			sourceTree = "<group>";
 		};
-		6510E1951EB5B0DC004D7BD1 /* First Sync */ = {
-			isa = PBXGroup;
-			children = (
-				6510E1961EB5B0DC004D7BD1 /* View */,
-				6510E1971EB5B0DC004D7BD1 /* View Model */,
-			);
-			name = "First Sync";
-			path = FirstSync;
-			sourceTree = "<group>";
-		};
-		6510E1961EB5B0DC004D7BD1 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				6510E1981EB5B1DB004D7BD1 /* FirstSyncViewController.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		6510E1971EB5B0DC004D7BD1 /* View Model */ = {
-			isa = PBXGroup;
-			children = (
-				6510E19A1EB5B208004D7BD1 /* FirstSyncViewModel.swift */,
-			);
-			name = "View Model";
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		6511E6A91EAE33DB005BCF6A /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -481,8 +457,8 @@
 		651F0F6D1EB379F6004639A1 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				6550910F1EB7140200E05CC1 /* Sync */,
 				651F6AAC1EB4D6A200520B68 /* Shared */,
-				6510E1951EB5B0DC004D7BD1 /* First Sync */,
 				651F0F6E1EB379F6004639A1 /* Artist List */,
 			);
 			path = Library;
@@ -525,6 +501,32 @@
 				651F6AAD1EB4D6A200520B68 /* LibraryUpdater.swift */,
 			);
 			path = Shared;
+			sourceTree = "<group>";
+		};
+		6550910F1EB7140200E05CC1 /* Sync */ = {
+			isa = PBXGroup;
+			children = (
+				655091101EB7140200E05CC1 /* View */,
+				655091121EB7140200E05CC1 /* View Model */,
+			);
+			path = Sync;
+			sourceTree = "<group>";
+		};
+		655091101EB7140200E05CC1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				655091111EB7140200E05CC1 /* SyncViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		655091121EB7140200E05CC1 /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				655091131EB7140200E05CC1 /* SyncViewModel.swift */,
+			);
+			name = "View Model";
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		6551C5611EAC6585008CA291 /* Modules */ = {
@@ -958,6 +960,7 @@
 				013886881DFB0868000DB2E3 /* UserDataStorage.swift in Sources */,
 				65C0930E1EA2742800BF8FEA /* RealmGateway+User.swift in Sources */,
 				6551C5841EAC6585008CA291 /* EnterUsernameViewModel.swift in Sources */,
+				655091171EB7180700E05CC1 /* SyncPresenter.swift in Sources */,
 				654917B41EA914CF00792CFC /* Promise+Void.swift in Sources */,
 				65C093081EA273F400BF8FEA /* Tag.swift in Sources */,
 				651470A51EAA6AA700F949DC /* NetworkOperation.swift in Sources */,
@@ -974,7 +977,7 @@
 				6511E6AB1EAE33DB005BCF6A /* EmptyDataSetView.swift in Sources */,
 				012D74AB1E1E27040009657B /* NavigationFlowCoordinator.swift in Sources */,
 				65C0930C1EA2741800BF8FEA /* RealmGateway+Artist.swift in Sources */,
-				6510E1991EB5B1DB004D7BD1 /* FirstSyncViewController.swift in Sources */,
+				655091141EB7140200E05CC1 /* SyncViewController.swift in Sources */,
 				651F0F7B1EB379F6004639A1 /* LibraryArtistCell.swift in Sources */,
 				65C093001EA273F400BF8FEA /* RealmArtist.swift in Sources */,
 				651F0F7E1EB379F6004639A1 /* LibraryArtistCellViewModel.swift in Sources */,
@@ -988,7 +991,7 @@
 				651F6AAE1EB4D6A200520B68 /* LibraryUpdater.swift in Sources */,
 				6511E6A81EAE2E63005BCF6A /* UITableView+HeaderVIew.swift in Sources */,
 				65C093061EA273F400BF8FEA /* RecentTracksPage.swift in Sources */,
-				6510E19B1EB5B208004D7BD1 /* FirstSyncViewModel.swift in Sources */,
+				655091151EB7140200E05CC1 /* SyncViewModel.swift in Sources */,
 				6551C5A31EAD00C7008CA291 /* RealmIgnoredTag.swift in Sources */,
 				651470A11EAA6A9100F949DC /* NetworkService+Library.swift in Sources */,
 				0140953D1E03EA4400FBFA1A /* Colors.swift in Sources */,

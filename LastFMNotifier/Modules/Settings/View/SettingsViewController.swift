@@ -26,7 +26,6 @@ class SettingsViewController: UIViewController {
     super.viewDidLoad()
 
     configureView()
-    bindToViewModel()
   }
 
   private func configureView() {
@@ -46,10 +45,6 @@ class SettingsViewController: UIViewController {
     tableView.tableFooterView = UIView()
 
     tableView.register(SettingCell.self, forCellReuseIdentifier: SettingCell.reuseIdentifier)
-  }
-
-  private func bindToViewModel() {
-    title = viewModel.title
   }
 }
 

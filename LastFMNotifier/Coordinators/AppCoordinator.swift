@@ -44,14 +44,6 @@ class AppCoordinator: Coordinator {
   }
 }
 
-extension AppCoordinator: EnterUsernameViewModelDelegate {
-  func enterUsernameViewModel(_ viewModel: EnterUsernameViewModel, didFinishWithAction action: EnterUsernameViewModelAction) {
-    if case .submit = action {
-      start()
-    }
-  }
-}
-
 extension AppCoordinator: MainFlowCoordinatorDelegate {
   func mainFlowCoordinatorDidChangeUsername(_ coordinator: MainFlowCoordinator) {
     start()

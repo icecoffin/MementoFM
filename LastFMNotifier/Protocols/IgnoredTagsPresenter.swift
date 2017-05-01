@@ -9,15 +9,18 @@
 import UIKit
 
 protocol IgnoredTagsPresenter: NavigationFlowCoordinator, IgnoredTagsViewModelDelegate {
-  func makeIgnoredTagsViewController(dependencies: IgnoredTagsViewModel.Dependencies) -> IgnoredTagsViewController
+  func makeIgnoredTagsViewController(dependencies: IgnoredTagsViewModel.Dependencies,
+                                     shouldAddDefaultTags: Bool) -> IgnoredTagsViewController
 }
 
 extension IgnoredTagsPresenter {
-  func makeIgnoredTagsViewController(dependencies: IgnoredTagsViewModel.Dependencies) -> IgnoredTagsViewController {
-    let viewModel = IgnoredTagsViewModel(dependencies: dependencies)
+  func makeIgnoredTagsViewController(dependencies: IgnoredTagsViewModel.Dependencies,
+                                     shouldAddDefaultTags: Bool) -> IgnoredTagsViewController {
+    let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: shouldAddDefaultTags)
     viewModel.delegate = self
     let viewController = IgnoredTagsViewController(viewModel: viewModel)
-    viewController.navigationItem.leftBarButtonItem = createBackButton()
+    viewController.title = "Ignored Tags".unlocalized
+    viewController.navigationItem.leftBarButtonItem = makeBackButton()
 
     let rightView = IgnoredTagsNavigationRightView()
     rightView.onAddTapped = { [unowned viewModel] in

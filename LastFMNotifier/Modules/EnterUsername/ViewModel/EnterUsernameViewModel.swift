@@ -14,7 +14,7 @@ enum EnterUsernameViewModelAction {
 }
 
 protocol EnterUsernameViewModelDelegate: class {
-  func enterUsernameViewModel(_ viewModel: EnterUsernameViewModel, didFinishWithAction action: EnterUsernameViewModelAction)
+  func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel)
 }
 
 class EnterUsernameViewModel {
@@ -25,10 +25,6 @@ class EnterUsernameViewModel {
 
   init(dependencies: Dependencies) {
     self.dependencies = dependencies
-  }
-
-  var title: String {
-    return "Welcome!".unlocalized
   }
 
   var usernameTextFieldPlaceholder: String {
@@ -53,19 +49,15 @@ class EnterUsernameViewModel {
     dependencies.userDataStorage.username = username
     if oldUsername != username {
       _ = clearLocalData().then {
-        self.delegate?.enterUsernameViewModel(self, didFinishWithAction: .submit)
+        self.delegate?.enterUsernameViewModelDidFinish(self)
       }
     } else {
-      delegate?.enterUsernameViewModel(self, didFinishWithAction: .submit)
+      delegate?.enterUsernameViewModelDidFinish(self)
     }
   }
 
   private func clearLocalData() -> Promise<Void> {
     dependencies.userDataStorage.reset()
     return dependencies.realmGateway.clearLocalData()
-  }
-
-  func close() {
-    delegate?.enterUsernameViewModel(self, didFinishWithAction: .cancel)
   }
 }

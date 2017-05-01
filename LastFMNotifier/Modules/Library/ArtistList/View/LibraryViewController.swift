@@ -77,7 +77,6 @@ class LibraryViewController: UIViewController {
   }
 
   private func bindToViewModel() {
-    title = viewModel.title
     searchController.searchBar.placeholder = viewModel.searchBarPlaceholder
 
     viewModel.onDidStartLoading = { [unowned self] in

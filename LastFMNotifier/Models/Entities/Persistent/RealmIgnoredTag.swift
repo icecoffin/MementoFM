@@ -13,6 +13,12 @@ class RealmIgnoredTag: Object {
   dynamic var uuid = UUID().uuidString
   dynamic var name = ""
 
+  class func ignoredTag(withName name: String) -> RealmIgnoredTag {
+    let realmIgnoredTag = RealmIgnoredTag()
+    realmIgnoredTag.name = name
+    return realmIgnoredTag
+  }
+
   class func from(ignoredTag: IgnoredTag) -> RealmIgnoredTag {
     let realmIgnoredTag = RealmIgnoredTag()
     realmIgnoredTag.uuid = ignoredTag.uuid

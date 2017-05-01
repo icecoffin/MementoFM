@@ -18,10 +18,6 @@ class SettingsViewModel {
   private lazy var cellViewModels: [SettingCellViewModel] = self.createCellViewModels()
   weak var delegate: SettingsViewModelDelegate?
 
-  var title: String {
-    return "Settings".unlocalized
-  }
-
   var itemCount: Int {
     return cellViewModels.count
   }

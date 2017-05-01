@@ -42,10 +42,14 @@ extension NetworkService: LibraryNetworkService {
           let artists = ([page] + pages).flatMap { $0.artists }
           fulfill(artists)
         }.catch { error in
-          reject(error)
+          if !error.isCancelledError {
+            reject(error)
+          }
         }
       }.catch { error in
+        if !error.isCancelledError {
           reject(error)
+        }
       }
     }
   }

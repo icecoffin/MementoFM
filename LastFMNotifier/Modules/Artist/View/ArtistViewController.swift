@@ -33,7 +33,7 @@ class ArtistViewController: UIViewController {
   }
 
   private func configureView() {
-    view.backgroundColor = UIColor.white
+    view.backgroundColor = .white
 
     view.addSubview(scrollView)
     scrollView.snp.makeConstraints { make in
@@ -66,7 +66,6 @@ class ArtistViewController: UIViewController {
   }
 
   private func bindToViewModel() {
-    title = viewModel.title
     imageView.kf.setImage(with: viewModel.imageURL)
     tagsLabel.text = viewModel.tags
     similarArtistsLabel.text = viewModel.similarArtists
