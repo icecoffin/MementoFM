@@ -9,12 +9,14 @@
 import Foundation
 
 class ArtistViewModel {
-  private let artist: Artist
-  private let realmGateway: RealmGateway
+  typealias Dependencies = HasRealmGateway
 
-  init(artist: Artist, realmGateway: RealmGateway) {
+  private let artist: Artist
+  private let dependencies: Dependencies
+
+  init(artist: Artist, dependencies: Dependencies) {
     self.artist = artist
-    self.realmGateway = realmGateway
+    self.dependencies = dependencies
   }
 
   var title: String {
@@ -39,7 +41,7 @@ class ArtistViewModel {
     let topTagNames = topTags.map({ $0.name })
     print("Top tags: \(topTagNames)")
     let predicate = NSPredicate(format: "ANY tags.name IN %@ AND name != %@", topTagNames, artist.name)
-    let realmArtists = realmGateway.defaultRealm.objects(RealmArtist.self).filter(predicate)
+    let realmArtists = dependencies.realmGateway.defaultRealm.objects(RealmArtist.self).filter(predicate)
 
     let filteredArtists = realmArtists.filter({ realmArtist in
       let realmArtistTags = realmArtist.tags.map({ $0.name }).prefix(5)

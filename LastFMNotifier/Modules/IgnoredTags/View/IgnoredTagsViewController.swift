@@ -13,9 +13,11 @@ class IgnoredTagsViewController: UIViewController {
   fileprivate let viewModel: IgnoredTagsViewModel
 
   private let tableView = TPKeyboardAvoidingTableView()
+  private let emptyDataSetView: EmptyDataSetView
 
   init(viewModel: IgnoredTagsViewModel) {
     self.viewModel = viewModel
+    self.emptyDataSetView = EmptyDataSetView(text: "Add tags that will be ignored when calculating similar artists".unlocalized)
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -44,6 +46,8 @@ class IgnoredTagsViewController: UIViewController {
     tableView.allowsSelection = false
     tableView.tableFooterView = UIView()
 
+    tableView.backgroundView = emptyDataSetView
+
     tableView.register(IgnoredTagCell.self, forCellReuseIdentifier: IgnoredTagCell.reuseIdentifier)
 
     tableView.dataSource = self
@@ -63,6 +67,10 @@ class IgnoredTagsViewController: UIViewController {
       self.tableView.endUpdates()
       let cell = self.tableView.cellForRow(at: indexPath)
       cell?.becomeFirstResponder()
+    }
+
+    viewModel.onDidUpdateTagCount = { [unowned self] isEmpty in
+      self.tableView.backgroundView?.isHidden = !isEmpty
     }
   }
 }

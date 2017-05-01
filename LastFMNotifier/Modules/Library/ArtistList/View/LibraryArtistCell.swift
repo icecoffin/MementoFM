@@ -80,10 +80,9 @@ class LibraryArtistCell: UITableViewCell {
     playcountLabel.textColor = UIColor.gray
   }
 
-  func configure(with viewModel: LibraryCellViewModel) {
+  func configure(with viewModel: LibraryArtistCellViewModel) {
     nameLabel.text = viewModel.name
     playcountLabel.text = viewModel.playcount
-    // TODO: leak
     if let url = viewModel.imageURL {
       photoImageView.kf.setImage(with: url)
     }

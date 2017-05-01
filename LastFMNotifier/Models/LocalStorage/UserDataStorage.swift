@@ -19,9 +19,10 @@ protocol UserDataInnerStorage: class {
 extension UserDefaults: UserDataInnerStorage { }
 
 class UserDataStorage {
-  private struct UserDefaultsKeys {
+  private struct InnerStorageKeys {
     static let username = "username"
     static let lastUpdateTimestamp = "lastUpdateTimestamp"
+    static let didFinishOnboarding = "didFinishOnboarding"
     static let didReceiveInitialCollection = "didReceiveInitialCollection"
   }
 
@@ -31,30 +32,39 @@ class UserDataStorage {
     self.innerStorage = innerStorage
   }
 
-  var username: String? {
+  var username: String {
     get {
-      return innerStorage.string(forKey: UserDefaultsKeys.username)
+      return innerStorage.string(forKey: InnerStorageKeys.username) ?? ""
     }
     set {
-      innerStorage.set(newValue, forKey: UserDefaultsKeys.username)
+      innerStorage.set(newValue, forKey: InnerStorageKeys.username)
     }
   }
 
   var lastUpdateTimestamp: TimeInterval {
     get {
-      return innerStorage.double(forKey: UserDefaultsKeys.lastUpdateTimestamp)
+      return innerStorage.double(forKey: InnerStorageKeys.lastUpdateTimestamp)
     }
     set {
-      innerStorage.set(newValue, forKey: UserDefaultsKeys.lastUpdateTimestamp)
+      innerStorage.set(newValue, forKey: InnerStorageKeys.lastUpdateTimestamp)
+    }
+  }
+
+  var didFinishOnboarding: Bool {
+    get {
+      return innerStorage.bool(forKey: InnerStorageKeys.didFinishOnboarding)
+    }
+    set {
+      innerStorage.set(newValue, forKey: InnerStorageKeys.didFinishOnboarding)
     }
   }
 
   var didReceiveInitialCollection: Bool {
     get {
-      return innerStorage.bool(forKey: UserDefaultsKeys.didReceiveInitialCollection)
+      return innerStorage.bool(forKey: InnerStorageKeys.didReceiveInitialCollection)
     }
     set {
-      innerStorage.set(newValue, forKey: UserDefaultsKeys.didReceiveInitialCollection)
+      innerStorage.set(newValue, forKey: InnerStorageKeys.didReceiveInitialCollection)
     }
   }
 

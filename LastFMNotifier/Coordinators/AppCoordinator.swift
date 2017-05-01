@@ -12,45 +12,35 @@ class AppCoordinator: Coordinator {
   var childCoordinators: [Coordinator] = []
 
   private let window: UIWindow
-  private let realmGateway = RealmGateway(defaultRealm: RealmFactory.realm(), getWriteRealm: {
-    return RealmFactory.realm()
-  })
+  fileprivate let dependencies: AppDependency
 
-  fileprivate let userDataStorage: UserDataStorage
-  fileprivate let networkService: NetworkService
-
-  init(window: UIWindow,
-       userDataStorage: UserDataStorage = UserDataStorage(),
-       networkService: NetworkService = NetworkService()) {
+  init(window: UIWindow, dependencies: AppDependency = AppDependency.default) {
     self.window = window
-    self.userDataStorage = userDataStorage
-    self.networkService = networkService
+    self.dependencies = dependencies
   }
 
   func start() {
-    networkService.cancelPendingRequests()
     removeAllChildren()
 
-    if userDataStorage.username != nil {
+    if dependencies.userDataStorage.didFinishOnboarding {
       startMainFlow()
     } else {
-      startEnterUsernameFlow()
+      startOnboardingFlow()
     }
   }
 
   func startMainFlow() {
-    let mainFlowCoordinator = MainFlowCoordinator(window: window, realmGateway: realmGateway, networkService: networkService)
+    let mainFlowCoordinator = MainFlowCoordinator(window: window, dependencies: dependencies)
     mainFlowCoordinator.delegate = self
     addChildCoordinator(mainFlowCoordinator)
     startChildren()
   }
 
-  func startEnterUsernameFlow() {
-    let enterUsernameViewModel = EnterUsernameViewModel(realmGateway: realmGateway, userDataStorage: userDataStorage)
-    let enterUsernameViewController = EnterUsernameViewController(viewModel: enterUsernameViewModel)
-    enterUsernameViewModel.delegate = self
-
-    window.rootViewController = enterUsernameViewController
+  func startOnboardingFlow() {
+    let onboardingCoordinator = OnboardingCoordinator(window: window, dependencies: dependencies)
+    onboardingCoordinator.delegate = self
+    addChildCoordinator(onboardingCoordinator)
+    startChildren()
   }
 }
 
@@ -64,6 +54,12 @@ extension AppCoordinator: EnterUsernameViewModelDelegate {
 
 extension AppCoordinator: MainFlowCoordinatorDelegate {
   func mainFlowCoordinatorDidChangeUsername(_ coordinator: MainFlowCoordinator) {
+    start()
+  }
+}
+
+extension AppCoordinator: OnboardingCoordinatorDelegate {
+  func onboardingCoordinatorDidFinish(_ coordinator: OnboardingCoordinator) {
     start()
   }
 }

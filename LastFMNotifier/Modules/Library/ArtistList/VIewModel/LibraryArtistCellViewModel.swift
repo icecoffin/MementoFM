@@ -1,5 +1,5 @@
 //
-//  LibraryCellViewModel.swift
+//  LibraryArtistCellViewModel.swift
 //  LastFMNotifier
 //
 //  Created by Daniel on 20/11/2016.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LibraryCellViewModel {
+class LibraryArtistCellViewModel {
   private let artist: Artist
 
   var onSelection: ((Artist) -> Void)?

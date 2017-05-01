@@ -13,17 +13,24 @@ protocol IgnoredTagsViewModelDelegate: class {
 }
 
 class IgnoredTagsViewModel {
-  private let realmGateway: RealmGateway
-  private var ignoredTags: [IgnoredTag]
+  typealias Dependencies = HasRealmGateway
+
+  private let dependencies: Dependencies
+  private var ignoredTags: [IgnoredTag] {
+    didSet {
+      onDidUpdateTagCount?(ignoredTags.isEmpty)
+    }
+  }
 
   weak var delegate: IgnoredTagsViewModelDelegate?
 
   var onWillSaveChanges: (() -> Void)?
   var onDidAddNewTag: ((IndexPath) -> Void)?
+  var onDidUpdateTagCount: ((_ isEmpty: Bool) -> Void)?
 
-  init(realmGateway: RealmGateway) {
-    self.realmGateway = realmGateway
-    self.ignoredTags = realmGateway.ignoredTags()
+  init(dependencies: Dependencies) {
+    self.dependencies = dependencies
+    self.ignoredTags = dependencies.realmGateway.ignoredTags()
   }
 
   var title: String {
@@ -73,7 +80,7 @@ class IgnoredTagsViewModel {
     }
 
     print(filteredTags.map({ $0.name }))
-    _ = realmGateway.updateIgnoredTags(filteredTags).then { [unowned self] in
+    _ = dependencies.realmGateway.updateIgnoredTags(filteredTags).then { [unowned self] in
       self.delegate?.ignoredTagsViewModelDidSaveChanges(self)
     }
   }

@@ -12,17 +12,15 @@ class LibraryCoordinator: NavigationFlowCoordinator {
   var childCoordinators: [Coordinator] = []
 
   let navigationController: UINavigationController
-  fileprivate let realmGateway: RealmGateway
-  fileprivate let networkService: NetworkService
+  fileprivate let dependencies: AppDependency
 
-  init(navigationController: UINavigationController, realmGateway: RealmGateway, networkService: NetworkService) {
+  init(navigationController: UINavigationController, dependencies: AppDependency) {
     self.navigationController = navigationController
-    self.realmGateway = realmGateway
-    self.networkService = networkService
+    self.dependencies = dependencies
   }
 
   func start() {
-    let libraryViewModel = LibraryViewModel(realmGateway: realmGateway, networkService: networkService)
+    let libraryViewModel = LibraryViewModel(dependencies: dependencies)
     libraryViewModel.delegate = self
     let libraryViewController = LibraryViewController(viewModel: libraryViewModel)
     navigationController.pushViewController(libraryViewController, animated: false)
@@ -31,7 +29,7 @@ class LibraryCoordinator: NavigationFlowCoordinator {
 
 extension LibraryCoordinator: LibraryViewModelDelegate {
   func libraryViewModel(_ viewModel: LibraryViewModel, didSelectArtist artist: Artist) {
-    let artistViewModel = ArtistViewModel(artist: artist, realmGateway: realmGateway)
+    let artistViewModel = ArtistViewModel(artist: artist, dependencies: dependencies)
 
     let artistViewController = ArtistViewController(viewModel: artistViewModel)
     artistViewController.navigationItem.leftBarButtonItem = createBackButton()

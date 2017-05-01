@@ -35,7 +35,7 @@ extension NetworkService: ArtistNetworkService {
         }
       }
 
-      when(fulfilled: promises.makeIterator(), concurrently: 1).then { _ in
+      when(fulfilled: promises).then { _ in
         fulfill()
       }.catch { error in
         reject(error)

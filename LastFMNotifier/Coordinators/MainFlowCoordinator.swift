@@ -16,15 +16,13 @@ class MainFlowCoordinator: Coordinator {
   var childCoordinators: [Coordinator] = []
 
   private let window: UIWindow
-  private let realmGateway: RealmGateway
-  private let networkService: NetworkService
+  fileprivate let dependencies: AppDependency
 
   weak var delegate: MainFlowCoordinatorDelegate?
 
-  init(window: UIWindow, realmGateway: RealmGateway, networkService: NetworkService) {
+  init(window: UIWindow, dependencies: AppDependency) {
     self.window = window
-    self.realmGateway = realmGateway
-    self.networkService = networkService
+    self.dependencies = dependencies
   }
 
   func start() {
@@ -39,8 +37,7 @@ class MainFlowCoordinator: Coordinator {
                                          selectedImage: nil)
     libraryNavigationController.tabBarItem = libraryTabBarItem
     let libraryCoordinator = LibraryCoordinator(navigationController: libraryNavigationController,
-                                                realmGateway: realmGateway,
-                                                networkService: networkService)
+                                                dependencies: dependencies)
     addChildCoordinator(libraryCoordinator)
 
     let settingsNavigationController = UINavigationController()
@@ -48,7 +45,7 @@ class MainFlowCoordinator: Coordinator {
                                           image: #imageLiteral(resourceName: "icon_settings"),
                                           selectedImage: nil)
     settingsNavigationController.tabBarItem = settingsTabBarItem
-    let settingsCoordinator = SettingsCoordinator(navigationController: settingsNavigationController, realmGateway: realmGateway)
+    let settingsCoordinator = SettingsCoordinator(navigationController: settingsNavigationController, dependencies: dependencies)
     settingsCoordinator.delegate = self
     addChildCoordinator(settingsCoordinator)
 

@@ -19,9 +19,6 @@ class RealmMappedCollection<Element: Object, Transformed> {
   private var transform: Transform
   private var notificationToken: NotificationToken?
 
-  // This is basically a sparse array - keys are indexes
-  private var transformedCache: [Int: Transformed] = [:]
-
   var sortDescriptors: [SortDescriptor] {
     didSet {
       results = fetchResults()

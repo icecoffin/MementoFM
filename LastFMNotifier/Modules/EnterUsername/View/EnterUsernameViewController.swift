@@ -29,6 +29,11 @@ class EnterUsernameViewController: UIViewController {
     super.viewDidLoad()
 
     configureView()
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+
     bindToViewModel()
   }
 
@@ -76,6 +81,8 @@ class EnterUsernameViewController: UIViewController {
 
     usernameTextField.textAlignment = .center
     usernameTextField.font = Fonts.raleway(withSize: 16)
+
+    usernameTextField.addTarget(self, action: #selector(usernameTextFieldEditingChanged(_:)), for: .editingChanged)
   }
 
   private func addSubmitButton() {
@@ -87,8 +94,8 @@ class EnterUsernameViewController: UIViewController {
 
     submitButton.setTitleColor(UIColor.white, for: .normal)
     submitButton.titleLabel?.font = Fonts.ralewayBold(withSize: 18)
-    submitButton.backgroundColor = Colors.gold
     submitButton.layer.cornerRadius = 6
+    disableSubmitButton()
 
     submitButton.addTarget(self, action: #selector(submitButtonTapped(_:)), for: .touchUpInside)
   }
@@ -103,9 +110,29 @@ class EnterUsernameViewController: UIViewController {
   }
 
   private func bindToViewModel() {
+    title = viewModel.title
     usernameTextField.placeholder = viewModel.usernameTextFieldPlaceholder
     submitButton.setTitle(viewModel.submitButtonTitle, for: .normal)
     currentUsernameLabel.text = viewModel.currentUsernameText
+  }
+
+  // MARK: Actions
+  @objc private func usernameTextFieldEditingChanged(_ textField: UITextField) {
+    if let text = textField.text, !text.isEmpty {
+      enableSubmitButton()
+    } else {
+      disableSubmitButton()
+    }
+  }
+
+  private func disableSubmitButton() {
+    submitButton.isEnabled = false
+    submitButton.backgroundColor = .gray
+  }
+
+  private func enableSubmitButton() {
+    submitButton.isEnabled = true
+    submitButton.backgroundColor = Colors.gold
   }
 }
 

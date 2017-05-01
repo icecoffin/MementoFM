@@ -8,33 +8,79 @@
 
 import UIKit
 
-class OnboardingCoordinator: NavigationFlowCoordinator {
+protocol OnboardingCoordinatorDelegate: class {
+  func onboardingCoordinatorDidFinish(_ coordinator: OnboardingCoordinator)
+}
+
+class OnboardingCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter {
   var childCoordinators: [Coordinator] = []
 
   let navigationController: UINavigationController
-  private let realmGateway: RealmGateway
+  let dependencies: AppDependency
+  var realmGateway: HasRealmGateway {
+    return dependencies
+  }
 
-  init(window: UIWindow, realmGateway: RealmGateway) {
+  weak var delegate: OnboardingCoordinatorDelegate?
+
+  init(window: UIWindow, dependencies: AppDependency) {
     self.navigationController = UINavigationController()
     window.rootViewController = self.navigationController
-    self.realmGateway = realmGateway
+    self.dependencies = dependencies
   }
 
   func start() {
-    showEnterUsernameViewController()
+    let alreadyHasUsername = !dependencies.userDataStorage.username.isEmpty
+    showEnterUsernameViewController(alreadyHasUsername: alreadyHasUsername)
+    if alreadyHasUsername {
+      showIgnoredTagsViewController(animated: false)
+    }
   }
 
-  private func showEnterUsernameViewController() {
-
+  private func showEnterUsernameViewController(alreadyHasUsername: Bool) {
+    let viewModel = EnterUsernameViewModel(dependencies: dependencies)
+    viewModel.delegate = self
+    let viewController = EnterUsernameViewController(viewModel: viewModel)
+    if alreadyHasUsername {
+      let forwardButton = BlockBarButtonItem(image: #imageLiteral(resourceName: "icon_forward"), style: .plain) { [unowned self] in
+        self.showIgnoredTagsViewController(animated: true)
+      }
+      viewController.navigationItem.rightBarButtonItem = forwardButton
+    }
+    navigationController.pushViewController(viewController, animated: true)
   }
 
-  fileprivate func showIgnoredTagsViewController() {
+  // TODO: add default tags
+  fileprivate func showIgnoredTagsViewController(animated: Bool) {
+    let viewController = makeIgnoredTagsViewController(dependencies: dependencies)
+    navigationController.pushViewController(viewController, animated: animated)
+  }
 
+  fileprivate func showSyncViewController() {
+    let viewModel = FirstSyncViewModel(dependencies: dependencies)
+    viewModel.delegate = self
+    let viewController = FirstSyncViewController(viewModel: viewModel)
+    navigationController.setNavigationBarHidden(true, animated: false)
+    navigationController.pushViewController(viewController, animated: true)
   }
 }
 
 extension OnboardingCoordinator: EnterUsernameViewModelDelegate {
   func enterUsernameViewModel(_ viewModel: EnterUsernameViewModel, didFinishWithAction action: EnterUsernameViewModelAction) {
+    let viewController = makeIgnoredTagsViewController(dependencies: dependencies)
+    navigationController.pushViewController(viewController, animated: true)
+  }
+}
 
+extension OnboardingCoordinator: IgnoredTagsViewModelDelegate {
+  func ignoredTagsViewModelDidSaveChanges(_ viewModel: IgnoredTagsViewModel) {
+    showSyncViewController()
+  }
+}
+
+extension OnboardingCoordinator: FirstSyncViewModelDelegate {
+  func firstSyncViewModelDidFinishLoading(_ viewModel: FirstSyncViewModel) {
+    dependencies.userDataStorage.didFinishOnboarding = true
+    delegate?.onboardingCoordinatorDidFinish(self)
   }
 }

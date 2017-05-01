@@ -12,21 +12,20 @@ protocol SettingsCoordinatorDelegate: class {
   func settingsCoordinatorDidChangeUsername(_ coordinator: SettingsCoordinator)
 }
 
-class SettingsCoordinator: NavigationFlowCoordinator {
+class SettingsCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter {
+  typealias Dependencies = HasRealmGateway & HasUserDataStorage & HasGeneralNetworkService
+
   var childCoordinators: [Coordinator] = []
 
   let navigationController: UINavigationController
-  fileprivate let realmGateway: RealmGateway
-  fileprivate let userDataStorage: UserDataStorage
+  let dependencies: Dependencies
 
   weak var delegate: SettingsCoordinatorDelegate?
 
   init(navigationController: UINavigationController,
-       realmGateway: RealmGateway,
-       userDataStorage: UserDataStorage = UserDataStorage()) {
+       dependencies: Dependencies) {
     self.navigationController = navigationController
-    self.realmGateway = realmGateway
-    self.userDataStorage = userDataStorage
+    self.dependencies = dependencies
   }
 
   func start() {
@@ -39,28 +38,12 @@ class SettingsCoordinator: NavigationFlowCoordinator {
 
 extension SettingsCoordinator: SettingsViewModelDelegate {
   func settingsViewModelDidRequestOpenIgnoredTags(_ viewModel: SettingsViewModel) {
-    let viewModel = IgnoredTagsViewModel(realmGateway: realmGateway)
-    viewModel.delegate = self
-    let viewController = IgnoredTagsViewController(viewModel: viewModel)
-    viewController.navigationItem.leftBarButtonItem = createBackButton()
-
-    let rightView = IgnoredTagsNavigationRightView()
-    rightView.onAddTapped = { [unowned viewModel] in
-      viewModel.addNewIgnoredTag()
-    }
-    rightView.onSaveTapped = { [unowned viewModel] in
-      viewModel.saveChanges()
-    }
-    rightView.sizeToFit()
-    let rightBarButtonItem = UIBarButtonItem(customView: rightView)
-    viewController.navigationItem.rightBarButtonItem = rightBarButtonItem
-
-    viewController.hidesBottomBarWhenPushed = true
+    let viewController = makeIgnoredTagsViewController(dependencies: dependencies)
     navigationController.pushViewController(viewController, animated: true)
   }
 
   func settingsViewModelDidRequestChangeUser(_ viewModel: SettingsViewModel) {
-    let viewModel = EnterUsernameViewModel(realmGateway: realmGateway, userDataStorage: userDataStorage)
+    let viewModel = EnterUsernameViewModel(dependencies: dependencies)
     viewModel.delegate = self
     let viewController = EnterUsernameViewController(viewModel: viewModel)
     viewController.configureForModalPresentation()
@@ -79,6 +62,7 @@ extension SettingsCoordinator: EnterUsernameViewModelDelegate {
   func enterUsernameViewModel(_ viewModel: EnterUsernameViewModel, didFinishWithAction action: EnterUsernameViewModelAction) {
     navigationController.dismiss(animated: true, completion: nil)
     if case .submit = action {
+      dependencies.generalNetworkService.cancelPendingRequests()
       delegate?.settingsCoordinatorDidChangeUsername(self)
     }
   }

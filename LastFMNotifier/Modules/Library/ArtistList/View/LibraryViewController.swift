@@ -93,7 +93,7 @@ class LibraryViewController: UIViewController {
       self.tableView.backgroundView?.isHidden = !isEmpty
     }
 
-    viewModel.onError = { [unowned self] error in
+    viewModel.onDidReceiveError = { [unowned self] error in
       self.showAlert(for: error)
       self.loadingView.isHidden = true
     }

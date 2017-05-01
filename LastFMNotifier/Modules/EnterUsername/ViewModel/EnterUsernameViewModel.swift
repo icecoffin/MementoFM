@@ -18,14 +18,17 @@ protocol EnterUsernameViewModelDelegate: class {
 }
 
 class EnterUsernameViewModel {
-  private let realmGateway: RealmGateway
-  private let userDataStorage: UserDataStorage
+  typealias Dependencies = HasRealmGateway & HasUserDataStorage
 
+  private let dependencies: Dependencies
   weak var delegate: EnterUsernameViewModelDelegate?
 
-  init(realmGateway: RealmGateway, userDataStorage: UserDataStorage) {
-    self.realmGateway = realmGateway
-    self.userDataStorage = userDataStorage
+  init(dependencies: Dependencies) {
+    self.dependencies = dependencies
+  }
+
+  var title: String {
+    return "Welcome!".unlocalized
   }
 
   var usernameTextFieldPlaceholder: String {
@@ -37,16 +40,17 @@ class EnterUsernameViewModel {
   }
 
   var currentUsernameText: String {
-    if let username = userDataStorage.username {
-      return "Current username:".unlocalized + " \(username)"
-    } else {
+    let username = dependencies.userDataStorage.username
+    if username.isEmpty {
       return ""
+    } else {
+      return "Current username: ".unlocalized + "\(username)"
     }
   }
 
   func submitUsername(_ username: String) {
-    let oldUsername = userDataStorage.username
-    userDataStorage.username = username
+    let oldUsername = dependencies.userDataStorage.username
+    dependencies.userDataStorage.username = username
     if oldUsername != username {
       _ = clearLocalData().then {
         self.delegate?.enterUsernameViewModel(self, didFinishWithAction: .submit)
@@ -57,8 +61,8 @@ class EnterUsernameViewModel {
   }
 
   private func clearLocalData() -> Promise<Void> {
-    userDataStorage.reset()
-    return realmGateway.clearLocalData()
+    dependencies.userDataStorage.reset()
+    return dependencies.realmGateway.clearLocalData()
   }
 
   func close() {
