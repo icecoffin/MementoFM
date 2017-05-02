@@ -14,7 +14,8 @@ struct Tag: Mappable {
   let count: Int
 
   init(map: Mapper) throws {
-    try name = map.from("name")
+    let name: String = try map.from("name")
+    self.name = name.lowercased()
     try count = map.from("count")
   }
 

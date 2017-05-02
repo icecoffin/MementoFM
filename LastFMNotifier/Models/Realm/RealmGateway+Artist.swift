@@ -28,4 +28,19 @@ extension RealmGateway {
       realm.add(realmArtist, update: true)
     }
   }
+
+  func recalculateArtistTopTags(ignoredTags: [IgnoredTag]) -> Promise<Void> {
+    return write { realm in
+      let artists = realm.objects(RealmArtist.self)
+      for artist in artists {
+        let topTags = artist.tags.filter({ realmTag in
+          !ignoredTags.contains(where: { ignoredTag in
+            realmTag.name == ignoredTag.name
+          })
+        }).prefix(5)
+        artist.topTags.removeAll()
+        artist.topTags.append(objectsIn: topTags)
+      }
+    }
+  }
 }

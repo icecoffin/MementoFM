@@ -41,6 +41,11 @@ class IgnoredTagCell: UITableViewCell {
 
     textField.text = viewModel.text
     textField.placeholder = viewModel.placeholder
+    textField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
+  }
+
+  @objc private func textFieldEditingChanged(_ textField: UITextField) {
+    textField.text = textField.text?.lowercased()
   }
 
   override func becomeFirstResponder() -> Bool {

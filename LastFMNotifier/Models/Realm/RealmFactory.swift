@@ -11,9 +11,9 @@ import RealmSwift
 class RealmFactory {
   static func realm() -> Realm {
     do {
-      var config = Realm.Configuration()
-      config.deleteRealmIfMigrationNeeded = true
-      Realm.Configuration.defaultConfiguration = config
+//      var config = Realm.Configuration()
+//      config.deleteRealmIfMigrationNeeded = true
+//      Realm.Configuration.defaultConfiguration = config
       let realm = try Realm()
       return realm
     } catch {

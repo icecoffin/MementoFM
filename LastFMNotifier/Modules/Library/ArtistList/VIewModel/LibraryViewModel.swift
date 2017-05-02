@@ -57,8 +57,13 @@ class LibraryViewModel {
       self.onDidStartLoading?()
     }
     libraryUpdater.onDidFinishLoading = { [unowned self] in
-      self.onDidFinishLoading?()
-      self.onDidUpdateData?(self.cellViewModels.isEmpty)
+      // TODO: calculate only after onboarding
+      let ignoredTags = self.dependencies.realmGateway.ignoredTags()
+      _ = self.dependencies.realmGateway.recalculateArtistTopTags(ignoredTags: ignoredTags).then { _ -> Promise<Void> in
+        self.onDidFinishLoading?()
+        self.onDidUpdateData?(self.cellViewModels.isEmpty)
+        return .void
+      }
     }
     // TODO: better progress display
     libraryUpdater.onDidChangeStatus = { /*[unowned self]*/ status in

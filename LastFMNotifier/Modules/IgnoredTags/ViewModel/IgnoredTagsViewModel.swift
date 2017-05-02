@@ -54,7 +54,7 @@ class IgnoredTagsViewModel {
     let cellViewModel = IgnoredTagCellViewModel(tag: ignoredTags[indexPath.row])
     cellViewModel.onTextChange = { [unowned self] text in
       if indexPath.row < self.ignoredTags.count {
-        let ignoredTag = self.ignoredTags[indexPath.row].updateName(text)
+        let ignoredTag = self.ignoredTags[indexPath.row].updateName(text.lowercased())
         self.ignoredTags[indexPath.row] = ignoredTag
       }
     }
@@ -88,8 +88,9 @@ class IgnoredTagsViewModel {
       return result + [ignoredTag]
     }
 
-    log.debug(filteredTags.map({ $0.name }))
     _ = dependencies.realmGateway.updateIgnoredTags(filteredTags).then { [unowned self] in
+      self.dependencies.realmGateway.recalculateArtistTopTags(ignoredTags: filteredTags)
+    }.then { [unowned self] in
       self.delegate?.ignoredTagsViewModelDidSaveChanges(self)
     }
   }

@@ -16,6 +16,7 @@ class RealmArtist: Object {
   dynamic var imageURLString: String?
   dynamic var needsTagsUpdate = true
   var tags = List<RealmTag>()
+  var topTags = List<RealmTag>()
 
   override static func primaryKey() -> String? {
     return "name"
@@ -39,6 +40,6 @@ class RealmArtist: Object {
   func toTransient() -> Artist {
     return Artist(name: name, playcount: playcount, urlString: urlString,
                   imageURLString: imageURLString, needsTagsUpdate: needsTagsUpdate,
-                  tags: tags.map({ $0.toTransient() }))
+                  tags: tags.map({ $0.toTransient() }), topTags: topTags.map({ $0.toTransient() }))
   }
 }
