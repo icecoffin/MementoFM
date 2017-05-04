@@ -26,10 +26,9 @@ extension NetworkService: ArtistNetworkService {
       let totalProgress = Progress(totalUnitCount: Int64(artists.count))
 
       let promises = artists.map { artist in
-        return getTopTags(for: artist.name).then { topTagsList -> Promise<Void> in
+        return getTopTags(for: artist.name).then { topTagsList -> Void in
           totalProgress.completedUnitCount += 1
           progress(TopTagsRequestProgress(progress: totalProgress, artist: artist, topTagsList: topTagsList))
-          return .void
         }.catch { error in
           if !error.isCancelledError {
             reject(error)

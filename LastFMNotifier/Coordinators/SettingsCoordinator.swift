@@ -12,18 +12,16 @@ protocol SettingsCoordinatorDelegate: class {
   func settingsCoordinatorDidChangeUsername(_ coordinator: SettingsCoordinator)
 }
 
-class SettingsCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter {
-  typealias Dependencies = HasRealmGateway & HasUserDataStorage & HasGeneralNetworkService
-
+class SettingsCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter, SyncPresenter {
   var childCoordinators: [Coordinator] = []
 
   let navigationController: UINavigationController
-  let dependencies: Dependencies
+  let dependencies: AppDependency
 
   weak var delegate: SettingsCoordinatorDelegate?
 
   init(navigationController: UINavigationController,
-       dependencies: Dependencies) {
+       dependencies: AppDependency) {
     self.navigationController = navigationController
     self.dependencies = dependencies
   }
@@ -63,14 +61,26 @@ extension SettingsCoordinator: SettingsViewModelDelegate {
 
 extension SettingsCoordinator: EnterUsernameViewModelDelegate {
   func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel) {
-    navigationController.dismiss(animated: true, completion: nil)
-    dependencies.generalNetworkService.cancelPendingRequests()
-    delegate?.settingsCoordinatorDidChangeUsername(self)
+    showSyncViewController()
+  }
+
+  func showSyncViewController() {
+    let syncViewController = makeSyncViewController(dependencies: dependencies)
+    syncViewController.hidesBottomBarWhenPushed = true
+    navigationController.pushViewController(syncViewController, animated: true)
+    navigationController.setNavigationBarHidden(true, animated: false)
   }
 }
 
 extension SettingsCoordinator: IgnoredTagsViewModelDelegate {
   func ignoredTagsViewModelDidSaveChanges(_ viewModel: IgnoredTagsViewModel) {
     navigationController.popViewController(animated: true)
+  }
+}
+
+extension SettingsCoordinator: SyncViewModelDelegate {
+  func syncViewModelDidFinishLoading(_ viewModel: SyncViewModel) {
+    dependencies.generalNetworkService.cancelPendingRequests()
+    delegate?.settingsCoordinatorDidChangeUsername(self)
   }
 }

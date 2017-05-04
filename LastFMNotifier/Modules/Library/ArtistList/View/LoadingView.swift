@@ -10,7 +10,8 @@ import UIKit
 import SnapKit
 
 class LoadingView: UIView {
-  private let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+  private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+  private let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
   private let messageLabel = UILabel()
 
   init() {
@@ -23,14 +24,23 @@ class LoadingView: UIView {
   }
 
   private func setup() {
+    addBlurView()
     addActivityIndicator()
     addMessageLabel()
+  }
+
+  private func addBlurView() {
+    addSubview(blurView)
+    blurView.snp.makeConstraints { make in
+      make.edges.equalToSuperview()
+    }
   }
 
   private func addActivityIndicator() {
     addSubview(activityIndicator)
     activityIndicator.snp.makeConstraints { make in
-      make.top.centerX.equalToSuperview()
+      make.centerY.equalToSuperview()
+      make.leading.equalToSuperview().offset(16)
     }
 
     activityIndicator.startAnimating()
@@ -39,12 +49,20 @@ class LoadingView: UIView {
   private func addMessageLabel() {
     addSubview(messageLabel)
     messageLabel.snp.makeConstraints { make in
-      make.top.equalTo(activityIndicator.snp.bottom).offset(8)
-      make.leading.trailing.bottom.equalToSuperview()
+      make.leading.equalTo(activityIndicator.snp.trailing).offset(16)
+      make.centerY.equalToSuperview()
+      make.trailing.equalToSuperview().inset(16)
     }
 
-    messageLabel.text = "LOADING".unlocalized
-    messageLabel.font = UIFont.systemFont(ofSize: 12)
-    messageLabel.textColor = UIColor.gray
+    messageLabel.font = Fonts.raleway(withSize: 12)
+    messageLabel.textColor = .white
+  }
+
+  func update(with message: String) {
+    messageLabel.text = message
+  }
+
+  override var intrinsicContentSize: CGSize {
+    return CGSize(width: UIViewNoIntrinsicMetric, height: 50)
   }
 }

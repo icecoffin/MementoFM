@@ -30,6 +30,7 @@ class LibraryViewModel {
   var onDidStartLoading: (() -> Void)?
   var onDidFinishLoading: (() -> Void)?
   var onDidUpdateData: ((_ isEmpty: Bool) -> Void)?
+  var onDidChangeStatus: ((String) -> Void)?
   var onDidReceiveError: ((Error) -> Void)?
 
   init(dependencies: Dependencies) {
@@ -57,17 +58,11 @@ class LibraryViewModel {
       self.onDidStartLoading?()
     }
     libraryUpdater.onDidFinishLoading = { [unowned self] in
-      // TODO: calculate only after onboarding
-      let ignoredTags = self.dependencies.realmGateway.ignoredTags()
-      _ = self.dependencies.realmGateway.recalculateArtistTopTags(ignoredTags: ignoredTags).then { _ -> Promise<Void> in
-        self.onDidFinishLoading?()
-        self.onDidUpdateData?(self.cellViewModels.isEmpty)
-        return .void
-      }
+      self.onDidFinishLoading?()
+      self.onDidUpdateData?(self.cellViewModels.isEmpty)
     }
-    // TODO: better progress display
-    libraryUpdater.onDidChangeStatus = { /*[unowned self]*/ status in
-      log.debug(status)
+    libraryUpdater.onDidChangeStatus = { [unowned self] status in
+      self.onDidChangeStatus?(self.stringFromStatus(status))
     }
     libraryUpdater.onDidReceiveError = { [unowned self] error in
       self.onDidReceiveError?(error)
@@ -106,5 +101,20 @@ class LibraryViewModel {
   func finishSearching(withText text: String) {
     cellViewModels.predicate = NSPredicate(format: "name CONTAINS[cd] %@", text)
     self.onDidUpdateData?(cellViewModels.isEmpty)
+  }
+
+  private func stringFromStatus(_ status: LibraryUpdateStatus) -> String {
+    switch status {
+    case .artistsFirstPage:
+      return "Getting library...".unlocalized
+    case .artists(let progress):
+      return "Getting library: page \(progress.completedUnitCount) out of \(progress.totalUnitCount)".unlocalized
+    case .recentTracksFirstPage:
+      return "Getting recent tracks..."
+    case .recentTracks(let progress):
+      return "Getting recent tracks: page \(progress.completedUnitCount) out of \(progress.totalUnitCount)".unlocalized
+    case .tags(_, let progress):
+      return "Getting tags for artists: \(progress.completedUnitCount) out of \(progress.totalUnitCount)".unlocalized
+    }
   }
 }

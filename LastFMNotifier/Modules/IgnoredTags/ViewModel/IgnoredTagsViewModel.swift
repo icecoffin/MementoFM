@@ -25,7 +25,8 @@ class IgnoredTagsViewModel {
 
   weak var delegate: IgnoredTagsViewModelDelegate?
 
-  var onWillSaveChanges: (() -> Void)?
+  var onDidStartSavingChanges: (() -> Void)?
+  var onDidFinishSavingChanges: (() -> Void)?
   var onDidAddNewTag: ((IndexPath) -> Void)?
   var onDidUpdateTagCount: ((_ isEmpty: Bool) -> Void)?
   var onDidAddDefaultTags: (() -> Void)?
@@ -39,10 +40,9 @@ class IgnoredTagsViewModel {
   }
 
   private func addDefaultTags() {
-    _ = dependencies.realmGateway.createDefaultIgnoredTags().then { [unowned self] _ -> Promise<Void> in
+    _ = dependencies.realmGateway.createDefaultIgnoredTags().then { [unowned self] _ -> Void in
       self.ignoredTags = self.dependencies.realmGateway.ignoredTags()
       self.onDidAddDefaultTags?()
-      return .void
     }
   }
 
@@ -73,7 +73,7 @@ class IgnoredTagsViewModel {
   }
 
   func saveChanges() {
-    onWillSaveChanges?()
+    onDidStartSavingChanges?()
 
     let filteredTags = ignoredTags.reduce([]) { result, ignoredTag -> [IgnoredTag] in
       if ignoredTag.name.isEmpty {
@@ -89,8 +89,9 @@ class IgnoredTagsViewModel {
     }
 
     _ = dependencies.realmGateway.updateIgnoredTags(filteredTags).then { [unowned self] in
-      self.dependencies.realmGateway.recalculateArtistTopTags(ignoredTags: filteredTags)
-    }.then { [unowned self] in
+      self.dependencies.realmGateway.recalculateArtistTopTags(ignoring: filteredTags)
+    }.then { [unowned self] _ -> Void in
+      self.onDidFinishSavingChanges?()
       self.delegate?.ignoredTagsViewModelDidSaveChanges(self)
     }
   }

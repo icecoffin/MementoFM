@@ -10,7 +10,9 @@ import Foundation
 import PromiseKit
 
 enum LibraryUpdateStatus {
+  case artistsFirstPage
   case artists(progress: Progress)
+  case recentTracksFirstPage
   case recentTracks(progress: Progress)
   case tags(artistName: String, progress: Progress)
 }
@@ -57,6 +59,7 @@ class LibraryUpdater {
   }
 
   private func getFullLibrary() -> Promise<Void> {
+    onDidChangeStatus?(.artistsFirstPage)
     return dependencies.libraryNetworkService.getLibrary(for: username, progress: { [weak self] progress in
       let status: LibraryUpdateStatus = .artists(progress: progress)
       self?.onDidChangeStatus?(status)
@@ -69,6 +72,7 @@ class LibraryUpdater {
   }
 
   private func getLibraryUpdates() -> Promise<Void> {
+    onDidChangeStatus?(.recentTracksFirstPage)
     return dependencies.userNetworkService.getRecentTracks(for: username, from: lastUpdateTimestamp, progress: { [weak self] progress in
       let status: LibraryUpdateStatus = .recentTracks(progress: progress)
       self?.onDidChangeStatus?(status)
@@ -89,7 +93,12 @@ class LibraryUpdater {
       guard let `self` = self else {
         return
       }
-      self.dependencies.realmGateway.updateArtist(requestProgress.artist, with: requestProgress.topTagsList.tags)
+      let realmGateway = self.dependencies.realmGateway
+      let artist = requestProgress.artist
+      let ignoredTags = realmGateway.ignoredTags()
+      _ = realmGateway.updateArtist(requestProgress.artist, with: requestProgress.topTagsList.tags).then {
+        return realmGateway.calculateTopTags(for: artist, ignoring: ignoredTags)
+      }
       let status: LibraryUpdateStatus = .tags(artistName: requestProgress.artist.name, progress: requestProgress.progress)
       self.onDidChangeStatus?(status)
     })

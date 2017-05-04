@@ -66,8 +66,10 @@ class LibraryViewController: UIViewController {
   private func addLoadingView() {
     view.addSubview(loadingView)
     loadingView.snp.makeConstraints { make in
-      make.center.equalToSuperview()
+      make.leading.trailing.bottom.equalToSuperview()
     }
+
+    loadingView.update(with: "LOADING".unlocalized)
   }
 
   private func configureSearchController() {
@@ -90,6 +92,10 @@ class LibraryViewController: UIViewController {
     viewModel.onDidUpdateData = { [unowned self] isEmpty in
       self.tableView.reloadData()
       self.tableView.backgroundView?.isHidden = !isEmpty
+    }
+
+    viewModel.onDidChangeStatus = { [unowned self] status in
+      self.loadingView.update(with: status)
     }
 
     viewModel.onDidReceiveError = { [unowned self] error in

@@ -20,7 +20,7 @@ class RealmGateway {
   }
 
   func write(block: @escaping (Realm) -> Void) -> Promise<Void> {
-    return dispatch_promise(DispatchQueue.global(qos: .utility)) {
+    return dispatch_promise(DispatchQueue.global()) {
       let backgroundRealm = self.getWriteRealm()
       self.write(to: backgroundRealm) { realm in
         block(realm)
@@ -49,7 +49,7 @@ class RealmGateway {
 
   func save(objects: [Object]) -> Promise<Void> {
     return Promise { resolve, _ in
-      DispatchQueue.global(qos: .default).async {
+      DispatchQueue.global().async {
         let backgroundRealm = self.getWriteRealm()
         self.write(to: backgroundRealm) { realm in
           realm.add(objects, update: true)

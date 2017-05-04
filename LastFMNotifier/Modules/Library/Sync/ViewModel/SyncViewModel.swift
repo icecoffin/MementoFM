@@ -47,10 +47,14 @@ class SyncViewModel {
 
   private func stringFromStatus(_ status: LibraryUpdateStatus) -> String {
     switch status {
+    case .artistsFirstPage:
+      return "Updating library...".unlocalized
     case .artists(let progress):
       let currentPage = progress.completedUnitCount
       let totalPageCount = progress.totalUnitCount
       return "Updating library (page \(currentPage) out of \(totalPageCount))".unlocalized
+    case .recentTracksFirstPage:
+      return "Getting recent tracks...".unlocalized
     case .recentTracks(let progress):
       let currentPage = progress.completedUnitCount
       let totalPageCount = progress.totalUnitCount

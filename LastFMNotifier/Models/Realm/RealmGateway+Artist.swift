@@ -15,7 +15,7 @@ extension RealmGateway {
     return defaultRealm.objects(RealmArtist.self).filter(predicate).map({ $0.toTransient() })
   }
 
-  @discardableResult func updateArtist(_ artist: Artist, with tags: [Tag]) -> Promise<Void> {
+  func updateArtist(_ artist: Artist, with tags: [Tag]) -> Promise<Void> {
     return write { realm in
       guard let realmArtist = realm.object(ofType: RealmArtist.self, forPrimaryKey: artist.name) else {
         return
@@ -29,18 +29,31 @@ extension RealmGateway {
     }
   }
 
-  func recalculateArtistTopTags(ignoredTags: [IgnoredTag]) -> Promise<Void> {
+  // TODO: naming
+  func recalculateArtistTopTags(ignoring ignoredTags: [IgnoredTag]) -> Promise<Void> {
     return write { realm in
       let artists = realm.objects(RealmArtist.self)
       for artist in artists {
-        let topTags = artist.tags.filter({ realmTag in
-          !ignoredTags.contains(where: { ignoredTag in
-            realmTag.name == ignoredTag.name
-          })
-        }).prefix(5)
-        artist.topTags.removeAll()
-        artist.topTags.append(objectsIn: topTags)
+        self.recalculateTopTags(for: artist, ignoring: ignoredTags)
       }
     }
+  }
+
+  func calculateTopTags(for artist: Artist, ignoring ignoredTags: [IgnoredTag]) -> Promise<Void> {
+    return write { realm in
+      if let realmArtist = realm.object(ofType: RealmArtist.self, forPrimaryKey: artist.name) {
+        self.recalculateTopTags(for: realmArtist, ignoring: ignoredTags)
+      }
+    }
+  }
+
+  private func recalculateTopTags(for artist: RealmArtist, ignoring ignoredTags: [IgnoredTag]) {
+    let topTags = artist.tags.filter({ realmTag in
+      !ignoredTags.contains(where: { ignoredTag in
+        realmTag.name == ignoredTag.name
+      })
+    }).prefix(5)
+    artist.topTags.removeAll()
+    artist.topTags.append(objectsIn: topTags)
   }
 }

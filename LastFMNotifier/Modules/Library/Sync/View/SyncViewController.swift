@@ -31,6 +31,7 @@ class SyncViewController: UIViewController {
   }
 
   private func configureView() {
+    view.backgroundColor = .white
     addProgressView()
     addErrorView()
   }
