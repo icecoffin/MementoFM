@@ -68,7 +68,12 @@ class LibraryViewModel {
     }
   }
 
-  // TODO: don't request data if we just came from onboarding or username change
+  func requestDataIfNeeded(currentTimestamp: TimeInterval = Date().timeIntervalSince1970) {
+    if currentTimestamp - lastUpdateTimestamp > 30 {
+      requestData()
+    }
+  }
+
   func requestData() {
     libraryUpdater.requestData()
   }

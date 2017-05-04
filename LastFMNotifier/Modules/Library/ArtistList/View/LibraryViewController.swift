@@ -69,7 +69,7 @@ class LibraryViewController: UIViewController {
       make.leading.trailing.bottom.equalToSuperview()
     }
 
-    loadingView.update(with: "LOADING".unlocalized)
+    loadingView.isHidden = true
   }
 
   private func configureSearchController() {
@@ -105,7 +105,8 @@ class LibraryViewController: UIViewController {
       self.loadingView.isHidden = true
     }
 
-    viewModel.requestData()
+    // TODO: request data on didBecomeActive or similar
+    viewModel.requestDataIfNeeded()
   }
 }
 
