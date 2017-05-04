@@ -14,7 +14,6 @@ protocol LibraryViewModelDelegate: class {
   func libraryViewModel(_ viewModel: LibraryViewModel, didSelectArtist artist: Artist)
 }
 
-// TODO: check why photos are not displayed when opening after onboarding
 class LibraryViewModel {
   typealias Dependencies = HasLibraryNetworkService & HasUserNetworkService & HasArtistNetworkService & HasRealmGateway & HasUserDataStorage
 
@@ -69,6 +68,7 @@ class LibraryViewModel {
     }
   }
 
+  // TODO: don't request data if we just came from onboarding or username change
   func requestData() {
     libraryUpdater.requestData()
   }

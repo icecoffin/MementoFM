@@ -50,7 +50,14 @@ class MainFlowCoordinator: Coordinator {
     addChildCoordinator(settingsCoordinator)
 
     tabBarController.viewControllers = [libraryNavigationController, settingsNavigationController]
-    window.rootViewController = tabBarController
+    if let currentRootView = window.rootViewController?.view {
+      UIView.transition(from: currentRootView, to: tabBarController.view, duration: 0.5,
+                        options: [.transitionFlipFromRight], completion: { _ in
+        self.window.rootViewController = tabBarController
+      })
+    } else {
+      window.rootViewController = tabBarController
+    }
     window.makeKeyAndVisible()
 
     startChildren()

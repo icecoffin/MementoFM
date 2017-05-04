@@ -35,6 +35,7 @@ class EnterUsernameViewModel {
     return "Submit".unlocalized
   }
 
+  // TODO: don't allow to submit username which is equal to the current one
   var currentUsernameText: String {
     let username = dependencies.userDataStorage.username
     if username.isEmpty {

@@ -76,6 +76,8 @@ class LibraryViewController: UIViewController {
     searchController.searchBar.delegate = self
     searchController.searchResultsUpdater = self
     searchController.dimsBackgroundDuringPresentation = false
+    // Force load UISearchController's view to avoid the warning on dealloc
+    _ = searchController.view
   }
 
   private func bindToViewModel() {
