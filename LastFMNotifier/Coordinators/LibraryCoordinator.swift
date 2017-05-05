@@ -14,17 +14,40 @@ class LibraryCoordinator: NavigationFlowCoordinator {
   let navigationController: UINavigationController
   fileprivate let dependencies: AppDependency
 
+  private var onApplicationDidBecomeActive: (() -> Void)?
+
   init(navigationController: UINavigationController, dependencies: AppDependency) {
     self.navigationController = navigationController
     self.dependencies = dependencies
+    subscribeToNotifications()
+  }
+
+  deinit {
+    unsubscribeFromNotifications()
   }
 
   func start() {
     let libraryViewModel = LibraryViewModel(dependencies: dependencies)
     libraryViewModel.delegate = self
+    onApplicationDidBecomeActive = { [unowned libraryViewModel] in
+      libraryViewModel.requestDataIfNeeded()
+    }
     let libraryViewController = LibraryViewController(viewModel: libraryViewModel)
     libraryViewController.title = "Library".unlocalized
     navigationController.pushViewController(libraryViewController, animated: false)
+  }
+
+  private func subscribeToNotifications() {
+    NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(_:)),
+                                           name: .UIApplicationDidBecomeActive, object: nil)
+  }
+
+  private func unsubscribeFromNotifications() {
+    NotificationCenter.default.removeObserver(self, name: .UIApplicationDidBecomeActive, object: nil)
+  }
+
+  @objc private func applicationDidBecomeActive(_ notification: Notification) {
+    onApplicationDidBecomeActive?()
   }
 }
 
