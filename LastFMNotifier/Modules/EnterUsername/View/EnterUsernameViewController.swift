@@ -101,12 +101,7 @@ class EnterUsernameViewController: UIViewController {
   }
 
   func submitButtonTapped(_ sender: UIButton) {
-    submitUsername()
-  }
-
-  fileprivate func submitUsername() {
-    let username = usernameTextField.text ?? ""
-    viewModel.submitUsername(username)
+    viewModel.submitUsername()
   }
 
   private func bindToViewModel() {
@@ -117,7 +112,8 @@ class EnterUsernameViewController: UIViewController {
 
   // MARK: Actions
   @objc private func usernameTextFieldEditingChanged(_ textField: UITextField) {
-    if let text = textField.text, !text.isEmpty {
+    viewModel.updateUsername(textField.text)
+    if viewModel.canSubmitUsername {
       enableSubmitButton()
     } else {
       disableSubmitButton()
@@ -139,7 +135,9 @@ class EnterUsernameViewController: UIViewController {
 extension EnterUsernameViewController: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
-    submitUsername()
+    if viewModel.canSubmitUsername {
+      viewModel.submitUsername()
+    }
     return true
   }
 }

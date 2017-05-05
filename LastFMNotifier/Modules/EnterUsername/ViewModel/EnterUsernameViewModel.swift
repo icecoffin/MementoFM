@@ -21,10 +21,17 @@ class EnterUsernameViewModel {
   typealias Dependencies = HasRealmGateway & HasUserDataStorage
 
   private let dependencies: Dependencies
+  private var currentUsername: String
+
   weak var delegate: EnterUsernameViewModelDelegate?
+
+  var canSubmitUsername: Bool {
+    return !currentUsername.isEmpty && currentUsername != dependencies.userDataStorage.username
+  }
 
   init(dependencies: Dependencies) {
     self.dependencies = dependencies
+    currentUsername = ""
   }
 
   var usernameTextFieldPlaceholder: String {
@@ -35,7 +42,6 @@ class EnterUsernameViewModel {
     return "Submit".unlocalized
   }
 
-  // TODO: don't allow to submit username which is equal to the current one
   var currentUsernameText: String {
     let username = dependencies.userDataStorage.username
     if username.isEmpty {
@@ -45,17 +51,28 @@ class EnterUsernameViewModel {
     }
   }
 
-  func submitUsername(_ username: String) {
-    let oldUsername = dependencies.userDataStorage.username
-    dependencies.userDataStorage.username = username
-    if oldUsername != username {
-      _ = clearLocalData().then {
-        self.delegate?.enterUsernameViewModelDidFinish(self)
-      }
-    } else {
-      delegate?.enterUsernameViewModelDidFinish(self)
+  func updateUsername(_ username: String?) {
+    currentUsername = username ?? ""
+  }
+
+  func submitUsername() {
+    dependencies.userDataStorage.username = currentUsername
+    _ = clearLocalData().then {
+      self.delegate?.enterUsernameViewModelDidFinish(self)
     }
   }
+
+//  func submitUsername(_ username: String) {
+//    let oldUsername = dependencies.userDataStorage.username
+//    dependencies.userDataStorage.username = username
+//    if oldUsername != username {
+//      _ = clearLocalData().then {
+//        self.delegate?.enterUsernameViewModelDidFinish(self)
+//      }
+//    } else {
+//      delegate?.enterUsernameViewModelDidFinish(self)
+//    }
+//  }
 
   private func clearLocalData() -> Promise<Void> {
     dependencies.userDataStorage.reset()
