@@ -131,7 +131,6 @@
 		3C73CC5DFEE8AB5EBB5DAB409B8D3463 /* AnyPromise.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D97379023EF15E9977B1225B5FEF31C /* AnyPromise.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3D0DFC8224C058C7ED67A1BA3FA5C98E /* BeCloseTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A4DE1A0C97D692D8F90E82E251679C /* BeCloseTo.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble -w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		3D45C5D32E04928C1AAF3790BCB833DE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 652E5196F6CB402799C7FB11CD9F5960 /* Foundation.framework */; };
-		3E2C2DE70BBA5561660D06A0CE9CE6DC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 652E5196F6CB402799C7FB11CD9F5960 /* Foundation.framework */; };
 		3F76515CC35EC2054408F3559D609499 /* sync_metadata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12545A43AFD3AAD6D8FEA9A29D0C082 /* sync_metadata.cpp */; settings = {COMPILER_FLAGS = "-DREALM_HAVE_CONFIG -DREALM_COCOA_VERSION='@\"2.7.0\"' -D__ASSERTMACROS__ -DREALM_ENABLE_SYNC -w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		3FFD8F96B5D7C7BBE22F1DC81937B8BA /* ThrowAssertion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C887333E35B60D9E1B60D6A6CE522C /* ThrowAssertion.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble -w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		404885285BEDBCB2C334A27A5E5A37C1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 652E5196F6CB402799C7FB11CD9F5960 /* Foundation.framework */; };
@@ -173,7 +172,6 @@
 		58812AABBC0A1E7AE019752424DF31A7 /* MultipartFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A146263746CB1EA67848A470BD4B30 /* MultipartFormData.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		591F0D8A1D3775A350E55430FDFA317F /* RLMSyncManager.h in Copy . Public Headers */ = {isa = PBXBuildFile; fileRef = A2BB24D95258FD3B53C02F3554EC0FFC /* RLMSyncManager.h */; };
 		594F8AD90A89CAB56D02E96246FAC834 /* RLMResults.mm in Sources */ = {isa = PBXBuildFile; fileRef = F4BC77ED88D71D2AF5A6AD0C1621D286 /* RLMResults.mm */; settings = {COMPILER_FLAGS = "-DREALM_HAVE_CONFIG -DREALM_COCOA_VERSION='@\"2.7.0\"' -D__ASSERTMACROS__ -DREALM_ENABLE_SYNC -w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		5A603C647F4BE36BA9F6513BE16A51AD /* Pods-LastFMNotifierTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B346ABFCBF4DE36EE7AEAFFF75B40BEA /* Pods-LastFMNotifierTests-dummy.m */; };
 		5AB9DB61D62D8BF7B1C734B373F361E7 /* CurrentTestCaseTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 96B33F95FE7C686912900B89A9227E14 /* CurrentTestCaseTracker.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		5B2C9C3A8CC01BA965BC9F60C0657E76 /* RLMObject_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = E33B59C4A9C3D1D811B8D45FE9C36BD8 /* RLMObject_Private.h */; };
 		5B556131ED8906436D34AC43BEF15E39 /* RLMSyncUser.h in Copy . Public Headers */ = {isa = PBXBuildFile; fileRef = 74EED0A2291105D29F5073307AE521AC /* RLMSyncUser.h */; };
@@ -277,6 +275,7 @@
 		9794B1EBCB2474897B2FC11021179814 /* RLMAnalytics.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0F2306FEA27834D4564DA5D4AAA6F43 /* RLMAnalytics.mm */; settings = {COMPILER_FLAGS = "-DREALM_HAVE_CONFIG -DREALM_COCOA_VERSION='@\"2.7.0\"' -D__ASSERTMACROS__ -DREALM_ENABLE_SYNC -w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		97F61D68A8AC8B7BB9FFDF49D5D2E5E4 /* network_reachability_observer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C928D8D8794C2CD13876100C658291F6 /* network_reachability_observer.cpp */; settings = {COMPILER_FLAGS = "-DREALM_HAVE_CONFIG -DREALM_COCOA_VERSION='@\"2.7.0\"' -D__ASSERTMACROS__ -DREALM_ENABLE_SYNC -w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		981EFF1371FCE40F1907DA262743B93E /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4358DEFA809BCAADA7823A946E266DD /* Notifications.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		98D07BC8687EB0ACE682175108B3D0A6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 652E5196F6CB402799C7FB11CD9F5960 /* Foundation.framework */; };
 		996D6C00F3FD5EA54BDD6AEAD3FED165 /* AdapterProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B39D1F88CA2CF74FA6B95668B73B518 /* AdapterProtocols.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble -w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		9A236AB1DCA45F106E9C2325F03D2DFA /* Equal.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38B327D6F25344E91E5FC11BFD1B9A1 /* Equal.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble -w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		9AA3A8A3A06EF427A342319AB0131D26 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354FAA10376346AD6CE45B664924551A /* Box.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
@@ -327,6 +326,7 @@
 		B840EB994D75E83B8A9C7236CABFFED8 /* ConstraintPriorityTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4201917813E1AB728225F388F3E4AFB7 /* ConstraintPriorityTarget.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		BA987FAF82A7C33CAFA24914B4B53B34 /* ConstraintItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0537FDEC2847CE03DF0D541BE16802CE /* ConstraintItem.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		BB1D93C9FEB92B2454F0450EBBDF5A44 /* RLMSyncPermissionOffer.h in Copy . Public Headers */ = {isa = PBXBuildFile; fileRef = 74B048570ED3E2F47A4342024D49D0E3 /* RLMSyncPermissionOffer.h */; };
+		BBB196A99AAB3E5819FCB69F5A905B4A /* Pods-LastFMNotifierTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DD3A085CAA28266F742ED40B0EF3A89 /* Pods-LastFMNotifierTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BBE47F7E0509F6DA10E11C0310B941BE /* ImageView+Kingfisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E13016C4979645F351AEF617F2C9B2B /* ImageView+Kingfisher.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		BC3C65E21F3F71220742501E688EFA29 /* SnapKit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D39AF171A96C80141201BFB3ECBDF165 /* SnapKit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BCEA563A924F8AC86EF786E422D11E92 /* placeholder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3AD61B31B5BA66F6FEFC933FFDDC005 /* placeholder.cpp */; settings = {COMPILER_FLAGS = "-DREALM_HAVE_CONFIG -DREALM_COCOA_VERSION='@\"2.7.0\"' -D__ASSERTMACROS__ -DREALM_ENABLE_SYNC -w -Xanalyzer -analyzer-disable-all-checks"; }; };
@@ -344,7 +344,6 @@
 		C451D60732C6E125C60CA0D6D31DABB5 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B5CC725F00BBF7421A8289C19DE5F9 /* Transform.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		C4C581D30388DB4457793C0482284A92 /* BeLessThanOrEqual.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE79071286E6EF57173EBF2C3A710E02 /* BeLessThanOrEqual.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble -w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		C4D8C5F3839E75A8719A503EDA0920D0 /* ExpectationMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2C6424DB7A9750786F6E2D56F40A04 /* ExpectationMessage.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble -w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		C50970186B6F1259839488C50ADA83BD /* Pods-LastFMNotifierTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DD3A085CAA28266F742ED40B0EF3A89 /* Pods-LastFMNotifierTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C523A77F4556E51903347578DEA2CF58 /* ConstraintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B007AAF3716EEDEA089ED7ED9108DE5A /* ConstraintView.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		C59456C42DB93F83BE7973E6E48AE756 /* TPKeyboardAvoiding-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C2B708DDCF4876ABC14C2439661BED83 /* TPKeyboardAvoiding-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C5FD57751548EFFA6567AFD2EB47CD56 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BA93B01826727192C7C5B4C0785C25 /* Request.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
@@ -420,6 +419,7 @@
 		F0C953A0F10C39012AE72C6059AC44B7 /* ConstraintMakerEditable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07153663EFD7D1408527C3DE1D519B68 /* ConstraintMakerEditable.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		F14A8BB4308FEFA721B5F43D235A064F /* Alamofire+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E22AE773102EEE643B504C6DB4F739 /* Alamofire+Promise.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		F18BA80565B00DFD28514B0BF5A22B7E /* RLMSyncManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A2BB24D95258FD3B53C02F3554EC0FFC /* RLMSyncManager.h */; };
+		F1DC3698E16ECA9D30C582BC7FD9759D /* Pods-LastFMNotifierTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B346ABFCBF4DE36EE7AEAFFF75B40BEA /* Pods-LastFMNotifierTests-dummy.m */; };
 		F32D6DDB6DADFC18131FBEBB8A587B88 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECE3C67D52D27DEE21C1174B17011E2 /* Optional.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		F39781CAE8B2024FA7D6509B9C9429F9 /* MatcherFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5C51EA04C9CF3E6B3C4623077A13C /* MatcherFunc.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble -w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		F3DA3AA945161592D62CBFFDDC8DAE16 /* SwiftVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637C734296A0B1C1C23EC2411162350D /* SwiftVersion.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
@@ -452,19 +452,26 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		12E69C0E3DE286EAAEF29E019BB99176 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DD7C8BF89FE8053D0A2A2D88BB49CF07;
-			remoteInfo = Nimble;
-		};
 		1725BA3ABF68319AD7E577082D52ACE3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = AD9A28DC5B2517D766A9AE5B7895A87F;
 			remoteInfo = SwiftyBeaver;
+		};
+		1EDF3712C700C97875AB78849193082E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7043A3C9E53F9D285913D97180120015;
+			remoteInfo = RealmSwift;
+		};
+		2883EB0CCF9FD43759E42CC0D8D85A73 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 90506BCBA9D76F772BF1B6F032FE7FD7;
+			remoteInfo = Realm;
 		};
 		2A263E8605660D91ED7E8F178277FE84 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -500,6 +507,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 561161DAB54CF48F51046D560085638D;
 			remoteInfo = SVProgressHUD;
+		};
+		48F4E9C57EBB43A01A043F8697D8C36B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DD7C8BF89FE8053D0A2A2D88BB49CF07;
+			remoteInfo = Nimble;
 		};
 		674F00DA9BA5CE935FD99183F3A722F3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1134,11 +1148,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B2D6EB5B7B8B9B24753261F318EF64E2 /* Frameworks */ = {
+		B4D743FD81DA92A9FB165DA1F0ED46D7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E2C2DE70BBA5561660D06A0CE9CE6DC /* Foundation.framework in Frameworks */,
+				98D07BC8687EB0ACE682175108B3D0A6 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1962,6 +1976,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1C4D6255BE97590A2F37304BF7368766 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BBB196A99AAB3E5819FCB69F5A905B4A /* Pods-LastFMNotifierTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		72FD1D132771915AE390B08B2E98126E /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -2040,14 +2062,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		843CC15B8A7867981BD68DCDC1CF8436 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C50970186B6F1259839488C50ADA83BD /* Pods-LastFMNotifierTests-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		85497845823171A47E23A59621A44463 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -2123,24 +2137,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		1EF4F46AC9A6AEADEAFCDE5146637283 /* Pods-LastFMNotifierTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = A941C2CBE605C1883B47D222BCB6D824 /* Build configuration list for PBXNativeTarget "Pods-LastFMNotifierTests" */;
-			buildPhases = (
-				29868076D4BCFC37186E76DE631A05E2 /* Sources */,
-				B2D6EB5B7B8B9B24753261F318EF64E2 /* Frameworks */,
-				843CC15B8A7867981BD68DCDC1CF8436 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				39A2E195CD6823355B85B74D24ACCB44 /* PBXTargetDependency */,
-			);
-			name = "Pods-LastFMNotifierTests";
-			productName = "Pods-LastFMNotifierTests";
-			productReference = AC0332162F621A1B618E79434EF79940 /* Pods_LastFMNotifierTests.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 		23CBFA281D33F52F5CD16AC1B052A1C2 /* TPKeyboardAvoiding */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 365685917F4B3C18C494EDBBAEB3C11C /* Build configuration list for PBXNativeTarget "TPKeyboardAvoiding" */;
@@ -2191,6 +2187,26 @@
 			name = PromiseKit;
 			productName = PromiseKit;
 			productReference = 131DC4D81D33DC097063EFB84A381A92 /* PromiseKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		3E69EF2EF85E2CF7299292633C6D7CF1 /* Pods-LastFMNotifierTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 150D28FA6517E1833AD0C9EC05B75D88 /* Build configuration list for PBXNativeTarget "Pods-LastFMNotifierTests" */;
+			buildPhases = (
+				3BA623C22C9301D547E8E057D4479B93 /* Sources */,
+				B4D743FD81DA92A9FB165DA1F0ED46D7 /* Frameworks */,
+				1C4D6255BE97590A2F37304BF7368766 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E3BA61B379C0DDEDB26AA3C8EA9CFEA7 /* PBXTargetDependency */,
+				C2FC385031292550C90A256E63D34CF8 /* PBXTargetDependency */,
+				34933CDE2025728313365CEAA30C76F0 /* PBXTargetDependency */,
+			);
+			name = "Pods-LastFMNotifierTests";
+			productName = "Pods-LastFMNotifierTests";
+			productReference = AC0332162F621A1B618E79434EF79940 /* Pods_LastFMNotifierTests.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		561161DAB54CF48F51046D560085638D /* SVProgressHUD */ = {
@@ -2386,7 +2402,7 @@
 				FBCC69D7C794145A1D1F84A3164E6083 /* ModelMapper */,
 				DD7C8BF89FE8053D0A2A2D88BB49CF07 /* Nimble */,
 				910679DC95BD3255D4D9BCDCDA7F115E /* Pods-LastFMNotifier */,
-				1EF4F46AC9A6AEADEAFCDE5146637283 /* Pods-LastFMNotifierTests */,
+				3E69EF2EF85E2CF7299292633C6D7CF1 /* Pods-LastFMNotifierTests */,
 				35BDB40B6983962C2E1F735D815F8681 /* PromiseKit */,
 				90506BCBA9D76F772BF1B6F032FE7FD7 /* Realm */,
 				7043A3C9E53F9D285913D97180120015 /* RealmSwift */,
@@ -2424,14 +2440,6 @@
 				1E68E76E27DCC4AD6195074F6F60C194 /* NSURL+Convertible.swift in Sources */,
 				11E28C96F7A0297BF25617B878D78E81 /* Transform+Dictionary.swift in Sources */,
 				C451D60732C6E125C60CA0D6D31DABB5 /* Transform.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		29868076D4BCFC37186E76DE631A05E2 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5A603C647F4BE36BA9F6513BE16A51AD /* Pods-LastFMNotifierTests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2500,6 +2508,14 @@
 				D05DC57A4E28678BAFA9B7F150380CD1 /* ThrowError.swift in Sources */,
 				82A8CF86C54998C21A2838B9C7791D04 /* ToSucceed.swift in Sources */,
 				AF89BE353A05AD95677F0FC95D7C8A9E /* XCTestObservationCenter+Register.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3BA623C22C9301D547E8E057D4479B93 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F1DC3698E16ECA9D30C582BC7FD9759D /* Pods-LastFMNotifierTests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2821,11 +2837,11 @@
 			target = 7043A3C9E53F9D285913D97180120015 /* RealmSwift */;
 			targetProxy = 87B54AA52D5C5C2BD6A042E783302092 /* PBXContainerItemProxy */;
 		};
-		39A2E195CD6823355B85B74D24ACCB44 /* PBXTargetDependency */ = {
+		34933CDE2025728313365CEAA30C76F0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = Nimble;
-			target = DD7C8BF89FE8053D0A2A2D88BB49CF07 /* Nimble */;
-			targetProxy = 12E69C0E3DE286EAAEF29E019BB99176 /* PBXContainerItemProxy */;
+			name = RealmSwift;
+			target = 7043A3C9E53F9D285913D97180120015 /* RealmSwift */;
+			targetProxy = 1EDF3712C700C97875AB78849193082E /* PBXContainerItemProxy */;
 		};
 		6E0F220B49BE381E61602F35C5E67D88 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2856,6 +2872,18 @@
 			name = TPKeyboardAvoiding;
 			target = 23CBFA281D33F52F5CD16AC1B052A1C2 /* TPKeyboardAvoiding */;
 			targetProxy = 2A263E8605660D91ED7E8F178277FE84 /* PBXContainerItemProxy */;
+		};
+		C2FC385031292550C90A256E63D34CF8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Realm;
+			target = 90506BCBA9D76F772BF1B6F032FE7FD7 /* Realm */;
+			targetProxy = 2883EB0CCF9FD43759E42CC0D8D85A73 /* PBXContainerItemProxy */;
+		};
+		E3BA61B379C0DDEDB26AA3C8EA9CFEA7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Nimble;
+			target = DD7C8BF89FE8053D0A2A2D88BB49CF07 /* Nimble */;
+			targetProxy = 48F4E9C57EBB43A01A043F8697D8C36B /* PBXContainerItemProxy */;
 		};
 		F50B143851B99C009EF1ECE211138729 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3040,6 +3068,44 @@
 			};
 			name = Release;
 		};
+		448C13E42078FAC141847138EF436108 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8A319196848CDE7DF18642B55EABC2FE /* Pods-LastFMNotifierTests.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-LastFMNotifierTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-LastFMNotifierTests/Pods-LastFMNotifierTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_LastFMNotifierTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		4E28E381BD3ADD913CB6D06C2EB6A986 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1701D3A9D7D8E7DA9EC53804EFA2CCD0 /* SnapKit.xcconfig */;
@@ -3064,6 +3130,45 @@
 				MODULEMAP_FILE = "Target Support Files/SnapKit/SnapKit.modulemap";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = SnapKit;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		51933C787D2BBD5F00C60AE390E10BAD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 854ED76C8AD2C70F24E5968996AEA559 /* Pods-LastFMNotifierTests.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-LastFMNotifierTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-LastFMNotifierTests/Pods-LastFMNotifierTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_LastFMNotifierTests;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -3505,44 +3610,6 @@
 			};
 			name = Release;
 		};
-		AD6BE8AB3E3407F625533FE5F5A753BB /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8A319196848CDE7DF18642B55EABC2FE /* Pods-LastFMNotifierTests.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-LastFMNotifierTests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-LastFMNotifierTests/Pods-LastFMNotifierTests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_LastFMNotifierTests;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		B04ACD5A0C9E82832A991BB0DB5D82A4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FE53234FC7D0674598BD8D8003D32029 /* SVProgressHUD.xcconfig */;
@@ -3727,45 +3794,6 @@
 			};
 			name = Release;
 		};
-		E7B8A92E91332085A271C79BF8596D48 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 854ED76C8AD2C70F24E5968996AEA559 /* Pods-LastFMNotifierTests.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-LastFMNotifierTests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-LastFMNotifierTests/Pods-LastFMNotifierTests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_LastFMNotifierTests;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 		F0BE9F21CC451E6E481AD11ECB9F4CFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 119A84633E44996DAC8AA09F2E2AEC2B /* Nimble.xcconfig */;
@@ -3871,6 +3899,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		150D28FA6517E1833AD0C9EC05B75D88 /* Build configuration list for PBXNativeTarget "Pods-LastFMNotifierTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				51933C787D2BBD5F00C60AE390E10BAD /* Debug */,
+				448C13E42078FAC141847138EF436108 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -3948,15 +3985,6 @@
 			buildConfigurations = (
 				8E4AACDBFFD2AC0B53E09279A2F4305F /* Debug */,
 				2ED671F1B4AFC3DA46DECCCA335AC56B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		A941C2CBE605C1883B47D222BCB6D824 /* Build configuration list for PBXNativeTarget "Pods-LastFMNotifierTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E7B8A92E91332085A271C79BF8596D48 /* Debug */,
-				AD6BE8AB3E3407F625533FE5F5A753BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

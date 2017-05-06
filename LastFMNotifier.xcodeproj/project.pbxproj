@@ -30,7 +30,6 @@
 		01A4EEA71DF58922000A12A6 /* Raleway-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 01A4EEA41DF58922000A12A6 /* Raleway-Medium.ttf */; };
 		01A4EEA81DF58922000A12A6 /* Raleway-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 01A4EEA51DF58922000A12A6 /* Raleway-Regular.ttf */; };
 		01A4EEAA1DF58945000A12A6 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A4EEA91DF58945000A12A6 /* Fonts.swift */; };
-		01D4D3311DAE4A0000BFD7FD /* LastFMNotifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D4D3301DAE4A0000BFD7FD /* LastFMNotifierTests.swift */; };
 		14F8D82E9E404265E749C818 /* Pods_LastFMNotifierTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29BF0DB16DD5BB044FE9504 /* Pods_LastFMNotifierTests.framework */; };
 		3306CFD886057A6727662492 /* Pods_LastFMNotifier.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2D2255AF2A192DD77241EC /* Pods_LastFMNotifier.framework */; };
 		6507714B1E8FA73900D5788F /* Mappable+FromAny.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650771491E8FA73900D5788F /* Mappable+FromAny.swift */; };
@@ -51,6 +50,8 @@
 		651470A31EAA6A9100F949DC /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514709E1EAA6A9100F949DC /* NetworkService.swift */; };
 		651470A51EAA6AA700F949DC /* NetworkOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651470A41EAA6AA700F949DC /* NetworkOperation.swift */; };
 		651552001EAFA1AF00F1EE37 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651551FF1EAFA1AF00F1EE37 /* OnboardingCoordinator.swift */; };
+		6517A3C61EBCE5C6002BC634 /* RealmMappedCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6517A3C51EBCE5C6002BC634 /* RealmMappedCollectionTests.swift */; };
+		6517A3C81EBCE5DA002BC634 /* RealmHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6517A3C71EBCE5DA002BC634 /* RealmHelpers.swift */; };
 		651F0F7B1EB379F6004639A1 /* LibraryArtistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F0F701EB379F6004639A1 /* LibraryArtistCell.swift */; };
 		651F0F7C1EB379F6004639A1 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F0F711EB379F6004639A1 /* LibraryViewController.swift */; };
 		651F0F7D1EB379F6004639A1 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F0F721EB379F6004639A1 /* LoadingView.swift */; };
@@ -132,7 +133,6 @@
 		01A4EEA91DF58945000A12A6 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		01D4D3181DAE4A0000BFD7FD /* LastFMNotifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LastFMNotifier.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01D4D32C1DAE4A0000BFD7FD /* LastFMNotifierTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LastFMNotifierTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		01D4D3301DAE4A0000BFD7FD /* LastFMNotifierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastFMNotifierTests.swift; sourceTree = "<group>"; };
 		01D4D3321DAE4A0000BFD7FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1325F94CA066BC04255604B2 /* Pods-LastFMNotifier.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LastFMNotifier.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LastFMNotifier/Pods-LastFMNotifier.debug.xcconfig"; sourceTree = "<group>"; };
 		2D89EF6B90057CC1DCFBD6A6 /* Pods-LastFMNotifier.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LastFMNotifier.release.xcconfig"; path = "Pods/Target Support Files/Pods-LastFMNotifier/Pods-LastFMNotifier.release.xcconfig"; sourceTree = "<group>"; };
@@ -154,6 +154,8 @@
 		6514709E1EAA6A9100F949DC /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		651470A41EAA6AA700F949DC /* NetworkOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkOperation.swift; sourceTree = "<group>"; };
 		651551FF1EAFA1AF00F1EE37 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
+		6517A3C51EBCE5C6002BC634 /* RealmMappedCollectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmMappedCollectionTests.swift; sourceTree = "<group>"; };
+		6517A3C71EBCE5DA002BC634 /* RealmHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmHelpers.swift; sourceTree = "<group>"; };
 		651F0F701EB379F6004639A1 /* LibraryArtistCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryArtistCell.swift; sourceTree = "<group>"; };
 		651F0F711EB379F6004639A1 /* LibraryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
 		651F0F721EB379F6004639A1 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
@@ -393,8 +395,8 @@
 		01D4D32F1DAE4A0000BFD7FD /* LastFMNotifierTests */ = {
 			isa = PBXGroup;
 			children = (
-				01D4D3301DAE4A0000BFD7FD /* LastFMNotifierTests.swift */,
 				01D4D3321DAE4A0000BFD7FD /* Info.plist */,
+				6517A3C41EBCE5C6002BC634 /* Realm */,
 			);
 			path = LastFMNotifierTests;
 			sourceTree = "<group>";
@@ -452,6 +454,15 @@
 				651470A41EAA6AA700F949DC /* NetworkOperation.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		6517A3C41EBCE5C6002BC634 /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				6517A3C51EBCE5C6002BC634 /* RealmMappedCollectionTests.swift */,
+				6517A3C71EBCE5DA002BC634 /* RealmHelpers.swift */,
+			);
+			path = Realm;
 			sourceTree = "<group>";
 		};
 		651F0F6D1EB379F6004639A1 /* Library */ = {
@@ -764,6 +775,7 @@
 					};
 					01D4D32B1DAE4A0000BFD7FD = {
 						CreatedOnToolsVersion = 8.0;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 01D4D3171DAE4A0000BFD7FD;
 					};
@@ -1006,7 +1018,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				01D4D3311DAE4A0000BFD7FD /* LastFMNotifierTests.swift in Sources */,
+				6517A3C81EBCE5DA002BC634 /* RealmHelpers.swift in Sources */,
+				6517A3C61EBCE5C6002BC634 /* RealmMappedCollectionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1160,10 +1173,12 @@
 			baseConfigurationReference = 7DA0674F9B99F1C73DD95155 /* Pods-LastFMNotifierTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = LastFMNotifierTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.icecoffin.LastFMNotifierTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LastFMNotifier.app/LastFMNotifier";
 			};
@@ -1174,6 +1189,7 @@
 			baseConfigurationReference = D1EB62EA0D8FE3964F218DE8 /* Pods-LastFMNotifierTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = LastFMNotifierTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.icecoffin.LastFMNotifierTests;

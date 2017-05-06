@@ -18,6 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var appCoordinator: AppCoordinator?
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    if let _ = NSClassFromString("XCTestCase") {
+      return true
+    }
+
     setupLogging()
 
     let window = UIWindow(frame: UIScreen.main.bounds)

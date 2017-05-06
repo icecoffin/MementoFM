@@ -105,7 +105,6 @@ class LibraryViewController: UIViewController {
       self.loadingView.isHidden = true
     }
 
-    // TODO: request data on didBecomeActive or similar
     viewModel.requestDataIfNeeded()
   }
 }

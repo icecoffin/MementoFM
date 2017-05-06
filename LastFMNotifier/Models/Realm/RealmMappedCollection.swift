@@ -21,14 +21,13 @@ class RealmMappedCollection<Element: Object, Transformed> {
 
   var sortDescriptors: [SortDescriptor] {
     didSet {
-      results = fetchResults()
-      subscribeToResultsNotifications()
+      refetchResults()
     }
   }
 
   var predicate: NSPredicate? {
     didSet {
-      results = fetchResults()
+      refetchResults()
     }
   }
 
@@ -55,7 +54,13 @@ class RealmMappedCollection<Element: Object, Transformed> {
     }
   }
 
+  private func refetchResults() {
+    results = fetchResults()
+    subscribeToResultsNotifications()
+  }
+
   private func subscribeToResultsNotifications() {
+    notificationToken?.stop()
     notificationToken = results.addNotificationBlock { [unowned self] changes in
       self.notificationBlock?(changes)
     }
