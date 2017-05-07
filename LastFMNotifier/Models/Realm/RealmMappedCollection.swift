@@ -49,9 +49,9 @@ class RealmMappedCollection<Element: Object, Transformed> {
     let results = realm.objects(Element.self).sorted(by: sortDescriptors)
     if let predicate = predicate {
       return results.filter(predicate)
-    } else {
-      return results
     }
+
+    return results
   }
 
   private func refetchResults() {
