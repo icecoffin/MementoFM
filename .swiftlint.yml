@@ -8,6 +8,7 @@ excluded:
   - Pods
   - Vendor
   - build
+  - GeneratedCode
 
 variable_name:  
   excluded:

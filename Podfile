@@ -10,6 +10,7 @@ target 'LastFMNotifier' do
   pod 'PromiseKit/Alamofire'
   pod 'RealmSwift'
   pod 'SnapKit'
+  pod 'Sourcery'
   pod 'SVProgressHUD'
   pod 'SwiftyBeaver'
   pod 'TPKeyboardAvoiding'
