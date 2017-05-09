@@ -12,7 +12,7 @@ struct IgnoredTag {
   let uuid: String
   let name: String
 
-  func updateName(_ newName: String) -> IgnoredTag {
+  func byUpdatingName(_ newName: String) -> IgnoredTag {
     return IgnoredTag(uuid: uuid, name: newName)
   }
 }

@@ -95,7 +95,6 @@
 		651F9E5F1EC09FDD006D9474 /* Sourcery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9E041EC09FDC006D9474 /* Sourcery.swift */; };
 		651F9E601EC09FDD006D9474 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 651F9E071EC09FDC006D9474 /* LaunchScreen.storyboard */; };
 		651F9E611EC09FDD006D9474 /* EmptyDataSetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9E0A1EC09FDC006D9474 /* EmptyDataSetView.swift */; };
-		651F9E6C1EC0A1B9006D9474 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 651F9E6B1EC0A1B9006D9474 /* Info.plist */; };
 		651F9E701EC0A88B006D9474 /* AutoEquatable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9E6E1EC0A88B006D9474 /* AutoEquatable.generated.swift */; };
 		651F9E711EC0A88B006D9474 /* AutoHashable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9E6F1EC0A88B006D9474 /* AutoHashable.generated.swift */; };
 /* End PBXBuildFile section */
@@ -261,6 +260,7 @@
 			children = (
 				01D4D3321DAE4A0000BFD7FD /* Info.plist */,
 				6517A3C41EBCE5C6002BC634 /* Realm */,
+				651F9E781EC0E308006D9474 /* Models */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -279,8 +279,8 @@
 		6517A3C41EBCE5C6002BC634 /* Realm */ = {
 			isa = PBXGroup;
 			children = (
-				6517A3C51EBCE5C6002BC634 /* RealmMappedCollectionTests.swift */,
 				6517A3C71EBCE5DA002BC634 /* RealmHelpers.swift */,
+				6517A3C51EBCE5C6002BC634 /* RealmMappedCollectionTests.swift */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -722,6 +722,13 @@
 			path = GeneratedCode;
 			sourceTree = "<group>";
 		};
+		651F9E781EC0E308006D9474 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		742EEABE63376162FBE45084 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -830,7 +837,6 @@
 				651F9E601EC09FDD006D9474 /* LaunchScreen.storyboard in Resources */,
 				651F9E0D1EC09FDC006D9474 /* Raleway-Bold.ttf in Resources */,
 				651F9E0B1EC09FDC006D9474 /* Assets.xcassets in Resources */,
-				651F9E6C1EC0A1B9006D9474 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -900,7 +906,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${PODS_ROOT}/Sourcery/bin/sourcery --sources ${SRCROOT}/Sources\t  --templates ${SRCROOT}/Templates --output ${SRCROOT}/GeneratedCode";
+			shellScript = "${PODS_ROOT}/Sourcery/bin/sourcery --sources ${SRCROOT}/Sources --templates ${SRCROOT}/Templates --output ${SRCROOT}/GeneratedCode";
 		};
 		A6665349F41C84CDB782A882 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

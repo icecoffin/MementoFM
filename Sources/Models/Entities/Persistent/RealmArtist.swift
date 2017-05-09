@@ -34,6 +34,10 @@ class RealmArtist: Object {
       let realmTag = RealmTag.from(tag: tag)
       realmArtist.tags.append(realmTag)
     }
+    for topTag in artist.topTags {
+      let realmTag = RealmTag.from(tag: topTag)
+      realmArtist.topTags.append(realmTag)
+    }
     return realmArtist
   }
 
