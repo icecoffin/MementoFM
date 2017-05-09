@@ -31,24 +31,3 @@ type_name:
   excluded:
     - Up
 
-custom_rules:
-   comments_space:
-      name: "Space After Comment"
-      regex: "(^ *//\w+)"
-      message: "There should be a space after //"
-      severity: warning
-   comments_capitalized_ignore_possible_code:
-      name: "Capitalize First Word In Comment"
-      regex: "(^ +// +(?!swiftlint)[a-z]+)"
-      message: "The first word of a comment should be capitalized"
-      severity: warning
-   empty_line_after_guard:
-      name: "Empty Line After Guard"
-      regex: "(^ *guard[ a-zA-Z0-9=?.\(\),><!]*\{[ a-zA-Z0-9=?.\(\),><!]*\}\n *(?!(?:return|guard))\S+)"
-      message: "There should be an empty line after a guard"
-      severity: warning
-   multiple_empty_lines:
-      name: "Multiple Empty Lines"
-      regex: "((?:\s*\n){3,})"
-      message: "There are too many line breaks"
-      severity: warning
