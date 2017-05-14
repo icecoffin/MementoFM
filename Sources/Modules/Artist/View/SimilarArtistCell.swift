@@ -28,7 +28,7 @@ class SimilarArtistCell: UICollectionViewCell {
     contentView.addSubview(photoImageView)
     photoImageView.snp.makeConstraints { make in
       make.top.equalToSuperview()
-      make.bottom.lessThanOrEqualToSuperview().inset(8)
+      make.bottom.lessThanOrEqualToSuperview().inset(8).priority(UILayoutPriorityDefaultHigh)
       make.leading.equalToSuperview().offset(16)
       make.width.height.equalTo(50)
     }
@@ -39,17 +39,17 @@ class SimilarArtistCell: UICollectionViewCell {
     contentView.addSubview(nameLabel)
     nameLabel.snp.makeConstraints { make in
       make.top.equalToSuperview()
-      make.leading.equalTo(photoImageView.snp.trailing).offset(16)
+      make.leading.equalTo(photoImageView.snp.trailing).offset(16).priority(UILayoutPriorityDefaultHigh)
       make.trailing.equalToSuperview().inset(16)
     }
     nameLabel.numberOfLines = 0
-    nameLabel.font = Fonts.ralewayMedium(withSize: 16)
+    nameLabel.font = Fonts.ralewayBold(withSize: 16)
 
     contentView.addSubview(tagsLabel)
     tagsLabel.snp.makeConstraints { make in
       make.top.equalTo(nameLabel.snp.bottom).offset(8)
       make.leading.trailing.equalTo(nameLabel)
-      make.bottom.equalToSuperview().inset(8)
+      make.bottom.equalToSuperview().inset(8).priority(UILayoutPriorityDefaultHigh)
     }
     tagsLabel.numberOfLines = 0
     tagsLabel.font = Fonts.raleway(withSize: 14)
