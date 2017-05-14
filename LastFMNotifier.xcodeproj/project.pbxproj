@@ -11,6 +11,9 @@
 		3306CFD886057A6727662492 /* Pods_LastFMNotifier.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2D2255AF2A192DD77241EC /* Pods_LastFMNotifier.framework */; };
 		6517A3C61EBCE5C6002BC634 /* RealmMappedCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6517A3C51EBCE5C6002BC634 /* RealmMappedCollectionTests.swift */; };
 		6517A3C81EBCE5DA002BC634 /* RealmHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6517A3C71EBCE5DA002BC634 /* RealmHelpers.swift */; };
+		6518B1291EC825E8001F4B74 /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518B1281EC825E8001F4B74 /* TagCell.swift */; };
+		6518B12F1EC85BA6001F4B74 /* SimilarArtistCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518B12E1EC85BA6001F4B74 /* SimilarArtistCellViewModel.swift */; };
+		6518B1311EC85C07001F4B74 /* TagCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518B1301EC85C07001F4B74 /* TagCellViewModel.swift */; };
 		651F9E0B1EC09FDC006D9474 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 651F9D881EC09FDC006D9474 /* Assets.xcassets */; };
 		651F9E0C1EC09FDC006D9474 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 651F9D8A1EC09FDC006D9474 /* OFL.txt */; };
 		651F9E0D1EC09FDC006D9474 /* Raleway-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 651F9D8B1EC09FDC006D9474 /* Raleway-Bold.ttf */; };
@@ -82,7 +85,7 @@
 		651F9E511EC09FDD006D9474 /* NetworkService+Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DF31EC09FDC006D9474 /* NetworkService+Library.swift */; };
 		651F9E521EC09FDD006D9474 /* NetworkService+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DF41EC09FDC006D9474 /* NetworkService+User.swift */; };
 		651F9E531EC09FDD006D9474 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DF51EC09FDC006D9474 /* NetworkService.swift */; };
-		651F9E541EC09FDD006D9474 /* CellReusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DF71EC09FDC006D9474 /* CellReusable.swift */; };
+		651F9E541EC09FDD006D9474 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DF71EC09FDC006D9474 /* Reusable.swift */; };
 		651F9E551EC09FDD006D9474 /* IgnoredTagsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DF81EC09FDC006D9474 /* IgnoredTagsPresenter.swift */; };
 		651F9E561EC09FDD006D9474 /* SyncPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DF91EC09FDC006D9474 /* SyncPresenter.swift */; };
 		651F9E581EC09FDD006D9474 /* AppearanceConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DFD1EC09FDC006D9474 /* AppearanceConfigurator.swift */; };
@@ -97,6 +100,20 @@
 		651F9E611EC09FDD006D9474 /* EmptyDataSetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9E0A1EC09FDC006D9474 /* EmptyDataSetView.swift */; };
 		651F9E701EC0A88B006D9474 /* AutoEquatable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9E6E1EC0A88B006D9474 /* AutoEquatable.generated.swift */; };
 		651F9E711EC0A88B006D9474 /* AutoHashable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9E6F1EC0A88B006D9474 /* AutoHashable.generated.swift */; };
+		65206EC31EC4C07700A83DA1 /* ArtistSectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65206EC21EC4C07700A83DA1 /* ArtistSectionDataSource.swift */; };
+		65206EC51EC4C0A500A83DA1 /* ArtistInfoSectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65206EC41EC4C0A500A83DA1 /* ArtistInfoSectionDataSource.swift */; };
+		65206EC71EC4C0CF00A83DA1 /* ArtistTopTagsSectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65206EC61EC4C0CF00A83DA1 /* ArtistTopTagsSectionDataSource.swift */; };
+		65206EC91EC4C11400A83DA1 /* ArtistSimilarArtistsSectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65206EC81EC4C11400A83DA1 /* ArtistSimilarArtistsSectionDataSource.swift */; };
+		65206ECB1EC4CDFB00A83DA1 /* ArtistInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65206ECA1EC4CDFB00A83DA1 /* ArtistInfoCell.swift */; };
+		65206ECD1EC4CEEF00A83DA1 /* SimilarArtistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65206ECC1EC4CEEF00A83DA1 /* SimilarArtistCell.swift */; };
+		65241C241EC6E96300927749 /* ArtistInfoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C1E1EC6E96300927749 /* ArtistInfoCellViewModel.swift */; };
+		65241C251EC6E96300927749 /* ArtistInfoSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C201EC6E96300927749 /* ArtistInfoSectionViewModel.swift */; };
+		65241C261EC6E96300927749 /* ArtistSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C211EC6E96300927749 /* ArtistSectionViewModel.swift */; };
+		65241C271EC6E96300927749 /* ArtistSimilarArtistsSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C221EC6E96300927749 /* ArtistSimilarArtistsSectionViewModel.swift */; };
+		65241C281EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C231EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift */; };
+		65241C2A1EC70AF400927749 /* UICollectionViewCell+DynamicSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C291EC70AF400927749 /* UICollectionViewCell+DynamicSize.swift */; };
+		65241C2C1EC710C700927749 /* ArtistSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C2B1EC710C700927749 /* ArtistSectionHeaderView.swift */; };
+		65B772891EC5C5E500892698 /* ArtistDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B772881EC5C5E500892698 /* ArtistDataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +134,9 @@
 		2D89EF6B90057CC1DCFBD6A6 /* Pods-LastFMNotifier.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LastFMNotifier.release.xcconfig"; path = "Pods/Target Support Files/Pods-LastFMNotifier/Pods-LastFMNotifier.release.xcconfig"; sourceTree = "<group>"; };
 		6517A3C51EBCE5C6002BC634 /* RealmMappedCollectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmMappedCollectionTests.swift; sourceTree = "<group>"; };
 		6517A3C71EBCE5DA002BC634 /* RealmHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmHelpers.swift; sourceTree = "<group>"; };
+		6518B1281EC825E8001F4B74 /* TagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
+		6518B12E1EC85BA6001F4B74 /* SimilarArtistCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimilarArtistCellViewModel.swift; sourceTree = "<group>"; };
+		6518B1301EC85C07001F4B74 /* TagCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCellViewModel.swift; sourceTree = "<group>"; };
 		651F9D881EC09FDC006D9474 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		651F9D8A1EC09FDC006D9474 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
 		651F9D8B1EC09FDC006D9474 /* Raleway-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Bold.ttf"; sourceTree = "<group>"; };
@@ -188,7 +208,7 @@
 		651F9DF31EC09FDC006D9474 /* NetworkService+Library.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NetworkService+Library.swift"; sourceTree = "<group>"; };
 		651F9DF41EC09FDC006D9474 /* NetworkService+User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NetworkService+User.swift"; sourceTree = "<group>"; };
 		651F9DF51EC09FDC006D9474 /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
-		651F9DF71EC09FDC006D9474 /* CellReusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellReusable.swift; sourceTree = "<group>"; };
+		651F9DF71EC09FDC006D9474 /* Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		651F9DF81EC09FDC006D9474 /* IgnoredTagsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IgnoredTagsPresenter.swift; sourceTree = "<group>"; };
 		651F9DF91EC09FDC006D9474 /* SyncPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncPresenter.swift; sourceTree = "<group>"; };
 		651F9DFD1EC09FDC006D9474 /* AppearanceConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceConfigurator.swift; sourceTree = "<group>"; };
@@ -204,6 +224,20 @@
 		651F9E6B1EC0A1B9006D9474 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		651F9E6E1EC0A88B006D9474 /* AutoEquatable.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoEquatable.generated.swift; sourceTree = "<group>"; };
 		651F9E6F1EC0A88B006D9474 /* AutoHashable.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoHashable.generated.swift; sourceTree = "<group>"; };
+		65206EC21EC4C07700A83DA1 /* ArtistSectionDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistSectionDataSource.swift; sourceTree = "<group>"; };
+		65206EC41EC4C0A500A83DA1 /* ArtistInfoSectionDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInfoSectionDataSource.swift; sourceTree = "<group>"; };
+		65206EC61EC4C0CF00A83DA1 /* ArtistTopTagsSectionDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistTopTagsSectionDataSource.swift; sourceTree = "<group>"; };
+		65206EC81EC4C11400A83DA1 /* ArtistSimilarArtistsSectionDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistSimilarArtistsSectionDataSource.swift; sourceTree = "<group>"; };
+		65206ECA1EC4CDFB00A83DA1 /* ArtistInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInfoCell.swift; sourceTree = "<group>"; };
+		65206ECC1EC4CEEF00A83DA1 /* SimilarArtistCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimilarArtistCell.swift; sourceTree = "<group>"; };
+		65241C1E1EC6E96300927749 /* ArtistInfoCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInfoCellViewModel.swift; sourceTree = "<group>"; };
+		65241C201EC6E96300927749 /* ArtistInfoSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInfoSectionViewModel.swift; sourceTree = "<group>"; };
+		65241C211EC6E96300927749 /* ArtistSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistSectionViewModel.swift; sourceTree = "<group>"; };
+		65241C221EC6E96300927749 /* ArtistSimilarArtistsSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistSimilarArtistsSectionViewModel.swift; sourceTree = "<group>"; };
+		65241C231EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistTopTagsSectionViewModel.swift; sourceTree = "<group>"; };
+		65241C291EC70AF400927749 /* UICollectionViewCell+DynamicSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+DynamicSize.swift"; sourceTree = "<group>"; };
+		65241C2B1EC710C700927749 /* ArtistSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistSectionHeaderView.swift; sourceTree = "<group>"; };
+		65B772881EC5C5E500892698 /* ArtistDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistDataSource.swift; sourceTree = "<group>"; };
 		7D2D2255AF2A192DD77241EC /* Pods_LastFMNotifier.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LastFMNotifier.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DA0674F9B99F1C73DD95155 /* Pods-LastFMNotifierTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LastFMNotifierTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LastFMNotifierTests/Pods-LastFMNotifierTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D1EB62EA0D8FE3964F218DE8 /* Pods-LastFMNotifierTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LastFMNotifierTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LastFMNotifierTests/Pods-LastFMNotifierTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -353,6 +387,7 @@
 				651F9DA11EC09FDC006D9474 /* String+Unlocalized.swift */,
 				651F9DA21EC09FDC006D9474 /* UITableView+HeaderVIew.swift */,
 				651F9DA31EC09FDC006D9474 /* UIViewController+Alert.swift */,
+				65241C291EC70AF400927749 /* UICollectionViewCell+DynamicSize.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -467,6 +502,7 @@
 			children = (
 				651F9DC51EC09FDC006D9474 /* View */,
 				651F9DC71EC09FDC006D9474 /* ViewModel */,
+				65206EC11EC4C06100A83DA1 /* DataSource */,
 			);
 			path = Artist;
 			sourceTree = "<group>";
@@ -475,6 +511,10 @@
 			isa = PBXGroup;
 			children = (
 				651F9DC61EC09FDC006D9474 /* ArtistViewController.swift */,
+				65206ECA1EC4CDFB00A83DA1 /* ArtistInfoCell.swift */,
+				6518B1281EC825E8001F4B74 /* TagCell.swift */,
+				65206ECC1EC4CEEF00A83DA1 /* SimilarArtistCell.swift */,
+				65241C2B1EC710C700927749 /* ArtistSectionHeaderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -483,6 +523,8 @@
 			isa = PBXGroup;
 			children = (
 				651F9DC81EC09FDC006D9474 /* ArtistViewModel.swift */,
+				65241C1F1EC6E96300927749 /* Sections */,
+				65241C1D1EC6E96300927749 /* Cells */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -656,7 +698,7 @@
 		651F9DF61EC09FDC006D9474 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				651F9DF71EC09FDC006D9474 /* CellReusable.swift */,
+				651F9DF71EC09FDC006D9474 /* Reusable.swift */,
 				651F9DF81EC09FDC006D9474 /* IgnoredTagsPresenter.swift */,
 				651F9DF91EC09FDC006D9474 /* SyncPresenter.swift */,
 			);
@@ -729,6 +771,39 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		65206EC11EC4C06100A83DA1 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				65B772881EC5C5E500892698 /* ArtistDataSource.swift */,
+				65206EC21EC4C07700A83DA1 /* ArtistSectionDataSource.swift */,
+				65206EC41EC4C0A500A83DA1 /* ArtistInfoSectionDataSource.swift */,
+				65206EC61EC4C0CF00A83DA1 /* ArtistTopTagsSectionDataSource.swift */,
+				65206EC81EC4C11400A83DA1 /* ArtistSimilarArtistsSectionDataSource.swift */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
+		65241C1D1EC6E96300927749 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				65241C1E1EC6E96300927749 /* ArtistInfoCellViewModel.swift */,
+				6518B1301EC85C07001F4B74 /* TagCellViewModel.swift */,
+				6518B12E1EC85BA6001F4B74 /* SimilarArtistCellViewModel.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		65241C1F1EC6E96300927749 /* Sections */ = {
+			isa = PBXGroup;
+			children = (
+				65241C201EC6E96300927749 /* ArtistInfoSectionViewModel.swift */,
+				65241C211EC6E96300927749 /* ArtistSectionViewModel.swift */,
+				65241C231EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift */,
+				65241C221EC6E96300927749 /* ArtistSimilarArtistsSectionViewModel.swift */,
+			);
+			path = Sections;
+			sourceTree = "<group>";
+		};
 		742EEABE63376162FBE45084 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -745,8 +820,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 01D4D3351DAE4A0000BFD7FD /* Build configuration list for PBXNativeTarget "LastFMNotifier" */;
 			buildPhases = (
-				651F9D7D1EC08BFD006D9474 /* Run Sourcery */,
 				575809D299E94D84B4875A43 /* [CP] Check Pods Manifest.lock */,
+				651F9D7D1EC08BFD006D9474 /* Run Sourcery */,
 				01D4D3141DAE4A0000BFD7FD /* Sources */,
 				01D4D3151DAE4A0000BFD7FD /* Frameworks */,
 				01D4D3161DAE4A0000BFD7FD /* Resources */,
@@ -976,20 +1051,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				651F9E311EC09FDC006D9474 /* RealmGateway.swift in Sources */,
+				65206EC31EC4C07700A83DA1 /* ArtistSectionDataSource.swift in Sources */,
 				651F9E1C1EC09FDC006D9474 /* Mappable+FromAny.swift in Sources */,
 				651F9E581EC09FDD006D9474 /* AppearanceConfigurator.swift in Sources */,
 				651F9E521EC09FDD006D9474 /* NetworkService+User.swift in Sources */,
 				651F9E381EC09FDC006D9474 /* ArtistViewModel.swift in Sources */,
 				651F9E5C1EC09FDD006D9474 /* ErrorConverter.swift in Sources */,
 				651F9E151EC09FDC006D9474 /* AppCoordinator.swift in Sources */,
+				65241C281EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift in Sources */,
+				6518B1311EC85C07001F4B74 /* TagCellViewModel.swift in Sources */,
 				651F9E351EC09FDC006D9474 /* TopTagsResponse.swift in Sources */,
 				651F9E341EC09FDC006D9474 /* RecentTracksPageResponse.swift in Sources */,
 				651F9E561EC09FDD006D9474 /* SyncPresenter.swift in Sources */,
 				651F9E411EC09FDC006D9474 /* LibraryViewController.swift in Sources */,
+				65241C271EC6E96300927749 /* ArtistSimilarArtistsSectionViewModel.swift in Sources */,
 				651F9E231EC09FDC006D9474 /* RealmTag.swift in Sources */,
+				6518B12F1EC85BA6001F4B74 /* SimilarArtistCellViewModel.swift in Sources */,
 				651F9E281EC09FDC006D9474 /* SettingConfiguration.swift in Sources */,
 				651F9E3F1EC09FDC006D9474 /* IgnoredTagsViewModel.swift in Sources */,
 				651F9E1B1EC09FDC006D9474 /* SettingsCoordinator.swift in Sources */,
+				65206ECB1EC4CDFB00A83DA1 /* ArtistInfoCell.swift in Sources */,
 				651F9E261EC09FDC006D9474 /* LibraryPage.swift in Sources */,
 				651F9E4A1EC09FDD006D9474 /* SettingsViewController.swift in Sources */,
 				651F9E611EC09FDD006D9474 /* EmptyDataSetView.swift in Sources */,
@@ -1001,6 +1082,8 @@
 				651F9E111EC09FDC006D9474 /* Dependencies.swift in Sources */,
 				651F9E241EC09FDC006D9474 /* Artist.swift in Sources */,
 				651F9E4F1EC09FDD006D9474 /* NetworkService+Artist.swift in Sources */,
+				65206ECD1EC4CEEF00A83DA1 /* SimilarArtistCell.swift in Sources */,
+				65241C2A1EC70AF400927749 /* UICollectionViewCell+DynamicSize.swift in Sources */,
 				651F9E481EC09FDD006D9474 /* SyncViewModel.swift in Sources */,
 				651F9E531EC09FDD006D9474 /* NetworkService.swift in Sources */,
 				651F9E2A1EC09FDC006D9474 /* TopTagsList.swift in Sources */,
@@ -1013,22 +1096,30 @@
 				651F9E321EC09FDC006D9474 /* RealmMappedCollection.swift in Sources */,
 				651F9E701EC0A88B006D9474 /* AutoEquatable.generated.swift in Sources */,
 				651F9E171EC09FDC006D9474 /* LibraryCoordinator.swift in Sources */,
+				65206EC71EC4C0CF00A83DA1 /* ArtistTopTagsSectionDataSource.swift in Sources */,
 				651F9E401EC09FDC006D9474 /* LibraryArtistCell.swift in Sources */,
 				651F9E291EC09FDC006D9474 /* Tag.swift in Sources */,
 				651F9E371EC09FDC006D9474 /* ArtistViewController.swift in Sources */,
 				651F9E1F1EC09FDC006D9474 /* UITableView+HeaderVIew.swift in Sources */,
 				651F9E181EC09FDC006D9474 /* MainFlowCoordinator.swift in Sources */,
 				651F9E501EC09FDD006D9474 /* NetworkService+General.swift in Sources */,
+				65241C261EC6E96300927749 /* ArtistSectionViewModel.swift in Sources */,
 				651F9E4E1EC09FDD006D9474 /* NetworkOperation.swift in Sources */,
 				651F9E4D1EC09FDD006D9474 /* NetworkConstants.swift in Sources */,
 				651F9E251EC09FDC006D9474 /* IgnoredTag.swift in Sources */,
+				65241C251EC6E96300927749 /* ArtistInfoSectionViewModel.swift in Sources */,
+				65206EC51EC4C0A500A83DA1 /* ArtistInfoSectionDataSource.swift in Sources */,
 				651F9E3A1EC09FDC006D9474 /* EnterUsernameViewModel.swift in Sources */,
 				651F9E591EC09FDD006D9474 /* AsynchronousOperation.swift in Sources */,
 				651F9E101EC09FDC006D9474 /* AppDelegate.swift in Sources */,
+				65B772891EC5C5E500892698 /* ArtistDataSource.swift in Sources */,
+				65206EC91EC4C11400A83DA1 /* ArtistSimilarArtistsSectionDataSource.swift in Sources */,
+				65241C2C1EC710C700927749 /* ArtistSectionHeaderView.swift in Sources */,
 				651F9E5A1EC09FDD006D9474 /* BlockBarButtonItem.swift in Sources */,
 				651F9E3B1EC09FDC006D9474 /* IgnoredTagCell.swift in Sources */,
 				651F9E4C1EC09FDD006D9474 /* SettingsViewModel.swift in Sources */,
 				651F9E361EC09FDC006D9474 /* AboutViewController.swift in Sources */,
+				6518B1291EC825E8001F4B74 /* TagCell.swift in Sources */,
 				651F9E4B1EC09FDD006D9474 /* SettingCellViewModel.swift in Sources */,
 				651F9E461EC09FDD006D9474 /* LibraryUpdater.swift in Sources */,
 				651F9E5F1EC09FDD006D9474 /* Sourcery.swift in Sources */,
@@ -1044,6 +1135,7 @@
 				651F9E5D1EC09FDD006D9474 /* Fonts.swift in Sources */,
 				651F9E2C1EC09FDC006D9474 /* UserDataStorage.swift in Sources */,
 				651F9E191EC09FDC006D9474 /* NavigationFlowCoordinator.swift in Sources */,
+				65241C241EC6E96300927749 /* ArtistInfoCellViewModel.swift in Sources */,
 				651F9E511EC09FDD006D9474 /* NetworkService+Library.swift in Sources */,
 				651F9E211EC09FDC006D9474 /* RealmArtist.swift in Sources */,
 				651F9E161EC09FDC006D9474 /* Coordinator.swift in Sources */,
@@ -1054,7 +1146,7 @@
 				651F9E2B1EC09FDC006D9474 /* Track.swift in Sources */,
 				651F9E3E1EC09FDC006D9474 /* IgnoredTagCellViewModel.swift in Sources */,
 				651F9E471EC09FDD006D9474 /* SyncViewController.swift in Sources */,
-				651F9E541EC09FDD006D9474 /* CellReusable.swift in Sources */,
+				651F9E541EC09FDD006D9474 /* Reusable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

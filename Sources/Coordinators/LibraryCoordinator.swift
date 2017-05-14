@@ -54,8 +54,9 @@ class LibraryCoordinator: NavigationFlowCoordinator {
 extension LibraryCoordinator: LibraryViewModelDelegate {
   func libraryViewModel(_ viewModel: LibraryViewModel, didSelectArtist artist: Artist) {
     let artistViewModel = ArtistViewModel(artist: artist, dependencies: dependencies)
+    let artistDataSource = ArtistDataSource(viewModel: artistViewModel)
 
-    let artistViewController = ArtistViewController(viewModel: artistViewModel)
+    let artistViewController = ArtistViewController(dataSource: artistDataSource)
     artistViewController.title = artistViewModel.title
     artistViewController.navigationItem.leftBarButtonItem = makeBackButton()
     artistViewController.hidesBottomBarWhenPushed = true

@@ -1,5 +1,5 @@
 //
-//  CellReusable.swift
+//  Reusable.swift
 //  LastFMNotifier
 //
 //  Created by Daniel on 06/12/2016.
@@ -8,14 +8,15 @@
 
 import UIKit
 
-protocol CellReusable {
+protocol Reusable {
   static var reuseIdentifier: String { get }
 }
 
-extension CellReusable {
+extension Reusable {
   static var reuseIdentifier: String {
     return String(describing: self)
   }
 }
 
-extension UITableViewCell: CellReusable { }
+extension UITableViewCell: Reusable { }
+extension UICollectionReusableView: Reusable { }

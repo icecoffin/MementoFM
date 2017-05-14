@@ -7,17 +7,15 @@
 //
 
 import UIKit
+import UICollectionViewLeftAlignedLayout
 
 class ArtistViewController: UIViewController {
-  fileprivate let viewModel: ArtistViewModel
+  fileprivate let dataSource: ArtistDataSource
 
-  private let scrollView = UIScrollView()
-  private let imageView = UIImageView()
-  private let tagsLabel = UILabel()
-  private let similarArtistsLabel = UILabel()
+  private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLeftAlignedLayout())
 
-  init(viewModel: ArtistViewModel) {
-    self.viewModel = viewModel
+  init(dataSource: ArtistDataSource) {
+    self.dataSource = dataSource
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -29,45 +27,61 @@ class ArtistViewController: UIViewController {
     super.viewDidLoad()
 
     configureView()
-    bindToViewModel()
+    dataSource.registerReusableViews(in: collectionView)
   }
 
   private func configureView() {
     view.backgroundColor = .white
+    collectionView.backgroundColor = .white
 
-    view.addSubview(scrollView)
-    scrollView.snp.makeConstraints { make in
+    view.addSubview(collectionView)
+    collectionView.snp.makeConstraints { make in
       make.edges.equalToSuperview()
     }
 
-    scrollView.addSubview(imageView)
-    imageView.snp.makeConstraints { make in
-      make.top.equalToSuperview().offset(16)
-      make.centerX.equalToSuperview()
-      make.width.height.equalTo(120)
-    }
-    imageView.layer.cornerRadius = 60
-    imageView.layer.masksToBounds = true
+    collectionView.dataSource = self
+    collectionView.delegate = self
+  }
+}
 
-    scrollView.addSubview(tagsLabel)
-    tagsLabel.snp.makeConstraints { make in
-      make.centerX.equalToSuperview()
-      make.top.equalTo(imageView.snp.bottom).offset(16)
-      make.leading.trailing.equalToSuperview().inset(16)
-    }
-    tagsLabel.numberOfLines = 0
-
-    scrollView.addSubview(similarArtistsLabel)
-    similarArtistsLabel.snp.makeConstraints { make in
-      make.top.equalTo(tagsLabel.snp.bottom).offset(16)
-      make.leading.trailing.bottom.equalToSuperview().inset(16)
-    }
-    similarArtistsLabel.numberOfLines = 0
+extension ArtistViewController: UICollectionViewDataSource {
+  func numberOfSections(in collectionView: UICollectionView) -> Int {
+    return dataSource.numberOfSections
   }
 
-  private func bindToViewModel() {
-    imageView.kf.setImage(with: viewModel.imageURL)
-    tagsLabel.text = viewModel.tags
-    similarArtistsLabel.text = viewModel.similarArtists
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return dataSource.numberOfItems(inSection: section)
+  }
+
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    return dataSource.cellForItem(at: indexPath, in: collectionView)
+  }
+}
+
+extension ArtistViewController: UICollectionViewDelegate {
+  func collectionView(_ collectionView: UICollectionView,
+                      viewForSupplementaryElementOfKind kind: String,
+                      at indexPath: IndexPath) -> UICollectionReusableView {
+    return dataSource.supplementaryView(ofKind: kind, at: indexPath, in: collectionView)
+  }
+}
+
+extension ArtistViewController: UICollectionViewDelegateFlowLayout {
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      sizeForItemAt indexPath: IndexPath) -> CGSize {
+    return dataSource.sizeForItem(at: indexPath, in: collectionView)
+  }
+
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      referenceSizeForHeaderInSection section: Int) -> CGSize {
+    return dataSource.sizeForHeader(inSection: section, in: collectionView)
+  }
+
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      insetForSectionAt section: Int) -> UIEdgeInsets {
+    return dataSource.insetForSection(at: section, in: collectionView)
   }
 }

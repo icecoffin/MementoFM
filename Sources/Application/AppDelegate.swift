@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var appCoordinator: AppCoordinator?
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-    if let _ = NSClassFromString("XCTestCase") {
+    if NSClassFromString("XCTestCase") != nil {
       return true
     }
 

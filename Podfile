@@ -14,6 +14,7 @@ target 'LastFMNotifier' do
   pod 'SVProgressHUD'
   pod 'SwiftyBeaver'
   pod 'TPKeyboardAvoiding'
+  pod 'UICollectionViewLeftAlignedLayout'
 
   target 'LastFMNotifierTests' do
     inherit! :search_paths
