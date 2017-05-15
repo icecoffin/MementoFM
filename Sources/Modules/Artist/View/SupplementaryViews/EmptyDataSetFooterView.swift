@@ -1,14 +1,14 @@
 //
-//  ArtistSectionHeaderView.swift
+//  EmptyDataSetFooterView.swift
 //  LastFMNotifier
 //
-//  Created by Daniel on 13/05/2017.
+//  Created by Daniel on 15/05/2017.
 //  Copyright © 2017 icecoffin. All rights reserved.
 //
 
 import UIKit
 
-class ArtistSectionHeaderView: UICollectionReusableView {
+class EmptyDataSetFooterView: UICollectionReusableView {
   private let textLabel = UILabel()
 
   override init(frame: CGRect) {
@@ -23,14 +23,16 @@ class ArtistSectionHeaderView: UICollectionReusableView {
   private func setup() {
     addSubview(textLabel)
     textLabel.snp.makeConstraints { make in
+      make.top.bottom.equalToSuperview().inset(8).priority(UILayoutPriorityDefaultHigh)
       make.leading.trailing.equalToSuperview().inset(16)
-      make.centerY.equalToSuperview()
     }
 
-    textLabel.font = Fonts.ralewayBold(withSize: 18)
+    textLabel.numberOfLines = 0
+    textLabel.font = Fonts.ralewayMedium(withSize: 14)
+    textLabel.textColor = .darkGray
   }
 
-  func configure(with viewModel: ArtistSectionViewModel) {
-    textLabel.text = viewModel.sectionHeaderText
+  func configure(with text: String) {
+    textLabel.text = text
   }
 }

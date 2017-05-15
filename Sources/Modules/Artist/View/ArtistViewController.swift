@@ -81,7 +81,17 @@ extension ArtistViewController: UICollectionViewDelegateFlowLayout {
 
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
+                      referenceSizeForFooterInSection section: Int) -> CGSize {
+    return dataSource.sizeForFooter(inSection: section, in: collectionView)
+  }
+
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
                       insetForSectionAt section: Int) -> UIEdgeInsets {
-    return dataSource.insetForSection(at: section, in: collectionView)
+    return dataSource.insetForSection(at: section)
+  }
+
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    return dataSource.minimumLineSpacingForSection(at: section)
   }
 }

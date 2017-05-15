@@ -21,11 +21,19 @@ class ArtistTopTagsSectionViewModel: ArtistSectionViewModel {
     return cellViewModels.count
   }
 
+  var hasTags: Bool {
+    return !cellViewModels.isEmpty
+  }
+
   func cellViewModel(at indexPath: IndexPath) -> TagCellViewModel {
     return cellViewModels[indexPath.item]
   }
 
   var sectionHeaderText: String? {
     return "Top tags".unlocalized
+  }
+
+  var emptyDataSetText: String {
+    return "There are no tags for this artist.".unlocalized
   }
 }

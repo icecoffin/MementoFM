@@ -17,6 +17,9 @@ class ArtistDataSource {
 
   func registerReusableViews(in collectionView: UICollectionView) {
     sectionDataSources.forEach { $0.registerReusableViews(in: collectionView) }
+    collectionView.register(EmptyDataSetFooterView.self,
+                            forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
+                            withReuseIdentifier: EmptyDataSetFooterView.reuseIdentifier)
   }
 
   var numberOfSections: Int {
@@ -38,18 +41,28 @@ class ArtistDataSource {
   func supplementaryView(ofKind kind: String,
                          at indexPath: IndexPath,
                          in collectionView: UICollectionView) -> UICollectionReusableView {
-    guard kind == UICollectionElementKindSectionHeader,
-      let headerView = sectionDataSources[indexPath.section].viewForHeader(at: indexPath, in: collectionView) else {
-      return UICollectionReusableView()
+    if kind == UICollectionElementKindSectionHeader {
+      return sectionDataSources[indexPath.section].viewForHeader(at: indexPath, in: collectionView) ?? UICollectionReusableView()
+    } else if kind == UICollectionElementKindSectionFooter {
+      return sectionDataSources[indexPath.section].viewForFooter(at: indexPath, in: collectionView) ?? UICollectionReusableView()
+    } else {
+      fatalError("Unknown supplementary view kind")
     }
-    return headerView
   }
 
   func sizeForHeader(inSection section: Int, in collectionView: UICollectionView) -> CGSize {
     return sectionDataSources[section].sizeForHeader(inSection: section, in: collectionView)
   }
 
-  func insetForSection(at index: Int, in collectionView: UICollectionView) -> UIEdgeInsets {
-    return sectionDataSources[index].insetForSection(at: index, in: collectionView)
+  func sizeForFooter(inSection section: Int, in collectionView: UICollectionView) -> CGSize {
+    return sectionDataSources[section].sizeForFooter(inSection: section, in: collectionView)
+  }
+
+  func insetForSection(at index: Int) -> UIEdgeInsets {
+    return sectionDataSources[index].insetForSection(at: index)
+  }
+
+  func minimumLineSpacingForSection(at index: Int) -> CGFloat {
+    return sectionDataSources[index].minimumLineSpacing
   }
 }

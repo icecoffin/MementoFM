@@ -18,7 +18,11 @@ protocol ArtistSectionDataSource {
   func viewForHeader(at indexPath: IndexPath, in collectionView: UICollectionView) -> UICollectionReusableView?
   func sizeForHeader(inSection section: Int, in collectionView: UICollectionView) -> CGSize
 
-  func insetForSection(at index: Int, in collectionView: UICollectionView) -> UIEdgeInsets
+  func viewForFooter(at indexPath: IndexPath, in collectionView: UICollectionView) -> UICollectionReusableView?
+  func sizeForFooter(inSection section: Int, in collectionView: UICollectionView) -> CGSize
+
+  func insetForSection(at index: Int) -> UIEdgeInsets
+  var minimumLineSpacing: CGFloat { get }
 }
 
 extension ArtistSectionDataSource {
@@ -30,7 +34,19 @@ extension ArtistSectionDataSource {
     return .zero
   }
 
-  func insetForSection(at index: Int, in collectionView: UICollectionView) -> UIEdgeInsets {
+  func viewForFooter(at indexPath: IndexPath, in collectionView: UICollectionView) -> UICollectionReusableView? {
+    return nil
+  }
+
+  func sizeForFooter(inSection section: Int, in collectionView: UICollectionView) -> CGSize {
     return .zero
+  }
+
+  func insetForSection(at index: Int) -> UIEdgeInsets {
+    return .zero
+  }
+
+  var minimumLineSpacing: CGFloat {
+    return 0
   }
 }

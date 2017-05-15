@@ -21,7 +21,7 @@ extension RealmGateway {
 
   func createDefaultIgnoredTags() -> Promise<Void> {
     return write(block: { realm in
-      let ignoredTags = ["rock", "metal", "electronic", "indie", "alternative", "seen live"]
+      let ignoredTags = ["rock", "metal", "electronic", "indie", "alternative", "seen live", "under 2000 listeners"]
       let realmIgnoredTags = ignoredTags.map({ RealmIgnoredTag.ignoredTag(withName: $0) })
       realm.add(realmIgnoredTags)
     })

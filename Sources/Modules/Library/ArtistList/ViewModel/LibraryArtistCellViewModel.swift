@@ -22,7 +22,7 @@ class LibraryArtistCellViewModel {
   }
 
   var playcount: String {
-    return "\(artist.playcount) plays"
+    return "\(artist.playcount) plays".unlocalized
   }
 
   var imageURL: URL? {

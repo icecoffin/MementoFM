@@ -10,8 +10,12 @@ import UIKit
 import Kingfisher
 
 class SimilarArtistCell: UICollectionViewCell {
+  private let outerStackView = UIStackView()
+  private let innerStackView = UIStackView()
+
   private let photoImageView = UIImageView()
   private let nameLabel = UILabel()
+  private let playcountLabel = UILabel()
   private let tagsLabel = UILabel()
   private let separatorView = UIView()
 
@@ -25,32 +29,39 @@ class SimilarArtistCell: UICollectionViewCell {
   }
 
   private func setup() {
-    contentView.addSubview(photoImageView)
+    contentView.addSubview(outerStackView)
+    outerStackView.snp.makeConstraints { make in
+      make.edges.equalToSuperview().priority(UILayoutPriorityDefaultHigh)
+    }
+    outerStackView.axis = .horizontal
+    outerStackView.spacing = 12
+    outerStackView.distribution = .fill
+    outerStackView.alignment = .top
+    outerStackView.isLayoutMarginsRelativeArrangement = true
+    outerStackView.layoutMargins = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+
+    outerStackView.addArrangedSubview(photoImageView)
     photoImageView.snp.makeConstraints { make in
-      make.top.equalToSuperview()
-      make.bottom.lessThanOrEqualToSuperview().inset(8).priority(UILayoutPriorityDefaultHigh)
-      make.leading.equalToSuperview().offset(16)
       make.width.height.equalTo(50)
     }
     photoImageView.backgroundColor = .groupTableViewBackground
     photoImageView.layer.cornerRadius = 25
     photoImageView.layer.masksToBounds = true
 
-    contentView.addSubview(nameLabel)
-    nameLabel.snp.makeConstraints { make in
-      make.top.equalToSuperview()
-      make.leading.equalTo(photoImageView.snp.trailing).offset(16).priority(UILayoutPriorityDefaultHigh)
-      make.trailing.equalToSuperview().inset(16)
-    }
+    outerStackView.addArrangedSubview(innerStackView)
+    innerStackView.axis = .vertical
+    innerStackView.spacing = 6
+    innerStackView.distribution = .fill
+
+    innerStackView.addArrangedSubview(nameLabel)
     nameLabel.numberOfLines = 0
     nameLabel.font = Fonts.ralewayBold(withSize: 16)
 
-    contentView.addSubview(tagsLabel)
-    tagsLabel.snp.makeConstraints { make in
-      make.top.equalTo(nameLabel.snp.bottom).offset(8)
-      make.leading.trailing.equalTo(nameLabel)
-      make.bottom.equalToSuperview().inset(8).priority(UILayoutPriorityDefaultHigh)
-    }
+    innerStackView.addArrangedSubview(playcountLabel)
+    playcountLabel.font = Fonts.raleway(withSize: 14)
+    playcountLabel.textColor = .gray
+
+    innerStackView.addArrangedSubview(tagsLabel)
     tagsLabel.numberOfLines = 0
     tagsLabel.font = Fonts.raleway(withSize: 14)
     tagsLabel.textColor = .darkGray
@@ -66,6 +77,8 @@ class SimilarArtistCell: UICollectionViewCell {
   func configure(with viewModel: SimilarArtistCellViewModel) {
     photoImageView.kf.setImage(with: viewModel.imageURL)
     nameLabel.text = viewModel.name
+    playcountLabel.text = viewModel.playcount
+    // TODO: bold common tags?
     tagsLabel.text = viewModel.tags
   }
 }

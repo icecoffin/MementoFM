@@ -59,10 +59,41 @@ class ArtistTopTagsSectionDataSource: ArtistSectionDataSource {
   }
 
   func sizeForHeader(inSection section: Int, in collectionView: UICollectionView) -> CGSize {
-    return CGSize(width: collectionView.frame.width, height: 44)
+    let prototypeHeader = ArtistSectionHeaderView()
+    return prototypeHeader.size(constrainedToWidth: collectionView.frame.width) {
+      prototypeHeader.configure(with: self.viewModel)
+    }
   }
 
-  func insetForSection(at index: Int, in collectionView: UICollectionView) -> UIEdgeInsets {
-    return UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16)
+  func viewForFooter(at indexPath: IndexPath, in collectionView: UICollectionView) -> UICollectionReusableView? {
+    let reuseIdentifier = EmptyDataSetFooterView.reuseIdentifier
+    guard !viewModel.hasTags,
+      let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter,
+                                                                       withReuseIdentifier: reuseIdentifier,
+                                                                       for: indexPath) as? EmptyDataSetFooterView else {
+      return nil
+    }
+
+    footerView.configure(with: viewModel.emptyDataSetText)
+    return footerView
+  }
+
+  func sizeForFooter(inSection section: Int, in collectionView: UICollectionView) -> CGSize {
+    if viewModel.hasTags {
+      return .zero
+    } else {
+      let prototypeFooter = EmptyDataSetFooterView()
+      return prototypeFooter.size(constrainedToWidth: collectionView.frame.width) {
+        prototypeFooter.configure(with: self.viewModel.emptyDataSetText)
+      }
+    }
+  }
+
+  func insetForSection(at index: Int) -> UIEdgeInsets {
+    return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+  }
+
+  var minimumLineSpacing: CGFloat {
+    return 8
   }
 }

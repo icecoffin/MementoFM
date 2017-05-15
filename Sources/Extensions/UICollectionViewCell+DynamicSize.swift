@@ -8,7 +8,18 @@
 
 import UIKit
 
-extension UICollectionViewCell {
+protocol DynamicSizable {
+  var viewForSizing: UIView { get }
+
+  func size(constrainedToWidth width: CGFloat, renderBlock: (() -> Void)?) -> CGSize
+  func size(renderBlock: (() -> Void)?) -> CGSize
+}
+
+extension UICollectionReusableView: DynamicSizable {
+  var viewForSizing: UIView {
+    return self
+  }
+
   func size(constrainedToWidth width: CGFloat, renderBlock: (() -> Void)? = nil) -> CGSize {
     renderBlock?()
 
@@ -17,7 +28,7 @@ extension UICollectionViewCell {
     setNeedsLayout()
     layoutIfNeeded()
 
-    let height = contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+    let height = viewForSizing.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
     return CGSize(width: width, height: height)
   }
 
@@ -27,6 +38,12 @@ extension UICollectionViewCell {
     setNeedsLayout()
     layoutIfNeeded()
 
-    return contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
+    return viewForSizing.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
+  }
+}
+
+extension UICollectionViewCell {
+  override var viewForSizing: UIView {
+    return contentView
   }
 }

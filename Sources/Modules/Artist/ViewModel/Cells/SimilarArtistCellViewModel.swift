@@ -19,6 +19,10 @@ class SimilarArtistCellViewModel {
     return artist.name
   }
 
+  var playcount: String {
+    return "\(artist.playcount) plays".unlocalized
+  }
+
   var imageURL: URL? {
     if let imageURLString = artist.imageURLString {
       return URL(string: imageURLString)
@@ -26,7 +30,7 @@ class SimilarArtistCellViewModel {
       return nil
     }
   }
-  
+
   var tags: String {
     return artist.topTags.map({ $0.name.lowercased() }).joined(separator: ", ")
   }

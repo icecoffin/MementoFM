@@ -58,6 +58,9 @@ class ArtistSimilarArtistsSectionDataSource: ArtistSectionDataSource {
   }
 
   func sizeForHeader(inSection section: Int, in collectionView: UICollectionView) -> CGSize {
-    return CGSize(width: collectionView.frame.width, height: 44)
+    let prototypeHeader = ArtistSectionHeaderView()
+    return prototypeHeader.size(constrainedToWidth: collectionView.frame.width) {
+      prototypeHeader.configure(with: self.viewModel)
+    }
   }
 }
