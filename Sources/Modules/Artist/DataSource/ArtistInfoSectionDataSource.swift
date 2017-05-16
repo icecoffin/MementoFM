@@ -10,6 +10,7 @@ import UIKit
 
 class ArtistInfoSectionDataSource: ArtistSectionDataSource {
   private let viewModel: ArtistInfoSectionViewModel
+  var onDidUpdateData: (() -> Void)?
 
   init(viewModel: ArtistInfoSectionViewModel) {
     self.viewModel = viewModel

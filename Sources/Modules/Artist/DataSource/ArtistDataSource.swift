@@ -11,15 +11,19 @@ import UIKit
 class ArtistDataSource {
   let sectionDataSources: [ArtistSectionDataSource]
 
+  var onDidUpdateData: ((_ section: Int) -> Void)?
+
   init(viewModel: ArtistViewModel) {
     sectionDataSources = viewModel.sectionDataSources
+    sectionDataSources.enumerated().forEach { offset, sectionDataSource in
+      sectionDataSource.onDidUpdateData = { [weak self] in
+        self?.onDidUpdateData?(offset)
+      }
+    }
   }
 
   func registerReusableViews(in collectionView: UICollectionView) {
     sectionDataSources.forEach { $0.registerReusableViews(in: collectionView) }
-    collectionView.register(EmptyDataSetFooterView.self,
-                            forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
-                            withReuseIdentifier: EmptyDataSetFooterView.reuseIdentifier)
   }
 
   var numberOfSections: Int {

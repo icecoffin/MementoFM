@@ -17,6 +17,10 @@ class ArtistViewController: UIViewController {
   init(dataSource: ArtistDataSource) {
     self.dataSource = dataSource
     super.init(nibName: nil, bundle: nil)
+
+    dataSource.onDidUpdateData = { [weak self] _ in
+      self?.collectionView.reloadData()
+    }
   }
 
   required init?(coder aDecoder: NSCoder) {

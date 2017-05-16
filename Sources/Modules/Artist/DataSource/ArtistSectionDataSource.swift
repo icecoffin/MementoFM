@@ -8,7 +8,9 @@
 
 import UIKit
 
-protocol ArtistSectionDataSource {
+protocol ArtistSectionDataSource: class {
+  var onDidUpdateData: (() -> Void)? { get set }
+
   var numberOfRows: Int { get }
 
   func registerReusableViews(in collectionView: UICollectionView)

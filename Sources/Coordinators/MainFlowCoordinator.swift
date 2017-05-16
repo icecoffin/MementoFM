@@ -32,24 +32,26 @@ class MainFlowCoordinator: Coordinator {
     tabBarController.tabBar.isTranslucent = false
 
     let libraryNavigationController = UINavigationController()
-    let libraryTabBarItem = UITabBarItem(title: "Library".unlocalized,
-                                         image: #imageLiteral(resourceName: "icon_library"),
-                                         selectedImage: nil)
+    let libraryTabBarItem = UITabBarItem(title: "Library".unlocalized, image: #imageLiteral(resourceName: "icon_library"), selectedImage: nil)
     libraryNavigationController.tabBarItem = libraryTabBarItem
-    let libraryCoordinator = LibraryCoordinator(navigationController: libraryNavigationController,
-                                                dependencies: dependencies)
+    let libraryCoordinator = LibraryCoordinator(navigationController: libraryNavigationController, dependencies: dependencies)
     addChildCoordinator(libraryCoordinator)
 
+    let tagsNavigationController = UINavigationController()
+    let tagsTabBarItem = UITabBarItem(title: "Tags".unlocalized, image: #imageLiteral(resourceName: "icon_tag"), selectedImage: nil)
+    tagsNavigationController.tabBarItem = tagsTabBarItem
+    let tagsCoordinator = TagsCoordinator(navigationController: tagsNavigationController, dependencies: dependencies)
+    addChildCoordinator(tagsCoordinator)
+
     let settingsNavigationController = UINavigationController()
-    let settingsTabBarItem = UITabBarItem(title: "Settings".unlocalized,
-                                          image: #imageLiteral(resourceName: "icon_settings"),
-                                          selectedImage: nil)
+    let settingsTabBarItem = UITabBarItem(title: "Settings".unlocalized, image: #imageLiteral(resourceName: "icon_settings"), selectedImage: nil)
     settingsNavigationController.tabBarItem = settingsTabBarItem
     let settingsCoordinator = SettingsCoordinator(navigationController: settingsNavigationController, dependencies: dependencies)
     settingsCoordinator.delegate = self
     addChildCoordinator(settingsCoordinator)
 
-    tabBarController.viewControllers = [libraryNavigationController, settingsNavigationController]
+    tabBarController.viewControllers = [libraryNavigationController, tagsNavigationController, settingsNavigationController]
+
     if let currentRootView = window.rootViewController?.view {
       UIView.transition(from: currentRootView, to: tabBarController.view, duration: 0.5,
                         options: [.transitionFlipFromRight], completion: { _ in

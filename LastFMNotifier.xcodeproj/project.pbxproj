@@ -13,6 +13,9 @@
 		6517A3C81EBCE5DA002BC634 /* RealmHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6517A3C71EBCE5DA002BC634 /* RealmHelpers.swift */; };
 		6518B12F1EC85BA6001F4B74 /* SimilarArtistCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518B12E1EC85BA6001F4B74 /* SimilarArtistCellViewModel.swift */; };
 		6518B1311EC85C07001F4B74 /* TagCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518B1301EC85C07001F4B74 /* TagCellViewModel.swift */; };
+		6518F0291ECB01B000681D5E /* TagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518F0281ECB01B000681D5E /* TagsViewController.swift */; };
+		6518F02B1ECB01B800681D5E /* TagsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518F02A1ECB01B800681D5E /* TagsViewModel.swift */; };
+		6518F02D1ECB044900681D5E /* TagsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518F02C1ECB044900681D5E /* TagsCoordinator.swift */; };
 		651CB35C1EC9DCDA00BC452C /* ArtistInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651CB3571EC9DCDA00BC452C /* ArtistInfoCell.swift */; };
 		651CB35D1EC9DCDA00BC452C /* SimilarArtistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651CB3581EC9DCDA00BC452C /* SimilarArtistCell.swift */; };
 		651CB35E1EC9DCDA00BC452C /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651CB3591EC9DCDA00BC452C /* TagCell.swift */; };
@@ -138,6 +141,9 @@
 		6517A3C71EBCE5DA002BC634 /* RealmHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmHelpers.swift; sourceTree = "<group>"; };
 		6518B12E1EC85BA6001F4B74 /* SimilarArtistCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimilarArtistCellViewModel.swift; sourceTree = "<group>"; };
 		6518B1301EC85C07001F4B74 /* TagCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCellViewModel.swift; sourceTree = "<group>"; };
+		6518F0281ECB01B000681D5E /* TagsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsViewController.swift; sourceTree = "<group>"; };
+		6518F02A1ECB01B800681D5E /* TagsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsViewModel.swift; sourceTree = "<group>"; };
+		6518F02C1ECB044900681D5E /* TagsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsCoordinator.swift; sourceTree = "<group>"; };
 		651CB3571EC9DCDA00BC452C /* ArtistInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInfoCell.swift; sourceTree = "<group>"; };
 		651CB3581EC9DCDA00BC452C /* SimilarArtistCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimilarArtistCell.swift; sourceTree = "<group>"; };
 		651CB3591EC9DCDA00BC452C /* TagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
@@ -323,6 +329,31 @@
 			path = Realm;
 			sourceTree = "<group>";
 		};
+		6518F0251ECB01A300681D5E /* Tags */ = {
+			isa = PBXGroup;
+			children = (
+				6518F0261ECB01A300681D5E /* View */,
+				6518F0271ECB01A300681D5E /* ViewModel */,
+			);
+			path = Tags;
+			sourceTree = "<group>";
+		};
+		6518F0261ECB01A300681D5E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6518F0281ECB01B000681D5E /* TagsViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6518F0271ECB01A300681D5E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				6518F02A1ECB01B800681D5E /* TagsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		651CB3561EC9DCDA00BC452C /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -399,6 +430,7 @@
 				651F9D9B1EC09FDC006D9474 /* NavigationFlowCoordinator.swift */,
 				651F9D9C1EC09FDC006D9474 /* OnboardingCoordinator.swift */,
 				651F9D9D1EC09FDC006D9474 /* SettingsCoordinator.swift */,
+				6518F02C1ECB044900681D5E /* TagsCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -508,6 +540,7 @@
 				651F9DC91EC09FDC006D9474 /* EnterUsername */,
 				651F9DCE1EC09FDC006D9474 /* IgnoredTags */,
 				651F9DD61EC09FDC006D9474 /* Library */,
+				6518F0251ECB01A300681D5E /* Tags */,
 				651F9DE71EC09FDC006D9474 /* Settings */,
 			);
 			path = Modules;
@@ -1077,6 +1110,7 @@
 				651F9E1C1EC09FDC006D9474 /* Mappable+FromAny.swift in Sources */,
 				651F9E581EC09FDD006D9474 /* AppearanceConfigurator.swift in Sources */,
 				651F9E521EC09FDD006D9474 /* NetworkService+User.swift in Sources */,
+				6518F02B1ECB01B800681D5E /* TagsViewModel.swift in Sources */,
 				651F9E381EC09FDC006D9474 /* ArtistViewModel.swift in Sources */,
 				651F9E5C1EC09FDD006D9474 /* ErrorConverter.swift in Sources */,
 				651CB35F1EC9DCDA00BC452C /* ArtistSectionHeaderView.swift in Sources */,
@@ -1149,6 +1183,7 @@
 				651F9E5F1EC09FDD006D9474 /* Sourcery.swift in Sources */,
 				651F9E1E1EC09FDC006D9474 /* String+Unlocalized.swift in Sources */,
 				651F9E2E1EC09FDC006D9474 /* RealmGateway+Artist.swift in Sources */,
+				6518F0291ECB01B000681D5E /* TagsViewController.swift in Sources */,
 				651F9E391EC09FDC006D9474 /* EnterUsernameViewController.swift in Sources */,
 				651F9E1A1EC09FDC006D9474 /* OnboardingCoordinator.swift in Sources */,
 				651F9E421EC09FDC006D9474 /* LoadingView.swift in Sources */,
@@ -1159,6 +1194,7 @@
 				651F9E5D1EC09FDD006D9474 /* Fonts.swift in Sources */,
 				651F9E2C1EC09FDC006D9474 /* UserDataStorage.swift in Sources */,
 				651F9E191EC09FDC006D9474 /* NavigationFlowCoordinator.swift in Sources */,
+				6518F02D1ECB044900681D5E /* TagsCoordinator.swift in Sources */,
 				65241C241EC6E96300927749 /* ArtistInfoCellViewModel.swift in Sources */,
 				651F9E511EC09FDD006D9474 /* NetworkService+Library.swift in Sources */,
 				651F9E211EC09FDC006D9474 /* RealmArtist.swift in Sources */,

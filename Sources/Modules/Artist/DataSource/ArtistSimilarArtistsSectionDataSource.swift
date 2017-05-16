@@ -11,9 +11,13 @@ import UIKit
 class ArtistSimilarArtistsSectionDataSource: ArtistSectionDataSource {
   private let viewModel: ArtistSimilarArtistsSectionViewModel
   private let prototypeCell = SimilarArtistCell()
+  var onDidUpdateData: (() -> Void)?
 
   init(viewModel: ArtistSimilarArtistsSectionViewModel) {
     self.viewModel = viewModel
+    viewModel.didUpdateCellViewModels = { [weak self] in
+      self?.onDidUpdateData?()
+    }
   }
 
   var numberOfRows: Int {
@@ -25,6 +29,12 @@ class ArtistSimilarArtistsSectionDataSource: ArtistSectionDataSource {
     collectionView.register(ArtistSectionHeaderView.self,
                             forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
                             withReuseIdentifier: ArtistSectionHeaderView.reuseIdentifier)
+    collectionView.register(EmptyDataSetFooterView.self,
+                            forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
+                            withReuseIdentifier: EmptyDataSetFooterView.reuseIdentifier)
+    collectionView.register(LoadingFooterView.self,
+                            forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
+                            withReuseIdentifier: LoadingFooterView.reuseIdentifier)
   }
 
   func cellForItem(at indexPath: IndexPath, in collectionView: UICollectionView) -> UICollectionViewCell {
@@ -61,6 +71,35 @@ class ArtistSimilarArtistsSectionDataSource: ArtistSectionDataSource {
     let prototypeHeader = ArtistSectionHeaderView()
     return prototypeHeader.size(constrainedToWidth: collectionView.frame.width) {
       prototypeHeader.configure(with: self.viewModel)
+    }
+  }
+
+  func viewForFooter(at indexPath: IndexPath, in collectionView: UICollectionView) -> UICollectionReusableView? {
+    if viewModel.isLoading {
+      return collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter,
+                                                             withReuseIdentifier: LoadingFooterView.reuseIdentifier,
+                                                             for: indexPath)
+    } else if !viewModel.hasSimilarArtists {
+      let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter,
+                                                                   withReuseIdentifier: EmptyDataSetFooterView.reuseIdentifier,
+                                                                   for: indexPath) as? EmptyDataSetFooterView
+      footer?.configure(with: viewModel.emptyDataSetText)
+      return footer
+    }
+    return nil
+  }
+
+  func sizeForFooter(inSection section: Int, in collectionView: UICollectionView) -> CGSize {
+    if viewModel.isLoading {
+      let prototypeFooter = LoadingFooterView()
+      return prototypeFooter.size(constrainedToWidth: collectionView.frame.width)
+    } else if !viewModel.hasSimilarArtists {
+      let prototypeFooter = EmptyDataSetFooterView()
+      return prototypeFooter.size(constrainedToWidth: collectionView.frame.width) {
+        prototypeFooter.configure(with: self.viewModel.emptyDataSetText)
+      }
+    } else {
+      return .zero
     }
   }
 }

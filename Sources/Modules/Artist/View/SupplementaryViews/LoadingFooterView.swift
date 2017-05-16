@@ -23,8 +23,9 @@ class LoadingFooterView: UICollectionReusableView {
   private func setup() {
     addSubview(activityIndicator)
     activityIndicator.snp.makeConstraints { make in
-      make.top.bottom.equalToSuperview().inset(4)
+      make.top.bottom.equalToSuperview().inset(4).priority(UILayoutPriorityDefaultHigh)
       make.centerX.equalToSuperview()
     }
+    activityIndicator.startAnimating()
   }
 }

@@ -8,10 +8,10 @@
 
 import UIKit
 
-// TODO: handle case when there are no top tags (show a special cell)
 class ArtistTopTagsSectionDataSource: ArtistSectionDataSource {
   private let viewModel: ArtistTopTagsSectionViewModel
   private let prototypeCell = TagCell()
+  var onDidUpdateData: (() -> Void)?
 
   init(viewModel: ArtistTopTagsSectionViewModel) {
     self.viewModel = viewModel
@@ -26,6 +26,9 @@ class ArtistTopTagsSectionDataSource: ArtistSectionDataSource {
     collectionView.register(ArtistSectionHeaderView.self,
                             forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
                             withReuseIdentifier: ArtistSectionHeaderView.reuseIdentifier)
+    collectionView.register(EmptyDataSetFooterView.self,
+                            forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
+                            withReuseIdentifier: EmptyDataSetFooterView.reuseIdentifier)
   }
 
   func cellForItem(at indexPath: IndexPath, in collectionView: UICollectionView) -> UICollectionViewCell {
