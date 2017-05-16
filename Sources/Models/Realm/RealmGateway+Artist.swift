@@ -9,6 +9,8 @@
 import Foundation
 import PromiseKit
 
+fileprivate let numberOfTopTags = 5
+
 extension RealmGateway {
   func saveArtists(_ artists: [Artist]) -> Promise<Void> {
     return write { realm in
@@ -36,12 +38,11 @@ extension RealmGateway {
     }
   }
 
-  // TODO: naming
-  func recalculateArtistTopTags(ignoring ignoredTags: [IgnoredTag]) -> Promise<Void> {
+  func calculateTopTagsForAllArtists(ignoring ignoredTags: [IgnoredTag]) -> Promise<Void> {
     return write { realm in
       let artists = realm.objects(RealmArtist.self)
       for artist in artists {
-        self.recalculateTopTags(for: artist, ignoring: ignoredTags)
+        self.calculateTopTags(for: artist, ignoring: ignoredTags)
       }
     }
   }
@@ -49,17 +50,17 @@ extension RealmGateway {
   func calculateTopTags(for artist: Artist, ignoring ignoredTags: [IgnoredTag]) -> Promise<Void> {
     return write { realm in
       if let realmArtist = realm.object(ofType: RealmArtist.self, forPrimaryKey: artist.name) {
-        self.recalculateTopTags(for: realmArtist, ignoring: ignoredTags)
+        self.calculateTopTags(for: realmArtist, ignoring: ignoredTags)
       }
     }
   }
 
-  private func recalculateTopTags(for artist: RealmArtist, ignoring ignoredTags: [IgnoredTag]) {
+  private func calculateTopTags(for artist: RealmArtist, ignoring ignoredTags: [IgnoredTag]) {
     let topTags = artist.tags.filter({ realmTag in
       !ignoredTags.contains(where: { ignoredTag in
         realmTag.name == ignoredTag.name
       })
-    }).prefix(5)
+    }).prefix(numberOfTopTags)
     artist.topTags.removeAll()
     artist.topTags.append(objectsIn: topTags)
   }

@@ -89,7 +89,7 @@ class IgnoredTagsViewModel {
     }
 
     _ = dependencies.realmGateway.updateIgnoredTags(filteredTags).then { [unowned self] in
-      self.dependencies.realmGateway.recalculateArtistTopTags(ignoring: filteredTags)
+      self.dependencies.realmGateway.calculateTopTagsForAllArtists(ignoring: filteredTags)
     }.then { [unowned self] _ -> Void in
       self.onDidFinishSavingChanges?()
       self.delegate?.ignoredTagsViewModelDidSaveChanges(self)
