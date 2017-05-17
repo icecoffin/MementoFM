@@ -51,7 +51,7 @@ struct AppDependency: HasRealmGateway, HasUserDataStorage, HasGeneralNetworkServ
   }
 
   static var `default`: AppDependency {
-    let realmGateway = RealmGateway(defaultRealm: RealmFactory.realm(), getWriteRealm: {
+    let realmGateway = RealmGateway(mainQueueRealm: RealmFactory.realm(), getBackgroundQueueRealm: {
       return RealmFactory.realm()
     })
     let userDataStorage = UserDataStorage()

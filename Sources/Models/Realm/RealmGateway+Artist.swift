@@ -21,7 +21,7 @@ extension RealmGateway {
 
   func artistsNeedingTagsUpdate() -> [Artist] {
     let predicate = NSPredicate(format: "needsTagsUpdate == \(true)")
-    return defaultRealm.objects(RealmArtist.self).filter(predicate).map({ $0.toTransient() })
+    return mainQueueRealm.objects(RealmArtist.self).filter(predicate).map({ $0.toTransient() })
   }
 
   func updateArtist(_ artist: Artist, with tags: [Tag]) -> Promise<Void> {
@@ -69,7 +69,7 @@ extension RealmGateway {
     return dispatch_promise(DispatchQueue.global()) { () -> [Artist] in
       let topTagNames = artist.topTags.map({ $0.name })
       let predicate = NSPredicate(format: "ANY tags.name IN %@ AND name != %@", topTagNames, artist.name)
-      let results = self.getWriteRealm().objects(RealmArtist.self).filter(predicate)
+      let results = self.getBackgroundQueueRealm().objects(RealmArtist.self).filter(predicate)
       return results.map({ $0.toTransient() })
     }
   }

@@ -12,11 +12,11 @@ import PromiseKit
 // MARK: Ignored tags
 extension RealmGateway {
   func hasIgnoredTags() -> Bool {
-    return !defaultRealm.objects(RealmIgnoredTag.self).isEmpty
+    return !mainQueueRealm.objects(RealmIgnoredTag.self).isEmpty
   }
 
   func ignoredTags() -> [IgnoredTag] {
-    return defaultRealm.objects(RealmIgnoredTag.self).map({ $0.toTransient() })
+    return mainQueueRealm.objects(RealmIgnoredTag.self).map({ $0.toTransient() })
   }
 
   func createDefaultIgnoredTags() -> Promise<Void> {

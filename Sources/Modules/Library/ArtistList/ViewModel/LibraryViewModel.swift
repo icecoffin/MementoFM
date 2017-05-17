@@ -41,7 +41,7 @@ class LibraryViewModel {
 
   private func createCellViewModels() -> RealmMappedCollection<RealmArtist, LibraryArtistCellViewModel> {
     let playcountSort = SortDescriptor(keyPath: "playcount", ascending: false)
-    return RealmMappedCollection(realm: dependencies.realmGateway.defaultRealm,
+    return RealmMappedCollection(realm: dependencies.realmGateway.mainQueueRealm,
                                  sortDescriptors: [playcountSort],
                                  transform: { [unowned self] artist -> LibraryArtistCellViewModel in
       let viewModel = LibraryArtistCellViewModel(artist: artist.toTransient())

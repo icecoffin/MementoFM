@@ -11,17 +11,17 @@ import RealmSwift
 import PromiseKit
 
 class RealmGateway {
-  let defaultRealm: Realm
-  let getWriteRealm: () -> Realm
+  let mainQueueRealm: Realm
+  let getBackgroundQueueRealm: () -> Realm
 
-  init(defaultRealm: Realm, getWriteRealm: @escaping () -> Realm) {
-    self.defaultRealm = defaultRealm
-    self.getWriteRealm = getWriteRealm
+  init(mainQueueRealm: Realm, getBackgroundQueueRealm: @escaping () -> Realm) {
+    self.mainQueueRealm = mainQueueRealm
+    self.getBackgroundQueueRealm = getBackgroundQueueRealm
   }
 
   func write(block: @escaping (Realm) -> Void) -> Promise<Void> {
     return dispatch_promise(DispatchQueue.global()) {
-      let backgroundRealm = self.getWriteRealm()
+      let backgroundRealm = self.getBackgroundQueueRealm()
       self.write(to: backgroundRealm) { realm in
         block(realm)
       }
@@ -32,7 +32,7 @@ class RealmGateway {
 
   private func refreshDefaultRealm() -> Promise<Void> {
     return Promise { resolve, _ in
-      defaultRealm.refresh()
+      mainQueueRealm.refresh()
       resolve()
     }
   }
