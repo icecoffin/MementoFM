@@ -57,22 +57,10 @@ class EnterUsernameViewModel {
 
   func submitUsername() {
     dependencies.userDataStorage.username = currentUsername
-    _ = clearLocalData().then {
+    clearLocalData().then {
       self.delegate?.enterUsernameViewModelDidFinish(self)
-    }
+    }.noError()
   }
-
-//  func submitUsername(_ username: String) {
-//    let oldUsername = dependencies.userDataStorage.username
-//    dependencies.userDataStorage.username = username
-//    if oldUsername != username {
-//      _ = clearLocalData().then {
-//        self.delegate?.enterUsernameViewModelDidFinish(self)
-//      }
-//    } else {
-//      delegate?.enterUsernameViewModelDidFinish(self)
-//    }
-//  }
 
   private func clearLocalData() -> Promise<Void> {
     dependencies.userDataStorage.reset()

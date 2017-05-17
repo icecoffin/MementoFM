@@ -64,4 +64,13 @@ extension RealmGateway {
     artist.topTags.removeAll()
     artist.topTags.append(objectsIn: topTags)
   }
+
+  func getArtistsWithIntersectingTopTags(for artist: Artist) -> Promise<[Artist]> {
+    return dispatch_promise(DispatchQueue.global()) { () -> [Artist] in
+      let topTagNames = artist.topTags.map({ $0.name })
+      let predicate = NSPredicate(format: "ANY tags.name IN %@ AND name != %@", topTagNames, artist.name)
+      let results = self.getWriteRealm().objects(RealmArtist.self).filter(predicate)
+      return results.map({ $0.toTransient() })
+    }
+  }
 }

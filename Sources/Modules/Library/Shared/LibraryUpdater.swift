@@ -95,9 +95,9 @@ class LibraryUpdater {
       let realmGateway = self.dependencies.realmGateway
       let artist = requestProgress.artist
       let ignoredTags = realmGateway.ignoredTags()
-      _ = realmGateway.updateArtist(requestProgress.artist, with: requestProgress.topTagsList.tags).then {
+      realmGateway.updateArtist(requestProgress.artist, with: requestProgress.topTagsList.tags).then {
         return realmGateway.calculateTopTags(for: artist, ignoring: ignoredTags)
-      }
+      }.noError()
       let status: LibraryUpdateStatus = .tags(artistName: requestProgress.artist.name, progress: requestProgress.progress)
       self.onDidChangeStatus?(status)
     })

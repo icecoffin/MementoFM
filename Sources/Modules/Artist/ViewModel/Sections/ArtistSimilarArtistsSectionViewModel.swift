@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PromiseKit
 
 class ArtistSimilarArtistsSectionViewModel: ArtistSectionViewModel {
   typealias Dependencies = HasRealmGateway
@@ -47,25 +48,26 @@ class ArtistSimilarArtistsSectionViewModel: ArtistSectionViewModel {
   }
 
   private func calculateSimilarArtists() {
-    DispatchQueue.global().async {
-      let realm = self.dependencies.realmGateway.getWriteRealm()
-      let topTagNames = self.artist.topTags.map({ $0.name })
-      let predicate = NSPredicate(format: "ANY tags.name IN %@ AND name != %@", topTagNames, self.artist.name)
-      let realmArtists = realm.objects(RealmArtist.self).filter(predicate)
+    dependencies.realmGateway.getArtistsWithIntersectingTopTags(for: artist).then { artists -> Void in
+      self.createCellViewModels(from: artists)
+    }.then(on: DispatchQueue.main) { _ -> Void in
+      self.isLoading = false
+      self.didUpdateCellViewModels?()
+    }.noError()
+  }
 
-      let filteredArtists = realmArtists.filter({ realmArtist in
-        let realmArtistTopTags = realmArtist.topTags.map({ $0.name })
-        let commonTags = topTagNames.filter({ realmArtistTopTags.contains($0) })
-        return commonTags.count >= 2
-      }).sorted(by: { artist1, artist2 -> Bool in
-        return artist1.name < artist2.name
-      }).map({ $0.toTransient() })
-
-      self.cellViewModels = filteredArtists.map({ SimilarArtistCellViewModel(artist: $0) })
-      DispatchQueue.main.async {
-        self.isLoading = false
-        self.didUpdateCellViewModels?()
+  // TODO: cleanup
+  private func createCellViewModels(from artists: [Artist]) {
+    cellViewModels = artists.map({ artist -> (Artist, Int) in
+      let commonTags = self.artist.intersectingTopTagNames(with: artist)
+      return (artist, commonTags.count)
+    }).filter({ (_, commonTagsCount) in
+      return commonTagsCount >= 2
+    }).sorted(by: { artist1, artist2 -> Bool in
+      if artist1.1 == artist2.1 {
+        return artist1.0.playcount > artist2.0.playcount
       }
-    }
+      return artist1.1 > artist2.1
+    }).map({ SimilarArtistCellViewModel(artist: $0.0) })
   }
 }

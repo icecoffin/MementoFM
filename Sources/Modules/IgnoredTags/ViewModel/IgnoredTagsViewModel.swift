@@ -40,10 +40,10 @@ class IgnoredTagsViewModel {
   }
 
   private func addDefaultTags() {
-    _ = dependencies.realmGateway.createDefaultIgnoredTags().then { [unowned self] _ -> Void in
+    dependencies.realmGateway.createDefaultIgnoredTags().then { [unowned self] _ -> Void in
       self.ignoredTags = self.dependencies.realmGateway.ignoredTags()
       self.onDidAddDefaultTags?()
-    }
+    }.noError()
   }
 
   var numberOfIgnoredTags: Int {
@@ -88,11 +88,11 @@ class IgnoredTagsViewModel {
       return result + [ignoredTag]
     }
 
-    _ = dependencies.realmGateway.updateIgnoredTags(filteredTags).then { [unowned self] in
+    dependencies.realmGateway.updateIgnoredTags(filteredTags).then { [unowned self] in
       self.dependencies.realmGateway.calculateTopTagsForAllArtists(ignoring: filteredTags)
     }.then { [unowned self] _ -> Void in
       self.onDidFinishSavingChanges?()
       self.delegate?.ignoredTagsViewModelDidSaveChanges(self)
-    }
+    }.noError()
   }
 }
