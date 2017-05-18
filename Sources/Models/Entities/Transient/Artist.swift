@@ -24,8 +24,7 @@ private func extractImageURLString(from json: Any?) throws -> String {
   return large?["#text"] as? String ?? ""
 }
 
-// TODO: move Mappable into extension to keep default initalizers (also for other model structs)
-struct Artist: Mappable, AutoEquatable, AutoHashable {
+struct Artist: AutoEquatable, AutoHashable {
   let name: String
   let playcount: Int
   let urlString: String
@@ -37,6 +36,14 @@ struct Artist: Mappable, AutoEquatable, AutoHashable {
   // sourcery: skipHashing
   let topTags: [Tag]
 
+  func intersectingTopTagNames(with artist: Artist) -> [String] {
+    let topTagNames = topTags.map({ $0.name })
+    let otherTopTagNames = artist.topTags.map({ $0.name })
+    return topTagNames.filter({ otherTopTagNames.contains($0) })
+  }
+}
+
+extension Artist: Mappable {
   init(map: Mapper) throws {
     try name = map.from("name")
     playcount = map.optionalFrom("playcount", transformation: { int(from: $0) }) ?? 0
@@ -45,21 +52,5 @@ struct Artist: Mappable, AutoEquatable, AutoHashable {
     needsTagsUpdate = true
     tags = []
     topTags = []
-  }
-
-  init(name: String, playcount: Int, urlString: String, imageURLString: String?, needsTagsUpdate: Bool, tags: [Tag], topTags: [Tag]) {
-    self.name = name
-    self.playcount = playcount
-    self.urlString = urlString
-    self.imageURLString = imageURLString
-    self.needsTagsUpdate = needsTagsUpdate
-    self.tags = tags
-    self.topTags = topTags
-  }
-
-  func intersectingTopTagNames(with artist: Artist) -> [String] {
-    let topTagNames = topTags.map({ $0.name })
-    let otherTopTagNames = artist.topTags.map({ $0.name })
-    return topTagNames.filter({ otherTopTagNames.contains($0) })
   }
 }

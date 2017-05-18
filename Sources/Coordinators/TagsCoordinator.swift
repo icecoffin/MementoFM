@@ -20,10 +20,9 @@ class TagsCoordinator: Coordinator {
   }
 
   func start() {
-    let tagsViewModel = TagsViewModel()
+    let tagsViewModel = TagsViewModel(dependencies: dependencies)
     let tagsViewController = TagsViewController(viewModel: tagsViewModel)
     tagsViewController.title = "Tags".unlocalized
     navigationController.pushViewController(tagsViewController, animated: false)
-
   }
 }

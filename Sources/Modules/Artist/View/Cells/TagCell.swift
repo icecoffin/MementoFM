@@ -9,6 +9,13 @@
 import UIKit
 
 class TagCell: UICollectionViewCell {
+  private struct Constants {
+    static let containerViewCornerRadius: CGFloat = 6
+    static let textLabelLeadingTrailingOffset: CGFloat = 8
+    static let textLabelTopBottomOffset: CGFloat = 4
+    static let textLabelFont = Fonts.raleway(withSize: 14)
+  }
+
   private let containerView = UIView()
   private let textLabel = UILabel()
 
@@ -27,18 +34,29 @@ class TagCell: UICollectionViewCell {
       make.edges.equalToSuperview()
     }
     containerView.backgroundColor = Colors.gold
-    containerView.layer.cornerRadius = 6
+    containerView.layer.cornerRadius = Constants.containerViewCornerRadius
 
     containerView.addSubview(textLabel)
     textLabel.snp.makeConstraints { make in
-      make.top.bottom.equalToSuperview().inset(4).priority(UILayoutPriorityDefaultHigh)
-      make.leading.trailing.equalToSuperview().inset(8).priority(UILayoutPriorityDefaultHigh)
+      make.top.bottom.equalToSuperview().inset(Constants.textLabelTopBottomOffset).priority(UILayoutPriorityDefaultHigh)
+      make.leading.trailing.equalToSuperview().inset(Constants.textLabelLeadingTrailingOffset).priority(UILayoutPriorityDefaultHigh)
     }
-    textLabel.font = Fonts.raleway(withSize: 14)
+    textLabel.font = Constants.textLabelFont
     textLabel.textColor = .white
   }
 
   func configure(with viewModel: TagCellViewModel) {
     textLabel.text = viewModel.name
+  }
+
+  func sizeForViewModel(_ viewModel: TagCellViewModel) -> CGSize {
+    let name = viewModel.name
+    let attributes = [NSFontAttributeName: Constants.textLabelFont]
+    let size = name.boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude),
+                                 options: [.usesLineFragmentOrigin, .usesFontLeading],
+                                 attributes: attributes,
+                                 context: nil).size
+    return CGSize(width: ceil(size.width) + Constants.textLabelLeadingTrailingOffset * 2,
+                  height: ceil(size.height) + Constants.textLabelTopBottomOffset * 2)
   }
 }

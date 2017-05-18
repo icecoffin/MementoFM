@@ -69,7 +69,7 @@ extension RealmGateway {
     return dispatch_promise(DispatchQueue.global()) { () -> [Artist] in
       let topTagNames = artist.topTags.map({ $0.name })
       let predicate = NSPredicate(format: "ANY tags.name IN %@ AND name != %@", topTagNames, artist.name)
-      let results = self.getBackgroundQueueRealm().objects(RealmArtist.self).filter(predicate)
+      let results = self.getCurrentQueueRealm().objects(RealmArtist.self).filter(predicate)
       return results.map({ $0.toTransient() })
     }
   }

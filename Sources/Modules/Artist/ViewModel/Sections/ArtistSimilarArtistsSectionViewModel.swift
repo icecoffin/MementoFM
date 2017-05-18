@@ -56,18 +56,19 @@ class ArtistSimilarArtistsSectionViewModel: ArtistSectionViewModel {
     }.noError()
   }
 
-  // TODO: cleanup
   private func createCellViewModels(from artists: [Artist]) {
-    cellViewModels = artists.map({ artist -> (Artist, Int) in
+    cellViewModels = artists.map({ artist -> (Artist, [String]) in
       let commonTags = self.artist.intersectingTopTagNames(with: artist)
-      return (artist, commonTags.count)
-    }).filter({ (_, commonTagsCount) in
-      return commonTagsCount >= 2
-    }).sorted(by: { artist1, artist2 -> Bool in
-      if artist1.1 == artist2.1 {
-        return artist1.0.playcount > artist2.0.playcount
+      return (artist, commonTags)
+    }).filter({ (_, commonTags) in
+      return commonTags.count >= 2
+    }).sorted(by: { (first: (artist: Artist, commonTags: [String]), second: (artist: Artist, commonTags: [String])) in
+      let commonTagsCount1 = first.commonTags.count
+      let commonTagsCount2 = second.commonTags.count
+      if commonTagsCount1 == commonTagsCount2 {
+        return first.artist.playcount > second.artist.playcount
       }
-      return artist1.1 > artist2.1
-    }).map({ SimilarArtistCellViewModel(artist: $0.0) })
+      return commonTagsCount1 > commonTagsCount2
+    }).map({ (artist, commonTags) in SimilarArtistCellViewModel(artist: artist, commonTags: commonTags) })
   }
 }

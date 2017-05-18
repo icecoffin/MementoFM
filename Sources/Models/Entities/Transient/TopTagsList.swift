@@ -9,14 +9,15 @@
 import Foundation
 import Mapper
 
-struct TopTagsList: Mappable {
+fileprivate let maxTagCount = 10
+
+struct TopTagsList {
   let tags: [Tag]
+}
 
-  init(tags: [Tag]) {
-    self.tags = tags
-  }
-
+extension TopTagsList: Mappable {
   init(map: Mapper) throws {
-    try tags = map.from("tag")
+    let tags: [Tag] = try map.from("tag")
+    self.tags = Array(tags.prefix(maxTagCount))
   }
 }

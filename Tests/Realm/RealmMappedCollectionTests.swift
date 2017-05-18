@@ -17,7 +17,7 @@ class RealmMappedCollectionTests: XCTestCase {
 
   override func setUp() {
     super.setUp()
-    realmGateway = RealmGateway(mainQueueRealm: RealmFactory.inMemoryRealm(), getBackgroundQueueRealm: {
+    realmGateway = RealmGateway(mainQueueRealm: RealmFactory.inMemoryRealm(), getCurrentQueueRealm: {
       return RealmFactory.inMemoryRealm()
     })
     collection = RealmMappedCollection(realm: realmGateway.mainQueueRealm, sortDescriptors: [], transform: { realmTag in

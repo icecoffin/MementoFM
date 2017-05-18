@@ -12,25 +12,25 @@ import PromiseKit
 
 class RealmGateway {
   let mainQueueRealm: Realm
-  let getBackgroundQueueRealm: () -> Realm
+  let getCurrentQueueRealm: () -> Realm
 
-  init(mainQueueRealm: Realm, getBackgroundQueueRealm: @escaping () -> Realm) {
+  init(mainQueueRealm: Realm, getCurrentQueueRealm: @escaping () -> Realm) {
     self.mainQueueRealm = mainQueueRealm
-    self.getBackgroundQueueRealm = getBackgroundQueueRealm
+    self.getCurrentQueueRealm = getCurrentQueueRealm
   }
 
   func write(block: @escaping (Realm) -> Void) -> Promise<Void> {
     return dispatch_promise(DispatchQueue.global()) {
-      let backgroundRealm = self.getBackgroundQueueRealm()
-      self.write(to: backgroundRealm) { realm in
+      let currentQueueRealm = self.getCurrentQueueRealm()
+      self.write(to: currentQueueRealm) { realm in
         block(realm)
       }
     }.then(on: DispatchQueue.main) { [unowned self] in
-      return self.refreshDefaultRealm()
+      return self.refreshMainQueueRealm()
     }
   }
 
-  private func refreshDefaultRealm() -> Promise<Void> {
+  private func refreshMainQueueRealm() -> Promise<Void> {
     return Promise { resolve, _ in
       mainQueueRealm.refresh()
       resolve()

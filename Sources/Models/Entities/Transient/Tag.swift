@@ -9,18 +9,15 @@
 import Foundation
 import Mapper
 
-struct Tag: Mappable, AutoEquatable, AutoHashable {
+struct Tag: AutoEquatable, AutoHashable {
   let name: String
   let count: Int
+}
 
+extension Tag: Mappable {
   init(map: Mapper) throws {
     let name: String = try map.from("name")
     self.name = name.lowercased()
     try count = map.from("count")
-  }
-
-  init(name: String, count: Int) {
-    self.name = name
-    self.count = count
   }
 }

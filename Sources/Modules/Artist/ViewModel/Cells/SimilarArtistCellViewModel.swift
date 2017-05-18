@@ -7,12 +7,15 @@
 //
 
 import Foundation
+import UIKit.UIFont
 
 class SimilarArtistCellViewModel {
   private let artist: Artist
+  private let commonTags: [String]
 
-  init(artist: Artist) {
+  init(artist: Artist, commonTags: [String]) {
     self.artist = artist
+    self.commonTags = commonTags
   }
 
   var name: String {
@@ -31,7 +34,14 @@ class SimilarArtistCellViewModel {
     }
   }
 
-  var tags: String {
-    return artist.topTags.map({ $0.name.lowercased() }).joined(separator: ", ")
+  var tags: NSAttributedString {
+    return artist.topTags.map({ tag in
+      let name = tag.name
+      if commonTags.contains(name) {
+        return NSAttributedString(string: name, attributes: [NSFontAttributeName: Fonts.ralewayBold(withSize: 14)])
+      } else {
+        return NSAttributedString(string: name)
+      }
+    }).joined(separator: ", ")
   }
 }

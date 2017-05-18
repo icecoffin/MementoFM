@@ -78,7 +78,6 @@ class SimilarArtistCell: UICollectionViewCell {
     photoImageView.kf.setImage(with: viewModel.imageURL)
     nameLabel.text = viewModel.name
     playcountLabel.text = viewModel.playcount
-    // TODO: bold common tags?
-    tagsLabel.text = viewModel.tags
+    tagsLabel.attributedText = viewModel.tags
   }
 }

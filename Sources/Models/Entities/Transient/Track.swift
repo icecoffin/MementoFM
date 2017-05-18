@@ -9,14 +9,12 @@
 import Foundation
 import Mapper
 
-struct Track: Mappable {
+struct Track {
   let artist: Artist
+}
 
+extension Track: Mappable {
   init(map: Mapper) throws {
     try artist = map.from("artist")
-  }
-
-  init(artist: Artist) {
-    self.artist = artist
   }
 }

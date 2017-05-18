@@ -9,11 +9,13 @@
 import Foundation
 import Mapper
 
-struct LibraryPage: Mappable {
+struct LibraryPage {
   let index: Int
   let totalPages: Int
   let artists: [Artist]
+}
 
+extension LibraryPage: Mappable {
   init(map: Mapper) throws {
     try index = map.from("@attr.page") { int(from: $0) }
     try totalPages = map.from("@attr.totalPages") { int(from: $0) }

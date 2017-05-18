@@ -44,9 +44,7 @@ class ArtistTopTagsSectionDataSource: ArtistSectionDataSource {
 
   func sizeForItem(at indexPath: IndexPath, in collectionView: UICollectionView) -> CGSize {
     let cellViewModel = viewModel.cellViewModel(at: indexPath)
-    return prototypeCell.size {
-      self.prototypeCell.configure(with: cellViewModel)
-    }
+    return prototypeCell.sizeForViewModel(cellViewModel)
   }
 
   func viewForHeader(at indexPath: IndexPath, in collectionView: UICollectionView) -> UICollectionReusableView? {
