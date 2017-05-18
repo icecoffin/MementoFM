@@ -31,7 +31,7 @@ class SimilarArtistCell: UICollectionViewCell {
   private func setup() {
     contentView.addSubview(outerStackView)
     outerStackView.snp.makeConstraints { make in
-      make.edges.equalToSuperview().priority(UILayoutPriorityDefaultHigh)
+      make.edges.equalToSuperview().priority(999)
     }
     outerStackView.axis = .horizontal
     outerStackView.spacing = 12
