@@ -76,8 +76,7 @@ extension TagsViewController: UICollectionViewDataSource {
 
 extension TagsViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let cellViewModel = viewModel.cellViewModel(at: indexPath)
-    print(cellViewModel.name)
+    viewModel.selectTag(at: indexPath)
   }
 
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,

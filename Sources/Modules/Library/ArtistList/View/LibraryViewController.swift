@@ -15,14 +15,14 @@ class LibraryViewController: UIViewController {
     static let estimatedRowHeight: CGFloat = 60
   }
 
-  fileprivate let viewModel: LibraryViewModel
+  fileprivate let viewModel: LibraryViewModelProtocol
 
   private let searchController = UISearchController(searchResultsController: nil)
   private let tableView = TPKeyboardAvoidingTableView()
   private let loadingView = LoadingView()
   private let emptyLibraryView = EmptyDataSetView(text: "No artists found".unlocalized)
 
-  init(viewModel: LibraryViewModel) {
+  init(viewModel: LibraryViewModelProtocol) {
     self.viewModel = viewModel
     super.init(nibName: nil, bundle: nil)
   }
@@ -138,7 +138,7 @@ extension LibraryViewController: UITableViewDelegate {
 
 extension LibraryViewController: UISearchResultsUpdating {
   func updateSearchResults(for searchController: UISearchController) {
-    viewModel.finishSearching(withText: searchController.searchBar.text ?? "")
+    viewModel.performSearch(withText: searchController.searchBar.text ?? "")
   }
 }
 

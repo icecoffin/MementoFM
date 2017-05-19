@@ -9,11 +9,17 @@
 import Foundation
 import RealmSwift
 
+protocol TagsViewModelDelegate: class {
+  func tagsViewModel(_ viewModel: TagsViewModel, didSelectTagWithName name: String)
+}
+
 class TagsViewModel {
   typealias Dependencies = HasRealmGateway
 
   private let dependencies: Dependencies
   private var cellViewModels: [TagCellViewModel] = []
+
+  weak var delegate: TagsViewModelDelegate?
 
   var onDidUpdateData: (() -> Void)?
 
@@ -48,8 +54,6 @@ class TagsViewModel {
       }.map {
         return Tag(name: $0.key, count: $0.value)
       }
-      print(result)
-      print("total: \(result.count)")
 
       self.cellViewModels = result.map { TagCellViewModel(tag: $0) }
       DispatchQueue.main.async {
@@ -64,5 +68,10 @@ class TagsViewModel {
 
   func cellViewModel(at indexPath: IndexPath) -> TagCellViewModel {
     return cellViewModels[indexPath.row]
+  }
+
+  func selectTag(at indexPath: IndexPath) {
+    let tagName = cellViewModel(at: indexPath).name
+    delegate?.tagsViewModel(self, didSelectTagWithName: tagName)
   }
 }

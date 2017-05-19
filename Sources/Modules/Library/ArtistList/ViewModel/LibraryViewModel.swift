@@ -10,11 +10,7 @@ import Foundation
 import RealmSwift
 import PromiseKit
 
-protocol LibraryViewModelDelegate: class {
-  func libraryViewModel(_ viewModel: LibraryViewModel, didSelectArtist artist: Artist)
-}
-
-class LibraryViewModel {
+class LibraryViewModel: LibraryViewModelProtocol {
   typealias Dependencies = HasLibraryNetworkService & HasUserNetworkService & HasArtistNetworkService & HasRealmGateway & HasUserDataStorage
 
   private let dependencies: Dependencies
@@ -70,24 +66,12 @@ class LibraryViewModel {
 
   func requestDataIfNeeded(currentTimestamp: TimeInterval = Date().timeIntervalSince1970) {
     if currentTimestamp - lastUpdateTimestamp > 30 {
-      requestData()
+      libraryUpdater.requestData()
     }
-  }
-
-  func requestData() {
-    libraryUpdater.requestData()
-  }
-
-  private var username: String {
-    return dependencies.userDataStorage.username
   }
 
   private var lastUpdateTimestamp: TimeInterval {
     return dependencies.userDataStorage.lastUpdateTimestamp
-  }
-
-  var searchBarPlaceholder: String {
-    return "Search".unlocalized
   }
 
   var itemCount: Int {
@@ -103,7 +87,7 @@ class LibraryViewModel {
     viewModel.handleSelection()
   }
 
-  func finishSearching(withText text: String) {
+  func performSearch(withText text: String) {
     cellViewModels.predicate = NSPredicate(format: "name CONTAINS[cd] %@", text)
     self.onDidUpdateData?(cellViewModels.isEmpty)
   }

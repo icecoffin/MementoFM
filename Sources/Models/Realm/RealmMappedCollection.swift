@@ -33,8 +33,9 @@ class RealmMappedCollection<Element: Object, Transformed> {
 
   var notificationBlock: ((RealmCollectionChange<Results<Element>>) -> Void)?
 
-  init(realm: Realm, sortDescriptors: [SortDescriptor], transform: @escaping Transform) {
+  init(realm: Realm, predicate: NSPredicate? = nil, sortDescriptors: [SortDescriptor], transform: @escaping Transform) {
     self.realm = realm
+    self.predicate = predicate
     self.sortDescriptors = sortDescriptors
     self.transform = transform
 
