@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LibraryCoordinator: NavigationFlowCoordinator, ArtistPresenter {
+class LibraryCoordinator: NavigationFlowCoordinator {
   var childCoordinators: [Coordinator] = []
 
   let navigationController: UINavigationController
@@ -53,7 +53,17 @@ class LibraryCoordinator: NavigationFlowCoordinator, ArtistPresenter {
 
 extension LibraryCoordinator: LibraryViewModelDelegate {
   func libraryViewModel(_ viewModel: LibraryViewModelProtocol, didSelectArtist artist: Artist) {
-    let artistViewController = makeArtistViewController(for: artist, dependencies: dependencies)
-    navigationController.pushViewController(artistViewController, animated: true)
+    let artistCoordinator = ArtistCoordinator(artist: artist,
+                                              navigationController: navigationController,
+                                              dependencies: dependencies)
+    artistCoordinator.delegate = self
+    addChildCoordinator(artistCoordinator)
+    artistCoordinator.start()
+  }
+}
+
+extension LibraryCoordinator: ArtistCoordinatorDelegate {
+  func artistCoordinatorDidFinish(_ coordinator: ArtistCoordinator) {
+    removeChildCoordinator(coordinator)
   }
 }

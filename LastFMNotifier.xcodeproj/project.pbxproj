@@ -19,7 +19,7 @@
 		6518F02D1ECB044900681D5E /* TagsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518F02C1ECB044900681D5E /* TagsCoordinator.swift */; };
 		651C3BB61ECEA3A100C00AD5 /* LibraryViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651C3BB51ECEA3A100C00AD5 /* LibraryViewModelProtocol.swift */; };
 		651C3BBA1ECF2F4E00C00AD5 /* ArtistsByTagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651C3BB91ECF2F4E00C00AD5 /* ArtistsByTagViewModel.swift */; };
-		651C3BBC1ECF34F200C00AD5 /* ArtistPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651C3BBB1ECF34F200C00AD5 /* ArtistPresenter.swift */; };
+		651C3BBE1ECF523B00C00AD5 /* ArtistCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651C3BBD1ECF523B00C00AD5 /* ArtistCoordinator.swift */; };
 		651CB35C1EC9DCDA00BC452C /* ArtistInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651CB3571EC9DCDA00BC452C /* ArtistInfoCell.swift */; };
 		651CB35D1EC9DCDA00BC452C /* SimilarArtistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651CB3581EC9DCDA00BC452C /* SimilarArtistCell.swift */; };
 		651CB35E1EC9DCDA00BC452C /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651CB3591EC9DCDA00BC452C /* TagCell.swift */; };
@@ -151,7 +151,7 @@
 		6518F02C1ECB044900681D5E /* TagsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsCoordinator.swift; sourceTree = "<group>"; };
 		651C3BB51ECEA3A100C00AD5 /* LibraryViewModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryViewModelProtocol.swift; sourceTree = "<group>"; };
 		651C3BB91ECF2F4E00C00AD5 /* ArtistsByTagViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistsByTagViewModel.swift; sourceTree = "<group>"; };
-		651C3BBB1ECF34F200C00AD5 /* ArtistPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistPresenter.swift; sourceTree = "<group>"; };
+		651C3BBD1ECF523B00C00AD5 /* ArtistCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistCoordinator.swift; sourceTree = "<group>"; };
 		651CB3571EC9DCDA00BC452C /* ArtistInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInfoCell.swift; sourceTree = "<group>"; };
 		651CB3581EC9DCDA00BC452C /* SimilarArtistCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimilarArtistCell.swift; sourceTree = "<group>"; };
 		651CB3591EC9DCDA00BC452C /* TagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
@@ -440,6 +440,7 @@
 				651F9D9C1EC09FDC006D9474 /* OnboardingCoordinator.swift */,
 				651F9D9D1EC09FDC006D9474 /* SettingsCoordinator.swift */,
 				6518F02C1ECB044900681D5E /* TagsCoordinator.swift */,
+				651C3BBD1ECF523B00C00AD5 /* ArtistCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -767,7 +768,6 @@
 				651F9DF71EC09FDC006D9474 /* Reusable.swift */,
 				651F9DF81EC09FDC006D9474 /* IgnoredTagsPresenter.swift */,
 				651F9DF91EC09FDC006D9474 /* SyncPresenter.swift */,
-				651C3BBB1ECF34F200C00AD5 /* ArtistPresenter.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1158,9 +1158,9 @@
 				651F9E531EC09FDD006D9474 /* NetworkService.swift in Sources */,
 				651F9E2A1EC09FDC006D9474 /* TopTagsList.swift in Sources */,
 				651F9E2F1EC09FDC006D9474 /* RealmGateway+IgnoredTag.swift in Sources */,
+				651C3BBE1ECF523B00C00AD5 /* ArtistCoordinator.swift in Sources */,
 				651F9E451EC09FDC006D9474 /* RecentTracksProcessor.swift in Sources */,
 				651F9E5E1EC09FDD006D9474 /* MappingHelpers.swift in Sources */,
-				651C3BBC1ECF34F200C00AD5 /* ArtistPresenter.swift in Sources */,
 				651F9E3C1EC09FDC006D9474 /* IgnoredTagsNavigationRightView.swift in Sources */,
 				651F9E121EC09FDC006D9474 /* Keys.swift in Sources */,
 				651C3BB61ECEA3A100C00AD5 /* LibraryViewModelProtocol.swift in Sources */,

@@ -13,10 +13,20 @@ protocol NavigationFlowCoordinator: Coordinator {
 }
 
 extension NavigationFlowCoordinator {
-  func makeBackButton() -> BlockBarButtonItem {
+  func makeBackButton(tapHandler: (() -> Void)? = nil) -> BlockBarButtonItem {
     let button = BlockBarButtonItem(image: #imageLiteral(resourceName: "icon_back"), style: .plain) { [unowned self] in
       self.navigationController.popViewController(animated: true)
+      tapHandler?()
     }
     return button
+  }
+}
+
+extension UINavigationController {
+  func popViewController(animated: Bool, completion: (() -> Void)?) {
+    CATransaction.begin()
+    CATransaction.setCompletionBlock(completion)
+    popViewController(animated: animated)
+    CATransaction.commit()
   }
 }
