@@ -31,19 +31,19 @@ class MainFlowCoordinator: Coordinator {
     let tabBarController = UITabBarController()
     tabBarController.tabBar.isTranslucent = false
 
-    let libraryNavigationController = UINavigationController()
+    let libraryNavigationController = NavigationController()
     let libraryTabBarItem = UITabBarItem(title: "Library".unlocalized, image: #imageLiteral(resourceName: "icon_library"), selectedImage: nil)
     libraryNavigationController.tabBarItem = libraryTabBarItem
     let libraryCoordinator = LibraryCoordinator(navigationController: libraryNavigationController, dependencies: dependencies)
     addChildCoordinator(libraryCoordinator)
 
-    let tagsNavigationController = UINavigationController()
+    let tagsNavigationController = NavigationController()
     let tagsTabBarItem = UITabBarItem(title: "Tags".unlocalized, image: #imageLiteral(resourceName: "icon_tag"), selectedImage: nil)
     tagsNavigationController.tabBarItem = tagsTabBarItem
     let tagsCoordinator = TagsCoordinator(navigationController: tagsNavigationController, dependencies: dependencies)
     addChildCoordinator(tagsCoordinator)
 
-    let settingsNavigationController = UINavigationController()
+    let settingsNavigationController = NavigationController()
     let settingsTabBarItem = UITabBarItem(title: "Settings".unlocalized, image: #imageLiteral(resourceName: "icon_settings"), selectedImage: nil)
     settingsNavigationController.tabBarItem = settingsTabBarItem
     let settingsCoordinator = SettingsCoordinator(navigationController: settingsNavigationController, dependencies: dependencies)

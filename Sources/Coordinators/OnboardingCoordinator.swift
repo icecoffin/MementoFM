@@ -15,7 +15,7 @@ protocol OnboardingCoordinatorDelegate: class {
 class OnboardingCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter, SyncPresenter {
   var childCoordinators: [Coordinator] = []
 
-  let navigationController: UINavigationController
+  let navigationController: NavigationController
   let dependencies: AppDependency
   var realmGateway: HasRealmGateway {
     return dependencies
@@ -24,7 +24,7 @@ class OnboardingCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter, Sy
   weak var delegate: OnboardingCoordinatorDelegate?
 
   init(window: UIWindow, dependencies: AppDependency) {
-    self.navigationController = UINavigationController()
+    self.navigationController = NavigationController()
     window.rootViewController = self.navigationController
     self.dependencies = dependencies
   }

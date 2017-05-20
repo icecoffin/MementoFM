@@ -18,7 +18,7 @@ class ArtistSimilarArtistsSectionViewModel: ArtistSectionViewModel {
   private var cellViewModels: [SimilarArtistCellViewModel]
   private(set) var isLoading: Bool = true
 
-  var didUpdateCellViewModels: (() -> Void)?
+  var onDidUpdateCellViewModels: (() -> Void)?
 
   required init(artist: Artist, dependencies: Dependencies) {
     self.artist = artist
@@ -48,11 +48,11 @@ class ArtistSimilarArtistsSectionViewModel: ArtistSectionViewModel {
   }
 
   private func calculateSimilarArtists() {
-    dependencies.realmGateway.getArtistsWithIntersectingTopTags(for: artist).then { artists -> Void in
-      self.createCellViewModels(from: artists)
-    }.then(on: DispatchQueue.main) { _ -> Void in
-      self.isLoading = false
-      self.didUpdateCellViewModels?()
+    dependencies.realmGateway.getArtistsWithIntersectingTopTags(for: artist).then { [weak self] artists -> Void in
+      self?.createCellViewModels(from: artists)
+    }.then(on: DispatchQueue.main) { [weak self] _ -> Void in
+      self?.isLoading = false
+      self?.onDidUpdateCellViewModels?()
     }.noError()
   }
 

@@ -36,7 +36,7 @@ class SyncViewModel {
     libraryUpdater.onDidChangeStatus = { [unowned self] status in
       self.onDidChangeStatus?(self.stringFromStatus(status))
     }
-    libraryUpdater.onDidReceiveError = { error in
+    libraryUpdater.onDidReceiveError = { [unowned self] error in
       self.onDidReceiveError?(error)
     }
   }

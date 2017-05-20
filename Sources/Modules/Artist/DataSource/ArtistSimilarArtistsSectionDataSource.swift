@@ -15,7 +15,7 @@ class ArtistSimilarArtistsSectionDataSource: ArtistSectionDataSource {
 
   init(viewModel: ArtistSimilarArtistsSectionViewModel) {
     self.viewModel = viewModel
-    viewModel.didUpdateCellViewModels = { [weak self] in
+    viewModel.onDidUpdateCellViewModels = { [weak self] in
       self?.onDidUpdateData?()
     }
   }

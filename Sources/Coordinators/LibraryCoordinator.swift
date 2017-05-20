@@ -11,12 +11,12 @@ import UIKit
 class LibraryCoordinator: NavigationFlowCoordinator {
   var childCoordinators: [Coordinator] = []
 
-  let navigationController: UINavigationController
+  let navigationController: NavigationController
   fileprivate let dependencies: AppDependency
 
   private var onApplicationDidBecomeActive: (() -> Void)?
 
-  init(navigationController: UINavigationController, dependencies: AppDependency) {
+  init(navigationController: NavigationController, dependencies: AppDependency) {
     self.navigationController = navigationController
     self.dependencies = dependencies
     subscribeToNotifications()
@@ -56,14 +56,7 @@ extension LibraryCoordinator: LibraryViewModelDelegate {
     let artistCoordinator = ArtistCoordinator(artist: artist,
                                               navigationController: navigationController,
                                               dependencies: dependencies)
-    artistCoordinator.delegate = self
     addChildCoordinator(artistCoordinator)
     artistCoordinator.start()
-  }
-}
-
-extension LibraryCoordinator: ArtistCoordinatorDelegate {
-  func artistCoordinatorDidFinish(_ coordinator: ArtistCoordinator) {
-    removeChildCoordinator(coordinator)
   }
 }

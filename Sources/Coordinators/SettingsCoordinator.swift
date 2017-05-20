@@ -15,13 +15,12 @@ protocol SettingsCoordinatorDelegate: class {
 class SettingsCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter, SyncPresenter {
   var childCoordinators: [Coordinator] = []
 
-  let navigationController: UINavigationController
+  let navigationController: NavigationController
   let dependencies: AppDependency
 
   weak var delegate: SettingsCoordinatorDelegate?
 
-  init(navigationController: UINavigationController,
-       dependencies: AppDependency) {
+  init(navigationController: NavigationController, dependencies: AppDependency) {
     self.navigationController = navigationController
     self.dependencies = dependencies
   }

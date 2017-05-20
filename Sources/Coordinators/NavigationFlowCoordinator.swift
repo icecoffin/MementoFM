@@ -9,7 +9,7 @@
 import UIKit
 
 protocol NavigationFlowCoordinator: Coordinator {
-  var navigationController: UINavigationController { get }
+  var navigationController: NavigationController { get }
 }
 
 extension NavigationFlowCoordinator {
@@ -19,14 +19,5 @@ extension NavigationFlowCoordinator {
       tapHandler?()
     }
     return button
-  }
-}
-
-extension UINavigationController {
-  func popViewController(animated: Bool, completion: (() -> Void)?) {
-    CATransaction.begin()
-    CATransaction.setCompletionBlock(completion)
-    popViewController(animated: animated)
-    CATransaction.commit()
   }
 }

@@ -8,15 +8,18 @@
 
 import UIKit
 
-class TagsCoordinator: NavigationFlowCoordinator {
+class TagsCoordinator: NSObject, NavigationFlowCoordinator {
   var childCoordinators: [Coordinator] = []
 
-  let navigationController: UINavigationController
+  let navigationController: NavigationController
   fileprivate let dependencies: AppDependency
 
-  init(navigationController: UINavigationController, dependencies: AppDependency) {
+  init(navigationController: NavigationController, dependencies: AppDependency) {
     self.navigationController = navigationController
     self.dependencies = dependencies
+    super.init()
+    navigationController.delegate = self
+    navigationController.interactivePopGestureRecognizer?.delegate = nil
   }
 
   func start() {
@@ -44,14 +47,22 @@ extension TagsCoordinator: LibraryViewModelDelegate {
     let artistCoordinator = ArtistCoordinator(artist: artist,
                                               navigationController: navigationController,
                                               dependencies: dependencies)
-    artistCoordinator.delegate = self
     addChildCoordinator(artistCoordinator)
     artistCoordinator.start()
   }
 }
 
-extension TagsCoordinator: ArtistCoordinatorDelegate {
-  func artistCoordinatorDidFinish(_ coordinator: ArtistCoordinator) {
-    removeChildCoordinator(coordinator)
+extension TagsCoordinator: UINavigationControllerDelegate {
+  func navigationController(_ navigationController: UINavigationController,
+                            didShow viewController: UIViewController,
+                            animated: Bool) {
+
+    guard let poppingViewController = navigationController.poppingViewController() else {
+      return
+    }
+
+    if poppingViewController is ArtistViewController {
+      childCoordinators.removeLast()
+    }
   }
 }
