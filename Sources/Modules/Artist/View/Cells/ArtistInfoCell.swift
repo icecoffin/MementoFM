@@ -9,11 +9,11 @@
 import UIKit
 import Kingfisher
 
-class ArtistInfoCell: UICollectionViewCell {
+class ArtistInfoCell: UITableViewCell {
   private let photoImageView = UIImageView()
 
-  override init(frame: CGRect) {
-    super.init(frame: frame)
+  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    super.init(style: style, reuseIdentifier: reuseIdentifier)
     setup()
   }
 

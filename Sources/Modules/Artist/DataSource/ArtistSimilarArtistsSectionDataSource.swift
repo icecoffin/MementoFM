@@ -24,23 +24,17 @@ class ArtistSimilarArtistsSectionDataSource: ArtistSectionDataSource {
     return viewModel.numberOfSimilarArtists
   }
 
-  func registerReusableViews(in collectionView: UICollectionView) {
-    collectionView.register(SimilarArtistCell.self, forCellWithReuseIdentifier: SimilarArtistCell.reuseIdentifier)
-    collectionView.register(ArtistSectionHeaderView.self,
-                            forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
-                            withReuseIdentifier: ArtistSectionHeaderView.reuseIdentifier)
-    collectionView.register(EmptyDataSetFooterView.self,
-                            forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
-                            withReuseIdentifier: EmptyDataSetFooterView.reuseIdentifier)
-    collectionView.register(LoadingFooterView.self,
-                            forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
-                            withReuseIdentifier: LoadingFooterView.reuseIdentifier)
+  func registerReusableViews(in tableView: UITableView) {
+    tableView.register(SimilarArtistCell.self, forCellReuseIdentifier: SimilarArtistCell.reuseIdentifier)
+    tableView.register(ArtistSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: ArtistSectionHeaderView.reuseIdentifier)
+    tableView.register(EmptyDataSetFooterView.self, forHeaderFooterViewReuseIdentifier: EmptyDataSetFooterView.reuseIdentifier)
+    tableView.register(LoadingFooterView.self, forHeaderFooterViewReuseIdentifier: LoadingFooterView.reuseIdentifier)
   }
 
-  func cellForItem(at indexPath: IndexPath, in collectionView: UICollectionView) -> UICollectionViewCell {
-    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SimilarArtistCell.reuseIdentifier,
-                                                        for: indexPath) as? SimilarArtistCell else {
-                                                          fatalError("SimilarArtistCell is not registered in the collection view")
+  func cellForRow(at indexPath: IndexPath, in tableView: UITableView) -> UITableViewCell {
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: SimilarArtistCell.reuseIdentifier,
+                                                   for: indexPath) as? SimilarArtistCell else {
+                                                    fatalError("SimilarArtistCell is not registered in the collection view")
     }
 
     let cellViewModel = viewModel.cellViewModel(at: indexPath)
@@ -48,58 +42,36 @@ class ArtistSimilarArtistsSectionDataSource: ArtistSectionDataSource {
     return cell
   }
 
-  func sizeForItem(at indexPath: IndexPath, in collectionView: UICollectionView) -> CGSize {
-    let cellViewModel = viewModel.cellViewModel(at: indexPath)
-    return prototypeCell.size(constrainedToWidth: collectionView.frame.width) {
-      self.prototypeCell.configure(with: cellViewModel)
-    }
-  }
-
-  func viewForHeader(at indexPath: IndexPath, in collectionView: UICollectionView) -> UICollectionReusableView? {
+  func viewForHeader(inSection section: Int, in tableView: UITableView) -> UITableViewHeaderFooterView? {
     let reuseIdentifier = ArtistSectionHeaderView.reuseIdentifier
-    guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader,
-                                                                           withReuseIdentifier: reuseIdentifier,
-                                                                           for: indexPath) as? ArtistSectionHeaderView else {
-                                                                            return nil
+    guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: reuseIdentifier) as? ArtistSectionHeaderView else {
+      return nil
     }
 
     headerView.configure(with: viewModel)
     return headerView
   }
 
-  func sizeForHeader(inSection section: Int, in collectionView: UICollectionView) -> CGSize {
-    let prototypeHeader = ArtistSectionHeaderView()
-    return prototypeHeader.size(constrainedToWidth: collectionView.frame.width) {
-      prototypeHeader.configure(with: self.viewModel)
-    }
+  func heightForHeader(inSection section: Int, in tableView: UITableView) -> CGFloat {
+    return UITableViewAutomaticDimension
   }
 
-  func viewForFooter(at indexPath: IndexPath, in collectionView: UICollectionView) -> UICollectionReusableView? {
+  func viewForFooter(inSection section: Int, in tableView: UITableView) -> UITableViewHeaderFooterView? {
     if viewModel.isLoading {
-      return collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter,
-                                                             withReuseIdentifier: LoadingFooterView.reuseIdentifier,
-                                                             for: indexPath)
+      return tableView.dequeueReusableHeaderFooterView(withIdentifier: LoadingFooterView.reuseIdentifier)
     } else if !viewModel.hasSimilarArtists {
-      let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter,
-                                                                   withReuseIdentifier: EmptyDataSetFooterView.reuseIdentifier,
-                                                                   for: indexPath) as? EmptyDataSetFooterView
+      let footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: EmptyDataSetFooterView.reuseIdentifier) as? EmptyDataSetFooterView
       footer?.configure(with: viewModel.emptyDataSetText)
       return footer
     }
     return nil
   }
 
-  func sizeForFooter(inSection section: Int, in collectionView: UICollectionView) -> CGSize {
-    if viewModel.isLoading {
-      let prototypeFooter = LoadingFooterView()
-      return prototypeFooter.size(constrainedToWidth: collectionView.frame.width)
-    } else if !viewModel.hasSimilarArtists {
-      let prototypeFooter = EmptyDataSetFooterView()
-      return prototypeFooter.size(constrainedToWidth: collectionView.frame.width) {
-        prototypeFooter.configure(with: self.viewModel.emptyDataSetText)
-      }
+  func heightForFooter(inSection section: Int, in tableView: UITableView) -> CGFloat {
+    if viewModel.isLoading || !viewModel.hasSimilarArtists {
+      return UITableViewAutomaticDimension
     } else {
-      return .zero
+      return CGFloat.leastNormalMagnitude
     }
   }
 }

@@ -22,8 +22,8 @@ class ArtistDataSource {
     }
   }
 
-  func registerReusableViews(in collectionView: UICollectionView) {
-    sectionDataSources.forEach { $0.registerReusableViews(in: collectionView) }
+  func registerReusableViews(in tableView: UITableView) {
+    sectionDataSources.forEach { $0.registerReusableViews(in: tableView) }
   }
 
   var numberOfSections: Int {
@@ -34,39 +34,23 @@ class ArtistDataSource {
     return sectionDataSources[section].numberOfRows
   }
 
-  func cellForItem(at indexPath: IndexPath, in collectionView: UICollectionView) -> UICollectionViewCell {
-    return sectionDataSources[indexPath.section].cellForItem(at: indexPath, in: collectionView)
+  func cellForRow(at indexPath: IndexPath, in tableView: UITableView) -> UITableViewCell {
+    return sectionDataSources[indexPath.section].cellForRow(at: indexPath, in: tableView)
   }
 
-  func sizeForItem(at indexPath: IndexPath, in collectionView: UICollectionView) -> CGSize {
-    return sectionDataSources[indexPath.section].sizeForItem(at: indexPath, in: collectionView)
+  func viewForHeader(inSection section: Int, in tableView: UITableView) -> UIView? {
+    return sectionDataSources[section].viewForHeader(inSection: section, in: tableView)
   }
 
-  func supplementaryView(ofKind kind: String,
-                         at indexPath: IndexPath,
-                         in collectionView: UICollectionView) -> UICollectionReusableView {
-    if kind == UICollectionElementKindSectionHeader {
-      return sectionDataSources[indexPath.section].viewForHeader(at: indexPath, in: collectionView) ?? UICollectionReusableView()
-    } else if kind == UICollectionElementKindSectionFooter {
-      return sectionDataSources[indexPath.section].viewForFooter(at: indexPath, in: collectionView) ?? UICollectionReusableView()
-    } else {
-      fatalError("Unknown supplementary view kind")
-    }
+  func heightForHeader(inSection section: Int, in tableView: UITableView) -> CGFloat {
+    return sectionDataSources[section].heightForHeader(inSection: section, in: tableView)
   }
 
-  func sizeForHeader(inSection section: Int, in collectionView: UICollectionView) -> CGSize {
-    return sectionDataSources[section].sizeForHeader(inSection: section, in: collectionView)
+  func viewForFooter(inSection section: Int, in tableView: UITableView) -> UIView? {
+    return sectionDataSources[section].viewForFooter(inSection: section, in: tableView)
   }
 
-  func sizeForFooter(inSection section: Int, in collectionView: UICollectionView) -> CGSize {
-    return sectionDataSources[section].sizeForFooter(inSection: section, in: collectionView)
-  }
-
-  func insetForSection(at index: Int) -> UIEdgeInsets {
-    return sectionDataSources[index].insetForSection(at: index)
-  }
-
-  func minimumLineSpacingForSection(at index: Int) -> CGFloat {
-    return sectionDataSources[index].minimumLineSpacing
+  func heightForFooter(inSection section: Int, in tableView: UITableView) -> CGFloat {
+    return sectionDataSources[section].heightForFooter(inSection: section, in: tableView)
   }
 }

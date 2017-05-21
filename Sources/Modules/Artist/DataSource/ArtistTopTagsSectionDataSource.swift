@@ -9,8 +9,8 @@
 import UIKit
 
 class ArtistTopTagsSectionDataSource: ArtistSectionDataSource {
-  private let viewModel: ArtistTopTagsSectionViewModel
-  private let prototypeCell = TagCell()
+  fileprivate let viewModel: ArtistTopTagsSectionViewModel
+
   var onDidUpdateData: (() -> Void)?
 
   init(viewModel: ArtistTopTagsSectionViewModel) {
@@ -18,40 +18,28 @@ class ArtistTopTagsSectionDataSource: ArtistSectionDataSource {
   }
 
   var numberOfRows: Int {
-    return viewModel.numberOfTopTags
+    return 1
   }
 
-  func registerReusableViews(in collectionView: UICollectionView) {
-    collectionView.register(TagCell.self, forCellWithReuseIdentifier: TagCell.reuseIdentifier)
-    collectionView.register(ArtistSectionHeaderView.self,
-                            forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
-                            withReuseIdentifier: ArtistSectionHeaderView.reuseIdentifier)
-    collectionView.register(EmptyDataSetFooterView.self,
-                            forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
-                            withReuseIdentifier: EmptyDataSetFooterView.reuseIdentifier)
+  func registerReusableViews(in tableView: UITableView) {
+    tableView.register(ArtistTagsCell.self, forCellReuseIdentifier: ArtistTagsCell.reuseIdentifier)
+    tableView.register(ArtistSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: ArtistSectionHeaderView.reuseIdentifier)
+    tableView.register(EmptyDataSetFooterView.self, forHeaderFooterViewReuseIdentifier: EmptyDataSetFooterView.reuseIdentifier)
   }
 
-  func cellForItem(at indexPath: IndexPath, in collectionView: UICollectionView) -> UICollectionViewCell {
-    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCell.reuseIdentifier,
-                                                        for: indexPath) as? TagCell else {
-      fatalError("TagCell is not registered in the collection view")
+  func cellForRow(at indexPath: IndexPath, in tableView: UITableView) -> UITableViewCell {
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: ArtistTagsCell.reuseIdentifier,
+                                                   for: indexPath) as? ArtistTagsCell else {
+      fatalError("ArtistTagsCell is not registered in the collection view")
     }
 
-    let cellViewModel = viewModel.cellViewModel(at: indexPath)
-    cell.configure(with: cellViewModel)
+    cell.dataSource = self
     return cell
   }
 
-  func sizeForItem(at indexPath: IndexPath, in collectionView: UICollectionView) -> CGSize {
-    let cellViewModel = viewModel.cellViewModel(at: indexPath)
-    return prototypeCell.sizeForViewModel(cellViewModel)
-  }
-
-  func viewForHeader(at indexPath: IndexPath, in collectionView: UICollectionView) -> UICollectionReusableView? {
+  func viewForHeader(inSection: Int, in tableView: UITableView) -> UITableViewHeaderFooterView? {
     let reuseIdentifier = ArtistSectionHeaderView.reuseIdentifier
-    guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader,
-                                                                           withReuseIdentifier: reuseIdentifier,
-                                                                           for: indexPath) as? ArtistSectionHeaderView else {
+    guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: reuseIdentifier) as? ArtistSectionHeaderView else {
       return nil
     }
 
@@ -59,19 +47,14 @@ class ArtistTopTagsSectionDataSource: ArtistSectionDataSource {
     return headerView
   }
 
-  func sizeForHeader(inSection section: Int, in collectionView: UICollectionView) -> CGSize {
-    let prototypeHeader = ArtistSectionHeaderView()
-    return prototypeHeader.size(constrainedToWidth: collectionView.frame.width) {
-      prototypeHeader.configure(with: self.viewModel)
-    }
+  func heightForHeader(inSection section: Int, in tableView: UITableView) -> CGFloat {
+    return UITableViewAutomaticDimension
   }
 
-  func viewForFooter(at indexPath: IndexPath, in collectionView: UICollectionView) -> UICollectionReusableView? {
+  func viewForFooter(inSection: Int, in tableView: UITableView) -> UITableViewHeaderFooterView? {
     let reuseIdentifier = EmptyDataSetFooterView.reuseIdentifier
     guard !viewModel.hasTags,
-      let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter,
-                                                                       withReuseIdentifier: reuseIdentifier,
-                                                                       for: indexPath) as? EmptyDataSetFooterView else {
+      let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: reuseIdentifier) as? EmptyDataSetFooterView else {
       return nil
     }
 
@@ -79,22 +62,17 @@ class ArtistTopTagsSectionDataSource: ArtistSectionDataSource {
     return footerView
   }
 
-  func sizeForFooter(inSection section: Int, in collectionView: UICollectionView) -> CGSize {
-    if viewModel.hasTags {
-      return .zero
-    } else {
-      let prototypeFooter = EmptyDataSetFooterView()
-      return prototypeFooter.size(constrainedToWidth: collectionView.frame.width) {
-        prototypeFooter.configure(with: self.viewModel.emptyDataSetText)
-      }
-    }
+  func heightForFooter(inSection section: Int, in tableView: UITableView) -> CGFloat {
+    return viewModel.hasTags ? CGFloat.leastNormalMagnitude : UITableViewAutomaticDimension
+  }
+}
+
+extension ArtistTopTagsSectionDataSource: ArtistTagsCellDataSource {
+  func numberOfTopTags(in cell: ArtistTagsCell) -> Int {
+    return viewModel.numberOfTopTags
   }
 
-  func insetForSection(at index: Int) -> UIEdgeInsets {
-    return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-  }
-
-  var minimumLineSpacing: CGFloat {
-    return 8
+  func tagCellViewModel(at indexPath: IndexPath, in cell: ArtistTagsCell) -> TagCellViewModel {
+    return viewModel.cellViewModel(at: indexPath)
   }
 }

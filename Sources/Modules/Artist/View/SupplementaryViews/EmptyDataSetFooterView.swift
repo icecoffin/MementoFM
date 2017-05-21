@@ -8,11 +8,11 @@
 
 import UIKit
 
-class EmptyDataSetFooterView: UICollectionReusableView {
-  private let textLabel = UILabel()
+class EmptyDataSetFooterView: UITableViewHeaderFooterView {
+  let messageLabel = UILabel()
 
-  override init(frame: CGRect) {
-    super.init(frame: frame)
+  override init(reuseIdentifier: String?) {
+    super.init(reuseIdentifier: reuseIdentifier)
     setup()
   }
 
@@ -21,18 +21,18 @@ class EmptyDataSetFooterView: UICollectionReusableView {
   }
 
   private func setup() {
-    addSubview(textLabel)
-    textLabel.snp.makeConstraints { make in
+    contentView.addSubview(messageLabel)
+    messageLabel.snp.makeConstraints { make in
       make.top.bottom.equalToSuperview().inset(8).priority(UILayoutPriorityDefaultHigh)
       make.leading.trailing.equalToSuperview().inset(16)
     }
 
-    textLabel.numberOfLines = 0
-    textLabel.font = Fonts.ralewayMedium(withSize: 14)
-    textLabel.textColor = .darkGray
+    messageLabel.numberOfLines = 0
+    messageLabel.font = Fonts.ralewayMedium(withSize: 14)
+    messageLabel.textColor = .darkGray
   }
 
   func configure(with text: String) {
-    textLabel.text = text
+    messageLabel.text = text
   }
 }

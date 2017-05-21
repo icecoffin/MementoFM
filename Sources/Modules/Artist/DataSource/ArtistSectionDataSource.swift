@@ -13,42 +13,30 @@ protocol ArtistSectionDataSource: class {
 
   var numberOfRows: Int { get }
 
-  func registerReusableViews(in collectionView: UICollectionView)
-  func cellForItem(at indexPath: IndexPath, in collectionView: UICollectionView) -> UICollectionViewCell
-  func sizeForItem(at indexPath: IndexPath, in collectionView: UICollectionView) -> CGSize
+  func registerReusableViews(in tableView: UITableView)
+  func cellForRow(at indexPath: IndexPath, in tableView: UITableView) -> UITableViewCell
 
-  func viewForHeader(at indexPath: IndexPath, in collectionView: UICollectionView) -> UICollectionReusableView?
-  func sizeForHeader(inSection section: Int, in collectionView: UICollectionView) -> CGSize
+  func viewForHeader(inSection: Int, in tableView: UITableView) -> UITableViewHeaderFooterView?
+  func heightForHeader(inSection section: Int, in tableView: UITableView) -> CGFloat
 
-  func viewForFooter(at indexPath: IndexPath, in collectionView: UICollectionView) -> UICollectionReusableView?
-  func sizeForFooter(inSection section: Int, in collectionView: UICollectionView) -> CGSize
-
-  func insetForSection(at index: Int) -> UIEdgeInsets
-  var minimumLineSpacing: CGFloat { get }
+  func viewForFooter(inSection: Int, in tableView: UITableView) -> UITableViewHeaderFooterView?
+  func heightForFooter(inSection section: Int, in tableView: UITableView) -> CGFloat
 }
 
 extension ArtistSectionDataSource {
-  func viewForHeader(at indexPath: IndexPath, in collectionView: UICollectionView) -> UICollectionReusableView? {
+  func viewForHeader(inSection: Int, in tableView: UITableView) -> UITableViewHeaderFooterView? {
     return nil
   }
 
-  func sizeForHeader(inSection section: Int, in collectionView: UICollectionView) -> CGSize {
-    return .zero
+  func heightForHeader(inSection section: Int, in tableView: UITableView) -> CGFloat {
+    return CGFloat.leastNormalMagnitude
   }
 
-  func viewForFooter(at indexPath: IndexPath, in collectionView: UICollectionView) -> UICollectionReusableView? {
+  func viewForFooter(inSection: Int, in tableView: UITableView) -> UITableViewHeaderFooterView? {
     return nil
   }
 
-  func sizeForFooter(inSection section: Int, in collectionView: UICollectionView) -> CGSize {
-    return .zero
-  }
-
-  func insetForSection(at index: Int) -> UIEdgeInsets {
-    return .zero
-  }
-
-  var minimumLineSpacing: CGFloat {
-    return 0
+  func heightForFooter(inSection section: Int, in tableView: UITableView) -> CGFloat {
+    return CGFloat.leastNormalMagnitude
   }
 }

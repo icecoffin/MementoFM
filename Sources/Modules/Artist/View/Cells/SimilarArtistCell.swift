@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 
-class SimilarArtistCell: UICollectionViewCell {
+class SimilarArtistCell: UITableViewCell {
   private let outerStackView = UIStackView()
   private let innerStackView = UIStackView()
 
@@ -19,8 +19,8 @@ class SimilarArtistCell: UICollectionViewCell {
   private let tagsLabel = UILabel()
   private let separatorView = UIView()
 
-  override init(frame: CGRect) {
-    super.init(frame: frame)
+  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    super.init(style: style, reuseIdentifier: reuseIdentifier)
     setup()
   }
 

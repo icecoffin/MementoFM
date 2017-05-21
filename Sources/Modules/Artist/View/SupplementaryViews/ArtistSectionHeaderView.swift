@@ -8,11 +8,11 @@
 
 import UIKit
 
-class ArtistSectionHeaderView: UICollectionReusableView {
-  private let textLabel = UILabel()
+class ArtistSectionHeaderView: UITableViewHeaderFooterView {
+  private let titleLabel = UILabel()
 
-  override init(frame: CGRect) {
-    super.init(frame: frame)
+  override init(reuseIdentifier: String?) {
+    super.init(reuseIdentifier: reuseIdentifier)
     setup()
   }
 
@@ -21,17 +21,17 @@ class ArtistSectionHeaderView: UICollectionReusableView {
   }
 
   private func setup() {
-    addSubview(textLabel)
-    textLabel.snp.makeConstraints { make in
+    contentView.addSubview(titleLabel)
+    titleLabel.snp.makeConstraints { make in
       make.top.equalToSuperview().offset(16)
       make.leading.trailing.equalToSuperview().inset(16)
       make.bottom.equalToSuperview().inset(8).priority(UILayoutPriorityDefaultHigh)
     }
 
-    textLabel.font = Fonts.ralewayBold(withSize: 18)
+    titleLabel.font = Fonts.ralewayBold(withSize: 18)
   }
 
   func configure(with viewModel: ArtistSectionViewModel) {
-    textLabel.text = viewModel.sectionHeaderText
+    titleLabel.text = viewModel.sectionHeaderText
   }
 }
