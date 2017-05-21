@@ -1,6 +1,6 @@
 //
 //  NetworkConstants.swift
-//  LastFMNotifier
+//  MementoFM
 //
 //  Created by Daniel on 07/11/16.
 //  Copyright © 2016 icecoffin. All rights reserved.

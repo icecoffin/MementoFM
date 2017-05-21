@@ -1,6 +1,6 @@
 //
 //  BlockBarButtonItem.swift
-//  LastFMNotifier
+//  MementoFM
 //
 //  Created by Daniel on 05/01/2017.
 //  Copyright © 2017 icecoffin. All rights reserved.

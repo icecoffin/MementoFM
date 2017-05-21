@@ -1,6 +1,6 @@
 //
 //  LibraryArtistCellViewModel.swift
-//  LastFMNotifier
+//  MementoFM
 //
 //  Created by Daniel on 20/11/2016.
 //  Copyright © 2016 icecoffin. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  String+Unlocalized.swift
-//  LastFMNotifier
+//  MementoFM
 //
 //  Created by Daniel on 24/04/2017.
 //  Copyright © 2017 icecoffin. All rights reserved.

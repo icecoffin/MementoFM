@@ -1,6 +1,6 @@
 //
 //  Fonts.swift
-//  LastFMNotifier
+//  MementoFM
 //
 //  Created by Daniel on 05/12/2016.
 //  Copyright © 2016 icecoffin. All rights reserved.

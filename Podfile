@@ -1,10 +1,10 @@
 platform :ios, '10.0'
 
-target 'LastFMNotifier' do
+target 'MementoFM' do
   use_frameworks!
   inhibit_all_warnings!
 
-  # Pods for LastFMNotifier
+  # Pods for MementoFM
   pod 'Kingfisher'
   pod 'ModelMapper'
   pod 'PromiseKit/Alamofire'
@@ -16,7 +16,7 @@ target 'LastFMNotifier' do
   pod 'TPKeyboardAvoiding'
   pod 'UICollectionViewLeftAlignedLayout'
 
-  target 'LastFMNotifierTests' do
+  target 'MementoFMTests' do
     inherit! :search_paths
     # Pods for testing
     pod 'Nimble'

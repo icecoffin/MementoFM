@@ -1,6 +1,6 @@
 //
 //  ArtistsByTagViewModel.swift
-//  LastFMNotifier
+//  MementoFM
 //
 //  Created by Daniel on 19/05/2017.
 //  Copyright © 2017 icecoffin. All rights reserved.

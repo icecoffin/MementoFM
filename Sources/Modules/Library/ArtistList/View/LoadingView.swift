@@ -1,6 +1,6 @@
 //
 //  LoadingView.swift
-//  LastFMNotifier
+//  MementoFM
 //
 //  Created by Daniel on 15/11/2016.
 //  Copyright © 2016 icecoffin. All rights reserved.

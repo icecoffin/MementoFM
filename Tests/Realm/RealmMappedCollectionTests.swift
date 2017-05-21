@@ -1,6 +1,6 @@
 //
 //  RealmMappedCollectionTests.swift
-//  LastFMNotifier
+//  MementoFM
 //
 //  Created by Daniel on 05/05/2017.
 //  Copyright © 2017 icecoffin. All rights reserved.
@@ -8,7 +8,7 @@
 
 import XCTest
 import Nimble
-@testable import LastFMNotifier
+@testable import MementoFM
 import RealmSwift
 
 class RealmMappedCollectionTests: XCTestCase {

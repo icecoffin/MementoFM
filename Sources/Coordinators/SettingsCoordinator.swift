@@ -1,6 +1,6 @@
 //
 //  SettingsCoordinator.swift
-//  LastFMNotifier
+//  MementoFM
 //
 //  Created by Daniel on 16/12/2016.
 //  Copyright © 2016 icecoffin. All rights reserved.

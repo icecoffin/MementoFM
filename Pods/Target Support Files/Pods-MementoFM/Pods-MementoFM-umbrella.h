@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_LastFMNotifierTestsVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_LastFMNotifierTestsVersionString[];
+FOUNDATION_EXPORT double Pods_MementoFMVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_MementoFMVersionString[];
 

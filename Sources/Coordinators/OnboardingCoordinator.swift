@@ -1,6 +1,6 @@
 //
 //  OnboardingCoordinator.swift
-//  LastFMNotifier
+//  MementoFM
 //
 //  Created by Daniel on 25/04/2017.
 //  Copyright © 2017 icecoffin. All rights reserved.

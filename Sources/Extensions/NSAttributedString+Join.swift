@@ -1,6 +1,6 @@
 //
 //  NSAttributedString+Join.swift
-//  LastFMNotifier
+//  MementoFM
 //
 //  Created by Daniel on 18/05/2017.
 //  Copyright © 2017 icecoffin. All rights reserved.
