@@ -25,7 +25,7 @@ class ArtistSectionHeaderView: UITableViewHeaderFooterView {
     titleLabel.snp.makeConstraints { make in
       make.top.equalToSuperview().offset(16)
       make.leading.trailing.equalToSuperview().inset(16)
-      make.bottom.equalToSuperview().inset(8).priority(UILayoutPriorityDefaultHigh)
+      make.bottom.equalToSuperview().inset(8).priority(999)
     }
 
     titleLabel.font = Fonts.ralewayBold(withSize: 18)

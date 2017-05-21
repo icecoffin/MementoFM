@@ -24,7 +24,7 @@ class ArtistInfoCell: UITableViewCell {
   private func setup() {
     contentView.addSubview(photoImageView)
     photoImageView.snp.makeConstraints { make in
-      make.top.equalToSuperview().inset(16).priority(UILayoutPriorityDefaultHigh)
+      make.top.equalToSuperview().inset(16).priority(999)
       make.bottom.equalToSuperview().inset(4)
       make.centerX.equalToSuperview()
       make.width.height.equalTo(120)

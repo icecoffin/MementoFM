@@ -38,8 +38,8 @@ class TagCell: UICollectionViewCell {
 
     containerView.addSubview(textLabel)
     textLabel.snp.makeConstraints { make in
-      make.top.bottom.equalToSuperview().inset(Constants.textLabelTopBottomOffset).priority(UILayoutPriorityDefaultHigh)
-      make.leading.trailing.equalToSuperview().inset(Constants.textLabelLeadingTrailingOffset).priority(UILayoutPriorityDefaultHigh)
+      make.top.bottom.equalToSuperview().inset(Constants.textLabelTopBottomOffset).priority(999)
+      make.leading.trailing.equalToSuperview().inset(Constants.textLabelLeadingTrailingOffset).priority(999)
     }
     textLabel.font = Constants.textLabelFont
     textLabel.textColor = .white

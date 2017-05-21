@@ -15,7 +15,7 @@ protocol ArtistTagsCellDataSource: class {
 }
 
 class ArtistTagsCell: UITableViewCell {
-  private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLeftAlignedLayout())
+  private let collectionView: UICollectionView
   fileprivate let prototypeCell = TagCell()
 
   weak var dataSource: ArtistTagsCellDataSource? {
@@ -25,6 +25,12 @@ class ArtistTagsCell: UITableViewCell {
   }
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    let layout = UICollectionViewLeftAlignedLayout()
+    layout.minimumLineSpacing = 8
+    layout.minimumInteritemSpacing = 8
+    layout.sectionInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
+    collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     setup()
   }
@@ -48,7 +54,9 @@ class ArtistTagsCell: UITableViewCell {
     collectionView.register(TagCell.self, forCellWithReuseIdentifier: TagCell.reuseIdentifier)
   }
 
-  override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
+  override func systemLayoutSizeFitting(_ targetSize: CGSize,
+                                        withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority,
+                                        verticalFittingPriority: UILayoutPriority) -> CGSize {
     collectionView.layoutIfNeeded()
     return collectionView.collectionViewLayout.collectionViewContentSize
   }
@@ -60,7 +68,8 @@ extension ArtistTagsCell: UICollectionViewDataSource {
   }
 
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCell.reuseIdentifier, for: indexPath) as? TagCell else {
+    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCell.reuseIdentifier,
+                                                        for: indexPath) as? TagCell else {
       fatalError("TagCell is not registered in the collection view")
     }
 
@@ -72,23 +81,13 @@ extension ArtistTagsCell: UICollectionViewDataSource {
 }
 
 extension ArtistTagsCell: UICollectionViewDelegateFlowLayout {
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      sizeForItemAt indexPath: IndexPath) -> CGSize {
     if let cellViewModel = dataSource?.tagCellViewModel(at: indexPath, in: self) {
       return prototypeCell.sizeForViewModel(cellViewModel)
     } else {
       return .zero
     }
-  }
-
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-    return 8
-  }
-
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-    return 8
-  }
-
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-    return UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
   }
 }

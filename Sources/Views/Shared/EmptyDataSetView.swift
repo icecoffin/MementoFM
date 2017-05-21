@@ -26,7 +26,7 @@ class EmptyDataSetView: UIView {
     addSubview(textLabel)
     textLabel.snp.makeConstraints { make in
       make.center.equalToSuperview()
-      make.leading.trailing.equalToSuperview().inset(16).priority(UILayoutPriorityDefaultHigh)
+      make.leading.trailing.equalToSuperview().inset(16).priority(999)
     }
 
     textLabel.numberOfLines = 0

@@ -23,7 +23,7 @@ class EmptyDataSetFooterView: UITableViewHeaderFooterView {
   private func setup() {
     contentView.addSubview(messageLabel)
     messageLabel.snp.makeConstraints { make in
-      make.top.bottom.equalToSuperview().inset(8).priority(UILayoutPriorityDefaultHigh)
+      make.top.bottom.equalToSuperview().inset(8).priority(999)
       make.leading.trailing.equalToSuperview().inset(16)
     }
 

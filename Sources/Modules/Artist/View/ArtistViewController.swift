@@ -34,8 +34,6 @@ class ArtistViewController: UIViewController {
   }
 
   private func configureView() {
-    view.backgroundColor = .white
-
     view.addSubview(tableView)
     tableView.snp.makeConstraints { make in
       make.edges.equalToSuperview()
@@ -46,8 +44,9 @@ class ArtistViewController: UIViewController {
 
     tableView.backgroundColor = .white
     tableView.separatorStyle = .none
+    tableView.allowsSelection = false
 
-    tableView.estimatedRowHeight = 50
+    tableView.estimatedRowHeight = 80
     tableView.estimatedSectionHeaderHeight = 50
     tableView.estimatedSectionFooterHeight = 50
   }

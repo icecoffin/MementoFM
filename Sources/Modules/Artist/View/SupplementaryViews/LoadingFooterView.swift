@@ -23,7 +23,7 @@ class LoadingFooterView: UITableViewHeaderFooterView {
   private func setup() {
     addSubview(activityIndicator)
     activityIndicator.snp.makeConstraints { make in
-      make.top.bottom.equalToSuperview().inset(4).priority(UILayoutPriorityDefaultHigh)
+      make.top.bottom.equalToSuperview().inset(4).priority(999)
       make.centerX.equalToSuperview()
     }
     activityIndicator.startAnimating()
