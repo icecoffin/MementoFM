@@ -33,7 +33,7 @@ class TagCell: UICollectionViewCell {
     containerView.snp.makeConstraints { make in
       make.edges.equalToSuperview()
     }
-    containerView.backgroundColor = Colors.gold
+    containerView.backgroundColor = Colors.bayLeaf
     containerView.layer.cornerRadius = Constants.containerViewCornerRadius
 
     containerView.addSubview(textLabel)

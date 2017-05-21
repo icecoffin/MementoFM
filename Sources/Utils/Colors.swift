@@ -9,5 +9,5 @@
 import UIKit
 
 enum Colors {
-  static let gold = UIColor(red: 225/255.0, green: 191/255.0, blue: 27/255.0, alpha: 1)
+  static let bayLeaf = UIColor(red: 113/255.0, green: 178/255.0, blue: 128/255.0, alpha: 1)
 }

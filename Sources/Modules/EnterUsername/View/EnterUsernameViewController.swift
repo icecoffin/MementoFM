@@ -127,7 +127,7 @@ class EnterUsernameViewController: UIViewController {
 
   private func enableSubmitButton() {
     submitButton.isEnabled = true
-    submitButton.backgroundColor = Colors.gold
+    submitButton.backgroundColor = Colors.bayLeaf
   }
 }
 
