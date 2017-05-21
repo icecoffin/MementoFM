@@ -31,3 +31,10 @@ type_name:
   excluded:
     - Up
 
+custom_rules:
+  print_usage:
+    name: "Print usage"
+    regex: "print\\(.*\\)"
+    message: "Use log.%level% instead of print"
+    severity: warning
+
