@@ -29,37 +29,12 @@ class TagsViewModel {
     getTags()
   }
 
-  // TODO: cleanup
   func getTags() {
-    let ignoredTags = dependencies.realmGateway.ignoredTags().map { $0.name }
-    DispatchQueue.global().async {
-      let artists = self.dependencies.realmGateway.getCurrentQueueRealm().objects(RealmArtist.self)
-      let allTopTags = artists.value(forKey: "topTags") as? [List<RealmTag>] ?? []
-      var uniqueTagsWithCounts = [String: Int]()
-      for topTags in allTopTags {
-        for tag in topTags {
-          let name = tag.name
-          if let count = uniqueTagsWithCounts[name] {
-            uniqueTagsWithCounts[name] = count + 1
-          } else {
-            uniqueTagsWithCounts[name] = 1
-          }
-        }
-      }
-
-      let result = uniqueTagsWithCounts.filter {
-        !ignoredTags.contains($0.key) && $0.value > 1
-      }.sorted { value1, value2 in
-        value1.value > value2.value
-      }.map {
-        return Tag(name: $0.key, count: $0.value)
-      }
-
-      self.cellViewModels = result.map { TagCellViewModel(tag: $0) }
-      DispatchQueue.main.async {
-        self.onDidUpdateData?()
-      }
-    }
+    dependencies.realmGateway.getAllTopTags().then { allTopTags -> Void in
+      self.createCellViewModels(from: allTopTags)
+    }.then(on: DispatchQueue.main) {
+      self.onDidUpdateData?()
+    }.noError()
   }
 
   var numberOfTags: Int {
@@ -73,5 +48,26 @@ class TagsViewModel {
   func selectTag(at indexPath: IndexPath) {
     let tagName = cellViewModel(at: indexPath).name
     delegate?.tagsViewModel(self, didSelectTagWithName: tagName)
+  }
+
+  private func createCellViewModels(from tags: [Tag]) {
+    var uniqueTagNamesWithCounts = [String: Int]()
+    for tag in tags {
+      let name = tag.name
+      if let count = uniqueTagNamesWithCounts[name] {
+        uniqueTagNamesWithCounts[name] = count + 1
+      } else {
+        uniqueTagNamesWithCounts[name] = 1
+      }
+    }
+
+    let result = uniqueTagNamesWithCounts.filter {
+      $0.value > 1
+    }.sorted { value1, value2 in
+      value1.value > value2.value
+    }.map {
+      return Tag(name: $0.key, count: $0.value)
+    }
+    cellViewModels = result.map { TagCellViewModel(tag: $0) }
   }
 }

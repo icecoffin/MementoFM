@@ -122,6 +122,7 @@
 		65241C271EC6E96300927749 /* ArtistSimilarArtistsSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C221EC6E96300927749 /* ArtistSimilarArtistsSectionViewModel.swift */; };
 		65241C281EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C231EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift */; };
 		65241C2A1EC70AF400927749 /* UICollectionViewCell+DynamicSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C291EC70AF400927749 /* UICollectionViewCell+DynamicSize.swift */; };
+		65443A291ED17B7600B4234E /* RealmGateway+Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65443A281ED17B7600B4234E /* RealmGateway+Tag.swift */; };
 		6555AB561ED032BA00BDDF21 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6555AB551ED032BA00BDDF21 /* NavigationController.swift */; };
 		6555AB581ED0AC1600BDDF21 /* ArtistTagsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6555AB571ED0AC1600BDDF21 /* ArtistTagsCell.swift */; };
 		65B772891EC5C5E500892698 /* ArtistDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B772881EC5C5E500892698 /* ArtistDataSource.swift */; };
@@ -257,6 +258,7 @@
 		65241C221EC6E96300927749 /* ArtistSimilarArtistsSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistSimilarArtistsSectionViewModel.swift; sourceTree = "<group>"; };
 		65241C231EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistTopTagsSectionViewModel.swift; sourceTree = "<group>"; };
 		65241C291EC70AF400927749 /* UICollectionViewCell+DynamicSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+DynamicSize.swift"; sourceTree = "<group>"; };
+		65443A281ED17B7600B4234E /* RealmGateway+Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmGateway+Tag.swift"; sourceTree = "<group>"; };
 		6555AB551ED032BA00BDDF21 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		6555AB571ED0AC1600BDDF21 /* ArtistTagsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistTagsCell.swift; sourceTree = "<group>"; };
 		65B772881EC5C5E500892698 /* ArtistDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistDataSource.swift; sourceTree = "<group>"; };
@@ -532,6 +534,7 @@
 				651F9DB81EC09FDC006D9474 /* RealmGateway+Artist.swift */,
 				651F9DB91EC09FDC006D9474 /* RealmGateway+IgnoredTag.swift */,
 				651F9DBA1EC09FDC006D9474 /* RealmGateway+User.swift */,
+				65443A281ED17B7600B4234E /* RealmGateway+Tag.swift */,
 				651F9DBB1EC09FDC006D9474 /* RealmGateway.swift */,
 				651F9DBC1EC09FDC006D9474 /* RealmMappedCollection.swift */,
 			);
@@ -1221,6 +1224,7 @@
 				6518F02D1ECB044900681D5E /* TagsCoordinator.swift in Sources */,
 				65241C241EC6E96300927749 /* ArtistInfoCellViewModel.swift in Sources */,
 				651F9E511EC09FDD006D9474 /* NetworkService+Library.swift in Sources */,
+				65443A291ED17B7600B4234E /* RealmGateway+Tag.swift in Sources */,
 				651F9E211EC09FDC006D9474 /* RealmArtist.swift in Sources */,
 				651F9E161EC09FDC006D9474 /* Coordinator.swift in Sources */,
 				651F9E431EC09FDC006D9474 /* LibraryArtistCellViewModel.swift in Sources */,
