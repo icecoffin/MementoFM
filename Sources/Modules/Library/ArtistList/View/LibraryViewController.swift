@@ -73,7 +73,6 @@ class LibraryViewController: UIViewController {
   }
 
   private func configureSearchController() {
-    searchController.searchBar.delegate = self
     searchController.searchResultsUpdater = self
     searchController.dimsBackgroundDuringPresentation = false
     // Force load UISearchController's view to avoid the warning on dealloc
@@ -136,15 +135,9 @@ extension LibraryViewController: UITableViewDelegate {
   }
 }
 
+// MARK: UISearchResultsUpdating
 extension LibraryViewController: UISearchResultsUpdating {
   func updateSearchResults(for searchController: UISearchController) {
     viewModel.performSearch(withText: searchController.searchBar.text ?? "")
-  }
-}
-
-// MARK: UISearchBarDelegate
-extension LibraryViewController: UISearchBarDelegate {
-  func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-    searchBar.resignFirstResponder()
   }
 }

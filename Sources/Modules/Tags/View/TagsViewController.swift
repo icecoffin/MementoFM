@@ -8,14 +8,21 @@
 
 import UIKit
 import UICollectionViewLeftAlignedLayout
+import TPKeyboardAvoiding
 
 class TagsViewController: UIViewController {
-  private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLeftAlignedLayout())
+  private let collectionView: TPKeyboardAvoidingCollectionView
+  private let emptyDataSetView = EmptyDataSetView(text: "No tags found".unlocalized)
+  fileprivate let searchController = UISearchController(searchResultsController: nil)
 
   fileprivate let viewModel: TagsViewModel
   fileprivate let prototypeCell = TagCell()
 
   init(viewModel: TagsViewModel) {
+    let layout = UICollectionViewLeftAlignedLayout()
+    layout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+    collectionView = TPKeyboardAvoidingCollectionView(frame: .zero, collectionViewLayout: layout)
+
     self.viewModel = viewModel
     super.init(nibName: nil, bundle: nil)
   }
@@ -27,14 +34,17 @@ class TagsViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    definesPresentationContext = true
+
     configureView()
+    configureSearchController()
     bindToViewModel()
   }
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
-    viewModel.getTags()
+    viewModel.getTags(searchText: searchController.searchBar.text)
   }
 
   private func configureView() {
@@ -48,11 +58,23 @@ class TagsViewController: UIViewController {
     collectionView.delegate = self
 
     collectionView.register(TagCell.self, forCellWithReuseIdentifier: TagCell.reuseIdentifier)
+    collectionView.register(TagsSearchHeaderView.self,
+                            forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                            withReuseIdentifier: TagsSearchHeaderView.reuseIdentifier)
+
+    collectionView.backgroundView = emptyDataSetView
+    collectionView.backgroundView?.isHidden = true
+  }
+
+  private func configureSearchController() {
+    searchController.dimsBackgroundDuringPresentation = false
+    searchController.searchBar.delegate = self
   }
 
   private func bindToViewModel() {
-    viewModel.onDidUpdateData = { [unowned self] in
+    viewModel.onDidUpdateData = { [unowned self] isEmpty in
       self.collectionView.reloadData()
+      self.collectionView.backgroundView?.isHidden = !isEmpty
     }
   }
 }
@@ -76,7 +98,10 @@ extension TagsViewController: UICollectionViewDataSource {
 
 extension TagsViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    viewModel.selectTag(at: indexPath)
+    // Prevents unwanted animations in LibraryViewController
+    DispatchQueue.main.async {
+      self.viewModel.selectTag(at: indexPath)
+    }
   }
 
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
@@ -86,8 +111,36 @@ extension TagsViewController: UICollectionViewDelegateFlowLayout {
   }
 
   func collectionView(_ collectionView: UICollectionView,
+                      viewForSupplementaryElementOfKind kind: String,
+                      at indexPath: IndexPath) -> UICollectionReusableView {
+    guard kind == UICollectionElementKindSectionHeader else {
+      fatalError("Unknown supplementary view kind")
+    }
+
+    let reuseIdentifier = TagsSearchHeaderView.reuseIdentifier
+    guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                           withReuseIdentifier: reuseIdentifier,
+                                                                           for: indexPath) as? TagsSearchHeaderView else {
+      fatalError("TagsSearchHeaderView is not registered in the collectionView")
+    }
+
+    headerView.addSearchBar(searchController.searchBar)
+    return headerView
+  }
+
+  func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
-                      insetForSectionAt section: Int) -> UIEdgeInsets {
-    return UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+                      referenceSizeForHeaderInSection section: Int) -> CGSize {
+    return searchController.searchBar.frame.size
+  }
+}
+
+extension TagsViewController: UISearchBarDelegate {
+  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    viewModel.performSearch(withText: searchText)
+  }
+
+  func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    viewModel.cancelSearch()
   }
 }

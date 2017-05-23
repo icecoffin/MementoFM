@@ -26,6 +26,7 @@
 		651CB35F1EC9DCDA00BC452C /* ArtistSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651CB35B1EC9DCDA00BC452C /* ArtistSectionHeaderView.swift */; };
 		651CB3611EC9DEE900BC452C /* EmptyDataSetFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651CB3601EC9DEE900BC452C /* EmptyDataSetFooterView.swift */; };
 		651CB3631EC9DEEF00BC452C /* LoadingFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651CB3621EC9DEEF00BC452C /* LoadingFooterView.swift */; };
+		651D69651ED349A200E96AF0 /* TagsSearchHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651D69641ED349A200E96AF0 /* TagsSearchHeaderView.swift */; };
 		651F9E0B1EC09FDC006D9474 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 651F9D881EC09FDC006D9474 /* Assets.xcassets */; };
 		651F9E0C1EC09FDC006D9474 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 651F9D8A1EC09FDC006D9474 /* OFL.txt */; };
 		651F9E0D1EC09FDC006D9474 /* Raleway-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 651F9D8B1EC09FDC006D9474 /* Raleway-Bold.ttf */; };
@@ -164,6 +165,7 @@
 		651CB35B1EC9DCDA00BC452C /* ArtistSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistSectionHeaderView.swift; sourceTree = "<group>"; };
 		651CB3601EC9DEE900BC452C /* EmptyDataSetFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyDataSetFooterView.swift; sourceTree = "<group>"; };
 		651CB3621EC9DEEF00BC452C /* LoadingFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingFooterView.swift; sourceTree = "<group>"; };
+		651D69641ED349A200E96AF0 /* TagsSearchHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsSearchHeaderView.swift; sourceTree = "<group>"; };
 		651F9D881EC09FDC006D9474 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		651F9D8A1EC09FDC006D9474 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
 		651F9D8B1EC09FDC006D9474 /* Raleway-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Bold.ttf"; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 			isa = PBXGroup;
 			children = (
 				6518F0281ECB01B000681D5E /* TagsViewController.swift */,
+				651D69641ED349A200E96AF0 /* TagsSearchHeaderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1218,6 +1221,7 @@
 				651F9E3B1EC09FDC006D9474 /* IgnoredTagCell.swift in Sources */,
 				651F9E4C1EC09FDD006D9474 /* SettingsViewModel.swift in Sources */,
 				651F9E361EC09FDC006D9474 /* AboutViewController.swift in Sources */,
+				651D69651ED349A200E96AF0 /* TagsSearchHeaderView.swift in Sources */,
 				651CB35E1EC9DCDA00BC452C /* TagCell.swift in Sources */,
 				651F9E4B1EC09FDD006D9474 /* SettingCellViewModel.swift in Sources */,
 				651F9E461EC09FDD006D9474 /* LibraryUpdater.swift in Sources */,

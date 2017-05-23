@@ -17,32 +17,32 @@ class TagsViewModel {
   typealias Dependencies = HasRealmGateway
 
   private let dependencies: Dependencies
-  private var cellViewModels: [TagCellViewModel] = []
+  private var allCellViewModels: [TagCellViewModel] = []
+  private var filteredCellViewModels: [TagCellViewModel] = []
 
   weak var delegate: TagsViewModelDelegate?
 
-  var onDidUpdateData: (() -> Void)?
+  var onDidUpdateData: ((_ isEmpty: Bool) -> Void)?
 
   init(dependencies: Dependencies) {
     self.dependencies = dependencies
-    self.cellViewModels = []
     getTags()
   }
 
-  func getTags() {
+  func getTags(searchText: String? = nil) {
     dependencies.realmGateway.getAllTopTags().then { allTopTags -> Void in
-      self.createCellViewModels(from: allTopTags)
+      self.createCellViewModels(from: allTopTags, searchText: searchText)
     }.then(on: DispatchQueue.main) {
-      self.onDidUpdateData?()
+      self.onDidUpdateData?(self.filteredCellViewModels.isEmpty)
     }.noError()
   }
 
   var numberOfTags: Int {
-    return cellViewModels.count
+    return filteredCellViewModels.count
   }
 
   func cellViewModel(at indexPath: IndexPath) -> TagCellViewModel {
-    return cellViewModels[indexPath.row]
+    return filteredCellViewModels[indexPath.row]
   }
 
   func selectTag(at indexPath: IndexPath) {
@@ -50,7 +50,7 @@ class TagsViewModel {
     delegate?.tagsViewModel(self, didSelectTagWithName: tagName)
   }
 
-  private func createCellViewModels(from tags: [Tag]) {
+  private func createCellViewModels(from tags: [Tag], searchText: String?) {
     var uniqueTagNamesWithCounts = [String: Int]()
     for tag in tags {
       let name = tag.name
@@ -68,6 +68,24 @@ class TagsViewModel {
     }.map {
       return Tag(name: $0.key, count: $0.value)
     }
-    cellViewModels = result.map { TagCellViewModel(tag: $0) }
+    allCellViewModels = result.map { TagCellViewModel(tag: $0) }
+    createFilteredCellViewModels(filter: searchText)
+  }
+
+  private func createFilteredCellViewModels(filter text: String?) {
+    if let text = text, !text.isEmpty {
+      filteredCellViewModels = allCellViewModels.filter({ $0.name.range(of: text, options: .caseInsensitive) != nil })
+    } else {
+      filteredCellViewModels = allCellViewModels
+    }
+  }
+
+  func performSearch(withText text: String?) {
+    createFilteredCellViewModels(filter: text)
+    onDidUpdateData?(filteredCellViewModels.isEmpty)
+  }
+
+  func cancelSearch() {
+    performSearch(withText: nil)
   }
 }
