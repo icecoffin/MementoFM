@@ -69,6 +69,8 @@ class TagsViewController: UIViewController {
   private func configureSearchController() {
     searchController.dimsBackgroundDuringPresentation = false
     searchController.searchBar.delegate = self
+    // Force load UISearchController's view to avoid the warning on dealloc
+    _ = searchController.view
   }
 
   private func bindToViewModel() {

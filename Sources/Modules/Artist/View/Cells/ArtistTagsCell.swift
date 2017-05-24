@@ -28,7 +28,6 @@ class ArtistTagsCell: UITableViewCell {
     let layout = UICollectionViewLeftAlignedLayout()
     layout.minimumLineSpacing = 8
     layout.minimumInteritemSpacing = 8
-    layout.sectionInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
     collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -88,6 +87,17 @@ extension ArtistTagsCell: UICollectionViewDelegateFlowLayout {
       return prototypeCell.sizeForViewModel(cellViewModel)
     } else {
       return .zero
+    }
+  }
+
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      insetForSectionAt section: Int) -> UIEdgeInsets {
+    if let dataSource = dataSource, dataSource.numberOfTopTags(in: self) > 0 {
+      return UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
+    } else {
+      return UIEdgeInsets(top: CGFloat.leastNormalMagnitude, left: CGFloat.leastNormalMagnitude,
+                          bottom: CGFloat.leastNormalMagnitude, right: CGFloat.leastNormalMagnitude)
     }
   }
 }
