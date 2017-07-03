@@ -74,7 +74,7 @@ class SimilarArtistCell: UITableViewCell {
     separatorView.backgroundColor = .lightGray
   }
 
-  func configure(with viewModel: SimilarArtistCellViewModel) {
+  func configure(with viewModel: SimilarArtistCellViewModelProtocol) {
     photoImageView.kf.setImage(with: viewModel.imageURL)
     nameLabel.text = viewModel.name
     playcountLabel.text = viewModel.playcount

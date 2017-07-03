@@ -10,6 +10,7 @@ import UIKit
 
 class AppCoordinator: Coordinator {
   var childCoordinators: [Coordinator] = []
+  var onDidFinish: (() -> Void)?
 
   private let window: UIWindow
   fileprivate let dependencies: AppDependency

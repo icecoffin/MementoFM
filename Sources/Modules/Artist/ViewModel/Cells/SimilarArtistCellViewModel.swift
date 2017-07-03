@@ -9,8 +9,15 @@
 import Foundation
 import UIKit.UIFont
 
-class SimilarArtistCellViewModel {
-  private let artist: Artist
+protocol SimilarArtistCellViewModelProtocol {
+  var name: String { get }
+  var playcount: String { get }
+  var imageURL: URL? { get }
+  var tags: NSAttributedString { get }
+}
+
+class SimilarArtistCellViewModel: SimilarArtistCellViewModelProtocol {
+  let artist: Artist
   private let commonTags: [String]
 
   init(artist: Artist, commonTags: [String]) {

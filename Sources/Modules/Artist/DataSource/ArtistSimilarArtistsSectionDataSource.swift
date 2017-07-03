@@ -74,4 +74,12 @@ class ArtistSimilarArtistsSectionDataSource: ArtistSectionDataSource {
       return CGFloat.leastNormalMagnitude
     }
   }
+
+  func shouldHighlightRow(at indexPath: IndexPath, in tableView: UITableView) -> Bool {
+    return true
+  }
+
+  func selectRow(at indexPath: IndexPath, in tableView: UITableView) {
+    viewModel.selectArtist(at: indexPath)
+  }
 }

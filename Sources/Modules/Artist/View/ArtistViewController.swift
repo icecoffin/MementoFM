@@ -44,7 +44,6 @@ class ArtistViewController: UIViewController {
 
     tableView.backgroundColor = .white
     tableView.separatorStyle = .none
-    tableView.allowsSelection = false
 
     tableView.estimatedRowHeight = 80
     tableView.estimatedSectionHeaderHeight = 50
@@ -67,6 +66,15 @@ extension ArtistViewController: UITableViewDataSource {
 }
 
 extension ArtistViewController: UITableViewDelegate {
+  func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+    return dataSource.shouldHighlightRow(at: indexPath, in: tableView)
+  }
+
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: false)
+    dataSource.selectRow(at: indexPath, in: tableView)
+  }
+
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     return dataSource.viewForHeader(inSection: section, in: tableView)
   }

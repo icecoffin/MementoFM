@@ -8,9 +8,15 @@
 
 import Foundation
 
+protocol ArtistTopTagsSectionViewModelDelegate: class {
+  func artistTopTagsSectionViewModel(_ viewModel: ArtistTopTagsSectionViewModel, didSelectTagWithName name: String)
+}
+
 class ArtistTopTagsSectionViewModel: ArtistSectionViewModel {
   private let artist: Artist
   private let cellViewModels: [TagCellViewModel]
+
+  weak var delegate: ArtistTopTagsSectionViewModelDelegate?
 
   required init(artist: Artist) {
     self.artist = artist
@@ -35,5 +41,9 @@ class ArtistTopTagsSectionViewModel: ArtistSectionViewModel {
 
   var emptyDataSetText: String {
     return "There are no tags for this artist.".unlocalized
+  }
+
+  func selectTag(withName name: String) {
+    delegate?.artistTopTagsSectionViewModel(self, didSelectTagWithName: name)
   }
 }

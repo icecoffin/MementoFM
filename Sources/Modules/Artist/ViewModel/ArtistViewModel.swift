@@ -8,12 +8,24 @@
 
 import Foundation
 
-class ArtistViewModel {
+protocol ArtistViewModelDelegate: class {
+  func artistViewModel(_ viewModel: ArtistViewModel, didSelectTagWithName name: String)
+  func artistViewModel(_ viewModel: ArtistViewModel, didSelectArtist artist: Artist)
+}
+
+protocol ArtistViewModelProtocol {
+  var title: String { get }
+  var sectionDataSources: [ArtistSectionDataSource] { get }
+}
+
+class ArtistViewModel: ArtistViewModelProtocol {
   typealias Dependencies = HasRealmGateway
 
   private let artist: Artist
   private let dependencies: Dependencies
   private let sectionViewModels: [ArtistSectionViewModel]
+
+  weak var delegate: ArtistViewModelDelegate?
 
   let sectionDataSources: [ArtistSectionDataSource]
 
@@ -30,9 +42,26 @@ class ArtistViewModel {
     let topTagsSectionDataSource = ArtistTopTagsSectionDataSource(viewModel: topTagsSectionViewModel)
     let similarArtistsSectionDataSource = ArtistSimilarArtistsSectionDataSource(viewModel: similarArtistsSectionViewModel)
     sectionDataSources = [infoSectionDataSource, topTagsSectionDataSource, similarArtistsSectionDataSource]
+
+    topTagsSectionViewModel.delegate = self
+    similarArtistsSectionViewModel.delegate = self
+
   }
 
   var title: String {
     return artist.name
+  }
+}
+
+extension ArtistViewModel: ArtistTopTagsSectionViewModelDelegate {
+  func artistTopTagsSectionViewModel(_ viewModel: ArtistTopTagsSectionViewModel, didSelectTagWithName name: String) {
+    delegate?.artistViewModel(self, didSelectTagWithName: name)
+  }
+}
+
+extension ArtistViewModel: ArtistSimilarArtistsSectionViewModelDelegate {
+  func artistSimilarArtistSectionViewModel(_ viewModel: ArtistSimilarArtistsSectionViewModel,
+                                           didSelectArtist artist: Artist) {
+    delegate?.artistViewModel(self, didSelectArtist: artist)
   }
 }

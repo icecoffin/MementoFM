@@ -14,6 +14,7 @@ protocol MainFlowCoordinatorDelegate: class {
 
 class MainFlowCoordinator: Coordinator {
   var childCoordinators: [Coordinator] = []
+  var onDidFinish: (() -> Void)?
 
   private let window: UIWindow
   fileprivate let dependencies: AppDependency
@@ -32,15 +33,23 @@ class MainFlowCoordinator: Coordinator {
     tabBarController.tabBar.isTranslucent = false
 
     let libraryNavigationController = NavigationController()
+    let libraryPopTracker = NavigationControllerPopTracker(navigationController: libraryNavigationController)
     let libraryTabBarItem = UITabBarItem(title: "Library".unlocalized, image: #imageLiteral(resourceName: "icon_library"), selectedImage: nil)
     libraryNavigationController.tabBarItem = libraryTabBarItem
-    let libraryCoordinator = LibraryCoordinator(navigationController: libraryNavigationController, dependencies: dependencies)
+    let libraryCoordinator = ArtistListCoordinator(navigationController: libraryNavigationController,
+                                                   popTracker: libraryPopTracker,
+                                                   configuration: LibraryCoordinatorConfiguration(),
+                                                   viewModelFactory: LibraryViewModelFactory(dependencies: dependencies),
+                                                   dependencies: dependencies)
     addChildCoordinator(libraryCoordinator)
 
     let tagsNavigationController = NavigationController()
+    let tagsPopTracker = NavigationControllerPopTracker(navigationController: tagsNavigationController)
     let tagsTabBarItem = UITabBarItem(title: "Tags".unlocalized, image: #imageLiteral(resourceName: "icon_tag"), selectedImage: nil)
     tagsNavigationController.tabBarItem = tagsTabBarItem
-    let tagsCoordinator = TagsCoordinator(navigationController: tagsNavigationController, dependencies: dependencies)
+    let tagsCoordinator = TagsCoordinator(navigationController: tagsNavigationController,
+                                          popTracker: tagsPopTracker,
+                                          dependencies: dependencies)
     addChildCoordinator(tagsCoordinator)
 
     let settingsNavigationController = NavigationController()

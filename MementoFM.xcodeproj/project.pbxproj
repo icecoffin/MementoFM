@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		14F8D82E9E404265E749C818 /* Pods_LastFMNotifierTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29BF0DB16DD5BB044FE9504 /* Pods_LastFMNotifierTests.framework */; };
 		57CC53BFD7353556C18C1D49 /* Pods_MementoFMTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54F7345EDE3E86D13A310BC8 /* Pods_MementoFMTests.framework */; };
+		6513540C1EDD875E0061B879 /* LibraryViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513540B1EDD875E0061B879 /* LibraryViewModelFactory.swift */; };
 		6516A53D1ECDFD830021E43C /* NSAttributedString+Join.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6516A53C1ECDFD830021E43C /* NSAttributedString+Join.swift */; };
 		6517A3C61EBCE5C6002BC634 /* RealmMappedCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6517A3C51EBCE5C6002BC634 /* RealmMappedCollectionTests.swift */; };
 		6517A3C81EBCE5DA002BC634 /* RealmHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6517A3C71EBCE5DA002BC634 /* RealmHelpers.swift */; };
@@ -17,7 +18,7 @@
 		6518F0291ECB01B000681D5E /* TagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518F0281ECB01B000681D5E /* TagsViewController.swift */; };
 		6518F02B1ECB01B800681D5E /* TagsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518F02A1ECB01B800681D5E /* TagsViewModel.swift */; };
 		6518F02D1ECB044900681D5E /* TagsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518F02C1ECB044900681D5E /* TagsCoordinator.swift */; };
-		651C3BB61ECEA3A100C00AD5 /* LibraryViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651C3BB51ECEA3A100C00AD5 /* LibraryViewModelProtocol.swift */; };
+		651C3BB61ECEA3A100C00AD5 /* ArtistListViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651C3BB51ECEA3A100C00AD5 /* ArtistListViewModelProtocol.swift */; };
 		651C3BBA1ECF2F4E00C00AD5 /* ArtistsByTagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651C3BB91ECF2F4E00C00AD5 /* ArtistsByTagViewModel.swift */; };
 		651C3BBE1ECF523B00C00AD5 /* ArtistCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651C3BBD1ECF523B00C00AD5 /* ArtistCoordinator.swift */; };
 		651CB35C1EC9DCDA00BC452C /* ArtistInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651CB3571EC9DCDA00BC452C /* ArtistInfoCell.swift */; };
@@ -37,7 +38,7 @@
 		651F9E121EC09FDC006D9474 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D921EC09FDC006D9474 /* Keys.swift */; };
 		651F9E151EC09FDC006D9474 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D971EC09FDC006D9474 /* AppCoordinator.swift */; };
 		651F9E161EC09FDC006D9474 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D981EC09FDC006D9474 /* Coordinator.swift */; };
-		651F9E171EC09FDC006D9474 /* LibraryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D991EC09FDC006D9474 /* LibraryCoordinator.swift */; };
+		651F9E171EC09FDC006D9474 /* ArtistListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D991EC09FDC006D9474 /* ArtistListCoordinator.swift */; };
 		651F9E181EC09FDC006D9474 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D9A1EC09FDC006D9474 /* MainFlowCoordinator.swift */; };
 		651F9E191EC09FDC006D9474 /* NavigationFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D9B1EC09FDC006D9474 /* NavigationFlowCoordinator.swift */; };
 		651F9E1A1EC09FDC006D9474 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D9C1EC09FDC006D9474 /* OnboardingCoordinator.swift */; };
@@ -78,8 +79,8 @@
 		651F9E3D1EC09FDC006D9474 /* IgnoredTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DD21EC09FDC006D9474 /* IgnoredTagsViewController.swift */; };
 		651F9E3E1EC09FDC006D9474 /* IgnoredTagCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DD41EC09FDC006D9474 /* IgnoredTagCellViewModel.swift */; };
 		651F9E3F1EC09FDC006D9474 /* IgnoredTagsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DD51EC09FDC006D9474 /* IgnoredTagsViewModel.swift */; };
-		651F9E401EC09FDC006D9474 /* LibraryArtistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DD91EC09FDC006D9474 /* LibraryArtistCell.swift */; };
-		651F9E411EC09FDC006D9474 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DDA1EC09FDC006D9474 /* LibraryViewController.swift */; };
+		651F9E401EC09FDC006D9474 /* ArtistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DD91EC09FDC006D9474 /* ArtistCell.swift */; };
+		651F9E411EC09FDC006D9474 /* ArtistListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DDA1EC09FDC006D9474 /* ArtistListViewController.swift */; };
 		651F9E421EC09FDC006D9474 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DDB1EC09FDC006D9474 /* LoadingView.swift */; };
 		651F9E431EC09FDC006D9474 /* LibraryArtistCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DDD1EC09FDC006D9474 /* LibraryArtistCellViewModel.swift */; };
 		651F9E441EC09FDC006D9474 /* LibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DDE1EC09FDC006D9474 /* LibraryViewModel.swift */; };
@@ -123,6 +124,8 @@
 		65241C271EC6E96300927749 /* ArtistSimilarArtistsSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C221EC6E96300927749 /* ArtistSimilarArtistsSectionViewModel.swift */; };
 		65241C281EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C231EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift */; };
 		65241C2A1EC70AF400927749 /* UICollectionViewCell+DynamicSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C291EC70AF400927749 /* UICollectionViewCell+DynamicSize.swift */; };
+		653277DC1EDC804F00BEBCAC /* ArtistsByTagPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653277DB1EDC804F00BEBCAC /* ArtistsByTagPresenter.swift */; };
+		653669EF1EE5753B00E9D56C /* NavigationControllerPopTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653669EE1EE5753B00E9D56C /* NavigationControllerPopTracker.swift */; };
 		65443A291ED17B7600B4234E /* RealmGateway+Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65443A281ED17B7600B4234E /* RealmGateway+Tag.swift */; };
 		6555AB561ED032BA00BDDF21 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6555AB551ED032BA00BDDF21 /* NavigationController.swift */; };
 		6555AB581ED0AC1600BDDF21 /* ArtistTagsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6555AB571ED0AC1600BDDF21 /* ArtistTagsCell.swift */; };
@@ -148,6 +151,7 @@
 		2D89EF6B90057CC1DCFBD6A6 /* Pods-LastFMNotifier.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LastFMNotifier.release.xcconfig"; path = "Pods/Target Support Files/Pods-LastFMNotifier/Pods-LastFMNotifier.release.xcconfig"; sourceTree = "<group>"; };
 		4E75EA4AA335D543060C18B9 /* Pods-MementoFM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MementoFM.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MementoFM/Pods-MementoFM.debug.xcconfig"; sourceTree = "<group>"; };
 		54F7345EDE3E86D13A310BC8 /* Pods_MementoFMTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MementoFMTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6513540B1EDD875E0061B879 /* LibraryViewModelFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryViewModelFactory.swift; sourceTree = "<group>"; };
 		6516A53C1ECDFD830021E43C /* NSAttributedString+Join.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Join.swift"; sourceTree = "<group>"; };
 		6517A3C51EBCE5C6002BC634 /* RealmMappedCollectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmMappedCollectionTests.swift; sourceTree = "<group>"; };
 		6517A3C71EBCE5DA002BC634 /* RealmHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmHelpers.swift; sourceTree = "<group>"; };
@@ -156,7 +160,7 @@
 		6518F0281ECB01B000681D5E /* TagsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsViewController.swift; sourceTree = "<group>"; };
 		6518F02A1ECB01B800681D5E /* TagsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsViewModel.swift; sourceTree = "<group>"; };
 		6518F02C1ECB044900681D5E /* TagsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsCoordinator.swift; sourceTree = "<group>"; };
-		651C3BB51ECEA3A100C00AD5 /* LibraryViewModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryViewModelProtocol.swift; sourceTree = "<group>"; };
+		651C3BB51ECEA3A100C00AD5 /* ArtistListViewModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistListViewModelProtocol.swift; sourceTree = "<group>"; };
 		651C3BB91ECF2F4E00C00AD5 /* ArtistsByTagViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistsByTagViewModel.swift; sourceTree = "<group>"; };
 		651C3BBD1ECF523B00C00AD5 /* ArtistCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistCoordinator.swift; sourceTree = "<group>"; };
 		651CB3571EC9DCDA00BC452C /* ArtistInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInfoCell.swift; sourceTree = "<group>"; };
@@ -176,7 +180,7 @@
 		651F9D921EC09FDC006D9474 /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		651F9D971EC09FDC006D9474 /* AppCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		651F9D981EC09FDC006D9474 /* Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
-		651F9D991EC09FDC006D9474 /* LibraryCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryCoordinator.swift; sourceTree = "<group>"; };
+		651F9D991EC09FDC006D9474 /* ArtistListCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistListCoordinator.swift; sourceTree = "<group>"; };
 		651F9D9A1EC09FDC006D9474 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
 		651F9D9B1EC09FDC006D9474 /* NavigationFlowCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationFlowCoordinator.swift; sourceTree = "<group>"; };
 		651F9D9C1EC09FDC006D9474 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
@@ -217,8 +221,8 @@
 		651F9DD21EC09FDC006D9474 /* IgnoredTagsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IgnoredTagsViewController.swift; sourceTree = "<group>"; };
 		651F9DD41EC09FDC006D9474 /* IgnoredTagCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IgnoredTagCellViewModel.swift; sourceTree = "<group>"; };
 		651F9DD51EC09FDC006D9474 /* IgnoredTagsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IgnoredTagsViewModel.swift; sourceTree = "<group>"; };
-		651F9DD91EC09FDC006D9474 /* LibraryArtistCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryArtistCell.swift; sourceTree = "<group>"; };
-		651F9DDA1EC09FDC006D9474 /* LibraryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
+		651F9DD91EC09FDC006D9474 /* ArtistCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistCell.swift; sourceTree = "<group>"; };
+		651F9DDA1EC09FDC006D9474 /* ArtistListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistListViewController.swift; sourceTree = "<group>"; };
 		651F9DDB1EC09FDC006D9474 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		651F9DDD1EC09FDC006D9474 /* LibraryArtistCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryArtistCellViewModel.swift; sourceTree = "<group>"; };
 		651F9DDE1EC09FDC006D9474 /* LibraryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryViewModel.swift; sourceTree = "<group>"; };
@@ -263,6 +267,8 @@
 		65241C221EC6E96300927749 /* ArtistSimilarArtistsSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistSimilarArtistsSectionViewModel.swift; sourceTree = "<group>"; };
 		65241C231EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistTopTagsSectionViewModel.swift; sourceTree = "<group>"; };
 		65241C291EC70AF400927749 /* UICollectionViewCell+DynamicSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+DynamicSize.swift"; sourceTree = "<group>"; };
+		653277DB1EDC804F00BEBCAC /* ArtistsByTagPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistsByTagPresenter.swift; sourceTree = "<group>"; };
+		653669EE1EE5753B00E9D56C /* NavigationControllerPopTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationControllerPopTracker.swift; sourceTree = "<group>"; };
 		65443A281ED17B7600B4234E /* RealmGateway+Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmGateway+Tag.swift"; sourceTree = "<group>"; };
 		6555AB551ED032BA00BDDF21 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		6555AB571ED0AC1600BDDF21 /* ArtistTagsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistTagsCell.swift; sourceTree = "<group>"; };
@@ -456,7 +462,7 @@
 			children = (
 				651F9D971EC09FDC006D9474 /* AppCoordinator.swift */,
 				651F9D981EC09FDC006D9474 /* Coordinator.swift */,
-				651F9D991EC09FDC006D9474 /* LibraryCoordinator.swift */,
+				651F9D991EC09FDC006D9474 /* ArtistListCoordinator.swift */,
 				651F9D9A1EC09FDC006D9474 /* MainFlowCoordinator.swift */,
 				651F9D9B1EC09FDC006D9474 /* NavigationFlowCoordinator.swift */,
 				651F9D9C1EC09FDC006D9474 /* OnboardingCoordinator.swift */,
@@ -693,8 +699,8 @@
 		651F9DD81EC09FDC006D9474 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				651F9DD91EC09FDC006D9474 /* LibraryArtistCell.swift */,
-				651F9DDA1EC09FDC006D9474 /* LibraryViewController.swift */,
+				651F9DD91EC09FDC006D9474 /* ArtistCell.swift */,
+				651F9DDA1EC09FDC006D9474 /* ArtistListViewController.swift */,
 				651F9DDB1EC09FDC006D9474 /* LoadingView.swift */,
 			);
 			path = View;
@@ -703,10 +709,11 @@
 		651F9DDC1EC09FDC006D9474 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				651C3BB51ECEA3A100C00AD5 /* LibraryViewModelProtocol.swift */,
+				651C3BB51ECEA3A100C00AD5 /* ArtistListViewModelProtocol.swift */,
 				651F9DDE1EC09FDC006D9474 /* LibraryViewModel.swift */,
 				651F9DDD1EC09FDC006D9474 /* LibraryArtistCellViewModel.swift */,
 				651F9DDF1EC09FDC006D9474 /* RecentTracksProcessor.swift */,
+				6513540B1EDD875E0061B879 /* LibraryViewModelFactory.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -791,6 +798,7 @@
 				651F9DF71EC09FDC006D9474 /* Reusable.swift */,
 				651F9DF81EC09FDC006D9474 /* IgnoredTagsPresenter.swift */,
 				651F9DF91EC09FDC006D9474 /* SyncPresenter.swift */,
+				653277DB1EDC804F00BEBCAC /* ArtistsByTagPresenter.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -806,6 +814,7 @@
 				651F9E021EC09FDC006D9474 /* Fonts.swift */,
 				651F9E031EC09FDC006D9474 /* MappingHelpers.swift */,
 				651F9E041EC09FDC006D9474 /* Sourcery.swift */,
+				653669EE1EE5753B00E9D56C /* NavigationControllerPopTracker.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1144,6 +1153,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				651F9E311EC09FDC006D9474 /* RealmGateway.swift in Sources */,
+				6513540C1EDD875E0061B879 /* LibraryViewModelFactory.swift in Sources */,
 				65206EC31EC4C07700A83DA1 /* ArtistSectionDataSource.swift in Sources */,
 				651F9E1C1EC09FDC006D9474 /* Mappable+FromAny.swift in Sources */,
 				651F9E581EC09FDD006D9474 /* AppearanceConfigurator.swift in Sources */,
@@ -1159,7 +1169,7 @@
 				651F9E351EC09FDC006D9474 /* TopTagsResponse.swift in Sources */,
 				651F9E341EC09FDC006D9474 /* RecentTracksPageResponse.swift in Sources */,
 				651F9E561EC09FDD006D9474 /* SyncPresenter.swift in Sources */,
-				651F9E411EC09FDC006D9474 /* LibraryViewController.swift in Sources */,
+				651F9E411EC09FDC006D9474 /* ArtistListViewController.swift in Sources */,
 				65241C271EC6E96300927749 /* ArtistSimilarArtistsSectionViewModel.swift in Sources */,
 				651F9E231EC09FDC006D9474 /* RealmTag.swift in Sources */,
 				6518B12F1EC85BA6001F4B74 /* SimilarArtistCellViewModel.swift in Sources */,
@@ -1191,15 +1201,15 @@
 				651F9E5E1EC09FDD006D9474 /* MappingHelpers.swift in Sources */,
 				651F9E3C1EC09FDC006D9474 /* IgnoredTagsNavigationRightView.swift in Sources */,
 				651F9E121EC09FDC006D9474 /* Keys.swift in Sources */,
-				651C3BB61ECEA3A100C00AD5 /* LibraryViewModelProtocol.swift in Sources */,
+				651C3BB61ECEA3A100C00AD5 /* ArtistListViewModelProtocol.swift in Sources */,
 				651F9E5B1EC09FDD006D9474 /* Colors.swift in Sources */,
 				651CB3611EC9DEE900BC452C /* EmptyDataSetFooterView.swift in Sources */,
 				651F9E321EC09FDC006D9474 /* RealmMappedCollection.swift in Sources */,
 				651F9E701EC0A88B006D9474 /* AutoEquatable.generated.swift in Sources */,
-				651F9E171EC09FDC006D9474 /* LibraryCoordinator.swift in Sources */,
+				651F9E171EC09FDC006D9474 /* ArtistListCoordinator.swift in Sources */,
 				651CB3631EC9DEEF00BC452C /* LoadingFooterView.swift in Sources */,
 				65206EC71EC4C0CF00A83DA1 /* ArtistTopTagsSectionDataSource.swift in Sources */,
-				651F9E401EC09FDC006D9474 /* LibraryArtistCell.swift in Sources */,
+				651F9E401EC09FDC006D9474 /* ArtistCell.swift in Sources */,
 				651F9E291EC09FDC006D9474 /* Tag.swift in Sources */,
 				651F9E371EC09FDC006D9474 /* ArtistViewController.swift in Sources */,
 				651F9E1F1EC09FDC006D9474 /* UITableView+HeaderVIew.swift in Sources */,
@@ -1240,8 +1250,10 @@
 				651F9E2C1EC09FDC006D9474 /* UserDataStorage.swift in Sources */,
 				651F9E191EC09FDC006D9474 /* NavigationFlowCoordinator.swift in Sources */,
 				6518F02D1ECB044900681D5E /* TagsCoordinator.swift in Sources */,
+				653277DC1EDC804F00BEBCAC /* ArtistsByTagPresenter.swift in Sources */,
 				65241C241EC6E96300927749 /* ArtistInfoCellViewModel.swift in Sources */,
 				651F9E511EC09FDD006D9474 /* NetworkService+Library.swift in Sources */,
+				653669EF1EE5753B00E9D56C /* NavigationControllerPopTracker.swift in Sources */,
 				65443A291ED17B7600B4234E /* RealmGateway+Tag.swift in Sources */,
 				651F9E211EC09FDC006D9474 /* RealmArtist.swift in Sources */,
 				651F9E161EC09FDC006D9474 /* Coordinator.swift in Sources */,

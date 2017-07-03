@@ -9,14 +9,14 @@
 import Foundation
 import RealmSwift
 
-class ArtistsByTagViewModel: LibraryViewModelProtocol {
+class ArtistsByTagViewModel: ArtistListViewModel {
   typealias Dependencies = HasRealmGateway
 
   private let tagName: String
   private let dependencies: Dependencies
   private let originalPredicate: NSPredicate
 
-  weak var delegate: LibraryViewModelDelegate?
+  weak var delegate: ArtistListViewModelDelegate?
 
   var onDidStartLoading: (() -> Void)?
   var onDidFinishLoading: (() -> Void)?
@@ -41,8 +41,8 @@ class ArtistsByTagViewModel: LibraryViewModelProtocol {
                                  sortDescriptors: [playcountSort],
                                  transform: { [unowned self] artist -> LibraryArtistCellViewModel in
                                   let viewModel = LibraryArtistCellViewModel(artist: artist.toTransient())
-                                  viewModel.onSelection = { artist in
-                                    self.delegate?.libraryViewModel(self, didSelectArtist: artist)
+                                  viewModel.onSelection = { [unowned self] artist in
+                                    self.delegate?.artistListViewModel(self, didSelectArtist: artist)
                                   }
                                   return viewModel
     })
@@ -50,6 +50,10 @@ class ArtistsByTagViewModel: LibraryViewModelProtocol {
 
   var itemCount: Int {
     return cellViewModels.count
+  }
+
+  var title: String {
+    return tagName
   }
 
   func requestDataIfNeeded(currentTimestamp: TimeInterval) { }

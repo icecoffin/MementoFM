@@ -8,18 +8,21 @@
 
 import UIKit
 
-class TagsCoordinator: NSObject, NavigationFlowCoordinator {
+class TagsCoordinator: NSObject, NavigationFlowCoordinator, ArtistsByTagPresenter {
   var childCoordinators: [Coordinator] = []
+  var onDidFinish: (() -> Void)?
 
   let navigationController: NavigationController
   fileprivate let dependencies: AppDependency
+  fileprivate let popTracker: NavigationControllerPopTracker
 
-  init(navigationController: NavigationController, dependencies: AppDependency) {
+  init(navigationController: NavigationController,
+       popTracker: NavigationControllerPopTracker,
+       dependencies: AppDependency) {
     self.navigationController = navigationController
+    self.popTracker = popTracker
     self.dependencies = dependencies
     super.init()
-    navigationController.delegate = self
-    navigationController.interactivePopGestureRecognizer?.delegate = nil
   }
 
   func start() {
@@ -33,36 +36,24 @@ class TagsCoordinator: NSObject, NavigationFlowCoordinator {
 
 extension TagsCoordinator: TagsViewModelDelegate {
   func tagsViewModel(_ viewModel: TagsViewModel, didSelectTagWithName name: String) {
-    let viewModel = ArtistsByTagViewModel(tagName: name, dependencies: dependencies)
-    viewModel.delegate = self
-    let viewController = LibraryViewController(viewModel: viewModel)
-    viewController.navigationItem.leftBarButtonItem = makeBackButton()
-    viewController.title = name
-    navigationController.pushViewController(viewController, animated: true)
+    let viewModelFactory = ArtistsByTagViewModelFactory(tagName: name, dependencies: dependencies)
+    let artistListCoordinator = ArtistListCoordinator(navigationController: navigationController,
+                                                      popTracker: popTracker,
+                                                      configuration: ArtistsByTagCoordinatorConfiguration(),
+                                                      viewModelFactory: viewModelFactory,
+                                                      dependencies: dependencies)
+    addChildCoordinator(artistListCoordinator)
+    artistListCoordinator.start()
   }
 }
 
-extension TagsCoordinator: LibraryViewModelDelegate {
-  func libraryViewModel(_ viewModel: LibraryViewModelProtocol, didSelectArtist artist: Artist) {
+extension TagsCoordinator: ArtistListViewModelDelegate {
+  func artistListViewModel(_ viewModel: ArtistListViewModel, didSelectArtist artist: Artist) {
     let artistCoordinator = ArtistCoordinator(artist: artist,
                                               navigationController: navigationController,
+                                              popTracker: popTracker,
                                               dependencies: dependencies)
     addChildCoordinator(artistCoordinator)
     artistCoordinator.start()
-  }
-}
-
-extension TagsCoordinator: UINavigationControllerDelegate {
-  func navigationController(_ navigationController: UINavigationController,
-                            didShow viewController: UIViewController,
-                            animated: Bool) {
-
-    guard let poppingViewController = navigationController.poppingViewController() else {
-      return
-    }
-
-    if poppingViewController is ArtistViewController {
-      childCoordinators.removeLast()
-    }
   }
 }

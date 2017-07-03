@@ -1,5 +1,5 @@
 //
-//  LibraryArtistCell.swift
+//  ArtistCell.swift
 //  MementoFM
 //
 //  Created by Daniel on 22/11/16.
@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Kingfisher
 
-class LibraryArtistCell: UITableViewCell {
+class ArtistCell: UITableViewCell {
   private let photoImageView = UIImageView()
   private let nameLabel = UILabel()
   private let playcountLabel = UILabel()

@@ -11,18 +11,27 @@ import UIKit
 class ArtistCoordinator: NavigationFlowCoordinator {
   let navigationController: NavigationController
   var childCoordinators: [Coordinator] = []
+  var onDidFinish: (() -> Void)?
 
   fileprivate let artist: Artist
+  fileprivate let popTracker: NavigationControllerPopTracker
   fileprivate let dependencies: AppDependency
 
-  init(artist: Artist, navigationController: NavigationController, dependencies: AppDependency) {
-    self.navigationController = navigationController
+  init(artist: Artist,
+       navigationController: NavigationController,
+       popTracker: NavigationControllerPopTracker,
+       dependencies: AppDependency) {
     self.artist = artist
+    self.navigationController = navigationController
+    self.popTracker = popTracker
     self.dependencies = dependencies
   }
 
   func start() {
+    popTracker.addDelegate(self)
+
     let viewModel = ArtistViewModel(artist: artist, dependencies: dependencies)
+    viewModel.delegate = self
     let dataSource = ArtistDataSource(viewModel: viewModel)
 
     let viewController = ArtistViewController(dataSource: dataSource)
@@ -31,5 +40,28 @@ class ArtistCoordinator: NavigationFlowCoordinator {
     viewController.hidesBottomBarWhenPushed = true
 
     navigationController.pushViewController(viewController, animated: true)
+  }
+
+  func shouldFinishAfterPopping(viewController: UIViewController) -> Bool {
+    return viewController is ArtistViewController
+  }
+}
+
+extension ArtistCoordinator: ArtistViewModelDelegate {
+  func artistViewModel(_ viewModel: ArtistViewModel, didSelectTagWithName name: String) {
+    let viewModelFactory = ArtistsByTagViewModelFactory(tagName: name, dependencies: dependencies)
+    let artistListCoordinator = ArtistListCoordinator(navigationController: navigationController,
+                                                      popTracker: popTracker,
+                                                      configuration: ArtistsByTagCoordinatorConfiguration(),
+                                                      viewModelFactory: viewModelFactory,
+                                                      dependencies: dependencies)
+    addChildCoordinator(artistListCoordinator)
+    artistListCoordinator.start()
+  }
+
+  func artistViewModel(_ viewModel: ArtistViewModel, didSelectArtist artist: Artist) {
+    let artistCoordinator = ArtistCoordinator(artist: artist, navigationController: navigationController, popTracker: popTracker, dependencies: dependencies)
+    addChildCoordinator(artistCoordinator)
+    artistCoordinator.start()
   }
 }

@@ -1,5 +1,5 @@
 //
-//  LibraryViewModelProtocol.swift
+//  ArtistListViewModel.swift
 //  MementoFM
 //
 //  Created by Daniel on 19/05/2017.
@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol LibraryViewModelDelegate: class {
-  func libraryViewModel(_ viewModel: LibraryViewModelProtocol, didSelectArtist artist: Artist)
+protocol ArtistListViewModelDelegate: class {
+  func artistListViewModel(_ viewModel: ArtistListViewModel, didSelectArtist artist: Artist)
 }
 
-protocol LibraryViewModelProtocol: class {
-  weak var delegate: LibraryViewModelDelegate? { get set }
+protocol ArtistListViewModel: class {
+  weak var delegate: ArtistListViewModelDelegate? { get set }
 
   var onDidStartLoading: (() -> Void)? { get set }
   var onDidFinishLoading: (() -> Void)? { get set }
@@ -22,6 +22,7 @@ protocol LibraryViewModelProtocol: class {
   var onDidReceiveError: ((Error) -> Void)? { get set }
 
   var itemCount: Int { get }
+  var title: String { get }
   var searchBarPlaceholder: String { get }
 
   func requestDataIfNeeded(currentTimestamp: TimeInterval)
@@ -30,7 +31,7 @@ protocol LibraryViewModelProtocol: class {
   func performSearch(withText text: String)
 }
 
-extension LibraryViewModelProtocol {
+extension ArtistListViewModel {
   func requestDataIfNeeded(currentTimestamp: TimeInterval = Date().timeIntervalSince1970) {
     requestDataIfNeeded(currentTimestamp: currentTimestamp)
   }

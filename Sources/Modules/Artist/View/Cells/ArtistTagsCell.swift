@@ -14,6 +14,10 @@ protocol ArtistTagsCellDataSource: class {
   func tagCellViewModel(at indexPath: IndexPath, in cell: ArtistTagsCell) -> TagCellViewModel
 }
 
+protocol ArtistTagsCellDelegate: class {
+  func artistTagsCell(_ cell: ArtistTagsCell, didSelectTagAt indexPath: IndexPath)
+}
+
 class ArtistTagsCell: UITableViewCell {
   private let collectionView: UICollectionView
   fileprivate let prototypeCell = TagCell()
@@ -23,6 +27,8 @@ class ArtistTagsCell: UITableViewCell {
       collectionView.reloadData()
     }
   }
+
+  weak var delegate: ArtistTagsCellDelegate?
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     let layout = UICollectionViewLeftAlignedLayout()
@@ -80,6 +86,10 @@ extension ArtistTagsCell: UICollectionViewDataSource {
 }
 
 extension ArtistTagsCell: UICollectionViewDelegateFlowLayout {
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    delegate?.artistTagsCell(self, didSelectTagAt: indexPath)
+  }
+
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {

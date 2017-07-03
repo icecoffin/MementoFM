@@ -1,5 +1,5 @@
 //
-//  LibraryViewController.swift
+//  ArtistListViewController.swift
 //  MementoFM
 //
 //  Created by Daniel on 12/10/16.
@@ -10,19 +10,19 @@ import UIKit
 import SnapKit
 import TPKeyboardAvoiding
 
-class LibraryViewController: UIViewController {
+class ArtistListViewController: UIViewController {
   private struct Constants {
     static let estimatedRowHeight: CGFloat = 60
   }
 
-  fileprivate let viewModel: LibraryViewModelProtocol
+  fileprivate let viewModel: ArtistListViewModel
 
   private let searchController = UISearchController(searchResultsController: nil)
   private let tableView = TPKeyboardAvoidingTableView()
   private let loadingView = LoadingView()
-  private let emptyLibraryView = EmptyDataSetView(text: "No artists found".unlocalized)
+  private let emptyDataSetView = EmptyDataSetView(text: "No artists found".unlocalized)
 
-  init(viewModel: LibraryViewModelProtocol) {
+  init(viewModel: ArtistListViewModel) {
     self.viewModel = viewModel
     super.init(nibName: nil, bundle: nil)
   }
@@ -50,7 +50,7 @@ class LibraryViewController: UIViewController {
       make.top.equalTo(topLayoutGuide.snp.bottom)
     }
 
-    tableView.register(LibraryArtistCell.self, forCellReuseIdentifier: LibraryArtistCell.reuseIdentifier)
+    tableView.register(ArtistCell.self, forCellReuseIdentifier: ArtistCell.reuseIdentifier)
 
     tableView.dataSource = self
     tableView.delegate = self
@@ -59,7 +59,7 @@ class LibraryViewController: UIViewController {
     tableView.tableFooterView = UIView()
     tableView.tableHeaderView = searchController.searchBar
 
-    tableView.backgroundView = emptyLibraryView
+    tableView.backgroundView = emptyDataSetView
     tableView.backgroundView?.isHidden = true
   }
 
@@ -109,15 +109,15 @@ class LibraryViewController: UIViewController {
 }
 
 // MARK: UITableViewDataSource
-extension LibraryViewController: UITableViewDataSource {
+extension ArtistListViewController: UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return viewModel.itemCount
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let reuseIdentifier = LibraryArtistCell.reuseIdentifier
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? LibraryArtistCell else {
-      fatalError("LibraryArtistCell is not registered in the table view")
+    let reuseIdentifier = ArtistCell.reuseIdentifier
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? ArtistCell else {
+      fatalError("ArtistCell is not registered in the table view")
     }
 
     let artistViewModel = viewModel.artistViewModel(at: indexPath)
@@ -128,15 +128,15 @@ extension LibraryViewController: UITableViewDataSource {
 }
 
 // MARK: UITableViewDelegate
-extension LibraryViewController: UITableViewDelegate {
+extension ArtistListViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    tableView.deselectRow(at: indexPath, animated: true)
+    tableView.deselectRow(at: indexPath, animated: false)
     viewModel.selectArtist(at: indexPath)
   }
 }
 
 // MARK: UISearchResultsUpdating
-extension LibraryViewController: UISearchResultsUpdating {
+extension ArtistListViewController: UISearchResultsUpdating {
   func updateSearchResults(for searchController: UISearchController) {
     viewModel.performSearch(withText: searchController.searchBar.text ?? "")
   }

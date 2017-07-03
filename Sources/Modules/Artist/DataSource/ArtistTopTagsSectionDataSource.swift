@@ -34,6 +34,7 @@ class ArtistTopTagsSectionDataSource: ArtistSectionDataSource {
     }
 
     cell.dataSource = self
+    cell.delegate = self
     return cell
   }
 
@@ -74,5 +75,12 @@ extension ArtistTopTagsSectionDataSource: ArtistTagsCellDataSource {
 
   func tagCellViewModel(at indexPath: IndexPath, in cell: ArtistTagsCell) -> TagCellViewModel {
     return viewModel.cellViewModel(at: indexPath)
+  }
+}
+
+extension ArtistTopTagsSectionDataSource: ArtistTagsCellDelegate {
+  func artistTagsCell(_ cell: ArtistTagsCell, didSelectTagAt indexPath: IndexPath) {
+    let tagName = viewModel.cellViewModel(at: indexPath).name
+    viewModel.selectTag(withName: tagName)
   }
 }

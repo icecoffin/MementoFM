@@ -14,6 +14,7 @@ protocol OnboardingCoordinatorDelegate: class {
 
 class OnboardingCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter, SyncPresenter {
   var childCoordinators: [Coordinator] = []
+  var onDidFinish: (() -> Void)?
 
   let navigationController: NavigationController
   let dependencies: AppDependency

@@ -14,6 +14,7 @@ protocol SettingsCoordinatorDelegate: class {
 
 class SettingsCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter, SyncPresenter {
   var childCoordinators: [Coordinator] = []
+  var onDidFinish: (() -> Void)?
 
   let navigationController: NavigationController
   let dependencies: AppDependency

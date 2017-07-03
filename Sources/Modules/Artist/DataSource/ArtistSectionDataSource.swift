@@ -16,6 +16,9 @@ protocol ArtistSectionDataSource: class {
   func registerReusableViews(in tableView: UITableView)
   func cellForRow(at indexPath: IndexPath, in tableView: UITableView) -> UITableViewCell
 
+  func shouldHighlightRow(at indexPath: IndexPath, in tableView: UITableView) -> Bool
+  func selectRow(at indexPath: IndexPath, in tableView: UITableView)
+
   func viewForHeader(inSection: Int, in tableView: UITableView) -> UITableViewHeaderFooterView?
   func heightForHeader(inSection section: Int, in tableView: UITableView) -> CGFloat
 
@@ -24,6 +27,14 @@ protocol ArtistSectionDataSource: class {
 }
 
 extension ArtistSectionDataSource {
+  func shouldHighlightRow(at indexPath: IndexPath, in tableView: UITableView) -> Bool {
+    return false
+  }
+
+  func selectRow(at indexPath: IndexPath, in tableView: UITableView) {
+
+  }
+
   func viewForHeader(inSection: Int, in tableView: UITableView) -> UITableViewHeaderFooterView? {
     return nil
   }

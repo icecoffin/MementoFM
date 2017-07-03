@@ -9,11 +9,13 @@
 import UIKit
 
 class ArtistDataSource {
+  private let viewModel: ArtistViewModelProtocol
   let sectionDataSources: [ArtistSectionDataSource]
 
   var onDidUpdateData: ((_ section: Int) -> Void)?
 
-  init(viewModel: ArtistViewModel) {
+  init(viewModel: ArtistViewModelProtocol) {
+    self.viewModel = viewModel
     sectionDataSources = viewModel.sectionDataSources
     sectionDataSources.enumerated().forEach { offset, sectionDataSource in
       sectionDataSource.onDidUpdateData = { [weak self] in
@@ -32,6 +34,14 @@ class ArtistDataSource {
 
   func numberOfItems(inSection section: Int) -> Int {
     return sectionDataSources[section].numberOfRows
+  }
+
+  func shouldHighlightRow(at indexPath: IndexPath, in tableView: UITableView) -> Bool {
+    return sectionDataSources[indexPath.section].shouldHighlightRow(at: indexPath, in: tableView)
+  }
+
+  func selectRow(at indexPath: IndexPath, in tableView: UITableView) {
+    sectionDataSources[indexPath.section].selectRow(at: indexPath, in: tableView)
   }
 
   func cellForRow(at indexPath: IndexPath, in tableView: UITableView) -> UITableViewCell {

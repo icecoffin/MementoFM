@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import PromiseKit
 
-class LibraryViewModel: LibraryViewModelProtocol {
+class LibraryViewModel: ArtistListViewModel {
   typealias Dependencies = HasLibraryNetworkService & HasUserNetworkService & HasArtistNetworkService & HasRealmGateway & HasUserDataStorage
 
   private let dependencies: Dependencies
@@ -20,7 +20,7 @@ class LibraryViewModel: LibraryViewModelProtocol {
     return self.createCellViewModels()
   }()
 
-  weak var delegate: LibraryViewModelDelegate?
+  weak var delegate: ArtistListViewModelDelegate?
 
   var onDidStartLoading: (() -> Void)?
   var onDidFinishLoading: (() -> Void)?
@@ -42,7 +42,7 @@ class LibraryViewModel: LibraryViewModelProtocol {
                                  transform: { [unowned self] artist -> LibraryArtistCellViewModel in
       let viewModel = LibraryArtistCellViewModel(artist: artist.toTransient())
       viewModel.onSelection = { artist in
-        self.delegate?.libraryViewModel(self, didSelectArtist: artist)
+        self.delegate?.artistListViewModel(self, didSelectArtist: artist)
       }
       return viewModel
     })
@@ -76,6 +76,10 @@ class LibraryViewModel: LibraryViewModelProtocol {
 
   var itemCount: Int {
     return cellViewModels.count
+  }
+
+  var title: String {
+    return "Library".unlocalized
   }
 
   func artistViewModel(at indexPath: IndexPath) -> LibraryArtistCellViewModel {

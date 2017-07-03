@@ -9,6 +9,11 @@
 import Foundation
 import PromiseKit
 
+protocol ArtistSimilarArtistsSectionViewModelDelegate: class {
+  func artistSimilarArtistSectionViewModel(_ viewModel: ArtistSimilarArtistsSectionViewModel,
+                                           didSelectArtist artist: Artist)
+}
+
 class ArtistSimilarArtistsSectionViewModel: ArtistSectionViewModel {
   typealias Dependencies = HasRealmGateway
 
@@ -19,6 +24,8 @@ class ArtistSimilarArtistsSectionViewModel: ArtistSectionViewModel {
   private(set) var isLoading: Bool = true
 
   var onDidUpdateCellViewModels: (() -> Void)?
+
+  weak var delegate: ArtistSimilarArtistsSectionViewModelDelegate?
 
   required init(artist: Artist, dependencies: Dependencies) {
     self.artist = artist
@@ -43,8 +50,13 @@ class ArtistSimilarArtistsSectionViewModel: ArtistSectionViewModel {
     return "There are no similar artists.".unlocalized
   }
 
-  func cellViewModel(at indexPath: IndexPath) -> SimilarArtistCellViewModel {
+  func cellViewModel(at indexPath: IndexPath) -> SimilarArtistCellViewModelProtocol {
     return cellViewModels[indexPath.item]
+  }
+
+  func selectArtist(at indexPath: IndexPath) {
+    let cellViewModel = cellViewModels[indexPath.row]
+    delegate?.artistSimilarArtistSectionViewModel(self, didSelectArtist: cellViewModel.artist)
   }
 
   private func calculateSimilarArtists() {
