@@ -43,9 +43,6 @@ class ArtistListCoordinator: NSObject, NavigationFlowCoordinator {
   fileprivate let viewModelFactory: ArtistListViewModelFactory
   fileprivate let dependencies: AppDependency
 
-  // TODO: move to view model?
-  private var onApplicationDidBecomeActive: (() -> Void)?
-
   init(navigationController: NavigationController,
        popTracker: NavigationControllerPopTracker,
        configuration: ArtistListCoordinatorConfiguration,
@@ -57,7 +54,6 @@ class ArtistListCoordinator: NSObject, NavigationFlowCoordinator {
     self.viewModelFactory = viewModelFactory
     self.dependencies = dependencies
     super.init()
-    subscribeToNotifications()
   }
 
   deinit {
@@ -69,26 +65,14 @@ class ArtistListCoordinator: NSObject, NavigationFlowCoordinator {
 
     let artistListViewModel = viewModelFactory.makeViewModel()
     artistListViewModel.delegate = self
-    onApplicationDidBecomeActive = { [weak artistListViewModel] in
-      artistListViewModel?.requestDataIfNeeded()
-    }
     let artistListViewController = ArtistListViewController(viewModel: artistListViewModel)
     artistListViewController.navigationItem.leftBarButtonItem = configuration.backButtonItem(for: self)
     artistListViewController.title = artistListViewModel.title
     navigationController.pushViewController(artistListViewController, animated: configuration.shouldStartAnimated)
   }
 
-  private func subscribeToNotifications() {
-    NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(_:)),
-                                           name: .UIApplicationDidBecomeActive, object: nil)
-  }
-
   private func unsubscribeFromNotifications() {
     NotificationCenter.default.removeObserver(self, name: .UIApplicationDidBecomeActive, object: nil)
-  }
-
-  @objc private func applicationDidBecomeActive(_ notification: Notification) {
-    onApplicationDidBecomeActive?()
   }
 
   func shouldFinishAfterPopping(viewController: UIViewController) -> Bool {

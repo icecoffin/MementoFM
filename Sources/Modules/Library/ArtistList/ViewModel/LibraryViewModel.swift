@@ -14,6 +14,7 @@ class LibraryViewModel: ArtistListViewModel {
   typealias Dependencies = HasLibraryNetworkService & HasUserNetworkService & HasArtistNetworkService & HasRealmGateway & HasUserDataStorage
 
   private let dependencies: Dependencies
+  private let applicationStateObserver: ApplicationStateObserver
   private let libraryUpdater: LibraryUpdater
 
   fileprivate lazy var cellViewModels: RealmMappedCollection<RealmArtist, LibraryArtistCellViewModel> = {
@@ -28,8 +29,9 @@ class LibraryViewModel: ArtistListViewModel {
   var onDidChangeStatus: ((String) -> Void)?
   var onDidReceiveError: ((Error) -> Void)?
 
-  init(dependencies: Dependencies) {
+  init(dependencies: Dependencies, applicationStateObserver: ApplicationStateObserver = .init()) {
     self.dependencies = dependencies
+    self.applicationStateObserver = applicationStateObserver
     libraryUpdater = LibraryUpdater(dependencies: dependencies)
 
     setup()
@@ -61,6 +63,10 @@ class LibraryViewModel: ArtistListViewModel {
     }
     libraryUpdater.onDidReceiveError = { [unowned self] error in
       self.onDidReceiveError?(error)
+    }
+
+    applicationStateObserver.onApplicationDidBecomeActive = { [weak self] in
+      self?.requestDataIfNeeded()
     }
   }
 
