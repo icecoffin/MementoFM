@@ -9,8 +9,14 @@
 import Foundation
 import PromiseKit
 
-// MARK: Ignored tags
-extension RealmGateway {
+protocol IgnoredTagsDatabaseService {
+  func hasIgnoredTags() -> Bool
+  func ignoredTags() -> [IgnoredTag]
+  func createDefaultIgnoredTags() -> Promise<Void>
+  func updateIgnoredTags(_ ignoredTags: [IgnoredTag]) -> Promise<Void>
+}
+
+extension RealmGateway: IgnoredTagsDatabaseService {
   func hasIgnoredTags() -> Bool {
     return !mainQueueRealm.objects(RealmIgnoredTag.self).isEmpty
   }

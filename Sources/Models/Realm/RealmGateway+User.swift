@@ -10,8 +10,11 @@ import Foundation
 import PromiseKit
 import RealmSwift
 
-// MARK: User
-extension RealmGateway {
+protocol UserDatabaseService {
+  func clearLocalData() -> Promise<Void>
+}
+
+extension RealmGateway: UserDatabaseService {
   func clearLocalData() -> Promise<Void> {
     return write(block: { realm in
       self.deleteObjects(RealmArtist.self, in: realm)

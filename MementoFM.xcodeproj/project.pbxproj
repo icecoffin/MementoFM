@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		14F8D82E9E404265E749C818 /* Pods_LastFMNotifierTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29BF0DB16DD5BB044FE9504 /* Pods_LastFMNotifierTests.framework */; };
 		57CC53BFD7353556C18C1D49 /* Pods_MementoFMTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54F7345EDE3E86D13A310BC8 /* Pods_MementoFMTests.framework */; };
 		6513540C1EDD875E0061B879 /* LibraryViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513540B1EDD875E0061B879 /* LibraryViewModelFactory.swift */; };
 		6516A53D1ECDFD830021E43C /* NSAttributedString+Join.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6516A53C1ECDFD830021E43C /* NSAttributedString+Join.swift */; };
@@ -298,7 +297,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14F8D82E9E404265E749C818 /* Pods_LastFMNotifierTests.framework in Frameworks */,
 				57CC53BFD7353556C18C1D49 /* Pods_MementoFMTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -10,7 +10,10 @@ import Foundation
 import PromiseKit
 import RealmSwift
 
-// MARK: Tags
+protocol TagsDatabaseService {
+  func getAllTopTags() -> Promise<[Tag]>
+}
+
 extension RealmGateway {
   func getAllTopTags() -> Promise<[Tag]> {
     return dispatch_promise(DispatchQueue.global()) { _ -> [Tag] in
