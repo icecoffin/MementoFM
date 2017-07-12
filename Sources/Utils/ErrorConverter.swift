@@ -13,6 +13,8 @@ enum ErrorConverter {
   static func displayMessage(for error: Error) -> String {
     if let mapperError = error as? MapperError {
       return displayMessage(for: mapperError)
+    } else if let lastFMError = error as? LastFMError {
+      return "\(lastFMError.message) (Error code: \(lastFMError.errorCode))"
     } else {
       return error.localizedDescription
     }

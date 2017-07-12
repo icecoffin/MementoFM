@@ -10,9 +10,6 @@ import Foundation
 import Alamofire
 import PromiseKit
 
-// TODO: handle last.fm API errors, like:
-// {"error":10,"message":"Invalid API key - You must be granted a valid key by last.fm"}
-
 protocol UserNetworkService {
   func getRecentTracks(for user: String, from: TimeInterval, limit: Int, progress: ((Progress) -> Void)?) -> Promise<[Track]>
 }
@@ -69,15 +66,10 @@ extension NetworkService: UserNetworkService {
                                      "limit": limit]
 
     return Promise { fulfill, reject in
-      let operation = NetworkOperation(url: baseURL, parameters: parameters) { response in
-        switch response.result {
-        case .success(let value):
-          do {
-            let pageResponse = try RecentTracksPageResponse.from(value)
-            fulfill(pageResponse.recentTracksPage)
-          } catch {
-            reject(error)
-          }
+      let operation = LastFMNetworkOperation<RecentTracksPageResponse>(url: baseURL, parameters: parameters) { result in
+        switch result {
+        case .success(let pageResponse):
+          fulfill(pageResponse.recentTracksPage)
         case .failure(let error):
           if !error.isCancelledError {
             reject(error)

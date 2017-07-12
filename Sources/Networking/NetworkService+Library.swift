@@ -63,15 +63,10 @@ extension NetworkService: LibraryNetworkService {
                                      "limit": limit]
 
     return Promise { fulfill, reject in
-      let operation = NetworkOperation(url: baseURL, parameters: parameters) { response in
-        switch response.result {
-        case .success(let value):
-          do {
-            let pageResponse = try LibraryPageResponse.from(value)
-            fulfill(pageResponse.libraryPage)
-          } catch {
-            reject(error)
-          }
+      let operation = LastFMNetworkOperation<LibraryPageResponse>(url: baseURL, parameters: parameters) { result in
+        switch result {
+        case .success(let pageResponse):
+          fulfill(pageResponse.libraryPage)
         case .failure(let error):
           if !error.isCancelledError {
             reject(error)
