@@ -80,7 +80,7 @@ extension SettingsCoordinator: IgnoredTagsViewModelDelegate {
 
 extension SettingsCoordinator: SyncViewModelDelegate {
   func syncViewModelDidFinishLoading(_ viewModel: SyncViewModel) {
-    dependencies.generalNetworkService.cancelPendingRequests()
+    dependencies.networkService.cancelPendingRequests()
     delegate?.settingsCoordinatorDidChangeUsername(self)
   }
 }

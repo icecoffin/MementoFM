@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmArtist: Object {
+final class RealmArtist: Object, RealmEntity {
   dynamic var name = ""
   dynamic var playcount = 0
   dynamic var urlString = ""
@@ -22,7 +22,8 @@ class RealmArtist: Object {
     return "name"
   }
 
-  class func from(artist: Artist) -> RealmArtist {
+  class func from(transient: Artist) -> RealmArtist {
+    let artist = transient
     let realmArtist = RealmArtist()
     realmArtist.name = artist.name
     realmArtist.playcount = artist.playcount
@@ -31,11 +32,11 @@ class RealmArtist: Object {
     realmArtist.tags = List<RealmTag>()
     realmArtist.needsTagsUpdate = artist.needsTagsUpdate
     for tag in artist.tags {
-      let realmTag = RealmTag.from(tag: tag)
+      let realmTag = RealmTag.from(transient: tag)
       realmArtist.tags.append(realmTag)
     }
     for topTag in artist.topTags {
-      let realmTag = RealmTag.from(tag: topTag)
+      let realmTag = RealmTag.from(transient: topTag)
       realmArtist.topTags.append(realmTag)
     }
     return realmArtist

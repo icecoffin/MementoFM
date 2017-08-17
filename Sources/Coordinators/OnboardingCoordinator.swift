@@ -18,9 +18,6 @@ class OnboardingCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter, Sy
 
   let navigationController: NavigationController
   let dependencies: AppDependency
-  var realmGateway: HasRealmGateway {
-    return dependencies
-  }
 
   weak var delegate: OnboardingCoordinatorDelegate?
 

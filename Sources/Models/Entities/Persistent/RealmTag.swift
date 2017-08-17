@@ -9,11 +9,12 @@
 import Foundation
 import RealmSwift
 
-class RealmTag: Object {
+final class RealmTag: Object, RealmEntity {
   dynamic var name = ""
   dynamic var count = 0
 
-  class func from(tag: Tag) -> RealmTag {
+  class func from(transient: Tag) -> RealmTag {
+    let tag = transient
     let realmTag = RealmTag()
     realmTag.name = tag.name
     realmTag.count = tag.count

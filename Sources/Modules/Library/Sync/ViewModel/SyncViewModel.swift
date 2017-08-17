@@ -13,7 +13,7 @@ protocol SyncViewModelDelegate: class {
 }
 
 class SyncViewModel {
-  typealias Dependencies = HasLibraryNetworkService & HasUserNetworkService & HasArtistNetworkService & HasRealmGateway & HasUserDataStorage
+  typealias Dependencies = HasUserService & HasArtistService & HasRealmService & HasUserDataStorage
 
   private let dependencies: Dependencies
   private let libraryUpdater: LibraryUpdater

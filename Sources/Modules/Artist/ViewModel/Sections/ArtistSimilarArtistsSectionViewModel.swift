@@ -15,7 +15,7 @@ protocol ArtistSimilarArtistsSectionViewModelDelegate: class {
 }
 
 class ArtistSimilarArtistsSectionViewModel: ArtistSectionViewModel {
-  typealias Dependencies = HasRealmGateway
+  typealias Dependencies = HasRealmService
 
   private let artist: Artist
   private let dependencies: Dependencies

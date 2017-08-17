@@ -14,7 +14,7 @@ protocol TagsViewModelDelegate: class {
 }
 
 class TagsViewModel {
-  typealias Dependencies = HasRealmGateway
+  typealias Dependencies = HasTagService
 
   private let dependencies: Dependencies
   private var allCellViewModels: [TagCellViewModel] = []
@@ -30,7 +30,7 @@ class TagsViewModel {
   }
 
   func getTags(searchText: String? = nil) {
-    dependencies.realmGateway.getAllTopTags().then { allTopTags -> Void in
+    dependencies.tagService.getAllTopTags().then { allTopTags -> Void in
       self.createCellViewModels(from: allTopTags, searchText: searchText)
     }.then(on: DispatchQueue.main) {
       self.onDidUpdateData?(self.filteredCellViewModels.isEmpty)

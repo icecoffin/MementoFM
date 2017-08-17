@@ -24,7 +24,9 @@ private func extractImageURLString(from json: Any?) throws -> String {
   return large?["#text"] as? String ?? ""
 }
 
-struct Artist: AutoEquatable, AutoHashable {
+struct Artist: AutoEquatable, AutoHashable, TransientEntity {
+  typealias RealmType = RealmArtist
+
   let name: String
   let playcount: Int
   let urlString: String

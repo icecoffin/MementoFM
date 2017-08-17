@@ -25,7 +25,7 @@ protocol ArtistDatabaseService {
 extension RealmGateway: ArtistDatabaseService {
   func saveArtists(_ artists: [Artist]) -> Promise<Void> {
     return write { realm in
-      let realmArtists = artists.map({ RealmArtist.from(artist: $0) })
+      let realmArtists = artists.map({ RealmArtist.from(transient: $0) })
       realm.add(realmArtists, update: true)
     }
   }
@@ -41,7 +41,7 @@ extension RealmGateway: ArtistDatabaseService {
         realmArtist.needsTagsUpdate = false
         realmArtist.tags.removeAll()
         tags.forEach { tag in
-          realmArtist.tags.append(RealmTag.from(tag: tag))
+          realmArtist.tags.append(RealmTag.from(transient: tag))
         }
         realm.add(realmArtist, update: true)
       }

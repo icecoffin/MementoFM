@@ -18,7 +18,7 @@ enum LibraryUpdateStatus {
 }
 
 class LibraryUpdater {
-  typealias Dependencies = HasLibraryNetworkService & HasUserNetworkService & HasArtistNetworkService & HasRealmGateway & HasUserDataStorage
+  typealias Dependencies = HasUserService & HasArtistService & HasRealmService & HasUserDataStorage
 
   private let dependencies: Dependencies
 
@@ -60,7 +60,7 @@ class LibraryUpdater {
 
   private func getFullLibrary() -> Promise<Void> {
     onDidChangeStatus?(.artistsFirstPage)
-    return dependencies.libraryNetworkService.getLibrary(for: username, progress: { [weak self] progress in
+    return dependencies.userService.getLibrary(for: username, progress: { [weak self] progress in
       let status: LibraryUpdateStatus = .artists(progress: progress)
       self?.onDidChangeStatus?(status)
     }).then { [unowned self] artists -> Promise<Void> in
@@ -72,7 +72,7 @@ class LibraryUpdater {
 
   private func getLibraryUpdates() -> Promise<Void> {
     onDidChangeStatus?(.recentTracksFirstPage)
-    return dependencies.userNetworkService.getRecentTracks(for: username, from: lastUpdateTimestamp, progress: { [weak self] progress in
+    return dependencies.userService.getRecentTracks(for: username, from: lastUpdateTimestamp, progress: { [weak self] progress in
       let status: LibraryUpdateStatus = .recentTracks(progress: progress)
       self?.onDidChangeStatus?(status)
     }).then { [unowned self] tracks -> Promise<Void> in
@@ -88,7 +88,7 @@ class LibraryUpdater {
 
   private func getArtistsTags() -> Promise<Void> {
     let artists = dependencies.realmGateway.artistsNeedingTagsUpdate()
-    return dependencies.artistNetworkService.getTopTags(for: artists, progress: { [weak self] requestProgress in
+    return dependencies.artistService.getTopTags(for: artists, progress: { [weak self] requestProgress in
       guard let `self` = self else {
         return
       }

@@ -8,54 +8,48 @@
 
 import Foundation
 
-protocol HasRealmGateway {
-  var realmGateway: RealmGateway { get }
+protocol HasRealmService {
+  var realmService: RealmService { get }
+}
+
+protocol HasNetworkService {
+  var networkService: LastFMNetworkService { get }
 }
 
 protocol HasUserDataStorage {
   var userDataStorage: UserDataStorage { get }
 }
 
-protocol HasGeneralNetworkService {
-  var generalNetworkService: GeneralNetworkService { get }
+protocol HasArtistService {
+  var artistService: ArtistService { get }
 }
 
-protocol HasArtistNetworkService {
-  var artistNetworkService: ArtistNetworkService { get }
+protocol HasUserService {
+  var userService: UserService { get }
 }
 
-protocol HasLibraryNetworkService {
-  var libraryNetworkService: LibraryNetworkService { get }
+protocol HasTagService {
+  var tagService: TagService { get }
 }
 
-protocol HasUserNetworkService {
-  var userNetworkService: UserNetworkService { get }
-}
-
-struct AppDependency: HasRealmGateway, HasUserDataStorage, HasGeneralNetworkService, HasArtistNetworkService,
-                      HasLibraryNetworkService, HasUserNetworkService {
-  let realmGateway: RealmGateway
+struct AppDependency: HasUserDataStorage, HasNetworkService, HasRealmService, HasArtistService, HasUserService {
+  let realmService: RealmService
   let userDataStorage: UserDataStorage
-  private let networkService: NetworkService
-  var generalNetworkService: GeneralNetworkService {
-    return networkService
-  }
-  var artistNetworkService: ArtistNetworkService {
-    return networkService
-  }
-  var libraryNetworkService: LibraryNetworkService {
-    return networkService
-  }
-  var userNetworkService: UserNetworkService {
-    return networkService
-  }
+  let networkService: LastFMNetworkService
+  let artistService: ArtistService
+  let userService: UserService
+  let tagService: TagService
 
   static var `default`: AppDependency {
-    let realmGateway = RealmGateway(mainQueueRealm: RealmFactory.realm(), getCurrentQueueRealm: {
-      return RealmFactory.realm()
-    })
+    let realmService = RealmService.persistent
     let userDataStorage = UserDataStorage()
-    let networkService = NetworkService()
-    return AppDependency(realmGateway: realmGateway, userDataStorage: userDataStorage, networkService: networkService)
+    let networkService = LastFMNetworkService()
+
+    let artistService = ArtistService(realmService: realmService, networkService: networkService)
+    let userService = UserService(realmService: realmService, networkService: networkService)
+    let tagService = TagService(realmService: realmService)
+
+    return AppDependency(realmService: realmService, userDataStorage: userDataStorage, networkService: networkService,
+                         artistService: artistService, userService: userService, tagService: tagService)
   }
 }

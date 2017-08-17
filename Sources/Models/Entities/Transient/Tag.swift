@@ -14,7 +14,9 @@ struct Tag: AutoEquatable, AutoHashable {
   let count: Int
 }
 
-extension Tag: Mappable {
+extension Tag: Mappable, TransientEntity {
+  typealias RealmType = RealmTag
+
   init(map: Mapper) throws {
     let name: String = try map.from("name")
     self.name = name.lowercased()

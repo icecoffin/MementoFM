@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 
 class ArtistsByTagViewModel: ArtistListViewModel {
-  typealias Dependencies = HasRealmGateway
+  typealias Dependencies = HasRealmService
 
   private let tagName: String
   private let dependencies: Dependencies
@@ -36,7 +36,7 @@ class ArtistsByTagViewModel: ArtistListViewModel {
 
   private func createCellViewModels() -> RealmMappedCollection<RealmArtist, LibraryArtistCellViewModel> {
     let playcountSort = SortDescriptor(keyPath: "playcount", ascending: false)
-    return RealmMappedCollection(realm: dependencies.realmGateway.mainQueueRealm,
+    return RealmMappedCollection(realm: dependencies.realmService.getRealm(),
                                  predicate: originalPredicate,
                                  sortDescriptors: [playcountSort],
                                  transform: { [unowned self] artist -> LibraryArtistCellViewModel in

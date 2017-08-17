@@ -11,7 +11,7 @@ import RealmSwift
 import PromiseKit
 
 class LibraryViewModel: ArtistListViewModel {
-  typealias Dependencies = HasLibraryNetworkService & HasUserNetworkService & HasArtistNetworkService & HasRealmGateway & HasUserDataStorage
+  typealias Dependencies = HasUserService & HasArtistService & HasRealmService & HasUserDataStorage
 
   private let dependencies: Dependencies
   private let applicationStateObserver: ApplicationStateObserver
@@ -39,7 +39,7 @@ class LibraryViewModel: ArtistListViewModel {
 
   private func createCellViewModels() -> RealmMappedCollection<RealmArtist, LibraryArtistCellViewModel> {
     let playcountSort = SortDescriptor(keyPath: "playcount", ascending: false)
-    return RealmMappedCollection(realm: dependencies.realmGateway.mainQueueRealm,
+    return RealmMappedCollection(realm: dependencies.realmService.getRealm(),
                                  sortDescriptors: [playcountSort],
                                  transform: { [unowned self] artist -> LibraryArtistCellViewModel in
       let viewModel = LibraryArtistCellViewModel(artist: artist.toTransient())

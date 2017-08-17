@@ -36,7 +36,7 @@ extension RealmGateway: IgnoredTagsDatabaseService {
   func updateIgnoredTags(_ ignoredTags: [IgnoredTag]) -> Promise<Void> {
     return write(block: { realm in
       realm.delete(realm.objects(RealmIgnoredTag.self))
-      let realmIgnoredTags = ignoredTags.map({ RealmIgnoredTag.from(ignoredTag: $0) })
+      let realmIgnoredTags = ignoredTags.map({ RealmIgnoredTag.from(transient: $0) })
       realm.add(realmIgnoredTags)
     })
   }

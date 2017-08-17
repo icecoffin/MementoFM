@@ -18,7 +18,7 @@ protocol EnterUsernameViewModelDelegate: class {
 }
 
 class EnterUsernameViewModel {
-  typealias Dependencies = HasRealmGateway & HasUserDataStorage
+  typealias Dependencies = HasUserService & HasUserDataStorage
 
   private let dependencies: Dependencies
   private var currentUsername: String
@@ -64,6 +64,6 @@ class EnterUsernameViewModel {
 
   private func clearLocalData() -> Promise<Void> {
     dependencies.userDataStorage.reset()
-    return dependencies.realmGateway.clearLocalData()
+    return dependencies.userService.clearUserData()
   }
 }

@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmIgnoredTag: Object {
+final class RealmIgnoredTag: Object, RealmEntity {
   dynamic var uuid = UUID().uuidString
   dynamic var name = ""
 
@@ -19,7 +19,8 @@ class RealmIgnoredTag: Object {
     return realmIgnoredTag
   }
 
-  class func from(ignoredTag: IgnoredTag) -> RealmIgnoredTag {
+  class func from(transient: IgnoredTag) -> RealmIgnoredTag {
+    let ignoredTag = transient
     let realmIgnoredTag = RealmIgnoredTag()
     realmIgnoredTag.uuid = ignoredTag.uuid
     realmIgnoredTag.name = ignoredTag.name

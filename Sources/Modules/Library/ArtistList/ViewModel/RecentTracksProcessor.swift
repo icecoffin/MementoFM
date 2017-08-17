@@ -31,7 +31,7 @@ class RecentTracksProcessor {
         if let existingArtist = realm.object(ofType: RealmArtist.self, forPrimaryKey: artist.name) {
           realmArtist = existingArtist
         } else {
-          realmArtist = RealmArtist.from(artist: artist)
+          realmArtist = RealmArtist.from(transient: artist)
           realm.add(realmArtist)
           newArtists.append(artist)
         }
