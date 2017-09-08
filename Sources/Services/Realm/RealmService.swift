@@ -18,13 +18,13 @@ class RealmService {
     self.getRealm = getRealm
   }
 
-  class var persistent: RealmService {
+  class func persistent() -> RealmService {
     return RealmService(getRealm: {
       return RealmFactory.realm()
     })
   }
 
-  class var inMemory: RealmService {
+  class func inMemory() -> RealmService {
     return RealmService(getRealm: {
       return RealmFactory.inMemoryRealm()
     })
@@ -69,6 +69,10 @@ class RealmService {
   }
 
   // MARK: - Obtaining objects from Realm
+  func hasObjects<T: TransientEntity>(ofType type: T.Type) -> Bool where T.RealmType: Object, T.RealmType.TransientType == T {
+    return !getRealm().objects(T.RealmType.self).isEmpty
+  }
+
   func objects<T: TransientEntity>(_ type: T.Type) -> [T.RealmType.TransientType]
     where T.RealmType: Object, T.RealmType.TransientType == T {
       return getRealm().objects(T.RealmType.self).flatMap({ $0.toTransient() })

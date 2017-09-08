@@ -15,7 +15,7 @@ protocol ArtistSimilarArtistsSectionViewModelDelegate: class {
 }
 
 class ArtistSimilarArtistsSectionViewModel: ArtistSectionViewModel {
-  typealias Dependencies = HasRealmService
+  typealias Dependencies = HasArtistService
 
   private let artist: Artist
   private let dependencies: Dependencies
@@ -60,7 +60,7 @@ class ArtistSimilarArtistsSectionViewModel: ArtistSectionViewModel {
   }
 
   private func calculateSimilarArtists() {
-    dependencies.realmGateway.getArtistsWithIntersectingTopTags(for: artist).then { [weak self] artists -> Void in
+    dependencies.artistService.getArtistsWithIntersectingTopTags(for: artist).then { [weak self] artists -> Void in
       self?.createCellViewModels(from: artists)
     }.then(on: DispatchQueue.main) { [weak self] _ -> Void in
       self?.isLoading = false

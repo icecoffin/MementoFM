@@ -19,7 +19,7 @@ protocol ArtistViewModelProtocol {
 }
 
 class ArtistViewModel: ArtistViewModelProtocol {
-  typealias Dependencies = HasRealmService
+  typealias Dependencies = HasArtistService
 
   private let artist: Artist
   private let dependencies: Dependencies

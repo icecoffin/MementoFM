@@ -23,7 +23,7 @@ class AppCoordinator: Coordinator {
   func start() {
     removeAllChildren()
 
-    if dependencies.userDataStorage.didFinishOnboarding {
+    if dependencies.userService.didFinishOnboarding {
       startMainFlow()
     } else {
       startOnboardingFlow()

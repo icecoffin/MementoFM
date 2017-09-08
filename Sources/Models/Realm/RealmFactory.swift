@@ -12,6 +12,7 @@ class RealmFactory {
   static func realm() -> Realm {
     do {
       let realm = try Realm()
+      realm.refresh()
       return realm
     } catch {
       fatalError("Can't create a Realm instance")

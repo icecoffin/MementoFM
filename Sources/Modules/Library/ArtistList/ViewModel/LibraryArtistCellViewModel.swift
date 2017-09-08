@@ -11,8 +11,6 @@ import Foundation
 class LibraryArtistCellViewModel {
   private let artist: Artist
 
-  var onSelection: ((Artist) -> Void)?
-
   init(artist: Artist) {
     self.artist = artist
   }
@@ -30,9 +28,5 @@ class LibraryArtistCellViewModel {
       return nil
     }
     return URL(string: imageURLString)
-  }
-
-  func handleSelection() {
-    onSelection?(artist)
   }
 }

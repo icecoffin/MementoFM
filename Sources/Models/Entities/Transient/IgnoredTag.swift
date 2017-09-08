@@ -8,7 +8,9 @@
 
 import Foundation
 
-struct IgnoredTag {
+struct IgnoredTag: TransientEntity {
+  typealias RealmType = RealmIgnoredTag
+
   let uuid: String
   let name: String
 

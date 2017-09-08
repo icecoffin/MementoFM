@@ -18,7 +18,7 @@ protocol EnterUsernameViewModelDelegate: class {
 }
 
 class EnterUsernameViewModel {
-  typealias Dependencies = HasUserService & HasUserDataStorage
+  typealias Dependencies = HasUserService
 
   private let dependencies: Dependencies
   private var currentUsername: String
@@ -26,7 +26,7 @@ class EnterUsernameViewModel {
   weak var delegate: EnterUsernameViewModelDelegate?
 
   var canSubmitUsername: Bool {
-    return !currentUsername.isEmpty && currentUsername != dependencies.userDataStorage.username
+    return !currentUsername.isEmpty && currentUsername != dependencies.userService.username
   }
 
   init(dependencies: Dependencies) {
@@ -43,7 +43,7 @@ class EnterUsernameViewModel {
   }
 
   var currentUsernameText: String {
-    let username = dependencies.userDataStorage.username
+    let username = dependencies.userService.username
     if username.isEmpty {
       return ""
     } else {
@@ -56,14 +56,9 @@ class EnterUsernameViewModel {
   }
 
   func submitUsername() {
-    dependencies.userDataStorage.username = currentUsername
-    clearLocalData().then {
+    dependencies.userService.username = currentUsername
+    dependencies.userService.clearUserData().then {
       self.delegate?.enterUsernameViewModelDidFinish(self)
     }.noError()
-  }
-
-  private func clearLocalData() -> Promise<Void> {
-    dependencies.userDataStorage.reset()
-    return dependencies.userService.clearUserData()
   }
 }

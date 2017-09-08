@@ -40,7 +40,7 @@ class NavigationControllerPopTracker: NSObject {
 
 extension NavigationControllerPopTracker: UINavigationControllerDelegate {
   func navigationController(_ navigationController: UINavigationController,
-                            willShow viewController: UIViewController,
+                            didShow viewController: UIViewController,
                             animated: Bool) {
 
     guard let poppingViewController = navigationController.poppingViewController() else {

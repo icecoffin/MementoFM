@@ -66,8 +66,12 @@ class LastFMNetworkOperation<T: Mappable>: AsynchronousOperation {
   }
 
   override func cancel() {
+    super.cancel()
     onCancel?()
     request?.cancel()
-    super.cancel()
+
+    if isExecuting {
+      completeOperation()
+    }
   }
 }

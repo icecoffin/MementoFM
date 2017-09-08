@@ -8,6 +8,7 @@
 
 import Foundation
 import PromiseKit
+import RealmSwift
 
 fileprivate let numberOfTopTags = 5
 
@@ -26,24 +27,33 @@ class ArtistService {
     self.networkService = networkService
   }
 
-  func getTopTags(for artists: [Artist], progress: @escaping ((TopTagsRequestProgress) -> Void)) -> Promise<Void> {
+  func getLibrary(for user: String, limit: Int = 200, progress: ((Progress) -> Void)?) -> Promise<[Artist]> {
     return Promise { fulfill, reject in
-      let totalProgress = Progress(totalUnitCount: Int64(artists.count))
+      let initialIndex = 1
+      getLibraryPage(withIndex: initialIndex, for: user, limit: limit).then { [unowned self] pageResponse -> Void in
+        let page = pageResponse.libraryPage
+        if page.totalPages <= initialIndex {
+          fulfill(page.artists)
+          return
+        }
 
-      let promises = artists.map { artist in
-        return getTopTags(for: artist.name).then { topTagsResponse -> Void in
-          totalProgress.completedUnitCount += 1
-          let topTagsList = topTagsResponse.topTagsList
-          progress(TopTagsRequestProgress(progress: totalProgress, artist: artist, topTagsList: topTagsList))
+        let totalProgress = Progress(totalUnitCount: Int64(page.totalPages - 1))
+        let pagePromises = (initialIndex+1...page.totalPages).map { index in
+          return self.getLibraryPage(withIndex: index, for: user, limit: limit).always {
+            totalProgress.completedUnitCount += 1
+            progress?(totalProgress)
+          }
+        }
+
+        when(fulfilled: pagePromises).then { pageResponses -> Void in
+          let pages = pageResponses.map({ $0.libraryPage })
+          let artists = ([page] + pages).flatMap { $0.artists }
+          fulfill(artists)
         }.catch { error in
           if !error.isCancelledError {
             reject(error)
           }
         }
-      }
-
-      when(fulfilled: promises).then { _ in
-        fulfill()
       }.catch { error in
         if !error.isCancelledError {
           reject(error)
@@ -52,12 +62,13 @@ class ArtistService {
     }
   }
 
-  private func getTopTags(for artist: String) -> Promise<TopTagsResponse> {
-    let parameters: [String: Any] = ["method": "artist.gettoptags",
+  private func getLibraryPage(withIndex index: Int, for user: String, limit: Int) -> Promise<LibraryPageResponse> {
+    let parameters: [String: Any] = ["method": "library.getartists",
                                      "api_key": Keys.LastFM.apiKey,
-                                     "artist": artist,
-                                     "format": "json"]
-
+                                     "user": user,
+                                     "format": "json",
+                                     "page": index,
+                                     "limit": limit]
     return networkService.performRequest(parameters: parameters)
   }
 
@@ -78,10 +89,12 @@ class ArtistService {
     }
   }
 
-  func updateArtist(_ artist: Artist, with tags: [Tag]) -> Promise<Void> {
+  func updateArtist(_ artist: Artist, with tags: [Tag]) -> Promise<Artist> {
     let updatedArtist = Artist(name: artist.name, playcount: artist.playcount, urlString: artist.urlString,
                                imageURLString: artist.imageURLString, needsTagsUpdate: false, tags: tags, topTags: artist.topTags)
-    return self.realmService.save(updatedArtist)
+    return self.realmService.save(updatedArtist).then {
+      return updatedArtist
+    }
   }
 
   func calculateTopTagsForAllArtists(ignoring ignoredTags: [IgnoredTag],
@@ -93,5 +106,21 @@ class ArtistService {
     }.then { artists in
       return self.realmService.save(artists)
     }
+  }
+
+  func calculateTopTags(for artist: Artist,
+                        ignoring ignoredTags: [IgnoredTag],
+                        numberOfTopTags: Int = numberOfTopTags) -> Promise<Void> {
+    let calculator = ArtistTopTagsCalculator(ignoredTags: ignoredTags, numberOfTopTags: numberOfTopTags)
+    let updatedArtist = calculator.calculateTopTags(for: artist)
+    return realmService.save(updatedArtist)
+  }
+
+  func artists(filteredUsing predicate: NSPredicate? = nil,
+               sortedBy sortDescriptors: [SortDescriptor]) -> RealmMappedCollection<RealmArtist, Artist> {
+    return RealmMappedCollection(realm: realmService.getRealm(),
+                                 predicate: predicate,
+                                 sortDescriptors: sortDescriptors,
+                                 transform: { return $0.toTransient() })
   }
 }

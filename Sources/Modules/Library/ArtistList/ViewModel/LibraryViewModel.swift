@@ -11,14 +11,14 @@ import RealmSwift
 import PromiseKit
 
 class LibraryViewModel: ArtistListViewModel {
-  typealias Dependencies = HasUserService & HasArtistService & HasRealmService & HasUserDataStorage
+  typealias Dependencies = HasLibraryUpdater & HasArtistService & HasUserService
 
   private let dependencies: Dependencies
   private let applicationStateObserver: ApplicationStateObserver
-  private let libraryUpdater: LibraryUpdater
 
-  fileprivate lazy var cellViewModels: RealmMappedCollection<RealmArtist, LibraryArtistCellViewModel> = {
-    return self.createCellViewModels()
+  fileprivate lazy var artists: RealmMappedCollection<RealmArtist, Artist> = {
+    let playcountSort = SortDescriptor(keyPath: "playcount", ascending: false)
+    return self.dependencies.artistService.artists(sortedBy: [playcountSort])
   }()
 
   weak var delegate: ArtistListViewModelDelegate?
@@ -32,37 +32,29 @@ class LibraryViewModel: ArtistListViewModel {
   init(dependencies: Dependencies, applicationStateObserver: ApplicationStateObserver = .init()) {
     self.dependencies = dependencies
     self.applicationStateObserver = applicationStateObserver
-    libraryUpdater = LibraryUpdater(dependencies: dependencies)
 
     setup()
   }
 
-  private func createCellViewModels() -> RealmMappedCollection<RealmArtist, LibraryArtistCellViewModel> {
-    let playcountSort = SortDescriptor(keyPath: "playcount", ascending: false)
-    return RealmMappedCollection(realm: dependencies.realmService.getRealm(),
-                                 sortDescriptors: [playcountSort],
-                                 transform: { [unowned self] artist -> LibraryArtistCellViewModel in
-      let viewModel = LibraryArtistCellViewModel(artist: artist.toTransient())
-      viewModel.onSelection = { artist in
-        self.delegate?.artistListViewModel(self, didSelectArtist: artist)
-      }
-      return viewModel
-    })
-  }
-
   private func setup() {
-    libraryUpdater.onDidStartLoading = { [unowned self] in
-      self.onDidStartLoading?()
+    dependencies.libraryUpdater.onDidStartLoading = { [weak self] in
+      self?.onDidStartLoading?()
     }
-    libraryUpdater.onDidFinishLoading = { [unowned self] in
+    dependencies.libraryUpdater.onDidFinishLoading = { [weak self] in
+      guard let `self` = self else {
+        return
+      }
       self.onDidFinishLoading?()
-      self.onDidUpdateData?(self.cellViewModels.isEmpty)
+      self.onDidUpdateData?(self.artists.isEmpty)
     }
-    libraryUpdater.onDidChangeStatus = { [unowned self] status in
+    dependencies.libraryUpdater.onDidChangeStatus = { [weak self] status in
+      guard let `self` = self else {
+        return
+      }
       self.onDidChangeStatus?(self.stringFromStatus(status))
     }
-    libraryUpdater.onDidReceiveError = { [unowned self] error in
-      self.onDidReceiveError?(error)
+    dependencies.libraryUpdater.onDidReceiveError = { [weak self] error in
+      self?.onDidReceiveError?(error)
     }
 
     applicationStateObserver.onApplicationDidBecomeActive = { [weak self] in
@@ -71,17 +63,17 @@ class LibraryViewModel: ArtistListViewModel {
   }
 
   func requestDataIfNeeded(currentTimestamp: TimeInterval = Date().timeIntervalSince1970) {
-    if currentTimestamp - lastUpdateTimestamp > 30 {
-      libraryUpdater.requestData()
+    if currentTimestamp - dependencies.libraryUpdater.lastUpdateTimestamp > 30 || dependencies.libraryUpdater.isFirstUpdate {
+      dependencies.libraryUpdater.requestData()
     }
   }
 
   private var lastUpdateTimestamp: TimeInterval {
-    return dependencies.userDataStorage.lastUpdateTimestamp
+    return dependencies.userService.lastUpdateTimestamp
   }
 
   var itemCount: Int {
-    return cellViewModels.count
+    return artists.count
   }
 
   var title: String {
@@ -89,17 +81,18 @@ class LibraryViewModel: ArtistListViewModel {
   }
 
   func artistViewModel(at indexPath: IndexPath) -> LibraryArtistCellViewModel {
-    return cellViewModels[indexPath.row]
+    let artist = artists[indexPath.row]
+    return LibraryArtistCellViewModel(artist: artist)
   }
 
   func selectArtist(at indexPath: IndexPath) {
-    let viewModel = cellViewModels[indexPath.row]
-    viewModel.handleSelection()
+    let artist = artists[indexPath.row]
+    delegate?.artistListViewModel(self, didSelectArtist: artist)
   }
 
   func performSearch(withText text: String) {
-    cellViewModels.predicate = NSPredicate(format: "name CONTAINS[cd] %@", text)
-    self.onDidUpdateData?(cellViewModels.isEmpty)
+    artists.predicate = NSPredicate(format: "name CONTAINS[cd] %@", text)
+    self.onDidUpdateData?(artists.isEmpty)
   }
 
   private func stringFromStatus(_ status: LibraryUpdateStatus) -> String {

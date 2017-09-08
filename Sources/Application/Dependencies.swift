@@ -8,18 +8,6 @@
 
 import Foundation
 
-protocol HasRealmService {
-  var realmService: RealmService { get }
-}
-
-protocol HasNetworkService {
-  var networkService: LastFMNetworkService { get }
-}
-
-protocol HasUserDataStorage {
-  var userDataStorage: UserDataStorage { get }
-}
-
 protocol HasArtistService {
   var artistService: ArtistService { get }
 }
@@ -32,24 +20,39 @@ protocol HasTagService {
   var tagService: TagService { get }
 }
 
-struct AppDependency: HasUserDataStorage, HasNetworkService, HasRealmService, HasArtistService, HasUserService {
-  let realmService: RealmService
-  let userDataStorage: UserDataStorage
-  let networkService: LastFMNetworkService
+protocol HasIgnoredTagService {
+  var ignoredTagService: IgnoredTagService { get }
+}
+
+protocol HasLibraryUpdater {
+  var libraryUpdater: LibraryUpdater { get }
+}
+
+struct AppDependency: HasArtistService, HasUserService, HasTagService, HasIgnoredTagService, HasLibraryUpdater {
   let artistService: ArtistService
   let userService: UserService
   let tagService: TagService
+  let ignoredTagService: IgnoredTagService
+  let trackService: TrackService
+
+  let libraryUpdater: LibraryUpdater
 
   static var `default`: AppDependency {
-    let realmService = RealmService.persistent
+    let realmService = RealmService.persistent()
     let userDataStorage = UserDataStorage()
     let networkService = LastFMNetworkService()
 
     let artistService = ArtistService(realmService: realmService, networkService: networkService)
-    let userService = UserService(realmService: realmService, networkService: networkService)
-    let tagService = TagService(realmService: realmService)
+    let userService = UserService(realmService: realmService, userDataStorage: userDataStorage)
+    let tagService = TagService(realmService: realmService, networkService: networkService)
+    let ignoredTagService = IgnoredTagService(realmService: realmService)
+    let trackService = TrackService(realmService: realmService, networkService: networkService)
 
-    return AppDependency(realmService: realmService, userDataStorage: userDataStorage, networkService: networkService,
-                         artistService: artistService, userService: userService, tagService: tagService)
+    let libraryUpdater = LibraryUpdater(userService: userService, artistService: artistService, tagService: tagService,
+                                        ignoredTagService: ignoredTagService, trackService: trackService,
+                                        networkService: networkService)
+
+    return AppDependency(artistService: artistService, userService: userService, tagService: tagService,
+                         ignoredTagService: ignoredTagService, trackService: trackService, libraryUpdater: libraryUpdater)
   }
 }

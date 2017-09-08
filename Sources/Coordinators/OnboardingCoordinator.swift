@@ -28,7 +28,7 @@ class OnboardingCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter, Sy
   }
 
   func start() {
-    let alreadyHasUsername = !dependencies.userDataStorage.username.isEmpty
+    let alreadyHasUsername = !dependencies.userService.username.isEmpty
     showEnterUsernameViewController(alreadyHasUsername: alreadyHasUsername)
     if alreadyHasUsername {
       showIgnoredTagsViewController(animated: false)
@@ -75,7 +75,7 @@ extension OnboardingCoordinator: IgnoredTagsViewModelDelegate {
 
 extension OnboardingCoordinator: SyncViewModelDelegate {
   func syncViewModelDidFinishLoading(_ viewModel: SyncViewModel) {
-    dependencies.userDataStorage.didFinishOnboarding = true
+    dependencies.userService.didFinishOnboarding = true
     delegate?.onboardingCoordinatorDidFinish(self)
   }
 }

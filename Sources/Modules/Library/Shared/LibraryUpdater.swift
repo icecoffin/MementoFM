@@ -18,16 +18,21 @@ enum LibraryUpdateStatus {
 }
 
 class LibraryUpdater {
-  typealias Dependencies = HasUserService & HasArtistService & HasRealmService & HasUserDataStorage
+  private let userService: UserService
+  private let artistService: ArtistService
+  private let tagService: TagService
+  private let ignoredTagService: IgnoredTagService
+  private let trackService: TrackService
+  private let networkService: LastFMNetworkService
 
-  private let dependencies: Dependencies
+  private(set) var isFirstUpdate: Bool = true
 
   private var username: String {
-    return dependencies.userDataStorage.username
+    return userService.username
   }
 
-  private var lastUpdateTimestamp: TimeInterval {
-    return dependencies.userDataStorage.lastUpdateTimestamp
+  var lastUpdateTimestamp: TimeInterval {
+    return userService.lastUpdateTimestamp
   }
 
   var onDidStartLoading: (() -> Void)?
@@ -35,8 +40,14 @@ class LibraryUpdater {
   var onDidChangeStatus: ((LibraryUpdateStatus) -> Void)?
   var onDidReceiveError: ((Error) -> Void)?
 
-  init(dependencies: Dependencies) {
-    self.dependencies = dependencies
+  init(userService: UserService, artistService: ArtistService, tagService: TagService, ignoredTagService: IgnoredTagService,
+       trackService: TrackService, networkService: LastFMNetworkService) {
+    self.userService = userService
+    self.artistService = artistService
+    self.tagService = tagService
+    self.ignoredTagService = ignoredTagService
+    self.trackService = trackService
+    self.networkService = networkService
   }
 
   func requestData() {
@@ -47,11 +58,18 @@ class LibraryUpdater {
       self.onDidFinishLoading?()
     }.catch { [unowned self] error in
       self.onDidReceiveError?(error)
+    }.always {
+      self.isFirstUpdate = false
     }
   }
 
+  func cancelPendingRequests() {
+    onDidChangeStatus?(.artistsFirstPage)
+    networkService.cancelPendingRequests()
+  }
+
   private func requestLibrary() -> Promise<Void> {
-    if dependencies.userDataStorage.didReceiveInitialCollection {
+    if userService.didReceiveInitialCollection {
       return getLibraryUpdates()
     } else {
       return getFullLibrary()
@@ -60,43 +78,41 @@ class LibraryUpdater {
 
   private func getFullLibrary() -> Promise<Void> {
     onDidChangeStatus?(.artistsFirstPage)
-    return dependencies.userService.getLibrary(for: username, progress: { [weak self] progress in
+    return artistService.getLibrary(for: username, progress: { [weak self] progress in
       let status: LibraryUpdateStatus = .artists(progress: progress)
       self?.onDidChangeStatus?(status)
     }).then { [unowned self] artists -> Promise<Void> in
       self.updateLastUpdateTimestamp()
-      self.dependencies.userDataStorage.didReceiveInitialCollection = true
-      return self.dependencies.realmGateway.saveArtists(artists)
+      self.userService.didReceiveInitialCollection = true
+      return self.artistService.saveArtists(artists)
     }
   }
 
   private func getLibraryUpdates() -> Promise<Void> {
     onDidChangeStatus?(.recentTracksFirstPage)
-    return dependencies.userService.getRecentTracks(for: username, from: lastUpdateTimestamp, progress: { [weak self] progress in
+    return trackService.getRecentTracks(for: username, from: lastUpdateTimestamp, progress: { [weak self] progress in
       let status: LibraryUpdateStatus = .recentTracks(progress: progress)
       self?.onDidChangeStatus?(status)
     }).then { [unowned self] tracks -> Promise<Void> in
       self.updateLastUpdateTimestamp()
-      let processor = RecentTracksProcessor()
-      return processor.process(tracks: tracks, usingRealmGateway: self.dependencies.realmGateway).asVoid()
+      return self.trackService.processTracks(tracks)
     }
   }
 
   private func updateLastUpdateTimestamp(date: Date = Date()) {
-    dependencies.userDataStorage.lastUpdateTimestamp = floor(date.timeIntervalSince1970)
+    userService.lastUpdateTimestamp = floor(date.timeIntervalSince1970)
   }
 
   private func getArtistsTags() -> Promise<Void> {
-    let artists = dependencies.realmGateway.artistsNeedingTagsUpdate()
-    return dependencies.artistService.getTopTags(for: artists, progress: { [weak self] requestProgress in
+    let artists = artistService.artistsNeedingTagsUpdate()
+    return tagService.getTopTags(for: artists, progress: { [weak self] requestProgress in
       guard let `self` = self else {
         return
       }
-      let realmGateway = self.dependencies.realmGateway
-      let artist = requestProgress.artist
-      let ignoredTags = realmGateway.ignoredTags()
-      realmGateway.updateArtist(requestProgress.artist, with: requestProgress.topTagsList.tags).then {
-        return realmGateway.calculateTopTags(for: artist, ignoring: ignoredTags)
+      let ignoredTags = self.ignoredTagService.ignoredTags()
+      self.artistService.updateArtist(requestProgress.artist,
+                                                   with: requestProgress.topTagsList.tags).then { artist in
+        return self.artistService.calculateTopTags(for: artist, ignoring: ignoredTags)
       }.noError()
       let status: LibraryUpdateStatus = .tags(artistName: requestProgress.artist.name, progress: requestProgress.progress)
       self.onDidChangeStatus?(status)

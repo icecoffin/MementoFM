@@ -14,7 +14,7 @@ protocol IgnoredTagsViewModelDelegate: class {
 }
 
 class IgnoredTagsViewModel {
-  typealias Dependencies = HasRealmGateway
+  typealias Dependencies = HasIgnoredTagService & HasArtistService
 
   private let dependencies: Dependencies
   private var ignoredTags: [IgnoredTag] {
@@ -33,15 +33,15 @@ class IgnoredTagsViewModel {
 
   init(dependencies: Dependencies, shouldAddDefaultTags: Bool) {
     self.dependencies = dependencies
-    self.ignoredTags = dependencies.realmGateway.ignoredTags()
+    self.ignoredTags = dependencies.ignoredTagService.ignoredTags()
     if self.ignoredTags.isEmpty && shouldAddDefaultTags {
       addDefaultTags()
     }
   }
 
   private func addDefaultTags() {
-    dependencies.realmGateway.createDefaultIgnoredTags().then { [unowned self] _ -> Void in
-      self.ignoredTags = self.dependencies.realmGateway.ignoredTags()
+    dependencies.ignoredTagService.createDefaultIgnoredTags().then { [unowned self] _ -> Void in
+      self.ignoredTags = self.dependencies.ignoredTagService.ignoredTags()
       self.onDidAddDefaultTags?()
     }.noError()
   }
@@ -88,8 +88,8 @@ class IgnoredTagsViewModel {
       return result + [ignoredTag]
     }
 
-    dependencies.realmGateway.updateIgnoredTags(filteredTags).then { [unowned self] in
-      self.dependencies.realmGateway.calculateTopTagsForAllArtists(ignoring: filteredTags)
+    dependencies.ignoredTagService.updateIgnoredTags(filteredTags).then { [unowned self] in
+      self.dependencies.artistService.calculateTopTagsForAllArtists(ignoring: filteredTags)
     }.then { [unowned self] _ -> Void in
       self.onDidFinishSavingChanges?()
       self.delegate?.ignoredTagsViewModelDidSaveChanges(self)

@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 
 class ArtistsByTagViewModel: ArtistListViewModel {
-  typealias Dependencies = HasRealmService
+  typealias Dependencies = HasArtistService
 
   private let tagName: String
   private let dependencies: Dependencies
@@ -24,8 +24,9 @@ class ArtistsByTagViewModel: ArtistListViewModel {
   var onDidChangeStatus: ((String) -> Void)?
   var onDidReceiveError: ((Error) -> Void)?
 
-  fileprivate lazy var cellViewModels: RealmMappedCollection<RealmArtist, LibraryArtistCellViewModel> = {
-    return self.createCellViewModels()
+  fileprivate lazy var artists: RealmMappedCollection<RealmArtist, Artist> = {
+    let playcountSort = SortDescriptor(keyPath: "playcount", ascending: false)
+    return self.dependencies.artistService.artists(filteredUsing: self.originalPredicate, sortedBy: [playcountSort])
   }()
 
   init(tagName: String, dependencies: Dependencies) {
@@ -34,22 +35,8 @@ class ArtistsByTagViewModel: ArtistListViewModel {
     self.originalPredicate = NSPredicate(format: "ANY topTags.name == %@", tagName)
   }
 
-  private func createCellViewModels() -> RealmMappedCollection<RealmArtist, LibraryArtistCellViewModel> {
-    let playcountSort = SortDescriptor(keyPath: "playcount", ascending: false)
-    return RealmMappedCollection(realm: dependencies.realmService.getRealm(),
-                                 predicate: originalPredicate,
-                                 sortDescriptors: [playcountSort],
-                                 transform: { [unowned self] artist -> LibraryArtistCellViewModel in
-                                  let viewModel = LibraryArtistCellViewModel(artist: artist.toTransient())
-                                  viewModel.onSelection = { [unowned self] artist in
-                                    self.delegate?.artistListViewModel(self, didSelectArtist: artist)
-                                  }
-                                  return viewModel
-    })
-  }
-
   var itemCount: Int {
-    return cellViewModels.count
+    return artists.count
   }
 
   var title: String {
@@ -59,18 +46,20 @@ class ArtistsByTagViewModel: ArtistListViewModel {
   func requestDataIfNeeded(currentTimestamp: TimeInterval) { }
 
   func artistViewModel(at indexPath: IndexPath) -> LibraryArtistCellViewModel {
-    return cellViewModels[indexPath.row]
+    let artist = artists[indexPath.row]
+    let viewModel = LibraryArtistCellViewModel(artist: artist)
+    return viewModel
   }
 
   func selectArtist(at indexPath: IndexPath) {
-    let viewModel = cellViewModels[indexPath.row]
-    viewModel.handleSelection()
+    let artist = artists[indexPath.row]
+    self.delegate?.artistListViewModel(self, didSelectArtist: artist)
   }
 
   func performSearch(withText text: String) {
     let filterPredicate = NSPredicate(format: "name CONTAINS[cd] %@", text)
     let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [originalPredicate, filterPredicate])
-    cellViewModels.predicate = compoundPredicate
-    self.onDidUpdateData?(cellViewModels.isEmpty)
+    artists.predicate = compoundPredicate
+    self.onDidUpdateData?(artists.isEmpty)
   }
 }

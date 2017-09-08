@@ -13,10 +13,9 @@ protocol SyncViewModelDelegate: class {
 }
 
 class SyncViewModel {
-  typealias Dependencies = HasUserService & HasArtistService & HasRealmService & HasUserDataStorage
+  typealias Dependencies = HasLibraryUpdater
 
   private let dependencies: Dependencies
-  private let libraryUpdater: LibraryUpdater
 
   weak var delegate: SyncViewModelDelegate?
 
@@ -25,24 +24,30 @@ class SyncViewModel {
 
   init(dependencies: Dependencies) {
     self.dependencies = dependencies
-    libraryUpdater = LibraryUpdater(dependencies: dependencies)
     setup()
   }
 
   private func setup() {
-    libraryUpdater.onDidFinishLoading = { [unowned self] in
+    dependencies.libraryUpdater.onDidFinishLoading = { [weak self] in
+      guard let `self` = self else {
+        return
+      }
       self.delegate?.syncViewModelDidFinishLoading(self)
     }
-    libraryUpdater.onDidChangeStatus = { [unowned self] status in
+    dependencies.libraryUpdater.onDidChangeStatus = { [weak self] status in
+      guard let `self` = self else {
+        return
+      }
       self.onDidChangeStatus?(self.stringFromStatus(status))
     }
-    libraryUpdater.onDidReceiveError = { [unowned self] error in
-      self.onDidReceiveError?(error)
+    dependencies.libraryUpdater.onDidReceiveError = { [weak self] error in
+      self?.onDidReceiveError?(error)
     }
   }
 
   func syncLibrary() {
-    libraryUpdater.requestData()
+    dependencies.libraryUpdater.cancelPendingRequests()
+    dependencies.libraryUpdater.requestData()
   }
 
   private func stringFromStatus(_ status: LibraryUpdateStatus) -> String {

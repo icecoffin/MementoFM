@@ -18,11 +18,11 @@ class ArtistTopTagsCalculator {
   }
 
   func calculateTopTags(for artist: Artist) -> Artist {
-    let topTags = artist.tags.filter({ tag in
+    let topTags = artist.tags.filter { tag in
       !ignoredTags.contains(where: { ignoredTag in
         tag.name == ignoredTag.name
       })
-    }).sorted(by: {
+    }.sorted(by: {
       $0.count > $1.count
     }).prefix(numberOfTopTags)
     return Artist(name: artist.name, playcount: artist.playcount, urlString: artist.urlString,

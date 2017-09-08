@@ -10,6 +10,7 @@ import Foundation
 
 class ApplicationStateObserver {
   var onApplicationDidBecomeActive: (() -> Void)?
+  private var isFirstLaunch = true
 
   init() {
     NotificationCenter.default.addObserver(self,
@@ -23,6 +24,10 @@ class ApplicationStateObserver {
   }
 
   @objc private func applicationDidBecomeActive(_ notification: Notification) {
-    onApplicationDidBecomeActive?()
+    if isFirstLaunch {
+      isFirstLaunch = false
+    } else {
+      onApplicationDidBecomeActive?()
+    }
   }
 }

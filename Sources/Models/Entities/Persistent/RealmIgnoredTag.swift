@@ -13,6 +13,10 @@ final class RealmIgnoredTag: Object, RealmEntity {
   dynamic var uuid = UUID().uuidString
   dynamic var name = ""
 
+  override static func primaryKey() -> String? {
+    return "uuid"
+  }
+
   class func ignoredTag(withName name: String) -> RealmIgnoredTag {
     let realmIgnoredTag = RealmIgnoredTag()
     realmIgnoredTag.name = name
