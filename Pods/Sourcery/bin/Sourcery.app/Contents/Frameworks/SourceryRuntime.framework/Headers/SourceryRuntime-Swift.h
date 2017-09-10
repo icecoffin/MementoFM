@@ -699,6 +699,14 @@ SWIFT_CLASS_NAMED("Method")
 @property (nonatomic, readonly) BOOL isMutating;
 /// Annotations, that were created with // sourcery: annotation1, other = “annotation value”, alterantive = 2
 @property (nonatomic, readonly, copy) NSDictionary<NSString *, NSObject *> * _Nonnull annotations;
+/// Reference to type name where the method is defined,
+/// nil if defined outside of any <code>enum</code>, <code>struct</code>, <code>class</code> etc
+@property (nonatomic, readonly, strong) TypeName * _Nullable definedInTypeName;
+/// Reference to actual type name where the method is defined if declaration uses typealias, otherwise just a <code>definedInTypeName</code>
+@property (nonatomic, readonly, strong) TypeName * _Nullable actualDefinedInTypeName;
+/// Reference to actual type where the object is defined,
+/// nil if defined outside of any <code>enum</code>, <code>struct</code>, <code>class</code> etc or type is unknown
+@property (nonatomic, strong) Type * _Nullable definedInType;
 /// Method attributes, i.e. <code>@discardableResult</code>
 @property (nonatomic, readonly, copy) NSDictionary<NSString *, Attribute *> * _Nonnull attributes;
 /// :nodoc:
@@ -1213,6 +1221,8 @@ SWIFT_CLASS("_TtC15SourceryRuntime5Types")
 @property (nonatomic, readonly, copy) NSArray<Struct *> * _Nonnull structs;
 /// All known enums
 @property (nonatomic, readonly, copy) NSArray<Enum *> * _Nonnull enums;
+/// All known extensions
+@property (nonatomic, readonly, copy) NSArray<Type *> * _Nonnull extensions;
 /// Types based on any other type, grouped by its name, even if they are not known.
 /// <code>types.based.MyType</code> returns list of types based on <code>MyType</code>
 @property (nonatomic, readonly, strong) TypesCollection * _Nonnull based;
@@ -1288,6 +1298,14 @@ SWIFT_CLASS("_TtC15SourceryRuntime8Variable")
 @property (nonatomic, copy) NSDictionary<NSString *, Attribute *> * _Nonnull attributes;
 /// Whether variable is final or not
 @property (nonatomic, readonly) BOOL isFinal;
+/// Reference to type name where the variable is defined,
+/// nil if defined outside of any <code>enum</code>, <code>struct</code>, <code>class</code> etc
+@property (nonatomic, readonly, strong) TypeName * _Nullable definedInTypeName;
+/// Reference to actual type name where the method is defined if declaration uses typealias, otherwise just a <code>definedInTypeName</code>
+@property (nonatomic, readonly, strong) TypeName * _Nullable actualDefinedInTypeName;
+/// Reference to actual type where the object is defined,
+/// nil if defined outside of any <code>enum</code>, <code>struct</code>, <code>class</code> etc or type is unknown
+@property (nonatomic, strong) Type * _Nullable definedInType;
 /// :nodoc:
 @property (nonatomic) id _Nullable __parserData;
 /// :nodoc:

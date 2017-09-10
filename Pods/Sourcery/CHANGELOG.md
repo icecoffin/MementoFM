@@ -2,6 +2,33 @@
 
 ---
 
+## 0.8.0
+
+### New Features
+
+- Added support in `AutoHashable` for static variables, `[Hashable]` array and `[Hashable: Hashable]` dictionary
+- Added `definedInType` property for `Method` and `Variable`
+- Added `extensions` filter for stencil template
+- Added include support in Swift templates
+- Swift templates now can throw errors. You can also throw just string literals.
+- Added support for TypeName in string filters (except filters from StencilSwiftKit).
+
+### Bug fixes
+
+- Fixed linker issue when using Swift templates
+- Updated `AutoMockable` to exclude generated code collisions
+- Fixed parsing of default values for variables that also have a body (e.g. for `didSet`)
+- Fixed line number display when an error occur while parsing a Swift template
+- Fixed `rsync` issue on `SourceryRuntime.framework` when using Swift templates
+- Fixed `auto:inline` for nested types (this concerns the first time the code is inserted)
+
+### Internal changes
+
+- Fix link for template in docs
+- Fix running Sourcery in the example app
+- Add step to update internal boilerplate code during the release
+
+
 ## 0.7.2
 
 ### Internal changes
