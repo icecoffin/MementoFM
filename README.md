@@ -10,11 +10,7 @@ Have you ever tried to find a music band which is similar to the one you're curr
 * Setup tags which will be ignored during similarity check (e.g. too broad ones or irrelevant to the actual music content) 
 
 ## Screenshots
-![Library](Screenshots/screen_1.png)
-
-![Artist details](Screenshots/screen_2.png) 
-
-![Search by tag](Screenshots/screen_3.png)
+<img src="Screenshots/screen_1.png" width="280"> <img src="Screenshots/screen_2.png" width="280"> <img src="Screenshots/screen_3.png" width="280">
 
 ## Running the app
 You'll need a Last.fm API key in order to run this app. Here's how you obtain it:
