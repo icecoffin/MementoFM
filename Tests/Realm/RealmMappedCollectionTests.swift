@@ -12,27 +12,24 @@ import Nimble
 import RealmSwift
 
 class RealmMappedCollectionTests: XCTestCase {
-  var realmGateway: RealmGateway!
+  var realm: Realm!
   var collection: RealmMappedCollection<RealmTag, Tag>!
 
   override func setUp() {
     super.setUp()
-    realmGateway = RealmGateway(mainQueueRealm: RealmFactory.inMemoryRealm(), getCurrentQueueRealm: {
-      return RealmFactory.inMemoryRealm()
-    })
-    collection = RealmMappedCollection(realm: realmGateway.mainQueueRealm, sortDescriptors: [], transform: { realmTag in
+    realm = RealmFactory.inMemoryRealm()
+    collection = RealmMappedCollection(realm: realm, sortDescriptors: [], transform: { realmTag in
       return realmTag.toTransient()
     })
   }
 
   override func tearDown() {
-    realmGateway = nil
+    realm = nil
     collection = nil
     super.tearDown()
   }
 
   func testCount() {
-    let realm = self.realmGateway.mainQueueRealm
     try? realm.write {
       let tag = RealmTag()
       realm.add(tag)
@@ -45,7 +42,6 @@ class RealmMappedCollectionTests: XCTestCase {
   }
 
   func testIsEmptyReturnsFalseWhenNotEmpty() {
-    let realm = self.realmGateway.mainQueueRealm
     try? realm.write {
       let tag = RealmTag()
       realm.add(tag)
@@ -54,7 +50,6 @@ class RealmMappedCollectionTests: XCTestCase {
   }
 
   func testGettingItemAtIndex() {
-    let realm = self.realmGateway.mainQueueRealm
     try? realm.write {
       let tag1 = RealmTag(name: "rock", count: 1)
       let tag2 = RealmTag(name: "metal", count: 2)
@@ -67,7 +62,6 @@ class RealmMappedCollectionTests: XCTestCase {
   }
 
   func testSettingPredicate() {
-    let realm = self.realmGateway.mainQueueRealm
     try? realm.write {
       let tag1 = RealmTag(name: "rock", count: 1)
       let tag2 = RealmTag(name: "metal", count: 2)
@@ -82,7 +76,6 @@ class RealmMappedCollectionTests: XCTestCase {
   }
 
   func testSettingSortDescriptors() {
-    let realm = self.realmGateway.mainQueueRealm
     try? realm.write {
       let tag1 = RealmTag(name: "rock", count: 1)
       let tag2 = RealmTag(name: "indie", count: 2)
@@ -103,7 +96,6 @@ class RealmMappedCollectionTests: XCTestCase {
                            SortDescriptor(keyPath: "count", ascending: true)]
     collection.sortDescriptors = sortDescriptors
 
-    let realm = self.realmGateway.mainQueueRealm
     // [("metal", 2)", ("rock", 1"]
     try? realm.write {
       let tag1 = RealmTag(name: "rock", count: 1)
@@ -125,17 +117,17 @@ class RealmMappedCollectionTests: XCTestCase {
           }
         }
 
-        try? realm.write {
+        try? self.realm.write {
           // [("metal", 2), ("rock", 5)]
-          let tag1 = realm.objects(RealmTag.self).filter("name == \"rock\"").first
+          let tag1 = self.realm.objects(RealmTag.self).filter("name == \"rock\"").first
           tag1?.count = 5
           // [("rock", 5)]
-          if let tag2 = realm.objects(RealmTag.self).filter("name == \"metal\"").first {
-            realm.delete(tag2)
+          if let tag2 = self.realm.objects(RealmTag.self).filter("name == \"metal\"").first {
+            self.realm.delete(tag2)
           }
           // [("electronic", 3), ("rock", 5)]
           let tag3 = RealmTag(name: "electronic", count: 3)
-          realm.add(tag3)
+          self.realm.add(tag3)
         }
       }
     }
