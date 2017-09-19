@@ -1,5 +1,5 @@
 //
-//  ArtistSectionHeaderView.swift
+//  ArtistTopTagsSectionHeaderView.swift
 //  MementoFM
 //
 //  Created by Daniel on 13/05/2017.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ArtistSectionHeaderView: UITableViewHeaderFooterView {
+class ArtistTopTagsSectionHeaderView: UITableViewHeaderFooterView {
   private let titleLabel = UILabel()
 
   override init(reuseIdentifier: String?) {
@@ -21,6 +21,9 @@ class ArtistSectionHeaderView: UITableViewHeaderFooterView {
   }
 
   private func setup() {
+    backgroundView = UIView()
+    contentView.backgroundColor = UIColor.white.withAlphaComponent(0.9)
+
     contentView.addSubview(titleLabel)
     titleLabel.snp.makeConstraints { make in
       make.top.equalToSuperview().offset(16)
@@ -31,7 +34,7 @@ class ArtistSectionHeaderView: UITableViewHeaderFooterView {
     titleLabel.font = Fonts.ralewayBold(withSize: 18)
   }
 
-  func configure(with viewModel: ArtistSectionViewModel) {
+  func configure(with viewModel: ArtistTopTagsSectionViewModel) {
     titleLabel.text = viewModel.sectionHeaderText
   }
 }

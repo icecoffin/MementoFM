@@ -21,6 +21,9 @@ class EmptyDataSetFooterView: UITableViewHeaderFooterView {
   }
 
   private func setup() {
+    backgroundView = UIView()
+    contentView.backgroundColor = UIColor.white
+
     contentView.addSubview(messageLabel)
     messageLabel.snp.makeConstraints { make in
       make.top.bottom.equalToSuperview().inset(8).priority(999)

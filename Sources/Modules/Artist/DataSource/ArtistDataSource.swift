@@ -12,15 +12,17 @@ class ArtistDataSource {
   private let viewModel: ArtistViewModelProtocol
   let sectionDataSources: [ArtistSectionDataSource]
 
-  var onDidUpdateData: ((_ section: Int) -> Void)?
+  var onDidUpdateData: (() -> Void)?
+  var onDidReceiveError: ((Error) -> Void)?
 
   init(viewModel: ArtistViewModelProtocol) {
     self.viewModel = viewModel
     sectionDataSources = viewModel.sectionDataSources
-    sectionDataSources.enumerated().forEach { offset, sectionDataSource in
-      sectionDataSource.onDidUpdateData = { [weak self] in
-        self?.onDidUpdateData?(offset)
-      }
+    viewModel.onDidUpdateData = { [unowned self] in
+      self.onDidUpdateData?()
+    }
+    viewModel.onDidReceiveError = { [unowned self] error in
+      self.onDidReceiveError?(error)
     }
   }
 

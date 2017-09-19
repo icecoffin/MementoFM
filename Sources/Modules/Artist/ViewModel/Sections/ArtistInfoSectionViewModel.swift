@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ArtistInfoSectionViewModel: ArtistSectionViewModel {
+class ArtistInfoSectionViewModel {
   private let artist: Artist
 
   required init(artist: Artist) {

@@ -1,5 +1,5 @@
 //
-//  ArtistSimilarArtistsSectionDataSource.swift
+//  ArtistSimilarsSectionDataSource.swift
 //  MementoFM
 //
 //  Created by Daniel on 11/05/2017.
@@ -8,16 +8,26 @@
 
 import UIKit
 
-class ArtistSimilarArtistsSectionDataSource: ArtistSectionDataSource {
-  private let viewModel: ArtistSimilarArtistsSectionViewModel
+enum SimilarArtistsSource: Int {
+  case local = 0
+  case lastFM
+}
+
+class ArtistSimilarsSectionDataSource: ArtistSectionDataSource {
+  fileprivate let viewModel: ArtistSimilarsSectionViewModel
   private let prototypeCell = SimilarArtistCell()
   var onDidUpdateData: (() -> Void)?
+  var onDidReceiveError: ((Error) -> Void)?
 
-  init(viewModel: ArtistSimilarArtistsSectionViewModel) {
+  init(viewModel: ArtistSimilarsSectionViewModel) {
     self.viewModel = viewModel
     viewModel.onDidUpdateCellViewModels = { [weak self] in
       self?.onDidUpdateData?()
     }
+    viewModel.onDidReceiveError = { [weak self] error in
+      self?.onDidReceiveError?(error)
+    }
+    viewModel.getSimilarArtists()
   }
 
   var numberOfRows: Int {
@@ -26,7 +36,7 @@ class ArtistSimilarArtistsSectionDataSource: ArtistSectionDataSource {
 
   func registerReusableViews(in tableView: UITableView) {
     tableView.register(SimilarArtistCell.self, forCellReuseIdentifier: SimilarArtistCell.reuseIdentifier)
-    tableView.register(ArtistSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: ArtistSectionHeaderView.reuseIdentifier)
+    tableView.register(ArtistSimilarsSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: ArtistSimilarsSectionHeaderView.reuseIdentifier)
     tableView.register(EmptyDataSetFooterView.self, forHeaderFooterViewReuseIdentifier: EmptyDataSetFooterView.reuseIdentifier)
     tableView.register(LoadingFooterView.self, forHeaderFooterViewReuseIdentifier: LoadingFooterView.reuseIdentifier)
   }
@@ -43,11 +53,12 @@ class ArtistSimilarArtistsSectionDataSource: ArtistSectionDataSource {
   }
 
   func viewForHeader(inSection section: Int, in tableView: UITableView) -> UITableViewHeaderFooterView? {
-    let reuseIdentifier = ArtistSectionHeaderView.reuseIdentifier
-    guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: reuseIdentifier) as? ArtistSectionHeaderView else {
+    let reuseIdentifier = ArtistSimilarsSectionHeaderView.reuseIdentifier
+    guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: reuseIdentifier) as? ArtistSimilarsSectionHeaderView else {
       return nil
     }
 
+    headerView.delegate = self
     headerView.configure(with: viewModel)
     return headerView
   }
@@ -81,5 +92,13 @@ class ArtistSimilarArtistsSectionDataSource: ArtistSectionDataSource {
 
   func selectRow(at indexPath: IndexPath, in tableView: UITableView) {
     viewModel.selectArtist(at: indexPath)
+  }
+}
+
+// MARK: - ArtistSimilarsSectionHeaderViewDelegate
+extension ArtistSimilarsSectionDataSource: ArtistSimilarsSectionHeaderViewDelegate {
+  func artistSimilarsSectionHeaderView(_ headerView: ArtistSimilarsSectionHeaderView,
+                                       didSelectSegmentWithIndex index: Int) {
+    viewModel.selectTab(at: index)
   }
 }

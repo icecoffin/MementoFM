@@ -13,7 +13,10 @@ protocol ArtistViewModelDelegate: class {
   func artistViewModel(_ viewModel: ArtistViewModel, didSelectArtist artist: Artist)
 }
 
-protocol ArtistViewModelProtocol {
+protocol ArtistViewModelProtocol: class {
+  var onDidUpdateData: (() -> Void)? { get set }
+  var onDidReceiveError: ((Error) -> Void)? { get set }
+
   var title: String { get }
   var sectionDataSources: [ArtistSectionDataSource] { get }
 }
@@ -23,11 +26,17 @@ class ArtistViewModel: ArtistViewModelProtocol {
 
   private let artist: Artist
   private let dependencies: Dependencies
-  private let sectionViewModels: [ArtistSectionViewModel]
 
   weak var delegate: ArtistViewModelDelegate?
 
+  var onDidUpdateData: (() -> Void)?
+  var onDidReceiveError: ((Error) -> Void)?
+
   let sectionDataSources: [ArtistSectionDataSource]
+
+  var title: String {
+    return artist.name
+  }
 
   init(artist: Artist, dependencies: Dependencies) {
     self.artist = artist
@@ -35,21 +44,22 @@ class ArtistViewModel: ArtistViewModelProtocol {
 
     let infoSectionViewModel = ArtistInfoSectionViewModel(artist: artist)
     let topTagsSectionViewModel = ArtistTopTagsSectionViewModel(artist: artist)
-    let similarArtistsSectionViewModel = ArtistSimilarArtistsSectionViewModel(artist: artist, dependencies: dependencies)
-    sectionViewModels = [infoSectionViewModel, topTagsSectionViewModel, similarArtistsSectionViewModel]
+    let similarsSectionViewModel = ArtistSimilarsSectionViewModel(artist: artist, dependencies: dependencies)
 
     let infoSectionDataSource = ArtistInfoSectionDataSource(viewModel: infoSectionViewModel)
     let topTagsSectionDataSource = ArtistTopTagsSectionDataSource(viewModel: topTagsSectionViewModel)
-    let similarArtistsSectionDataSource = ArtistSimilarArtistsSectionDataSource(viewModel: similarArtistsSectionViewModel)
-    sectionDataSources = [infoSectionDataSource, topTagsSectionDataSource, similarArtistsSectionDataSource]
+    let similarsSectionDataSource = ArtistSimilarsSectionDataSource(viewModel: similarsSectionViewModel)
+    sectionDataSources = [infoSectionDataSource, topTagsSectionDataSource, similarsSectionDataSource]
 
     topTagsSectionViewModel.delegate = self
-    similarArtistsSectionViewModel.delegate = self
+    similarsSectionViewModel.delegate = self
 
-  }
-
-  var title: String {
-    return artist.name
+    similarsSectionDataSource.onDidUpdateData = { [unowned self] in
+      self.onDidUpdateData?()
+    }
+    similarsSectionDataSource.onDidReceiveError = { [unowned self] error in
+      self.onDidReceiveError?(error)
+    }
   }
 }
 
@@ -59,9 +69,9 @@ extension ArtistViewModel: ArtistTopTagsSectionViewModelDelegate {
   }
 }
 
-extension ArtistViewModel: ArtistSimilarArtistsSectionViewModelDelegate {
-  func artistSimilarArtistSectionViewModel(_ viewModel: ArtistSimilarArtistsSectionViewModel,
-                                           didSelectArtist artist: Artist) {
+extension ArtistViewModel: ArtistSimilarsSectionViewModelDelegate {
+  func artistSimilarsSectionViewModel(_ viewModel: ArtistSimilarsSectionViewModel,
+                                      didSelectArtist artist: Artist) {
     delegate?.artistViewModel(self, didSelectArtist: artist)
   }
 }

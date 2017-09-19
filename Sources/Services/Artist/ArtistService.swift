@@ -123,4 +123,18 @@ class ArtistService {
                                  sortDescriptors: sortDescriptors,
                                  transform: { return $0.toTransient() })
   }
+
+  func getSimilarArtists(for artist: Artist, limit: Int = 20) -> Promise<[Artist]> {
+    let parameters: [String: Any] = ["method": "artist.getsimilar",
+                                     "api_key": Keys.LastFM.apiKey,
+                                     "artist": artist.name,
+                                     "format": "json",
+                                     "limit": limit]
+    return networkService.performRequest(parameters: parameters).then { (response: SimilarArtistListResponse) in
+      let artistNames = response.similarArtistList.similarArtists.map({ $0.name })
+      let predicate = NSPredicate(format: "name in %@", artistNames)
+      let artists = self.realmService.objects(Artist.self, filteredBy: predicate)
+      return Promise(value: artists)
+    }
+  }
 }

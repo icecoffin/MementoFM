@@ -23,7 +23,7 @@ class ArtistTopTagsSectionDataSource: ArtistSectionDataSource {
 
   func registerReusableViews(in tableView: UITableView) {
     tableView.register(ArtistTagsCell.self, forCellReuseIdentifier: ArtistTagsCell.reuseIdentifier)
-    tableView.register(ArtistSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: ArtistSectionHeaderView.reuseIdentifier)
+    tableView.register(ArtistTopTagsSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: ArtistTopTagsSectionHeaderView.reuseIdentifier)
     tableView.register(EmptyDataSetFooterView.self, forHeaderFooterViewReuseIdentifier: EmptyDataSetFooterView.reuseIdentifier)
   }
 
@@ -39,8 +39,8 @@ class ArtistTopTagsSectionDataSource: ArtistSectionDataSource {
   }
 
   func viewForHeader(inSection: Int, in tableView: UITableView) -> UITableViewHeaderFooterView? {
-    let reuseIdentifier = ArtistSectionHeaderView.reuseIdentifier
-    guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: reuseIdentifier) as? ArtistSectionHeaderView else {
+    let reuseIdentifier = ArtistTopTagsSectionHeaderView.reuseIdentifier
+    guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: reuseIdentifier) as? ArtistTopTagsSectionHeaderView else {
       return nil
     }
 

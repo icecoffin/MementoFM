@@ -11,7 +11,7 @@ import UIKit
 class ArtistViewController: UIViewController {
   fileprivate let dataSource: ArtistDataSource
 
-  private let tableView = UITableView(frame: .zero, style: .grouped)
+  private let tableView = UITableView()
 
   init(dataSource: ArtistDataSource) {
     self.dataSource = dataSource
@@ -19,6 +19,11 @@ class ArtistViewController: UIViewController {
 
     dataSource.onDidUpdateData = { [weak self] _ in
       self?.tableView.reloadData()
+    }
+
+    dataSource.onDidReceiveError = { [weak self] error in
+      self?.tableView.reloadData()
+      self?.showAlert(for: error)
     }
   }
 
