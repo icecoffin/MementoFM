@@ -17,7 +17,7 @@ class ArtistViewController: UIViewController {
     self.dataSource = dataSource
     super.init(nibName: nil, bundle: nil)
 
-    dataSource.onDidUpdateData = { [weak self] _ in
+    dataSource.onDidUpdateData = { [weak self] in
       self?.tableView.reloadData()
     }
 

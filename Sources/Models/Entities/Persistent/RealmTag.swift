@@ -10,8 +10,8 @@ import Foundation
 import RealmSwift
 
 final class RealmTag: Object, RealmEntity {
-  dynamic var name = ""
-  dynamic var count = 0
+  @objc dynamic var name = ""
+  @objc dynamic var count = 0
 
   class func from(transient: Tag) -> RealmTag {
     let tag = transient

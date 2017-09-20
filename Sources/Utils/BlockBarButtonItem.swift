@@ -35,7 +35,7 @@ class BlockBarButtonItem: UIBarButtonItem {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func barButtonItemTapped(_ sender: UIButton) {
+  @objc private func barButtonItemTapped(_ sender: UIButton) {
     actionHandler()
   }
 }

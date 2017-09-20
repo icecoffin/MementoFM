@@ -61,9 +61,10 @@ class TagsViewModel {
       }
     }
 
-    let result = uniqueTagNamesWithCounts.filter {
+    let temp: [(key: String, value: Int)] = uniqueTagNamesWithCounts.filter {
       $0.value > 1
-    }.sorted { value1, value2 in
+    }
+    let result = temp.sorted { value1, value2 in
       value1.value > value2.value
     }.map {
       return Tag(name: $0.key, count: $0.value)

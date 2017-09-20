@@ -33,7 +33,7 @@ class ArtistCell: UITableViewCell {
     outerStackView.layoutMargins = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
     outerStackView.isLayoutMarginsRelativeArrangement = true
     outerStackView.translatesAutoresizingMaskIntoConstraints = false
-    outerStackView.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+    outerStackView.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
 
     contentView.addSubview(outerStackView)
     outerStackView.snp.makeConstraints { make in
@@ -61,7 +61,7 @@ class ArtistCell: UITableViewCell {
   private func configurePhotoImageView() {
     let photoSize: CGFloat = 60
     photoImageView.snp.updateConstraints { make in
-      make.width.height.equalTo(photoSize)
+      make.width.height.equalTo(photoSize).priority(999)
     }
 
     photoImageView.layer.cornerRadius = photoSize / 2

@@ -42,8 +42,8 @@ extension UICollectionReusableView: DynamicSizable {
   }
 }
 
-extension UICollectionViewCell {
-  override var viewForSizing: UIView {
+extension DynamicSizable where Self == UICollectionViewCell {
+  var viewForSizing: UIView {
     return contentView
   }
 }

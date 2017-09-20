@@ -10,8 +10,8 @@ import Foundation
 import RealmSwift
 
 final class RealmIgnoredTag: Object, RealmEntity {
-  dynamic var uuid = UUID().uuidString
-  dynamic var name = ""
+  @objc dynamic var uuid = UUID().uuidString
+  @objc dynamic var name = ""
 
   override static func primaryKey() -> String? {
     return "uuid"

@@ -32,7 +32,7 @@ class RealmService {
 
   // MARK: - Writing to Realm
   func write(block: @escaping (Realm) -> Void) -> Promise<Void> {
-    return dispatch_promise(DispatchQueue.global()) {
+    return DispatchQueue.global().promise {
       let currentQueueRealm = self.getRealm()
       self.write(to: currentQueueRealm) { realm in
         block(realm)

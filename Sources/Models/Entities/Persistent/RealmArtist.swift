@@ -10,11 +10,11 @@ import Foundation
 import RealmSwift
 
 final class RealmArtist: Object, RealmEntity {
-  dynamic var name = ""
-  dynamic var playcount = 0
-  dynamic var urlString = ""
-  dynamic var imageURLString: String?
-  dynamic var needsTagsUpdate = true
+  @objc dynamic var name = ""
+  @objc dynamic var playcount = 0
+  @objc dynamic var urlString = ""
+  @objc dynamic var imageURLString: String?
+  @objc dynamic var needsTagsUpdate = true
   var tags = List<RealmTag>()
   var topTags = List<RealmTag>()
 

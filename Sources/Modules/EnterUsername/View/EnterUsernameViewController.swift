@@ -100,7 +100,7 @@ class EnterUsernameViewController: UIViewController {
     submitButton.addTarget(self, action: #selector(submitButtonTapped(_:)), for: .touchUpInside)
   }
 
-  func submitButtonTapped(_ sender: UIButton) {
+  @objc private func submitButtonTapped(_ sender: UIButton) {
     viewModel.submitUsername()
   }
 

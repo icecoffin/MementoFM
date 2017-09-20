@@ -35,7 +35,7 @@ class TagService {
       }
 
       when(fulfilled: promises).then { _ in
-        fulfill()
+        fulfill(())
       }.catch { error in
         if !error.isCancelledError {
           reject(error)
@@ -54,7 +54,7 @@ class TagService {
   }
 
   func getAllTopTags() -> Promise<[Tag]> {
-    return dispatch_promise(DispatchQueue.global()) { _ -> [Tag] in
+    return DispatchQueue.global().promise { () -> [Tag] in
       let artists = self.realmService.objects(Artist.self)
       return artists.flatMap { return $0.topTags }
     }

@@ -82,7 +82,7 @@ class ArtistService {
   }
 
   func getArtistsWithIntersectingTopTags(for artist: Artist) -> Promise<[Artist]> {
-    return dispatch_promise(DispatchQueue.global()) { () -> [Artist] in
+    return DispatchQueue.global().promise { () -> [Artist] in
       let topTagNames = artist.topTags.map({ $0.name })
       let predicate = NSPredicate(format: "ANY tags.name IN %@ AND name != %@", topTagNames, artist.name)
       return self.realmService.objects(Artist.self, filteredBy: predicate)
@@ -99,7 +99,7 @@ class ArtistService {
 
   func calculateTopTagsForAllArtists(ignoring ignoredTags: [IgnoredTag],
                                      numberOfTopTags: Int = numberOfTopTags) -> Promise<Void> {
-    return dispatch_promise(DispatchQueue.global()) { _ -> [Artist] in
+    return DispatchQueue.global().promise { () -> [Artist] in
       let calculator = ArtistTopTagsCalculator(ignoredTags: ignoredTags, numberOfTopTags: numberOfTopTags)
       let artists = self.realmService.objects(Artist.self)
       return artists.map({ return calculator.calculateTopTags(for: $0) })
