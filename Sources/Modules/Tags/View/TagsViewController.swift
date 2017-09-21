@@ -13,12 +13,13 @@ import TPKeyboardAvoiding
 class TagsViewController: UIViewController {
   private let collectionView: TPKeyboardAvoidingCollectionView
   private let emptyDataSetView = EmptyDataSetView(text: "No tags found".unlocalized)
-  fileprivate let searchController = UISearchController(searchResultsController: nil)
+  fileprivate let searchController: UISearchController
 
   fileprivate let viewModel: TagsViewModel
   fileprivate let prototypeCell = TagCell()
 
-  init(viewModel: TagsViewModel) {
+  init(searchController: UISearchController, viewModel: TagsViewModel) {
+    self.searchController = searchController
     let layout = UICollectionViewLeftAlignedLayout()
     layout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
     collectionView = TPKeyboardAvoidingCollectionView(frame: .zero, collectionViewLayout: layout)
@@ -58,9 +59,6 @@ class TagsViewController: UIViewController {
     collectionView.delegate = self
 
     collectionView.register(TagCell.self, forCellWithReuseIdentifier: TagCell.reuseIdentifier)
-    collectionView.register(TagsSearchHeaderView.self,
-                            forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
-                            withReuseIdentifier: TagsSearchHeaderView.reuseIdentifier)
 
     collectionView.backgroundView = emptyDataSetView
     collectionView.backgroundView?.isHidden = true
@@ -69,8 +67,6 @@ class TagsViewController: UIViewController {
   private func configureSearchController() {
     searchController.dimsBackgroundDuringPresentation = false
     searchController.searchBar.delegate = self
-    // Force load UISearchController's view to avoid the warning on dealloc
-    _ = searchController.view
   }
 
   private func bindToViewModel() {
@@ -100,40 +96,13 @@ extension TagsViewController: UICollectionViewDataSource {
 
 extension TagsViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    // Prevents unwanted animations in LibraryViewController
-    DispatchQueue.main.async {
-      self.viewModel.selectTag(at: indexPath)
-    }
+    viewModel.selectTag(at: indexPath)
   }
 
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
     let cellViewModel = viewModel.cellViewModel(at: indexPath)
     return prototypeCell.sizeForViewModel(cellViewModel)
-  }
-
-  func collectionView(_ collectionView: UICollectionView,
-                      viewForSupplementaryElementOfKind kind: String,
-                      at indexPath: IndexPath) -> UICollectionReusableView {
-    guard kind == UICollectionElementKindSectionHeader else {
-      fatalError("Unknown supplementary view kind")
-    }
-
-    let reuseIdentifier = TagsSearchHeaderView.reuseIdentifier
-    guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                           withReuseIdentifier: reuseIdentifier,
-                                                                           for: indexPath) as? TagsSearchHeaderView else {
-      fatalError("TagsSearchHeaderView is not registered in the collectionView")
-    }
-
-    headerView.addSearchBar(searchController.searchBar)
-    return headerView
-  }
-
-  func collectionView(_ collectionView: UICollectionView,
-                      layout collectionViewLayout: UICollectionViewLayout,
-                      referenceSizeForHeaderInSection section: Int) -> CGSize {
-    return searchController.searchBar.frame.size
   }
 }
 

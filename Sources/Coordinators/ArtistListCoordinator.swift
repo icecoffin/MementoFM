@@ -65,8 +65,11 @@ class ArtistListCoordinator: NSObject, NavigationFlowCoordinator {
 
     let artistListViewModel = viewModelFactory.makeViewModel()
     artistListViewModel.delegate = self
-    let artistListViewController = ArtistListViewController(viewModel: artistListViewModel)
+    let searchController = UISearchController(searchResultsController: nil)
+    let artistListViewController = ArtistListViewController(searchController: searchController, viewModel: artistListViewModel)
     artistListViewController.navigationItem.leftBarButtonItem = configuration.backButtonItem(for: self)
+    artistListViewController.navigationItem.searchController = searchController
+    artistListViewController.navigationItem.hidesSearchBarWhenScrolling = false
     artistListViewController.title = artistListViewModel.title
     navigationController.pushViewController(artistListViewController, animated: configuration.shouldStartAnimated)
   }

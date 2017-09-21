@@ -17,12 +17,13 @@ class ArtistListViewController: UIViewController {
 
   fileprivate let viewModel: ArtistListViewModel
 
-  private let searchController = UISearchController(searchResultsController: nil)
+  private let searchController: UISearchController
   private let tableView = TPKeyboardAvoidingTableView()
   private let loadingView = LoadingView()
   private let emptyDataSetView = EmptyDataSetView(text: "No artists found".unlocalized)
 
-  init(viewModel: ArtistListViewModel) {
+  init(searchController: UISearchController, viewModel: ArtistListViewModel) {
+    self.searchController = searchController
     self.viewModel = viewModel
     super.init(nibName: nil, bundle: nil)
   }
@@ -35,7 +36,6 @@ class ArtistListViewController: UIViewController {
     super.viewDidLoad()
 
     definesPresentationContext = true
-    automaticallyAdjustsScrollViewInsets = false
 
     configureSearchController()
     addTableView()
@@ -46,8 +46,7 @@ class ArtistListViewController: UIViewController {
   private func addTableView() {
     view.addSubview(tableView)
     tableView.snp.makeConstraints { make in
-      make.leading.trailing.bottom.equalToSuperview()
-      make.top.equalTo(topLayoutGuide.snp.bottom)
+      make.edges.equalToSuperview()
     }
 
     tableView.register(ArtistCell.self, forCellReuseIdentifier: ArtistCell.reuseIdentifier)
@@ -57,7 +56,6 @@ class ArtistListViewController: UIViewController {
 
     tableView.estimatedRowHeight = Constants.estimatedRowHeight
     tableView.tableFooterView = UIView()
-    tableView.tableHeaderView = searchController.searchBar
 
     tableView.backgroundView = emptyDataSetView
     tableView.backgroundView?.isHidden = true
@@ -75,8 +73,6 @@ class ArtistListViewController: UIViewController {
   private func configureSearchController() {
     searchController.searchResultsUpdater = self
     searchController.dimsBackgroundDuringPresentation = false
-    // Force load UISearchController's view to avoid the warning on dealloc
-    _ = searchController.view
   }
 
   private func bindToViewModel() {

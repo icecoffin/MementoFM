@@ -13,6 +13,7 @@ class NavigationController: UINavigationController, UIGestureRecognizerDelegate 
   override func viewDidLoad() {
     super.viewDidLoad()
     interactivePopGestureRecognizer?.delegate = self
+    navigationBar.prefersLargeTitles = true
   }
 
   func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {

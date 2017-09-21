@@ -6,7 +6,7 @@
 //  Copyright © 2017 icecoffin. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol ArtistsByTagPresenter: NavigationFlowCoordinator, ArtistListViewModelDelegate {
   func makeLibraryViewController(forTagWithName tagName: String,
@@ -18,8 +18,11 @@ extension ArtistsByTagPresenter {
                                  dependencies: ArtistsByTagViewModel.Dependencies) -> ArtistListViewController {
     let viewModel = ArtistsByTagViewModel(tagName: tagName, dependencies: dependencies)
     viewModel.delegate = self
-    let viewController = ArtistListViewController(viewModel: viewModel)
+    let searchController = UISearchController(searchResultsController: nil)
+    let viewController = ArtistListViewController(searchController: searchController, viewModel: viewModel)
     viewController.navigationItem.leftBarButtonItem = makeBackButton()
+    viewController.navigationItem.searchController = searchController
+    viewController.navigationItem.hidesSearchBarWhenScrolling = false
     viewController.title = viewModel.title
     return viewController
   }
