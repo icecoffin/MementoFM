@@ -11,6 +11,7 @@ import PromiseKit
 
 class UserService {
   private let realmService: RealmService
+  private let networkService: LastFMNetworkService
   private let userDataStorage: UserDataStorage
 
   var username: String {
@@ -48,8 +49,9 @@ class UserService {
     }
   }
 
-  init(realmService: RealmService, userDataStorage: UserDataStorage) {
+  init(realmService: RealmService, networkService: LastFMNetworkService, userDataStorage: UserDataStorage) {
     self.realmService = realmService
+    self.networkService = networkService
     self.userDataStorage = userDataStorage
   }
 
@@ -59,5 +61,13 @@ class UserService {
       realm.delete(realm.objects(RealmArtist.self))
       realm.delete(realm.objects(RealmTag.self))
     }
+  }
+
+  func checkUserExists(withUsername username: String) -> Promise<EmptyResponse> {
+    let parameters: [String: Any] = ["method": "user.getInfo",
+                                     "api_key": Keys.LastFM.apiKey,
+                                     "user": username,
+                                     "format": "json"]
+    return networkService.performRequest(parameters: parameters)
   }
 }

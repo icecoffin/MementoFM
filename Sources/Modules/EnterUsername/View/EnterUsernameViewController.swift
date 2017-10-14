@@ -105,6 +105,18 @@ class EnterUsernameViewController: UIViewController {
   }
 
   private func bindToViewModel() {
+    viewModel.onDidStartRequest = {
+      HUD.show()
+    }
+
+    viewModel.onDidFinishRequest = {
+      HUD.dismiss()
+    }
+
+    viewModel.onDidReceiveError = { [weak self] error in
+      self?.showAlert(for: error)
+    }
+
     usernameTextField.placeholder = viewModel.usernameTextFieldPlaceholder
     submitButton.setTitle(viewModel.submitButtonTitle, for: .normal)
     currentUsernameLabel.text = viewModel.currentUsernameText

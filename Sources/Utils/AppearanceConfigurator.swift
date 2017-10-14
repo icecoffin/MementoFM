@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 enum AppearanceConfigurator {
   static func configureAppearance() {
     configureNavigationBarAppearance()
     configureTabBarItemAppearance()
     configureSearchBarAppearance()
+    configureHUDAppearance()
   }
 
   private static func configureNavigationBarAppearance() {
@@ -31,5 +33,9 @@ enum AppearanceConfigurator {
 
     let barButtonItemAppearance = UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self])
     barButtonItemAppearance.setTitleTextAttributes([NSAttributedStringKey.font: Fonts.raleway(withSize: 16)], for: .normal)
+  }
+
+  private static func configureHUDAppearance() {
+    SVProgressHUD.setDefaultMaskType(.black)
   }
 }

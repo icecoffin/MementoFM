@@ -8,7 +8,6 @@
 
 import UIKit
 import TPKeyboardAvoiding
-import SVProgressHUD
 
 class IgnoredTagsViewController: UIViewController {
   fileprivate let viewModel: IgnoredTagsViewModel
@@ -60,12 +59,11 @@ class IgnoredTagsViewController: UIViewController {
   private func bindToViewModel() {
     viewModel.onDidStartSavingChanges = { [unowned self] in
       self.view.endEditing(true)
-      SVProgressHUD.setDefaultMaskType(.black)
-      SVProgressHUD.show()
+      HUD.show()
     }
 
     viewModel.onDidFinishSavingChanges = {
-      SVProgressHUD.dismiss()
+      HUD.dismiss()
     }
 
     viewModel.onDidAddNewTag = { [unowned self] indexPath in

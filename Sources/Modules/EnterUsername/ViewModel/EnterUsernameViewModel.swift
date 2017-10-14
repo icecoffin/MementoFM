@@ -23,6 +23,10 @@ class EnterUsernameViewModel {
   private let dependencies: Dependencies
   private var currentUsername: String
 
+  var onDidStartRequest: (() -> Void)?
+  var onDidFinishRequest: (() -> Void)?
+  var onDidReceiveError: ((Error) -> Void)?
+
   weak var delegate: EnterUsernameViewModelDelegate?
 
   var canSubmitUsername: Bool {
@@ -56,9 +60,17 @@ class EnterUsernameViewModel {
   }
 
   func submitUsername() {
-    dependencies.userService.username = currentUsername
-    dependencies.userService.clearUserData().then {
+    let userService = dependencies.userService
+    onDidStartRequest?()
+    userService.checkUserExists(withUsername: currentUsername).then { _ in
+      userService.username = self.currentUsername
+      return userService.clearUserData()
+    }.then {
       self.delegate?.enterUsernameViewModelDidFinish(self)
-    }.noError()
+    }.catch { error in
+      self.onDidReceiveError?(error)
+    }.always {
+      self.onDidFinishRequest?()
+    }
   }
 }
