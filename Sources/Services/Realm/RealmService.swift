@@ -68,6 +68,15 @@ class RealmService {
     }
   }
 
+  // MARK: - Deleting objects from Realm
+
+  func deleteObjects<T: TransientEntity>(ofType type: T.Type) -> Promise<Void> where T.RealmType: Object, T.RealmType.TransientType == T {
+    return write { realm in
+      let realmObjects = realm.objects(T.RealmType.self)
+      realm.delete(realmObjects)
+    }
+  }
+
   // MARK: - Obtaining objects from Realm
   func hasObjects<T: TransientEntity>(ofType type: T.Type) -> Bool where T.RealmType: Object, T.RealmType.TransientType == T {
     return !getRealm().objects(T.RealmType.self).isEmpty

@@ -33,6 +33,8 @@ class IgnoredTagService {
   }
 
   func updateIgnoredTags(_ ignoredTags: [IgnoredTag]) -> Promise<Void> {
-    return realmService.save(ignoredTags)
+    return realmService.deleteObjects(ofType: IgnoredTag.self).then {
+      return self.realmService.save(ignoredTags)
+    }
   }
 }
