@@ -57,6 +57,7 @@ class OnboardingCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter, Sy
   fileprivate func showSyncViewController() {
     let viewController = makeSyncViewController(dependencies: dependencies)
     navigationController.setNavigationBarHidden(true, animated: false)
+    navigationController.isInteractivePopGestureEnabled = false
     navigationController.pushViewController(viewController, animated: true)
   }
 }

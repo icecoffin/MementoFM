@@ -10,6 +10,14 @@ import UIKit
 
 // A UINavigationController subclass allowing to use custom back buttons along with the interactive pop gesture
 class NavigationController: UINavigationController, UIGestureRecognizerDelegate {
+  var isInteractivePopGestureEnabled: Bool {
+    get {
+      return interactivePopGestureRecognizer?.isEnabled ?? false
+    } set {
+      interactivePopGestureRecognizer?.isEnabled = newValue
+    }
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     interactivePopGestureRecognizer?.delegate = self

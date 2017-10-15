@@ -68,6 +68,7 @@ extension SettingsCoordinator: EnterUsernameViewModelDelegate {
     let syncViewController = makeSyncViewController(dependencies: dependencies)
     syncViewController.hidesBottomBarWhenPushed = true
     navigationController.pushViewController(syncViewController, animated: true)
+    navigationController.isInteractivePopGestureEnabled = false
     navigationController.setNavigationBarHidden(true, animated: false)
   }
 }
