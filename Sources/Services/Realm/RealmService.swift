@@ -18,18 +18,6 @@ class RealmService {
     self.getRealm = getRealm
   }
 
-  class func persistent() -> RealmService {
-    return RealmService(getRealm: {
-      return RealmFactory.realm()
-    })
-  }
-
-  class func inMemory() -> RealmService {
-    return RealmService(getRealm: {
-      return RealmFactory.inMemoryRealm()
-    })
-  }
-
   // MARK: - Writing to Realm
   fileprivate func write(block: @escaping (Realm) -> Void) -> Promise<Void> {
     return DispatchQueue.global().promise {

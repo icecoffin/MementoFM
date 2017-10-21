@@ -38,7 +38,9 @@ struct AppDependency: HasArtistService, HasUserService, HasTagService, HasIgnore
   let libraryUpdater: LibraryUpdater
 
   static var `default`: AppDependency {
-    let realmService = RealmService.persistent()
+    let realmService = RealmService(getRealm: {
+      return RealmFactory.realm()
+    })
     let userDataStorage = UserDataStorage()
     let networkService = LastFMNetworkService()
 

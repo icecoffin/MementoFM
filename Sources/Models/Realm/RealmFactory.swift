@@ -23,6 +23,7 @@ class RealmFactory {
     do {
       let config = Realm.Configuration(inMemoryIdentifier: "InMemory")
       let realm = try Realm(configuration: config)
+      realm.refresh()
       return realm
     } catch {
       fatalError("Can't create an in-memory Realm instance")
