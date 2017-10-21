@@ -43,7 +43,7 @@ class RealmMappedCollection<Element: Object, Transformed> {
   }
 
   deinit {
-    notificationToken?.stop()
+    notificationToken?.invalidate()
   }
 
   private func fetchResults() -> Results<Element> {
@@ -61,8 +61,8 @@ class RealmMappedCollection<Element: Object, Transformed> {
   }
 
   private func subscribeToResultsNotifications() {
-    notificationToken?.stop()
-    notificationToken = results.addNotificationBlock { [unowned self] changes in
+    notificationToken?.invalidate()
+    notificationToken = results.observe { [unowned self] changes in
       self.notificationBlock?(changes)
     }
   }
