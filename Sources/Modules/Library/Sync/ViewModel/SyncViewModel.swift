@@ -67,7 +67,7 @@ class SyncViewModel {
     case .tags(let artistName, let progress):
       let currentIndex = progress.completedUnitCount
       let totalArtistCount = progress.totalUnitCount
-      return "Getting tags for \(artistName) (\(currentIndex) out of \(totalArtistCount))".unlocalized
+      return ["Getting tags for", artistName, "(\(currentIndex) out of \(totalArtistCount))"].joined(separator: "\n").unlocalized
     }
   }
 }

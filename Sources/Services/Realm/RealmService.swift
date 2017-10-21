@@ -31,7 +31,7 @@ class RealmService {
   }
 
   // MARK: - Writing to Realm
-  func write(block: @escaping (Realm) -> Void) -> Promise<Void> {
+  fileprivate func write(block: @escaping (Realm) -> Void) -> Promise<Void> {
     return DispatchQueue.global().promise {
       let currentQueueRealm = self.getRealm()
       self.write(to: currentQueueRealm) { realm in
@@ -53,7 +53,8 @@ class RealmService {
   }
 
   // MARK: - Saving objects to Realm
-  func save<T: TransientEntity>(_ object: T, update: Bool = true) -> Promise<Void> where T.RealmType.TransientType == T {
+  func save<T: TransientEntity>(_ object: T, update: Bool = true) -> Promise<Void>
+    where T.RealmType.TransientType == T {
     return write { realm in
       if let realmObject = T.RealmType.from(transient: object) as? Object {
         realm.add(realmObject, update: update)
@@ -61,7 +62,8 @@ class RealmService {
     }
   }
 
-  func save<T: TransientEntity>(_ objects: [T], update: Bool = true) -> Promise<Void> where T.RealmType.TransientType == T {
+  func save<T: TransientEntity>(_ objects: [T], update: Bool = true) -> Promise<Void>
+    where T.RealmType.TransientType == T {
     return write { realm in
       let realmObjects = objects.flatMap({ return T.RealmType.from(transient: $0) as? Object })
       realm.add(realmObjects, update: update)
@@ -70,15 +72,17 @@ class RealmService {
 
   // MARK: - Deleting objects from Realm
 
-  func deleteObjects<T: TransientEntity>(ofType type: T.Type) -> Promise<Void> where T.RealmType: Object, T.RealmType.TransientType == T {
+  func deleteObjects<T: TransientEntity>(ofType type: T.Type) -> Promise<Void>
+    where T.RealmType: Object, T.RealmType.TransientType == T {
     return write { realm in
-      let realmObjects = realm.objects(T.RealmType.self)
+      let realmObjects = realm.objects(type.RealmType.self)
       realm.delete(realmObjects)
     }
   }
 
   // MARK: - Obtaining objects from Realm
-  func hasObjects<T: TransientEntity>(ofType type: T.Type) -> Bool where T.RealmType: Object, T.RealmType.TransientType == T {
+  func hasObjects<T: TransientEntity>(ofType type: T.Type) -> Bool
+    where T.RealmType: Object, T.RealmType.TransientType == T {
     return !getRealm().objects(T.RealmType.self).isEmpty
   }
 

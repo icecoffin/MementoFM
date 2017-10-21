@@ -11,7 +11,7 @@ import PromiseKit
 
 class RecentTracksProcessor {
   func process(tracks: [Track],
-               usingRealmService realmService: RealmService) -> Promise<[Artist]> {
+               usingRealmService realmService: RealmService) -> Promise<Void> {
     var artistNamesWithPlayCounts = [Artist: Int]()
 
     for track in tracks {
@@ -23,22 +23,11 @@ class RecentTracksProcessor {
       }
     }
 
-    var newArtists = [Artist]()
+    let artists: [Artist] = artistNamesWithPlayCounts.map { artist, playcount in
+      let updatedArtist = realmService.object(ofType: Artist.self, forPrimaryKey: artist.name) ?? artist
+      return updatedArtist.updatingPlaycount(updatedArtist.playcount + playcount)
+    }
 
-    return realmService.write(block: { realm in
-      for (artist, playCount) in artistNamesWithPlayCounts {
-        let realmArtist: RealmArtist
-        if let existingArtist = realm.object(ofType: RealmArtist.self, forPrimaryKey: artist.name) {
-          realmArtist = existingArtist
-        } else {
-          realmArtist = RealmArtist.from(transient: artist)
-          realm.add(realmArtist)
-          newArtists.append(artist)
-        }
-        realmArtist.playcount += playCount
-      }
-    }).then(execute: { _ -> Promise<[Artist]> in
-      return Promise(value: newArtists)
-    })
+    return realmService.save(artists)
   }
 }

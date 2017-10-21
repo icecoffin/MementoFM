@@ -68,10 +68,6 @@ class LibraryViewModel: ArtistListViewModel {
     }
   }
 
-  private var lastUpdateTimestamp: TimeInterval {
-    return dependencies.userService.lastUpdateTimestamp
-  }
-
   var itemCount: Int {
     return artists.count
   }

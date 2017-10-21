@@ -43,6 +43,11 @@ struct Artist: AutoEquatable, AutoHashable, TransientEntity {
     let otherTopTagNames = artist.topTags.map({ $0.name })
     return topTagNames.filter({ otherTopTagNames.contains($0) })
   }
+
+  func updatingPlaycount(_ playcount: Int) -> Artist {
+    return Artist(name: name, playcount: playcount, urlString: urlString, imageURLString: imageURLString,
+                  needsTagsUpdate: needsTagsUpdate, tags: tags, topTags: topTags)
+  }
 }
 
 extension Artist: Mappable {

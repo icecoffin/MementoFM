@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import RealmSwift
 
 protocol TagsViewModelDelegate: class {
   func tagsViewModel(_ viewModel: TagsViewModel, didSelectTagWithName name: String)

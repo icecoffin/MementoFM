@@ -55,7 +55,7 @@ class TrackService {
 
   func processTracks(_ tracks: [Track]) -> Promise<Void> {
     let processor = RecentTracksProcessor()
-    return processor.process(tracks: tracks, usingRealmService: realmService).asVoid()
+    return processor.process(tracks: tracks, usingRealmService: realmService)
   }
 
   private func getRecentTracksPage(withIndex index: Int, for user: String, from: TimeInterval, limit: Int) -> Promise<RecentTracksPageResponse> {

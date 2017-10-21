@@ -57,10 +57,8 @@ class UserService {
 
   func clearUserData() -> Promise<Void> {
     userDataStorage.reset()
-    return realmService.write { realm in
-      realm.delete(realm.objects(RealmArtist.self))
-      realm.delete(realm.objects(RealmTag.self))
-    }
+    return when(fulfilled: [realmService.deleteObjects(ofType: Artist.self),
+                            realmService.deleteObjects(ofType: Tag.self)])
   }
 
   func checkUserExists(withUsername username: String) -> Promise<EmptyResponse> {
