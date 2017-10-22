@@ -11,7 +11,7 @@ import RealmSwift
 import PromiseKit
 
 class RealmService {
-  let getRealm: () -> Realm
+  private let getRealm: () -> Realm
 
   // MARK: - Init & factory methods
   init(getRealm: @escaping () -> Realm) {
@@ -38,6 +38,16 @@ class RealmService {
     } catch {
       fatalError("Can't write to Realm")
     }
+  }
+
+  // MARK: - Realm mapped collection
+  func mappedCollection<T: TransientEntity, R>(filteredUsing predicate: NSPredicate? = nil,
+                                               sortedBy sortDescriptors: [SortDescriptor]) -> RealmMappedCollection<R, T>
+  where T.RealmType == R, R.TransientType == T {
+    return RealmMappedCollection<R, T>(realm: getRealm(),
+                                       predicate: predicate,
+                                       sortDescriptors: sortDescriptors,
+                                       transform: { return $0.toTransient() })
   }
 
   // MARK: - Saving objects to Realm

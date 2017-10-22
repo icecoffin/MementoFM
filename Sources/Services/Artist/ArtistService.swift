@@ -118,10 +118,7 @@ class ArtistService {
 
   func artists(filteredUsing predicate: NSPredicate? = nil,
                sortedBy sortDescriptors: [SortDescriptor]) -> RealmMappedCollection<RealmArtist, Artist> {
-    return RealmMappedCollection(realm: realmService.getRealm(),
-                                 predicate: predicate,
-                                 sortDescriptors: sortDescriptors,
-                                 transform: { return $0.toTransient() })
+    return realmService.mappedCollection(filteredUsing: predicate, sortedBy: sortDescriptors)
   }
 
   func getSimilarArtists(for artist: Artist, limit: Int = 20) -> Promise<[Artist]> {
