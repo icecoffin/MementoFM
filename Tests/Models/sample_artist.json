@@ -1,0 +1,30 @@
+{
+  "name": "Tiger Army",
+  "playcount": "730",
+  "tagcount": "0",
+  "mbid": "a043cfa6-6e87-4975-ac27-5005bdfa7afb",
+  "url": "https://www.last.fm/music/Tiger+Army",
+  "streamable": "0",
+  "image": [
+            {
+            "#text": "https://lastfm-img2.akamaized.net/i/u/34s/ed7d669ae7e14fd2bf2bb3e55600f687.png",
+            "size": "small"
+            },
+            {
+            "#text": "https://lastfm-img2.akamaized.net/i/u/64s/ed7d669ae7e14fd2bf2bb3e55600f687.png",
+            "size": "medium"
+            },
+            {
+            "#text": "https://lastfm-img2.akamaized.net/i/u/174s/ed7d669ae7e14fd2bf2bb3e55600f687.png",
+            "size": "large"
+            },
+            {
+            "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/ed7d669ae7e14fd2bf2bb3e55600f687.png",
+            "size": "extralarge"
+            },
+            {
+            "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/ed7d669ae7e14fd2bf2bb3e55600f687.png",
+            "size": "mega"
+            }
+            ]
+}
