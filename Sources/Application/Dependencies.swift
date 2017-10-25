@@ -44,11 +44,19 @@ struct AppDependency: HasArtistService, HasUserService, HasTagService, HasIgnore
     let userDataStorage = UserDataStorage()
     let networkService = LastFMNetworkService()
 
-    let artistService = ArtistService(realmService: realmService, networkService: networkService)
-    let userService = UserService(realmService: realmService, networkService: networkService, userDataStorage: userDataStorage)
-    let tagService = TagService(realmService: realmService, networkService: networkService)
+    let artistRepository = ArtistNetworkRepository(networkService: networkService)
+    let artistService = ArtistService(realmService: realmService, repository: artistRepository)
+
+    let userRepository = UserNetworkRepository(networkService: networkService)
+    let userService = UserService(realmService: realmService, repository: userRepository, userDataStorage: userDataStorage)
+
+    let tagRepository = TagNetworkRepository(networkService: networkService)
+    let tagService = TagService(realmService: realmService, repository: tagRepository)
+
     let ignoredTagService = IgnoredTagService(realmService: realmService)
-    let trackService = TrackService(realmService: realmService, networkService: networkService)
+
+    let trackRepository = TrackNetworkRepository(networkService: networkService)
+    let trackService = TrackService(realmService: realmService, repository: trackRepository)
 
     let libraryUpdater = LibraryUpdater(userService: userService, artistService: artistService, tagService: tagService,
                                         ignoredTagService: ignoredTagService, trackService: trackService,

@@ -11,17 +11,21 @@ import PromiseKit
 
 class TrackService {
   private let realmService: RealmService
-  private let networkService: LastFMNetworkService
+  private let repository: TrackRepository
 
-  init(realmService: RealmService, networkService: LastFMNetworkService) {
+  init(realmService: RealmService, repository: TrackRepository) {
     self.realmService = realmService
-    self.networkService = networkService
+    self.repository = repository
   }
 
-  func getRecentTracks(for user: String, from: TimeInterval, limit: Int = 200, progress: ((Progress) -> Void)?) -> Promise<[Track]> {
+  func getRecentTracks(for user: String,
+                       from: TimeInterval,
+                       limit: Int = 200,
+                       progress: ((Progress) -> Void)?) -> Promise<[Track]> {
     return Promise { fulfill, reject in
       let initialIndex = 1
-      getRecentTracksPage(withIndex: initialIndex, for: user, from: from, limit: limit).then { [unowned self] response -> Void in
+      repository.getRecentTracksPage(withIndex: initialIndex, for: user,
+                                     from: from, limit: limit).then { [unowned self] response -> Void in
         let page = response.recentTracksPage
         if page.totalPages <= initialIndex {
           fulfill(page.tracks)
@@ -30,7 +34,7 @@ class TrackService {
 
         let totalProgress = Progress(totalUnitCount: Int64(page.totalPages - 1))
         let pagePromises = (initialIndex+1...page.totalPages).map { index in
-          return self.getRecentTracksPage(withIndex: index, for: user, from: from, limit: limit).always {
+          return self.repository.getRecentTracksPage(withIndex: index, for: user, from: from, limit: limit).always {
             totalProgress.completedUnitCount += 1
             progress?(totalProgress)
           }
@@ -56,17 +60,5 @@ class TrackService {
   func processTracks(_ tracks: [Track]) -> Promise<Void> {
     let processor = RecentTracksProcessor()
     return processor.process(tracks: tracks, usingRealmService: realmService)
-  }
-
-  private func getRecentTracksPage(withIndex index: Int, for user: String, from: TimeInterval, limit: Int) -> Promise<RecentTracksPageResponse> {
-    let parameters: [String: Any] = ["method": "user.getrecenttracks",
-                                     "api_key": Keys.LastFM.apiKey,
-                                     "user": user,
-                                     "from": from,
-                                     "extended": 1,
-                                     "format": "json",
-                                     "page": index,
-                                     "limit": limit]
-    return networkService.performRequest(parameters: parameters)
   }
 }

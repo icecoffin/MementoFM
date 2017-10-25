@@ -20,17 +20,17 @@ struct TopTagsRequestProgress {
 
 class ArtistService {
   private let realmService: RealmService
-  private let networkService: LastFMNetworkService
+  private let repository: ArtistRepository
 
-  init(realmService: RealmService, networkService: LastFMNetworkService) {
+  init(realmService: RealmService, repository: ArtistRepository) {
     self.realmService = realmService
-    self.networkService = networkService
+    self.repository = repository
   }
 
   func getLibrary(for user: String, limit: Int = 200, progress: ((Progress) -> Void)?) -> Promise<[Artist]> {
     return Promise { fulfill, reject in
       let initialIndex = 1
-      getLibraryPage(withIndex: initialIndex, for: user, limit: limit).then { [unowned self] pageResponse -> Void in
+      repository.getLibraryPage(withIndex: initialIndex, for: user, limit: limit).then { [unowned self] pageResponse -> Void in
         let page = pageResponse.libraryPage
         if page.totalPages <= initialIndex {
           fulfill(page.artists)
@@ -39,7 +39,7 @@ class ArtistService {
 
         let totalProgress = Progress(totalUnitCount: Int64(page.totalPages - 1))
         let pagePromises = (initialIndex+1...page.totalPages).map { index in
-          return self.getLibraryPage(withIndex: index, for: user, limit: limit).always {
+          return self.repository.getLibraryPage(withIndex: index, for: user, limit: limit).always {
             totalProgress.completedUnitCount += 1
             progress?(totalProgress)
           }
@@ -60,16 +60,6 @@ class ArtistService {
         }
       }
     }
-  }
-
-  private func getLibraryPage(withIndex index: Int, for user: String, limit: Int) -> Promise<LibraryPageResponse> {
-    let parameters: [String: Any] = ["method": "library.getartists",
-                                     "api_key": Keys.LastFM.apiKey,
-                                     "user": user,
-                                     "format": "json",
-                                     "page": index,
-                                     "limit": limit]
-    return networkService.performRequest(parameters: parameters)
   }
 
   func saveArtists(_ artists: [Artist]) -> Promise<Void> {
@@ -122,12 +112,7 @@ class ArtistService {
   }
 
   func getSimilarArtists(for artist: Artist, limit: Int = 20) -> Promise<[Artist]> {
-    let parameters: [String: Any] = ["method": "artist.getsimilar",
-                                     "api_key": Keys.LastFM.apiKey,
-                                     "artist": artist.name,
-                                     "format": "json",
-                                     "limit": limit]
-    return networkService.performRequest(parameters: parameters).then { (response: SimilarArtistListResponse) in
+    return repository.getSimilarArtists(for: artist, limit: limit).then { response in
       let artistNames = response.similarArtistList.similarArtists.map({ $0.name })
       let predicate = NSPredicate(format: "name in %@", artistNames)
       let artists = self.realmService.objects(Artist.self, filteredBy: predicate)

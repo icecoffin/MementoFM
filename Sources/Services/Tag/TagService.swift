@@ -11,11 +11,11 @@ import PromiseKit
 
 class TagService {
   private let realmService: RealmService
-  private let networkService: LastFMNetworkService
+  private let repository: TagRepository
 
-  init(realmService: RealmService, networkService: LastFMNetworkService) {
+  init(realmService: RealmService, repository: TagRepository) {
     self.realmService = realmService
-    self.networkService = networkService
+    self.repository = repository
   }
 
   func getTopTags(for artists: [Artist], progress: @escaping ((TopTagsRequestProgress) -> Void)) -> Promise<Void> {
@@ -23,7 +23,7 @@ class TagService {
       let totalProgress = Progress(totalUnitCount: Int64(artists.count))
 
       let promises = artists.map { artist in
-        return getTopTags(for: artist.name).then { topTagsResponse -> Void in
+        return repository.getTopTags(for: artist.name).then { topTagsResponse -> Void in
           totalProgress.completedUnitCount += 1
           let topTagsList = topTagsResponse.topTagsList
           progress(TopTagsRequestProgress(progress: totalProgress, artist: artist, topTagsList: topTagsList))
@@ -42,15 +42,6 @@ class TagService {
         }
       }
     }
-  }
-
-  private func getTopTags(for artist: String) -> Promise<TopTagsResponse> {
-    let parameters: [String: Any] = ["method": "artist.gettoptags",
-                                     "api_key": Keys.LastFM.apiKey,
-                                     "artist": artist,
-                                     "format": "json"]
-
-    return networkService.performRequest(parameters: parameters)
   }
 
   func getAllTopTags() -> Promise<[Tag]> {
