@@ -367,7 +367,6 @@
 				01D4D3321DAE4A0000BFD7FD /* Info.plist */,
 				651B66341F9C9217003C436E /* Models */,
 				651B66371F9C9218003C436E /* Utils */,
-				6517A3C41EBCE5C6002BC634 /* Realm */,
 				654430771FA230A000923356 /* Services */,
 			);
 			path = Tests;
@@ -434,6 +433,8 @@
 		65112D671F2F181700CBF8BA /* Realm */ = {
 			isa = PBXGroup;
 			children = (
+				651F9DB71EC09FDC006D9474 /* RealmFactory.swift */,
+				651F9DBC1EC09FDC006D9474 /* RealmMappedCollection.swift */,
 				65112D681F2F181700CBF8BA /* RealmService.swift */,
 			);
 			path = Realm;
@@ -605,7 +606,6 @@
 			children = (
 				651F9DA51EC09FDC006D9474 /* Entities */,
 				651F9DB31EC09FDC006D9474 /* LocalStorage */,
-				651F9DB61EC09FDC006D9474 /* Realm */,
 				651F9DBD1EC09FDC006D9474 /* Responses */,
 			);
 			path = Models;
@@ -653,15 +653,6 @@
 				651F9DB41EC09FDC006D9474 /* UserDataStorage.swift */,
 			);
 			path = LocalStorage;
-			sourceTree = "<group>";
-		};
-		651F9DB61EC09FDC006D9474 /* Realm */ = {
-			isa = PBXGroup;
-			children = (
-				651F9DB71EC09FDC006D9474 /* RealmFactory.swift */,
-				651F9DBC1EC09FDC006D9474 /* RealmMappedCollection.swift */,
-			);
-			path = Realm;
 			sourceTree = "<group>";
 		};
 		651F9DBD1EC09FDC006D9474 /* Responses */ = {
@@ -1003,6 +994,7 @@
 		654430771FA230A000923356 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				6517A3C41EBCE5C6002BC634 /* Realm */,
 				650DB4471FA316A800E6F006 /* Track */,
 			);
 			path = Services;
