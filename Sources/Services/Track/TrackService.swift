@@ -21,7 +21,7 @@ class TrackService {
   func getRecentTracks(for user: String,
                        from: TimeInterval,
                        limit: Int = 200,
-                       progress: ((Progress) -> Void)?) -> Promise<[Track]> {
+                       progress: ((Progress) -> Void)? = nil) -> Promise<[Track]> {
     return Promise { fulfill, reject in
       let initialIndex = 1
       repository.getRecentTracksPage(withIndex: initialIndex, for: user,
@@ -44,21 +44,20 @@ class TrackService {
           let pages = pageResponses.map({ $0.recentTracksPage })
           let tracks = ([page] + pages).flatMap({ $0.tracks })
           fulfill(tracks)
-          }.catch { error in
-            if !error.isCancelledError {
-              reject(error)
-            }
-        }
         }.catch { error in
           if !error.isCancelledError {
             reject(error)
           }
+        }
+      }.catch { error in
+        if !error.isCancelledError {
+          reject(error)
+        }
       }
     }
   }
 
-  func processTracks(_ tracks: [Track]) -> Promise<Void> {
-    let processor = RecentTracksProcessor()
-    return processor.process(tracks: tracks, usingRealmService: realmService)
+  func processTracks(_ tracks: [Track], using processor: RecentTracksProcessing = RecentTracksProcessor()) -> Promise<Void> {
+    return processor.process(tracks: tracks, using: realmService)
   }
 }

@@ -20,11 +20,7 @@ class RealmServiceTests: XCTestCase {
     super.setUp()
     realm = RealmFactory.inMemoryRealm()
     realmService = RealmService(getRealm: {
-      if Thread.isMainThread {
-        return self.realm
-      } else {
-        return RealmFactory.inMemoryRealm()
-      }
+      return RealmFactory.inMemoryRealm()
     })
   }
 
@@ -39,7 +35,7 @@ class RealmServiceTests: XCTestCase {
       let ignoredTag = IgnoredTag(uuid: "uuid", name: "name")
       self.realmService.save(ignoredTag).then { _ -> Void in
         let expectedIgnoredTag = self.realm.object(ofType: RealmIgnoredTag.self,
-                                                                     forPrimaryKey: ignoredTag.uuid)?.toTransient()
+                                                   forPrimaryKey: ignoredTag.uuid)?.toTransient()
         expect(expectedIgnoredTag).to(equal(ignoredTag))
         done()
       }.noError()

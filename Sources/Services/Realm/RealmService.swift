@@ -11,18 +11,27 @@ import RealmSwift
 import PromiseKit
 
 class RealmService {
-  private let getRealm: () -> Realm
+  private let mainQueueRealm: Realm
+  private let getBackgroundQueueRealm: () -> Realm
+
+  private var currentQueueRealm: Realm {
+    if Thread.isMainThread {
+      return self.mainQueueRealm
+    } else {
+      return getBackgroundQueueRealm()
+    }
+  }
 
   // MARK: - Init & factory methods
   init(getRealm: @escaping () -> Realm) {
-    self.getRealm = getRealm
+    self.mainQueueRealm = getRealm()
+    self.getBackgroundQueueRealm = getRealm
   }
 
   // MARK: - Writing to Realm
   fileprivate func write(block: @escaping (Realm) -> Void) -> Promise<Void> {
     return DispatchQueue.global().promise {
-      let currentQueueRealm = self.getRealm()
-      self.write(to: currentQueueRealm) { realm in
+      self.write(to: self.currentQueueRealm) { realm in
         block(realm)
       }
     }.then(on: DispatchQueue.main) {
@@ -44,7 +53,7 @@ class RealmService {
   func mappedCollection<T: TransientEntity, R>(filteredUsing predicate: NSPredicate? = nil,
                                                sortedBy sortDescriptors: [SortDescriptor]) -> RealmMappedCollection<R, T>
   where T.RealmType == R, R.TransientType == T {
-    return RealmMappedCollection<R, T>(realm: getRealm(),
+    return RealmMappedCollection<R, T>(realm: currentQueueRealm,
                                        predicate: predicate,
                                        sortDescriptors: sortDescriptors,
                                        transform: { return $0.toTransient() })
@@ -81,22 +90,22 @@ class RealmService {
   // MARK: - Obtaining objects from Realm
   func hasObjects<T: TransientEntity>(ofType type: T.Type) -> Bool
     where T.RealmType: Object, T.RealmType.TransientType == T {
-    return !getRealm().objects(T.RealmType.self).isEmpty
+    return !currentQueueRealm.objects(T.RealmType.self).isEmpty
   }
 
   func objects<T: TransientEntity>(_ type: T.Type) -> [T.RealmType.TransientType]
     where T.RealmType: Object, T.RealmType.TransientType == T {
-      return getRealm().objects(T.RealmType.self).flatMap({ $0.toTransient() })
+      return currentQueueRealm.objects(T.RealmType.self).flatMap({ $0.toTransient() })
   }
 
   func objects<T: TransientEntity>(_ type: T.Type, filteredBy predicate: NSPredicate) -> [T.RealmType.TransientType]
     where T.RealmType: Object, T.RealmType.TransientType == T {
-    return getRealm().objects(T.RealmType.self).filter(predicate).flatMap({ $0.toTransient() })
+    return currentQueueRealm.objects(T.RealmType.self).filter(predicate).flatMap({ $0.toTransient() })
   }
 
   func object<T: TransientEntity, K>(ofType type: T.Type, forPrimaryKey key: K) -> T.RealmType.TransientType?
     where T.RealmType: Object, T.RealmType.TransientType == T {
-    if let realmObject = getRealm().object(ofType: T.RealmType.self, forPrimaryKey: key) {
+    if let realmObject = currentQueueRealm.object(ofType: T.RealmType.self, forPrimaryKey: key) {
       return realmObject.toTransient()
     } else {
       return nil

@@ -9,9 +9,12 @@
 import Foundation
 import PromiseKit
 
-class RecentTracksProcessor {
-  func process(tracks: [Track],
-               usingRealmService realmService: RealmService) -> Promise<Void> {
+protocol RecentTracksProcessing {
+  func process(tracks: [Track], using realmService: RealmService) -> Promise<Void>
+}
+
+class RecentTracksProcessor: RecentTracksProcessing {
+  func process(tracks: [Track], using realmService: RealmService) -> Promise<Void> {
     var artistNamesWithPlayCounts = [Artist: Int]()
 
     for track in tracks {

@@ -9,9 +9,11 @@
 import Foundation
 import Mapper
 
-struct RecentTracksPageResponse: Mappable {
+struct RecentTracksPageResponse {
   let recentTracksPage: RecentTracksPage
+}
 
+extension RecentTracksPageResponse: Mappable {
   init(map: Mapper) throws {
     recentTracksPage = try map.from("recenttracks")
   }
