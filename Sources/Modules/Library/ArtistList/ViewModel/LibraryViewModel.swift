@@ -87,7 +87,7 @@ class LibraryViewModel: ArtistListViewModel {
   }
 
   func performSearch(withText text: String) {
-    artists.predicate = NSPredicate(format: "name CONTAINS[cd] %@", text)
+    artists.predicate = text.isEmpty ?  NSPredicate(format: "name CONTAINS[cd] %@", text)
     self.onDidUpdateData?(artists.isEmpty)
   }
 
