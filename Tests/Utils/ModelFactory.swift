@@ -15,6 +15,10 @@ class ModelFactory {
                   imageURLString: "http://example.com/artist\(index).jpg", needsTagsUpdate: false, tags: [], topTags: [])
   }
 
+  class func generateArtists(inAmount amount: Int) -> [Artist] {
+    return (1...amount).map { index in generateArtist(index: index) }
+  }
+
   class func generateTrack(index: Int = 1) -> Track {
     let artist = generateArtist(index: index)
     return Track(artist: artist)
@@ -22,5 +26,13 @@ class ModelFactory {
 
   class func generateTracks(inAmount amount: Int) -> [Track] {
     return (1...amount).map { index in generateTrack(index: index) }
+  }
+
+  class func generateTag(index: Int = 1, for artist: String) -> Tag {
+    return Tag(name: "Tag\(artist)\(index)", count: index)
+  }
+
+  class func generateTags(inAmount amount: Int, for artist: String) -> [Tag] {
+    return (1...amount).map { index in generateTag(index: index, for: artist) }
   }
 }

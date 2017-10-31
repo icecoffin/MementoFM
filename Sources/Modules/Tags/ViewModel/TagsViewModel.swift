@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PromiseKit
 
 protocol TagsViewModelDelegate: class {
   func tagsViewModel(_ viewModel: TagsViewModel, didSelectTagWithName name: String)
@@ -29,11 +30,13 @@ class TagsViewModel {
   }
 
   func getTags(searchText: String? = nil) {
-    dependencies.tagService.getAllTopTags().then { allTopTags -> Void in
+    let allTopTags = dependencies.tagService.getAllTopTags()
+    DispatchQueue.global().async {
       self.createCellViewModels(from: allTopTags, searchText: searchText)
-    }.then(on: DispatchQueue.main) {
-      self.onDidUpdateData?(self.filteredCellViewModels.isEmpty)
-    }.noError()
+      DispatchQueue.main.async {
+        self.onDidUpdateData?(self.filteredCellViewModels.isEmpty)
+      }
+    }
   }
 
   var numberOfTags: Int {

@@ -21,6 +21,8 @@
 		6513540C1EDD875E0061B879 /* LibraryViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513540B1EDD875E0061B879 /* LibraryViewModelFactory.swift */; };
 		6515EA9B1F49561700081F70 /* IgnoredTagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6515EA9A1F49561700081F70 /* IgnoredTagService.swift */; };
 		6516A53D1ECDFD830021E43C /* NSAttributedString+Join.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6516A53C1ECDFD830021E43C /* NSAttributedString+Join.swift */; };
+		651742141FA59C17004FCFF4 /* TagServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651742101FA59C04004FCFF4 /* TagServiceTests.swift */; };
+		651742151FA59C17004FCFF4 /* TagStubRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651742121FA59C11004FCFF4 /* TagStubRepository.swift */; };
 		65178A8A1F6ACD6D006A29E8 /* ArtistSimilarsSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65178A891F6ACD6D006A29E8 /* ArtistSimilarsSectionHeaderView.swift */; };
 		6517A3C61EBCE5C6002BC634 /* RealmMappedCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6517A3C51EBCE5C6002BC634 /* RealmMappedCollectionTests.swift */; };
 		6517A3C81EBCE5DA002BC634 /* RealmHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6517A3C71EBCE5DA002BC634 /* RealmHelpers.swift */; };
@@ -180,6 +182,8 @@
 		6513540B1EDD875E0061B879 /* LibraryViewModelFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryViewModelFactory.swift; sourceTree = "<group>"; };
 		6515EA9A1F49561700081F70 /* IgnoredTagService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IgnoredTagService.swift; sourceTree = "<group>"; };
 		6516A53C1ECDFD830021E43C /* NSAttributedString+Join.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Join.swift"; sourceTree = "<group>"; };
+		651742101FA59C04004FCFF4 /* TagServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagServiceTests.swift; sourceTree = "<group>"; };
+		651742121FA59C11004FCFF4 /* TagStubRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagStubRepository.swift; sourceTree = "<group>"; };
 		65178A891F6ACD6D006A29E8 /* ArtistSimilarsSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistSimilarsSectionHeaderView.swift; sourceTree = "<group>"; };
 		6517A3C51EBCE5C6002BC634 /* RealmMappedCollectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmMappedCollectionTests.swift; sourceTree = "<group>"; };
 		6517A3C71EBCE5DA002BC634 /* RealmHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmHelpers.swift; sourceTree = "<group>"; };
@@ -447,6 +451,15 @@
 				651F33911FA0FD2600B178D0 /* UserRepository.swift */,
 			);
 			path = User;
+			sourceTree = "<group>";
+		};
+		6517420F1FA59BF9004FCFF4 /* Tag */ = {
+			isa = PBXGroup;
+			children = (
+				651742101FA59C04004FCFF4 /* TagServiceTests.swift */,
+				651742121FA59C11004FCFF4 /* TagStubRepository.swift */,
+			);
+			path = Tag;
 			sourceTree = "<group>";
 		};
 		6517A3C41EBCE5C6002BC634 /* Realm */ = {
@@ -996,6 +1009,7 @@
 			children = (
 				6517A3C41EBCE5C6002BC634 /* Realm */,
 				650DB4471FA316A800E6F006 /* Track */,
+				6517420F1FA59BF9004FCFF4 /* Tag */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1434,7 +1448,9 @@
 			files = (
 				651B663E1F9C9234003C436E /* Utils.swift in Sources */,
 				65A305C41F9B383900E1D9C4 /* RealmServiceTests.swift in Sources */,
+				651742141FA59C17004FCFF4 /* TagServiceTests.swift in Sources */,
 				6517A3C81EBCE5DA002BC634 /* RealmHelpers.swift in Sources */,
+				651742151FA59C17004FCFF4 /* TagStubRepository.swift in Sources */,
 				6544307A1FA231AF00923356 /* TrackServiceTests.swift in Sources */,
 				651B663C1F9C922C003C436E /* ArtistTests.swift in Sources */,
 				6517A3C61EBCE5C6002BC634 /* RealmMappedCollectionTests.swift in Sources */,

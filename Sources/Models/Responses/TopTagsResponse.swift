@@ -9,9 +9,11 @@
 import Foundation
 import Mapper
 
-struct TopTagsResponse: Mappable {
+struct TopTagsResponse {
   let topTagsList: TopTagsList
+}
 
+extension TopTagsResponse: Mappable {
   init(map: Mapper) throws {
     topTagsList = map.optionalFrom("toptags") ?? TopTagsList(tags: [])
   }
