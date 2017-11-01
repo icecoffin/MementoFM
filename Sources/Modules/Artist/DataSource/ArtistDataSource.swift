@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ArtistDataSource {
+class ArtistDataSource: NSObject {
   private let viewModel: ArtistViewModelProtocol
   let sectionDataSources: [ArtistSectionDataSource]
 
@@ -18,6 +18,12 @@ class ArtistDataSource {
   init(viewModel: ArtistViewModelProtocol) {
     self.viewModel = viewModel
     sectionDataSources = viewModel.sectionDataSources
+    super.init()
+
+    bindToViewModel()
+  }
+
+  private func bindToViewModel() {
     viewModel.onDidUpdateData = { [unowned self] in
       self.onDidUpdateData?()
     }
@@ -29,40 +35,47 @@ class ArtistDataSource {
   func registerReusableViews(in tableView: UITableView) {
     sectionDataSources.forEach { $0.registerReusableViews(in: tableView) }
   }
+}
 
-  var numberOfSections: Int {
+// MARK: - UITableViewDataSource
+extension ArtistDataSource: UITableViewDataSource {
+  func numberOfSections(in tableView: UITableView) -> Int {
     return sectionDataSources.count
   }
 
-  func numberOfItems(inSection section: Int) -> Int {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return sectionDataSources[section].numberOfRows
   }
 
-  func shouldHighlightRow(at indexPath: IndexPath, in tableView: UITableView) -> Bool {
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    return sectionDataSources[indexPath.section].cellForRow(at: indexPath, in: tableView)
+  }
+}
+
+// MARK: - UITableViewDelegate
+extension ArtistDataSource: UITableViewDelegate {
+  func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
     return sectionDataSources[indexPath.section].shouldHighlightRow(at: indexPath, in: tableView)
   }
 
-  func selectRow(at indexPath: IndexPath, in tableView: UITableView) {
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: false)
     sectionDataSources[indexPath.section].selectRow(at: indexPath, in: tableView)
   }
 
-  func cellForRow(at indexPath: IndexPath, in tableView: UITableView) -> UITableViewCell {
-    return sectionDataSources[indexPath.section].cellForRow(at: indexPath, in: tableView)
-  }
-
-  func viewForHeader(inSection section: Int, in tableView: UITableView) -> UIView? {
+  func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     return sectionDataSources[section].viewForHeader(inSection: section, in: tableView)
   }
 
-  func heightForHeader(inSection section: Int, in tableView: UITableView) -> CGFloat {
+  func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     return sectionDataSources[section].heightForHeader(inSection: section, in: tableView)
   }
 
-  func viewForFooter(inSection section: Int, in tableView: UITableView) -> UIView? {
+  func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
     return sectionDataSources[section].viewForFooter(inSection: section, in: tableView)
   }
 
-  func heightForFooter(inSection section: Int, in tableView: UITableView) -> CGFloat {
+  func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
     return sectionDataSources[section].heightForFooter(inSection: section, in: tableView)
   }
 }

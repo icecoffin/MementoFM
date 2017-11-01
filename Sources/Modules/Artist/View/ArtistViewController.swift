@@ -44,8 +44,8 @@ class ArtistViewController: UIViewController {
       make.edges.equalToSuperview()
     }
 
-    tableView.dataSource = self
-    tableView.delegate = self
+    tableView.dataSource = dataSource
+    tableView.delegate = dataSource
 
     tableView.backgroundColor = .white
     tableView.separatorStyle = .none
@@ -53,46 +53,5 @@ class ArtistViewController: UIViewController {
     tableView.estimatedRowHeight = 80
     tableView.estimatedSectionHeaderHeight = 50
     tableView.estimatedSectionFooterHeight = 50
-  }
-}
-
-extension ArtistViewController: UITableViewDataSource {
-  func numberOfSections(in tableView: UITableView) -> Int {
-    return dataSource.numberOfSections
-  }
-
-  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return dataSource.numberOfItems(inSection: section)
-  }
-
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    return dataSource.cellForRow(at: indexPath, in: tableView)
-  }
-}
-
-extension ArtistViewController: UITableViewDelegate {
-  func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-    return dataSource.shouldHighlightRow(at: indexPath, in: tableView)
-  }
-
-  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    tableView.deselectRow(at: indexPath, animated: false)
-    dataSource.selectRow(at: indexPath, in: tableView)
-  }
-
-  func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    return dataSource.viewForHeader(inSection: section, in: tableView)
-  }
-
-  func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return dataSource.heightForHeader(inSection: section, in: tableView)
-  }
-
-  func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-    return dataSource.viewForFooter(inSection: section, in: tableView)
-  }
-
-  func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-    return dataSource.heightForFooter(inSection: section, in: tableView)
   }
 }
