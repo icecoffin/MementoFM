@@ -13,6 +13,7 @@ target 'MementoFM' do
   pod 'Sourcery'
   pod 'SVProgressHUD'
   pod 'SwiftyBeaver'
+  pod 'SwiftLint'
   pod 'TPKeyboardAvoiding'
   pod 'UICollectionViewLeftAlignedLayout'
 

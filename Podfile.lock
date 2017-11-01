@@ -15,6 +15,7 @@ PODS:
   - SnapKit (4.0.0)
   - Sourcery (0.9.0)
   - SVProgressHUD (2.2.2)
+  - SwiftLint (0.23.1)
   - SwiftyBeaver (1.4.2)
   - TPKeyboardAvoiding (1.3.1)
   - UICollectionViewLeftAlignedLayout (1.0.2)
@@ -28,6 +29,7 @@ DEPENDENCIES:
   - SnapKit
   - Sourcery
   - SVProgressHUD
+  - SwiftLint
   - SwiftyBeaver
   - TPKeyboardAvoiding
   - UICollectionViewLeftAlignedLayout
@@ -43,10 +45,11 @@ SPEC CHECKSUMS:
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   Sourcery: e3829460a1fa0bcd3b689e6087a89cc063cd2289
   SVProgressHUD: 59b2d3dabacbd051576d21d32293ca7228dc18b0
+  SwiftLint: 1b670ce79284c76520f84060e87d645078fd32fa
   SwiftyBeaver: 91057725648ee4980308f1650af077d04b3654a0
   TPKeyboardAvoiding: 0d6af20e95e2850f4c621841225b59ec7d8dd852
   UICollectionViewLeftAlignedLayout: 830bf6fa5bab9f9b464f62e3384f9d2e00b3c0f6
 
-PODFILE CHECKSUM: 7e11718942353ebe4f9b0e27e75d4232cbcde259
+PODFILE CHECKSUM: fcbb568e9c355f0e2818cae324e25d400bab2490
 
 COCOAPODS: 1.3.1
