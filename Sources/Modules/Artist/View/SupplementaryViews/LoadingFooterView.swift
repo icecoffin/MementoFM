@@ -24,11 +24,20 @@ class LoadingFooterView: UITableViewHeaderFooterView {
     backgroundView = UIView()
     contentView.backgroundColor = UIColor.white
 
-    addSubview(activityIndicator)
+    contentView.addSubview(activityIndicator)
     activityIndicator.snp.makeConstraints { make in
-      make.top.bottom.equalToSuperview().inset(4).priority(999)
+      make.top.bottom.equalToSuperview().inset(4)
       make.centerX.equalToSuperview()
     }
+    startAnimating()
+  }
+
+  private func startAnimating() {
     activityIndicator.startAnimating()
+  }
+
+  override func prepareForReuse() {
+    startAnimating()
+    super.prepareForReuse()
   }
 }

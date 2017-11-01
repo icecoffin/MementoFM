@@ -10,7 +10,7 @@ import Foundation
 import PromiseKit
 
 protocol ArtistSimilarsSectionViewModelProtocol: class {
-  var onDidUpdateCellViewModels: (() -> Void)? { get set }
+  var onDidUpdateData: (() -> Void)? { get set }
   var onDidReceiveError: ((Error) -> Void)? { get set }
 
   var numberOfSimilarArtists: Int { get }
@@ -35,7 +35,7 @@ class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtocol {
   private var tabViewModels: [ArtistSimilarsSectionViewModelProtocol] = []
   private(set) var currentTabViewModel: ArtistSimilarsSectionViewModelProtocol
 
-  var onDidUpdateCellViewModels: (() -> Void)?
+  var onDidUpdateData: (() -> Void)?
   var onDidReceiveError: ((Error) -> Void)?
 
   weak var delegate: ArtistSimilarsSectionViewModelDelegate?
@@ -79,13 +79,13 @@ class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtocol {
 
   private func setup() {
     for tabViewModel in tabViewModels {
-      tabViewModel.onDidUpdateCellViewModels = { [weak self, unowned tabViewModel] in
+      tabViewModel.onDidUpdateData = { [weak self, unowned tabViewModel] in
         guard let `self` = self else {
           return
         }
 
         if tabViewModel === self.currentTabViewModel {
-          self.onDidUpdateCellViewModels?()
+          self.onDidUpdateData?()
         }
       }
 
@@ -115,7 +115,7 @@ class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtocol {
 
   func selectTab(at index: Int) {
     currentTabViewModel = tabViewModels[index]
-    onDidUpdateCellViewModels?()
+    onDidUpdateData?()
     currentTabViewModel.getSimilarArtists()
   }
 }
