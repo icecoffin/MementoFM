@@ -35,4 +35,12 @@ class ModelFactory {
   class func generateTags(inAmount amount: Int, for artist: String) -> [Tag] {
     return (1...amount).map { index in generateTag(index: index, for: artist) }
   }
+
+  class func generateIgnoredTag(index: Int = 1) -> IgnoredTag {
+    return IgnoredTag(uuid: "uuid\(index)", name: "IgnoredTag\(index)")
+  }
+
+  class func generateIgnoredTags(inAmount amount: Int) -> [IgnoredTag] {
+    return (1...amount).map { index in generateIgnoredTag(index: index) }
+  }
 }

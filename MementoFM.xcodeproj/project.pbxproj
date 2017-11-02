@@ -145,6 +145,7 @@
 		6555AB581ED0AC1600BDDF21 /* ArtistTagsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6555AB571ED0AC1600BDDF21 /* ArtistTagsCell.swift */; };
 		6557BD701F717D1300E08DD4 /* SimilarsSectionTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6557BD6F1F717D1300E08DD4 /* SimilarsSectionTabViewModel.swift */; };
 		655E97B91F3C6AEC003614C8 /* TagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655E97B81F3C6AEC003614C8 /* TagService.swift */; };
+		658B26B61FAB518600E3A6EA /* IgnoredTagServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658B26B41FAB518300E3A6EA /* IgnoredTagServiceTests.swift */; };
 		65A305C41F9B383900E1D9C4 /* RealmServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A305C21F9B383400E1D9C4 /* RealmServiceTests.swift */; };
 		65B772891EC5C5E500892698 /* ArtistDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B772881EC5C5E500892698 /* ArtistDataSource.swift */; };
 		65C10DF41F0BD0170072BF09 /* ApplicationStateObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C10DF31F0BD0170072BF09 /* ApplicationStateObserver.swift */; };
@@ -307,6 +308,7 @@
 		6555AB571ED0AC1600BDDF21 /* ArtistTagsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistTagsCell.swift; sourceTree = "<group>"; };
 		6557BD6F1F717D1300E08DD4 /* SimilarsSectionTabViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimilarsSectionTabViewModel.swift; sourceTree = "<group>"; };
 		655E97B81F3C6AEC003614C8 /* TagService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagService.swift; sourceTree = "<group>"; };
+		658B26B41FAB518300E3A6EA /* IgnoredTagServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoredTagServiceTests.swift; sourceTree = "<group>"; };
 		65A305C21F9B383400E1D9C4 /* RealmServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmServiceTests.swift; sourceTree = "<group>"; };
 		65B772881EC5C5E500892698 /* ArtistDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistDataSource.swift; sourceTree = "<group>"; };
 		65C10DF31F0BD0170072BF09 /* ApplicationStateObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationStateObserver.swift; sourceTree = "<group>"; };
@@ -1010,6 +1012,7 @@
 				6517A3C41EBCE5C6002BC634 /* Realm */,
 				650DB4471FA316A800E6F006 /* Track */,
 				6517420F1FA59BF9004FCFF4 /* Tag */,
+				658B26B31FAB517400E3A6EA /* IgnoredTag */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1029,6 +1032,14 @@
 				651F338D1FA0FB7D00B178D0 /* TagRepository.swift */,
 			);
 			path = Tag;
+			sourceTree = "<group>";
+		};
+		658B26B31FAB517400E3A6EA /* IgnoredTag */ = {
+			isa = PBXGroup;
+			children = (
+				658B26B41FAB518300E3A6EA /* IgnoredTagServiceTests.swift */,
+			);
+			path = IgnoredTag;
 			sourceTree = "<group>";
 		};
 		742EEABE63376162FBE45084 /* Frameworks */ = {
@@ -1435,6 +1446,7 @@
 				65A305C41F9B383900E1D9C4 /* RealmServiceTests.swift in Sources */,
 				651742141FA59C17004FCFF4 /* TagServiceTests.swift in Sources */,
 				6517A3C81EBCE5DA002BC634 /* RealmHelpers.swift in Sources */,
+				658B26B61FAB518600E3A6EA /* IgnoredTagServiceTests.swift in Sources */,
 				651742151FA59C17004FCFF4 /* TagStubRepository.swift in Sources */,
 				6544307A1FA231AF00923356 /* TrackServiceTests.swift in Sources */,
 				651B663C1F9C922C003C436E /* ArtistTests.swift in Sources */,
