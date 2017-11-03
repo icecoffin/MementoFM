@@ -11,8 +11,9 @@ import Nimble
 @testable import MementoFM
 import Mapper
 
+// TODO: add tests
 class ArtistTests: XCTestCase {
-  private func sampleArtist() -> Artist? {
+  private func sampleArtist() -> Artist! {
     guard let json = Utils.json(forResource: "sample_artist", withExtension: "json") as? NSDictionary else {
       return nil
     }
@@ -50,7 +51,7 @@ class ArtistTests: XCTestCase {
   func testUpdatingPlaycount() {
     let artist = sampleArtist()
 
-    let updatedArtist = artist?.updatingPlaycount(100)
+    let updatedArtist = artist?.updatingPlaycount(to: 100)
 
     expect(updatedArtist?.name).to(equal(artist?.name))
     expect(updatedArtist?.playcount).to(equal(100))
@@ -59,5 +60,33 @@ class ArtistTests: XCTestCase {
     expect(updatedArtist?.needsTagsUpdate).to(equal(artist?.needsTagsUpdate))
     expect(updatedArtist?.tags).to(equal(artist?.tags))
     expect(updatedArtist?.topTags).to(equal(artist?.topTags))
+  }
+
+  func testUpdatingTags() {
+    let artist = sampleArtist()
+    let tags = ModelFactory.generateTags(inAmount: 5, for: "Artist")
+
+    let updatedArtist = artist?.updatingTags(to: tags, needsTagsUpdate: true)
+    expect(updatedArtist?.name).to(equal(artist?.name))
+    expect(updatedArtist?.playcount).to(equal(artist?.playcount))
+    expect(updatedArtist?.urlString).to(equal(artist?.urlString))
+    expect(updatedArtist?.imageURLString).to(equal(artist?.imageURLString))
+    expect(updatedArtist?.needsTagsUpdate).to(equal(true))
+    expect(updatedArtist?.tags).to(equal(tags))
+    expect(updatedArtist?.topTags).to(equal(artist?.topTags))
+  }
+
+  func testUpdatingTopTags() {
+    let artist = sampleArtist()
+    let topTags = ModelFactory.generateTags(inAmount: 5, for: "Artist")
+
+    let updatedArtist = artist?.updatingTopTags(to: topTags)
+    expect(updatedArtist?.name).to(equal(artist?.name))
+    expect(updatedArtist?.playcount).to(equal(artist?.playcount))
+    expect(updatedArtist?.urlString).to(equal(artist?.urlString))
+    expect(updatedArtist?.imageURLString).to(equal(artist?.imageURLString))
+    expect(updatedArtist?.needsTagsUpdate).to(equal(true))
+    expect(updatedArtist?.tags).to(equal(artist?.tags))
+    expect(updatedArtist?.topTags).to(equal(topTags))
   }
 }

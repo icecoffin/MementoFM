@@ -8,63 +8,62 @@
 
 import Foundation
 
-protocol UserDataInnerStorage: class {
-  func set(_ value: Any?, forKey key: String)
+protocol UserDataStoring: class {
+  var username: String { get set }
+  var lastUpdateTimestamp: TimeInterval { get set }
+  var didFinishOnboarding: Bool { get set }
+  var didReceiveInitialCollection: Bool { get set}
 
-  func string(forKey key: String) -> String?
-  func double(forKey key: String) -> Double
-  func bool(forKey key: String) -> Bool
+  func reset()
 }
 
-extension UserDefaults: UserDataInnerStorage { }
-
-class UserDataStorage {
-  private struct InnerStorageKeys {
+class UserDataStorage: UserDataStoring {
+  private struct UserDefaultsKeys {
     static let username = "username"
     static let lastUpdateTimestamp = "lastUpdateTimestamp"
     static let didFinishOnboarding = "didFinishOnboarding"
     static let didReceiveInitialCollection = "didReceiveInitialCollection"
   }
 
-  private let innerStorage: UserDataInnerStorage
+  private let userDefaults: UserDefaults
 
-  init(innerStorage: UserDataInnerStorage = UserDefaults.standard) {
-    self.innerStorage = innerStorage
+  init(userDefaults: UserDefaults = .standard) {
+    self.userDefaults = userDefaults
   }
 
   var username: String {
     get {
-      return innerStorage.string(forKey: InnerStorageKeys.username) ?? ""
+      return userDefaults.string(forKey: UserDefaultsKeys.username) ?? ""
     }
     set {
-      innerStorage.set(newValue, forKey: InnerStorageKeys.username)
+      userDefaults.set(newValue, forKey: UserDefaultsKeys.username)
     }
   }
 
   var lastUpdateTimestamp: TimeInterval {
     get {
-      return innerStorage.double(forKey: InnerStorageKeys.lastUpdateTimestamp)
+      return userDefaults.double(forKey: UserDefaultsKeys.lastUpdateTimestamp)
     }
     set {
-      innerStorage.set(newValue, forKey: InnerStorageKeys.lastUpdateTimestamp)
+      userDefaults.set(newValue, forKey: UserDefaultsKeys.lastUpdateTimestamp)
     }
   }
 
   var didFinishOnboarding: Bool {
     get {
-      return innerStorage.bool(forKey: InnerStorageKeys.didFinishOnboarding)
+      return userDefaults.bool(forKey: UserDefaultsKeys.didFinishOnboarding)
     }
     set {
-      innerStorage.set(newValue, forKey: InnerStorageKeys.didFinishOnboarding)
+      userDefaults.set(newValue, forKey: UserDefaultsKeys.didFinishOnboarding)
     }
   }
 
   var didReceiveInitialCollection: Bool {
     get {
-      return innerStorage.bool(forKey: InnerStorageKeys.didReceiveInitialCollection)
+      return userDefaults.bool(forKey: UserDefaultsKeys.didReceiveInitialCollection)
     }
     set {
-      innerStorage.set(newValue, forKey: InnerStorageKeys.didReceiveInitialCollection)
+      userDefaults.set(newValue, forKey: UserDefaultsKeys.didReceiveInitialCollection)
     }
   }
 

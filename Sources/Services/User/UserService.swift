@@ -12,7 +12,7 @@ import PromiseKit
 class UserService {
   private let realmService: RealmService
   private let repository: UserRepository
-  private let userDataStorage: UserDataStorage
+  private let userDataStorage: UserDataStoring
 
   var username: String {
     get {
@@ -49,7 +49,7 @@ class UserService {
     }
   }
 
-  init(realmService: RealmService, repository: UserRepository, userDataStorage: UserDataStorage) {
+  init(realmService: RealmService, repository: UserRepository, userDataStorage: UserDataStoring) {
     self.realmService = realmService
     self.repository = repository
     self.userDataStorage = userDataStorage

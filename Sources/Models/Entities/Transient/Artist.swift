@@ -44,7 +44,17 @@ struct Artist: AutoEquatable, AutoHashable, TransientEntity {
     return topTagNames.filter({ otherTopTagNames.contains($0) })
   }
 
-  func updatingPlaycount(_ playcount: Int) -> Artist {
+  func updatingPlaycount(to playcount: Int) -> Artist {
+    return Artist(name: name, playcount: playcount, urlString: urlString, imageURLString: imageURLString,
+                  needsTagsUpdate: needsTagsUpdate, tags: tags, topTags: topTags)
+  }
+
+  func updatingTags(to tags: [Tag], needsTagsUpdate: Bool) -> Artist {
+    return Artist(name: name, playcount: playcount, urlString: urlString, imageURLString: imageURLString,
+                  needsTagsUpdate: needsTagsUpdate, tags: tags, topTags: topTags)
+  }
+
+  func updatingTopTags(to topTags: [Tag]) -> Artist {
     return Artist(name: name, playcount: playcount, urlString: urlString, imageURLString: imageURLString,
                   needsTagsUpdate: needsTagsUpdate, tags: tags, topTags: topTags)
   }

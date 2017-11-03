@@ -80,8 +80,7 @@ class ArtistService {
   }
 
   func updateArtist(_ artist: Artist, with tags: [Tag]) -> Promise<Artist> {
-    let updatedArtist = Artist(name: artist.name, playcount: artist.playcount, urlString: artist.urlString,
-                               imageURLString: artist.imageURLString, needsTagsUpdate: false, tags: tags, topTags: artist.topTags)
+    let updatedArtist = artist.updatingTags(to: tags, needsTagsUpdate: false)
     return self.realmService.save(updatedArtist).then {
       return updatedArtist
     }

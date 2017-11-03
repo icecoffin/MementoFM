@@ -28,7 +28,7 @@ class RecentTracksProcessor: RecentTracksProcessing {
 
     let artists: [Artist] = artistNamesWithPlayCounts.map { artist, playcount in
       let updatedArtist = realmService.object(ofType: Artist.self, forPrimaryKey: artist.name) ?? artist
-      return updatedArtist.updatingPlaycount(updatedArtist.playcount + playcount)
+      return updatedArtist.updatingPlaycount(to: updatedArtist.playcount + playcount)
     }
 
     return realmService.save(artists)

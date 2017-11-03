@@ -25,8 +25,6 @@ class ArtistTopTagsCalculator {
     }.sorted(by: {
       $0.count > $1.count
     }).prefix(numberOfTopTags)
-    return Artist(name: artist.name, playcount: artist.playcount, urlString: artist.urlString,
-                  imageURLString: artist.imageURLString, needsTagsUpdate: artist.needsTagsUpdate,
-                  tags: artist.tags, topTags: Array(topTags))
+    return artist.updatingTopTags(to: Array(topTags))
   }
 }
