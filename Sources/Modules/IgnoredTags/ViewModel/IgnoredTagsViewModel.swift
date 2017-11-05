@@ -88,8 +88,9 @@ class IgnoredTagsViewModel {
       return result + [ignoredTag]
     }
 
+    let calculator = ArtistTopTagsCalculator(ignoredTags: ignoredTags)
     dependencies.ignoredTagService.updateIgnoredTags(filteredTags).then { [unowned self] in
-      self.dependencies.artistService.calculateTopTagsForAllArtists(ignoring: filteredTags)
+      self.dependencies.artistService.calculateTopTagsForAllArtists(using: calculator)
     }.then { [unowned self] _ -> Void in
       self.onDidFinishSavingChanges?()
       self.delegate?.ignoredTagsViewModelDidSaveChanges(self)

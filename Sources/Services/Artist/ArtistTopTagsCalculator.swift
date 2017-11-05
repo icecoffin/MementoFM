@@ -8,11 +8,15 @@
 
 import Foundation
 
-class ArtistTopTagsCalculator {
+protocol ArtistTopTagsCalculating: class {
+  func calculateTopTags(for artist: Artist) -> Artist
+}
+
+class ArtistTopTagsCalculator: ArtistTopTagsCalculating {
   private let ignoredTags: [IgnoredTag]
   private let numberOfTopTags: Int
 
-  init(ignoredTags: [IgnoredTag], numberOfTopTags: Int) {
+  init(ignoredTags: [IgnoredTag], numberOfTopTags: Int = 5) {
     self.ignoredTags = ignoredTags
     self.numberOfTopTags = numberOfTopTags
   }

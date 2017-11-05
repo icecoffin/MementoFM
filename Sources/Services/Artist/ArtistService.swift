@@ -10,8 +10,6 @@ import Foundation
 import PromiseKit
 import RealmSwift
 
-fileprivate let numberOfTopTags = 5
-
 struct TopTagsRequestProgress {
   let progress: Progress
   let artist: Artist
@@ -27,7 +25,7 @@ class ArtistService {
     self.repository = repository
   }
 
-  func getLibrary(for user: String, limit: Int = 200, progress: ((Progress) -> Void)?) -> Promise<[Artist]> {
+  func getLibrary(for user: String, limit: Int = 200, progress: ((Progress) -> Void)? = nil) -> Promise<[Artist]> {
     return Promise { fulfill, reject in
       let initialIndex = 1
       repository.getLibraryPage(withIndex: initialIndex, for: user, limit: limit).then { [unowned self] pageResponse -> Void in
@@ -71,12 +69,10 @@ class ArtistService {
     return realmService.objects(Artist.self, filteredBy: predicate)
   }
 
-  func getArtistsWithIntersectingTopTags(for artist: Artist) -> Promise<[Artist]> {
-    return DispatchQueue.global().promise { () -> [Artist] in
-      let topTagNames = artist.topTags.map({ $0.name })
-      let predicate = NSPredicate(format: "ANY tags.name IN %@ AND name != %@", topTagNames, artist.name)
-      return self.realmService.objects(Artist.self, filteredBy: predicate)
-    }
+  func getArtistsWithIntersectingTopTags(for artist: Artist) -> [Artist] {
+    let topTagNames = artist.topTags.map({ $0.name })
+    let predicate = NSPredicate(format: "ANY topTags.name IN %@ AND name != %@", topTagNames, artist.name)
+    return self.realmService.objects(Artist.self, filteredBy: predicate)
   }
 
   func updateArtist(_ artist: Artist, with tags: [Tag]) -> Promise<Artist> {
@@ -86,10 +82,8 @@ class ArtistService {
     }
   }
 
-  func calculateTopTagsForAllArtists(ignoring ignoredTags: [IgnoredTag],
-                                     numberOfTopTags: Int = numberOfTopTags) -> Promise<Void> {
+  func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating) -> Promise<Void> {
     return DispatchQueue.global().promise { () -> [Artist] in
-      let calculator = ArtistTopTagsCalculator(ignoredTags: ignoredTags, numberOfTopTags: numberOfTopTags)
       let artists = self.realmService.objects(Artist.self)
       return artists.map({ return calculator.calculateTopTags(for: $0) })
     }.then { artists in
@@ -98,9 +92,7 @@ class ArtistService {
   }
 
   func calculateTopTags(for artist: Artist,
-                        ignoring ignoredTags: [IgnoredTag],
-                        numberOfTopTags: Int = numberOfTopTags) -> Promise<Void> {
-    let calculator = ArtistTopTagsCalculator(ignoredTags: ignoredTags, numberOfTopTags: numberOfTopTags)
+                        using calculator: ArtistTopTagsCalculating) -> Promise<Void> {
     let updatedArtist = calculator.calculateTopTags(for: artist)
     return realmService.save(updatedArtist)
   }

@@ -9,9 +9,11 @@
 import Foundation
 import Mapper
 
-struct LibraryPageResponse: Mappable {
+struct LibraryPageResponse {
   let libraryPage: LibraryPage
+}
 
+extension LibraryPageResponse: Mappable {
   init(map: Mapper) throws {
     libraryPage = try map.from("artists")
   }

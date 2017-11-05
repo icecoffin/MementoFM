@@ -110,9 +110,10 @@ class LibraryUpdater {
         return
       }
       let ignoredTags = self.ignoredTagService.ignoredTags()
+      let calculator = ArtistTopTagsCalculator(ignoredTags: ignoredTags)
       self.artistService.updateArtist(requestProgress.artist,
                                                    with: requestProgress.topTagsList.tags).then { artist in
-        return self.artistService.calculateTopTags(for: artist, ignoring: ignoredTags)
+        return self.artistService.calculateTopTags(for: artist, using: calculator)
       }.noError()
       let status: LibraryUpdateStatus = .tags(artistName: requestProgress.artist.name, progress: requestProgress.progress)
       self.onDidChangeStatus?(status)

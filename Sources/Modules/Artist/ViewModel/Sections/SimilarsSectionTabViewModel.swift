@@ -68,7 +68,7 @@ class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol {
     isLoading = true
     requestStrategy.getSimilarArtists(for: artist).then { [weak self] artists -> Void in
       self?.createCellViewModels(from: artists)
-      }.then(on: DispatchQueue.main) { _ -> Void in
+      }.then { _ -> Void in
         self.isLoading = false
         self.onDidUpdateData?()
       }.catch { error in

@@ -10,13 +10,13 @@ import Foundation
 @testable import MementoFM
 
 class ModelFactory {
-  class func generateArtist(index: Int = 1) -> Artist {
+  class func generateArtist(index: Int = 1, needsTagsUpdate: Bool = false) -> Artist {
     return Artist(name: "Artist\(index)", playcount: index, urlString: "http://example.com/artist\(index)",
-                  imageURLString: "http://example.com/artist\(index).jpg", needsTagsUpdate: false, tags: [], topTags: [])
+                  imageURLString: "http://example.com/artist\(index).jpg", needsTagsUpdate: needsTagsUpdate, tags: [], topTags: [])
   }
 
-  class func generateArtists(inAmount amount: Int) -> [Artist] {
-    return (1...amount).map { index in generateArtist(index: index) }
+  class func generateArtists(inAmount amount: Int, needsTagsUpdate: Bool = false) -> [Artist] {
+    return (1...amount).map { index in generateArtist(index: index, needsTagsUpdate: needsTagsUpdate) }
   }
 
   class func generateTrack(index: Int = 1) -> Track {
@@ -42,5 +42,9 @@ class ModelFactory {
 
   class func generateIgnoredTags(inAmount amount: Int) -> [IgnoredTag] {
     return (1...amount).map { index in generateIgnoredTag(index: index) }
+  }
+
+  class func generateSimilarArtists(inAmount amount: Int) -> [SimilarArtist] {
+    return (1...amount).map { index in SimilarArtist(name: "Artist\(index)") }
   }
 }

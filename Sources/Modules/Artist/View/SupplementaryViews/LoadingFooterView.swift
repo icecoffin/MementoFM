@@ -37,7 +37,7 @@ class LoadingFooterView: UITableViewHeaderFooterView {
   }
 
   override func prepareForReuse() {
-    startAnimating()
     super.prepareForReuse()
+    startAnimating()
   }
 }
