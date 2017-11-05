@@ -31,6 +31,7 @@
 		651889491FAEF66B006964E0 /* ArtistLibraryStubRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651889471FAEF667006964E0 /* ArtistLibraryStubRepository.swift */; };
 		6518894E1FAEF769006964E0 /* ArtistSimilarsStubRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518894C1FAEF758006964E0 /* ArtistSimilarsStubRepository.swift */; };
 		6518894F1FAEF76C006964E0 /* ArtistEmptyStubRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518894A1FAEF74D006964E0 /* ArtistEmptyStubRepository.swift */; };
+		651889521FAF0A8E006964E0 /* ArtistTopTagsCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651889501FAF0A8D006964E0 /* ArtistTopTagsCalculatorTests.swift */; };
 		6518B12F1EC85BA6001F4B74 /* SimilarArtistCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518B12E1EC85BA6001F4B74 /* SimilarArtistCellViewModel.swift */; };
 		6518B1311EC85C07001F4B74 /* TagCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518B1301EC85C07001F4B74 /* TagCellViewModel.swift */; };
 		6518F0291ECB01B000681D5E /* TagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518F0281ECB01B000681D5E /* TagsViewController.swift */; };
@@ -201,6 +202,7 @@
 		651889471FAEF667006964E0 /* ArtistLibraryStubRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistLibraryStubRepository.swift; sourceTree = "<group>"; };
 		6518894A1FAEF74D006964E0 /* ArtistEmptyStubRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistEmptyStubRepository.swift; sourceTree = "<group>"; };
 		6518894C1FAEF758006964E0 /* ArtistSimilarsStubRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSimilarsStubRepository.swift; sourceTree = "<group>"; };
+		651889501FAF0A8D006964E0 /* ArtistTopTagsCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistTopTagsCalculatorTests.swift; sourceTree = "<group>"; };
 		6518B12E1EC85BA6001F4B74 /* SimilarArtistCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimilarArtistCellViewModel.swift; sourceTree = "<group>"; };
 		6518B1301EC85C07001F4B74 /* TagCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCellViewModel.swift; sourceTree = "<group>"; };
 		6518F0281ECB01B000681D5E /* TagsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsViewController.swift; sourceTree = "<group>"; };
@@ -413,6 +415,7 @@
 			isa = PBXGroup;
 			children = (
 				650A93201FACD1B5001DE7A5 /* ArtistServiceTests.swift */,
+				651889501FAF0A8D006964E0 /* ArtistTopTagsCalculatorTests.swift */,
 				651BB71D1FAD9D4E00E71F50 /* ArtistStubTopTagsCalculator.swift */,
 				651889471FAEF667006964E0 /* ArtistLibraryStubRepository.swift */,
 				6518894C1FAEF758006964E0 /* ArtistSimilarsStubRepository.swift */,
@@ -1501,6 +1504,7 @@
 				658B26BC1FAB6D3C00E3A6EA /* UserStubRepository.swift in Sources */,
 				654430801FA2417400923356 /* ModelFactory.swift in Sources */,
 				6544307F1FA2417200923356 /* TrackStubRepository.swift in Sources */,
+				651889521FAF0A8E006964E0 /* ArtistTopTagsCalculatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
