@@ -30,7 +30,9 @@ class TagServiceTests: XCTestCase {
     let artistCount = 5
     let tagsPerArtist = 5
 
-    let tagRepository = TagStubRepository(tagsPerArtist: tagsPerArtist, shouldFailWithError: false)
+    let tagRepository = TagStubRepository(shouldFailWithError: false, tagProvider: { artist in
+      ModelFactory.generateTags(inAmount: tagsPerArtist, for: artist)
+    })
     let tagService = TagService(realmService: realmService, repository: tagRepository)
     let artists = ModelFactory.generateArtists(inAmount: artistCount)
 
@@ -51,9 +53,8 @@ class TagServiceTests: XCTestCase {
 
   func testGettingTopTagsForArtistsWithError() {
     let artistCount = 5
-    let tagsPerArtist = 5
 
-    let tagRepository = TagStubRepository(tagsPerArtist: tagsPerArtist, shouldFailWithError: true)
+    let tagRepository = TagStubRepository(shouldFailWithError: true, tagProvider: { _ in [] })
     let tagService = TagService(realmService: realmService, repository: tagRepository)
     let artists = ModelFactory.generateArtists(inAmount: artistCount)
 
@@ -76,8 +77,7 @@ class TagServiceTests: XCTestCase {
     let artist1 = Artist(name: "Artist1", playcount: 1, urlString: "", imageURLString: nil, needsTagsUpdate: false, tags: tags1, topTags: topTags1)
     let artist2 = Artist(name: "Artist2", playcount: 1, urlString: "", imageURLString: nil, needsTagsUpdate: false, tags: tags2, topTags: topTags2)
 
-    let tagRepository = TagStubRepository(tagsPerArtist: 10, shouldFailWithError: false)
-    let tagService = TagService(realmService: realmService, repository: tagRepository)
+    let tagService = TagService(realmService: realmService, repository: TagEmptyStubRepository())
 
     waitUntil { done in
       self.realmService.save([artist1, artist2]).then { _ -> Void in

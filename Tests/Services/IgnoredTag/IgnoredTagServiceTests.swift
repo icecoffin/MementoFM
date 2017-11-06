@@ -17,7 +17,6 @@ class IgnoredTagServiceTests: XCTestCase {
 
   override func setUp() {
     super.setUp()
-
     realmService = RealmService(getRealm: {
       return RealmFactory.inMemoryRealm()
     })
@@ -31,8 +30,9 @@ class IgnoredTagServiceTests: XCTestCase {
   }
 
   func testGettingIgnoredTags() {
+    let ignoredTags = ModelFactory.generateIgnoredTags(inAmount: 5)
+
     waitUntil { done in
-      let ignoredTags = ModelFactory.generateIgnoredTags(inAmount: 5)
       self.realmService.save(ignoredTags).then { _ -> Void in
         let expectedIgnoredTags = self.ignoredTagService.ignoredTags()
         expect(expectedIgnoredTags).to(equal(ignoredTags))
@@ -42,8 +42,9 @@ class IgnoredTagServiceTests: XCTestCase {
   }
 
   func testCreatingDefaultIgnoredTags() {
+    let ignoredTagNames = ["tag1", "tag2"]
+
     waitUntil { done in
-      let ignoredTagNames = ["tag1", "tag2"]
       self.ignoredTagService.createDefaultIgnoredTags(withNames: ignoredTagNames).then { _ -> Void in
         let expectedIgnoredTagNames = self.realmService.objects(IgnoredTag.self).map { $0.name }
         expect(expectedIgnoredTagNames).to(equal(ignoredTagNames))
@@ -53,14 +54,17 @@ class IgnoredTagServiceTests: XCTestCase {
   }
 
   func testUpdatingIgnoredTags() {
+    let originalIgnoredTags = ModelFactory.generateIgnoredTags(inAmount: 5)
+    let updatedIgnoredTags = ModelFactory.generateIgnoredTags(inAmount: 10)
+
     waitUntil { done in
-      let ignoredTags1 = ModelFactory.generateIgnoredTags(inAmount: 5)
-      let ignoredTags2 = ModelFactory.generateIgnoredTags(inAmount: 10)
-      self.realmService.save(ignoredTags1).then { _ -> Promise<Void> in
-        return self.ignoredTagService.updateIgnoredTags(ignoredTags2)
+      firstly {
+        self.realmService.save(originalIgnoredTags)
+      }.then {
+        self.ignoredTagService.updateIgnoredTags(updatedIgnoredTags)
       }.then { _ -> Void in
         let expectedIgnoredTags = self.ignoredTagService.ignoredTags()
-        expect(expectedIgnoredTags).to(equal(ignoredTags2))
+        expect(expectedIgnoredTags).to(equal(updatedIgnoredTags))
         done()
       }.noError()
     }

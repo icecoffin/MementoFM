@@ -23,9 +23,6 @@ class RecentTracksStubProcessor: RecentTracksProcessing {
 class TrackServiceTests: XCTestCase {
   var realmService: RealmService!
 
-  let totalPages = 5
-  let limit = 20
-
   override func setUp() {
     super.setUp()
 
@@ -40,17 +37,22 @@ class TrackServiceTests: XCTestCase {
   }
 
   func testGettingRecentTracksWithSuccess() {
-    let trackRepository = TrackStubRepository(totalPages: totalPages, shouldFailWithError: false)
+    let totalPages = 5
+    let limit = 20
+
+    let trackRepository = TrackStubRepository(totalPages: totalPages, shouldFailWithError: false, trackProvider: {
+      ModelFactory.generateTracks(inAmount: limit)
+    })
     let trackService = TrackService(realmService: realmService, repository: trackRepository)
 
     var progressCallCount = 0
     waitUntil { done in
-      trackService.getRecentTracks(for: "User", from: 0, limit: self.limit) { _ in
+      trackService.getRecentTracks(for: "User", from: 0, limit: limit) { _ in
         progressCallCount += 1
       }.then { tracks -> Void in
-        expect(progressCallCount).to(equal(self.totalPages - 1))
+        expect(progressCallCount).to(equal(totalPages - 1))
 
-        let expectedTracks = (0..<self.totalPages).flatMap { _ in ModelFactory.generateTracks(inAmount: self.limit) }
+        let expectedTracks = (0..<totalPages).flatMap { _ in ModelFactory.generateTracks(inAmount: limit) }
         expect(expectedTracks).to(equal(tracks))
         done()
       }.catch { _ in
@@ -60,11 +62,14 @@ class TrackServiceTests: XCTestCase {
   }
 
   func testGettingRecentTracksWithError() {
-    let trackRepository = TrackStubRepository(totalPages: totalPages, shouldFailWithError: true)
+    let totalPages = 5
+    let limit = 20
+
+    let trackRepository = TrackStubRepository(totalPages: totalPages, shouldFailWithError: true, trackProvider: { [] })
     let trackService = TrackService(realmService: realmService, repository: trackRepository)
 
     waitUntil { done in
-      trackService.getRecentTracks(for: "User", from: 0, limit: self.limit).then { _ in
+      trackService.getRecentTracks(for: "User", from: 0, limit: limit).then { _ in
         fail()
       }.catch { error in
         expect(error).toNot(beNil())
@@ -74,8 +79,7 @@ class TrackServiceTests: XCTestCase {
   }
 
   func testProcessingTracks() {
-    let trackRepository = TrackStubRepository(totalPages: totalPages, shouldFailWithError: false)
-    let trackService = TrackService(realmService: realmService, repository: trackRepository)
+    let trackService = TrackService(realmService: realmService, repository: TrackEmptyStubRepository())
 
     let processor = RecentTracksStubProcessor()
     trackService.processTracks([], using: processor).then {

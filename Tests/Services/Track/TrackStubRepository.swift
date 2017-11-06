@@ -13,10 +13,12 @@ import PromiseKit
 class TrackStubRepository: TrackRepository {
   private let totalPages: Int
   private let shouldFailWithError: Bool
+  private let trackProvider: (() -> [Track])
 
-  init(totalPages: Int, shouldFailWithError: Bool) {
+  init(totalPages: Int, shouldFailWithError: Bool, trackProvider: @escaping (() -> [Track])) {
     self.totalPages = totalPages
     self.shouldFailWithError = shouldFailWithError
+    self.trackProvider = trackProvider
   }
 
   func getRecentTracksPage(withIndex index: Int, for user: String,
@@ -24,7 +26,7 @@ class TrackStubRepository: TrackRepository {
     if shouldFailWithError {
       return Promise(error: NSError(domain: "MementoFM", code: 1, userInfo: nil))
     } else {
-      let tracks = ModelFactory.generateTracks(inAmount: limit)
+      let tracks = trackProvider()
       let recentTracksPage = RecentTracksPage(index: index, totalPages: totalPages, tracks: tracks)
       let response = RecentTracksPageResponse(recentTracksPage: recentTracksPage)
       return Promise(value: response)
