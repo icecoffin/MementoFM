@@ -14,9 +14,9 @@ protocol TagRepository: class {
 }
 
 class TagNetworkRepository: TagRepository {
-  private let networkService: LastFMNetworkService
+  private let networkService: NetworkService
 
-  init(networkService: LastFMNetworkService) {
+  init(networkService: NetworkService) {
     self.networkService = networkService
   }
 

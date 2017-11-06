@@ -53,6 +53,7 @@
 		651AA7181FB0692600EEE40A /* RealmArtistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651AA7171FB0692600EEE40A /* RealmArtistTests.swift */; };
 		651AA71A1FB082E100EEE40A /* RealmIgnoredTagTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651AA7191FB082E100EEE40A /* RealmIgnoredTagTests.swift */; };
 		651AA71C1FB0830800EEE40A /* RealmTagTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651AA71B1FB0830800EEE40A /* RealmTagTests.swift */; };
+		651AA71E1FB0ACD400EEE40A /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651AA71D1FB0ACD400EEE40A /* NetworkService.swift */; };
 		651B663C1F9C922C003C436E /* ArtistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651B66351F9C9217003C436E /* ArtistTests.swift */; };
 		651B663D1F9C922F003C436E /* sample_artist.json in Resources */ = {isa = PBXBuildFile; fileRef = 651B66361F9C9217003C436E /* sample_artist.json */; };
 		651B663E1F9C9234003C436E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651B66381F9C9218003C436E /* Utils.swift */; };
@@ -240,6 +241,7 @@
 		651AA7171FB0692600EEE40A /* RealmArtistTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmArtistTests.swift; sourceTree = "<group>"; };
 		651AA7191FB082E100EEE40A /* RealmIgnoredTagTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmIgnoredTagTests.swift; sourceTree = "<group>"; };
 		651AA71B1FB0830800EEE40A /* RealmTagTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmTagTests.swift; sourceTree = "<group>"; };
+		651AA71D1FB0ACD400EEE40A /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		651B66351F9C9217003C436E /* ArtistTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistTests.swift; sourceTree = "<group>"; };
 		651B66361F9C9217003C436E /* sample_artist.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_artist.json; sourceTree = "<group>"; };
 		651B66381F9C9218003C436E /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -493,9 +495,10 @@
 		65112D631F2F181700CBF8BA /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				65112D641F2F181700CBF8BA /* LastFMNetworkOperation.swift */,
-				65112D651F2F181700CBF8BA /* LastFMNetworkService.swift */,
+				651AA71D1FB0ACD400EEE40A /* NetworkService.swift */,
 				65112D661F2F181700CBF8BA /* NetworkConstants.swift */,
+				65112D651F2F181700CBF8BA /* LastFMNetworkService.swift */,
+				65112D641F2F181700CBF8BA /* LastFMNetworkOperation.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1522,6 +1525,7 @@
 				651F9E361EC09FDC006D9474 /* AboutViewController.swift in Sources */,
 				651CB35E1EC9DCDA00BC452C /* TagCell.swift in Sources */,
 				651F9E4B1EC09FDD006D9474 /* SettingCellViewModel.swift in Sources */,
+				651AA71E1FB0ACD400EEE40A /* NetworkService.swift in Sources */,
 				651F9E461EC09FDD006D9474 /* LibraryUpdater.swift in Sources */,
 				651F9E5F1EC09FDD006D9474 /* Sourcery.swift in Sources */,
 				651F9E1E1EC09FDC006D9474 /* String+Unlocalized.swift in Sources */,

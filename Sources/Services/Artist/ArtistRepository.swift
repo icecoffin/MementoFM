@@ -12,9 +12,9 @@ protocol ArtistRepository: class {
 }
 
 class ArtistNetworkRepository: ArtistRepository {
-  private let networkService: LastFMNetworkService
+  private let networkService: NetworkService
 
-  init(networkService: LastFMNetworkService) {
+  init(networkService: NetworkService) {
     self.networkService = networkService
   }
 

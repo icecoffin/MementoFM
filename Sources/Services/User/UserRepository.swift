@@ -14,9 +14,9 @@ protocol UserRepository: class {
 }
 
 class UserNetworkRepository: UserRepository {
-  private let networkService: LastFMNetworkService
+  private let networkService: NetworkService
 
-  init(networkService: LastFMNetworkService) {
+  init(networkService: NetworkService) {
     self.networkService = networkService
   }
 

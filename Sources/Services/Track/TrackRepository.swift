@@ -17,9 +17,9 @@ protocol TrackRepository: class {
 }
 
 class TrackNetworkRepository: TrackRepository {
-  private let networkService: LastFMNetworkService
+  private let networkService: NetworkService
 
-  init(networkService: LastFMNetworkService) {
+  init(networkService: NetworkService) {
     self.networkService = networkService
   }
 

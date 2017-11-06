@@ -23,7 +23,7 @@ class LibraryUpdater {
   private let tagService: TagService
   private let ignoredTagService: IgnoredTagService
   private let trackService: TrackService
-  private let networkService: LastFMNetworkService
+  private let networkService: NetworkService
 
   private(set) var isFirstUpdate: Bool = true
 
@@ -41,7 +41,7 @@ class LibraryUpdater {
   var onDidReceiveError: ((Error) -> Void)?
 
   init(userService: UserService, artistService: ArtistService, tagService: TagService, ignoredTagService: IgnoredTagService,
-       trackService: TrackService, networkService: LastFMNetworkService) {
+       trackService: TrackService, networkService: NetworkService) {
     self.userService = userService
     self.artistService = artistService
     self.tagService = tagService
