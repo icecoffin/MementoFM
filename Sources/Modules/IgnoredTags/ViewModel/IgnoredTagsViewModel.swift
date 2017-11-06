@@ -54,7 +54,7 @@ class IgnoredTagsViewModel {
     let cellViewModel = IgnoredTagCellViewModel(tag: ignoredTags[indexPath.row])
     cellViewModel.onTextChange = { [unowned self] text in
       if indexPath.row < self.ignoredTags.count {
-        let ignoredTag = self.ignoredTags[indexPath.row].byUpdatingName(text.lowercased())
+        let ignoredTag = self.ignoredTags[indexPath.row].updatingName(text.lowercased())
         self.ignoredTags[indexPath.row] = ignoredTag
       }
     }

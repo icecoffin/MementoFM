@@ -13,7 +13,7 @@ import Mapper
 
 // TODO: add tests
 class ArtistTests: XCTestCase {
-  private func sampleArtist() -> Artist! {
+  private func sampleArtist() -> Artist? {
     guard let json = Utils.json(forResource: "sample_artist", withExtension: "json") as? NSDictionary else {
       return nil
     }

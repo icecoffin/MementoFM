@@ -1,0 +1,71 @@
+{
+  "artist": [
+             {
+             "name": "Earth",
+             "playcount": "1910",
+             "tagcount": "0",
+             "mbid": "e7220fad-efdc-46af-a95b-338b46a901c9",
+             "url": "https://www.last.fm/music/Earth",
+             "streamable": "0",
+             "image": [
+                       {
+                       "#text": "https://lastfm-img2.akamaized.net/i/u/34s/34d0e655ec4d431cc3b7b61416252508.png",
+                       "size": "small"
+                       },
+                       {
+                       "#text": "https://lastfm-img2.akamaized.net/i/u/64s/34d0e655ec4d431cc3b7b61416252508.png",
+                       "size": "medium"
+                       },
+                       {
+                       "#text": "https://lastfm-img2.akamaized.net/i/u/174s/34d0e655ec4d431cc3b7b61416252508.png",
+                       "size": "large"
+                       },
+                       {
+                       "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/34d0e655ec4d431cc3b7b61416252508.png",
+                       "size": "extralarge"
+                       },
+                       {
+                       "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/34d0e655ec4d431cc3b7b61416252508.png",
+                       "size": "mega"
+                       }
+                       ]
+             },
+             {
+             "name": "Koffin Kats",
+             "playcount": "1415",
+             "tagcount": "0",
+             "mbid": "04bb4b4f-538c-4e54-bc1e-594825bde32a",
+             "url": "https://www.last.fm/music/Koffin+Kats",
+             "streamable": "0",
+             "image": [
+                       {
+                       "#text": "https://lastfm-img2.akamaized.net/i/u/34s/50697147ca6e46cf9f59cdb77cb42a22.png",
+                       "size": "small"
+                       },
+                       {
+                       "#text": "https://lastfm-img2.akamaized.net/i/u/64s/50697147ca6e46cf9f59cdb77cb42a22.png",
+                       "size": "medium"
+                       },
+                       {
+                       "#text": "https://lastfm-img2.akamaized.net/i/u/174s/50697147ca6e46cf9f59cdb77cb42a22.png",
+                       "size": "large"
+                       },
+                       {
+                       "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/50697147ca6e46cf9f59cdb77cb42a22.png",
+                       "size": "extralarge"
+                       },
+                       {
+                       "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/50697147ca6e46cf9f59cdb77cb42a22.png",
+                       "size": "mega"
+                       }
+                       ]
+             }
+             ],
+  "@attr": {
+    "user": "Dread_Icefist",
+    "page": "2",
+    "perPage": "2",
+    "totalPages": "720",
+    "total": "1440"
+  }
+}

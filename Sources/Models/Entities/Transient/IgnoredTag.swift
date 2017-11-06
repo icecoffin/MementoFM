@@ -14,7 +14,7 @@ struct IgnoredTag: TransientEntity, AutoHashable, AutoEquatable {
   let uuid: String
   let name: String
 
-  func byUpdatingName(_ newName: String) -> IgnoredTag {
+  func updatingName(_ newName: String) -> IgnoredTag {
     return IgnoredTag(uuid: uuid, name: newName)
   }
 }
