@@ -17,12 +17,6 @@ final class RealmIgnoredTag: Object, RealmEntity {
     return "uuid"
   }
 
-  class func ignoredTag(withName name: String) -> RealmIgnoredTag {
-    let realmIgnoredTag = RealmIgnoredTag()
-    realmIgnoredTag.name = name
-    return realmIgnoredTag
-  }
-
   class func from(transient: IgnoredTag) -> RealmIgnoredTag {
     let ignoredTag = transient
     let realmIgnoredTag = RealmIgnoredTag()
