@@ -20,10 +20,7 @@ protocol NetworkService: class {
 }
 
 extension NetworkService {
-  func performRequest<T: Mappable>(method: HTTPMethod = .get,
-                                   parameters: Parameters? = nil,
-                                   encoding: ParameterEncoding = URLEncoding.default,
-                                   headers: HTTPHeaders? = nil) -> Promise<T> {
-    return performRequest(method: method, parameters: parameters, encoding: encoding, headers: headers)
+  func performRequest<T: Mappable>(parameters: Parameters?) -> Promise<T> {
+    return performRequest(method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil)
   }
 }
