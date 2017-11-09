@@ -9,7 +9,17 @@
 import Foundation
 import PromiseKit
 
-class UserService {
+protocol UserServiceProtocol: class {
+  var username: String { get set }
+  var lastUpdateTimestamp: TimeInterval { get set }
+  var didReceiveInitialCollection: Bool { get set }
+  var didFinishOnboarding: Bool { get set }
+
+  func clearUserData() -> Promise<Void>
+  func checkUserExists(withUsername username: String) -> Promise<EmptyResponse>
+}
+
+class UserService: UserServiceProtocol {
   private let realmService: RealmService
   private let repository: UserRepository
   private let userDataStorage: UserDataStoring

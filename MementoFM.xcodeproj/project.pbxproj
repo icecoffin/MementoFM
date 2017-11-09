@@ -174,6 +174,7 @@
 		655E97B91F3C6AEC003614C8 /* TagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655E97B81F3C6AEC003614C8 /* TagService.swift */; };
 		656D2ED21FB1F6980096DE27 /* TagNetworkRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656D2ED11FB1F6980096DE27 /* TagNetworkRepositoryTests.swift */; };
 		656D2ED41FB1F78C0096DE27 /* ArtistNetworkRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656D2ED31FB1F78C0096DE27 /* ArtistNetworkRepositoryTests.swift */; };
+		656D2F051FB211DC0096DE27 /* EnterUsernameViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656D2F041FB211DC0096DE27 /* EnterUsernameViewModelTests.swift */; };
 		658B26B61FAB518600E3A6EA /* IgnoredTagServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658B26B41FAB518300E3A6EA /* IgnoredTagServiceTests.swift */; };
 		658B26B91FAB6C2F00E3A6EA /* UserServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658B26B81FAB6C2E00E3A6EA /* UserServiceTests.swift */; };
 		658B26BC1FAB6D3C00E3A6EA /* UserStubRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658B26BA1FAB6D3A00E3A6EA /* UserStubRepository.swift */; };
@@ -368,6 +369,7 @@
 		655E97B81F3C6AEC003614C8 /* TagService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagService.swift; sourceTree = "<group>"; };
 		656D2ED11FB1F6980096DE27 /* TagNetworkRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagNetworkRepositoryTests.swift; sourceTree = "<group>"; };
 		656D2ED31FB1F78C0096DE27 /* ArtistNetworkRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistNetworkRepositoryTests.swift; sourceTree = "<group>"; };
+		656D2F041FB211DC0096DE27 /* EnterUsernameViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterUsernameViewModelTests.swift; sourceTree = "<group>"; };
 		658B26B41FAB518300E3A6EA /* IgnoredTagServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoredTagServiceTests.swift; sourceTree = "<group>"; };
 		658B26B81FAB6C2E00E3A6EA /* UserServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceTests.swift; sourceTree = "<group>"; };
 		658B26BA1FAB6D3A00E3A6EA /* UserStubRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStubRepository.swift; sourceTree = "<group>"; };
@@ -1138,6 +1140,7 @@
 		654430771FA230A000923356 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				656D2F021FB211B60096DE27 /* Modules */,
 				6517A3C41EBCE5C6002BC634 /* Realm */,
 				650A931F1FACD19C001DE7A5 /* Artist */,
 				658B26B31FAB517400E3A6EA /* IgnoredTag */,
@@ -1163,6 +1166,22 @@
 				651F338D1FA0FB7D00B178D0 /* TagRepository.swift */,
 			);
 			path = Tag;
+			sourceTree = "<group>";
+		};
+		656D2F021FB211B60096DE27 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				656D2F031FB211CA0096DE27 /* Enter Username */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		656D2F031FB211CA0096DE27 /* Enter Username */ = {
+			isa = PBXGroup;
+			children = (
+				656D2F041FB211DC0096DE27 /* EnterUsernameViewModelTests.swift */,
+			);
+			path = "Enter Username";
 			sourceTree = "<group>";
 		};
 		658B26B31FAB517400E3A6EA /* IgnoredTag */ = {
@@ -1594,6 +1613,7 @@
 				651AA6FF1FB05CFB00EEE40A /* TagTests.swift in Sources */,
 				651B663E1F9C9234003C436E /* Utils.swift in Sources */,
 				656D2ED21FB1F6980096DE27 /* TagNetworkRepositoryTests.swift in Sources */,
+				656D2F051FB211DC0096DE27 /* EnterUsernameViewModelTests.swift in Sources */,
 				65A305C41F9B383900E1D9C4 /* RealmServiceTests.swift in Sources */,
 				651889551FAF58D5006964E0 /* TagEmptyStubRepository.swift in Sources */,
 				651742141FA59C17004FCFF4 /* TagServiceTests.swift in Sources */,

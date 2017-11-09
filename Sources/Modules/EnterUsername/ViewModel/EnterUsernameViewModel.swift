@@ -46,12 +46,16 @@ class EnterUsernameViewModel {
     return "Submit".unlocalized
   }
 
+  var currentUsernamePrefix: String {
+    return "Current username: ".unlocalized
+  }
+
   var currentUsernameText: String {
     let username = dependencies.userService.username
     if username.isEmpty {
       return ""
     } else {
-      return "Current username: ".unlocalized + "\(username)"
+      return currentUsernamePrefix + username
     }
   }
 

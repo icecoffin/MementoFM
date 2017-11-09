@@ -13,7 +13,7 @@ protocol HasArtistService {
 }
 
 protocol HasUserService {
-  var userService: UserService { get }
+  var userService: UserServiceProtocol { get }
 }
 
 protocol HasTagService {
@@ -30,7 +30,7 @@ protocol HasLibraryUpdater {
 
 struct AppDependency: HasArtistService, HasUserService, HasTagService, HasIgnoredTagService, HasLibraryUpdater {
   let artistService: ArtistService
-  let userService: UserService
+  let userService: UserServiceProtocol
   let tagService: TagService
   let ignoredTagService: IgnoredTagService
   let trackService: TrackService
