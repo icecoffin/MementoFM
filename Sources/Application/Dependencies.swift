@@ -9,7 +9,7 @@
 import Foundation
 
 protocol HasArtistService {
-  var artistService: ArtistService { get }
+  var artistService: ArtistServiceProtocol { get }
 }
 
 protocol HasUserService {
@@ -21,7 +21,7 @@ protocol HasTagService {
 }
 
 protocol HasIgnoredTagService {
-  var ignoredTagService: IgnoredTagService { get }
+  var ignoredTagService: IgnoredTagServiceProtocol { get }
 }
 
 protocol HasLibraryUpdater {
@@ -29,10 +29,10 @@ protocol HasLibraryUpdater {
 }
 
 struct AppDependency: HasArtistService, HasUserService, HasTagService, HasIgnoredTagService, HasLibraryUpdater {
-  let artistService: ArtistService
+  let artistService: ArtistServiceProtocol
   let userService: UserServiceProtocol
   let tagService: TagService
-  let ignoredTagService: IgnoredTagService
+  let ignoredTagService: IgnoredTagServiceProtocol
   let trackService: TrackService
 
   let libraryUpdater: LibraryUpdater

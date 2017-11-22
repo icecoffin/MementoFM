@@ -11,31 +11,6 @@ import XCTest
 import Nimble
 import PromiseKit
 
-private class StubUserService: UserServiceProtocol {
-  var shouldFinishWithSuccess = true
-
-  var username: String = ""
-  var lastUpdateTimestamp: TimeInterval = 0
-  var didReceiveInitialCollection: Bool = false
-  var didFinishOnboarding: Bool = false
-
-  var didCallClearUserData = false
-  func clearUserData() -> Promise<Void> {
-    didCallClearUserData = true
-    return Promise(value: ())
-  }
-
-  var usernameBeingChecked = ""
-  func checkUserExists(withUsername username: String) -> Promise<EmptyResponse> {
-    usernameBeingChecked = username
-    if shouldFinishWithSuccess {
-      return Promise(value: EmptyResponse())
-    } else {
-      return Promise(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
-    }
-  }
-}
-
 private class Dependencies: EnterUsernameViewModel.Dependencies {
   let userService: UserServiceProtocol
 

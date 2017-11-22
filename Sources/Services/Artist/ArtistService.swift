@@ -16,7 +16,38 @@ struct TopTagsRequestProgress {
   let topTagsList: TopTagsList
 }
 
-class ArtistService {
+protocol ArtistServiceProtocol: class {
+  func getLibrary(for user: String, limit: Int, progress: ((Progress) -> Void)?) -> Promise<[Artist]>
+  func saveArtists(_ artists: [Artist]) -> Promise<Void>
+  func artistsNeedingTagsUpdate() -> [Artist]
+  func artistsWithIntersectingTopTags(for artist: Artist) -> [Artist]
+  func updateArtist(_ artist: Artist, with tags: [Tag]) -> Promise<Artist>
+  func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating) -> Promise<Void>
+  func calculateTopTags(for artist: Artist, using calculator: ArtistTopTagsCalculating) -> Promise<Void>
+  func artists(filteredUsing predicate: NSPredicate?,
+               sortedBy sortDescriptors: [SortDescriptor]) -> RealmMappedCollection<RealmArtist, Artist>
+  func getSimilarArtists(for artist: Artist, limit: Int) -> Promise<[Artist]>
+}
+
+extension ArtistServiceProtocol {
+  func getLibrary(for user: String, progress: ((Progress) -> Void)?) -> Promise<[Artist]> {
+    return getLibrary(for: user, limit: 200, progress: progress)
+  }
+
+  func getLibrary(for user: String) -> Promise<[Artist]> {
+    return getLibrary(for: user, limit: 200, progress: nil)
+  }
+
+  func artists(sortedBy sortDescriptors: [SortDescriptor]) -> RealmMappedCollection<RealmArtist, Artist> {
+    return artists(filteredUsing: nil, sortedBy: sortDescriptors)
+  }
+
+  func getSimilarArtists(for artist: Artist) -> Promise<[Artist]> {
+    return getSimilarArtists(for: artist, limit: 20)
+  }
+}
+
+class ArtistService: ArtistServiceProtocol {
   private let realmService: RealmService
   private let repository: ArtistRepository
 
@@ -25,7 +56,7 @@ class ArtistService {
     self.repository = repository
   }
 
-  func getLibrary(for user: String, limit: Int = 200, progress: ((Progress) -> Void)? = nil) -> Promise<[Artist]> {
+  func getLibrary(for user: String, limit: Int, progress: ((Progress) -> Void)?) -> Promise<[Artist]> {
     return Promise { fulfill, reject in
       let initialIndex = 1
       repository.getLibraryPage(withIndex: initialIndex, for: user, limit: limit).then { [unowned self] pageResponse -> Void in
@@ -69,7 +100,7 @@ class ArtistService {
     return realmService.objects(Artist.self, filteredBy: predicate)
   }
 
-  func getArtistsWithIntersectingTopTags(for artist: Artist) -> [Artist] {
+  func artistsWithIntersectingTopTags(for artist: Artist) -> [Artist] {
     let topTagNames = artist.topTags.map({ $0.name })
     let predicate = NSPredicate(format: "ANY topTags.name IN %@ AND name != %@", topTagNames, artist.name)
     return self.realmService.objects(Artist.self, filteredBy: predicate)
@@ -91,8 +122,7 @@ class ArtistService {
     }
   }
 
-  func calculateTopTags(for artist: Artist,
-                        using calculator: ArtistTopTagsCalculating) -> Promise<Void> {
+  func calculateTopTags(for artist: Artist, using calculator: ArtistTopTagsCalculating) -> Promise<Void> {
     let updatedArtist = calculator.calculateTopTags(for: artist)
     return realmService.save(updatedArtist)
   }
@@ -102,7 +132,7 @@ class ArtistService {
     return realmService.mappedCollection(filteredUsing: predicate, sortedBy: sortDescriptors)
   }
 
-  func getSimilarArtists(for artist: Artist, limit: Int = 20) -> Promise<[Artist]> {
+  func getSimilarArtists(for artist: Artist, limit: Int) -> Promise<[Artist]> {
     return repository.getSimilarArtists(for: artist, limit: limit).then { response in
       let artistNames = response.similarArtistList.similarArtists.map({ $0.name })
       let predicate = NSPredicate(format: "name in %@", artistNames)

@@ -31,7 +31,10 @@ class StubNetworkService<ResponseType>: NetworkService where ResponseType: Mappa
     self.parameters = parameters
     self.encoding = encoding
     self.headers = headers
-    return Promise(value: response as! T)
+    guard let response = response as? T else {
+      fatalError("ResponseType should be the same as performRequest response type")
+    }
+    return Promise(value: response)
   }
 
   func cancelPendingRequests() {

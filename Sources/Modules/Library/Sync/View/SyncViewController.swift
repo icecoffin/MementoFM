@@ -73,7 +73,7 @@ class SyncViewController: UIViewController {
   }
 }
 
-fileprivate class SyncProgressView: UIView {
+private class SyncProgressView: UIView {
   private let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
   private let statusLabel = UILabel()
 
@@ -117,7 +117,7 @@ fileprivate class SyncProgressView: UIView {
   }
 }
 
-fileprivate class SyncErrorView: UIView {
+private class SyncErrorView: UIView {
   private let errorLabel = UILabel()
   private let descriptionLabel = UILabel()
   private let retryButton = UIButton(type: .system)

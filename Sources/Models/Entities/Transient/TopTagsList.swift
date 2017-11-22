@@ -9,7 +9,6 @@
 import Foundation
 import Mapper
 
-
 struct TopTagsList {
   static let maxTagCount = 10
   let tags: [Tag]

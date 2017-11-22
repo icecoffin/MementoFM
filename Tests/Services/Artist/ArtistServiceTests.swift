@@ -38,7 +38,7 @@ class ArtistServiceTests: XCTestCase {
 
     var progressCallCount = 0
     waitUntil { done in
-      artistService.getLibrary(for: "user", limit: artistsPerPage, progress: { progress in
+      artistService.getLibrary(for: "user", limit: artistsPerPage, progress: { _ in
         progressCallCount += 1
       }).then { artists -> Void in
         expect(progressCallCount).to(equal(totalPages - 1))
@@ -59,7 +59,7 @@ class ArtistServiceTests: XCTestCase {
     let artistService = ArtistService(realmService: realmService, repository: repository)
 
     waitUntil { done in
-      artistService.getLibrary(for: "user", limit: artistsPerPage).then { _ in
+      artistService.getLibrary(for: "user", limit: artistsPerPage, progress: nil).then { _ in
         fail()
       }.catch { error in
         expect(error).toNot(beNil())
@@ -112,11 +112,11 @@ class ArtistServiceTests: XCTestCase {
       firstly {
         self.realmService.save([artist1, artist2, artist3])
       }.then { _ -> Void in
-        let artists1 = artistService.getArtistsWithIntersectingTopTags(for: artist1)
+        let artists1 = artistService.artistsWithIntersectingTopTags(for: artist1)
         expect(artists1).to(equal([artist2]))
-        let artists2 = artistService.getArtistsWithIntersectingTopTags(for: artist2)
+        let artists2 = artistService.artistsWithIntersectingTopTags(for: artist2)
         expect(artists2).to(equal([artist1]))
-        let artists3 = artistService.getArtistsWithIntersectingTopTags(for: artist3)
+        let artists3 = artistService.artistsWithIntersectingTopTags(for: artist3)
         expect(artists3).to(beEmpty())
         done()
       }.noError()

@@ -9,9 +9,26 @@
 import Foundation
 import PromiseKit
 
-class IgnoredTagService {
+protocol IgnoredTagServiceProtocol: class {
+  var defaultIgnoredTagNames: [String] { get }
+
+  func ignoredTags() -> [IgnoredTag]
+  func createDefaultIgnoredTags(withNames names: [String]) -> Promise<Void>
+  func updateIgnoredTags(_ ignoredTags: [IgnoredTag]) -> Promise<Void>
+}
+
+extension IgnoredTagServiceProtocol {
+  var defaultIgnoredTagNames: [String] {
+    return ["rock", "metal", "indie", "alternative", "seen live", "under 2000 listeners"]
+  }
+
+  func createDefaultIgnoredTags() -> Promise<Void> {
+    return createDefaultIgnoredTags(withNames: defaultIgnoredTagNames)
+  }
+}
+
+class IgnoredTagService: IgnoredTagServiceProtocol {
   private let realmService: RealmService
-  private static let defaultIgnoredTagNames = ["rock", "metal", "indie", "alternative", "seen live", "under 2000 listeners"]
 
   init(realmService: RealmService) {
     self.realmService = realmService
@@ -21,7 +38,7 @@ class IgnoredTagService {
     return realmService.objects(IgnoredTag.self)
   }
 
-  func createDefaultIgnoredTags(withNames names: [String] = IgnoredTagService.defaultIgnoredTagNames) -> Promise<Void> {
+  func createDefaultIgnoredTags(withNames names: [String]) -> Promise<Void> {
     let ignoredTags = names.map { name in
       return IgnoredTag(uuid: UUID().uuidString, name: name)
     }

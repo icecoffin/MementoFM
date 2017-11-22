@@ -19,9 +19,9 @@ enum LibraryUpdateStatus {
 
 class LibraryUpdater {
   private let userService: UserServiceProtocol
-  private let artistService: ArtistService
+  private let artistService: ArtistServiceProtocol
   private let tagService: TagService
-  private let ignoredTagService: IgnoredTagService
+  private let ignoredTagService: IgnoredTagServiceProtocol
   private let trackService: TrackService
   private let networkService: NetworkService
 
@@ -40,8 +40,8 @@ class LibraryUpdater {
   var onDidChangeStatus: ((LibraryUpdateStatus) -> Void)?
   var onDidReceiveError: ((Error) -> Void)?
 
-  init(userService: UserServiceProtocol, artistService: ArtistService, tagService: TagService,
-       ignoredTagService: IgnoredTagService, trackService: TrackService, networkService: NetworkService) {
+  init(userService: UserServiceProtocol, artistService: ArtistServiceProtocol, tagService: TagService,
+       ignoredTagService: IgnoredTagServiceProtocol, trackService: TrackService, networkService: NetworkService) {
     self.userService = userService
     self.artistService = artistService
     self.tagService = tagService

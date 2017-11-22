@@ -17,7 +17,7 @@ class TrackRepositoryTests: XCTestCase {
     let recentTracksPage = RecentTracksPage(index: 1, totalPages: 1, tracks: [])
     let response = RecentTracksPageResponse(recentTracksPage: recentTracksPage)
     let networkService = StubNetworkService(response: response)
-    
+
     let trackRepository = TrackNetworkRepository(networkService: networkService)
     trackRepository.getRecentTracksPage(withIndex: 1, for: "User", from: TimeInterval(1509982044), limit: 10).then { _ -> Void in
       expect(networkService.method).to(equal(.get))

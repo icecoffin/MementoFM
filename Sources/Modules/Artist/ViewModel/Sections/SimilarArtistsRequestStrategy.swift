@@ -29,7 +29,7 @@ class SimilarArtistsLocalRequestStrategy: SimilarArtistsRequestStrategy {
   }
 
   func getSimilarArtists(for artist: Artist) -> Promise<[Artist]> {
-    let similarArtists = dependencies.artistService.getArtistsWithIntersectingTopTags(for: artist)
+    let similarArtists = dependencies.artistService.artistsWithIntersectingTopTags(for: artist)
     return Promise(value: similarArtists)
   }
 }

@@ -29,7 +29,6 @@ class IgnoredTagsViewModel {
   var onDidFinishSavingChanges: (() -> Void)?
   var onDidAddNewTag: ((IndexPath) -> Void)?
   var onDidUpdateTagCount: ((_ isEmpty: Bool) -> Void)?
-  var onDidAddDefaultTags: (() -> Void)?
 
   init(dependencies: Dependencies, shouldAddDefaultTags: Bool) {
     self.dependencies = dependencies
@@ -40,9 +39,8 @@ class IgnoredTagsViewModel {
   }
 
   private func addDefaultTags() {
-    dependencies.ignoredTagService.createDefaultIgnoredTags().then { [unowned self] _ -> Void in
+    dependencies.ignoredTagService.createDefaultIgnoredTags().then {
       self.ignoredTags = self.dependencies.ignoredTagService.ignoredTags()
-      self.onDidAddDefaultTags?()
     }.noError()
   }
 
@@ -88,7 +86,7 @@ class IgnoredTagsViewModel {
       return result + [ignoredTag]
     }
 
-    let calculator = ArtistTopTagsCalculator(ignoredTags: ignoredTags)
+    let calculator = ArtistTopTagsCalculator(ignoredTags: filteredTags)
     dependencies.ignoredTagService.updateIgnoredTags(filteredTags).then { [unowned self] in
       self.dependencies.artistService.calculateTopTagsForAllArtists(using: calculator)
     }.then { [unowned self] _ -> Void in

@@ -31,6 +31,10 @@ type_name:
   excluded:
     - Up
 
+nesting:
+  type_level:
+    warning: 2
+
 custom_rules:
   print_usage:
     name: "Print usage"

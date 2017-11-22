@@ -21,6 +21,7 @@
 		6511361D1F2AE6B40079411F /* RealmEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6511361C1F2AE6B40079411F /* RealmEntity.swift */; };
 		6511361F1F2AE6DB0079411F /* TransientEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6511361E1F2AE6DB0079411F /* TransientEntity.swift */; };
 		6513540C1EDD875E0061B879 /* LibraryViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513540B1EDD875E0061B879 /* LibraryViewModelFactory.swift */; };
+		6514EAE91FB6D8D900FDEA18 /* StubArtistService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653347061FB617E80020DC82 /* StubArtistService.swift */; };
 		6515EA9B1F49561700081F70 /* IgnoredTagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6515EA9A1F49561700081F70 /* IgnoredTagService.swift */; };
 		6516A53D1ECDFD830021E43C /* NSAttributedString+Join.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6516A53C1ECDFD830021E43C /* NSAttributedString+Join.swift */; };
 		651742141FA59C17004FCFF4 /* TagServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651742101FA59C04004FCFF4 /* TagServiceTests.swift */; };
@@ -162,7 +163,10 @@
 		65241C281EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C231EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift */; };
 		65241C2A1EC70AF400927749 /* UICollectionViewCell+DynamicSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C291EC70AF400927749 /* UICollectionViewCell+DynamicSize.swift */; };
 		653277DC1EDC804F00BEBCAC /* ArtistsByTagPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653277DB1EDC804F00BEBCAC /* ArtistsByTagPresenter.swift */; };
+		653347041FB6168C0020DC82 /* StubIgnoredTagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653347001FB616800020DC82 /* StubIgnoredTagService.swift */; };
+		653347051FB6168C0020DC82 /* StubUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653347021FB616880020DC82 /* StubUserService.swift */; };
 		653669EF1EE5753B00E9D56C /* NavigationControllerPopTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653669EE1EE5753B00E9D56C /* NavigationControllerPopTracker.swift */; };
+		6539536E1FC4671700B84387 /* IgnoredTagCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6539536D1FC4671700B84387 /* IgnoredTagCellViewModelTests.swift */; };
 		653F21751F6D1272009A562A /* SimilarArtistsRequestStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653F21741F6D1272009A562A /* SimilarArtistsRequestStrategy.swift */; };
 		653F21771F6D8484009A562A /* SimilarArtistListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653F21761F6D8484009A562A /* SimilarArtistListResponse.swift */; };
 		6544307A1FA231AF00923356 /* TrackServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654430781FA231A700923356 /* TrackServiceTests.swift */; };
@@ -175,6 +179,7 @@
 		656D2ED21FB1F6980096DE27 /* TagNetworkRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656D2ED11FB1F6980096DE27 /* TagNetworkRepositoryTests.swift */; };
 		656D2ED41FB1F78C0096DE27 /* ArtistNetworkRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656D2ED31FB1F78C0096DE27 /* ArtistNetworkRepositoryTests.swift */; };
 		656D2F051FB211DC0096DE27 /* EnterUsernameViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656D2F041FB211DC0096DE27 /* EnterUsernameViewModelTests.swift */; };
+		6574CD611FB4C06E00B7ABE9 /* IgnoredTagsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6574CD601FB4C06E00B7ABE9 /* IgnoredTagsViewModelTests.swift */; };
 		658B26B61FAB518600E3A6EA /* IgnoredTagServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658B26B41FAB518300E3A6EA /* IgnoredTagServiceTests.swift */; };
 		658B26B91FAB6C2F00E3A6EA /* UserServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658B26B81FAB6C2E00E3A6EA /* UserServiceTests.swift */; };
 		658B26BC1FAB6D3C00E3A6EA /* UserStubRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658B26BA1FAB6D3A00E3A6EA /* UserStubRepository.swift */; };
@@ -357,7 +362,11 @@
 		65241C231EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistTopTagsSectionViewModel.swift; sourceTree = "<group>"; };
 		65241C291EC70AF400927749 /* UICollectionViewCell+DynamicSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+DynamicSize.swift"; sourceTree = "<group>"; };
 		653277DB1EDC804F00BEBCAC /* ArtistsByTagPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistsByTagPresenter.swift; sourceTree = "<group>"; };
+		653347001FB616800020DC82 /* StubIgnoredTagService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubIgnoredTagService.swift; sourceTree = "<group>"; };
+		653347021FB616880020DC82 /* StubUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubUserService.swift; sourceTree = "<group>"; };
+		653347061FB617E80020DC82 /* StubArtistService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubArtistService.swift; sourceTree = "<group>"; };
 		653669EE1EE5753B00E9D56C /* NavigationControllerPopTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationControllerPopTracker.swift; sourceTree = "<group>"; };
+		6539536D1FC4671700B84387 /* IgnoredTagCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoredTagCellViewModelTests.swift; sourceTree = "<group>"; };
 		653F21741F6D1272009A562A /* SimilarArtistsRequestStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimilarArtistsRequestStrategy.swift; sourceTree = "<group>"; };
 		653F21761F6D8484009A562A /* SimilarArtistListResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimilarArtistListResponse.swift; sourceTree = "<group>"; };
 		654430781FA231A700923356 /* TrackServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackServiceTests.swift; sourceTree = "<group>"; };
@@ -370,6 +379,7 @@
 		656D2ED11FB1F6980096DE27 /* TagNetworkRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagNetworkRepositoryTests.swift; sourceTree = "<group>"; };
 		656D2ED31FB1F78C0096DE27 /* ArtistNetworkRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistNetworkRepositoryTests.swift; sourceTree = "<group>"; };
 		656D2F041FB211DC0096DE27 /* EnterUsernameViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterUsernameViewModelTests.swift; sourceTree = "<group>"; };
+		6574CD601FB4C06E00B7ABE9 /* IgnoredTagsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoredTagsViewModelTests.swift; sourceTree = "<group>"; };
 		658B26B41FAB518300E3A6EA /* IgnoredTagServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoredTagServiceTests.swift; sourceTree = "<group>"; };
 		658B26B81FAB6C2E00E3A6EA /* UserServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceTests.swift; sourceTree = "<group>"; };
 		658B26BA1FAB6D3A00E3A6EA /* UserStubRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStubRepository.swift; sourceTree = "<group>"; };
@@ -1137,6 +1147,16 @@
 			path = Sections;
 			sourceTree = "<group>";
 		};
+		653346FF1FB6166A0020DC82 /* Service Stubs */ = {
+			isa = PBXGroup;
+			children = (
+				653347001FB616800020DC82 /* StubIgnoredTagService.swift */,
+				653347021FB616880020DC82 /* StubUserService.swift */,
+				653347061FB617E80020DC82 /* StubArtistService.swift */,
+			);
+			path = "Service Stubs";
+			sourceTree = "<group>";
+		};
 		654430771FA230A000923356 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -1171,6 +1191,8 @@
 		656D2F021FB211B60096DE27 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				653346FF1FB6166A0020DC82 /* Service Stubs */,
+				6574CD5D1FB4B40200B7ABE9 /* Ignored Tags */,
 				656D2F031FB211CA0096DE27 /* Enter Username */,
 			);
 			path = Modules;
@@ -1182,6 +1204,15 @@
 				656D2F041FB211DC0096DE27 /* EnterUsernameViewModelTests.swift */,
 			);
 			path = "Enter Username";
+			sourceTree = "<group>";
+		};
+		6574CD5D1FB4B40200B7ABE9 /* Ignored Tags */ = {
+			isa = PBXGroup;
+			children = (
+				6574CD601FB4C06E00B7ABE9 /* IgnoredTagsViewModelTests.swift */,
+				6539536D1FC4671700B84387 /* IgnoredTagCellViewModelTests.swift */,
+			);
+			path = "Ignored Tags";
 			sourceTree = "<group>";
 		};
 		658B26B31FAB517400E3A6EA /* IgnoredTag */ = {
@@ -1222,6 +1253,7 @@
 			buildPhases = (
 				575809D299E94D84B4875A43 /* [CP] Check Pods Manifest.lock */,
 				651F9D7D1EC08BFD006D9474 /* Run Sourcery */,
+				65291E041FBC241B00AE07BC /* Run SwiftLint */,
 				01D4D3141DAE4A0000BFD7FD /* Sources */,
 				01D4D3151DAE4A0000BFD7FD /* Frameworks */,
 				01D4D3161DAE4A0000BFD7FD /* Resources */,
@@ -1399,6 +1431,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "${PODS_ROOT}/Sourcery/bin/sourcery --sources ${SRCROOT}/Sources --templates ${SRCROOT}/Templates --output ${SRCROOT}/GeneratedCode";
+		};
+		65291E041FBC241B00AE07BC /* Run SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint\n";
 		};
 		A6665349F41C84CDB782A882 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1630,20 +1676,25 @@
 				650A931E1FACACA8001DE7A5 /* StubUserDataStorage.swift in Sources */,
 				651AA7061FB062C000EEE40A /* TopTagsListTests.swift in Sources */,
 				651AA6F41FB0338A00EEE40A /* LibraryPageTests.swift in Sources */,
+				653347051FB6168C0020DC82 /* StubUserService.swift in Sources */,
+				6514EAE91FB6D8D900FDEA18 /* StubArtistService.swift in Sources */,
 				651BB71F1FAD9D5200E71F50 /* ArtistStubTopTagsCalculator.swift in Sources */,
 				651889581FAF5B60006964E0 /* TrackEmptyStubRepository.swift in Sources */,
 				658B26B91FAB6C2F00E3A6EA /* UserServiceTests.swift in Sources */,
 				651AA7281FB0CE1E00EEE40A /* UserNetworkRepositoryTests.swift in Sources */,
 				6517A3C61EBCE5C6002BC634 /* RealmMappedCollectionTests.swift in Sources */,
+				653347041FB6168C0020DC82 /* StubIgnoredTagService.swift in Sources */,
 				658B26BC1FAB6D3C00E3A6EA /* UserStubRepository.swift in Sources */,
 				654430801FA2417400923356 /* ModelFactory.swift in Sources */,
 				651AA6F91FB035C500EEE40A /* RecentTracksPageTests.swift in Sources */,
 				651AA7181FB0692600EEE40A /* RealmArtistTests.swift in Sources */,
 				6544307F1FA2417200923356 /* TrackStubRepository.swift in Sources */,
+				6574CD611FB4C06E00B7ABE9 /* IgnoredTagsViewModelTests.swift in Sources */,
 				651AA7261FB0AF5C00EEE40A /* StubNetworkService.swift in Sources */,
 				651AA6F21FB032F100EEE40A /* IgnoredTagTests.swift in Sources */,
 				651AA7251FB0AF5C00EEE40A /* TrackNetworkRepositoryTests.swift in Sources */,
 				651889521FAF0A8E006964E0 /* ArtistTopTagsCalculatorTests.swift in Sources */,
+				6539536E1FC4671700B84387 /* IgnoredTagCellViewModelTests.swift in Sources */,
 				651AA70E1FB0660700EEE40A /* TrackTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

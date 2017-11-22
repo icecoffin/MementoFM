@@ -26,5 +26,5 @@ class LibraryPageTests: XCTestCase {
     expect(libraryPage?.index).to(equal(2))
     expect(libraryPage?.totalPages).to(equal(720))
     expect(libraryPage?.artists.count).to(equal(2))
-  }    
+  }
 }
