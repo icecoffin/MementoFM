@@ -30,8 +30,8 @@ class TagsViewModel {
   }
 
   func getTags(searchText: String? = nil) {
-    let allTopTags = dependencies.tagService.getAllTopTags()
     DispatchQueue.global().async {
+      let allTopTags = self.dependencies.tagService.getAllTopTags()
       self.createCellViewModels(from: allTopTags, searchText: searchText)
       DispatchQueue.main.async {
         self.onDidUpdateData?(self.filteredCellViewModels.isEmpty)

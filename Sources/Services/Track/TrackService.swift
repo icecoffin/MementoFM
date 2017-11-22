@@ -9,7 +9,22 @@
 import Foundation
 import PromiseKit
 
-class TrackService {
+protocol TrackServiceProtocol: class {
+  func getRecentTracks(for user: String, from: TimeInterval, limit: Int, progress: ((Progress) -> Void)?) -> Promise<[Track]>
+  func processTracks(_ tracks: [Track], using processor: RecentTracksProcessing) -> Promise<Void>
+}
+
+extension TrackServiceProtocol {
+  func getRecentTracks(for user: String, from: TimeInterval, progress: ((Progress) -> Void)?) -> Promise<[Track]> {
+    return getRecentTracks(for: user, from: from, limit: 200, progress: progress)
+  }
+
+  func processTracks(_ tracks: [Track]) -> Promise<Void> {
+    return processTracks(tracks, using: RecentTracksProcessor())
+  }
+}
+
+class TrackService: TrackServiceProtocol {
   private let realmService: RealmService
   private let repository: TrackRepository
 

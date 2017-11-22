@@ -20,9 +20,9 @@ enum LibraryUpdateStatus {
 class LibraryUpdater {
   private let userService: UserServiceProtocol
   private let artistService: ArtistServiceProtocol
-  private let tagService: TagService
+  private let tagService: TagServiceProtocol
   private let ignoredTagService: IgnoredTagServiceProtocol
-  private let trackService: TrackService
+  private let trackService: TrackServiceProtocol
   private let networkService: NetworkService
 
   private(set) var isFirstUpdate: Bool = true

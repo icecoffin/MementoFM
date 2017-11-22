@@ -9,7 +9,18 @@
 import Foundation
 import PromiseKit
 
-class TagService {
+protocol TagServiceProtocol: class {
+  func getTopTags(for artists: [Artist], progress: ((TopTagsRequestProgress) -> Void)?) -> Promise<Void>
+  func getAllTopTags() -> [Tag]
+}
+
+extension TagServiceProtocol {
+  func getTopTags(for artists: [Artist]) -> Promise<Void> {
+    return getTopTags(for: artists, progress: nil)
+  }
+}
+
+class TagService: TagServiceProtocol {
   private let realmService: RealmService
   private let repository: TagRepository
 
@@ -18,7 +29,7 @@ class TagService {
     self.repository = repository
   }
 
-  func getTopTags(for artists: [Artist], progress: ((TopTagsRequestProgress) -> Void)? = nil) -> Promise<Void> {
+  func getTopTags(for artists: [Artist], progress: ((TopTagsRequestProgress) -> Void)?) -> Promise<Void> {
     return Promise { fulfill, reject in
       let totalProgress = Progress(totalUnitCount: Int64(artists.count))
 
