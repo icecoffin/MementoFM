@@ -25,6 +25,7 @@ class TagsViewController: UIViewController {
     collectionView = TPKeyboardAvoidingCollectionView(frame: .zero, collectionViewLayout: layout)
 
     self.viewModel = viewModel
+    viewModel.getTags()
     super.init(nibName: nil, bundle: nil)
   }
 
