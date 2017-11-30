@@ -9,14 +9,13 @@
 import Foundation
 import RealmSwift
 
-class RealmMappedCollection<Element: Object, Transformed> {
-  typealias Transform = (Element) -> Transformed
+class RealmMappedCollection<Element: TransientEntity> where Element.RealmType: Object {
+  typealias Transform = (Element.RealmType) -> Element
 
   private let realm: Realm
-  lazy private var results: Results<Element> = {
+  lazy private var results: Results<Element.RealmType> = {
     return self.fetchResults()
   }()
-  private var transform: Transform
   private var notificationToken: NotificationToken?
 
   var sortDescriptors: [SortDescriptor] {
@@ -31,13 +30,12 @@ class RealmMappedCollection<Element: Object, Transformed> {
     }
   }
 
-  var notificationBlock: ((RealmCollectionChange<Results<Element>>) -> Void)?
+  var notificationBlock: ((RealmCollectionChange<Results<Element.RealmType>>) -> Void)?
 
-  init(realm: Realm, predicate: NSPredicate? = nil, sortDescriptors: [SortDescriptor], transform: @escaping Transform) {
+  init(realm: Realm, predicate: NSPredicate? = nil, sortDescriptors: [SortDescriptor]) {
     self.realm = realm
     self.predicate = predicate
     self.sortDescriptors = sortDescriptors
-    self.transform = transform
 
     subscribeToResultsNotifications()
   }
@@ -46,8 +44,8 @@ class RealmMappedCollection<Element: Object, Transformed> {
     notificationToken?.invalidate()
   }
 
-  private func fetchResults() -> Results<Element> {
-    let results = realm.objects(Element.self).sorted(by: sortDescriptors)
+  private func fetchResults() -> Results<Element.RealmType> {
+    let results = realm.objects(Element.RealmType.self).sorted(by: sortDescriptors)
     if let predicate = predicate {
       return results.filter(predicate)
     }
@@ -71,8 +69,8 @@ class RealmMappedCollection<Element: Object, Transformed> {
     return results.count
   }
 
-  subscript(index: Int) -> Transformed {
-    return transform(results[index])
+  subscript(index: Int) -> Element.RealmType.TransientType {
+    return results[index].toTransient()
   }
 
   var isEmpty: Bool {

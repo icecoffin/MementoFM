@@ -16,7 +16,7 @@ class LibraryViewModel: ArtistListViewModel {
   private let dependencies: Dependencies
   private let applicationStateObserver: ApplicationStateObserver
 
-  fileprivate lazy var artists: RealmMappedCollection<RealmArtist, Artist> = {
+  fileprivate lazy var artists: RealmMappedCollection<Artist> = {
     let playcountSort = SortDescriptor(keyPath: "playcount", ascending: false)
     return self.dependencies.artistService.artists(sortedBy: [playcountSort])
   }()

@@ -72,10 +72,12 @@ class StubArtistService: ArtistServiceProtocol {
     }
   }
 
-  func artists(filteredUsing predicate: NSPredicate?, sortedBy sortDescriptors: [SortDescriptor]) -> RealmMappedCollection<RealmArtist, Artist> {
-    return RealmMappedCollection(realm: RealmFactory.inMemoryRealm(),
-                                 sortDescriptors: [],
-                                 transform: { _ in return ModelFactory.generateArtist() })
+  var expectedRealmForArtists: Realm!
+  func artists(filteredUsing predicate: NSPredicate?,
+               sortedBy sortDescriptors: [SortDescriptor]) -> RealmMappedCollection<Artist> {
+    return RealmMappedCollection(realm: expectedRealmForArtists,
+                                 predicate: predicate,
+                                 sortDescriptors: sortDescriptors)
   }
 
   var expectedSimilarArtistsArtist: Artist?

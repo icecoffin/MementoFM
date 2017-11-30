@@ -13,19 +13,18 @@ import RealmSwift
 
 class RealmMappedCollectionTests: XCTestCase {
   var realm: Realm!
-  var collection: RealmMappedCollection<RealmTag, Tag>!
+  var collection: RealmMappedCollection<Tag>!
 
   override func setUp() {
     super.setUp()
     realm = RealmFactory.inMemoryRealm()
-    collection = RealmMappedCollection(realm: realm, sortDescriptors: [], transform: { realmTag in
-      return realmTag.toTransient()
-    })
+    collection = RealmMappedCollection(realm: realm, sortDescriptors: [])
   }
 
   override func tearDown() {
-    realm = nil
+    collection.notificationBlock = nil
     collection = nil
+    realm = nil
     super.tearDown()
   }
 
@@ -34,7 +33,7 @@ class RealmMappedCollectionTests: XCTestCase {
       let tag = RealmTag()
       realm.add(tag)
     }
-    expect(self.collection.count).to(equal(1))
+    expect(self.collection.count).toEventually(equal(1))
   }
 
   func testIsEmptyReturnsTrueWhenEmpty() {
@@ -46,7 +45,7 @@ class RealmMappedCollectionTests: XCTestCase {
       let tag = RealmTag()
       realm.add(tag)
     }
-    expect(self.collection.isEmpty).to(beFalse())
+    expect(self.collection.isEmpty).toEventually(beFalse())
   }
 
   func testGettingItemAtIndex() {
@@ -57,8 +56,8 @@ class RealmMappedCollectionTests: XCTestCase {
     }
 
     let secondTag = collection[1]
-    expect(secondTag.name).to(equal("metal"))
-    expect(secondTag.count).to(equal(2))
+    expect(secondTag.name).toEventually(equal("metal"))
+    expect(secondTag.count).toEventually(equal(2))
   }
 
   func testSettingPredicate() {
@@ -69,10 +68,10 @@ class RealmMappedCollectionTests: XCTestCase {
     }
     let predicate = NSPredicate(format: "count > 1")
     collection.predicate = predicate
-    expect(self.collection.count).to(equal(1))
+    expect(self.collection.count).toEventually(equal(1))
 
     collection.predicate = nil
-    expect(self.collection.count).to(equal(2))
+    expect(self.collection.count).toEventually(equal(2))
   }
 
   func testSettingSortDescriptors() {
@@ -86,9 +85,9 @@ class RealmMappedCollectionTests: XCTestCase {
                            SortDescriptor(keyPath: "count", ascending: false)]
     collection.sortDescriptors = sortDescriptors
 
-    expect(self.collection[0].count).to(equal(3))
-    expect(self.collection[0].name).to(equal(self.collection[1].name))
-    expect(self.collection[2].name).to(equal("rock"))
+    expect(self.collection[0].count).toEventually(equal(3))
+    expect(self.collection[0].name).toEventually(equal(self.collection[1].name))
+    expect(self.collection[2].name).toEventually(equal("rock"))
   }
 
   func testUpdatesNotifications() {

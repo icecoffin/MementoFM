@@ -50,13 +50,12 @@ class RealmService {
   }
 
   // MARK: - Realm mapped collection
-  func mappedCollection<T: TransientEntity, R>(filteredUsing predicate: NSPredicate? = nil,
-                                               sortedBy sortDescriptors: [SortDescriptor]) -> RealmMappedCollection<R, T>
-  where T.RealmType == R, R.TransientType == T {
-    return RealmMappedCollection<R, T>(realm: currentQueueRealm,
+  func mappedCollection<T: TransientEntity>(filteredUsing predicate: NSPredicate? = nil,
+                                            sortedBy sortDescriptors: [SortDescriptor]) -> RealmMappedCollection<T>
+    where T.RealmType: Object {
+    return RealmMappedCollection<T>(realm: currentQueueRealm,
                                        predicate: predicate,
-                                       sortDescriptors: sortDescriptors,
-                                       transform: { return $0.toTransient() })
+                                       sortDescriptors: sortDescriptors)
   }
 
   // MARK: - Saving objects to Realm
