@@ -22,7 +22,6 @@ class RealmMappedCollectionTests: XCTestCase {
   }
 
   override func tearDown() {
-    collection.notificationBlock = nil
     collection = nil
     realm = nil
     super.tearDown()

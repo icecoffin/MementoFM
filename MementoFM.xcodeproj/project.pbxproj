@@ -189,6 +189,7 @@
 		65B4A0491FC7153500E01881 /* TagsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B4A0481FC7153500E01881 /* TagsViewModelTests.swift */; };
 		65B772891EC5C5E500892698 /* ArtistDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B772881EC5C5E500892698 /* ArtistDataSource.swift */; };
 		65C10DF41F0BD0170072BF09 /* ApplicationStateObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C10DF31F0BD0170072BF09 /* ApplicationStateObserver.swift */; };
+		65DC8F611FD0620F007299DB /* ArtistsByTagViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DC8F601FD0620F007299DB /* ArtistsByTagViewModelTests.swift */; };
 		9F43E2411B39BE7B45A44303 /* Pods_MementoFM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA52817501538FC095064AC8 /* Pods_MementoFM.framework */; };
 /* End PBXBuildFile section */
 
@@ -392,6 +393,7 @@
 		65B4A0481FC7153500E01881 /* TagsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsViewModelTests.swift; sourceTree = "<group>"; };
 		65B772881EC5C5E500892698 /* ArtistDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistDataSource.swift; sourceTree = "<group>"; };
 		65C10DF31F0BD0170072BF09 /* ApplicationStateObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationStateObserver.swift; sourceTree = "<group>"; };
+		65DC8F601FD0620F007299DB /* ArtistsByTagViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistsByTagViewModelTests.swift; sourceTree = "<group>"; };
 		7D2D2255AF2A192DD77241EC /* Pods_LastFMNotifier.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LastFMNotifier.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DA0674F9B99F1C73DD95155 /* Pods-LastFMNotifierTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LastFMNotifierTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LastFMNotifierTests/Pods-LastFMNotifierTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7FE38FF7C97840AA7B03AE41 /* Pods-MementoFM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MementoFM.release.xcconfig"; path = "Pods/Target Support Files/Pods-MementoFM/Pods-MementoFM.release.xcconfig"; sourceTree = "<group>"; };
@@ -1246,6 +1248,7 @@
 			isa = PBXGroup;
 			children = (
 				65B4A0481FC7153500E01881 /* TagsViewModelTests.swift */,
+				65DC8F601FD0620F007299DB /* ArtistsByTagViewModelTests.swift */,
 			);
 			path = Tags;
 			sourceTree = "<group>";
@@ -1675,6 +1678,7 @@
 				6518894E1FAEF769006964E0 /* ArtistSimilarsStubRepository.swift in Sources */,
 				651AA6FF1FB05CFB00EEE40A /* TagTests.swift in Sources */,
 				651B663E1F9C9234003C436E /* Utils.swift in Sources */,
+				65DC8F611FD0620F007299DB /* ArtistsByTagViewModelTests.swift in Sources */,
 				656D2ED21FB1F6980096DE27 /* TagNetworkRepositoryTests.swift in Sources */,
 				656D2F051FB211DC0096DE27 /* EnterUsernameViewModelTests.swift in Sources */,
 				65A305C41F9B383900E1D9C4 /* RealmServiceTests.swift in Sources */,
