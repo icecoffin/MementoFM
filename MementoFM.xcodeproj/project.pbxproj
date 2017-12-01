@@ -178,6 +178,7 @@
 		6555AB581ED0AC1600BDDF21 /* ArtistTagsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6555AB571ED0AC1600BDDF21 /* ArtistTagsCell.swift */; };
 		6557BD701F717D1300E08DD4 /* SimilarsSectionTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6557BD6F1F717D1300E08DD4 /* SimilarsSectionTabViewModel.swift */; };
 		655E97B91F3C6AEC003614C8 /* TagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655E97B81F3C6AEC003614C8 /* TagService.swift */; };
+		656A5B2E1FD1A8BF00A98265 /* RecentTracksProcessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656A5B2D1FD1A8BF00A98265 /* RecentTracksProcessorTests.swift */; };
 		656D2ED21FB1F6980096DE27 /* TagNetworkRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656D2ED11FB1F6980096DE27 /* TagNetworkRepositoryTests.swift */; };
 		656D2ED41FB1F78C0096DE27 /* ArtistNetworkRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656D2ED31FB1F78C0096DE27 /* ArtistNetworkRepositoryTests.swift */; };
 		656D2F051FB211DC0096DE27 /* EnterUsernameViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656D2F041FB211DC0096DE27 /* EnterUsernameViewModelTests.swift */; };
@@ -382,6 +383,7 @@
 		6555AB571ED0AC1600BDDF21 /* ArtistTagsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistTagsCell.swift; sourceTree = "<group>"; };
 		6557BD6F1F717D1300E08DD4 /* SimilarsSectionTabViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimilarsSectionTabViewModel.swift; sourceTree = "<group>"; };
 		655E97B81F3C6AEC003614C8 /* TagService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagService.swift; sourceTree = "<group>"; };
+		656A5B2D1FD1A8BF00A98265 /* RecentTracksProcessorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTracksProcessorTests.swift; sourceTree = "<group>"; };
 		656D2ED11FB1F6980096DE27 /* TagNetworkRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagNetworkRepositoryTests.swift; sourceTree = "<group>"; };
 		656D2ED31FB1F78C0096DE27 /* ArtistNetworkRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistNetworkRepositoryTests.swift; sourceTree = "<group>"; };
 		656D2F041FB211DC0096DE27 /* EnterUsernameViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterUsernameViewModelTests.swift; sourceTree = "<group>"; };
@@ -1198,12 +1200,21 @@
 			path = Tag;
 			sourceTree = "<group>";
 		};
+		656A5B2C1FD1A8A100A98265 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				656A5B2D1FD1A8BF00A98265 /* RecentTracksProcessorTests.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
 		656D2F021FB211B60096DE27 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
 				653346FF1FB6166A0020DC82 /* Service Stubs */,
 				6574CD5D1FB4B40200B7ABE9 /* Ignored Tags */,
 				656D2F031FB211CA0096DE27 /* Enter Username */,
+				656A5B2C1FD1A8A100A98265 /* Library */,
 				65B4A0471FC7151F00E01881 /* Tags */,
 			);
 			path = Modules;
@@ -1681,6 +1692,7 @@
 				65DC8F611FD0620F007299DB /* ArtistsByTagViewModelTests.swift in Sources */,
 				656D2ED21FB1F6980096DE27 /* TagNetworkRepositoryTests.swift in Sources */,
 				656D2F051FB211DC0096DE27 /* EnterUsernameViewModelTests.swift in Sources */,
+				656A5B2E1FD1A8BF00A98265 /* RecentTracksProcessorTests.swift in Sources */,
 				65A305C41F9B383900E1D9C4 /* RealmServiceTests.swift in Sources */,
 				651889551FAF58D5006964E0 /* TagEmptyStubRepository.swift in Sources */,
 				651742141FA59C17004FCFF4 /* TagServiceTests.swift in Sources */,
