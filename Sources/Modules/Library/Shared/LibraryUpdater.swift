@@ -17,7 +17,20 @@ enum LibraryUpdateStatus {
   case tags(artistName: String, progress: Progress)
 }
 
-class LibraryUpdater {
+protocol LibraryUpdaterProtocol: class {
+  var onDidStartLoading: (() -> Void)? { get set }
+  var onDidFinishLoading: (() -> Void)? { get set }
+  var onDidChangeStatus: ((LibraryUpdateStatus) -> Void)? { get set }
+  var onDidReceiveError: ((Error) -> Void)? { get set }
+
+  var isFirstUpdate: Bool { get }
+  var lastUpdateTimestamp: TimeInterval { get }
+
+  func requestData()
+  func cancelPendingRequests()
+}
+
+class LibraryUpdater: LibraryUpdaterProtocol {
   private let userService: UserServiceProtocol
   private let artistService: ArtistServiceProtocol
   private let tagService: TagServiceProtocol

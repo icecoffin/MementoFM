@@ -76,6 +76,7 @@ class IgnoredTagsViewController: UIViewController {
 
     viewModel.onDidUpdateTagCount = { [unowned self] isEmpty in
       self.tableView.backgroundView?.isHidden = !isEmpty
+      self.tableView.reloadData()
     }
 
     tableView.backgroundView?.isHidden = viewModel.numberOfIgnoredTags > 0

@@ -25,7 +25,7 @@ protocol HasIgnoredTagService {
 }
 
 protocol HasLibraryUpdater {
-  var libraryUpdater: LibraryUpdater { get }
+  var libraryUpdater: LibraryUpdaterProtocol { get }
 }
 
 struct AppDependency: HasArtistService, HasUserService, HasTagService, HasIgnoredTagService, HasLibraryUpdater {
@@ -35,7 +35,7 @@ struct AppDependency: HasArtistService, HasUserService, HasTagService, HasIgnore
   let ignoredTagService: IgnoredTagServiceProtocol
   let trackService: TrackServiceProtocol
 
-  let libraryUpdater: LibraryUpdater
+  let libraryUpdater: LibraryUpdaterProtocol
 
   static var `default`: AppDependency {
     let realmService = RealmService(getRealm: {
