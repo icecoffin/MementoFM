@@ -14,7 +14,7 @@ class LibraryViewModel: ArtistListViewModel {
   typealias Dependencies = HasLibraryUpdater & HasArtistService & HasUserService
 
   private let dependencies: Dependencies
-  private let applicationStateObserver: ApplicationStateObserver
+  private let applicationStateObserver: ApplicationStateObserving
 
   fileprivate lazy var artists: RealmMappedCollection<Artist> = {
     let playcountSort = SortDescriptor(keyPath: "playcount", ascending: false)
@@ -29,7 +29,7 @@ class LibraryViewModel: ArtistListViewModel {
   var onDidChangeStatus: ((String) -> Void)?
   var onDidReceiveError: ((Error) -> Void)?
 
-  init(dependencies: Dependencies, applicationStateObserver: ApplicationStateObserver = .init()) {
+  init(dependencies: Dependencies, applicationStateObserver: ApplicationStateObserving = ApplicationStateObserver()) {
     self.dependencies = dependencies
     self.applicationStateObserver = applicationStateObserver
 

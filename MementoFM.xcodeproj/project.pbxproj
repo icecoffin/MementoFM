@@ -192,6 +192,7 @@
 		65B4A0491FC7153500E01881 /* TagsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B4A0481FC7153500E01881 /* TagsViewModelTests.swift */; };
 		65B772891EC5C5E500892698 /* ArtistDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B772881EC5C5E500892698 /* ArtistDataSource.swift */; };
 		65C10DF41F0BD0170072BF09 /* ApplicationStateObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C10DF31F0BD0170072BF09 /* ApplicationStateObserver.swift */; };
+		65C4D89B1FD3D7C2004B0CF3 /* LibraryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C4D89A1FD3D7C2004B0CF3 /* LibraryViewModelTests.swift */; };
 		65DC8F611FD0620F007299DB /* ArtistsByTagViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DC8F601FD0620F007299DB /* ArtistsByTagViewModelTests.swift */; };
 		9F43E2411B39BE7B45A44303 /* Pods_MementoFM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA52817501538FC095064AC8 /* Pods_MementoFM.framework */; };
 /* End PBXBuildFile section */
@@ -399,6 +400,7 @@
 		65B4A0481FC7153500E01881 /* TagsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsViewModelTests.swift; sourceTree = "<group>"; };
 		65B772881EC5C5E500892698 /* ArtistDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistDataSource.swift; sourceTree = "<group>"; };
 		65C10DF31F0BD0170072BF09 /* ApplicationStateObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationStateObserver.swift; sourceTree = "<group>"; };
+		65C4D89A1FD3D7C2004B0CF3 /* LibraryViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewModelTests.swift; sourceTree = "<group>"; };
 		65DC8F601FD0620F007299DB /* ArtistsByTagViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistsByTagViewModelTests.swift; sourceTree = "<group>"; };
 		7D2D2255AF2A192DD77241EC /* Pods_LastFMNotifier.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LastFMNotifier.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DA0674F9B99F1C73DD95155 /* Pods-LastFMNotifierTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LastFMNotifierTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LastFMNotifierTests/Pods-LastFMNotifierTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1209,6 +1211,7 @@
 			isa = PBXGroup;
 			children = (
 				656A5B2D1FD1A8BF00A98265 /* RecentTracksProcessorTests.swift */,
+				65C4D89A1FD3D7C2004B0CF3 /* LibraryViewModelTests.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -1723,6 +1726,7 @@
 				651AA71A1FB082E100EEE40A /* RealmIgnoredTagTests.swift in Sources */,
 				650A93221FACD1B9001DE7A5 /* ArtistServiceTests.swift in Sources */,
 				650A931E1FACACA8001DE7A5 /* StubUserDataStorage.swift in Sources */,
+				65C4D89B1FD3D7C2004B0CF3 /* LibraryViewModelTests.swift in Sources */,
 				651AA7061FB062C000EEE40A /* TopTagsListTests.swift in Sources */,
 				6517B0901FC5D3E60024DFD9 /* StubTagService.swift in Sources */,
 				651AA6F41FB0338A00EEE40A /* LibraryPageTests.swift in Sources */,

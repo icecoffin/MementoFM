@@ -29,6 +29,10 @@ class StubLibraryUpdater: LibraryUpdaterProtocol {
     didCancelPendingRequests = true
   }
 
+  func simulateStartLoading() {
+    onDidStartLoading?()
+  }
+
   func simulateFinishLoading() {
     onDidFinishLoading?()
   }

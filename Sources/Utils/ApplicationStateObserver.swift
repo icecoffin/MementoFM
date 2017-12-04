@@ -8,7 +8,11 @@
 
 import Foundation
 
-class ApplicationStateObserver {
+protocol ApplicationStateObserving: class {
+  var onApplicationDidBecomeActive: (() -> Void)? { get set }
+}
+
+class ApplicationStateObserver: ApplicationStateObserving {
   var onApplicationDidBecomeActive: (() -> Void)?
   private var isFirstLaunch = true
 
