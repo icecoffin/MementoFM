@@ -68,11 +68,11 @@ class SyncViewModelTests: XCTestCase {
     libraryUpdater.simulateStatusChange(.tags(artistName: "Artist", progress: tagsProgress))
 
     // Not sure if this is the good way to test this conversion (strings may be localized in the future)
-    let expectedStatuses = ["Updating library...",
-                            "Updating library (page 1 out of 10)",
-                            "Getting recent tracks...",
-                            "Getting recent tracks (page 1 out of 10)",
-                            "Getting tags for\nArtist\n(1 out of 10)"]
+    let expectedStatuses = ["Updating library...".unlocalized,
+                            "Updating library (page 1 out of 10)".unlocalized,
+                            "Getting recent tracks...".unlocalized,
+                            "Getting recent tracks (page 1 out of 10)".unlocalized,
+                            "Getting tags for\nArtist\n(1 out of 10)".unlocalized]
     expect(statuses).to(equal(expectedStatuses))
   }
 

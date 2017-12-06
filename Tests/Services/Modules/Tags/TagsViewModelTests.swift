@@ -50,7 +50,7 @@ class TagsViewModelTests: XCTestCase {
 
   func testGettingTagsWhenNotEmpty() {
     let tags = sampleTags()
-    tagService.expectedTopTags = tags
+    tagService.stubTopTags = tags
     let viewModel = TagsViewModel(dependencies: dependencies)
     var expectedIsEmpty = true
     viewModel.onDidUpdateData = { isEmpty in
@@ -62,7 +62,7 @@ class TagsViewModelTests: XCTestCase {
 
   func testGettingNumberOfTags() {
     let tags = sampleTags()
-    tagService.expectedTopTags = tags
+    tagService.stubTopTags = tags
     let viewModel = TagsViewModel(dependencies: dependencies)
     viewModel.getTags()
     var expectedNumberOfTags = 0
@@ -74,7 +74,7 @@ class TagsViewModelTests: XCTestCase {
 
   func testGettingCellViewModel() {
     let tags = sampleTags()
-    tagService.expectedTopTags = tags
+    tagService.stubTopTags = tags
     let viewModel = TagsViewModel(dependencies: dependencies)
     var expectedCellViewModel: TagCellViewModel?
     viewModel.onDidUpdateData = { [unowned viewModel] _ in
@@ -94,7 +94,7 @@ class TagsViewModelTests: XCTestCase {
     }
 
     let tags = sampleTags()
-    tagService.expectedTopTags = tags
+    tagService.stubTopTags = tags
     let delegate = StubTagsViewModelDelegate()
     let viewModel = TagsViewModel(dependencies: dependencies)
     viewModel.delegate = delegate
@@ -108,7 +108,7 @@ class TagsViewModelTests: XCTestCase {
 
   func testPerformingSearch() {
     let tags = sampleTags()
-    tagService.expectedTopTags = tags
+    tagService.stubTopTags = tags
     let viewModel = TagsViewModel(dependencies: dependencies)
     var expectedNumberOfTags = 0
 
@@ -131,7 +131,7 @@ class TagsViewModelTests: XCTestCase {
 
   func testCancellingSearch() {
     let tags = sampleTags()
-    tagService.expectedTopTags = tags
+    tagService.stubTopTags = tags
     let viewModel = TagsViewModel(dependencies: dependencies)
     var expectedNumberOfTags = 0
 

@@ -12,37 +12,52 @@ import PromiseKit
 import RealmSwift
 
 class StubArtistService: ArtistServiceProtocol {
-  var expectedUser: String = ""
-  var expectedLimit: Int = 0
+  var user: String = ""
+  var limit: Int = 0
+  var getLibraryShouldReturnError = false
+  var progress = Progress()
+  var didRequestLibrary = false
   func getLibrary(for user: String, limit: Int, progress: ((Progress) -> Void)?) -> Promise<[Artist]> {
-    expectedUser = user
-    expectedLimit = limit
-    return Promise(value: [])
+    self.user = user
+    self.limit = limit
+    didRequestLibrary = true
+    if getLibraryShouldReturnError {
+      return Promise(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
+    } else {
+      progress?(self.progress)
+      return Promise(value: [])
+    }
   }
 
-  var expectedSavingArtists = [Artist]()
+  var savingArtists = [Artist]()
+  var didCallSaveArtists = false
   func saveArtists(_ artists: [Artist]) -> Promise<Void> {
-    expectedSavingArtists = artists
+    savingArtists = artists
+    didCallSaveArtists = true
     return Promise(value: ())
   }
 
-  var expectedArtistsNeedingTagsUpdate: [Artist] = []
+  var stubArtistsNeedingTagsUpdate: [Artist] = []
+  var didRequestArtistsNeedingTagsUpdate = false
   func artistsNeedingTagsUpdate() -> [Artist] {
-    return expectedArtistsNeedingTagsUpdate
+    didRequestArtistsNeedingTagsUpdate = true
+    return stubArtistsNeedingTagsUpdate
   }
 
-  var intersectingTopTagsExpectedArtist: Artist?
+  var intersectingTopTagsArtist: Artist?
   func artistsWithIntersectingTopTags(for artist: Artist) -> [Artist] {
-    intersectingTopTagsExpectedArtist = artist
+    intersectingTopTagsArtist = artist
     return []
   }
 
-  var expectedUpdatingArtist: Artist?
-  var expectedUpdatingTags: [Tag] = []
+  var updatingArtist: Artist?
+  var updatingTags: [Tag] = []
   var updateArtistShouldReturnError: Bool = false
+  var didCallUpdateArtist: Bool = false
   func updateArtist(_ artist: Artist, with tags: [Tag]) -> Promise<Artist> {
-    expectedUpdatingArtist = artist
-    expectedUpdatingTags = tags
+    updatingArtist = artist
+    updatingTags = tags
+    didCallUpdateArtist = true
     if updateArtistShouldReturnError {
       return Promise(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
     } else {
@@ -61,10 +76,12 @@ class StubArtistService: ArtistServiceProtocol {
     }
   }
 
-  var expectedCalculateTopTagsArtist: Artist?
+  var stubCalculateTopTagsArtist: Artist?
   var calculateTopTagsShouldReturnError: Bool = false
+  var didCallCalculateTopTags: Bool = false
   func calculateTopTags(for artist: Artist, using calculator: ArtistTopTagsCalculating) -> Promise<Void> {
-    expectedCalculateTopTagsArtist = artist
+    stubCalculateTopTagsArtist = artist
+    didCallCalculateTopTags = true
     if calculateTopTagsShouldReturnError {
       return Promise(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
     } else {

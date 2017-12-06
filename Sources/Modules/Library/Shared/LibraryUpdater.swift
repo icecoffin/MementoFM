@@ -53,8 +53,8 @@ class LibraryUpdater: LibraryUpdaterProtocol {
   var onDidChangeStatus: ((LibraryUpdateStatus) -> Void)?
   var onDidReceiveError: ((Error) -> Void)?
 
-  init(userService: UserServiceProtocol, artistService: ArtistServiceProtocol, tagService: TagService,
-       ignoredTagService: IgnoredTagServiceProtocol, trackService: TrackService, networkService: NetworkService) {
+  init(userService: UserServiceProtocol, artistService: ArtistServiceProtocol, tagService: TagServiceProtocol,
+       ignoredTagService: IgnoredTagServiceProtocol, trackService: TrackServiceProtocol, networkService: NetworkService) {
     self.userService = userService
     self.artistService = artistService
     self.tagService = tagService
@@ -124,8 +124,7 @@ class LibraryUpdater: LibraryUpdaterProtocol {
       }
       let ignoredTags = self.ignoredTagService.ignoredTags()
       let calculator = ArtistTopTagsCalculator(ignoredTags: ignoredTags)
-      self.artistService.updateArtist(requestProgress.artist,
-                                                   with: requestProgress.topTagsList.tags).then { artist in
+      self.artistService.updateArtist(requestProgress.artist, with: requestProgress.topTagsList.tags).then { artist in
         return self.artistService.calculateTopTags(for: artist, using: calculator)
       }.noError()
       let status: LibraryUpdateStatus = .tags(artistName: requestProgress.artist.name, progress: requestProgress.progress)

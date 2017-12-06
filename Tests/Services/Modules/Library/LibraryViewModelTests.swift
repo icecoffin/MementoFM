@@ -202,11 +202,11 @@ class LibraryViewModelTests: XCTestCase {
     tagsProgress.completedUnitCount = 1
     libraryUpdater.simulateStatusChange(.tags(artistName: "Artist", progress: tagsProgress))
 
-    let expectedStatuses = ["Getting library...",
-                            "Getting library: page 1 out of 10",
-                            "Getting recent tracks...",
-                            "Getting recent tracks: page 1 out of 10",
-                            "Getting tags for artists: 1 out of 10"]
+    let expectedStatuses = ["Getting library...".unlocalized,
+                            "Getting library: page 1 out of 10".unlocalized,
+                            "Getting recent tracks...".unlocalized,
+                            "Getting recent tracks: page 1 out of 10".unlocalized,
+                            "Getting tags for artists: 1 out of 10".unlocalized]
     expect(statuses).to(equal(expectedStatuses))
   }
 

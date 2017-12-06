@@ -14,15 +14,15 @@ class StubIgnoredTagService: IgnoredTagServiceProtocol {
   var defaultIgnoredTagNames: [String] = []
 
   var didRequestIgnoredTags = false
-  var expectedIgnoredTags: [IgnoredTag] = []
+  var stubIgnoredTags: [IgnoredTag] = []
   func ignoredTags() -> [IgnoredTag] {
     didRequestIgnoredTags = true
-    return expectedIgnoredTags
+    return stubIgnoredTags
   }
 
-  var expectedDefaultIgnoredTagNames: [String] = []
+  var createdDefaultIgnoredTagNames: [String] = []
   func createDefaultIgnoredTags(withNames names: [String]) -> Promise<Void> {
-    expectedDefaultIgnoredTagNames = names
+    createdDefaultIgnoredTagNames = names
     return Promise(value: ())
   }
 

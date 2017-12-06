@@ -37,7 +37,8 @@ class StubNetworkService<ResponseType>: NetworkService where ResponseType: Mappa
     return Promise(value: response)
   }
 
+  var didCancelPendingRequests = false
   func cancelPendingRequests() {
-
+    didCancelPendingRequests = true
   }
 }
