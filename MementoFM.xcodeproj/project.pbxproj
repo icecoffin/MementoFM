@@ -180,6 +180,7 @@
 		6555AB581ED0AC1600BDDF21 /* ArtistTagsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6555AB571ED0AC1600BDDF21 /* ArtistTagsCell.swift */; };
 		6557BD701F717D1300E08DD4 /* SimilarsSectionTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6557BD6F1F717D1300E08DD4 /* SimilarsSectionTabViewModel.swift */; };
 		655E97B91F3C6AEC003614C8 /* TagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655E97B81F3C6AEC003614C8 /* TagService.swift */; };
+		656401791FD862C700782788 /* ArtistInfoSectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656401781FD862C700782788 /* ArtistInfoSectionViewModelTests.swift */; };
 		656A5B2E1FD1A8BF00A98265 /* RecentTracksProcessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656A5B2D1FD1A8BF00A98265 /* RecentTracksProcessorTests.swift */; };
 		656A5B331FD1BD0800A98265 /* SyncViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656A5B321FD1BD0800A98265 /* SyncViewModelTests.swift */; };
 		656A5B351FD1BD1200A98265 /* StubLibraryUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656A5B341FD1BD1200A98265 /* StubLibraryUpdater.swift */; };
@@ -390,6 +391,7 @@
 		6555AB571ED0AC1600BDDF21 /* ArtistTagsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistTagsCell.swift; sourceTree = "<group>"; };
 		6557BD6F1F717D1300E08DD4 /* SimilarsSectionTabViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimilarsSectionTabViewModel.swift; sourceTree = "<group>"; };
 		655E97B81F3C6AEC003614C8 /* TagService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagService.swift; sourceTree = "<group>"; };
+		656401781FD862C700782788 /* ArtistInfoSectionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistInfoSectionViewModelTests.swift; sourceTree = "<group>"; };
 		656A5B2D1FD1A8BF00A98265 /* RecentTracksProcessorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTracksProcessorTests.swift; sourceTree = "<group>"; };
 		656A5B321FD1BD0800A98265 /* SyncViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncViewModelTests.swift; sourceTree = "<group>"; };
 		656A5B341FD1BD1200A98265 /* StubLibraryUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubLibraryUpdater.swift; sourceTree = "<group>"; };
@@ -1211,6 +1213,14 @@
 			path = Tag;
 			sourceTree = "<group>";
 		};
+		656401771FD8625800782788 /* Artist */ = {
+			isa = PBXGroup;
+			children = (
+				656401781FD862C700782788 /* ArtistInfoSectionViewModelTests.swift */,
+			);
+			path = Artist;
+			sourceTree = "<group>";
+		};
 		656A5B2C1FD1A8A100A98265 /* Library */ = {
 			isa = PBXGroup;
 			children = (
@@ -1234,6 +1244,7 @@
 			isa = PBXGroup;
 			children = (
 				653346FF1FB6166A0020DC82 /* Service Stubs */,
+				656401771FD8625800782788 /* Artist */,
 				6574CD5D1FB4B40200B7ABE9 /* Ignored Tags */,
 				656D2F031FB211CA0096DE27 /* Enter Username */,
 				656A5B2C1FD1A8A100A98265 /* Library */,
@@ -1718,6 +1729,7 @@
 				656D2F051FB211DC0096DE27 /* EnterUsernameViewModelTests.swift in Sources */,
 				656A5B2E1FD1A8BF00A98265 /* RecentTracksProcessorTests.swift in Sources */,
 				65A305C41F9B383900E1D9C4 /* RealmServiceTests.swift in Sources */,
+				656401791FD862C700782788 /* ArtistInfoSectionViewModelTests.swift in Sources */,
 				651889551FAF58D5006964E0 /* TagEmptyStubRepository.swift in Sources */,
 				651742141FA59C17004FCFF4 /* TagServiceTests.swift in Sources */,
 				6517A3C81EBCE5DA002BC634 /* RealmHelpers.swift in Sources */,
