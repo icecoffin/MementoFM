@@ -57,7 +57,7 @@ class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol {
   }
 
   func getSimilarArtists() {
-    if !isLoading, cellViewModels.isEmpty {
+    if !isLoading && cellViewModels.isEmpty {
       calculateSimilarArtists()
     } else {
       onDidUpdateData?()
@@ -90,6 +90,8 @@ class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol {
         return first.artist.playcount > second.artist.playcount
       }
       return commonTagsCount1 > commonTagsCount2
-    }).map({ (artist, commonTags) in SimilarArtistCellViewModel(artist: artist, commonTags: commonTags) })
+    }).map({ (artist, commonTags) in
+      SimilarArtistCellViewModel(artist: artist, commonTags: commonTags)
+    })
   }
 }
