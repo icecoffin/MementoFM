@@ -45,9 +45,10 @@ class StubArtistService: ArtistServiceProtocol {
   }
 
   var intersectingTopTagsArtist: Artist?
+  var stubArtistsWithIntersectingTopTags: [Artist] = []
   func artistsWithIntersectingTopTags(for artist: Artist) -> [Artist] {
     intersectingTopTagsArtist = artist
-    return []
+    return stubArtistsWithIntersectingTopTags
   }
 
   var updatingArtist: Artist?
@@ -100,13 +101,14 @@ class StubArtistService: ArtistServiceProtocol {
   var expectedSimilarArtistsArtist: Artist?
   var expectedSimilarArtistsLimit: Int = 0
   var getSimilarArtistsShouldReturnError: Bool = false
+  var stubSimilarArtists: [Artist] = []
   func getSimilarArtists(for artist: Artist, limit: Int) -> Promise<[Artist]> {
     expectedSimilarArtistsArtist = artist
     expectedSimilarArtistsLimit = limit
     if getSimilarArtistsShouldReturnError {
       return Promise(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
     } else {
-      return Promise(value: [])
+      return Promise(value: stubSimilarArtists)
     }
   }
 }

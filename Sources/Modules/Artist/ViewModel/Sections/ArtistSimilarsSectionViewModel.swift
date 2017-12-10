@@ -33,7 +33,7 @@ class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtocol {
   typealias Dependencies = HasArtistService
 
   private var tabViewModels: [ArtistSimilarsSectionViewModelProtocol] = []
-  private(set) var currentTabViewModel: ArtistSimilarsSectionViewModelProtocol
+  private(set) lazy var currentTabViewModel: ArtistSimilarsSectionViewModelProtocol = self.tabViewModels[0]
 
   var onDidUpdateData: (() -> Void)?
   var onDidReceiveError: ((Error) -> Void)?
@@ -60,20 +60,10 @@ class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtocol {
     return currentTabViewModel.emptyDataSetText
   }
 
-  init(artist: Artist, dependencies: Dependencies) {
-    let localRequestStrategy = SimilarArtistsLocalRequestStrategy(dependencies: dependencies)
-    let localTabViewModel = SimilarsSectionTabViewModel(artist: artist,
-                                                        requestStrategy: localRequestStrategy,
-                                                        dependencies: dependencies)
-
-    let remoteRequestStrategy = SimilarArtistsRemoteRequestStrategy(dependencies: dependencies)
-    let lastFMTabViewModel = SimilarsSectionTabViewModel(artist: artist,
-                                                         requestStrategy: remoteRequestStrategy,
-                                                         dependencies: dependencies)
-    currentTabViewModel = localTabViewModel
-
-    tabViewModels = [localTabViewModel, lastFMTabViewModel]
-    localTabViewModel.delegate = self
+  init(artist: Artist,
+       tabViewModelFactory: ArtistSimilarsSectionTabViewModelFactoryProtocol = ArtistSimilarsSectionTabViewModelFactory(),
+       dependencies: Dependencies) {
+    tabViewModels = tabViewModelFactory.makeTabViewModels(for: artist, dependencies: dependencies, delegate: self)
     setup()
   }
 
