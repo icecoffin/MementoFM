@@ -1,23 +1,23 @@
 PODS:
-  - Alamofire (4.5.1)
-  - Kingfisher (4.1.1)
-  - ModelMapper (7.2.0)
-  - Nimble (7.0.2)
-  - PromiseKit/Alamofire (4.4.3):
+  - Alamofire (4.6.0)
+  - Kingfisher (4.6.1)
+  - ModelMapper (7.4.0)
+  - Nimble (7.0.3)
+  - PromiseKit/Alamofire (4.5.1):
     - Alamofire (~> 4.0)
     - PromiseKit/CorePromise
-  - PromiseKit/CorePromise (4.4.3)
-  - Realm (3.0.0):
-    - Realm/Headers (= 3.0.0)
-  - Realm/Headers (3.0.0)
-  - RealmSwift (3.0.0):
-    - Realm (= 3.0.0)
+  - PromiseKit/CorePromise (4.5.1)
+  - Realm (3.0.2):
+    - Realm/Headers (= 3.0.2)
+  - Realm/Headers (3.0.2)
+  - RealmSwift (3.0.2):
+    - Realm (= 3.0.2)
   - SnapKit (4.0.0)
-  - Sourcery (0.9.0)
+  - Sourcery (0.10.1)
   - SVProgressHUD (2.2.2)
-  - SwiftLint (0.23.1)
-  - SwiftyBeaver (1.4.2)
-  - TPKeyboardAvoiding (1.3.1)
+  - SwiftLint (0.24.0)
+  - SwiftyBeaver (1.5.1)
+  - TPKeyboardAvoiding (1.3.2)
   - UICollectionViewLeftAlignedLayout (1.0.2)
 
 DEPENDENCIES:
@@ -35,19 +35,19 @@ DEPENDENCIES:
   - UICollectionViewLeftAlignedLayout
 
 SPEC CHECKSUMS:
-  Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
-  Kingfisher: 6793a473357b5dbee42b0068ef203fe8325f259e
-  ModelMapper: bef729f9c7095cadffc3c2ef9432fc5e21d8fc60
-  Nimble: bfe1f814edabba69ff145cb1283e04ed636a67f2
-  PromiseKit: fbb52a0d154402c57eeb6eccd36dd7724fcf6117
-  Realm: dec0de73be8c57506e39db72694d513c189493b3
-  RealmSwift: 44a7090b16d1b22a406c6bf129bdd602db1bbecc
+  Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
+  Kingfisher: 1f9157d9c02b380cbd0b7cc890161195164eb634
+  ModelMapper: 467f49f6f187b4e6cde2599e7cc5968cefa3f19b
+  Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
+  PromiseKit: 445dac9b2c3c3b4b31b5f842bc325700b848a8bd
+  Realm: 6f23fd1f178a09342eac21bfa7c2bf4312a7a180
+  RealmSwift: 695393add1b8f9d5fa75dd16e6355cf3935f71e2
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
-  Sourcery: e3829460a1fa0bcd3b689e6087a89cc063cd2289
+  Sourcery: ac71ac4d490f62fd381a9f3b558f3093d91bddd5
   SVProgressHUD: 59b2d3dabacbd051576d21d32293ca7228dc18b0
-  SwiftLint: 1b670ce79284c76520f84060e87d645078fd32fa
-  SwiftyBeaver: 91057725648ee4980308f1650af077d04b3654a0
-  TPKeyboardAvoiding: 0d6af20e95e2850f4c621841225b59ec7d8dd852
+  SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
+  SwiftyBeaver: 4f74563624b2c1e821c522c54142b5dd5ebb0f30
+  TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
   UICollectionViewLeftAlignedLayout: 830bf6fa5bab9f9b464f62e3384f9d2e00b3c0f6
 
 PODFILE CHECKSUM: fcbb568e9c355f0e2818cae324e25d400bab2490
