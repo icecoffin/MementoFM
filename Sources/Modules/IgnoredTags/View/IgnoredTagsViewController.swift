@@ -66,6 +66,10 @@ class IgnoredTagsViewController: UIViewController {
       HUD.dismiss()
     }
 
+    viewModel.onDidReceiveError = { [unowned self] error in
+      self.showAlert(for: error)
+    }
+
     viewModel.onDidAddNewTag = { [unowned self] indexPath in
       self.tableView.beginUpdates()
       self.tableView.insertRows(at: [indexPath], with: .automatic)

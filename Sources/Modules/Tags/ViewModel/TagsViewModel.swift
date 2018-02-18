@@ -34,7 +34,7 @@ class TagsViewModel {
       self.createCellViewModels(from: allTopTags, searchText: searchText)
     }.done(on: DispatchQueue.main) {
       self.onDidUpdateData?(self.filteredCellViewModels.isEmpty)
-    }.noError()
+    }
   }
 
   var numberOfTags: Int {

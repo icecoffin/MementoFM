@@ -1,5 +1,5 @@
 //
-//  Promise+Void.swift
+//  Promise+NoError.swift
 //  MementoFM
 //
 //  Created by Daniel on 20/04/2017.

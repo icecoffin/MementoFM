@@ -27,6 +27,7 @@ class IgnoredTagsViewModel {
 
   var onDidStartSavingChanges: (() -> Void)?
   var onDidFinishSavingChanges: (() -> Void)?
+  var onDidReceiveError: ((Error) -> Void)?
   var onDidAddNewTag: ((IndexPath) -> Void)?
   var onDidUpdateTagCount: ((_ isEmpty: Bool) -> Void)?
 
@@ -41,7 +42,9 @@ class IgnoredTagsViewModel {
   private func addDefaultTags() {
     dependencies.ignoredTagService.createDefaultIgnoredTags().done {
       self.ignoredTags = self.dependencies.ignoredTagService.ignoredTags()
-    }.noError()
+    }.catch { error in
+      self.onDidReceiveError?(error)
+    }
   }
 
   var numberOfIgnoredTags: Int {
@@ -92,6 +95,8 @@ class IgnoredTagsViewModel {
     }.done { [unowned self] _ -> Void in
       self.onDidFinishSavingChanges?()
       self.delegate?.ignoredTagsViewModelDidSaveChanges(self)
-    }.noError()
+    }.catch { error in
+      self.onDidReceiveError?(error)
+    }
   }
 }

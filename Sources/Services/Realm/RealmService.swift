@@ -29,24 +29,21 @@ class RealmService {
   }
 
   // MARK: - Writing to Realm
-  // TODO: guarantee
   fileprivate func write(block: @escaping (Realm) -> Void) -> Promise<Void> {
     return DispatchQueue.global().async(.promise) {
-      self.write(to: self.currentQueueRealm) { realm in
+      try self.write(to: self.currentQueueRealm) { realm in
         block(realm)
       }
     }.then(on: DispatchQueue.main) { _ -> Promise<Void> in
       return .value(())
+    }.recover(on: DispatchQueue.main) { error in
+      return Promise(error: error)
     }
   }
 
-  fileprivate func write(to realm: Realm, block: (Realm) -> Void) {
-    do {
-      try realm.write {
-        block(realm)
-      }
-    } catch {
-      fatalError("Can't write to Realm")
+  fileprivate func write(to realm: Realm, block: (Realm) -> Void) throws {
+    try realm.write {
+      block(realm)
     }
   }
 
