@@ -29,13 +29,14 @@ class RealmService {
   }
 
   // MARK: - Writing to Realm
+  // TODO: guarantee
   fileprivate func write(block: @escaping (Realm) -> Void) -> Promise<Void> {
-    return DispatchQueue.global().promise {
+    return DispatchQueue.global().async(.promise) {
       self.write(to: self.currentQueueRealm) { realm in
         block(realm)
       }
-    }.then(on: DispatchQueue.main) {
-      return .void
+    }.then(on: DispatchQueue.main) { _ -> Promise<Void> in
+      return .value(())
     }
   }
 

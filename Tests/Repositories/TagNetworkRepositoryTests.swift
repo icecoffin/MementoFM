@@ -18,7 +18,7 @@ class TagNetworkRepositoryTests: XCTestCase {
     let response = TopTagsResponse(topTagsList: topTagsList)
     let networkService = StubNetworkService(response: response)
     let tagRepository = TagNetworkRepository(networkService: networkService)
-    tagRepository.getTopTags(for: "Artist").then { _ -> Void in
+    tagRepository.getTopTags(for: "Artist").done { _ in
       let expectedParameters: [String: AnyHashable] = ["method": "artist.gettoptags",
                                                        "api_key": Keys.LastFM.apiKey,
                                                        "artist": "Artist",

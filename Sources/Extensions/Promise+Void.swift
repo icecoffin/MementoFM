@@ -10,10 +10,6 @@ import Foundation
 import PromiseKit
 
 extension Promise {
-  static var void: Promise<Void> {
-    return Promise<Void>(value: ())
-  }
-
   @discardableResult func noError() -> Promise<T> {
     return self
   }

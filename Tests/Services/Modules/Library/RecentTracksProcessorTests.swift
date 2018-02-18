@@ -38,7 +38,7 @@ class RecentTracksProcessorTests: XCTestCase {
       self.realmService.save(artists).then { _ -> Promise<Void> in
         let recentTracksProcessor = RecentTracksProcessor()
         return recentTracksProcessor.process(tracks: tracks, using: self.realmService)
-      }.then { _ -> Void in
+      }.done { _ in
         let artists = self.realmService.objects(Artist.self)
         expect(artists.count).to(equal(3))
         expect(artists[0].playcount).to(equal(3))

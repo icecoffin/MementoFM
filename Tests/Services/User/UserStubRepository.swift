@@ -19,7 +19,7 @@ class UserStubRepository: UserRepository {
 
   func checkUserExists(withUsername username: String) -> Promise<EmptyResponse> {
     if shouldFinishWithSuccess {
-      return Promise(value: EmptyResponse())
+      return .value(EmptyResponse())
     } else {
       let error = NSError(domain: "MementoFM", code: 6, userInfo: nil)
       return Promise(error: error)

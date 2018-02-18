@@ -16,7 +16,7 @@ class RecentTracksStubProcessor: RecentTracksProcessing {
 
   func process(tracks: [Track], using realmService: RealmService) -> Promise<Void> {
     didCallProcess = true
-    return Promise(value: ())
+    return .value(())
   }
 }
 
@@ -49,7 +49,7 @@ class TrackServiceTests: XCTestCase {
     waitUntil { done in
       trackService.getRecentTracks(for: "User", from: 0, limit: limit) { _ in
         progressCallCount += 1
-      }.then { tracks -> Void in
+      }.done { tracks in
         expect(progressCallCount).to(equal(totalPages - 1))
 
         let expectedTracks = (0..<totalPages).flatMap { _ in ModelFactory.generateTracks(inAmount: limit) }
@@ -69,7 +69,7 @@ class TrackServiceTests: XCTestCase {
     let trackService = TrackService(realmService: realmService, repository: trackRepository)
 
     waitUntil { done in
-      trackService.getRecentTracks(for: "User", from: 0, limit: limit).then { _ in
+      trackService.getRecentTracks(for: "User", from: 0, limit: limit).done { _ in
         fail()
       }.catch { error in
         expect(error).toNot(beNil())
@@ -82,7 +82,7 @@ class TrackServiceTests: XCTestCase {
     let trackService = TrackService(realmService: realmService, repository: TrackEmptyStubRepository())
 
     let processor = RecentTracksStubProcessor()
-    trackService.processTracks([], using: processor).then {
+    trackService.processTracks([], using: processor).done { _ in
       expect(processor.didCallProcess).to(beTrue())
     }.noError()
   }

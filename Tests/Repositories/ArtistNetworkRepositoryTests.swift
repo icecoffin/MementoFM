@@ -18,7 +18,7 @@ class ArtistNetworkRepositoryTests: XCTestCase {
     let response = LibraryPageResponse(libraryPage: libraryPage)
     let networkService = StubNetworkService(response: response)
     let artistRepository = ArtistNetworkRepository(networkService: networkService)
-    artistRepository.getLibraryPage(withIndex: 1, for: "User", limit: 10).then { _ -> Void in
+    artistRepository.getLibraryPage(withIndex: 1, for: "User", limit: 10).done { _ in
       let expectedParameters: [String: AnyHashable] = ["method": "library.getartists",
                                                        "api_key": Keys.LastFM.apiKey,
                                                        "user": "User",
@@ -38,7 +38,7 @@ class ArtistNetworkRepositoryTests: XCTestCase {
     let artistRepository = ArtistNetworkRepository(networkService: networkService)
 
     let artist = ModelFactory.generateArtist()
-    artistRepository.getSimilarArtists(for: artist, limit: 10).then { _ -> Void in
+    artistRepository.getSimilarArtists(for: artist, limit: 10).done { _ in
       let expectedParameters: [String: AnyHashable] = ["method": "artist.getsimilar",
                                                        "api_key": Keys.LastFM.apiKey,
                                                        "artist": artist.name,

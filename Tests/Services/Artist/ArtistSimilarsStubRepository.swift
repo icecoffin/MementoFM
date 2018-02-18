@@ -30,7 +30,7 @@ class ArtistSimilarsStubRepository: ArtistRepository {
       let similarArtists = similarArtistProvider()
       let similarArtistList = SimilarArtistList(similarArtists: similarArtists)
       let response = SimilarArtistListResponse(similarArtistList: similarArtistList)
-      return Promise(value: response)
+      return .value(response)
     }
   }
 }

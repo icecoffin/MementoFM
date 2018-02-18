@@ -30,26 +30,22 @@ class TagService: TagServiceProtocol {
   }
 
   func getTopTags(for artists: [Artist], progress: ((TopTagsRequestProgress) -> Void)?) -> Promise<Void> {
-    return Promise { fulfill, reject in
+    return Promise { seal in
       let totalProgress = Progress(totalUnitCount: Int64(artists.count))
 
       let promises = artists.map { artist in
-        return repository.getTopTags(for: artist.name).then { topTagsResponse -> Void in
+        return repository.getTopTags(for: artist.name).done { topTagsResponse -> Void in
           totalProgress.completedUnitCount += 1
           let topTagsList = topTagsResponse.topTagsList
           progress?(TopTagsRequestProgress(progress: totalProgress, artist: artist, topTagsList: topTagsList))
-        }.catch { error in
-          if !error.isCancelledError {
-            reject(error)
-          }
         }
       }
 
-      when(fulfilled: promises).then { _ in
-        fulfill(())
+      when(fulfilled: promises).done { _ in
+        seal.fulfill(())
       }.catch { error in
-        if !error.isCancelledError {
-          reject(error)
+        if !error.isCancelled {
+          seal.reject(error)
         }
       }
     }

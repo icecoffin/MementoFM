@@ -40,7 +40,7 @@ class SimilarArtistsLocalRequestStrategyTests: XCTestCase {
     artistService.stubArtistsWithIntersectingTopTags = similarArtists
     let strategy = SimilarArtistsLocalRequestStrategy(dependencies: dependencies)
     var expectedSimilarArtists: [Artist] = []
-    strategy.getSimilarArtists(for: sampleArtist).then { artists in
+    strategy.getSimilarArtists(for: sampleArtist).done { artists in
       expectedSimilarArtists = artists
     }.noError()
     expect(expectedSimilarArtists).toEventually(equal(similarArtists))

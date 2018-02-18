@@ -29,7 +29,7 @@ class TrackStubRepository: TrackRepository {
       let tracks = trackProvider()
       let recentTracksPage = RecentTracksPage(index: index, totalPages: totalPages, tracks: tracks)
       let response = RecentTracksPageResponse(recentTracksPage: recentTracksPage)
-      return Promise(value: response)
+      return .value(response)
     }
   }
 }

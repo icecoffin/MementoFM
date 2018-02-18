@@ -34,7 +34,7 @@ class StubNetworkService<ResponseType>: NetworkService where ResponseType: Mappa
     guard let response = response as? T else {
       fatalError("ResponseType should be the same as performRequest response type")
     }
-    return Promise(value: response)
+    return .value(response)
   }
 
   var didCancelPendingRequests = false

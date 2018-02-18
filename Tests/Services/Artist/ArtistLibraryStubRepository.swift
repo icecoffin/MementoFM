@@ -28,7 +28,7 @@ class ArtistLibraryStubRepository: ArtistRepository {
       let artists = artistProvider(index)
       let libraryPage = LibraryPage(index: index, totalPages: totalPages, artists: artists)
       let response = LibraryPageResponse(libraryPage: libraryPage)
-      return Promise(value: response)
+      return .value(response)
     }
   }
 

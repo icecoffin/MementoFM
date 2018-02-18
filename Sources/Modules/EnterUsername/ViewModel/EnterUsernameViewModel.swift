@@ -66,15 +66,15 @@ class EnterUsernameViewModel {
   func submitUsername() {
     let userService = dependencies.userService
     onDidStartRequest?()
-    userService.checkUserExists(withUsername: currentUsername).then { _ in
+    userService.checkUserExists(withUsername: currentUsername).then { _ -> Promise<Void> in
       userService.username = self.currentUsername
       return userService.clearUserData()
-    }.then {
+    }.done {
       self.delegate?.enterUsernameViewModelDidFinish(self)
+    }.ensure {
+      self.onDidFinishRequest?()
     }.catch { error in
       self.onDidReceiveError?(error)
-    }.always {
-      self.onDidFinishRequest?()
     }
   }
 }

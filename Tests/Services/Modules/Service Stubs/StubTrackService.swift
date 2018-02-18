@@ -21,7 +21,7 @@ class StubTrackService: TrackServiceProtocol {
     self.from = from
     self.limit = limit
     didCallGetRecentTracks = true
-    return Promise(value: stubRecentTracks)
+    return .value(stubRecentTracks)
   }
 
   var tracks: [Track] = []
@@ -29,7 +29,7 @@ class StubTrackService: TrackServiceProtocol {
   func processTracks(_ tracks: [Track], using processor: RecentTracksProcessing) -> Promise<Void> {
     self.tracks = tracks
     didCallProcessTracks = true
-    return Promise(value: ())
+    return .value(())
   }
 
 }

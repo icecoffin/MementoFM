@@ -21,14 +21,14 @@ class StubUserService: UserServiceProtocol {
   var didCallClearUserData = false
   func clearUserData() -> Promise<Void> {
     didCallClearUserData = true
-    return Promise(value: ())
+    return .value(())
   }
 
   var usernameBeingChecked = ""
   func checkUserExists(withUsername username: String) -> Promise<EmptyResponse> {
     usernameBeingChecked = username
     if shouldFinishWithSuccess {
-      return Promise(value: EmptyResponse())
+      return .value(EmptyResponse())
     } else {
       return Promise(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
     }

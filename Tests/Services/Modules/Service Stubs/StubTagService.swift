@@ -20,7 +20,7 @@ class StubTagService: TagServiceProtocol {
       progress?(stubProgress)
     }
     didRequestTopTags = true
-    return Promise(value: ())
+    return .value(())
   }
 
   var stubTopTags: [Tag] = []

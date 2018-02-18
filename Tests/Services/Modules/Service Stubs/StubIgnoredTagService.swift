@@ -23,12 +23,12 @@ class StubIgnoredTagService: IgnoredTagServiceProtocol {
   var createdDefaultIgnoredTagNames: [String] = []
   func createDefaultIgnoredTags(withNames names: [String]) -> Promise<Void> {
     createdDefaultIgnoredTagNames = names
-    return Promise(value: ())
+    return .value(())
   }
 
   var updatedIgnoredTags: [IgnoredTag] = []
   func updateIgnoredTags(_ ignoredTags: [IgnoredTag]) -> Promise<Void> {
     updatedIgnoredTags = ignoredTags
-    return Promise(value: ())
+    return .value(())
   }
 }

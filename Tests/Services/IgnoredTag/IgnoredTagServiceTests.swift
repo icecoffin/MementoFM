@@ -33,7 +33,7 @@ class IgnoredTagServiceTests: XCTestCase {
     let ignoredTags = ModelFactory.generateIgnoredTags(inAmount: 5)
 
     waitUntil { done in
-      self.realmService.save(ignoredTags).then { _ -> Void in
+      self.realmService.save(ignoredTags).done { _ in
         let expectedIgnoredTags = self.ignoredTagService.ignoredTags()
         expect(expectedIgnoredTags).to(equal(ignoredTags))
         done()
@@ -45,7 +45,7 @@ class IgnoredTagServiceTests: XCTestCase {
     let ignoredTagNames = ["tag1", "tag2"]
 
     waitUntil { done in
-      self.ignoredTagService.createDefaultIgnoredTags(withNames: ignoredTagNames).then { _ -> Void in
+      self.ignoredTagService.createDefaultIgnoredTags(withNames: ignoredTagNames).done { _ in
         let expectedIgnoredTagNames = self.realmService.objects(IgnoredTag.self).map { $0.name }
         expect(expectedIgnoredTagNames).to(equal(ignoredTagNames))
         done()
@@ -62,7 +62,7 @@ class IgnoredTagServiceTests: XCTestCase {
         self.realmService.save(originalIgnoredTags)
       }.then {
         self.ignoredTagService.updateIgnoredTags(updatedIgnoredTags)
-      }.then { _ -> Void in
+      }.done { _ in
         let expectedIgnoredTags = self.ignoredTagService.ignoredTags()
         expect(expectedIgnoredTags).to(equal(updatedIgnoredTags))
         done()

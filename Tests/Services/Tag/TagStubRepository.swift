@@ -26,7 +26,7 @@ class TagStubRepository: TagRepository {
       let tags = tagProvider(artist)
       let topTagsList = TopTagsList(tags: tags)
       let response = TopTagsResponse(topTagsList: topTagsList)
-      return Promise(value: response)
+      return .value(response)
     }
   }
 }

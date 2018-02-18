@@ -37,13 +37,13 @@ class TrackService: TrackServiceProtocol {
                        from: TimeInterval,
                        limit: Int = 200,
                        progress: ((Progress) -> Void)? = nil) -> Promise<[Track]> {
-    return Promise { fulfill, reject in
+    return Promise { seal in
       let initialIndex = 1
       repository.getRecentTracksPage(withIndex: initialIndex, for: user,
-                                     from: from, limit: limit).then { [unowned self] response -> Void in
+                                     from: from, limit: limit).done { [unowned self] response -> Void in
         let page = response.recentTracksPage
         if page.totalPages <= initialIndex {
-          fulfill(page.tracks)
+          seal.fulfill(page.tracks)
           return
         }
 
@@ -55,18 +55,18 @@ class TrackService: TrackServiceProtocol {
           }
         }
 
-        when(fulfilled: pagePromises).then { pageResponses -> Void in
+        when(fulfilled: pagePromises).done { pageResponses -> Void in
           let pages = pageResponses.map({ $0.recentTracksPage })
           let tracks = ([page] + pages).flatMap({ $0.tracks })
-          fulfill(tracks)
+          seal.fulfill(tracks)
         }.catch { error in
-          if !error.isCancelledError {
-            reject(error)
+          if !error.isCancelled {
+            seal.reject(error)
           }
         }
       }.catch { error in
-        if !error.isCancelledError {
-          reject(error)
+        if !error.isCancelled {
+          seal.reject(error)
         }
       }
     }

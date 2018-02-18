@@ -24,22 +24,22 @@ class LastFMNetworkService: NetworkService {
                                    parameters: Parameters?,
                                    encoding: ParameterEncoding,
                                    headers: HTTPHeaders?) -> Promise<T> {
-    return Promise { fulfill, reject in
+    return Promise { seal in
       let operation = LastFMNetworkOperation<T>(url: baseURL,
                                                 parameters: parameters,
                                                 encoding: encoding,
                                                 headers: headers) { result in
         switch result {
         case .success(let response):
-          fulfill(response)
+          seal.fulfill(response)
         case .failure(let error):
-          if !error.isCancelledError {
-            reject(error)
+          if !error.isCancelled {
+            seal.reject(error)
           }
         }
       }
       operation.onCancel = {
-        reject(NSError.cancelledError())
+        seal.reject(PMKError.cancelled)
       }
       queue.addOperation(operation)
     }

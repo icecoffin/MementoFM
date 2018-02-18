@@ -57,12 +57,12 @@ class ArtistService: ArtistServiceProtocol {
   }
 
   func getLibrary(for user: String, limit: Int, progress: ((Progress) -> Void)?) -> Promise<[Artist]> {
-    return Promise { fulfill, reject in
+    return Promise { seal in
       let initialIndex = 1
-      repository.getLibraryPage(withIndex: initialIndex, for: user, limit: limit).then { [unowned self] pageResponse -> Void in
+      repository.getLibraryPage(withIndex: initialIndex, for: user, limit: limit).done { [unowned self] pageResponse -> Void in
         let page = pageResponse.libraryPage
         if page.totalPages <= initialIndex {
-          fulfill(page.artists)
+          seal.fulfill(page.artists)
           return
         }
 
@@ -74,18 +74,18 @@ class ArtistService: ArtistServiceProtocol {
           }
         }
 
-        when(fulfilled: pagePromises).then { pageResponses -> Void in
+        when(fulfilled: pagePromises).done { pageResponses -> Void in
           let pages = pageResponses.map({ $0.libraryPage })
           let artists = ([page] + pages).flatMap { $0.artists }
-          fulfill(artists)
+          seal.fulfill(artists)
         }.catch { error in
-          if !error.isCancelledError {
-            reject(error)
+          if !error.isCancelled {
+            seal.reject(error)
           }
         }
       }.catch { error in
-        if !error.isCancelledError {
-          reject(error)
+        if !error.isCancelled {
+          seal.reject(error)
         }
       }
     }
@@ -108,13 +108,13 @@ class ArtistService: ArtistServiceProtocol {
 
   func updateArtist(_ artist: Artist, with tags: [Tag]) -> Promise<Artist> {
     let updatedArtist = artist.updatingTags(to: tags, needsTagsUpdate: false)
-    return self.realmService.save(updatedArtist).then {
-      return updatedArtist
+    return self.realmService.save(updatedArtist).then { _ -> Promise<Artist> in
+      return .value(updatedArtist)
     }
   }
 
   func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating) -> Promise<Void> {
-    return DispatchQueue.global().promise { () -> [Artist] in
+    return DispatchQueue.global().async(.promise) { () -> [Artist] in
       let artists = self.realmService.objects(Artist.self)
       return artists.map({ return calculator.calculateTopTags(for: $0) })
     }.then { artists in
@@ -133,11 +133,11 @@ class ArtistService: ArtistServiceProtocol {
   }
 
   func getSimilarArtists(for artist: Artist, limit: Int) -> Promise<[Artist]> {
-    return repository.getSimilarArtists(for: artist, limit: limit).then { response in
+    return repository.getSimilarArtists(for: artist, limit: limit).then { response -> Promise<[Artist]> in
       let artistNames = response.similarArtistList.similarArtists.map({ $0.name })
       let predicate = NSPredicate(format: "name in %@", artistNames)
       let artists = self.realmService.objects(Artist.self, filteredBy: predicate)
-      return Promise(value: artists)
+      return .value(artists)
     }
   }
 }

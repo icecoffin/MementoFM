@@ -19,7 +19,7 @@ class StubSimilarArtistsRequestStrategy: SimilarArtistsRequestStrategy {
     if getSimilarArtistsShouldReturnError {
       return Promise(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
     } else {
-      return Promise(value: stubSimilarArtists)
+      return .value(stubSimilarArtists)
     }
   }
 }

@@ -40,7 +40,7 @@ class SimilarArtistsRemoteRequestStrategyTests: XCTestCase {
     artistService.stubSimilarArtists = similarArtists
     let strategy = SimilarArtistsRemoteRequestStrategy(dependencies: dependencies)
     var expectedSimilarArtists: [Artist] = []
-    strategy.getSimilarArtists(for: sampleArtist).then { artists in
+    strategy.getSimilarArtists(for: sampleArtist).done { artists in
       expectedSimilarArtists = artists
     }.noError()
     expect(expectedSimilarArtists).toEventually(equal(similarArtists))

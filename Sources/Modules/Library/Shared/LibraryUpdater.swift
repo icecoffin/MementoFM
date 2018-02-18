@@ -67,11 +67,11 @@ class LibraryUpdater: LibraryUpdaterProtocol {
     onDidStartLoading?()
     requestLibrary().then {
       return self.getArtistsTags()
-    }.then { [unowned self] _ in
+    }.done { [unowned self] _ in
       self.onDidFinishLoading?()
     }.catch { [unowned self] error in
       self.onDidReceiveError?(error)
-    }.always {
+    }.finally {
       self.isFirstUpdate = false
     }
   }

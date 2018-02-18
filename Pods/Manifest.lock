@@ -1,21 +1,21 @@
 PODS:
   - Alamofire (4.6.0)
-  - Kingfisher (4.6.1)
-  - ModelMapper (7.4.0)
+  - Kingfisher (4.6.2)
+  - ModelMapper (7.4.1)
   - Nimble (7.0.3)
-  - PromiseKit/Alamofire (4.5.1):
+  - PromiseKit/Alamofire (6.0.2):
     - Alamofire (~> 4.0)
     - PromiseKit/CorePromise
-  - PromiseKit/CorePromise (4.5.1)
-  - Realm (3.0.2):
-    - Realm/Headers (= 3.0.2)
-  - Realm/Headers (3.0.2)
-  - RealmSwift (3.0.2):
-    - Realm (= 3.0.2)
+  - PromiseKit/CorePromise (6.0.2)
+  - Realm (3.1.1):
+    - Realm/Headers (= 3.1.1)
+  - Realm/Headers (3.1.1)
+  - RealmSwift (3.1.1):
+    - Realm (= 3.1.1)
   - SnapKit (4.0.0)
   - Sourcery (0.10.1)
-  - SVProgressHUD (2.2.2)
-  - SwiftLint (0.24.0)
+  - SVProgressHUD (2.2.3)
+  - SwiftLint (0.25.0)
   - SwiftyBeaver (1.5.1)
   - TPKeyboardAvoiding (1.3.2)
   - UICollectionViewLeftAlignedLayout (1.0.2)
@@ -36,20 +36,20 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
-  Kingfisher: 1f9157d9c02b380cbd0b7cc890161195164eb634
-  ModelMapper: 467f49f6f187b4e6cde2599e7cc5968cefa3f19b
+  Kingfisher: 55b9c395bf8d3949676ad3861111923990ab68cf
+  ModelMapper: e576b4e32007bf574d0f9e4f533d29c46d29f146
   Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
-  PromiseKit: 445dac9b2c3c3b4b31b5f842bc325700b848a8bd
-  Realm: 6f23fd1f178a09342eac21bfa7c2bf4312a7a180
-  RealmSwift: 695393add1b8f9d5fa75dd16e6355cf3935f71e2
+  PromiseKit: fb2f518a7e868eacddfd3a08c38fe81eff25f92c
+  Realm: 42d1c38a5b1bbcc828b48a7ce702cb86fc68adf4
+  RealmSwift: d31937ca6a6ee54acde64ec839523c0a3c04924b
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   Sourcery: ac71ac4d490f62fd381a9f3b558f3093d91bddd5
-  SVProgressHUD: 59b2d3dabacbd051576d21d32293ca7228dc18b0
-  SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
+  SVProgressHUD: a5eaeff664a82dda89809c409ace40183ce91523
+  SwiftLint: e14651157288e9e01d6e1a71db7014fb5744a8ea
   SwiftyBeaver: 4f74563624b2c1e821c522c54142b5dd5ebb0f30
   TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
   UICollectionViewLeftAlignedLayout: 830bf6fa5bab9f9b464f62e3384f9d2e00b3c0f6
 
 PODFILE CHECKSUM: fcbb568e9c355f0e2818cae324e25d400bab2490
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.4.0

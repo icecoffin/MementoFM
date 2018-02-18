@@ -85,7 +85,7 @@ class UserServiceTests: XCTestCase {
         self.realmService.save(artists)
       }.then {
         userService.clearUserData()
-      }.then { _ -> Void in
+      }.done { _ in
         expect(self.realmService.hasObjects(ofType: Artist.self)).to(beFalse())
         expect(self.realmService.hasObjects(ofType: Tag.self)).to(beFalse())
         expect(userDataStorage.didCallReset).to(beTrue())
@@ -100,7 +100,7 @@ class UserServiceTests: XCTestCase {
     let userService = UserService(realmService: realmService, repository: userRepository, userDataStorage: userDataStorage)
 
     waitUntil { done in
-      userService.checkUserExists(withUsername: "test").then { _ in
+      userService.checkUserExists(withUsername: "test").done { _ in
         done()
       }.catch { _ in
         fail()
@@ -114,7 +114,7 @@ class UserServiceTests: XCTestCase {
     let userService = UserService(realmService: realmService, repository: userRepository, userDataStorage: userDataStorage)
 
     waitUntil { done in
-      userService.checkUserExists(withUsername: "test").then { _ in
+      userService.checkUserExists(withUsername: "test").done { _ in
         fail()
       }.catch { _ in
         done()

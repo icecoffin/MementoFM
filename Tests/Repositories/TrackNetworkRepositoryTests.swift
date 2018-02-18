@@ -19,7 +19,7 @@ class TrackRepositoryTests: XCTestCase {
     let networkService = StubNetworkService(response: response)
 
     let trackRepository = TrackNetworkRepository(networkService: networkService)
-    trackRepository.getRecentTracksPage(withIndex: 1, for: "User", from: TimeInterval(1509982044), limit: 10).then { _ -> Void in
+    trackRepository.getRecentTracksPage(withIndex: 1, for: "User", from: TimeInterval(1509982044), limit: 10).done { _ in
       expect(networkService.method).to(equal(.get))
       let expectedParameters: [String: AnyHashable] = ["method": "user.getrecenttracks",
                                                        "api_key": Keys.LastFM.apiKey,

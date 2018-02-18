@@ -42,7 +42,7 @@ class TagServiceTests: XCTestCase {
         let expectedTags = ModelFactory.generateTags(inAmount: tagsPerArtist, for: progress.artist.name)
         expect(progress.topTagsList.tags).to(equal(expectedTags))
         progressCallCount += 1
-      }).then { _ -> Void in
+      }).done { _ in
         expect(progressCallCount).to(equal(artists.count))
         done()
       }.catch { _ in
@@ -59,7 +59,7 @@ class TagServiceTests: XCTestCase {
     let artists = ModelFactory.generateArtists(inAmount: artistCount)
 
     waitUntil { done in
-      tagService.getTopTags(for: artists).then {
+      tagService.getTopTags(for: artists).done { _ in
         fail()
       }.catch { error in
         expect(error).toNot(beNil())
@@ -80,7 +80,7 @@ class TagServiceTests: XCTestCase {
     let tagService = TagService(realmService: realmService, repository: TagEmptyStubRepository())
 
     waitUntil { done in
-      self.realmService.save([artist1, artist2]).then { _ -> Void in
+      self.realmService.save([artist1, artist2]).done { _ in
         let topTags = tagService.getAllTopTags()
         let expectedTopTags = topTags1 + topTags2
         expect(expectedTopTags).to(equal(topTags))

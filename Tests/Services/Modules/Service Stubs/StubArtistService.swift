@@ -25,7 +25,7 @@ class StubArtistService: ArtistServiceProtocol {
       return Promise(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
     } else {
       progress?(self.progress)
-      return Promise(value: [])
+      return .value([])
     }
   }
 
@@ -34,7 +34,7 @@ class StubArtistService: ArtistServiceProtocol {
   func saveArtists(_ artists: [Artist]) -> Promise<Void> {
     savingArtists = artists
     didCallSaveArtists = true
-    return Promise(value: ())
+    return .value(())
   }
 
   var stubArtistsNeedingTagsUpdate: [Artist] = []
@@ -62,7 +62,7 @@ class StubArtistService: ArtistServiceProtocol {
     if updateArtistShouldReturnError {
       return Promise(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
     } else {
-      return Promise(value: artist)
+      return .value(artist)
     }
   }
 
@@ -73,7 +73,7 @@ class StubArtistService: ArtistServiceProtocol {
     if calculateTopTagsForAllShouldReturnError {
       return Promise(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
     } else {
-      return Promise(value: ())
+      return .value(())
     }
   }
 
@@ -86,7 +86,7 @@ class StubArtistService: ArtistServiceProtocol {
     if calculateTopTagsShouldReturnError {
       return Promise(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
     } else {
-      return Promise(value: ())
+      return .value(())
     }
   }
 
@@ -108,7 +108,7 @@ class StubArtistService: ArtistServiceProtocol {
     if getSimilarArtistsShouldReturnError {
       return Promise(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
     } else {
-      return Promise(value: stubSimilarArtists)
+      return .value(stubSimilarArtists)
     }
   }
 }
