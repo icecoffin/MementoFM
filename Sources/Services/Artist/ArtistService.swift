@@ -68,7 +68,7 @@ class ArtistService: ArtistServiceProtocol {
 
         let totalProgress = Progress(totalUnitCount: Int64(page.totalPages - 1))
         let pagePromises = (initialIndex+1...page.totalPages).map { index in
-          return self.repository.getLibraryPage(withIndex: index, for: user, limit: limit).always {
+          return self.repository.getLibraryPage(withIndex: index, for: user, limit: limit).ensure {
             totalProgress.completedUnitCount += 1
             progress?(totalProgress)
           }
