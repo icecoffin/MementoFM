@@ -9,7 +9,7 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
-  fileprivate let viewModel: SettingsViewModel
+  private let viewModel: SettingsViewModel
 
   private let tableView = UITableView()
 

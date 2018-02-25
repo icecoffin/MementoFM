@@ -9,7 +9,7 @@
 import UIKit
 
 class ArtistTopTagsSectionDataSource: ArtistSectionDataSource {
-  fileprivate let viewModel: ArtistTopTagsSectionViewModel
+  private let viewModel: ArtistTopTagsSectionViewModel
 
   var onDidUpdateData: (() -> Void)?
 

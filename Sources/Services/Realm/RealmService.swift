@@ -29,7 +29,7 @@ class RealmService {
   }
 
   // MARK: - Writing to Realm
-  fileprivate func write(block: @escaping (Realm) -> Void) -> Promise<Void> {
+  private func write(block: @escaping (Realm) -> Void) -> Promise<Void> {
     return DispatchQueue.global().async(.promise) {
       try self.write(to: self.currentQueueRealm) { realm in
         block(realm)
@@ -41,7 +41,7 @@ class RealmService {
     }
   }
 
-  fileprivate func write(to realm: Realm, block: (Realm) -> Void) throws {
+  private func write(to realm: Realm, block: (Realm) -> Void) throws {
     try realm.write {
       block(realm)
     }

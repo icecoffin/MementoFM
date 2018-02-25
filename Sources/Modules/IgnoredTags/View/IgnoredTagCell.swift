@@ -10,9 +10,9 @@ import UIKit
 
 class IgnoredTagCell: UITableViewCell {
   private let textField = UITextField()
-  fileprivate var viewModel: IgnoredTagCellViewModel?
+  private var viewModel: IgnoredTagCellViewModel?
 
-  fileprivate var onTextUpdate: ((String) -> Void)?
+  private var onTextUpdate: ((String) -> Void)?
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)

@@ -13,9 +13,9 @@ class ArtistCoordinator: NavigationFlowCoordinator {
   var childCoordinators: [Coordinator] = []
   var onDidFinish: (() -> Void)?
 
-  fileprivate let artist: Artist
-  fileprivate let popTracker: NavigationControllerPopTracker
-  fileprivate let dependencies: AppDependency
+  private let artist: Artist
+  private let popTracker: NavigationControllerPopTracker
+  private let dependencies: AppDependency
 
   init(artist: Artist,
        navigationController: NavigationController,

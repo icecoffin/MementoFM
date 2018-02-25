@@ -13,8 +13,8 @@ class TagsCoordinator: NSObject, NavigationFlowCoordinator, ArtistsByTagPresente
   var onDidFinish: (() -> Void)?
 
   let navigationController: NavigationController
-  fileprivate let dependencies: AppDependency
-  fileprivate let popTracker: NavigationControllerPopTracker
+  private let dependencies: AppDependency
+  private let popTracker: NavigationControllerPopTracker
 
   init(navigationController: NavigationController,
        popTracker: NavigationControllerPopTracker,

@@ -17,7 +17,7 @@ class MainFlowCoordinator: Coordinator {
   var onDidFinish: (() -> Void)?
 
   private let window: UIWindow
-  fileprivate let dependencies: AppDependency
+  private let dependencies: AppDependency
 
   weak var delegate: MainFlowCoordinatorDelegate?
 

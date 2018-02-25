@@ -9,7 +9,7 @@
 import UIKit
 
 class ArtistViewController: UIViewController {
-  fileprivate let dataSource: ArtistDataSource
+  private let dataSource: ArtistDataSource
 
   private let tableView = UITableView()
 

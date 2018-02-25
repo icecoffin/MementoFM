@@ -14,8 +14,9 @@ enum SimilarArtistsSource: Int {
 }
 
 class ArtistSimilarsSectionDataSource: ArtistSectionDataSource {
-  fileprivate let viewModel: ArtistSimilarsSectionViewModel
+  private let viewModel: ArtistSimilarsSectionViewModel
   private let prototypeCell = SimilarArtistCell()
+
   var onDidUpdateData: (() -> Void)?
   var onDidReceiveError: ((Error) -> Void)?
 

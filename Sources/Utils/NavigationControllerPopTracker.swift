@@ -15,7 +15,7 @@ protocol NavigationControllerPopObserver: class {
 
 class NavigationControllerPopTracker: NSObject {
   private let navigationController: NavigationController
-  fileprivate var observers = [NavigationControllerPopObserver]()
+  private var observers = [NavigationControllerPopObserver]()
 
   init(navigationController: NavigationController) {
     self.navigationController = navigationController

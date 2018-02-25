@@ -38,10 +38,10 @@ class ArtistListCoordinator: NSObject, NavigationFlowCoordinator {
   var onDidFinish: (() -> Void)?
 
   let navigationController: NavigationController
-  fileprivate let popTracker: NavigationControllerPopTracker
-  fileprivate let configuration: ArtistListCoordinatorConfiguration
-  fileprivate let viewModelFactory: ArtistListViewModelFactory
-  fileprivate let dependencies: AppDependency
+  private let popTracker: NavigationControllerPopTracker
+  private let configuration: ArtistListCoordinatorConfiguration
+  private let viewModelFactory: ArtistListViewModelFactory
+  private let dependencies: AppDependency
 
   init(navigationController: NavigationController,
        popTracker: NavigationControllerPopTracker,

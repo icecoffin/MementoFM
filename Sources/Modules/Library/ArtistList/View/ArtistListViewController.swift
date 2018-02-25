@@ -15,7 +15,7 @@ class ArtistListViewController: UIViewController {
     static let estimatedRowHeight: CGFloat = 60
   }
 
-  fileprivate let viewModel: ArtistListViewModel
+  private let viewModel: ArtistListViewModel
 
   private let searchController: UISearchController
   private let tableView = TPKeyboardAvoidingTableView()

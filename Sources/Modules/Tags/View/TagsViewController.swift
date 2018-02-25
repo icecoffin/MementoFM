@@ -13,10 +13,10 @@ import TPKeyboardAvoiding
 class TagsViewController: UIViewController {
   private let collectionView: TPKeyboardAvoidingCollectionView
   private let emptyDataSetView = EmptyDataSetView(text: "No tags found".unlocalized)
-  fileprivate let searchController: UISearchController
+  private let searchController: UISearchController
 
-  fileprivate let viewModel: TagsViewModel
-  fileprivate let prototypeCell = TagCell()
+  private let viewModel: TagsViewModel
+  private let prototypeCell = TagCell()
 
   init(searchController: UISearchController, viewModel: TagsViewModel) {
     self.searchController = searchController

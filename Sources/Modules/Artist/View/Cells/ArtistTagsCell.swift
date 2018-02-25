@@ -20,7 +20,7 @@ protocol ArtistTagsCellDelegate: class {
 
 class ArtistTagsCell: UITableViewCell {
   private let collectionView: UICollectionView
-  fileprivate let prototypeCell = TagCell()
+  private let prototypeCell = TagCell()
 
   weak var dataSource: ArtistTagsCellDataSource? {
     didSet {

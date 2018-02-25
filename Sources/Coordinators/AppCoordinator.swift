@@ -13,7 +13,7 @@ class AppCoordinator: Coordinator {
   var onDidFinish: (() -> Void)?
 
   private let window: UIWindow
-  fileprivate let dependencies: AppDependency
+  private let dependencies: AppDependency
 
   init(window: UIWindow, dependencies: AppDependency = AppDependency.default) {
     self.window = window

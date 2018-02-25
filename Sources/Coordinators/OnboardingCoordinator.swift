@@ -49,12 +49,12 @@ class OnboardingCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter, Sy
     navigationController.pushViewController(viewController, animated: true)
   }
 
-  fileprivate func showIgnoredTagsViewController(animated: Bool) {
+  private func showIgnoredTagsViewController(animated: Bool) {
     let viewController = makeIgnoredTagsViewController(dependencies: dependencies, shouldAddDefaultTags: true)
     navigationController.pushViewController(viewController, animated: animated)
   }
 
-  fileprivate func showSyncViewController() {
+  private func showSyncViewController() {
     let viewController = makeSyncViewController(dependencies: dependencies)
     navigationController.setNavigationBarHidden(true, animated: false)
     navigationController.isInteractivePopGestureEnabled = false

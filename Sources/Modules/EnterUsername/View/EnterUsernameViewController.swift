@@ -14,7 +14,7 @@ class EnterUsernameViewController: UIViewController {
   private let usernameTextField = UITextField()
   private let submitButton = UIButton(type: .system)
 
-  fileprivate let viewModel: EnterUsernameViewModel
+  private let viewModel: EnterUsernameViewModel
 
   init(viewModel: EnterUsernameViewModel) {
     self.viewModel = viewModel
