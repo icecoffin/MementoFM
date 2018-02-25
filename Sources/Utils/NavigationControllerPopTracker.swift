@@ -8,14 +8,14 @@
 
 import UIKit
 
-protocol NavigationControllerPopTrackerDelegate: class {
+protocol NavigationControllerPopObserver: class {
   func navigationControllerPopTracker(_ tracker: NavigationControllerPopTracker,
                                       didPopViewController viewController: UIViewController)
 }
 
 class NavigationControllerPopTracker: NSObject {
   private let navigationController: NavigationController
-  fileprivate var delegates = [NavigationControllerPopTrackerDelegate]()
+  fileprivate var observers = [NavigationControllerPopObserver]()
 
   init(navigationController: NavigationController) {
     self.navigationController = navigationController
@@ -23,18 +23,14 @@ class NavigationControllerPopTracker: NSObject {
     navigationController.delegate = self
   }
 
-  func addDelegate(_ delegate: NavigationControllerPopTrackerDelegate) {
-    delegates.append(delegate)
+  func addObserver(_ observer: NavigationControllerPopObserver) {
+    observers.append(observer)
   }
 
-  func removeDelegate(_ delegate: NavigationControllerPopTrackerDelegate) {
-    if let index = delegates.index(where: { $0 === delegate }) {
-      delegates.remove(at: index)
+  func removeObserver(_ observer: NavigationControllerPopObserver) {
+    if let index = observers.index(where: { $0 === observer }) {
+      observers.remove(at: index)
     }
-  }
-
-  func removeLastDelegate() {
-    delegates.removeLast()
   }
 }
 
@@ -47,6 +43,6 @@ extension NavigationControllerPopTracker: UINavigationControllerDelegate {
       return
     }
 
-    delegates.last?.navigationControllerPopTracker(self, didPopViewController: poppingViewController)
+    observers.last?.navigationControllerPopTracker(self, didPopViewController: poppingViewController)
   }
 }

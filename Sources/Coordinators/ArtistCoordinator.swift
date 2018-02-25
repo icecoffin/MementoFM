@@ -28,7 +28,7 @@ class ArtistCoordinator: NavigationFlowCoordinator {
   }
 
   func start() {
-    popTracker.addDelegate(self)
+    popTracker.addObserver(self)
 
     let viewModel = ArtistViewModel(artist: artist, dependencies: dependencies)
     viewModel.delegate = self

@@ -61,7 +61,7 @@ class ArtistListCoordinator: NSObject, NavigationFlowCoordinator {
   }
 
   func start() {
-    popTracker.addDelegate(self)
+    popTracker.addObserver(self)
 
     let artistListViewModel = viewModelFactory.makeViewModel()
     artistListViewModel.delegate = self

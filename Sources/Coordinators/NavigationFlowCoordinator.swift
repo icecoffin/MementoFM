@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol NavigationFlowCoordinator: Coordinator, NavigationControllerPopTrackerDelegate {
+protocol NavigationFlowCoordinator: Coordinator, NavigationControllerPopObserver {
   var navigationController: NavigationController { get }
 
   func shouldFinishAfterPopping(viewController: UIViewController) -> Bool
@@ -30,14 +30,15 @@ extension NavigationFlowCoordinator {
 
 // MARK: - NavigationControllerPopTracker delegate
 extension NavigationFlowCoordinator {
-  func navigationControllerPopTracker(_ tracker: NavigationControllerPopTracker, didPopViewController viewController: UIViewController) {
+  func navigationControllerPopTracker(_ tracker: NavigationControllerPopTracker,
+                                      didPopViewController viewController: UIViewController) {
     if shouldFinishAfterPopping(viewController: viewController) {
       if childCoordinators.isEmpty {
-        tracker.removeDelegate(self)
+        tracker.removeObserver(self)
         onDidFinish?()
       } else {
-        if let coordinator = childCoordinators.last as? NavigationControllerPopTrackerDelegate {
-          tracker.removeDelegate(coordinator)
+        if let coordinator = childCoordinators.last as? NavigationControllerPopObserver {
+          tracker.removeObserver(coordinator)
         }
         childCoordinators.removeLast()
       }
