@@ -28,8 +28,6 @@ class ArtistCoordinator: NavigationFlowCoordinator {
   }
 
   func start() {
-    popTracker.addObserver(self)
-
     let viewModel = ArtistViewModel(artist: artist, dependencies: dependencies)
     viewModel.delegate = self
     let dataSource = ArtistDataSource(viewModel: viewModel)
@@ -39,11 +37,9 @@ class ArtistCoordinator: NavigationFlowCoordinator {
     viewController.navigationItem.leftBarButtonItem = makeBackButton()
     viewController.hidesBottomBarWhenPushed = true
 
-    navigationController.pushViewController(viewController, animated: true)
-  }
+    popTracker.addObserver(self, forPopTransitionOf: viewController)
 
-  func shouldFinishAfterPopping(viewController: UIViewController) -> Bool {
-    return viewController is ArtistViewController
+    navigationController.pushViewController(viewController, animated: true)
   }
 }
 
@@ -60,7 +56,10 @@ extension ArtistCoordinator: ArtistViewModelDelegate {
   }
 
   func artistViewModel(_ viewModel: ArtistViewModel, didSelectArtist artist: Artist) {
-    let artistCoordinator = ArtistCoordinator(artist: artist, navigationController: navigationController, popTracker: popTracker, dependencies: dependencies)
+    let artistCoordinator = ArtistCoordinator(artist: artist,
+                                              navigationController: navigationController,
+                                              popTracker: popTracker,
+                                              dependencies: dependencies)
     addChildCoordinator(artistCoordinator)
     artistCoordinator.start()
   }

@@ -12,7 +12,6 @@ class RealmFactory {
   static func realm() -> Realm {
     do {
       let realm = try Realm()
-      realm.refresh()
       return realm
     } catch {
       fatalError("Can't create a Realm instance")
@@ -23,7 +22,6 @@ class RealmFactory {
     do {
       let config = Realm.Configuration(inMemoryIdentifier: "InMemory")
       let realm = try Realm(configuration: config)
-      realm.refresh()
       return realm
     } catch {
       fatalError("Can't create an in-memory Realm instance")

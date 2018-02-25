@@ -35,6 +35,7 @@ class RealmService {
         block(realm)
       }
     }.then(on: DispatchQueue.main) { _ -> Promise<Void> in
+      self.currentQueueRealm.refresh()
       return .value(())
     }.recover(on: DispatchQueue.main) { error in
       return Promise(error: error)

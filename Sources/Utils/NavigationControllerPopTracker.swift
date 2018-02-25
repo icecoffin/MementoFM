@@ -13,9 +13,13 @@ protocol NavigationControllerPopObserver: class {
                                       didPopViewController viewController: UIViewController)
 }
 
+struct NavigationControllerPopObserverContainer {
+  weak var value: NavigationControllerPopObserver?
+}
+
 class NavigationControllerPopTracker: NSObject {
   private let navigationController: NavigationController
-  private var observers = [NavigationControllerPopObserver]()
+  private var viewControllerToObservers: [UIViewController: NavigationControllerPopObserverContainer] = [:]
 
   init(navigationController: NavigationController) {
     self.navigationController = navigationController
@@ -23,14 +27,10 @@ class NavigationControllerPopTracker: NSObject {
     navigationController.delegate = self
   }
 
-  func addObserver(_ observer: NavigationControllerPopObserver) {
-    observers.append(observer)
-  }
-
-  func removeObserver(_ observer: NavigationControllerPopObserver) {
-    if let index = observers.index(where: { $0 === observer }) {
-      observers.remove(at: index)
-    }
+  func addObserver(_ observer: NavigationControllerPopObserver,
+                   forPopTransitionOf viewController: UIViewController) {
+    let wrappedObserver = NavigationControllerPopObserverContainer(value: observer)
+    viewControllerToObservers[viewController] = wrappedObserver
   }
 }
 
@@ -38,11 +38,14 @@ extension NavigationControllerPopTracker: UINavigationControllerDelegate {
   func navigationController(_ navigationController: UINavigationController,
                             didShow viewController: UIViewController,
                             animated: Bool) {
-
     guard let poppingViewController = navigationController.poppingViewController() else {
       return
     }
 
-    observers.last?.navigationControllerPopTracker(self, didPopViewController: poppingViewController)
+    if let wrappedObserver = viewControllerToObservers[poppingViewController] {
+      let observer = wrappedObserver.value
+      observer?.navigationControllerPopTracker(self, didPopViewController: poppingViewController)
+      viewControllerToObservers.removeValue(forKey: poppingViewController)
+    }
   }
 }

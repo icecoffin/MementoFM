@@ -65,8 +65,10 @@ class LibraryUpdater: LibraryUpdaterProtocol {
 
   func requestData() {
     onDidStartLoading?()
-    requestLibrary().then {
-      return self.getArtistsTags()
+    firstly {
+      self.requestLibrary()
+    }.then {
+      self.getArtistsTags()
     }.done { [unowned self] _ in
       self.onDidFinishLoading?()
     }.catch { [unowned self] error in

@@ -10,8 +10,6 @@ import UIKit
 
 protocol NavigationFlowCoordinator: Coordinator, NavigationControllerPopObserver {
   var navigationController: NavigationController { get }
-
-  func shouldFinishAfterPopping(viewController: UIViewController) -> Bool
 }
 
 extension NavigationFlowCoordinator {
@@ -22,26 +20,16 @@ extension NavigationFlowCoordinator {
     }
     return button
   }
-
-  func shouldFinishAfterPopping(viewController: UIViewController) -> Bool {
-    return false
-  }
 }
 
-// MARK: - NavigationControllerPopTracker delegate
+// MARK: - NavigationControllerPopObserver
 extension NavigationFlowCoordinator {
   func navigationControllerPopTracker(_ tracker: NavigationControllerPopTracker,
                                       didPopViewController viewController: UIViewController) {
-    if shouldFinishAfterPopping(viewController: viewController) {
-      if childCoordinators.isEmpty {
-        tracker.removeObserver(self)
-        onDidFinish?()
-      } else {
-        if let coordinator = childCoordinators.last as? NavigationControllerPopObserver {
-          tracker.removeObserver(coordinator)
-        }
-        childCoordinators.removeLast()
-      }
+    if childCoordinators.isEmpty {
+      onDidFinish?()
+    } else {
+      childCoordinators.removeLast()
     }
   }
 }

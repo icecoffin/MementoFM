@@ -61,25 +61,23 @@ class ArtistListCoordinator: NSObject, NavigationFlowCoordinator {
   }
 
   func start() {
-    popTracker.addObserver(self)
+    let viewModel = viewModelFactory.makeViewModel()
+    viewModel.delegate = self
 
-    let artistListViewModel = viewModelFactory.makeViewModel()
-    artistListViewModel.delegate = self
     let searchController = UISearchController(searchResultsController: nil)
-    let artistListViewController = ArtistListViewController(searchController: searchController, viewModel: artistListViewModel)
-    artistListViewController.navigationItem.leftBarButtonItem = configuration.backButtonItem(for: self)
-    artistListViewController.navigationItem.searchController = searchController
-    artistListViewController.navigationItem.hidesSearchBarWhenScrolling = false
-    artistListViewController.title = artistListViewModel.title
-    navigationController.pushViewController(artistListViewController, animated: configuration.shouldStartAnimated)
+    let viewController = ArtistListViewController(searchController: searchController, viewModel: viewModel)
+    viewController.navigationItem.leftBarButtonItem = configuration.backButtonItem(for: self)
+    viewController.navigationItem.searchController = searchController
+    viewController.navigationItem.hidesSearchBarWhenScrolling = false
+    viewController.title = viewModel.title
+
+    popTracker.addObserver(self, forPopTransitionOf: viewController)
+
+    navigationController.pushViewController(viewController, animated: configuration.shouldStartAnimated)
   }
 
   private func unsubscribeFromNotifications() {
     NotificationCenter.default.removeObserver(self, name: .UIApplicationDidBecomeActive, object: nil)
-  }
-
-  func shouldFinishAfterPopping(viewController: UIViewController) -> Bool {
-    return viewController is ArtistListViewController
   }
 }
 
