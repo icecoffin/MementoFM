@@ -59,7 +59,7 @@ class ArtistService: ArtistServiceProtocol {
   func getLibrary(for user: String, limit: Int, progress: ((Progress) -> Void)?) -> Promise<[Artist]> {
     return Promise { seal in
       let initialIndex = 1
-      repository.getLibraryPage(withIndex: initialIndex, for: user, limit: limit).done { [unowned self] pageResponse -> Void in
+      repository.getLibraryPage(withIndex: initialIndex, for: user, limit: limit).done { pageResponse in
         let page = pageResponse.libraryPage
         if page.totalPages <= initialIndex {
           seal.fulfill(page.artists)
@@ -74,7 +74,7 @@ class ArtistService: ArtistServiceProtocol {
           }
         }
 
-        when(fulfilled: pagePromises).done { pageResponses -> Void in
+        when(fulfilled: pagePromises).done { pageResponses in
           let pages = pageResponses.map({ $0.libraryPage })
           let artists = ([page] + pages).flatMap { $0.artists }
           seal.fulfill(artists)

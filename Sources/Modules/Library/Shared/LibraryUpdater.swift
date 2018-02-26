@@ -69,9 +69,9 @@ class LibraryUpdater: LibraryUpdaterProtocol {
       self.requestLibrary()
     }.then {
       self.getArtistsTags()
-    }.done { [unowned self] _ in
+    }.done { _ in
       self.onDidFinishLoading?()
-    }.catch { [unowned self] error in
+    }.catch { error in
       self.onDidReceiveError?(error)
     }.finally {
       self.isFirstUpdate = false
@@ -93,24 +93,28 @@ class LibraryUpdater: LibraryUpdaterProtocol {
 
   private func getFullLibrary() -> Promise<Void> {
     onDidChangeStatus?(.artistsFirstPage)
-    return artistService.getLibrary(for: username, progress: { [weak self] progress in
+    let progress: ((Progress) -> Void) = { [weak self] progress in
       let status: LibraryUpdateStatus = .artists(progress: progress)
       self?.onDidChangeStatus?(status)
-    }).then { [unowned self] artists -> Promise<Void> in
-      self.updateLastUpdateTimestamp()
-      self.userService.didReceiveInitialCollection = true
-      return self.artistService.saveArtists(artists)
+    }
+    return artistService.getLibrary(for: username, progress: progress)
+      .then { artists -> Promise<Void> in
+        self.updateLastUpdateTimestamp()
+        self.userService.didReceiveInitialCollection = true
+        return self.artistService.saveArtists(artists)
     }
   }
 
   private func getLibraryUpdates() -> Promise<Void> {
     onDidChangeStatus?(.recentTracksFirstPage)
-    return trackService.getRecentTracks(for: username, from: lastUpdateTimestamp, progress: { [weak self] progress in
+    let progress: ((Progress) -> Void) = { [weak self] progress in
       let status: LibraryUpdateStatus = .recentTracks(progress: progress)
       self?.onDidChangeStatus?(status)
-    }).then { [unowned self] tracks -> Promise<Void> in
-      self.updateLastUpdateTimestamp()
-      return self.trackService.processTracks(tracks)
+    }
+    return trackService.getRecentTracks(for: username, from: lastUpdateTimestamp, progress: progress)
+      .then { tracks -> Promise<Void> in
+        self.updateLastUpdateTimestamp()
+        return self.trackService.processTracks(tracks)
     }
   }
 
@@ -120,7 +124,7 @@ class LibraryUpdater: LibraryUpdaterProtocol {
 
   private func getArtistsTags() -> Promise<Void> {
     let artists = artistService.artistsNeedingTagsUpdate()
-    return tagService.getTopTags(for: artists, progress: { [weak self] requestProgress in
+    let progress: ((TopTagsRequestProgress) -> Void) = { [weak self] requestProgress in
       guard let `self` = self else {
         return
       }
@@ -128,11 +132,13 @@ class LibraryUpdater: LibraryUpdaterProtocol {
       let calculator = ArtistTopTagsCalculator(ignoredTags: ignoredTags)
       self.artistService.updateArtist(requestProgress.artist, with: requestProgress.topTagsList.tags).then { artist in
         return self.artistService.calculateTopTags(for: artist, using: calculator)
-      }.catch { error in
-        self.onDidReceiveError?(error)
+        }.catch { error in
+          self.onDidReceiveError?(error)
       }
       let status: LibraryUpdateStatus = .tags(artistName: requestProgress.artist.name, progress: requestProgress.progress)
       self.onDidChangeStatus?(status)
-    })
+    }
+
+    return tagService.getTopTags(for: artists, progress: progress)
   }
 }

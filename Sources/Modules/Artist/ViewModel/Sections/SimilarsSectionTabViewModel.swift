@@ -66,9 +66,9 @@ class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol {
 
   private func calculateSimilarArtists() {
     isLoading = true
-    requestStrategy.getSimilarArtists(for: artist).map { [weak self] artists -> Void in
+    requestStrategy.getSimilarArtists(for: artist).map { [weak self] artists in
       self?.createCellViewModels(from: artists)
-    }.done { _ -> Void in
+    }.done { _ in
       self.isLoading = false
       self.onDidUpdateData?()
     }.catch { error in

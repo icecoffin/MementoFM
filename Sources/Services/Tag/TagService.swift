@@ -34,7 +34,7 @@ class TagService: TagServiceProtocol {
       let totalProgress = Progress(totalUnitCount: Int64(artists.count))
 
       let promises = artists.map { artist in
-        return repository.getTopTags(for: artist.name).done { topTagsResponse -> Void in
+        return repository.getTopTags(for: artist.name).done { topTagsResponse in
           totalProgress.completedUnitCount += 1
           let topTagsList = topTagsResponse.topTagsList
           progress?(TopTagsRequestProgress(progress: totalProgress, artist: artist, topTagsList: topTagsList))

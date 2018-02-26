@@ -40,7 +40,7 @@ class TrackService: TrackServiceProtocol {
     return Promise { seal in
       let initialIndex = 1
       repository.getRecentTracksPage(withIndex: initialIndex, for: user,
-                                     from: from, limit: limit).done { [unowned self] response -> Void in
+                                     from: from, limit: limit).done { response in
         let page = response.recentTracksPage
         if page.totalPages <= initialIndex {
           seal.fulfill(page.tracks)
@@ -55,7 +55,7 @@ class TrackService: TrackServiceProtocol {
           }
         }
 
-        when(fulfilled: pagePromises).done { pageResponses -> Void in
+        when(fulfilled: pagePromises).done { pageResponses in
           let pages = pageResponses.map({ $0.recentTracksPage })
           let tracks = ([page] + pages).flatMap({ $0.tracks })
           seal.fulfill(tracks)

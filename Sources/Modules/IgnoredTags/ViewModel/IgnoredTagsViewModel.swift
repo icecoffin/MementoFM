@@ -90,9 +90,11 @@ class IgnoredTagsViewModel {
     }
 
     let calculator = ArtistTopTagsCalculator(ignoredTags: filteredTags)
-    dependencies.ignoredTagService.updateIgnoredTags(filteredTags).then { [unowned self] in
+    firstly {
+      self.dependencies.ignoredTagService.updateIgnoredTags(filteredTags)
+    }.then {
       self.dependencies.artistService.calculateTopTagsForAllArtists(using: calculator)
-    }.done { [unowned self] _ -> Void in
+    }.done { _ in
       self.onDidFinishSavingChanges?()
       self.delegate?.ignoredTagsViewModelDidSaveChanges(self)
     }.catch { error in
