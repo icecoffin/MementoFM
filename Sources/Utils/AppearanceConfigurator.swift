@@ -19,7 +19,8 @@ enum AppearanceConfigurator {
 
   private static func configureNavigationBarAppearance() {
     let appearance = UINavigationBar.appearance()
-    appearance.titleTextAttributes = [NSAttributedStringKey.font: Fonts.ralewayBold(withSize: 16)]
+    appearance.titleTextAttributes = [.font: Fonts.ralewayBold(withSize: 16)]
+    appearance.largeTitleTextAttributes = [.font: Fonts.ralewayBold(withSize: 36)]
   }
 
   private static func configureTabBarItemAppearance() {
