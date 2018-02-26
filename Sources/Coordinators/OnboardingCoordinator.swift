@@ -41,7 +41,7 @@ class OnboardingCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter, Sy
     let viewController = EnterUsernameViewController(viewModel: viewModel)
     viewController.title = "Welcome!".unlocalized
     if alreadyHasUsername {
-      let forwardButton = BlockBarButtonItem(image: #imageLiteral(resourceName: "icon_forward"), style: .plain) { [unowned self] in
+      let forwardButton = BlockBarButtonItem(image: R.image.iconForward(), style: .plain) { [unowned self] in
         self.showIgnoredTagsViewController(animated: true)
       }
       viewController.navigationItem.rightBarButtonItem = forwardButton

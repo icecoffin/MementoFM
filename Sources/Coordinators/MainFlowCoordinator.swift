@@ -34,7 +34,7 @@ class MainFlowCoordinator: Coordinator {
 
     let libraryNavigationController = NavigationController()
     let libraryPopTracker = NavigationControllerPopTracker(navigationController: libraryNavigationController)
-    let libraryTabBarItem = UITabBarItem(title: "Library".unlocalized, image: #imageLiteral(resourceName: "icon_library"), selectedImage: nil)
+    let libraryTabBarItem = UITabBarItem(title: "Library".unlocalized, image: R.image.iconLibrary(), selectedImage: nil)
     libraryNavigationController.tabBarItem = libraryTabBarItem
     let libraryCoordinator = ArtistListCoordinator(navigationController: libraryNavigationController,
                                                    popTracker: libraryPopTracker,
@@ -45,7 +45,7 @@ class MainFlowCoordinator: Coordinator {
 
     let tagsNavigationController = NavigationController()
     let tagsPopTracker = NavigationControllerPopTracker(navigationController: tagsNavigationController)
-    let tagsTabBarItem = UITabBarItem(title: "Tags".unlocalized, image: #imageLiteral(resourceName: "icon_tag"), selectedImage: nil)
+    let tagsTabBarItem = UITabBarItem(title: "Tags".unlocalized, image: R.image.iconTag(), selectedImage: nil)
     tagsNavigationController.tabBarItem = tagsTabBarItem
     let tagsCoordinator = TagsCoordinator(navigationController: tagsNavigationController,
                                           popTracker: tagsPopTracker,
@@ -53,7 +53,7 @@ class MainFlowCoordinator: Coordinator {
     addChildCoordinator(tagsCoordinator)
 
     let settingsNavigationController = NavigationController()
-    let settingsTabBarItem = UITabBarItem(title: "Settings".unlocalized, image: #imageLiteral(resourceName: "icon_settings"), selectedImage: nil)
+    let settingsTabBarItem = UITabBarItem(title: "Settings".unlocalized, image: R.image.iconSettings(), selectedImage: nil)
     settingsNavigationController.tabBarItem = settingsTabBarItem
     let settingsCoordinator = SettingsCoordinator(navigationController: settingsNavigationController, dependencies: dependencies)
     settingsCoordinator.delegate = self
