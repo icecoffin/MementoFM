@@ -39,8 +39,20 @@ class ArtistTests: XCTestCase {
     let topTags2 = [Tag(name: "tag1", count: 1),
                     Tag(name: "tag3", count: 2),
                     Tag(name: "tag4", count: 3)]
-    let artist1 = Artist(name: "artist1", playcount: 1, urlString: "", imageURLString: nil, needsTagsUpdate: false, tags: [], topTags: topTags1)
-    let artist2 = Artist(name: "artist2", playcount: 1, urlString: "", imageURLString: nil, needsTagsUpdate: false, tags: [], topTags: topTags2)
+    let artist1 = Artist(name: "artist1",
+                         playcount: 1,
+                         urlString: "",
+                         imageURLString: nil,
+                         needsTagsUpdate: false,
+                         tags: [],
+                         topTags: topTags1)
+    let artist2 = Artist(name: "artist2",
+                         playcount: 1,
+                         urlString: "",
+                         imageURLString: nil,
+                         needsTagsUpdate: false,
+                         tags: [],
+                         topTags: topTags2)
 
     let intersectingTopTagNames = artist1.intersectingTopTagNames(with: artist2)
 

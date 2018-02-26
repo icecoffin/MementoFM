@@ -11,8 +11,13 @@ import Foundation
 
 class ModelFactory {
   class func generateArtist(index: Int = 1, needsTagsUpdate: Bool = false) -> Artist {
-    return Artist(name: "Artist\(index)", playcount: index, urlString: "http://example.com/artist\(index)",
-                  imageURLString: "http://example.com/artist\(index).jpg", needsTagsUpdate: needsTagsUpdate, tags: [], topTags: [])
+    return Artist(name: "Artist\(index)",
+                  playcount: index,
+                  urlString: "http://example.com/artist\(index)",
+                  imageURLString: "http://example.com/artist\(index).jpg",
+                  needsTagsUpdate: needsTagsUpdate,
+                  tags: [],
+                  topTags: [])
   }
 
   class func generateArtists(inAmount amount: Int, needsTagsUpdate: Bool = false) -> [Artist] {

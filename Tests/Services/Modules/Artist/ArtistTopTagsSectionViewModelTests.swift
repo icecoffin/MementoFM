@@ -21,7 +21,13 @@ class ArtistTopTagsSectionViewModelTests: XCTestCase {
 
   var sampleArtist: Artist = {
     let tags: [Tag] = [Tag(name: "Tag1", count: 1), Tag(name: "Tag2", count: 1)]
-    return Artist(name: "Artist", playcount: 1, urlString: "", imageURLString: "", needsTagsUpdate: false, tags: tags, topTags: tags)
+    return Artist(name: "Artist",
+                  playcount: 1,
+                  urlString: "",
+                  imageURLString: "",
+                  needsTagsUpdate: false,
+                  tags: tags,
+                  topTags: tags)
   }()
 
   func testGettingNumberOfTopTags() {
@@ -35,7 +41,13 @@ class ArtistTopTagsSectionViewModelTests: XCTestCase {
     let viewModel1 = ArtistTopTagsSectionViewModel(artist: artist)
     expect(viewModel1.hasTags).to(beTrue())
 
-    let artistWithNoTags = Artist(name: "Artist", playcount: 1, urlString: "", imageURLString: "", needsTagsUpdate: false, tags: [], topTags: [])
+    let artistWithNoTags = Artist(name: "Artist",
+                                  playcount: 1,
+                                  urlString: "",
+                                  imageURLString: "",
+                                  needsTagsUpdate: false,
+                                  tags: [],
+                                  topTags: [])
     let viewModel2 = ArtistTopTagsSectionViewModel(artist: artistWithNoTags)
     expect(viewModel2.hasTags).to(beFalse())
   }

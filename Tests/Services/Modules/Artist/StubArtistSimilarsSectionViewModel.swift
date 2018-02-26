@@ -56,7 +56,9 @@ class StubArtistSimilarsSectionTabViewModelFactory: ArtistSimilarsSectionTabView
   var firstTabViewModel = StubArtistSimilarsSectionViewModel()
   var secondTabViewModel = StubArtistSimilarsSectionViewModel()
 
-  func makeTabViewModels(for artist: Artist, dependencies: ArtistSimilarsSectionViewModel.Dependencies, delegate: SimilarsSectionTabViewModelDelegate) -> [ArtistSimilarsSectionViewModelProtocol] {
+  func makeTabViewModels(for artist: Artist,
+                         dependencies: ArtistSimilarsSectionViewModel.Dependencies,
+                         delegate: SimilarsSectionTabViewModelDelegate) -> [ArtistSimilarsSectionViewModelProtocol] {
     return [firstTabViewModel, secondTabViewModel]
   }
 }

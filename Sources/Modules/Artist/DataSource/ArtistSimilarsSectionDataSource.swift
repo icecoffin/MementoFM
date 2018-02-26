@@ -37,7 +37,8 @@ class ArtistSimilarsSectionDataSource: ArtistSectionDataSource {
 
   func registerReusableViews(in tableView: UITableView) {
     tableView.register(SimilarArtistCell.self, forCellReuseIdentifier: SimilarArtistCell.reuseIdentifier)
-    tableView.register(ArtistSimilarsSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: ArtistSimilarsSectionHeaderView.reuseIdentifier)
+    tableView.register(ArtistSimilarsSectionHeaderView.self,
+                       forHeaderFooterViewReuseIdentifier: ArtistSimilarsSectionHeaderView.reuseIdentifier)
     tableView.register(EmptyDataSetFooterView.self, forHeaderFooterViewReuseIdentifier: EmptyDataSetFooterView.reuseIdentifier)
     tableView.register(LoadingFooterView.self, forHeaderFooterViewReuseIdentifier: LoadingFooterView.reuseIdentifier)
   }
@@ -55,7 +56,8 @@ class ArtistSimilarsSectionDataSource: ArtistSectionDataSource {
 
   func viewForHeader(inSection section: Int, in tableView: UITableView) -> UITableViewHeaderFooterView? {
     let reuseIdentifier = ArtistSimilarsSectionHeaderView.reuseIdentifier
-    guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: reuseIdentifier) as? ArtistSimilarsSectionHeaderView else {
+    guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: reuseIdentifier)
+      as? ArtistSimilarsSectionHeaderView else {
       return nil
     }
 
@@ -72,7 +74,8 @@ class ArtistSimilarsSectionDataSource: ArtistSectionDataSource {
     if viewModel.isLoading {
       return tableView.dequeueReusableHeaderFooterView(withIdentifier: LoadingFooterView.reuseIdentifier)
     } else if !viewModel.hasSimilarArtists {
-      let footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: EmptyDataSetFooterView.reuseIdentifier) as? EmptyDataSetFooterView
+      let footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: EmptyDataSetFooterView.reuseIdentifier)
+        as? EmptyDataSetFooterView
       footer?.configure(with: viewModel.emptyDataSetText)
       return footer
     }

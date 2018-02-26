@@ -55,7 +55,9 @@ class ArtistServiceTests: XCTestCase {
     let totalPages = 5
     let artistsPerPage = 10
 
-    let repository = ArtistLibraryStubRepository(totalPages: totalPages, shouldFailWithError: true, artistProvider: { _ in return [] })
+    let repository = ArtistLibraryStubRepository(totalPages: totalPages,
+                                                 shouldFailWithError: true,
+                                                 artistProvider: { _ in return [] })
     let artistService = ArtistService(realmService: realmService, repository: repository)
 
     waitUntil { done in

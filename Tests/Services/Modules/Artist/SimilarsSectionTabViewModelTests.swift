@@ -32,7 +32,13 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
 
   let sampleArtist: Artist = {
     let tags = [Tag(name: "Tag1", count: 1), Tag(name: "Tag2", count: 1), Tag(name: "Tag3", count: 1)]
-    return Artist(name: "Artist", playcount: 1, urlString: "", imageURLString: nil, needsTagsUpdate: false, tags: [], topTags: tags)
+    return Artist(name: "Artist",
+                  playcount: 1,
+                  urlString: "",
+                  imageURLString: nil,
+                  needsTagsUpdate: false,
+                  tags: [],
+                  topTags: tags)
   }()
 
   let similarArtists: [Artist] = {
@@ -63,7 +69,9 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
   }
 
   func testGettingNumberOfSimilarArtists() {
-    let viewModel = SimilarsSectionTabViewModel(artist: sampleArtist, requestStrategy: requestStrategy, dependencies: dependencies)
+    let viewModel = SimilarsSectionTabViewModel(artist: sampleArtist,
+                                                requestStrategy: requestStrategy,
+                                                dependencies: dependencies)
     var expectedNumberOfSimilarArtists = 0
     viewModel.onDidUpdateData = {
       expectedNumberOfSimilarArtists = viewModel.numberOfSimilarArtists
@@ -73,7 +81,9 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
   }
 
   func testGettingHasSimilarArtists() {
-    let viewModel = SimilarsSectionTabViewModel(artist: sampleArtist, requestStrategy: requestStrategy, dependencies: dependencies)
+    let viewModel = SimilarsSectionTabViewModel(artist: sampleArtist,
+                                                requestStrategy: requestStrategy,
+                                                dependencies: dependencies)
     var expectedHasSimilarArtists = false
     viewModel.onDidUpdateData = {
       expectedHasSimilarArtists = viewModel.hasSimilarArtists
@@ -83,7 +93,9 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
   }
 
   func testGettingCellViewModel() {
-    let viewModel = SimilarsSectionTabViewModel(artist: sampleArtist, requestStrategy: requestStrategy, dependencies: dependencies)
+    let viewModel = SimilarsSectionTabViewModel(artist: sampleArtist,
+                                                requestStrategy: requestStrategy,
+                                                dependencies: dependencies)
     var expectedArtistNames: [String] = []
     viewModel.onDidUpdateData = {
       expectedArtistNames = (0..<viewModel.numberOfSimilarArtists).map {
@@ -96,7 +108,9 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
   }
 
   func testSelectingArtist() {
-    let viewModel = SimilarsSectionTabViewModel(artist: sampleArtist, requestStrategy: requestStrategy, dependencies: dependencies)
+    let viewModel = SimilarsSectionTabViewModel(artist: sampleArtist,
+                                                requestStrategy: requestStrategy,
+                                                dependencies: dependencies)
     let delegate = StubSimilarsSectionTabViewModelDelegate()
     viewModel.delegate = delegate
     viewModel.onDidUpdateData = {
@@ -109,7 +123,9 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
 
   func testGettingSimilarArtistsWhenDataIsEmpty() {
     requestStrategy.stubSimilarArtists = []
-    let viewModel = SimilarsSectionTabViewModel(artist: sampleArtist, requestStrategy: requestStrategy, dependencies: dependencies)
+    let viewModel = SimilarsSectionTabViewModel(artist: sampleArtist,
+                                                requestStrategy: requestStrategy,
+                                                dependencies: dependencies)
     viewModel.getSimilarArtists()
     var expectedIsLoading = true
     viewModel.onDidUpdateData = {
@@ -122,7 +138,9 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
   func testGettingSimilarArtistsWithError() {
     requestStrategy.stubSimilarArtists = []
     requestStrategy.getSimilarArtistsShouldReturnError = true
-    let viewModel = SimilarsSectionTabViewModel(artist: sampleArtist, requestStrategy: requestStrategy, dependencies: dependencies)
+    let viewModel = SimilarsSectionTabViewModel(artist: sampleArtist,
+                                                requestStrategy: requestStrategy,
+                                                dependencies: dependencies)
     var didReceiveError = false
     viewModel.onDidReceiveError = { _ in
       didReceiveError = true

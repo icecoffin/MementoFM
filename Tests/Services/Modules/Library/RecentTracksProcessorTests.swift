@@ -27,9 +27,27 @@ class RecentTracksProcessorTests: XCTestCase {
   }
 
   func testProcessingTracks() {
-    let artist1 = Artist(name: "Artist1", playcount: 1, urlString: "", imageURLString: nil, needsTagsUpdate: false, tags: [], topTags: [])
-    let artist2 = Artist(name: "Artist2", playcount: 1, urlString: "", imageURLString: nil, needsTagsUpdate: false, tags: [], topTags: [])
-    let artist3 = Artist(name: "Artist3", playcount: 0, urlString: "", imageURLString: nil, needsTagsUpdate: false, tags: [], topTags: [])
+    let artist1 = Artist(name: "Artist1",
+                         playcount: 1,
+                         urlString: "",
+                         imageURLString: nil,
+                         needsTagsUpdate: false,
+                         tags: [],
+                         topTags: [])
+    let artist2 = Artist(name: "Artist2",
+                         playcount: 1,
+                         urlString: "",
+                         imageURLString: nil,
+                         needsTagsUpdate: false,
+                         tags: [],
+                         topTags: [])
+    let artist3 = Artist(name: "Artist3",
+                         playcount: 0,
+                         urlString: "",
+                         imageURLString: nil,
+                         needsTagsUpdate: false,
+                         tags: [],
+                         topTags: [])
     let artists = [artist1, artist2]
 
     let tracks = [Track(artist: artist1), Track(artist: artist1), Track(artist: artist3)]
