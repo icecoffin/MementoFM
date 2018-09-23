@@ -9,7 +9,7 @@ target 'MementoFM' do
   pod 'ModelMapper'
   pod 'PromiseKit/Alamofire'
   pod 'RealmSwift'
-  pod 'R.swift'
+  pod 'R.swift', '5.0.0.alpha.1'
   pod 'SnapKit'
   pod 'Sourcery'
   pod 'SVProgressHUD'

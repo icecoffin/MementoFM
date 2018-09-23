@@ -1352,7 +1352,6 @@
 				6549DF8C2043C8E7001EDDC4 /* Run R.swift */,
 				01D4D3141DAE4A0000BFD7FD /* Sources */,
 				01D4D3151DAE4A0000BFD7FD /* Frameworks */,
-				DAAEEC7C99C07FA873BB98F1 /* [CP] Copy Pods Resources */,
 				01D4D3161DAE4A0000BFD7FD /* Resources */,
 				0EB0A82E503FA4E862A74975 /* [CP] Embed Pods Frameworks */,
 			);
@@ -1374,7 +1373,6 @@
 				01D4D3291DAE4A0000BFD7FD /* Frameworks */,
 				01D4D32A1DAE4A0000BFD7FD /* Resources */,
 				A6665349F41C84CDB782A882 /* [CP] Embed Pods Frameworks */,
-				CABB4D0DBDAE9F3DF057C8FE /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1578,36 +1576,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MementoFMTests/Pods-MementoFMTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CABB4D0DBDAE9F3DF057C8FE /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MementoFMTests/Pods-MementoFMTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DAAEEC7C99C07FA873BB98F1 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MementoFM/Pods-MementoFM-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FB561C7DCCFC0F2510C095C9 /* [CP] Check Pods Manifest.lock */ = {

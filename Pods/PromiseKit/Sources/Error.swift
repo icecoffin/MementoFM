@@ -2,7 +2,7 @@ import Foundation
 
 public enum PMKError: Error {
     /**
-     The completionHandler with form (T?, ErrorType?) was called with (nil, nil)
+     The completionHandler with form `(T?, Error?)` was called with `(nil, nil)`.
      This is invalid as per Cocoa/Apple calling conventions.
      */
     case invalidCallingConvention
@@ -20,7 +20,18 @@ public enum PMKError: Error {
     case cancelled
 
     /// `nil` was returned from `flatMap`
+    @available(*, deprecated, message: "See: `compactMap`")
     case flatMap(Any, Any.Type)
+
+    /// `nil` was returned from `compactMap`
+    case compactMap(Any, Any.Type)
+
+    /**
+     The lastValue or firstValue of a sequence was requested but the sequence was empty.
+
+     Also used if all values of this collection failed the test passed to `firstValue(where:)`.
+     */
+    case emptySequence
 }
 
 extension PMKError: CustomDebugStringConvertible {
@@ -28,6 +39,8 @@ extension PMKError: CustomDebugStringConvertible {
         switch self {
         case .flatMap(let obj, let type):
             return "Could not `flatMap<\(type)>`: \(obj)"
+        case .compactMap(let obj, let type):
+            return "Could not `compactMap<\(type)>`: \(obj)"
         case .invalidCallingConvention:
             return "A closure was called with an invalid calling convention, probably (nil, nil)"
         case .returnedSelf:
@@ -36,6 +49,8 @@ extension PMKError: CustomDebugStringConvertible {
             return "Bad input was provided to a PromiseKit function"
         case .cancelled:
             return "The asynchronous sequence was cancelled"
+        case .emptySequence:
+            return "The first or last element was requested for an empty sequence"
         }
     }
 }
@@ -49,7 +64,9 @@ extension PMKError: LocalizedError {
 
 //////////////////////////////////////////////////////////// Cancellation
 
+/// An error that may represent the cancelled condition
 public protocol CancellableError: Error {
+    /// returns true if this Error represents a cancelled condition
     var isCancelled: Bool { get }
 }
 
@@ -71,7 +88,11 @@ extension Error {
     }
 }
 
+/// Used by `catch` and `recover`
 public enum CatchPolicy {
+    /// Indicates that `catch` or `recover` handle all error types including cancellable-errors.
     case allErrors
+
+    /// Indicates that `catch` or `recover` handle all error except cancellable-errors.
     case allErrorsExceptCancellation
 }
