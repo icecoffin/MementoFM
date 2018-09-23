@@ -6,7 +6,7 @@
 //  Copyright © 2017 icecoffin. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol ApplicationStateObserving: class {
   var onApplicationDidBecomeActive: (() -> Void)? { get set }
@@ -19,12 +19,12 @@ class ApplicationStateObserver: ApplicationStateObserving {
   init() {
     NotificationCenter.default.addObserver(self,
                                            selector: #selector(applicationDidBecomeActive(_:)),
-                                           name: .UIApplicationDidBecomeActive,
+                                           name: UIApplication.didBecomeActiveNotification,
                                            object: nil)
   }
 
   deinit {
-    NotificationCenter.default.removeObserver(self, name: .UIApplicationDidBecomeActive, object: nil)
+    NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
   }
 
   @objc private func applicationDidBecomeActive(_ notification: Notification) {

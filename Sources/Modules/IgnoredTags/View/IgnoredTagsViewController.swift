@@ -106,7 +106,7 @@ extension IgnoredTagsViewController: UITableViewDataSource {
 }
 
 extension IgnoredTagsViewController: UITableViewDelegate {
-  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == .delete {
       tableView.beginUpdates()
       tableView.deleteRows(at: [indexPath], with: .automatic)

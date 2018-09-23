@@ -70,7 +70,7 @@ class RealmService {
   func save<T: TransientEntity>(_ objects: [T], update: Bool = true) -> Promise<Void>
     where T.RealmType.TransientType == T {
     return write { realm in
-      let realmObjects = objects.flatMap({ return T.RealmType.from(transient: $0) as? Object })
+      let realmObjects = objects.compactMap({ return T.RealmType.from(transient: $0) as? Object })
       realm.add(realmObjects, update: update)
     }
   }
@@ -93,12 +93,12 @@ class RealmService {
 
   func objects<T: TransientEntity>(_ type: T.Type) -> [T.RealmType.TransientType]
     where T.RealmType: Object, T.RealmType.TransientType == T {
-      return currentQueueRealm.objects(T.RealmType.self).flatMap({ $0.toTransient() })
+      return currentQueueRealm.objects(T.RealmType.self).compactMap({ $0.toTransient() })
   }
 
   func objects<T: TransientEntity>(_ type: T.Type, filteredBy predicate: NSPredicate) -> [T.RealmType.TransientType]
     where T.RealmType: Object, T.RealmType.TransientType == T {
-    return currentQueueRealm.objects(T.RealmType.self).filter(predicate).flatMap({ $0.toTransient() })
+    return currentQueueRealm.objects(T.RealmType.self).filter(predicate).compactMap({ $0.toTransient() })
   }
 
   func object<T: TransientEntity, K>(ofType type: T.Type, forPrimaryKey key: K) -> T.RealmType.TransientType?

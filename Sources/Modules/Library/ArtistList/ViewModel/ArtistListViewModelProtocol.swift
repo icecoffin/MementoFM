@@ -13,7 +13,7 @@ protocol ArtistListViewModelDelegate: class {
 }
 
 protocol ArtistListViewModel: class {
-  weak var delegate: ArtistListViewModelDelegate? { get set }
+  var delegate: ArtistListViewModelDelegate? { get set }
 
   var onDidStartLoading: (() -> Void)? { get set }
   var onDidFinishLoading: (() -> Void)? { get set }

@@ -23,7 +23,7 @@ extension UITableView {
     headerView.setNeedsLayout()
     headerView.layoutIfNeeded()
 
-    let height = headerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+    let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
     widthConstraint?.deactivate()
 
     headerView.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: height)

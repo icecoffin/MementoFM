@@ -25,15 +25,15 @@ enum AppearanceConfigurator {
 
   private static func configureTabBarItemAppearance() {
     let appearance = UITabBarItem.appearance()
-    appearance.setTitleTextAttributes([NSAttributedStringKey.font: Fonts.raleway(withSize: 9)], for: .normal)
+    appearance.setTitleTextAttributes([.font: Fonts.raleway(withSize: 9)], for: .normal)
   }
 
   private static func configureSearchBarAppearance() {
     let textFieldAppearance = UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self])
-    textFieldAppearance.defaultTextAttributes = [NSAttributedStringKey.font.rawValue: Fonts.raleway(withSize: 14)]
+    textFieldAppearance.defaultTextAttributes = [.font: Fonts.raleway(withSize: 14)]
 
     let barButtonItemAppearance = UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self])
-    barButtonItemAppearance.setTitleTextAttributes([NSAttributedStringKey.font: Fonts.raleway(withSize: 16)], for: .normal)
+    barButtonItemAppearance.setTitleTextAttributes([.font: Fonts.raleway(withSize: 16)], for: .normal)
   }
 
   private static func configureHUDAppearance() {

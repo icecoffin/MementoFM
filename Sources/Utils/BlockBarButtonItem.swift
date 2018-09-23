@@ -11,7 +11,7 @@ import UIKit
 class BlockBarButtonItem: UIBarButtonItem {
   private let actionHandler: (() -> Void)
 
-  init(image: UIImage?, style: UIBarButtonItemStyle, actionHandler: @escaping (() -> Void)) {
+  init(image: UIImage?, style: UIBarButtonItem.Style, actionHandler: @escaping (() -> Void)) {
     self.actionHandler = actionHandler
     super.init()
 
@@ -21,7 +21,7 @@ class BlockBarButtonItem: UIBarButtonItem {
     self.action = #selector(barButtonItemTapped(_:))
   }
 
-  init(title: String?, style: UIBarButtonItemStyle, actionHandler: @escaping (() -> Void)) {
+  init(title: String?, style: UIBarButtonItem.Style, actionHandler: @escaping (() -> Void)) {
     self.actionHandler = actionHandler
     super.init()
 

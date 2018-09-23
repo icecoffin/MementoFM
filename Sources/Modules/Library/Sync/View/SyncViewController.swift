@@ -74,7 +74,7 @@ class SyncViewController: UIViewController {
 }
 
 private class SyncProgressView: UIView {
-  private let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+  private let activityIndicator = UIActivityIndicatorView(style: .whiteLarge)
   private let statusLabel = UILabel()
 
   init() {

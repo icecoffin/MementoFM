@@ -77,7 +77,7 @@ class ArtistListCoordinator: NSObject, NavigationFlowCoordinator {
   }
 
   private func unsubscribeFromNotifications() {
-    NotificationCenter.default.removeObserver(self, name: .UIApplicationDidBecomeActive, object: nil)
+    NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
   }
 }
 

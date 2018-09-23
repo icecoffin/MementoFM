@@ -45,7 +45,7 @@ class SimilarArtistCellViewModelTests: XCTestCase {
   }
 
   func testGettingTags() {
-    let attributes = [NSAttributedStringKey.font: Fonts.ralewayBold(withSize: 14)]
+    let attributes: [NSAttributedString.Key: Any] = [.font: Fonts.ralewayBold(withSize: 14)]
     var expectedTagsArray: [NSAttributedString] = []
     expectedTagsArray.append(NSAttributedString(string: "Tag1", attributes: attributes))
     expectedTagsArray.append(NSAttributedString(string: "Tag2"))

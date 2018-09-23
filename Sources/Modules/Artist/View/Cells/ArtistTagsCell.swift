@@ -30,7 +30,7 @@ class ArtistTagsCell: UITableViewCell {
 
   weak var delegate: ArtistTagsCellDelegate?
 
-  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     let layout = UICollectionViewLeftAlignedLayout()
     layout.minimumLineSpacing = 8
     layout.minimumInteritemSpacing = 8

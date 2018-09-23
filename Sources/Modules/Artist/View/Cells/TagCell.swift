@@ -51,7 +51,7 @@ class TagCell: UICollectionViewCell {
 
   func sizeForViewModel(_ viewModel: TagCellViewModel) -> CGSize {
     let name = viewModel.name
-    let attributes = [NSAttributedStringKey.font: Constants.textLabelFont]
+    let attributes: [NSAttributedString.Key: Any] = [.font: Constants.textLabelFont]
     let size = name.boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude),
                                  options: [.usesLineFragmentOrigin, .usesFontLeading],
                                  attributes: attributes,

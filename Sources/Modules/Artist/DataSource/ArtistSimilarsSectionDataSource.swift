@@ -67,7 +67,7 @@ class ArtistSimilarsSectionDataSource: ArtistSectionDataSource {
   }
 
   func heightForHeader(inSection section: Int, in tableView: UITableView) -> CGFloat {
-    return UITableViewAutomaticDimension
+    return UITableView.automaticDimension
   }
 
   func viewForFooter(inSection section: Int, in tableView: UITableView) -> UITableViewHeaderFooterView? {
@@ -84,7 +84,7 @@ class ArtistSimilarsSectionDataSource: ArtistSectionDataSource {
 
   func heightForFooter(inSection section: Int, in tableView: UITableView) -> CGFloat {
     if viewModel.isLoading || !viewModel.hasSimilarArtists {
-      return UITableViewAutomaticDimension
+      return UITableView.automaticDimension
     } else {
       return CGFloat.leastNormalMagnitude
     }

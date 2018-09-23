@@ -11,7 +11,7 @@ import SnapKit
 
 class LoadingView: UIView {
   private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-  private let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
+  private let activityIndicator = UIActivityIndicatorView(style: .white)
   private let messageLabel = UILabel()
 
   init() {
@@ -63,6 +63,6 @@ class LoadingView: UIView {
   }
 
   override var intrinsicContentSize: CGSize {
-    return CGSize(width: UIViewNoIntrinsicMetric, height: 50)
+    return CGSize(width: UIView.noIntrinsicMetric, height: 50)
   }
 }

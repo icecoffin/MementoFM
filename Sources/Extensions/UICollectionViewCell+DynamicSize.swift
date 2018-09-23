@@ -28,7 +28,7 @@ extension UICollectionReusableView: DynamicSizable {
     setNeedsLayout()
     layoutIfNeeded()
 
-    let height = viewForSizing.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+    let height = viewForSizing.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
     return CGSize(width: width, height: height)
   }
 
@@ -38,7 +38,7 @@ extension UICollectionReusableView: DynamicSizable {
     setNeedsLayout()
     layoutIfNeeded()
 
-    return viewForSizing.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
+    return viewForSizing.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
   }
 }
 

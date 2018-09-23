@@ -51,7 +51,7 @@ class ArtistTopTagsSectionDataSource: ArtistSectionDataSource {
   }
 
   func heightForHeader(inSection section: Int, in tableView: UITableView) -> CGFloat {
-    return UITableViewAutomaticDimension
+    return UITableView.automaticDimension
   }
 
   func viewForFooter(inSection: Int, in tableView: UITableView) -> UITableViewHeaderFooterView? {
@@ -67,7 +67,7 @@ class ArtistTopTagsSectionDataSource: ArtistSectionDataSource {
   }
 
   func heightForFooter(inSection section: Int, in tableView: UITableView) -> CGFloat {
-    return viewModel.hasTags ? CGFloat.leastNormalMagnitude : UITableViewAutomaticDimension
+    return viewModel.hasTags ? CGFloat.leastNormalMagnitude : UITableView.automaticDimension
   }
 }
 
