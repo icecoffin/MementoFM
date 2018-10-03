@@ -11,7 +11,6 @@ target 'MementoFM' do
   pod 'RealmSwift'
   pod 'R.swift', '5.0.0.alpha.1'
   pod 'SnapKit'
-  pod 'Sourcery'
   pod 'SVProgressHUD'
   pod 'SwiftyBeaver'
   pod 'SwiftLint'

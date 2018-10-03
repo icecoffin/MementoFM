@@ -16,7 +16,6 @@ PODS:
   - RealmSwift (3.10.0):
     - Realm (= 3.10.0)
   - SnapKit (4.0.1)
-  - Sourcery (0.15.0)
   - SVProgressHUD (2.2.5)
   - SwiftLint (0.27.0)
   - SwiftyBeaver (1.6.1)
@@ -31,7 +30,6 @@ DEPENDENCIES:
   - R.swift (= 5.0.0.alpha.1)
   - RealmSwift
   - SnapKit
-  - Sourcery
   - SVProgressHUD
   - SwiftLint
   - SwiftyBeaver
@@ -50,7 +48,6 @@ SPEC REPOS:
     - Realm
     - RealmSwift
     - SnapKit
-    - Sourcery
     - SVProgressHUD
     - SwiftLint
     - SwiftyBeaver
@@ -68,13 +65,12 @@ SPEC CHECKSUMS:
   Realm: 85ab9e4f779d66f6e9ffeb118dc25b7f130c96ac
   RealmSwift: 69121c8b86d0ae005fb779efdb10e606732e1c74
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
-  Sourcery: 5895672cae353cdbfa95f3f4aaeb75a664d76f6a
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftLint: 3207c1faa2240bf8973b191820a116113cd11073
   SwiftyBeaver: ccfcdf85a04d429f1633f668650b0ce8020bda3a
   TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
   UICollectionViewLeftAlignedLayout: 830bf6fa5bab9f9b464f62e3384f9d2e00b3c0f6
 
-PODFILE CHECKSUM: 13fda833ea49495a7946e16cd8a20fe2c07c9383
+PODFILE CHECKSUM: 5b73c83f0ec7ce53aa8f3c3f9a76288e023f9a44
 
 COCOAPODS: 1.5.3

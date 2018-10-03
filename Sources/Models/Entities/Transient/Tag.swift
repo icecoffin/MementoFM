@@ -9,7 +9,7 @@
 import Foundation
 import Mapper
 
-struct Tag: AutoEquatable, AutoHashable {
+struct Tag: Equatable {
   let name: String
   let count: Int
 }

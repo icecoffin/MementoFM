@@ -24,7 +24,7 @@ private func extractImageURLString(from json: Any?) throws -> String {
   return large?["#text"] as? String ?? ""
 }
 
-struct Artist: AutoEquatable, AutoHashable, TransientEntity {
+struct Artist: TransientEntity, Equatable {
   typealias RealmType = RealmArtist
 
   let name: String
@@ -33,9 +33,7 @@ struct Artist: AutoEquatable, AutoHashable, TransientEntity {
   let imageURLString: String?
 
   let needsTagsUpdate: Bool
-  // sourcery: skipHashing
   let tags: [Tag]
-  // sourcery: skipHashing
   let topTags: [Tag]
 
   func intersectingTopTagNames(with artist: Artist) -> [String] {
@@ -57,6 +55,14 @@ struct Artist: AutoEquatable, AutoHashable, TransientEntity {
   func updatingTopTags(to topTags: [Tag]) -> Artist {
     return Artist(name: name, playcount: playcount, urlString: urlString, imageURLString: imageURLString,
                   needsTagsUpdate: needsTagsUpdate, tags: tags, topTags: topTags)
+  }
+}
+
+extension Artist: Hashable {
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(name)
+    hasher.combine(playcount)
+    hasher.combine(urlString)
   }
 }
 

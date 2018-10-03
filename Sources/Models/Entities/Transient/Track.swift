@@ -9,7 +9,7 @@
 import Foundation
 import Mapper
 
-struct Track: AutoHashable, AutoEquatable {
+struct Track: Equatable {
   let artist: Artist
 }
 
