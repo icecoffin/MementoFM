@@ -145,9 +145,7 @@
 		651F9E581EC09FDD006D9474 /* AppearanceConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DFD1EC09FDC006D9474 /* AppearanceConfigurator.swift */; };
 		651F9E591EC09FDD006D9474 /* AsynchronousOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DFE1EC09FDC006D9474 /* AsynchronousOperation.swift */; };
 		651F9E5A1EC09FDD006D9474 /* BlockBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DFF1EC09FDC006D9474 /* BlockBarButtonItem.swift */; };
-		651F9E5B1EC09FDD006D9474 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9E001EC09FDC006D9474 /* Colors.swift */; };
 		651F9E5C1EC09FDD006D9474 /* ErrorConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9E011EC09FDC006D9474 /* ErrorConverter.swift */; };
-		651F9E5D1EC09FDD006D9474 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9E021EC09FDC006D9474 /* Fonts.swift */; };
 		651F9E5E1EC09FDD006D9474 /* MappingHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9E031EC09FDC006D9474 /* MappingHelpers.swift */; };
 		651F9E5F1EC09FDD006D9474 /* Sourcery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9E041EC09FDC006D9474 /* Sourcery.swift */; };
 		651F9E601EC09FDD006D9474 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 651F9E071EC09FDC006D9474 /* LaunchScreen.storyboard */; };
@@ -199,6 +197,8 @@
 		658B26B61FAB518600E3A6EA /* IgnoredTagServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658B26B41FAB518300E3A6EA /* IgnoredTagServiceTests.swift */; };
 		658B26B91FAB6C2F00E3A6EA /* UserServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658B26B81FAB6C2E00E3A6EA /* UserServiceTests.swift */; };
 		658B26BC1FAB6D3C00E3A6EA /* UserStubRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658B26BA1FAB6D3A00E3A6EA /* UserStubRepository.swift */; };
+		65A0A24B2164D7240037354E /* UIColor+AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A0A24A2164D7240037354E /* UIColor+AppColors.swift */; };
+		65A0A24D2164D7490037354E /* UIFont+AppFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A0A24C2164D7490037354E /* UIFont+AppFonts.swift */; };
 		65A305C41F9B383900E1D9C4 /* RealmServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A305C21F9B383400E1D9C4 /* RealmServiceTests.swift */; };
 		65B4A0491FC7153500E01881 /* TagsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B4A0481FC7153500E01881 /* TagsViewModelTests.swift */; };
 		65B772891EC5C5E500892698 /* ArtistDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B772881EC5C5E500892698 /* ArtistDataSource.swift */; };
@@ -364,9 +364,7 @@
 		651F9DFD1EC09FDC006D9474 /* AppearanceConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceConfigurator.swift; sourceTree = "<group>"; };
 		651F9DFE1EC09FDC006D9474 /* AsynchronousOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsynchronousOperation.swift; sourceTree = "<group>"; };
 		651F9DFF1EC09FDC006D9474 /* BlockBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockBarButtonItem.swift; sourceTree = "<group>"; };
-		651F9E001EC09FDC006D9474 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		651F9E011EC09FDC006D9474 /* ErrorConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorConverter.swift; sourceTree = "<group>"; };
-		651F9E021EC09FDC006D9474 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		651F9E031EC09FDC006D9474 /* MappingHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MappingHelpers.swift; sourceTree = "<group>"; };
 		651F9E041EC09FDC006D9474 /* Sourcery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sourcery.swift; sourceTree = "<group>"; };
 		651F9E081EC09FDC006D9474 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -420,6 +418,8 @@
 		658B26B41FAB518300E3A6EA /* IgnoredTagServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoredTagServiceTests.swift; sourceTree = "<group>"; };
 		658B26B81FAB6C2E00E3A6EA /* UserServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceTests.swift; sourceTree = "<group>"; };
 		658B26BA1FAB6D3A00E3A6EA /* UserStubRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStubRepository.swift; sourceTree = "<group>"; };
+		65A0A24A2164D7240037354E /* UIColor+AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+AppColors.swift"; sourceTree = "<group>"; };
+		65A0A24C2164D7490037354E /* UIFont+AppFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+AppFonts.swift"; sourceTree = "<group>"; };
 		65A305C21F9B383400E1D9C4 /* RealmServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmServiceTests.swift; sourceTree = "<group>"; };
 		65B4A0481FC7153500E01881 /* TagsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsViewModelTests.swift; sourceTree = "<group>"; };
 		65B772881EC5C5E500892698 /* ArtistDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistDataSource.swift; sourceTree = "<group>"; };
@@ -795,6 +795,8 @@
 				65241C291EC70AF400927749 /* UICollectionViewCell+DynamicSize.swift */,
 				651F9DA21EC09FDC006D9474 /* UITableView+HeaderVIew.swift */,
 				651F9DA31EC09FDC006D9474 /* UIViewController+Alert.swift */,
+				65A0A24A2164D7240037354E /* UIColor+AppColors.swift */,
+				65A0A24C2164D7490037354E /* UIFont+AppFonts.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1089,9 +1091,7 @@
 				651F9DFD1EC09FDC006D9474 /* AppearanceConfigurator.swift */,
 				651F9DFE1EC09FDC006D9474 /* AsynchronousOperation.swift */,
 				651F9DFF1EC09FDC006D9474 /* BlockBarButtonItem.swift */,
-				651F9E001EC09FDC006D9474 /* Colors.swift */,
 				651F9E011EC09FDC006D9474 /* ErrorConverter.swift */,
-				651F9E021EC09FDC006D9474 /* Fonts.swift */,
 				651F9E031EC09FDC006D9474 /* MappingHelpers.swift */,
 				651F9E041EC09FDC006D9474 /* Sourcery.swift */,
 				653669EE1EE5753B00E9D56C /* NavigationControllerPopTracker.swift */,
@@ -1667,7 +1667,6 @@
 				651F9E3C1EC09FDC006D9474 /* IgnoredTagsNavigationRightView.swift in Sources */,
 				651F9E121EC09FDC006D9474 /* Keys.swift in Sources */,
 				651C3BB61ECEA3A100C00AD5 /* ArtistListViewModelProtocol.swift in Sources */,
-				651F9E5B1EC09FDD006D9474 /* Colors.swift in Sources */,
 				651CB3611EC9DEE900BC452C /* EmptyDataSetFooterView.swift in Sources */,
 				651F9E321EC09FDC006D9474 /* RealmMappedCollection.swift in Sources */,
 				651F9E701EC0A88B006D9474 /* AutoEquatable.generated.swift in Sources */,
@@ -1702,12 +1701,12 @@
 				651F9E5F1EC09FDD006D9474 /* Sourcery.swift in Sources */,
 				651F9E1E1EC09FDC006D9474 /* String+Unlocalized.swift in Sources */,
 				6518F0291ECB01B000681D5E /* TagsViewController.swift in Sources */,
+				65A0A24B2164D7240037354E /* UIColor+AppColors.swift in Sources */,
 				651F9E391EC09FDC006D9474 /* EnterUsernameViewController.swift in Sources */,
 				651F9E1A1EC09FDC006D9474 /* OnboardingCoordinator.swift in Sources */,
 				651F9E421EC09FDC006D9474 /* LoadingView.swift in Sources */,
 				651F9E331EC09FDC006D9474 /* LibraryPageResponse.swift in Sources */,
 				651F9E551EC09FDD006D9474 /* IgnoredTagsPresenter.swift in Sources */,
-				651F9E5D1EC09FDD006D9474 /* Fonts.swift in Sources */,
 				651F9E2C1EC09FDC006D9474 /* UserDataStorage.swift in Sources */,
 				652167661F619E1A005B7273 /* TrackService.swift in Sources */,
 				655E97B91F3C6AEC003614C8 /* TagService.swift in Sources */,
@@ -1724,6 +1723,7 @@
 				651F9E2D1EC09FDC006D9474 /* RealmFactory.swift in Sources */,
 				651F9E221EC09FDC006D9474 /* RealmIgnoredTag.swift in Sources */,
 				65112D711F2F181800CBF8BA /* UserService.swift in Sources */,
+				65A0A24D2164D7490037354E /* UIFont+AppFonts.swift in Sources */,
 				651F9E271EC09FDC006D9474 /* RecentTracksPage.swift in Sources */,
 				65112D6C1F2F181700CBF8BA /* ArtistTopTagsCalculator.swift in Sources */,
 				651F9E2B1EC09FDC006D9474 /* Track.swift in Sources */,

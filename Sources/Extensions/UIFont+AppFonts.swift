@@ -1,14 +1,14 @@
 //
-//  Fonts.swift
+//  UIFont+AppFonts.swift
 //  MementoFM
 //
-//  Created by Daniel on 05/12/2016.
-//  Copyright © 2016 icecoffin. All rights reserved.
+//  Created by Daniel on 03/10/2018.
+//  Copyright © 2018 icecoffin. All rights reserved.
 //
 
 import UIKit
 
-enum Fonts {
+extension UIFont {
   static func raleway(withSize size: CGFloat) -> UIFont {
     return font(withName: "Raleway", size: size)
   }

@@ -25,7 +25,7 @@ class AboutViewController: UIViewController {
       make.edges.equalToSuperview().inset(16)
     }
 
-    textView.font = Fonts.raleway(withSize: 16)
+    textView.font = .raleway(withSize: 16)
     textView.isEditable = false
     textView.dataDetectorTypes = [.link]
     textView.text = aboutTexts().joined(separator: "\n\n")

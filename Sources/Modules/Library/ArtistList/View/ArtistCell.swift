@@ -72,11 +72,11 @@ class ArtistCell: UITableViewCell {
   private func configureNameLabel() {
     nameLabel.numberOfLines = 0
     nameLabel.lineBreakMode = .byWordWrapping
-    nameLabel.font = Fonts.ralewayMedium(withSize: 16)
+    nameLabel.font = .ralewayMedium(withSize: 16)
   }
 
   private func configurePlaycountLabel() {
-    playcountLabel.font = Fonts.raleway(withSize: 14)
+    playcountLabel.font = .raleway(withSize: 14)
     playcountLabel.textColor = UIColor.gray
   }
 

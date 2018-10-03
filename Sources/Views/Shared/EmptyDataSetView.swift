@@ -32,6 +32,6 @@ class EmptyDataSetView: UIView {
     textLabel.numberOfLines = 0
     textLabel.textAlignment = .center
     textLabel.text = text
-    textLabel.font = Fonts.ralewayMedium(withSize: 16)
+    textLabel.font = .ralewayMedium(withSize: 16)
   }
 }

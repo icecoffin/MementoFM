@@ -44,7 +44,7 @@ class ArtistSimilarsSectionHeaderView: UITableViewHeaderFooterView {
     }
 
     titleLabel.numberOfLines = 0
-    titleLabel.font = Fonts.ralewayBold(withSize: 18)
+    titleLabel.font = .ralewayBold(withSize: 18)
   }
 
   private func addSegmentedControl() {
@@ -55,7 +55,7 @@ class ArtistSimilarsSectionHeaderView: UITableViewHeaderFooterView {
       make.bottom.equalToSuperview().inset(8).priority(999)
     }
 
-    segmentedControl.tintColor = Colors.bayLeaf
+    segmentedControl.tintColor = .bayLeaf
     segmentedControl.selectedSegmentIndex = 0
     segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
   }

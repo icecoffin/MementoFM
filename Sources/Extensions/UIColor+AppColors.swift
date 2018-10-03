@@ -1,0 +1,13 @@
+//
+//  UIColor+AppColors.swift
+//  MementoFM
+//
+//  Created by Daniel on 03/10/2018.
+//  Copyright © 2018 icecoffin. All rights reserved.
+//
+
+import UIKit
+
+extension UIColor {
+  static let bayLeaf = UIColor(red: 113/255.0, green: 178/255.0, blue: 128/255.0, alpha: 1)
+}

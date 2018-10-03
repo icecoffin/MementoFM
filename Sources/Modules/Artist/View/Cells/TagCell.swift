@@ -13,7 +13,7 @@ class TagCell: UICollectionViewCell {
     static let containerViewCornerRadius: CGFloat = 6
     static let textLabelLeadingTrailingOffset: CGFloat = 8
     static let textLabelTopBottomOffset: CGFloat = 4
-    static let textLabelFont = Fonts.raleway(withSize: 14)
+    static let textLabelFont: UIFont = .raleway(withSize: 14)
   }
 
   private let containerView = UIView()
@@ -33,7 +33,7 @@ class TagCell: UICollectionViewCell {
     containerView.snp.makeConstraints { make in
       make.edges.equalToSuperview()
     }
-    containerView.backgroundColor = Colors.bayLeaf
+    containerView.backgroundColor = .bayLeaf
     containerView.layer.cornerRadius = Constants.containerViewCornerRadius
 
     containerView.addSubview(textLabel)

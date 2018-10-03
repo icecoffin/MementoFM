@@ -31,7 +31,7 @@ class ArtistTopTagsSectionHeaderView: UITableViewHeaderFooterView {
       make.bottom.equalToSuperview().inset(8).priority(999)
     }
 
-    titleLabel.font = Fonts.ralewayBold(withSize: 18)
+    titleLabel.font = .ralewayBold(withSize: 18)
   }
 
   func configure(with viewModel: ArtistTopTagsSectionViewModel) {

@@ -19,21 +19,21 @@ enum AppearanceConfigurator {
 
   private static func configureNavigationBarAppearance() {
     let appearance = UINavigationBar.appearance()
-    appearance.titleTextAttributes = [.font: Fonts.ralewayBold(withSize: 16)]
-    appearance.largeTitleTextAttributes = [.font: Fonts.ralewayBold(withSize: 36)]
+    appearance.titleTextAttributes = [.font: UIFont.ralewayBold(withSize: 16)]
+    appearance.largeTitleTextAttributes = [.font: UIFont.ralewayBold(withSize: 36)]
   }
 
   private static func configureTabBarItemAppearance() {
     let appearance = UITabBarItem.appearance()
-    appearance.setTitleTextAttributes([.font: Fonts.raleway(withSize: 9)], for: .normal)
+    appearance.setTitleTextAttributes([.font: UIFont.raleway(withSize: 9)], for: .normal)
   }
 
   private static func configureSearchBarAppearance() {
     let textFieldAppearance = UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self])
-    textFieldAppearance.defaultTextAttributes = [.font: Fonts.raleway(withSize: 14)]
+    textFieldAppearance.defaultTextAttributes = [.font: UIFont.raleway(withSize: 14)]
 
     let barButtonItemAppearance = UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self])
-    barButtonItemAppearance.setTitleTextAttributes([.font: Fonts.raleway(withSize: 16)], for: .normal)
+    barButtonItemAppearance.setTitleTextAttributes([.font: UIFont.raleway(withSize: 16)], for: .normal)
   }
 
   private static func configureHUDAppearance() {
