@@ -28,23 +28,23 @@ class SimilarArtistCellViewModelTests: XCTestCase {
 
   let commonTags = ["Tag1", "Tag3"]
 
-  func testGettingName() {
+  func test_name_returnsArtistName() {
     let viewModel = SimilarArtistCellViewModel(artist: sampleArtist, commonTags: commonTags)
     expect(viewModel.name).to(equal("Artist"))
   }
 
-  func testGettingPlaycount() {
+  func test_playcount_returnsCorrectValue_basedOnArtistPlaycount() {
     let viewModel = SimilarArtistCellViewModel(artist: sampleArtist, commonTags: commonTags)
     expect(viewModel.playcount).to(equal("10 plays".unlocalized))
   }
 
-  func testGettingImageURL() {
+  func test_imageURL_returnsCorrectURLFromArtist() {
     let viewModel = SimilarArtistCellViewModel(artist: sampleArtist, commonTags: commonTags)
     let expectedURL = URL(string: "https://example.com/1.jpg")
     expect(viewModel.imageURL).to(equal(expectedURL))
   }
 
-  func testGettingTags() {
+  func test_tags_returnsCorrectlyAttributedTags_basedOnCommonTags() {
     let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.ralewayBold(withSize: 14)]
     var expectedTagsArray: [NSAttributedString] = []
     expectedTagsArray.append(NSAttributedString(string: "Tag1", attributes: attributes))

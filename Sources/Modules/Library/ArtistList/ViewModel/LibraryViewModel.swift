@@ -62,8 +62,9 @@ class LibraryViewModel: ArtistListViewModel {
     }
   }
 
-  func requestDataIfNeeded(currentTimestamp: TimeInterval = Date().timeIntervalSince1970) {
-    if currentTimestamp - dependencies.libraryUpdater.lastUpdateTimestamp > 30 || dependencies.libraryUpdater.isFirstUpdate {
+  func requestDataIfNeeded(currentTimestamp: TimeInterval, minTimeInterval: TimeInterval) {
+    if currentTimestamp - dependencies.libraryUpdater.lastUpdateTimestamp > minTimeInterval
+      || dependencies.libraryUpdater.isFirstUpdate {
       dependencies.libraryUpdater.requestData()
     }
   }

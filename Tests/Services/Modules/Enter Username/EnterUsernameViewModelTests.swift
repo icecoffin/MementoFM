@@ -20,31 +20,88 @@ private class Dependencies: EnterUsernameViewModel.Dependencies {
 }
 
 class EnterUsernameViewModelTests: XCTestCase {
-  func testCanSubmitUsername() {
+  func test_canSubmitUsername_returnsFalse_forEmptyUsername() {
     let dependencies = Dependencies(userService: StubUserService())
     let viewModel = EnterUsernameViewModel(dependencies: dependencies)
 
     expect(viewModel.canSubmitUsername).to(beFalse())
+  }
+
+  func test_canSubmitUsername_returnsTrue_forNewUsername() {
+    let dependencies = Dependencies(userService: StubUserService())
+    let viewModel = EnterUsernameViewModel(dependencies: dependencies)
+
+    dependencies.userService.username = "foo"
+    viewModel.updateUsername("username")
+
+    expect(viewModel.canSubmitUsername).to(beTrue())
+  }
+
+  func test_canSubmitUsername_returnsFalse_forExistingUsername() {
+    let dependencies = Dependencies(userService: StubUserService())
+    let viewModel = EnterUsernameViewModel(dependencies: dependencies)
 
     viewModel.updateUsername("username")
-    dependencies.userService.username = "foo"
-    expect(viewModel.canSubmitUsername).to(beTrue())
-
     dependencies.userService.username = "username"
+
     expect(viewModel.canSubmitUsername).to(beFalse())
   }
 
-  func testCurrentUsernameText() {
+  func test_currentUsername_returnsEmptyString_ifNoUsernameIsSet() {
     let dependencies = Dependencies(userService: StubUserService())
     let viewModel = EnterUsernameViewModel(dependencies: dependencies)
 
     expect(viewModel.currentUsernameText).to(equal(""))
+  }
 
+  func test_currentUsername_returnsCorrectValue_basedOnUserService() {
+    let dependencies = Dependencies(userService: StubUserService())
+
+    let viewModel = EnterUsernameViewModel(dependencies: dependencies)
     dependencies.userService.username = "username"
+
     expect(viewModel.currentUsernameText).to(equal(viewModel.currentUsernamePrefix + "username"))
   }
 
-  func testSubmittingUsernameWithSuccess() {
+  func test_submitUsername_callsOnDidStartRequest() {
+    let userService = StubUserService()
+    let dependencies = Dependencies(userService: userService)
+    let viewModel = EnterUsernameViewModel(dependencies: dependencies)
+
+    var didStartRequest = false
+
+    viewModel.onDidStartRequest = {
+      didStartRequest = true
+    }
+
+    viewModel.updateUsername("username")
+    viewModel.submitUsername()
+
+    expect(didStartRequest).toEventually(beTrue())
+  }
+
+  func test_submitUsername_callsOnDidFinishRequest() {
+    let userService = StubUserService()
+    let dependencies = Dependencies(userService: userService)
+    let viewModel = EnterUsernameViewModel(dependencies: dependencies)
+
+    var didStartRequest = false
+
+    viewModel.onDidStartRequest = {
+      didStartRequest = true
+    }
+    viewModel.onDidReceiveError = { _ in
+      // Test that onDidRecieveError is never called
+      fail()
+    }
+
+    viewModel.updateUsername("username")
+    viewModel.submitUsername()
+
+    expect(didStartRequest).toEventually(beTrue())
+  }
+
+  func test_submitUsername_notifiesDelegateOnSuccess() {
     class StubEnterUsernameViewModelDelegate: EnterUsernameViewModelDelegate {
       var didCallEnterUsernameViewModelDidFinish = false
       func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel) {
@@ -56,35 +113,41 @@ class EnterUsernameViewModelTests: XCTestCase {
     let dependencies = Dependencies(userService: userService)
     let viewModel = EnterUsernameViewModel(dependencies: dependencies)
 
-    var didStartRequest = false
-    var didFinishRequest = false
-
-    viewModel.onDidStartRequest = {
-      didStartRequest = true
-    }
-    viewModel.onDidFinishRequest = {
-      didFinishRequest = true
-    }
-    viewModel.onDidReceiveError = { _ in
-      fail()
-    }
-
     let delegate = StubEnterUsernameViewModelDelegate()
     viewModel.delegate = delegate
 
     viewModel.updateUsername("username")
     viewModel.submitUsername()
 
-    expect(didStartRequest).toEventually(beTrue())
-    expect(didFinishRequest).toEventually(beTrue())
     expect(delegate.didCallEnterUsernameViewModelDidFinish).toEventually(beTrue())
+  }
+
+  func test_submitUsername_checksThatUsernameExists() {
+    let userService = StubUserService()
+    let dependencies = Dependencies(userService: userService)
+    let viewModel = EnterUsernameViewModel(dependencies: dependencies)
+
+    viewModel.updateUsername("username")
+    viewModel.submitUsername()
+
     expect(userService.usernameBeingChecked).toEventually(equal("username"))
+  }
+
+  func test_submitUsername_clearsUserDataOnSuccess() {
+    let userService = StubUserService()
+    let dependencies = Dependencies(userService: userService)
+    let viewModel = EnterUsernameViewModel(dependencies: dependencies)
+
+    viewModel.updateUsername("username")
+    viewModel.submitUsername()
+
     expect(userService.didCallClearUserData).toEventually(beTrue())
   }
 
-  func testSubmittingUsernameWithError() {
+  func test_submitUsername_callsOnDidReceiveError() {
     class StubEnterUsernameViewModelDelegate: EnterUsernameViewModelDelegate {
       func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel) {
+        // Test that delegate is not notified
         fail()
       }
     }
@@ -94,16 +157,8 @@ class EnterUsernameViewModelTests: XCTestCase {
     let dependencies = Dependencies(userService: userService)
     let viewModel = EnterUsernameViewModel(dependencies: dependencies)
 
-    var didStartRequest = false
-    var didFinishRequest = false
     var didReceiveError = false
 
-    viewModel.onDidStartRequest = {
-      didStartRequest = true
-    }
-    viewModel.onDidFinishRequest = {
-      didFinishRequest = true
-    }
     viewModel.onDidReceiveError = { _ in
       didReceiveError = true
     }
@@ -114,10 +169,6 @@ class EnterUsernameViewModelTests: XCTestCase {
     viewModel.updateUsername("username")
     viewModel.submitUsername()
 
-    expect(didStartRequest).toEventually(beTrue())
-    expect(didFinishRequest).toEventually(beTrue())
     expect(didReceiveError).toEventually(beTrue())
-    expect(userService.usernameBeingChecked).to(equal("username"))
-    expect(userService.didCallClearUserData).to(beFalse())
   }
 }

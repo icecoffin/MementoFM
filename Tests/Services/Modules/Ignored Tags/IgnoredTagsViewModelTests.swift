@@ -22,6 +22,14 @@ class IgnoredTagsViewModelTests: XCTestCase {
     }
   }
 
+  class StubIgnoredTagsViewModelDelegate: IgnoredTagsViewModelDelegate {
+    var didCallDidSaveChanges = false
+
+    func ignoredTagsViewModelDidSaveChanges(_ viewModel: IgnoredTagsViewModel) {
+      didCallDidSaveChanges = true
+    }
+  }
+
   var ignoredTagService: StubIgnoredTagService!
   var artistService: StubArtistService!
   var dependencies: Dependencies!
@@ -32,7 +40,7 @@ class IgnoredTagsViewModelTests: XCTestCase {
     dependencies = Dependencies(ignoredTagService: ignoredTagService, artistService: artistService)
   }
 
-  func testInitWhenIgnoredTagsExist() {
+  func test_init_doesNotCreateDefaultIgnoredTags_whenShouldAddDefaultTagsIsFalse() {
     let defaultIgnoredTagNames = ["tag1", "tag2"]
     ignoredTagService.defaultIgnoredTagNames = defaultIgnoredTagNames
 
@@ -45,7 +53,7 @@ class IgnoredTagsViewModelTests: XCTestCase {
     expect(self.ignoredTagService.createdDefaultIgnoredTagNames).to(beEmpty())
   }
 
-  func testInitWithAddingIgnoredTags() {
+  func test_init_createsDefaultIgnoredTags_whenShouldAddDefaultTagsIsTrue() {
     let defaultIgnoredTagNames = ["tag1", "tag2"]
     ignoredTagService.defaultIgnoredTagNames = defaultIgnoredTagNames
 
@@ -55,15 +63,16 @@ class IgnoredTagsViewModelTests: XCTestCase {
     expect(self.ignoredTagService.createdDefaultIgnoredTagNames).to(equal(defaultIgnoredTagNames))
   }
 
-  func testGettingNumberOfIgnoredTags() {
+  func test_numberOfIgnoredTags_returnsCorrectValue() {
     let ignoredTags = ModelFactory.generateIgnoredTags(inAmount: 10)
     ignoredTagService.stubIgnoredTags = ignoredTags
 
     let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
+
     expect(viewModel.numberOfIgnoredTags).to(equal(ignoredTags.count))
   }
 
-  func testGettingCellViewModel() {
+  func test_cellViewModelAtIndexPath_returnsCorrectValue() {
     let ignoredTags = ModelFactory.generateIgnoredTags(inAmount: 10)
     ignoredTagService.stubIgnoredTags = ignoredTags
 
@@ -78,38 +87,107 @@ class IgnoredTagsViewModelTests: XCTestCase {
     expect(updatedCellViewModel.text).to(equal("text"))
   }
 
-  func testAddingNewIgnoredTag() {
+  func test_cellViewModelAtIndexPath_returnsNewValueOnTextChange() {
     let ignoredTags = ModelFactory.generateIgnoredTags(inAmount: 10)
     ignoredTagService.stubIgnoredTags = ignoredTags
 
     let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
+    let indexPath = IndexPath(row: 0, section: 0)
+
+    let cellViewModel = viewModel.cellViewModel(at: indexPath)
+    cellViewModel.onTextChange?("text")
+
+    let updatedCellViewModel = viewModel.cellViewModel(at: indexPath)
+
+    expect(updatedCellViewModel.text).to(equal("text"))
+  }
+
+  func test_addNewIgnoredTag_callsOnDidAddNewTag() {
+    let ignoredTags = ModelFactory.generateIgnoredTags(inAmount: 10)
+    ignoredTagService.stubIgnoredTags = ignoredTags
+
+    let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
+
     var expectedIndexPath: IndexPath?
     viewModel.onDidAddNewTag = { indexPath in
       expectedIndexPath = indexPath
     }
+
     viewModel.addNewIgnoredTag()
 
     expect(expectedIndexPath).toEventually(equal(IndexPath(row: ignoredTags.count, section: 0)))
-    expect(viewModel.numberOfIgnoredTags).to(equal(ignoredTags.count + 1))
   }
 
-  func testDeletingIgnoredTag() {
+  func test_addNewIgnoredTag_increasesNumberOfIgnoredTags() {
     let ignoredTags = ModelFactory.generateIgnoredTags(inAmount: 10)
     ignoredTagService.stubIgnoredTags = ignoredTags
 
     let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
+
+    viewModel.addNewIgnoredTag()
+
+    expect(viewModel.numberOfIgnoredTags).to(equal(ignoredTags.count + 1))
+  }
+
+  func test_deleteIgnoredTagAtIndexPath_decreasesNumberOfIgnoredTags() {
+    let ignoredTags = ModelFactory.generateIgnoredTags(inAmount: 10)
+    ignoredTagService.stubIgnoredTags = ignoredTags
+
+    let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
+
     viewModel.deleteIgnoredTag(at: IndexPath(row: 0, section: 0))
+
     expect(viewModel.numberOfIgnoredTags).to(equal(ignoredTags.count - 1))
   }
 
-  func testSavingChanges() {
-    class StubIgnoredTagsViewModelDelegate: IgnoredTagsViewModelDelegate {
-      var didCallDidSaveChanges = false
-      func ignoredTagsViewModelDidSaveChanges(_ viewModel: IgnoredTagsViewModel) {
-        didCallDidSaveChanges = true
-      }
+  func test_saveChanges_callsOnDidStartSavingChanges() {
+    let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
+
+    var didStartSavingChanges = false
+
+    viewModel.onDidStartSavingChanges = {
+      didStartSavingChanges = true
     }
 
+    viewModel.saveChanges()
+
+    expect(didStartSavingChanges).to(beTrue())
+  }
+
+  func test_saveChanges_callsOnDidFinishSavingChanges() {
+    let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
+
+    var didFinishSavingChanges = false
+
+    viewModel.onDidFinishSavingChanges = {
+      didFinishSavingChanges = true
+    }
+
+    viewModel.saveChanges()
+
+    expect(didFinishSavingChanges).toEventually(beTrue())
+  }
+
+  func test_saveChanges_notifiesDelegateOnSuccess() {
+    let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
+
+    let delegate = StubIgnoredTagsViewModelDelegate()
+    viewModel.delegate = delegate
+
+    viewModel.saveChanges()
+
+    expect(delegate.didCallDidSaveChanges).toEventually(beTrue())
+  }
+
+  func test_saveChanges_callsArtistService() {
+    let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
+
+    viewModel.saveChanges()
+
+    expect(self.artistService.didCallCalculateTopTagsForAllArtists).toEventually(beTrue())
+  }
+
+  func test_saveChanges_updatesIgnoredTags() {
     ignoredTagService.stubIgnoredTags = [IgnoredTag(uuid: "uuid1", name: "tag1"),
                                          IgnoredTag(uuid: "uuid2", name: "tag1"),
                                          IgnoredTag(uuid: "uuid3", name: "tag1"),
@@ -120,25 +198,7 @@ class IgnoredTagsViewModelTests: XCTestCase {
 
     let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
 
-    let delegate = StubIgnoredTagsViewModelDelegate()
-    viewModel.delegate = delegate
-
-    var didStartSavingChanges = false
-    var didFinishSavingChanges = false
-
-    viewModel.onDidStartSavingChanges = {
-      didStartSavingChanges = true
-    }
-    viewModel.onDidFinishSavingChanges = {
-      didFinishSavingChanges = true
-    }
     viewModel.saveChanges()
-
-    expect(didStartSavingChanges).to(beTrue())
-    expect(didFinishSavingChanges).toEventually(beTrue())
-    expect(delegate.didCallDidSaveChanges).toEventually(beTrue())
-
-    expect(self.artistService.didCallCalculateTopTagsForAllArtists).toEventually(beTrue())
 
     let expectedUpdatedIgnoredTags = [IgnoredTag(uuid: "uuid1", name: "tag1"),
                                       IgnoredTag(uuid: "uuid4", name: "tag2"),

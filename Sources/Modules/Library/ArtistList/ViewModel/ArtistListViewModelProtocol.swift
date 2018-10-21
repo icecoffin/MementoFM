@@ -25,15 +25,16 @@ protocol ArtistListViewModel: class {
   var title: String { get }
   var searchBarPlaceholder: String { get }
 
-  func requestDataIfNeeded(currentTimestamp: TimeInterval)
+  func requestDataIfNeeded(currentTimestamp: TimeInterval, minTimeInterval: TimeInterval)
   func artistViewModel(at indexPath: IndexPath) -> LibraryArtistCellViewModel
   func selectArtist(at indexPath: IndexPath)
   func performSearch(withText text: String)
 }
 
 extension ArtistListViewModel {
-  func requestDataIfNeeded(currentTimestamp: TimeInterval = Date().timeIntervalSince1970) {
-    requestDataIfNeeded(currentTimestamp: currentTimestamp)
+  func requestDataIfNeeded(currentTimestamp: TimeInterval = Date().timeIntervalSince1970,
+                           minTimeInterval: TimeInterval = 30) {
+    requestDataIfNeeded(currentTimestamp: currentTimestamp, minTimeInterval: minTimeInterval)
   }
 
   var searchBarPlaceholder: String {

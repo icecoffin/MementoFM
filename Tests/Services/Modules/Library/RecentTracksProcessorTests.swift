@@ -26,7 +26,7 @@ class RecentTracksProcessorTests: XCTestCase {
     super.tearDown()
   }
 
-  func testProcessingTracks() {
+  func test_processTracks_updatesArtistsInDatabase() {
     let artist1 = Artist(name: "Artist1",
                          playcount: 1,
                          urlString: "",

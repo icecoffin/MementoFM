@@ -20,6 +20,13 @@ class TagsViewModelTests: XCTestCase {
     }
   }
 
+  class StubTagsViewModelDelegate: TagsViewModelDelegate {
+    var selectedTagName: String = ""
+    func tagsViewModel(_ viewModel: TagsViewModel, didSelectTagWithName name: String) {
+      selectedTagName = name
+    }
+  }
+
   var tagService: StubTagService!
   var dependencies: Dependencies!
 
@@ -38,17 +45,19 @@ class TagsViewModelTests: XCTestCase {
     dependencies = Dependencies(tagService: tagService)
   }
 
-  func testGettingTagsWhenEmpty() {
+  func test_getTags_callsOnDidUpdateData_withIsEmptyEqualToTrue() {
     let viewModel = TagsViewModel(dependencies: dependencies)
     var expectedIsEmpty = false
     viewModel.onDidUpdateData = { isEmpty in
       expectedIsEmpty = isEmpty
     }
+
     viewModel.getTags()
+
     expect(expectedIsEmpty).toEventually(equal(true))
   }
 
-  func testGettingTagsWhenNotEmpty() {
+  func test_getTags_callsOnDidUpdateData_withIsEmptyEqualToFalse() {
     let tags = sampleTags()
     tagService.stubTopTags = tags
     let viewModel = TagsViewModel(dependencies: dependencies)
@@ -56,11 +65,13 @@ class TagsViewModelTests: XCTestCase {
     viewModel.onDidUpdateData = { isEmpty in
       expectedIsEmpty = isEmpty
     }
+
     viewModel.getTags()
+
     expect(expectedIsEmpty).toEventually(equal(false))
   }
 
-  func testGettingNumberOfTags() {
+  func test_numberOfTags_returnsCorrectValue() {
     let tags = sampleTags()
     tagService.stubTopTags = tags
     let viewModel = TagsViewModel(dependencies: dependencies)
@@ -72,7 +83,7 @@ class TagsViewModelTests: XCTestCase {
     expect(expectedNumberOfTags).toEventually(equal(2))
   }
 
-  func testGettingCellViewModel() {
+  func func_cellViewModelAtIndexPath_returnsCorrectValue() {
     let tags = sampleTags()
     tagService.stubTopTags = tags
     let viewModel = TagsViewModel(dependencies: dependencies)
@@ -81,18 +92,13 @@ class TagsViewModelTests: XCTestCase {
       let indexPath = IndexPath(row: 1, section: 0)
       expectedCellViewModel = viewModel.cellViewModel(at: indexPath)
     }
+
     viewModel.getTags()
+
     expect(expectedCellViewModel?.name).toEventually(equal("Tag2"))
   }
 
-  func testSelectingTag() {
-    class StubTagsViewModelDelegate: TagsViewModelDelegate {
-      var selectedTagName: String = ""
-      func tagsViewModel(_ viewModel: TagsViewModel, didSelectTagWithName name: String) {
-        selectedTagName = name
-      }
-    }
-
+  func test_selectTagAtIndexPath_notifiesDelegate() {
     let tags = sampleTags()
     tagService.stubTopTags = tags
     let delegate = StubTagsViewModelDelegate()
@@ -102,11 +108,13 @@ class TagsViewModelTests: XCTestCase {
       let indexPath = IndexPath(row: 1, section: 0)
       viewModel.selectTag(at: indexPath)
     }
+
     viewModel.getTags()
+
     expect(delegate.selectedTagName).toEventually(equal("Tag2"))
   }
 
-  func testPerformingSearch() {
+  func test_performSearch_filtersTagsBasedOnSearchText() {
     let tags = sampleTags()
     tagService.stubTopTags = tags
     let viewModel = TagsViewModel(dependencies: dependencies)
@@ -126,10 +134,11 @@ class TagsViewModelTests: XCTestCase {
 
     viewModel.onDidUpdateData = onDidGetTags
     viewModel.getTags()
+
     expect(expectedNumberOfTags).toEventually(equal(1))
   }
 
-  func testCancellingSearch() {
+  func test_cancelSearch_returnsAllTagsWithoutFiltering() {
     let tags = sampleTags()
     tagService.stubTopTags = tags
     let viewModel = TagsViewModel(dependencies: dependencies)

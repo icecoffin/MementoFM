@@ -31,18 +31,20 @@ class SimilarArtistsRemoteRequestStrategyTests: XCTestCase {
     dependencies = Dependencies(artistService: artistService)
   }
 
-  func testGettingNumberOfIntersectingTags() {
+  func test_minNumberOfIntersectingTags_returnsCorrectValueFromStrategy() {
     let strategy = SimilarArtistsRemoteRequestStrategy(dependencies: dependencies)
     expect(strategy.minNumberOfIntersectingTags).to(equal(0))
   }
 
-  func testGettingSimilarArtists() {
+  func test_getSimilarArtists_getsCorrectValueFromArtistService() {
     artistService.stubSimilarArtists = similarArtists
     let strategy = SimilarArtistsRemoteRequestStrategy(dependencies: dependencies)
     var expectedSimilarArtists: [Artist] = []
+
     strategy.getSimilarArtists(for: sampleArtist).done { artists in
       expectedSimilarArtists = artists
     }.noError()
+
     expect(expectedSimilarArtists).toEventually(equal(similarArtists))
   }
 }

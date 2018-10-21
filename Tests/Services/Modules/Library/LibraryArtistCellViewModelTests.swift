@@ -21,17 +21,17 @@ class LibraryArtistCellViewModelTests: XCTestCase {
                   topTags: [])
   }
 
-  func testGettingName() {
+  func test_name_returnsArtistName() {
     let viewModel = LibraryArtistCellViewModel(artist: sampleArtist)
     expect(viewModel.name).to(equal("Artist"))
   }
 
-  func testGettingPlaycount() {
+  func test_playcount_returnsCorrectValue_basedOnArtistPlaycount() {
     let viewModel = LibraryArtistCellViewModel(artist: sampleArtist)
     expect(viewModel.playcount).to(equal("10 plays"))
   }
 
-  func testGettingImageURL() {
+  func test_imageURL_returnsCorrectURLFromArtist() {
     let viewModel = LibraryArtistCellViewModel(artist: sampleArtist)
     let url = URL(string: "https://example.com/1.jpg")
     expect(viewModel.imageURL).to(equal(url))

@@ -30,17 +30,21 @@ class ArtistTopTagsSectionViewModelTests: XCTestCase {
                   topTags: tags)
   }()
 
-  func testGettingNumberOfTopTags() {
+  func func_numberOfTopTags_returnsCorrectValue() {
     let artist = sampleArtist
     let viewModel = ArtistTopTagsSectionViewModel(artist: artist)
+
     expect(viewModel.numberOfTopTags).to(equal(sampleArtist.topTags.count))
   }
 
-  func testGettingHasTags() {
+  func test_hasTags_returnsTrue_whenArtistHasTags() {
     let artist = sampleArtist
     let viewModel1 = ArtistTopTagsSectionViewModel(artist: artist)
-    expect(viewModel1.hasTags).to(beTrue())
 
+    expect(viewModel1.hasTags).to(beTrue())
+  }
+
+  func test_hasTags_returnsFalse_whenArtistHasNoTags() {
     let artistWithNoTags = Artist(name: "Artist",
                                   playcount: 1,
                                   urlString: "",
@@ -49,23 +53,28 @@ class ArtistTopTagsSectionViewModelTests: XCTestCase {
                                   tags: [],
                                   topTags: [])
     let viewModel2 = ArtistTopTagsSectionViewModel(artist: artistWithNoTags)
+
     expect(viewModel2.hasTags).to(beFalse())
   }
 
-  func testGettingTagCellViewModel() {
+  func test_cellViewModelAtIndexPath_returnsCorrectValue() {
     let artist = sampleArtist
     let viewModel = ArtistTopTagsSectionViewModel(artist: artist)
     let indexPath = IndexPath(row: 1, section: 0)
+
     let cellViewModel = viewModel.cellViewModel(at: indexPath)
+
     expect(cellViewModel.name).to(equal("Tag2"))
   }
 
-  func testSelectingTag() {
+  func test_selectTagWithName_notifiesDelegateCorrectly() {
     let artist = sampleArtist
     let viewModel = ArtistTopTagsSectionViewModel(artist: artist)
     let delegate = StubArtistTopTagsSectionViewModelDelegate()
     viewModel.delegate = delegate
+
     viewModel.selectTag(withName: "Tag2")
+
     expect(delegate.selectedTagName).to(equal("Tag2"))
   }
 }

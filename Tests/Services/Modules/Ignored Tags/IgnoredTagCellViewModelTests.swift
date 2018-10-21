@@ -12,13 +12,14 @@ import Nimble
 import PromiseKit
 
 class IgnoredTagCellViewModelTests: XCTestCase {
-  func testGettingText() {
+
+  func test_text_returnsTagName() {
     let tag = IgnoredTag(uuid: "uuid", name: "name")
     let viewModel = IgnoredTagCellViewModel(tag: tag)
     expect(viewModel.text).to(equal(tag.name))
   }
 
-  func testCallingTextDidChange() {
+  func test_tagTextDidChange_callsOnTextChange() {
     let tag = IgnoredTag(uuid: "uuid", name: "name")
     let viewModel = IgnoredTagCellViewModel(tag: tag)
 

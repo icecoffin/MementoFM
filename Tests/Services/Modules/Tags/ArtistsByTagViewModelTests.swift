@@ -61,56 +61,65 @@ class ArtistsByTagViewModelTests: XCTestCase {
     dependencies = nil
   }
 
-  func testGettingItemCount() {
+  func test_itemCount_returnsCorrectValue() {
     writeArtists()
     let viewModel = ArtistsByTagViewModel(tagName: "Tag1", dependencies: dependencies)
+
     expect(viewModel.itemCount).to(equal(4))
   }
 
-  func testGettingTitle() {
+  func test_title_returnsCorrectValue() {
     let viewModel = ArtistsByTagViewModel(tagName: "Tag1", dependencies: dependencies)
+
     expect(viewModel.title).to(equal("Tag1"))
   }
 
-  func testGettingArtistViewModel() {
+  func test_artistViewModelAtIndexPath_returnsCorrectValue() {
     writeArtists()
     let viewModel = ArtistsByTagViewModel(tagName: "Tag1", dependencies: dependencies)
     let indexPath = IndexPath(row: 1, section: 0)
     let artistViewModel = viewModel.artistViewModel(at: indexPath)
+
     expect(artistViewModel.name).to(equal("Artist2"))
   }
 
-  func testSelectingArtist() {
+  func test_selectArtistAtIndexPath_notifiesDelegate() {
     let artists = sampleArtists
     writeArtists()
     let viewModel = ArtistsByTagViewModel(tagName: "Tag1", dependencies: dependencies)
     let delegate = StubArtistsByTagViewModelDelegate()
     viewModel.delegate = delegate
     let indexPath = IndexPath(row: 1, section: 0)
+
     viewModel.selectArtist(at: indexPath)
+
     expect(delegate.selectedArtist).to(equal(artists[1]))
   }
 
-  func testPerformingSearchWithEmptyResult() {
+  func test_performSearch_filtersArtistsBasedOnText() {
     writeArtists()
     let viewModel = ArtistsByTagViewModel(tagName: "Tag1", dependencies: dependencies)
     var expectedIsEmpty = true
     viewModel.onDidUpdateData = { isEmpty in
       expectedIsEmpty = isEmpty
     }
+
     viewModel.performSearch(withText: "1")
+
     expect(viewModel.itemCount).toEventually(equal(1))
     expect(expectedIsEmpty).toEventually(beFalse())
   }
 
-  func testPerformingSearchWithNotEmptyResult() {
+  func test_performSearch_returnsEmptyResultForNonExistentText() {
     writeArtists()
     let viewModel = ArtistsByTagViewModel(tagName: "Tag1", dependencies: dependencies)
     var expectedIsEmpty = false
     viewModel.onDidUpdateData = { isEmpty in
       expectedIsEmpty = isEmpty
     }
+
     viewModel.performSearch(withText: "231")
+
     expect(viewModel.itemCount).toEventually(equal(0))
     expect(expectedIsEmpty).toEventually(beTrue())
   }

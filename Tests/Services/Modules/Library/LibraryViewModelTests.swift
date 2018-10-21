@@ -72,114 +72,148 @@ class LibraryViewModelTests: XCTestCase {
     super.tearDown()
   }
 
-  func testMakingFirstUpdate() {
+  func test_requestDataIfNeeded_requestsDataOnFirstUpdate() {
     let viewModel = LibraryViewModel(dependencies: dependencies)
 
     libraryUpdater.isFirstUpdate = true
+
     viewModel.requestDataIfNeeded()
+
     expect(self.libraryUpdater.didRequestData).to(beTrue())
   }
 
-  func testRequestingDataByTimeInterval() {
+  func test_requestDataIfNeeded_requestsDataAfterMinTimeInterval() {
     let viewModel = LibraryViewModel(dependencies: dependencies)
 
     libraryUpdater.lastUpdateTimestamp = 100
-    viewModel.requestDataIfNeeded(currentTimestamp: 200)
+
+    viewModel.requestDataIfNeeded(currentTimestamp: 131, minTimeInterval: 30)
+
     expect(self.libraryUpdater.didRequestData).to(beTrue())
   }
 
-  func testRequestingDataWhenNotNeeded() {
+  func test_requestDataIfNeeded_doesNotRequestDataBeforeMinTimeInterval() {
     let viewModel = LibraryViewModel(dependencies: dependencies)
 
     libraryUpdater.lastUpdateTimestamp = 100
     libraryUpdater.isFirstUpdate = false
-    viewModel.requestDataIfNeeded(currentTimestamp: 100)
+
+    viewModel.requestDataIfNeeded(currentTimestamp: 110, minTimeInterval: 30)
+
     expect(self.libraryUpdater.didRequestData).to(beFalse())
   }
 
-  func testGettingItemCount() {
+  func test_itemCount_returnsCorrectValue() {
     writeArtists()
     let viewModel = LibraryViewModel(dependencies: dependencies)
+
     expect(viewModel.itemCount).to(equal(sampleArtists.count))
   }
 
-  func testGettingArtistViewModel() {
+  func test_artistViewModelAtIndexPath_returnsCorrectValue() {
     writeArtists()
     let viewModel = LibraryViewModel(dependencies: dependencies)
     let indexPath = IndexPath(row: 1, section: 0)
+
     let artistViewModel = viewModel.artistViewModel(at: indexPath)
+
     expect(artistViewModel.name).to(equal(sampleArtists[1].name))
   }
 
-  func testSelectingArtist() {
+  func test_selectArtistAtIndexPath_notifiesDelegate() {
     writeArtists()
     let viewModel = LibraryViewModel(dependencies: dependencies)
     let delegate = StubLibraryViewModelDelegate()
     viewModel.delegate = delegate
     let indexPath = IndexPath(row: 1, section: 0)
+
     viewModel.selectArtist(at: indexPath)
+
     expect(delegate.selectedArtist).to(equal(sampleArtists[1]))
   }
 
-  func testPerformingSearch() {
+  func test_performSearch_filtersItems_basedOnText() {
     writeArtists()
     let viewModel = LibraryViewModel(dependencies: dependencies)
 
     viewModel.performSearch(withText: "1")
+
     expect(viewModel.itemCount).to(equal(1))
+  }
+
+  func test_performSearch_returnsAllItems_whenTextIsEmpty() {
+    writeArtists()
+    let viewModel = LibraryViewModel(dependencies: dependencies)
 
     viewModel.performSearch(withText: "")
+
     expect(viewModel.itemCount).to(equal(sampleArtists.count))
   }
 
-  func testRequestingDataOnApplicationDidBecomeActive() {
+  func test_libraryUpdater_requestsDataOnApplicationDidBecomeActive() {
     let applicationStateObserver = StubApplicationStateObserver()
     let viewModel = LibraryViewModel(dependencies: dependencies, applicationStateObserver: applicationStateObserver)
     // Suppress 'unused variable' warning
     _ = viewModel.delegate
+
     applicationStateObserver.onApplicationDidBecomeActive?()
+
     expect(self.libraryUpdater.didRequestData).to(beTrue())
   }
 
-  func testStartLoading() {
+  func test_onDidStartLoading_isCalledOnLibraryUpdate() {
     let viewModel = LibraryViewModel(dependencies: dependencies)
     var didStartLoading = false
     viewModel.onDidStartLoading = {
       didStartLoading = true
     }
+
     libraryUpdater.simulateStartLoading()
+
     expect(didStartLoading).to(beTrue())
   }
 
-  func testFinishLoading() {
+  func test_onDidFinishLoading_isCalledWhenLibraryIsUpdated() {
     let viewModel = LibraryViewModel(dependencies: dependencies)
     var didFinishLoading = false
     viewModel.onDidFinishLoading = {
       didFinishLoading = true
     }
+
+    libraryUpdater.simulateFinishLoading()
+
+    expect(didFinishLoading).to(beTrue())
+  }
+
+  func test_onDidUpdateData_isCalledWhenLibraryIsUpdated() {
+    let viewModel = LibraryViewModel(dependencies: dependencies)
+
     var didUpdateData = false
     var dataIsEmpty = false
     viewModel.onDidUpdateData = { isEmpty in
       didUpdateData = true
       dataIsEmpty = isEmpty
     }
+
     libraryUpdater.simulateFinishLoading()
-    expect(didFinishLoading).to(beTrue())
+
     expect(didUpdateData).to(beTrue())
     expect(dataIsEmpty).to(beTrue())
   }
 
-  func testGettingErrorWhileUpdating() {
+  func test_onDidReceiveError_isCalledOnLibraryUpdateError() {
     let viewModel = LibraryViewModel(dependencies: dependencies)
     var didReceiveError = false
     viewModel.onDidReceiveError = { _ in
       didReceiveError = true
     }
+
     libraryUpdater.simulateError(NSError(domain: "MementoFM", code: 6, userInfo: nil))
+
     expect(didReceiveError).to(beTrue())
   }
 
-  func testUpdatingStatus() {
+  func test_onDidChangeStatus_isCalledWithCorrectStatus_whenStatusChanges() {
     let viewModel = LibraryViewModel(dependencies: dependencies)
     var statuses: [String] = []
 
