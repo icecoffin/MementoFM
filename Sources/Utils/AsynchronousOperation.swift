@@ -93,8 +93,6 @@ public class AsynchronousOperation: Operation {
  From https://developer.apple.com/sample-code/wwdc/2015/downloads/Advanced-NSOperations.zip
  */
 
-import Foundation
-
 extension NSLock {
 
   /// Perform closure within lock.

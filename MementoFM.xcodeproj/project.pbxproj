@@ -1403,6 +1403,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -1453,7 +1454,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-MementoFM/Pods-MementoFM-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-MementoFM/Pods-MementoFM-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/ModelMapper/Mapper.framework",
@@ -1484,7 +1485,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MementoFM/Pods-MementoFM-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MementoFM/Pods-MementoFM-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		575809D299E94D84B4875A43 /* [CP] Check Pods Manifest.lock */ = {
@@ -1525,13 +1526,15 @@
 			files = (
 			);
 			inputPaths = (
+				"$TEMP_DIR/rswift-lastrun",
 			);
 			name = "Run R.swift";
 			outputPaths = (
+				$SRCROOT/GeneratedCode/R.generated.swift,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/GeneratedCode\"";
+			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/GeneratedCode/R.generated.swift\"\n";
 		};
 		A6665349F41C84CDB782A882 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1539,7 +1542,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-MementoFMTests/Pods-MementoFMTests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-MementoFMTests/Pods-MementoFMTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
@@ -1552,7 +1555,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MementoFMTests/Pods-MementoFMTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MementoFMTests/Pods-MementoFMTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FB561C7DCCFC0F2510C095C9 /* [CP] Check Pods Manifest.lock */ = {

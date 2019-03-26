@@ -42,7 +42,7 @@ extension UICollectionReusableView: DynamicSizable {
   }
 }
 
-extension DynamicSizable where Self == UICollectionViewCell {
+extension DynamicSizable where Self: UICollectionViewCell {
   var viewForSizing: UIView {
     return contentView
   }
