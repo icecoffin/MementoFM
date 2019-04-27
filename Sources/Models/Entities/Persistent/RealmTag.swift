@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-final class RealmTag: Object, RealmEntity {
+final class RealmTag: Object, PersistentEntity {
   @objc dynamic var name = ""
   @objc dynamic var count = 0
 

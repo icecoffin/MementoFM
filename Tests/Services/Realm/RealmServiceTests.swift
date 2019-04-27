@@ -125,7 +125,7 @@ class RealmServiceTests: XCTestCase {
 
   func testCreatingMappedCollection() {
     let predicate = NSPredicate(format: "name contains[cd] '1'")
-    let sortDescriptors = [SortDescriptor(keyPath: "name", ascending: true)]
+    let sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
     let mappedCollection: RealmMappedCollection<IgnoredTag>
     mappedCollection = realmService.mappedCollection(filteredUsing: predicate, sortedBy: sortDescriptors)
     expect(mappedCollection.predicate).to(equal(predicate))

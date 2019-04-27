@@ -27,7 +27,7 @@ class RealmMappedCollectionTests: XCTestCase {
     super.tearDown()
   }
 
-  func testCount() {
+  func test_count_returnsCorrectValue() {
     try? realm.write {
       let tag = RealmTag()
       realm.add(tag)
@@ -35,11 +35,11 @@ class RealmMappedCollectionTests: XCTestCase {
     expect(self.collection.count).toEventually(equal(1))
   }
 
-  func testIsEmptyReturnsTrueWhenEmpty() {
+  func test_isEmpty_returnsTrue_whenCollectionIsEmpty() {
     expect(self.collection.isEmpty).to(beTrue())
   }
 
-  func testIsEmptyReturnsFalseWhenNotEmpty() {
+  func test_isEmpty_returnsFalse_whenCollectionIsNotEmpty() {
     try? realm.write {
       let tag = RealmTag()
       realm.add(tag)
@@ -47,7 +47,7 @@ class RealmMappedCollectionTests: XCTestCase {
     expect(self.collection.isEmpty).toEventually(beFalse())
   }
 
-  func testGettingItemAtIndex() {
+  func test_subscript_returnsCorrectItemForIndex() {
     try? realm.write {
       let tag1 = RealmTag(name: "rock", count: 1)
       let tag2 = RealmTag(name: "metal", count: 2)
@@ -59,7 +59,7 @@ class RealmMappedCollectionTests: XCTestCase {
     expect(secondTag.count).toEventually(equal(2))
   }
 
-  func testSettingPredicate() {
+  func test_settingPredicate_filtersCollection() {
     try? realm.write {
       let tag1 = RealmTag(name: "rock", count: 1)
       let tag2 = RealmTag(name: "metal", count: 2)
@@ -73,61 +73,19 @@ class RealmMappedCollectionTests: XCTestCase {
     expect(self.collection.count).toEventually(equal(2))
   }
 
-  func testSettingSortDescriptors() {
+  func test_settingSortDescriptors_sortsCollection() {
     try? realm.write {
       let tag1 = RealmTag(name: "rock", count: 1)
       let tag2 = RealmTag(name: "indie", count: 2)
       let tag3 = RealmTag(name: "indie", count: 3)
       realm.add([tag1, tag2, tag3])
     }
-    let sortDescriptors = [SortDescriptor(keyPath: "name", ascending: true),
-                           SortDescriptor(keyPath: "count", ascending: false)]
+    let sortDescriptors = [NSSortDescriptor(key: "name", ascending: true),
+                           NSSortDescriptor(key: "count", ascending: false)]
     collection.sortDescriptors = sortDescriptors
 
     expect(self.collection[0].count).toEventually(equal(3))
     expect(self.collection[0].name).toEventually(equal(self.collection[1].name))
     expect(self.collection[2].name).toEventually(equal("rock"))
-  }
-
-  func testUpdatesNotifications() {
-    let sortDescriptors = [SortDescriptor(keyPath: "name", ascending: true),
-                           SortDescriptor(keyPath: "count", ascending: true)]
-    collection.sortDescriptors = sortDescriptors
-
-    // [("metal", 2)", ("rock", 1"]
-    try? realm.write {
-      let tag1 = RealmTag(name: "rock", count: 1)
-      let tag2 = RealmTag(name: "metal", count: 2)
-      realm.add([tag1, tag2])
-    }
-
-    waitUntil { done in
-      DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-        self.collection.notificationBlock = { changes in
-          switch changes {
-          case .update(_, let deletions, let insertions, let modifications):
-            expect(deletions).to(equal([0]))
-            expect(insertions).to(equal([0]))
-            expect(modifications).to(equal([1]))
-            done()
-          default:
-            fail()
-          }
-        }
-
-        try? self.realm.write {
-          // [("metal", 2), ("rock", 5)]
-          let tag1 = self.realm.objects(RealmTag.self).filter("name == \"rock\"").first
-          tag1?.count = 5
-          // [("rock", 5)]
-          if let tag2 = self.realm.objects(RealmTag.self).filter("name == \"metal\"").first {
-            self.realm.delete(tag2)
-          }
-          // [("electronic", 3), ("rock", 5)]
-          let tag3 = RealmTag(name: "electronic", count: 3)
-          self.realm.add(tag3)
-        }
-      }
-    }
   }
 }

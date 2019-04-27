@@ -1,5 +1,5 @@
 //
-//  RealmEntity.swift
+//  PersistentEntity.swift
 //  MementoFM
 //
 //  Created by Daniel on 28/07/2017.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol RealmEntity {
+protocol PersistentEntity {
   associatedtype TransientType
 
   static func from(transient: TransientType) -> Self

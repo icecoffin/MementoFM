@@ -25,7 +25,7 @@ private func extractImageURLString(from json: Any?) throws -> String {
 }
 
 struct Artist: TransientEntity, Equatable {
-  typealias RealmType = RealmArtist
+  typealias PersistentType = RealmArtist
 
   let name: String
   let playcount: Int

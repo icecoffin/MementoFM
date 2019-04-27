@@ -25,7 +25,7 @@ protocol ArtistServiceProtocol: class {
   func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating) -> Promise<Void>
   func calculateTopTags(for artist: Artist, using calculator: ArtistTopTagsCalculating) -> Promise<Void>
   func artists(filteredUsing predicate: NSPredicate?,
-               sortedBy sortDescriptors: [SortDescriptor]) -> RealmMappedCollection<Artist>
+               sortedBy sortDescriptors: [NSSortDescriptor]) -> RealmMappedCollection<Artist>
   func getSimilarArtists(for artist: Artist, limit: Int) -> Promise<[Artist]>
 }
 
@@ -38,7 +38,7 @@ extension ArtistServiceProtocol {
     return getLibrary(for: user, limit: 200, progress: nil)
   }
 
-  func artists(sortedBy sortDescriptors: [SortDescriptor]) -> RealmMappedCollection<Artist> {
+  func artists(sortedBy sortDescriptors: [NSSortDescriptor]) -> RealmMappedCollection<Artist> {
     return artists(filteredUsing: nil, sortedBy: sortDescriptors)
   }
 
@@ -128,7 +128,7 @@ class ArtistService: ArtistServiceProtocol {
   }
 
   func artists(filteredUsing predicate: NSPredicate? = nil,
-               sortedBy sortDescriptors: [SortDescriptor]) -> RealmMappedCollection<Artist> {
+               sortedBy sortDescriptors: [NSSortDescriptor]) -> RealmMappedCollection<Artist> {
     return realmService.mappedCollection(filteredUsing: predicate, sortedBy: sortDescriptors)
   }
 

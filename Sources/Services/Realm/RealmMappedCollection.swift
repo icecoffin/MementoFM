@@ -9,16 +9,27 @@
 import Foundation
 import RealmSwift
 
-class RealmMappedCollection<Element: TransientEntity> where Element.RealmType: Object {
-  typealias Transform = (Element.RealmType) -> Element
+class RealmMappedCollection<Element: TransientEntity>: PersistentMappedCollection where Element.PersistentType: Object {
+  typealias Transform = (Element.PersistentType) -> Element
+
+  // MARK: - Private properties
 
   private let realm: Realm
-  lazy private var results: Results<Element.RealmType> = {
+  lazy private var results: Results<Element.PersistentType> = {
     return self.fetchResults()
   }()
-  private var notificationToken: NotificationToken?
 
-  var sortDescriptors: [SortDescriptor] {
+  // MARK: - Public properties
+
+  var count: Int {
+    return results.count
+  }
+
+  var isEmpty: Bool {
+    return results.isEmpty
+  }
+
+  var sortDescriptors: [NSSortDescriptor] {
     didSet {
       refetchResults()
     }
@@ -30,22 +41,19 @@ class RealmMappedCollection<Element: TransientEntity> where Element.RealmType: O
     }
   }
 
-  var notificationBlock: ((RealmCollectionChange<Results<Element.RealmType>>) -> Void)?
+  // MARK: - Init
 
-  init(realm: Realm, predicate: NSPredicate? = nil, sortDescriptors: [SortDescriptor]) {
+  init(realm: Realm, predicate: NSPredicate? = nil, sortDescriptors: [NSSortDescriptor]) {
     self.realm = realm
     self.predicate = predicate
     self.sortDescriptors = sortDescriptors
-
-    subscribeToResultsNotifications()
   }
 
-  deinit {
-    notificationToken?.invalidate()
-  }
+  // MARK: - Private methods
 
-  private func fetchResults() -> Results<Element.RealmType> {
-    let results = realm.objects(Element.RealmType.self).sorted(by: sortDescriptors)
+  private func fetchResults() -> Results<Element.PersistentType> {
+    let realmSortDescriptors = sortDescriptors.compactMap { SortDescriptor(nsSortDescriptor: $0) }
+    let results = realm.objects(Element.PersistentType.self).sorted(by: realmSortDescriptors)
     if let predicate = predicate {
       return results.filter(predicate)
     }
@@ -55,25 +63,18 @@ class RealmMappedCollection<Element: TransientEntity> where Element.RealmType: O
 
   private func refetchResults() {
     results = fetchResults()
-    subscribeToResultsNotifications()
   }
 
-  private func subscribeToResultsNotifications() {
-    notificationToken?.invalidate()
-    notificationToken = results.observe { [unowned self] changes in
-      self.notificationBlock?(changes)
-    }
-  }
+  // MARK: - Subscript
 
-  var count: Int {
-    return results.count
-  }
-
-  subscript(index: Int) -> Element.RealmType.TransientType {
+  subscript(index: Int) -> Element.PersistentType.TransientType {
     return results[index].toTransient()
   }
+}
 
-  var isEmpty: Bool {
-    return results.isEmpty
+extension SortDescriptor {
+  init?(nsSortDescriptor: NSSortDescriptor) {
+    guard let key = nsSortDescriptor.key else { return nil }
+    self = SortDescriptor(keyPath: key, ascending: nsSortDescriptor.ascending)
   }
 }
