@@ -50,8 +50,8 @@ class RealmService {
 
   // MARK: - Realm mapped collection
   func mappedCollection<T: TransientEntity>(filteredUsing predicate: NSPredicate? = nil,
-                                            sortedBy sortDescriptors: [SortDescriptor]) -> RealmMappedCollection<T>
-    where T.RealmType: Object {
+                                            sortedBy sortDescriptors: [NSSortDescriptor]) -> RealmMappedCollection<T>
+    where T.PersistentType: Object {
     return RealmMappedCollection<T>(realm: currentQueueRealm,
                                        predicate: predicate,
                                        sortDescriptors: sortDescriptors)
@@ -59,18 +59,18 @@ class RealmService {
 
   // MARK: - Saving objects to Realm
   func save<T: TransientEntity>(_ object: T, update: Bool = true) -> Promise<Void>
-    where T.RealmType.TransientType == T {
+    where T.PersistentType.TransientType == T {
     return write { realm in
-      if let realmObject = T.RealmType.from(transient: object) as? Object {
+      if let realmObject = T.PersistentType.from(transient: object) as? Object {
         realm.add(realmObject, update: update)
       }
     }
   }
 
   func save<T: TransientEntity>(_ objects: [T], update: Bool = true) -> Promise<Void>
-    where T.RealmType.TransientType == T {
+    where T.PersistentType.TransientType == T {
     return write { realm in
-      let realmObjects = objects.compactMap({ return T.RealmType.from(transient: $0) as? Object })
+      let realmObjects = objects.compactMap({ return T.PersistentType.from(transient: $0) as? Object })
       realm.add(realmObjects, update: update)
     }
   }
@@ -78,32 +78,32 @@ class RealmService {
   // MARK: - Deleting objects from Realm
 
   func deleteObjects<T: TransientEntity>(ofType type: T.Type) -> Promise<Void>
-    where T.RealmType: Object, T.RealmType.TransientType == T {
+    where T.PersistentType: Object, T.PersistentType.TransientType == T {
     return write { realm in
-      let realmObjects = realm.objects(type.RealmType.self)
+      let realmObjects = realm.objects(type.PersistentType.self)
       realm.delete(realmObjects)
     }
   }
 
   // MARK: - Obtaining objects from Realm
   func hasObjects<T: TransientEntity>(ofType type: T.Type) -> Bool
-    where T.RealmType: Object, T.RealmType.TransientType == T {
-    return !currentQueueRealm.objects(T.RealmType.self).isEmpty
+    where T.PersistentType: Object, T.PersistentType.TransientType == T {
+    return !currentQueueRealm.objects(T.PersistentType.self).isEmpty
   }
 
-  func objects<T: TransientEntity>(_ type: T.Type) -> [T.RealmType.TransientType]
-    where T.RealmType: Object, T.RealmType.TransientType == T {
-      return currentQueueRealm.objects(T.RealmType.self).compactMap({ $0.toTransient() })
+  func objects<T: TransientEntity>(_ type: T.Type) -> [T.PersistentType.TransientType]
+    where T.PersistentType: Object, T.PersistentType.TransientType == T {
+      return currentQueueRealm.objects(T.PersistentType.self).compactMap({ $0.toTransient() })
   }
 
-  func objects<T: TransientEntity>(_ type: T.Type, filteredBy predicate: NSPredicate) -> [T.RealmType.TransientType]
-    where T.RealmType: Object, T.RealmType.TransientType == T {
-    return currentQueueRealm.objects(T.RealmType.self).filter(predicate).compactMap({ $0.toTransient() })
+  func objects<T: TransientEntity>(_ type: T.Type, filteredBy predicate: NSPredicate) -> [T.PersistentType.TransientType]
+    where T.PersistentType: Object, T.PersistentType.TransientType == T {
+    return currentQueueRealm.objects(T.PersistentType.self).filter(predicate).compactMap({ $0.toTransient() })
   }
 
-  func object<T: TransientEntity, K>(ofType type: T.Type, forPrimaryKey key: K) -> T.RealmType.TransientType?
-    where T.RealmType: Object, T.RealmType.TransientType == T {
-    if let realmObject = currentQueueRealm.object(ofType: T.RealmType.self, forPrimaryKey: key) {
+  func object<T: TransientEntity, K>(ofType type: T.Type, forPrimaryKey key: K) -> T.PersistentType.TransientType?
+    where T.PersistentType: Object, T.PersistentType.TransientType == T {
+    if let realmObject = currentQueueRealm.object(ofType: T.PersistentType.self, forPrimaryKey: key) {
       return realmObject.toTransient()
     } else {
       return nil

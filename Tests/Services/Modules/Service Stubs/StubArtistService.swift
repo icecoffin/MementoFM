@@ -92,7 +92,7 @@ class StubArtistService: ArtistServiceProtocol {
 
   var expectedRealmForArtists: Realm!
   func artists(filteredUsing predicate: NSPredicate?,
-               sortedBy sortDescriptors: [SortDescriptor]) -> RealmMappedCollection<Artist> {
+               sortedBy sortDescriptors: [NSSortDescriptor]) -> RealmMappedCollection<Artist> {
     return RealmMappedCollection(realm: expectedRealmForArtists,
                                  predicate: predicate,
                                  sortDescriptors: sortDescriptors)

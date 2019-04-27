@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-final class RealmArtist: Object, RealmEntity {
+final class RealmArtist: Object, PersistentEntity {
   @objc dynamic var name = ""
   @objc dynamic var playcount = 0
   @objc dynamic var urlString = ""

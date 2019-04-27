@@ -178,7 +178,7 @@ class ArtistServiceTests: XCTestCase {
     let artistService = ArtistService(realmService: realmService, repository: ArtistEmptyStubRepository())
 
     let predicate = NSPredicate(format: "name contains[cd] '1'")
-    let sortDescriptors = [SortDescriptor(keyPath: "name")]
+    let sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
     let artistsMappedCollection = artistService.artists(filteredUsing: predicate, sortedBy: sortDescriptors)
     expect(artistsMappedCollection.predicate).to(equal(predicate))
     expect(artistsMappedCollection.sortDescriptors).to(equal(sortDescriptors))

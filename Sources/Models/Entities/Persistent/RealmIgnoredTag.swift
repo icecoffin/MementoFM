@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-final class RealmIgnoredTag: Object, RealmEntity {
+final class RealmIgnoredTag: Object, PersistentEntity {
   @objc dynamic var uuid = UUID().uuidString
   @objc dynamic var name = ""
 

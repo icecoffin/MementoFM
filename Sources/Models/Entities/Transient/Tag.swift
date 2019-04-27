@@ -15,7 +15,7 @@ struct Tag: Equatable {
 }
 
 extension Tag: Mappable, TransientEntity {
-  typealias RealmType = RealmTag
+  typealias PersistentType = RealmTag
 
   init(map: Mapper) throws {
     let name: String = try map.from("name")
