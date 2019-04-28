@@ -28,26 +28,26 @@ extension IgnoredTagServiceProtocol {
 }
 
 class IgnoredTagService: IgnoredTagServiceProtocol {
-  private let realmService: RealmService
+  private let persistentStore: PersistentStore
 
-  init(realmService: RealmService) {
-    self.realmService = realmService
+  init(persistentStore: PersistentStore) {
+    self.persistentStore = persistentStore
   }
 
   func ignoredTags() -> [IgnoredTag] {
-    return realmService.objects(IgnoredTag.self)
+    return persistentStore.objects(IgnoredTag.self)
   }
 
   func createDefaultIgnoredTags(withNames names: [String]) -> Promise<Void> {
     let ignoredTags = names.map { name in
       return IgnoredTag(uuid: UUID().uuidString, name: name)
     }
-    return realmService.save(ignoredTags)
+    return persistentStore.save(ignoredTags)
   }
 
   func updateIgnoredTags(_ ignoredTags: [IgnoredTag]) -> Promise<Void> {
-    return realmService.deleteObjects(ofType: IgnoredTag.self).then {
-      return self.realmService.save(ignoredTags)
+    return persistentStore.deleteObjects(ofType: IgnoredTag.self).then {
+      return self.persistentStore.save(ignoredTags)
     }
   }
 }

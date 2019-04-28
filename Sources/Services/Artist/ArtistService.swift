@@ -8,7 +8,6 @@
 
 import Foundation
 import PromiseKit
-import RealmSwift
 
 struct TopTagsRequestProgress {
   let progress: Progress
@@ -48,11 +47,11 @@ extension ArtistServiceProtocol {
 }
 
 class ArtistService: ArtistServiceProtocol {
-  private let realmService: RealmService
+  private let persistentStore: PersistentStore
   private let repository: ArtistRepository
 
-  init(realmService: RealmService, repository: ArtistRepository) {
-    self.realmService = realmService
+  init(persistentStore: PersistentStore, repository: ArtistRepository) {
+    self.persistentStore = persistentStore
     self.repository = repository
   }
 
@@ -92,51 +91,51 @@ class ArtistService: ArtistServiceProtocol {
   }
 
   func saveArtists(_ artists: [Artist]) -> Promise<Void> {
-    return realmService.save(artists)
+    return persistentStore.save(artists)
   }
 
   func artistsNeedingTagsUpdate() -> [Artist] {
     let predicate = NSPredicate(format: "needsTagsUpdate == \(true)")
-    return realmService.objects(Artist.self, filteredBy: predicate)
+    return persistentStore.objects(Artist.self, filteredBy: predicate)
   }
 
   func artistsWithIntersectingTopTags(for artist: Artist) -> [Artist] {
     let topTagNames = artist.topTags.map({ $0.name })
     let predicate = NSPredicate(format: "ANY topTags.name IN %@ AND name != %@", topTagNames, artist.name)
-    return self.realmService.objects(Artist.self, filteredBy: predicate)
+    return self.persistentStore.objects(Artist.self, filteredBy: predicate)
   }
 
   func updateArtist(_ artist: Artist, with tags: [Tag]) -> Promise<Artist> {
     let updatedArtist = artist.updatingTags(to: tags, needsTagsUpdate: false)
-    return self.realmService.save(updatedArtist).then { _ -> Promise<Artist> in
+    return self.persistentStore.save(updatedArtist).then { _ -> Promise<Artist> in
       return .value(updatedArtist)
     }
   }
 
   func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating) -> Promise<Void> {
     return DispatchQueue.global().async(.promise) { () -> [Artist] in
-      let artists = self.realmService.objects(Artist.self)
+      let artists = self.persistentStore.objects(Artist.self)
       return artists.map({ return calculator.calculateTopTags(for: $0) })
     }.then { artists in
-      return self.realmService.save(artists)
+      return self.persistentStore.save(artists)
     }
   }
 
   func calculateTopTags(for artist: Artist, using calculator: ArtistTopTagsCalculating) -> Promise<Void> {
     let updatedArtist = calculator.calculateTopTags(for: artist)
-    return realmService.save(updatedArtist)
+    return persistentStore.save(updatedArtist)
   }
 
   func artists(filteredUsing predicate: NSPredicate? = nil,
                sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<Artist> {
-    return realmService.mappedCollection(filteredUsing: predicate, sortedBy: sortDescriptors)
+    return persistentStore.mappedCollection(filteredUsing: predicate, sortedBy: sortDescriptors)
   }
 
   func getSimilarArtists(for artist: Artist, limit: Int) -> Promise<[Artist]> {
     return repository.getSimilarArtists(for: artist, limit: limit).then { response -> Promise<[Artist]> in
       let artistNames = response.similarArtistList.similarArtists.map({ $0.name })
       let predicate = NSPredicate(format: "name in %@", artistNames)
-      let artists = self.realmService.objects(Artist.self, filteredBy: predicate)
+      let artists = self.persistentStore.objects(Artist.self, filteredBy: predicate)
       return .value(artists)
     }
   }

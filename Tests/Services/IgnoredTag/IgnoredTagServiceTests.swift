@@ -20,7 +20,7 @@ class IgnoredTagServiceTests: XCTestCase {
     realmService = RealmService(getRealm: {
       return RealmFactory.inMemoryRealm()
     })
-    ignoredTagService = IgnoredTagService(realmService: realmService)
+    ignoredTagService = IgnoredTagService(persistentStore: realmService)
   }
 
   override func tearDown() {

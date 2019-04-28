@@ -9,13 +9,13 @@
 import Foundation
 import RealmSwift
 
-class RealmMappedCollection<Element: TransientEntity>: PersistentMappedCollection where Element.PersistentType: Object {
+class RealmMappedCollection<Element: TransientEntity>: PersistentMappedCollection {
   typealias Transform = (Element.PersistentType) -> Element
 
   // MARK: - Private properties
 
   private let realm: Realm
-  lazy private var results: Results<Element.PersistentType> = {
+  lazy private var results: Results<Object> = {
     return self.fetchResults()
   }()
 
@@ -51,9 +51,13 @@ class RealmMappedCollection<Element: TransientEntity>: PersistentMappedCollectio
 
   // MARK: - Private methods
 
-  private func fetchResults() -> Results<Element.PersistentType> {
+  private func fetchResults() -> Results<Object> {
+    guard let type = Element.PersistentType.self as? Object.Type else {
+      fatalError("The provided Element.PersistentType is not a Realm Object subclass")
+    }
+
     let realmSortDescriptors = sortDescriptors.compactMap { SortDescriptor(nsSortDescriptor: $0) }
-    let results = realm.objects(Element.PersistentType.self).sorted(by: realmSortDescriptors)
+    let results = realm.objects(type).sorted(by: realmSortDescriptors)
     if let predicate = predicate {
       return results.filter(predicate)
     }
@@ -68,7 +72,11 @@ class RealmMappedCollection<Element: TransientEntity>: PersistentMappedCollectio
   // MARK: - Subscript
 
   subscript(index: Int) -> Element.PersistentType.TransientType {
-    return results[index].toTransient()
+    guard let item = results[index] as? Element.PersistentType else {
+      fatalError("The provided Element.PersistentType is not a Realm Object subclass")
+    }
+
+    return item.toTransient()
   }
 }
 

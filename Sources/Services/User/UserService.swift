@@ -20,7 +20,7 @@ protocol UserServiceProtocol: class {
 }
 
 class UserService: UserServiceProtocol {
-  private let realmService: RealmService
+  private let persistentStore: PersistentStore
   private let repository: UserRepository
   private let userDataStorage: UserDataStoring
 
@@ -59,16 +59,16 @@ class UserService: UserServiceProtocol {
     }
   }
 
-  init(realmService: RealmService, repository: UserRepository, userDataStorage: UserDataStoring) {
-    self.realmService = realmService
+  init(persistentStore: PersistentStore, repository: UserRepository, userDataStorage: UserDataStoring) {
+    self.persistentStore = persistentStore
     self.repository = repository
     self.userDataStorage = userDataStorage
   }
 
   func clearUserData() -> Promise<Void> {
     userDataStorage.reset()
-    return when(fulfilled: [realmService.deleteObjects(ofType: Artist.self),
-                            realmService.deleteObjects(ofType: Tag.self)])
+    return when(fulfilled: [persistentStore.deleteObjects(ofType: Artist.self),
+                            persistentStore.deleteObjects(ofType: Tag.self)])
   }
 
   func checkUserExists(withUsername username: String) -> Promise<EmptyResponse> {

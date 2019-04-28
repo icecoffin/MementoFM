@@ -21,11 +21,11 @@ extension TagServiceProtocol {
 }
 
 class TagService: TagServiceProtocol {
-  private let realmService: RealmService
+  private let persistentStore: PersistentStore
   private let repository: TagRepository
 
-  init(realmService: RealmService, repository: TagRepository) {
-    self.realmService = realmService
+  init(persistentStore: PersistentStore, repository: TagRepository) {
+    self.persistentStore = persistentStore
     self.repository = repository
   }
 
@@ -52,7 +52,7 @@ class TagService: TagServiceProtocol {
   }
 
   func getAllTopTags() -> [Tag] {
-    let artists = self.realmService.objects(Artist.self)
+    let artists = self.persistentStore.objects(Artist.self)
     return artists.flatMap { return $0.topTags }
   }
 }

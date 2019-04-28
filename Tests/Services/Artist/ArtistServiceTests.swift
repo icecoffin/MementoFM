@@ -34,7 +34,7 @@ class ArtistServiceTests: XCTestCase {
     let repository = ArtistLibraryStubRepository(totalPages: totalPages, shouldFailWithError: false, artistProvider: { _ in
       return ModelFactory.generateArtists(inAmount: artistsPerPage)
     })
-    let artistService = ArtistService(realmService: realmService, repository: repository)
+    let artistService = ArtistService(persistentStore: realmService, repository: repository)
 
     var progressCallCount = 0
     waitUntil { done in
@@ -58,7 +58,7 @@ class ArtistServiceTests: XCTestCase {
     let repository = ArtistLibraryStubRepository(totalPages: totalPages,
                                                  shouldFailWithError: true,
                                                  artistProvider: { _ in return [] })
-    let artistService = ArtistService(realmService: realmService, repository: repository)
+    let artistService = ArtistService(persistentStore: realmService, repository: repository)
 
     waitUntil { done in
       artistService.getLibrary(for: "user", limit: artistsPerPage, progress: nil).done { _ in
@@ -71,7 +71,7 @@ class ArtistServiceTests: XCTestCase {
   }
 
   func testSavingArtists() {
-    let artistService = ArtistService(realmService: realmService, repository: ArtistEmptyStubRepository())
+    let artistService = ArtistService(persistentStore: realmService, repository: ArtistEmptyStubRepository())
 
     let artists = ModelFactory.generateArtists(inAmount: 5)
     waitUntil { done in
@@ -84,7 +84,7 @@ class ArtistServiceTests: XCTestCase {
   }
 
   func testGettingArtistsNeedingTagsUpdate() {
-    let artistService = ArtistService(realmService: realmService, repository: ArtistEmptyStubRepository())
+    let artistService = ArtistService(persistentStore: realmService, repository: ArtistEmptyStubRepository())
 
     let artists1 = ModelFactory.generateArtists(inAmount: 5)
     let artists2 = ModelFactory.generateArtists(inAmount: 5, needsTagsUpdate: true)
@@ -98,7 +98,7 @@ class ArtistServiceTests: XCTestCase {
   }
 
   func testGettingArtistsWithIntersectingTopTags() {
-    let artistService = ArtistService(realmService: realmService, repository: ArtistEmptyStubRepository())
+    let artistService = ArtistService(persistentStore: realmService, repository: ArtistEmptyStubRepository())
 
     let tags1 = [Tag(name: "Tag1", count: 1),
                  Tag(name: "Tag2", count: 2),
@@ -126,7 +126,7 @@ class ArtistServiceTests: XCTestCase {
   }
 
   func testUpdatingArtistWithTags() {
-    let artistService = ArtistService(realmService: realmService, repository: ArtistEmptyStubRepository())
+    let artistService = ArtistService(persistentStore: realmService, repository: ArtistEmptyStubRepository())
 
     let artist = ModelFactory.generateArtist(index: 1, needsTagsUpdate: true)
     let tags = ModelFactory.generateTags(inAmount: 5, for: artist.name)
@@ -141,7 +141,7 @@ class ArtistServiceTests: XCTestCase {
   }
 
   func testCalculatingTopTagsForAllArtists() {
-    let artistService = ArtistService(realmService: realmService, repository: ArtistEmptyStubRepository())
+    let artistService = ArtistService(persistentStore: realmService, repository: ArtistEmptyStubRepository())
 
     let artists = ModelFactory.generateArtists(inAmount: 5)
     let calculator = ArtistStubTopTagsCalculator()
@@ -159,7 +159,7 @@ class ArtistServiceTests: XCTestCase {
   }
 
   func testCalculatingTopTagsForArtist() {
-    let artistService = ArtistService(realmService: realmService, repository: ArtistEmptyStubRepository())
+    let artistService = ArtistService(persistentStore: realmService, repository: ArtistEmptyStubRepository())
 
     let artist = ModelFactory.generateArtist(index: 1)
     let calculator = ArtistStubTopTagsCalculator()
@@ -175,7 +175,7 @@ class ArtistServiceTests: XCTestCase {
   }
 
   func testCreatingArtistsMappedCollection() {
-    let artistService = ArtistService(realmService: realmService, repository: ArtistEmptyStubRepository())
+    let artistService = ArtistService(persistentStore: realmService, repository: ArtistEmptyStubRepository())
 
     let predicate = NSPredicate(format: "name contains[cd] '1'")
     let sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
@@ -190,7 +190,7 @@ class ArtistServiceTests: XCTestCase {
     let repository = ArtistSimilarsStubRepository(shouldFailWithError: false, similarArtistProvider: {
       return ModelFactory.generateSimilarArtists(inAmount: similarArtistCount)
     })
-    let artistService = ArtistService(realmService: realmService, repository: repository)
+    let artistService = ArtistService(persistentStore: realmService, repository: repository)
 
     let artist = ModelFactory.generateArtist()
     waitUntil { done in
@@ -211,7 +211,7 @@ class ArtistServiceTests: XCTestCase {
 
   func testGettingSimilarArtistsWithFailure() {
     let repository = ArtistSimilarsStubRepository(shouldFailWithError: true, similarArtistProvider: { [] })
-    let artistService = ArtistService(realmService: realmService, repository: repository)
+    let artistService = ArtistService(persistentStore: realmService, repository: repository)
 
     let artist = ModelFactory.generateArtist()
     waitUntil { done in

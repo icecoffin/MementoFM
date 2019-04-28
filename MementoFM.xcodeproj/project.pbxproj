@@ -185,6 +185,7 @@
 		656D2ED21FB1F6980096DE27 /* TagNetworkRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656D2ED11FB1F6980096DE27 /* TagNetworkRepositoryTests.swift */; };
 		656D2ED41FB1F78C0096DE27 /* ArtistNetworkRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656D2ED31FB1F78C0096DE27 /* ArtistNetworkRepositoryTests.swift */; };
 		656D2F051FB211DC0096DE27 /* EnterUsernameViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656D2F041FB211DC0096DE27 /* EnterUsernameViewModelTests.swift */; };
+		656FE2312276265900DD3A8E /* PersistentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656FE2302276265900DD3A8E /* PersistentStore.swift */; };
 		6574CD611FB4C06E00B7ABE9 /* IgnoredTagsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6574CD601FB4C06E00B7ABE9 /* IgnoredTagsViewModelTests.swift */; };
 		657A56131FDD11D90061FD26 /* SimilarsSectionTabViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657A56121FDD11D90061FD26 /* SimilarsSectionTabViewModelTests.swift */; };
 		657A56151FDD17870061FD26 /* StubSimilarArtistsRequestStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657A56141FDD17870061FD26 /* StubSimilarArtistsRequestStrategy.swift */; };
@@ -404,6 +405,7 @@
 		656D2ED11FB1F6980096DE27 /* TagNetworkRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagNetworkRepositoryTests.swift; sourceTree = "<group>"; };
 		656D2ED31FB1F78C0096DE27 /* ArtistNetworkRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistNetworkRepositoryTests.swift; sourceTree = "<group>"; };
 		656D2F041FB211DC0096DE27 /* EnterUsernameViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterUsernameViewModelTests.swift; sourceTree = "<group>"; };
+		656FE2302276265900DD3A8E /* PersistentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentStore.swift; sourceTree = "<group>"; };
 		6574CD601FB4C06E00B7ABE9 /* IgnoredTagsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoredTagsViewModelTests.swift; sourceTree = "<group>"; };
 		657A56121FDD11D90061FD26 /* SimilarsSectionTabViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarsSectionTabViewModelTests.swift; sourceTree = "<group>"; };
 		657A56141FDD17870061FD26 /* StubSimilarArtistsRequestStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubSimilarArtistsRequestStrategy.swift; sourceTree = "<group>"; };
@@ -532,10 +534,10 @@
 		65112D5F1F2F181700CBF8BA /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				656FE22F2276264C00DD3A8E /* Persistence */,
 				65112D601F2F181700CBF8BA /* Artist */,
 				655E97B61F3C6AE3003614C8 /* IgnoredTag */,
 				65112D631F2F181700CBF8BA /* Network */,
-				65112D671F2F181700CBF8BA /* Realm */,
 				655E97B71F3C6AE3003614C8 /* Tag */,
 				652167641F619DEC005B7273 /* Track */,
 				65112D691F2F181700CBF8BA /* User */,
@@ -570,7 +572,6 @@
 				651F9DB71EC09FDC006D9474 /* RealmFactory.swift */,
 				651F9DBC1EC09FDC006D9474 /* RealmMappedCollection.swift */,
 				65112D681F2F181700CBF8BA /* RealmService.swift */,
-				650E0ABA2274E4CE0014EBD8 /* PersistentMappedCollection.swift */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -1286,6 +1287,16 @@
 			path = "Enter Username";
 			sourceTree = "<group>";
 		};
+		656FE22F2276264C00DD3A8E /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				656FE2302276265900DD3A8E /* PersistentStore.swift */,
+				650E0ABA2274E4CE0014EBD8 /* PersistentMappedCollection.swift */,
+				65112D671F2F181700CBF8BA /* Realm */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
 		6574CD5D1FB4B40200B7ABE9 /* Ignored Tags */ = {
 			isa = PBXGroup;
 			children = (
@@ -1692,6 +1703,7 @@
 				655E97B91F3C6AEC003614C8 /* TagService.swift in Sources */,
 				651F9E191EC09FDC006D9474 /* NavigationFlowCoordinator.swift in Sources */,
 				6518F02D1ECB044900681D5E /* TagsCoordinator.swift in Sources */,
+				656FE2312276265900DD3A8E /* PersistentStore.swift in Sources */,
 				653F21771F6D8484009A562A /* SimilarArtistListResponse.swift in Sources */,
 				653277DC1EDC804F00BEBCAC /* ArtistsByTagPresenter.swift in Sources */,
 				65241C241EC6E96300927749 /* ArtistInfoCellViewModel.swift in Sources */,

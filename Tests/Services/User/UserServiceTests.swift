@@ -30,7 +30,7 @@ class UserServiceTests: XCTestCase {
   func testUsername() {
     let userRepository = UserStubRepository(shouldFinishWithSuccess: true)
     let userDataStorage = StubUserDataStorage()
-    let userService = UserService(realmService: realmService, repository: userRepository, userDataStorage: userDataStorage)
+    let userService = UserService(persistentStore: realmService, repository: userRepository, userDataStorage: userDataStorage)
 
     userService.username = "test"
     expect(userDataStorage.didSetUsername).to(beTrue())
@@ -41,7 +41,7 @@ class UserServiceTests: XCTestCase {
   func testLastUpdateTimestamp() {
     let userRepository = UserStubRepository(shouldFinishWithSuccess: true)
     let userDataStorage = StubUserDataStorage()
-    let userService = UserService(realmService: realmService, repository: userRepository, userDataStorage: userDataStorage)
+    let userService = UserService(persistentStore: realmService, repository: userRepository, userDataStorage: userDataStorage)
 
     userService.lastUpdateTimestamp = 100
     expect(userDataStorage.didSetLastUpdateTimestamp).to(beTrue())
@@ -52,7 +52,7 @@ class UserServiceTests: XCTestCase {
   func testDidReceiveInitialCollection() {
     let userRepository = UserStubRepository(shouldFinishWithSuccess: true)
     let userDataStorage = StubUserDataStorage()
-    let userService = UserService(realmService: realmService, repository: userRepository, userDataStorage: userDataStorage)
+    let userService = UserService(persistentStore: realmService, repository: userRepository, userDataStorage: userDataStorage)
 
     userService.didReceiveInitialCollection = true
     expect(userDataStorage.didSetDidReceiveInitialCollection).to(beTrue())
@@ -63,7 +63,7 @@ class UserServiceTests: XCTestCase {
   func testDidFinishOnboarding() {
     let userRepository = UserStubRepository(shouldFinishWithSuccess: true)
     let userDataStorage = StubUserDataStorage()
-    let userService = UserService(realmService: realmService, repository: userRepository, userDataStorage: userDataStorage)
+    let userService = UserService(persistentStore: realmService, repository: userRepository, userDataStorage: userDataStorage)
 
     userService.didFinishOnboarding = true
     expect(userDataStorage.didSetDidFinishOnboarding).to(beTrue())
@@ -74,7 +74,7 @@ class UserServiceTests: XCTestCase {
   func testClearingUserData() {
     let userRepository = UserStubRepository(shouldFinishWithSuccess: true)
     let userDataStorage = StubUserDataStorage()
-    let userService = UserService(realmService: realmService, repository: userRepository, userDataStorage: userDataStorage)
+    let userService = UserService(persistentStore: realmService, repository: userRepository, userDataStorage: userDataStorage)
 
     waitUntil { done in
       let artists: [Artist] = ModelFactory.generateArtists(inAmount: 5).map { artist in
@@ -86,8 +86,8 @@ class UserServiceTests: XCTestCase {
       }.then {
         userService.clearUserData()
       }.done { _ in
-        expect(self.realmService.hasObjects(ofType: Artist.self)).to(beFalse())
-        expect(self.realmService.hasObjects(ofType: Tag.self)).to(beFalse())
+        expect(self.realmService.objects(Artist.self)).to(beEmpty())
+        expect(self.realmService.objects(Tag.self)).to(beEmpty())
         expect(userDataStorage.didCallReset).to(beTrue())
         done()
       }.noError()
@@ -97,7 +97,7 @@ class UserServiceTests: XCTestCase {
   func testCheckingUserExistsWithSuccess() {
     let userRepository = UserStubRepository(shouldFinishWithSuccess: true)
     let userDataStorage = StubUserDataStorage()
-    let userService = UserService(realmService: realmService, repository: userRepository, userDataStorage: userDataStorage)
+    let userService = UserService(persistentStore: realmService, repository: userRepository, userDataStorage: userDataStorage)
 
     waitUntil { done in
       userService.checkUserExists(withUsername: "test").done { _ in
@@ -111,7 +111,7 @@ class UserServiceTests: XCTestCase {
   func testCheckingUserExistsWithFailure() {
     let userRepository = UserStubRepository(shouldFinishWithSuccess: false)
     let userDataStorage = StubUserDataStorage()
-    let userService = UserService(realmService: realmService, repository: userRepository, userDataStorage: userDataStorage)
+    let userService = UserService(persistentStore: realmService, repository: userRepository, userDataStorage: userDataStorage)
 
     waitUntil { done in
       userService.checkUserExists(withUsername: "test").done { _ in
