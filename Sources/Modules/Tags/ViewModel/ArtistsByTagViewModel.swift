@@ -24,7 +24,7 @@ class ArtistsByTagViewModel: ArtistListViewModel {
   var onDidChangeStatus: ((String) -> Void)?
   var onDidReceiveError: ((Error) -> Void)?
 
-  private lazy var artists: RealmMappedCollection<Artist> = {
+  private lazy var artists: AnyPersistentMappedCollection<Artist> = {
     let playcountSort = NSSortDescriptor(key: "playcount", ascending: false)
     return self.dependencies.artistService.artists(filteredUsing: self.originalPredicate, sortedBy: [playcountSort])
   }()
