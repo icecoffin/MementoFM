@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import PromiseKit
 
-class RealmService {
+class RealmService: PersistentStore {
   private let mainQueueRealm: Realm
   private let getBackgroundQueueRealm: () -> Realm
 
@@ -49,12 +49,11 @@ class RealmService {
   }
 
   // MARK: - Realm mapped collection
-  func mappedCollection<T: TransientEntity>(filteredUsing predicate: NSPredicate? = nil,
-                                            sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<T>
-    where T.PersistentType: Object {
-      let realmMappedCollection = RealmMappedCollection<T>(realm: currentQueueRealm,
-                                                           predicate: predicate,
-                                                           sortDescriptors: sortDescriptors)
+  func mappedCollection<T: TransientEntity>(filteredUsing predicate: NSPredicate?,
+                                            sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<T> {
+    let realmMappedCollection = RealmMappedCollection<T>(realm: currentQueueRealm,
+                                                         predicate: predicate,
+                                                         sortDescriptors: sortDescriptors)
       return AnyPersistentMappedCollection(realmMappedCollection)
   }
 
@@ -79,35 +78,38 @@ class RealmService {
   // MARK: - Deleting objects from Realm
 
   func deleteObjects<T: TransientEntity>(ofType type: T.Type) -> Promise<Void>
-    where T.PersistentType: Object, T.PersistentType.TransientType == T {
+    where T.PersistentType.TransientType == T {
+      guard let type = type.PersistentType.self as? Object.Type else {
+        fatalError("The provided Element.PersistentType is not a Realm Object subclass")
+      }
+
     return write { realm in
-      let realmObjects = realm.objects(type.PersistentType.self)
+      let realmObjects = realm.objects(type)
       realm.delete(realmObjects)
     }
   }
 
   // MARK: - Obtaining objects from Realm
-  func hasObjects<T: TransientEntity>(ofType type: T.Type) -> Bool
-    where T.PersistentType: Object, T.PersistentType.TransientType == T {
-    return !currentQueueRealm.objects(T.PersistentType.self).isEmpty
-  }
+  func objects<T: TransientEntity>(_ type: T.Type, filteredBy predicate: NSPredicate?) -> [T.PersistentType.TransientType]
+    where T.PersistentType.TransientType == T {
+      guard let type = T.PersistentType.self as? Object.Type else {
+        fatalError("The provided Element.PersistentType is not a Realm Object subclass")
+      }
 
-  func objects<T: TransientEntity>(_ type: T.Type) -> [T.PersistentType.TransientType]
-    where T.PersistentType: Object, T.PersistentType.TransientType == T {
-      return currentQueueRealm.objects(T.PersistentType.self).compactMap({ $0.toTransient() })
-  }
-
-  func objects<T: TransientEntity>(_ type: T.Type, filteredBy predicate: NSPredicate) -> [T.PersistentType.TransientType]
-    where T.PersistentType: Object, T.PersistentType.TransientType == T {
-    return currentQueueRealm.objects(T.PersistentType.self).filter(predicate).compactMap({ $0.toTransient() })
+      var results = currentQueueRealm.objects(type)
+      if let predicate = predicate {
+        results = results.filter(predicate)
+      }
+      return results.compactMap({ ($0 as? T.PersistentType)?.toTransient() })
   }
 
   func object<T: TransientEntity, K>(ofType type: T.Type, forPrimaryKey key: K) -> T.PersistentType.TransientType?
-    where T.PersistentType: Object, T.PersistentType.TransientType == T {
-    if let realmObject = currentQueueRealm.object(ofType: T.PersistentType.self, forPrimaryKey: key) {
-      return realmObject.toTransient()
-    } else {
-      return nil
-    }
+    where T.PersistentType.TransientType == T {
+      guard let type = T.PersistentType.self as? Object.Type else {
+        fatalError("The provided Element.PersistentType is not a Realm Object subclass")
+      }
+
+      let realmObject = currentQueueRealm.object(ofType: type, forPrimaryKey: key)
+      return (realmObject as? T.PersistentType)?.toTransient()
   }
 }

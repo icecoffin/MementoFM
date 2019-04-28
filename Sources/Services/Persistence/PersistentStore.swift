@@ -1,0 +1,44 @@
+//
+//  PersistentStore.swift
+//  MementoFM
+//
+//  Created by Dani on 28/04/2019.
+//  Copyright © 2019 icecoffin. All rights reserved.
+//
+
+import Foundation
+import PromiseKit
+
+protocol PersistentStore {
+  func mappedCollection<T: TransientEntity>(filteredUsing predicate: NSPredicate?,
+                                            sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<T>
+
+  func save<T: TransientEntity>(_ objects: [T], update: Bool) -> Promise<Void>
+    where T.PersistentType.TransientType == T
+
+  func deleteObjects<T: TransientEntity>(ofType type: T.Type) -> Promise<Void>
+    where T.PersistentType.TransientType == T
+
+  func objects<T: TransientEntity>(_ type: T.Type, filteredBy predicate: NSPredicate?) -> [T.PersistentType.TransientType]
+    where T.PersistentType.TransientType == T
+
+  func object<T: TransientEntity, K>(ofType type: T.Type, forPrimaryKey key: K) -> T.PersistentType.TransientType?
+    where T.PersistentType.TransientType == T
+}
+
+extension PersistentStore {
+  func objects<T: TransientEntity>(_ type: T.Type) -> [T.PersistentType.TransientType]
+    where T.PersistentType.TransientType == T {
+      return objects(type, filteredBy: nil)
+  }
+
+  func save<T: TransientEntity>(_ objects: [T]) -> Promise<Void>
+    where T.PersistentType.TransientType == T {
+      return save(objects, update: true)
+  }
+
+  func save<T: TransientEntity>(_ object: T, update: Bool = true) -> Promise<Void>
+    where T.PersistentType.TransientType == T {
+      return save([object], update: update)
+  }
+}

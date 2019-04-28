@@ -10,11 +10,11 @@ import Foundation
 import PromiseKit
 
 protocol RecentTracksProcessing {
-  func process(tracks: [Track], using realmService: RealmService) -> Promise<Void>
+  func process(tracks: [Track], using persistentStore: PersistentStore) -> Promise<Void>
 }
 
 class RecentTracksProcessor: RecentTracksProcessing {
-  func process(tracks: [Track], using realmService: RealmService) -> Promise<Void> {
+  func process(tracks: [Track], using persistentStore: PersistentStore) -> Promise<Void> {
     var artistNamesWithPlayCounts = [Artist: Int]()
 
     for track in tracks {
@@ -27,10 +27,10 @@ class RecentTracksProcessor: RecentTracksProcessing {
     }
 
     let artists: [Artist] = artistNamesWithPlayCounts.map { artist, playcount in
-      let updatedArtist = realmService.object(ofType: Artist.self, forPrimaryKey: artist.name) ?? artist
+      let updatedArtist = persistentStore.object(ofType: Artist.self, forPrimaryKey: artist.name) ?? artist
       return updatedArtist.updatingPlaycount(to: updatedArtist.playcount + playcount)
     }
 
-    return realmService.save(artists)
+    return persistentStore.save(artists)
   }
 }

@@ -14,7 +14,7 @@ import PromiseKit
 class RecentTracksStubProcessor: RecentTracksProcessing {
   var didCallProcess = false
 
-  func process(tracks: [Track], using realmService: RealmService) -> Promise<Void> {
+  func process(tracks: [Track], using realmService: PersistentStore) -> Promise<Void> {
     didCallProcess = true
     return .value(())
   }
@@ -43,7 +43,7 @@ class TrackServiceTests: XCTestCase {
     let trackRepository = TrackStubRepository(totalPages: totalPages, shouldFailWithError: false, trackProvider: {
       ModelFactory.generateTracks(inAmount: limit)
     })
-    let trackService = TrackService(realmService: realmService, repository: trackRepository)
+    let trackService = TrackService(persistentStore: realmService, repository: trackRepository)
 
     var progressCallCount = 0
     waitUntil { done in
@@ -66,7 +66,7 @@ class TrackServiceTests: XCTestCase {
     let limit = 20
 
     let trackRepository = TrackStubRepository(totalPages: totalPages, shouldFailWithError: true, trackProvider: { [] })
-    let trackService = TrackService(realmService: realmService, repository: trackRepository)
+    let trackService = TrackService(persistentStore: realmService, repository: trackRepository)
 
     waitUntil { done in
       trackService.getRecentTracks(for: "User", from: 0, limit: limit).done { _ in
@@ -79,7 +79,7 @@ class TrackServiceTests: XCTestCase {
   }
 
   func testProcessingTracks() {
-    let trackService = TrackService(realmService: realmService, repository: TrackEmptyStubRepository())
+    let trackService = TrackService(persistentStore: realmService, repository: TrackEmptyStubRepository())
 
     let processor = RecentTracksStubProcessor()
     trackService.processTracks([], using: processor).done { _ in

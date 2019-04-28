@@ -33,7 +33,7 @@ class TagServiceTests: XCTestCase {
     let tagRepository = TagStubRepository(shouldFailWithError: false, tagProvider: { artist in
       ModelFactory.generateTags(inAmount: tagsPerArtist, for: artist)
     })
-    let tagService = TagService(realmService: realmService, repository: tagRepository)
+    let tagService = TagService(persistentStore: realmService, repository: tagRepository)
     let artists = ModelFactory.generateArtists(inAmount: artistCount)
 
     var progressCallCount = 0
@@ -55,7 +55,7 @@ class TagServiceTests: XCTestCase {
     let artistCount = 5
 
     let tagRepository = TagStubRepository(shouldFailWithError: true, tagProvider: { _ in [] })
-    let tagService = TagService(realmService: realmService, repository: tagRepository)
+    let tagService = TagService(persistentStore: realmService, repository: tagRepository)
     let artists = ModelFactory.generateArtists(inAmount: artistCount)
 
     waitUntil { done in
@@ -89,7 +89,7 @@ class TagServiceTests: XCTestCase {
                          tags: tags2,
                          topTags: topTags2)
 
-    let tagService = TagService(realmService: realmService, repository: TagEmptyStubRepository())
+    let tagService = TagService(persistentStore: realmService, repository: TagEmptyStubRepository())
 
     waitUntil { done in
       self.realmService.save([artist1, artist2]).done { _ in

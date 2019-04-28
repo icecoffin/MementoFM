@@ -25,11 +25,11 @@ extension TrackServiceProtocol {
 }
 
 class TrackService: TrackServiceProtocol {
-  private let realmService: RealmService
+  private let persistentStore: PersistentStore
   private let repository: TrackRepository
 
-  init(realmService: RealmService, repository: TrackRepository) {
-    self.realmService = realmService
+  init(persistentStore: PersistentStore, repository: TrackRepository) {
+    self.persistentStore = persistentStore
     self.repository = repository
   }
 
@@ -73,6 +73,6 @@ class TrackService: TrackServiceProtocol {
   }
 
   func processTracks(_ tracks: [Track], using processor: RecentTracksProcessing = RecentTracksProcessor()) -> Promise<Void> {
-    return processor.process(tracks: tracks, using: realmService)
+    return processor.process(tracks: tracks, using: persistentStore)
   }
 }

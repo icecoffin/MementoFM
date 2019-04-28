@@ -70,18 +70,6 @@ class RealmServiceTests: XCTestCase {
     }
   }
 
-  func testHavingObjects() {
-    waitUntil { done in
-      expect(self.realmService.hasObjects(ofType: IgnoredTag.self)).to(equal(false))
-      let ignoredTags = [IgnoredTag(uuid: "uuid1", name: "name1"),
-                         IgnoredTag(uuid: "uuid2", name: "name2")]
-      self.realmService.save(ignoredTags).done { _ in
-        expect(self.realmService.hasObjects(ofType: IgnoredTag.self)).to(equal(true))
-        done()
-      }.noError()
-    }
-  }
-
   func testGettingObjects() {
     waitUntil { done in
       let ignoredTags = [IgnoredTag(uuid: "uuid1", name: "name1"),
