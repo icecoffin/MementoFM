@@ -10,216 +10,185 @@ import XCTest
 @testable import MementoFM
 import Nimble
 import PromiseKit
-import RealmSwift
 
 class ArtistServiceTests: XCTestCase {
-  var realmService: RealmService!
+  var persistentStore: StubPersistentStore!
 
   override func setUp() {
     super.setUp()
-    realmService = RealmService(getRealm: {
-      return RealmFactory.inMemoryRealm()
-    })
+    persistentStore = StubPersistentStore()
   }
 
-  override func tearDown() {
-    realmService = nil
-    super.tearDown()
-  }
-
-  func testGettingLibraryWithSuccess() {
+  func test_getLibrary_callsProgress_andReturnsArtistsOnSuccess() {
     let totalPages = 5
     let artistsPerPage = 10
 
     let repository = ArtistLibraryStubRepository(totalPages: totalPages, shouldFailWithError: false, artistProvider: { _ in
       return ModelFactory.generateArtists(inAmount: artistsPerPage)
     })
-    let artistService = ArtistService(persistentStore: realmService, repository: repository)
+    let artistService = ArtistService(persistentStore: persistentStore, repository: repository)
 
     var progressCallCount = 0
-    waitUntil { done in
-      artistService.getLibrary(for: "user", limit: artistsPerPage, progress: { _ in
-        progressCallCount += 1
-      }).done { artists in
-        expect(progressCallCount).to(equal(totalPages - 1))
-        let expectedArtists = (0..<totalPages).flatMap { _ in ModelFactory.generateArtists(inAmount: artistsPerPage) }
-        expect(expectedArtists).to(equal(artists))
-        done()
-      }.catch { _ in
-        fail()
-      }
+    var expectedArtists: [Artist] = []
+    artistService.getLibrary(for: "user", limit: artistsPerPage, progress: { _ in
+      progressCallCount += 1
+    }).done { artists in
+      expectedArtists = artists
+    }.catch { _ in
+      fail()
     }
+
+    let artists = (0..<totalPages).flatMap { _ in ModelFactory.generateArtists(inAmount: artistsPerPage) }
+    expect(expectedArtists).toEventually(equal(artists))
+    expect(progressCallCount).toEventually(equal(totalPages - 1))
   }
 
-  func testGettingLibraryWithFailure() {
+  func test_getLibrary_returnsErrorOnFailure() {
     let totalPages = 5
     let artistsPerPage = 10
 
     let repository = ArtistLibraryStubRepository(totalPages: totalPages,
                                                  shouldFailWithError: true,
                                                  artistProvider: { _ in return [] })
-    let artistService = ArtistService(persistentStore: realmService, repository: repository)
+    let artistService = ArtistService(persistentStore: persistentStore, repository: repository)
 
-    waitUntil { done in
-      artistService.getLibrary(for: "user", limit: artistsPerPage, progress: nil).done { _ in
-        fail()
-      }.catch { error in
-        expect(error).toNot(beNil())
-        done()
-      }
+    var didCatchError = false
+    artistService.getLibrary(for: "user", limit: artistsPerPage, progress: nil).done { _ in
+      fail()
+    }.catch { _ in
+      didCatchError = true
     }
+
+    expect(didCatchError).toEventually(beTrue())
   }
 
-  func testSavingArtists() {
-    let artistService = ArtistService(persistentStore: realmService, repository: ArtistEmptyStubRepository())
+  func test_saveArtists_callsPersistentStore() {
+    let artistService = ArtistService(persistentStore: persistentStore, repository: ArtistEmptyStubRepository())
 
     let artists = ModelFactory.generateArtists(inAmount: 5)
-    waitUntil { done in
-      artistService.saveArtists(artists).done { _ in
-        let expectedArtists = self.realmService.objects(Artist.self)
-        expect(expectedArtists).to(equal(artists))
-        done()
-      }.noError()
-    }
+    artistService.saveArtists(artists).noError()
+
+    let saveParameters = persistentStore.saveParameters
+    expect(saveParameters?.objects as? [Artist]) == artists
+    expect(saveParameters?.update) == true
   }
 
-  func testGettingArtistsNeedingTagsUpdate() {
-    let artistService = ArtistService(persistentStore: realmService, repository: ArtistEmptyStubRepository())
+  func test_artistsNeedingTagsUpdate_callsPersistentStoreWithCorrectParameters() {
+    let artistService = ArtistService(persistentStore: persistentStore, repository: ArtistEmptyStubRepository())
 
-    let artists1 = ModelFactory.generateArtists(inAmount: 5)
-    let artists2 = ModelFactory.generateArtists(inAmount: 5, needsTagsUpdate: true)
-    waitUntil { done in
-      self.realmService.save(artists1 + artists2).done { _ in
-        let expectedArtists = artistService.artistsNeedingTagsUpdate()
-        expect(expectedArtists).to(equal(artists2))
-        done()
-      }.noError()
-    }
+    _ = artistService.artistsNeedingTagsUpdate()
+
+    let predicate = persistentStore.objectsPredicate
+    expect(predicate?.predicateFormat) == "needsTagsUpdate == 1"
   }
 
-  func testGettingArtistsWithIntersectingTopTags() {
-    let artistService = ArtistService(persistentStore: realmService, repository: ArtistEmptyStubRepository())
+  func test_artistsWithIntersectingTopTags_callsPersistentStoreWithCorrectParameters() {
+    let artistService = ArtistService(persistentStore: persistentStore, repository: ArtistEmptyStubRepository())
 
-    let tags1 = [Tag(name: "Tag1", count: 1),
+    let tags = [Tag(name: "Tag1", count: 1),
                  Tag(name: "Tag2", count: 2),
                  Tag(name: "Tag3", count: 3)]
-    let tags2 = [Tag(name: "Tag1", count: 1),
-                 Tag(name: "Tag4", count: 4)]
-    let tags3 = [Tag(name: "Tag5", count: 5)]
+    let artist = ModelFactory.generateArtist(index: 1).updatingTopTags(to: tags)
 
-    let artist1 = ModelFactory.generateArtist(index: 1).updatingTopTags(to: tags1)
-    let artist2 = ModelFactory.generateArtist(index: 2).updatingTopTags(to: tags2)
-    let artist3 = ModelFactory.generateArtist(index: 3).updatingTopTags(to: tags3)
-    waitUntil { done in
-      firstly {
-        self.realmService.save([artist1, artist2, artist3])
-      }.done { _ in
-        let artists1 = artistService.artistsWithIntersectingTopTags(for: artist1)
-        expect(artists1).to(equal([artist2]))
-        let artists2 = artistService.artistsWithIntersectingTopTags(for: artist2)
-        expect(artists2).to(equal([artist1]))
-        let artists3 = artistService.artistsWithIntersectingTopTags(for: artist3)
-        expect(artists3).to(beEmpty())
-        done()
-      }.noError()
-    }
+    _ = artistService.artistsWithIntersectingTopTags(for: artist)
+
+    let predicate = persistentStore.objectsPredicate
+    expect(predicate?.predicateFormat) == "ANY topTags.name IN {\"Tag1\", \"Tag2\", \"Tag3\"} AND name != \"\(artist.name)\""
   }
 
-  func testUpdatingArtistWithTags() {
-    let artistService = ArtistService(persistentStore: realmService, repository: ArtistEmptyStubRepository())
+  func test_updateArtistWithTags_updatesArtist_andCallsPersistentStoreWithCorrectParameters() {
+    let artistService = ArtistService(persistentStore: persistentStore, repository: ArtistEmptyStubRepository())
 
     let artist = ModelFactory.generateArtist(index: 1, needsTagsUpdate: true)
     let tags = ModelFactory.generateTags(inAmount: 5, for: artist.name)
-    waitUntil { done in
-      artistService.updateArtist(artist, with: tags).done { _ in
-        let expectedArtist = self.realmService.object(ofType: Artist.self, forPrimaryKey: artist.name)
-        expect(expectedArtist?.tags).to(equal(tags))
-        expect(expectedArtist?.needsTagsUpdate).to(beFalse())
-        done()
-      }.noError()
-    }
+
+    artistService.updateArtist(artist, with: tags).noError()
+
+    let saveParameters = persistentStore.saveParameters
+    expect(saveParameters?.update) == true
+
+    let updatedArtist = saveParameters?.objects.first as? Artist
+    expect(updatedArtist?.tags) == tags
+    expect(updatedArtist?.needsTagsUpdate) == false
   }
 
-  func testCalculatingTopTagsForAllArtists() {
-    let artistService = ArtistService(persistentStore: realmService, repository: ArtistEmptyStubRepository())
+  func test_calculateTopTagsForAllArtists_callsCalculatorForEachArtist_andSavesArtists() {
+    let artistService = ArtistService(persistentStore: persistentStore, repository: ArtistEmptyStubRepository())
 
     let artists = ModelFactory.generateArtists(inAmount: 5)
-    let calculator = ArtistStubTopTagsCalculator()
+    persistentStore.customObjects = artists
 
-    waitUntil { done in
-      firstly {
-        return artistService.saveArtists(artists)
-      }.then {
-        artistService.calculateTopTagsForAllArtists(using: calculator)
-      }.done { _ in
-        expect(calculator.numberOfCalculateTopTagsCalled).to(equal(artists.count))
-        done()
-      }.noError()
-    }
+    let calculator = ArtistStubTopTagsCalculator()
+    artistService.calculateTopTagsForAllArtists(using: calculator, using: TestDispatcher()).noError()
+
+    expect(calculator.numberOfCalculateTopTagsCalled) == artists.count
+    expect(self.persistentStore.saveParameters?.objects as? [Artist]).toEventually(equal(artists))
+    expect(self.persistentStore.saveParameters?.update).toEventually(beTrue())
   }
 
-  func testCalculatingTopTagsForArtist() {
-    let artistService = ArtistService(persistentStore: realmService, repository: ArtistEmptyStubRepository())
+  func test_calculateTopTagsForArtist_callsCalculatorOnce_andSavesArtist() {
+    let artistService = ArtistService(persistentStore: persistentStore, repository: ArtistEmptyStubRepository())
 
     let artist = ModelFactory.generateArtist(index: 1)
     let calculator = ArtistStubTopTagsCalculator()
 
-    waitUntil { done in
-      artistService.calculateTopTags(for: artist, using: calculator).done { _ in
-        let expectedArtist = self.realmService.object(ofType: Artist.self, forPrimaryKey: artist.name)
-        expect(expectedArtist).toNot(beNil())
-        expect(calculator.numberOfCalculateTopTagsCalled).to(equal(1))
-        done()
-      }.noError()
-    }
+    artistService.calculateTopTags(for: artist, using: calculator).noError()
+
+    expect(calculator.numberOfCalculateTopTagsCalled) == 1
+    expect(self.persistentStore.saveParameters?.objects.first as? Artist) == artist
+    expect(self.persistentStore.saveParameters?.update) == true
   }
 
-  func testCreatingArtistsMappedCollection() {
-    let artistService = ArtistService(persistentStore: realmService, repository: ArtistEmptyStubRepository())
+  func test_artists_createsCorrectMappedCollection() {
+    let artistService = ArtistService(persistentStore: persistentStore, repository: ArtistEmptyStubRepository())
 
     let predicate = NSPredicate(format: "name contains[cd] '1'")
     let sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-    let artistsMappedCollection = artistService.artists(filteredUsing: predicate, sortedBy: sortDescriptors)
-    expect(artistsMappedCollection.predicate).to(equal(predicate))
-    expect(artistsMappedCollection.sortDescriptors).to(equal(sortDescriptors))
+
+    let mappedCollection = StubPersistentMappedCollection<Artist>()
+    persistentStore.customMappedCollection = AnyPersistentMappedCollection(mappedCollection)
+
+    _ = artistService.artists(filteredUsing: predicate, sortedBy: sortDescriptors)
+    let parameters = persistentStore.mappedCollectionParameters
+
+    expect(parameters?.predicate) == predicate
+    expect(parameters?.sortDescriptors) == sortDescriptors
   }
 
-  func testGettingSimilarArtistsWithSuccess() {
-    let similarArtistCount = 10
+  func test_getSimilarArtists_finishesWithSuccess() {
+    let similarArtistCount = 3
 
     let repository = ArtistSimilarsStubRepository(shouldFailWithError: false, similarArtistProvider: {
       return ModelFactory.generateSimilarArtists(inAmount: similarArtistCount)
     })
-    let artistService = ArtistService(persistentStore: realmService, repository: repository)
+    let artistService = ArtistService(persistentStore: persistentStore, repository: repository)
 
     let artist = ModelFactory.generateArtist()
-    waitUntil { done in
-      let artists = ModelFactory.generateArtists(inAmount: 10)
-      firstly {
-        self.realmService.save(artists)
-      }.then {
-        artistService.getSimilarArtists(for: artist)
-      }.done { artists in
-        let expectedArtists = ModelFactory.generateArtists(inAmount: similarArtistCount)
-        expect(expectedArtists).to(equal(artists))
-        done()
-      }.catch { _ in
-        fail()
-      }
+    artistService.getSimilarArtists(for: artist).catch { _ in
+      fail()
     }
+
+    expect(repository.getSimilarArtistsParameters?.artist) == artist
+    expect(repository.getSimilarArtistsParameters?.limit) == 20
+
+    let predicateFormat = "name IN {\"Artist1\", \"Artist2\", \"Artist3\"}"
+    expect(self.persistentStore.objectsPredicate?.predicateFormat).toEventually(equal(predicateFormat))
   }
 
-  func testGettingSimilarArtistsWithFailure() {
+  func test_getSimilarArtists_failsWithError() {
     let repository = ArtistSimilarsStubRepository(shouldFailWithError: true, similarArtistProvider: { [] })
-    let artistService = ArtistService(persistentStore: realmService, repository: repository)
+    let artistService = ArtistService(persistentStore: persistentStore, repository: repository)
 
     let artist = ModelFactory.generateArtist()
-    waitUntil { done in
-      artistService.getSimilarArtists(for: artist).done { _ in
-        fail()
-      }.catch { _ in
-        done()
-      }
+
+    var didCatchError = false
+    artistService.getSimilarArtists(for: artist).done { _ in
+      fail()
+    }.catch { _ in
+      didCatchError = true
     }
+
+    expect(didCatchError).toEventually(beTrue())
+    expect(self.persistentStore.objectsPredicate).toEventually(beNil())
   }
 }

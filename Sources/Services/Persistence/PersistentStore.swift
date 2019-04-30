@@ -19,15 +19,15 @@ protocol PersistentStore {
   func deleteObjects<T: TransientEntity>(ofType type: T.Type) -> Promise<Void>
     where T.PersistentType.TransientType == T
 
-  func objects<T: TransientEntity>(_ type: T.Type, filteredBy predicate: NSPredicate?) -> [T.PersistentType.TransientType]
+  func objects<T: TransientEntity>(_ type: T.Type, filteredBy predicate: NSPredicate?) -> [T]
     where T.PersistentType.TransientType == T
 
-  func object<T: TransientEntity, K>(ofType type: T.Type, forPrimaryKey key: K) -> T.PersistentType.TransientType?
+  func object<T: TransientEntity, K>(ofType type: T.Type, forPrimaryKey key: K) -> T?
     where T.PersistentType.TransientType == T
 }
 
 extension PersistentStore {
-  func objects<T: TransientEntity>(_ type: T.Type) -> [T.PersistentType.TransientType]
+  func objects<T: TransientEntity>(_ type: T.Type) -> [T]
     where T.PersistentType.TransientType == T {
       return objects(type, filteredBy: nil)
   }

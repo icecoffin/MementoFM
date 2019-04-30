@@ -43,7 +43,7 @@ class ArtistsByTagViewModel: ArtistListViewModel {
     return tagName
   }
 
-  func requestDataIfNeeded() { }
+  func requestDataIfNeeded(currentTimestamp: TimeInterval, minTimeInterval: TimeInterval) { }
 
   func artistViewModel(at indexPath: IndexPath) -> LibraryArtistCellViewModel {
     let artist = artists[indexPath.row]

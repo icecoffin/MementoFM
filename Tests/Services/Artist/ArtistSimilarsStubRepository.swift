@@ -23,7 +23,9 @@ class ArtistSimilarsStubRepository: ArtistRepository {
     fatalError()
   }
 
+  var getSimilarArtistsParameters: (artist: Artist, limit: Int)?
   func getSimilarArtists(for artist: Artist, limit: Int) -> Promise<SimilarArtistListResponse> {
+    getSimilarArtistsParameters = (artist, limit)
     if shouldFailWithError {
       return Promise(error: NSError(domain: "MementoFM", code: 1, userInfo: nil))
     } else {

@@ -32,9 +32,8 @@ protocol ArtistListViewModel: class {
 }
 
 extension ArtistListViewModel {
-  func requestDataIfNeeded(currentTimestamp: TimeInterval = Date().timeIntervalSince1970,
-                           minTimeInterval: TimeInterval = 30) {
-    requestDataIfNeeded(currentTimestamp: currentTimestamp, minTimeInterval: minTimeInterval)
+  func requestDataIfNeeded() {
+    requestDataIfNeeded(currentTimestamp: Date().timeIntervalSince1970, minTimeInterval: 30)
   }
 
   var searchBarPlaceholder: String {

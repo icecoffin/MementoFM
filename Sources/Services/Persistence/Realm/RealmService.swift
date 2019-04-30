@@ -90,7 +90,7 @@ class RealmService: PersistentStore {
   }
 
   // MARK: - Obtaining objects from Realm
-  func objects<T: TransientEntity>(_ type: T.Type, filteredBy predicate: NSPredicate?) -> [T.PersistentType.TransientType]
+  func objects<T: TransientEntity>(_ type: T.Type, filteredBy predicate: NSPredicate?) -> [T]
     where T.PersistentType.TransientType == T {
       guard let type = T.PersistentType.self as? Object.Type else {
         fatalError("The provided Element.PersistentType is not a Realm Object subclass")
@@ -103,7 +103,7 @@ class RealmService: PersistentStore {
       return results.compactMap({ ($0 as? T.PersistentType)?.toTransient() })
   }
 
-  func object<T: TransientEntity, K>(ofType type: T.Type, forPrimaryKey key: K) -> T.PersistentType.TransientType?
+  func object<T: TransientEntity, K>(ofType type: T.Type, forPrimaryKey key: K) -> T?
     where T.PersistentType.TransientType == T {
       guard let type = T.PersistentType.self as? Object.Type else {
         fatalError("The provided Element.PersistentType is not a Realm Object subclass")

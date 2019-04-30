@@ -68,7 +68,7 @@ class StubArtistService: ArtistServiceProtocol {
 
   var didCallCalculateTopTagsForAllArtists: Bool = false
   var calculateTopTagsForAllShouldReturnError: Bool = false
-  func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating) -> Promise<Void> {
+  func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating, using dispatcher: Dispatcher) -> Promise<Void> {
     didCallCalculateTopTagsForAllArtists = true
     if calculateTopTagsForAllShouldReturnError {
       return Promise(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))

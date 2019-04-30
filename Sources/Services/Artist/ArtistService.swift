@@ -21,7 +21,7 @@ protocol ArtistServiceProtocol: class {
   func artistsNeedingTagsUpdate() -> [Artist]
   func artistsWithIntersectingTopTags(for artist: Artist) -> [Artist]
   func updateArtist(_ artist: Artist, with tags: [Tag]) -> Promise<Artist>
-  func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating) -> Promise<Void>
+  func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating, using dispatcher: Dispatcher) -> Promise<Void>
   func calculateTopTags(for artist: Artist, using calculator: ArtistTopTagsCalculating) -> Promise<Void>
   func artists(filteredUsing predicate: NSPredicate?,
                sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<Artist>
@@ -43,6 +43,10 @@ extension ArtistServiceProtocol {
 
   func getSimilarArtists(for artist: Artist) -> Promise<[Artist]> {
     return getSimilarArtists(for: artist, limit: 20)
+  }
+
+  func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating) -> Promise<Void> {
+    return calculateTopTagsForAllArtists(using: calculator, using: AsyncDispatcher.global)
   }
 }
 
@@ -112,8 +116,8 @@ class ArtistService: ArtistServiceProtocol {
     }
   }
 
-  func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating) -> Promise<Void> {
-    return DispatchQueue.global().async(.promise) { () -> [Artist] in
+  func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating, using dispatcher: Dispatcher) -> Promise<Void> {
+    return dispatcher.dispatch { () -> [Artist] in
       let artists = self.persistentStore.objects(Artist.self)
       return artists.map({ return calculator.calculateTopTags(for: $0) })
     }.then { artists in
