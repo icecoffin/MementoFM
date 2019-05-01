@@ -12,61 +12,42 @@ import Nimble
 import PromiseKit
 
 class IgnoredTagServiceTests: XCTestCase {
-  var realmService: RealmService!
+  var persistentStore: StubPersistentStore!
   var ignoredTagService: IgnoredTagService!
 
   override func setUp() {
     super.setUp()
-    realmService = RealmService(getRealm: {
-      return RealmFactory.inMemoryRealm()
-    })
-    ignoredTagService = IgnoredTagService(persistentStore: realmService)
+
+    persistentStore = StubPersistentStore()
+    ignoredTagService = IgnoredTagService(persistentStore: persistentStore)
   }
 
-  override func tearDown() {
-    realmService = nil
-    ignoredTagService = nil
-    super.tearDown()
-  }
-
-  func testGettingIgnoredTags() {
+  func test_ignoredTags_callsPersistentStore() {
     let ignoredTags = ModelFactory.generateIgnoredTags(inAmount: 5)
+    persistentStore.customObjects = ignoredTags
 
-    waitUntil { done in
-      self.realmService.save(ignoredTags).done { _ in
-        let expectedIgnoredTags = self.ignoredTagService.ignoredTags()
-        expect(expectedIgnoredTags).to(equal(ignoredTags))
-        done()
-      }.noError()
-    }
+    let expectedIgnoredTags = ignoredTagService.ignoredTags()
+    expect(self.persistentStore.objectsPredicate).to(beNil())
+    expect(ignoredTags) == expectedIgnoredTags
   }
 
-  func testCreatingDefaultIgnoredTags() {
+  func test_createDefaultIgnoredTags_createsTagsAndSavesToPersistentStore() {
     let ignoredTagNames = ["tag1", "tag2"]
 
-    waitUntil { done in
-      self.ignoredTagService.createDefaultIgnoredTags(withNames: ignoredTagNames).done { _ in
-        let expectedIgnoredTagNames = self.realmService.objects(IgnoredTag.self).map { $0.name }
-        expect(expectedIgnoredTagNames).to(equal(ignoredTagNames))
-        done()
-      }.noError()
-    }
+    _ = ignoredTagService.createDefaultIgnoredTags(withNames: ignoredTagNames)
+
+    let saveParameters = persistentStore.saveParameters
+    let expectedIgnoredTagNames = (saveParameters?.objects as? [IgnoredTag])?.compactMap { $0.name }
+    expect(ignoredTagNames) == expectedIgnoredTagNames
+    expect(saveParameters?.update) == true
   }
 
-  func testUpdatingIgnoredTags() {
-    let originalIgnoredTags = ModelFactory.generateIgnoredTags(inAmount: 5)
-    let updatedIgnoredTags = ModelFactory.generateIgnoredTags(inAmount: 10)
+  func test_updateIgnoresTags_deletesOldIgnoredTags_andSavesNewOnes() {
+    let ignoredTags = ModelFactory.generateIgnoredTags(inAmount: 3)
 
-    waitUntil { done in
-      firstly {
-        self.realmService.save(originalIgnoredTags)
-      }.then {
-        self.ignoredTagService.updateIgnoredTags(updatedIgnoredTags)
-      }.done { _ in
-        let expectedIgnoredTags = self.ignoredTagService.ignoredTags()
-        expect(expectedIgnoredTags).to(equal(updatedIgnoredTags))
-        done()
-      }.noError()
-    }
+    _ = ignoredTagService.updateIgnoredTags(ignoredTags)
+
+    expect(self.persistentStore.didCallDelete) == true
+    expect(self.persistentStore.saveParameters?.objects as? [IgnoredTag]).toEventually(equal(ignoredTags))
   }
 }
