@@ -13,7 +13,7 @@ protocol TagRepository: class {
   func getTopTags(for artist: String) -> Promise<TopTagsResponse>
 }
 
-class TagNetworkRepository: TagRepository {
+final class TagNetworkRepository: TagRepository {
   private let networkService: NetworkService
 
   init(networkService: NetworkService) {

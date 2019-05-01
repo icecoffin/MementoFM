@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ArtistDataSource: NSObject {
+final class ArtistDataSource: NSObject {
   private let viewModel: ArtistViewModelProtocol
   let sectionDataSources: [ArtistSectionDataSource]
 

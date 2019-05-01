@@ -12,7 +12,7 @@ protocol MainFlowCoordinatorDelegate: class {
   func mainFlowCoordinatorDidChangeUsername(_ coordinator: MainFlowCoordinator)
 }
 
-class MainFlowCoordinator: Coordinator {
+final class MainFlowCoordinator: Coordinator {
   var childCoordinators: [Coordinator] = []
   var onDidFinish: (() -> Void)?
 

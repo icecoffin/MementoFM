@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TagsCoordinator: NSObject, NavigationFlowCoordinator, ArtistsByTagPresenter {
+final class TagsCoordinator: NSObject, NavigationFlowCoordinator, ArtistsByTagPresenter {
   var childCoordinators: [Coordinator] = []
   var onDidFinish: (() -> Void)?
 

@@ -24,7 +24,7 @@ extension TrackServiceProtocol {
   }
 }
 
-class TrackService: TrackServiceProtocol {
+final class TrackService: TrackServiceProtocol {
   private let persistentStore: PersistentStore
   private let repository: TrackRepository
 

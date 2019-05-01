@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SettingCellViewModel {
+final class SettingCellViewModel {
   private let configuration: SettingConfiguration
 
   init(configuration: SettingConfiguration) {

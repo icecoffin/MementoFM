@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 import Mapper
 
-class LastFMNetworkOperation<T: Mappable>: AsynchronousOperation {
+final class LastFMNetworkOperation<T: Mappable>: AsynchronousOperation {
   typealias CompletionHandler = (Result<T>) -> Void
 
   private let url: URLConvertible

@@ -14,7 +14,7 @@ protocol SettingsViewModelDelegate: class {
   func settingsViewModelDidRequestOpenAbout(_ viewModel: SettingsViewModel)
 }
 
-class SettingsViewModel {
+final class SettingsViewModel {
   private lazy var cellViewModels: [SettingCellViewModel] = self.createCellViewModels()
   weak var delegate: SettingsViewModelDelegate?
 

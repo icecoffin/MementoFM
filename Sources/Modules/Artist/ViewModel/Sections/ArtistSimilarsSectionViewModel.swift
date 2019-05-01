@@ -29,7 +29,7 @@ protocol ArtistSimilarsSectionViewModelDelegate: class {
                                       didSelectArtist artist: Artist)
 }
 
-class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtocol {
+final class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtocol {
   typealias Dependencies = HasArtistService
 
   private var tabViewModels: [ArtistSimilarsSectionViewModelProtocol] = []

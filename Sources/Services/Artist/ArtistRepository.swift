@@ -11,7 +11,7 @@ protocol ArtistRepository: class {
   func getSimilarArtists(for artist: Artist, limit: Int) -> Promise<SimilarArtistListResponse>
 }
 
-class ArtistNetworkRepository: ArtistRepository {
+final class ArtistNetworkRepository: ArtistRepository {
   private let networkService: NetworkService
 
   init(networkService: NetworkService) {

@@ -13,7 +13,7 @@ protocol ArtistListCoordinatorConfiguration {
   func backButtonItem(for coordinator: NavigationFlowCoordinator) -> UIBarButtonItem?
 }
 
-class LibraryCoordinatorConfiguration: ArtistListCoordinatorConfiguration {
+final class LibraryCoordinatorConfiguration: ArtistListCoordinatorConfiguration {
   var shouldStartAnimated: Bool {
     return false
   }
@@ -23,7 +23,7 @@ class LibraryCoordinatorConfiguration: ArtistListCoordinatorConfiguration {
   }
 }
 
-class ArtistsByTagCoordinatorConfiguration: ArtistListCoordinatorConfiguration {
+final class ArtistsByTagCoordinatorConfiguration: ArtistListCoordinatorConfiguration {
   var shouldStartAnimated: Bool {
     return true
   }
@@ -33,7 +33,7 @@ class ArtistsByTagCoordinatorConfiguration: ArtistListCoordinatorConfiguration {
   }
 }
 
-class ArtistListCoordinator: NSObject, NavigationFlowCoordinator {
+final class ArtistListCoordinator: NSObject, NavigationFlowCoordinator {
   var childCoordinators: [Coordinator] = []
   var onDidFinish: (() -> Void)?
 

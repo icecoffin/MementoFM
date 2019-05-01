@@ -13,7 +13,7 @@ protocol IgnoredTagsViewModelDelegate: class {
   func ignoredTagsViewModelDidSaveChanges(_ viewModel: IgnoredTagsViewModel)
 }
 
-class IgnoredTagsViewModel {
+final class IgnoredTagsViewModel {
   typealias Dependencies = HasIgnoredTagService & HasArtistService
 
   private let dependencies: Dependencies

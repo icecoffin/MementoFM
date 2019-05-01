@@ -13,7 +13,7 @@ protocol SimilarsSectionTabViewModelDelegate: class {
                                    didSelectArtist artist: Artist)
 }
 
-class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol {
+final class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol {
   typealias Dependencies = HasArtistService
 
   private let artist: Artist

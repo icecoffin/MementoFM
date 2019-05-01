@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 
-class SimilarArtistCell: UITableViewCell {
+final class SimilarArtistCell: UITableViewCell {
   private let outerStackView = UIStackView()
   private let innerStackView = UIStackView()
 

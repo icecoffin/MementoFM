@@ -13,7 +13,7 @@ protocol UserRepository: class {
   func checkUserExists(withUsername username: String) -> Promise<EmptyResponse>
 }
 
-class UserNetworkRepository: UserRepository {
+final class UserNetworkRepository: UserRepository {
   private let networkService: NetworkService
 
   init(networkService: NetworkService) {

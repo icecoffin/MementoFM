@@ -20,7 +20,7 @@ extension TagServiceProtocol {
   }
 }
 
-class TagService: TagServiceProtocol {
+final class TagService: TagServiceProtocol {
   private let persistentStore: PersistentStore
   private let repository: TagRepository
 

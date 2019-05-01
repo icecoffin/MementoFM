@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmMappedCollection<Element: TransientEntity>: PersistentMappedCollection {
+final class RealmMappedCollection<Element: TransientEntity>: PersistentMappedCollection {
   typealias Transform = (Element.PersistentType) -> Element
 
   // MARK: - Private properties

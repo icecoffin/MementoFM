@@ -13,7 +13,7 @@ protocol ArtistSimilarsSectionHeaderViewDelegate: class {
                                        didSelectSegmentWithIndex index: Int)
 }
 
-class ArtistSimilarsSectionHeaderView: UITableViewHeaderFooterView {
+final class ArtistSimilarsSectionHeaderView: UITableViewHeaderFooterView {
   private let titleLabel = UILabel()
   private let segmentedControl = UISegmentedControl(items: ["Local".unlocalized, "Last.fm".unlocalized])
 

@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class ArtistsByTagViewModel: ArtistListViewModel {
+final class ArtistsByTagViewModel: ArtistListViewModel {
   typealias Dependencies = HasArtistService
 
   private let tagName: String

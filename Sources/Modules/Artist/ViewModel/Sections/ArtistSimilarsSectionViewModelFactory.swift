@@ -11,7 +11,7 @@ protocol ArtistSimilarsSectionTabViewModelFactoryProtocol {
                          delegate: SimilarsSectionTabViewModelDelegate) -> [ArtistSimilarsSectionViewModelProtocol]
 }
 
-class ArtistSimilarsSectionTabViewModelFactory: ArtistSimilarsSectionTabViewModelFactoryProtocol {
+final class ArtistSimilarsSectionTabViewModelFactory: ArtistSimilarsSectionTabViewModelFactoryProtocol {
   func makeTabViewModels(for artist: Artist,
                          dependencies: ArtistSimilarsSectionViewModel.Dependencies,
                          delegate: SimilarsSectionTabViewModelDelegate) -> [ArtistSimilarsSectionViewModelProtocol] {

@@ -21,7 +21,7 @@ protocol ArtistViewModelProtocol: class {
   var sectionDataSources: [ArtistSectionDataSource] { get }
 }
 
-class ArtistViewModel: ArtistViewModelProtocol {
+final class ArtistViewModel: ArtistViewModelProtocol {
   typealias Dependencies = HasArtistService
 
   private let artist: Artist

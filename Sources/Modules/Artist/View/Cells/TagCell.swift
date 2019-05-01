@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TagCell: UICollectionViewCell {
+final class TagCell: UICollectionViewCell {
   private struct Constants {
     static let containerViewCornerRadius: CGFloat = 6
     static let textLabelLeadingTrailingOffset: CGFloat = 8

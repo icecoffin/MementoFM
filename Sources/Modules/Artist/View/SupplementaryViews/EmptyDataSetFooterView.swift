@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EmptyDataSetFooterView: UITableViewHeaderFooterView {
+final class EmptyDataSetFooterView: UITableViewHeaderFooterView {
   let messageLabel = UILabel()
 
   override init(reuseIdentifier: String?) {

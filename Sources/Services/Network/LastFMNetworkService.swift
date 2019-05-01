@@ -11,7 +11,7 @@ import Alamofire
 import PromiseKit
 import Mapper
 
-class LastFMNetworkService: NetworkService {
+final class LastFMNetworkService: NetworkService {
   let baseURL: URL
   let queue = OperationQueue()
 

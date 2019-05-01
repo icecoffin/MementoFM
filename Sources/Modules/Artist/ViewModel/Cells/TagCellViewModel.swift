@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TagCellViewModel {
+final class TagCellViewModel {
   private let tag: Tag
 
   init(tag: Tag) {

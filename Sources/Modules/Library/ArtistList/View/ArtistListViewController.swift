@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import TPKeyboardAvoiding
 
-class ArtistListViewController: UIViewController {
+final class ArtistListViewController: UIViewController {
   private struct Constants {
     static let estimatedRowHeight: CGFloat = 60
   }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoadingFooterView: UITableViewHeaderFooterView {
+final class LoadingFooterView: UITableViewHeaderFooterView {
   private let activityIndicator = UIActivityIndicatorView(style: .gray)
 
   override init(reuseIdentifier: String?) {

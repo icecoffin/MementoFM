@@ -19,7 +19,7 @@ protocol UserServiceProtocol: class {
   func checkUserExists(withUsername username: String) -> Promise<EmptyResponse>
 }
 
-class UserService: UserServiceProtocol {
+final class UserService: UserServiceProtocol {
   private let persistentStore: PersistentStore
   private let repository: UserRepository
   private let userDataStorage: UserDataStoring

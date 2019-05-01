@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BlockBarButtonItem: UIBarButtonItem {
+final class BlockBarButtonItem: UIBarButtonItem {
   private let actionHandler: (() -> Void)
 
   init(image: UIImage?, style: UIBarButtonItem.Style, actionHandler: @escaping (() -> Void)) {

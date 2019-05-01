@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ArtistViewController: UIViewController {
+final class ArtistViewController: UIViewController {
   private let dataSource: ArtistDataSource
 
   private let tableView = UITableView()

@@ -13,7 +13,7 @@ protocol TagsViewModelDelegate: class {
   func tagsViewModel(_ viewModel: TagsViewModel, didSelectTagWithName name: String)
 }
 
-class TagsViewModel {
+final class TagsViewModel {
   typealias Dependencies = HasTagService
 
   private let dependencies: Dependencies

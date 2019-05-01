@@ -50,7 +50,7 @@ extension ArtistServiceProtocol {
   }
 }
 
-class ArtistService: ArtistServiceProtocol {
+final class ArtistService: ArtistServiceProtocol {
   private let persistentStore: PersistentStore
   private let repository: ArtistRepository
 

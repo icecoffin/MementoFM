@@ -16,7 +16,7 @@ protocol TrackRepository: class {
                            limit: Int) -> Promise<RecentTracksPageResponse>
 }
 
-class TrackNetworkRepository: TrackRepository {
+final class TrackNetworkRepository: TrackRepository {
   private let networkService: NetworkService
 
   init(networkService: NetworkService) {

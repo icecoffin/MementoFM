@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Kingfisher
 
-class ArtistCell: UITableViewCell {
+final class ArtistCell: UITableViewCell {
   private let photoImageView = UIImageView()
   private let nameLabel = UILabel()
   private let playcountLabel = UILabel()

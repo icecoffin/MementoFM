@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IgnoredTagsNavigationRightView: UIView {
+final class IgnoredTagsNavigationRightView: UIView {
   private let buttonSpacing: CGFloat = 12
 
   private let addButton = UIButton(type: .system)

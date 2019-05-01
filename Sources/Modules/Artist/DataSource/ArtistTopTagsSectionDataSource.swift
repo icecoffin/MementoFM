@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ArtistTopTagsSectionDataSource: ArtistSectionDataSource {
+final class ArtistTopTagsSectionDataSource: ArtistSectionDataSource {
   private let viewModel: ArtistTopTagsSectionViewModel
 
   var onDidUpdateData: (() -> Void)?

@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import PromiseKit
 
-class RealmService: PersistentStore {
+final class RealmService: PersistentStore {
   private let mainQueueRealm: Realm
   private let getBackgroundQueueRealm: () -> Realm
 

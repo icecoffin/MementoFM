@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SyncViewController: UIViewController {
+final class SyncViewController: UIViewController {
   private let viewModel: SyncViewModel
 
   private let progressView = SyncProgressView()

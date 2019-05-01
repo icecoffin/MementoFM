@@ -27,7 +27,7 @@ extension IgnoredTagServiceProtocol {
   }
 }
 
-class IgnoredTagService: IgnoredTagServiceProtocol {
+final class IgnoredTagService: IgnoredTagServiceProtocol {
   private let persistentStore: PersistentStore
 
   init(persistentStore: PersistentStore) {

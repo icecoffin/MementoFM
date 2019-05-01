@@ -30,7 +30,7 @@ protocol LibraryUpdaterProtocol: class {
   func cancelPendingRequests()
 }
 
-class LibraryUpdater: LibraryUpdaterProtocol {
+final class LibraryUpdater: LibraryUpdaterProtocol {
   private let userService: UserServiceProtocol
   private let artistService: ArtistServiceProtocol
   private let tagService: TagServiceProtocol

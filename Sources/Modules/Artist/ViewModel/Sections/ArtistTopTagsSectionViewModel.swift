@@ -12,7 +12,7 @@ protocol ArtistTopTagsSectionViewModelDelegate: class {
   func artistTopTagsSectionViewModel(_ viewModel: ArtistTopTagsSectionViewModel, didSelectTagWithName name: String)
 }
 
-class ArtistTopTagsSectionViewModel {
+final class ArtistTopTagsSectionViewModel {
   private let artist: Artist
   private let cellViewModels: [TagCellViewModel]
 

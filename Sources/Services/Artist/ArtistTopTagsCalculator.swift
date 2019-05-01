@@ -12,7 +12,7 @@ protocol ArtistTopTagsCalculating: class {
   func calculateTopTags(for artist: Artist) -> Artist
 }
 
-class ArtistTopTagsCalculator: ArtistTopTagsCalculating {
+final class ArtistTopTagsCalculator: ArtistTopTagsCalculating {
   private let ignoredTags: [IgnoredTag]
   private let numberOfTopTags: Int
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AboutViewController: UIViewController {
+final class AboutViewController: UIViewController {
   private let textView = UITextView()
 
   override func viewDidLoad() {

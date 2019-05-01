@@ -16,7 +16,7 @@ protocol SimilarArtistCellViewModelProtocol {
   var tags: NSAttributedString { get }
 }
 
-class SimilarArtistCellViewModel: SimilarArtistCellViewModelProtocol {
+final class SimilarArtistCellViewModel: SimilarArtistCellViewModelProtocol {
   let artist: Artist
   private let commonTags: [String]
 

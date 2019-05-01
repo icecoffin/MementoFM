@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ArtistTopTagsSectionHeaderView: UITableViewHeaderFooterView {
+final class ArtistTopTagsSectionHeaderView: UITableViewHeaderFooterView {
   private let titleLabel = UILabel()
 
   override init(reuseIdentifier: String?) {

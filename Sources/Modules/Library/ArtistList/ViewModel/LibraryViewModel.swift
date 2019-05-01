@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import PromiseKit
 
-class LibraryViewModel: ArtistListViewModel {
+final class LibraryViewModel: ArtistListViewModel {
   typealias Dependencies = HasLibraryUpdater & HasArtistService & HasUserService
 
   private let dependencies: Dependencies

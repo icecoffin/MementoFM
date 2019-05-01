@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EnterUsernameViewController: UIViewController {
+final class EnterUsernameViewController: UIViewController {
   private let stackView = UIStackView()
   private let currentUsernameLabel = UILabel()
   private let usernameTextField = UITextField()

@@ -12,7 +12,7 @@ protocol SettingsCoordinatorDelegate: class {
   func settingsCoordinatorDidChangeUsername(_ coordinator: SettingsCoordinator)
 }
 
-class SettingsCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter, SyncPresenter {
+final class SettingsCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter, SyncPresenter {
   var childCoordinators: [Coordinator] = []
   var onDidFinish: (() -> Void)?
 

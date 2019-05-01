@@ -17,7 +17,7 @@ protocol UserDataStoring: class {
   func reset()
 }
 
-class UserDataStorage: UserDataStoring {
+final class UserDataStorage: UserDataStoring {
   private struct UserDefaultsKeys {
     static let username = "username"
     static let lastUpdateTimestamp = "lastUpdateTimestamp"

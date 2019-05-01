@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class LoadingView: UIView {
+final class LoadingView: UIView {
   private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
   private let activityIndicator = UIActivityIndicatorView(style: .white)
   private let messageLabel = UILabel()

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingCell: UITableViewCell {
+final class SettingCell: UITableViewCell {
   private let containerView = UIView()
   private let titleLabel = UILabel()
 

@@ -8,7 +8,7 @@
 
 import RealmSwift
 
-class RealmFactory {
+final class RealmFactory {
   static func realm() -> Realm {
     do {
       let realm = try Realm()

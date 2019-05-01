@@ -12,7 +12,7 @@ protocol OnboardingCoordinatorDelegate: class {
   func onboardingCoordinatorDidFinish(_ coordinator: OnboardingCoordinator)
 }
 
-class OnboardingCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter, SyncPresenter {
+final class OnboardingCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter, SyncPresenter {
   var childCoordinators: [Coordinator] = []
   var onDidFinish: (() -> Void)?
 

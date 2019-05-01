@@ -12,7 +12,7 @@ protocol SyncViewModelDelegate: class {
   func syncViewModelDidFinishLoading(_ viewModel: SyncViewModel)
 }
 
-class SyncViewModel {
+final class SyncViewModel {
   typealias Dependencies = HasLibraryUpdater
 
   private let dependencies: Dependencies

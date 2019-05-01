@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LibraryArtistCellViewModel {
+final class LibraryArtistCellViewModel {
   private let artist: Artist
 
   init(artist: Artist) {

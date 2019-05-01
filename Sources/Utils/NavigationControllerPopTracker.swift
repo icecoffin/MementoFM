@@ -17,7 +17,7 @@ struct NavigationControllerPopObserverContainer {
   weak var value: NavigationControllerPopObserver?
 }
 
-class NavigationControllerPopTracker: NSObject {
+final class NavigationControllerPopTracker: NSObject {
   private let navigationController: NavigationController
   private var viewControllerToObservers: [UIViewController: NavigationControllerPopObserverContainer] = [:]
 

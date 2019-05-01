@@ -12,7 +12,7 @@ protocol ArtistListViewModelFactory {
   func makeViewModel() -> ArtistListViewModel
 }
 
-class LibraryViewModelFactory: ArtistListViewModelFactory {
+final class LibraryViewModelFactory: ArtistListViewModelFactory {
   private let dependencies: LibraryViewModel.Dependencies
 
   init(dependencies: LibraryViewModel.Dependencies) {
@@ -24,7 +24,7 @@ class LibraryViewModelFactory: ArtistListViewModelFactory {
   }
 }
 
-class ArtistsByTagViewModelFactory: ArtistListViewModelFactory {
+final class ArtistsByTagViewModelFactory: ArtistListViewModelFactory {
   private let dependencies: ArtistsByTagViewModel.Dependencies
   private let tagName: String
 

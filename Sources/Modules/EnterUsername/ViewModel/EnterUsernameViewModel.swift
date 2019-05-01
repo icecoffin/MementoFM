@@ -17,7 +17,7 @@ protocol EnterUsernameViewModelDelegate: class {
   func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel)
 }
 
-class EnterUsernameViewModel {
+final class EnterUsernameViewModel {
   typealias Dependencies = HasUserService
 
   private let dependencies: Dependencies

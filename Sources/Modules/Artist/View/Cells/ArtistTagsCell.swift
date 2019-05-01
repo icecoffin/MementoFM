@@ -18,7 +18,7 @@ protocol ArtistTagsCellDelegate: class {
   func artistTagsCell(_ cell: ArtistTagsCell, didSelectTagAt indexPath: IndexPath)
 }
 
-class ArtistTagsCell: UITableViewCell {
+final class ArtistTagsCell: UITableViewCell {
   private let collectionView: UICollectionView
   private let prototypeCell = TagCell()
 

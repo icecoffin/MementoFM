@@ -13,7 +13,7 @@ protocol RecentTracksProcessing {
   func process(tracks: [Track], using persistentStore: PersistentStore) -> Promise<Void>
 }
 
-class RecentTracksProcessor: RecentTracksProcessing {
+final class RecentTracksProcessor: RecentTracksProcessing {
   func process(tracks: [Track], using persistentStore: PersistentStore) -> Promise<Void> {
     var artistNamesWithPlayCounts = [Artist: Int]()
 

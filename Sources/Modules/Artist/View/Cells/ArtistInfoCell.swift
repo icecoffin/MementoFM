@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 
-class ArtistInfoCell: UITableViewCell {
+final class ArtistInfoCell: UITableViewCell {
   private let photoImageView = UIImageView()
 
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

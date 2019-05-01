@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EmptyDataSetView: UIView {
+final class EmptyDataSetView: UIView {
   private let text: String
   private let textLabel = UILabel()
 

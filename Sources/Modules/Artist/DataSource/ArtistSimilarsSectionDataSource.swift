@@ -13,7 +13,7 @@ enum SimilarArtistsSource: Int {
   case lastFM
 }
 
-class ArtistSimilarsSectionDataSource: ArtistSectionDataSource {
+final class ArtistSimilarsSectionDataSource: ArtistSectionDataSource {
   private let viewModel: ArtistSimilarsSectionViewModel
   private let prototypeCell = SimilarArtistCell()
 

@@ -9,7 +9,7 @@
 import UIKit
 import TPKeyboardAvoiding
 
-class IgnoredTagsViewController: UIViewController {
+final class IgnoredTagsViewController: UIViewController {
   private let viewModel: IgnoredTagsViewModel
 
   private let tableView = TPKeyboardAvoidingTableView()

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ArtistCoordinator: NavigationFlowCoordinator {
+final class ArtistCoordinator: NavigationFlowCoordinator {
   let navigationController: NavigationController
   var childCoordinators: [Coordinator] = []
   var onDidFinish: (() -> Void)?

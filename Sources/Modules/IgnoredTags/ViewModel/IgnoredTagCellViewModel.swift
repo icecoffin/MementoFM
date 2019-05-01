@@ -8,7 +8,7 @@
 
 import Foundation
 
-class IgnoredTagCellViewModel {
+final class IgnoredTagCellViewModel {
   private let tag: IgnoredTag
 
   var onTextChange: ((String) -> Void)?

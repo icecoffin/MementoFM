@@ -17,7 +17,7 @@ protocol SimilarArtistsRequestStrategy {
   func getSimilarArtists(for artist: Artist) -> Promise<[Artist]>
 }
 
-class SimilarArtistsLocalRequestStrategy: SimilarArtistsRequestStrategy {
+final class SimilarArtistsLocalRequestStrategy: SimilarArtistsRequestStrategy {
   private let dependencies: Dependencies
 
   var minNumberOfIntersectingTags: Int {
@@ -34,7 +34,7 @@ class SimilarArtistsLocalRequestStrategy: SimilarArtistsRequestStrategy {
   }
 }
 
-class SimilarArtistsRemoteRequestStrategy: SimilarArtistsRequestStrategy {
+final class SimilarArtistsRemoteRequestStrategy: SimilarArtistsRequestStrategy {
   private let dependencies: Dependencies
 
   var minNumberOfIntersectingTags: Int {

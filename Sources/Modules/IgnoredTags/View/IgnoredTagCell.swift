@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IgnoredTagCell: UITableViewCell {
+final class IgnoredTagCell: UITableViewCell {
   private let textField = UITextField()
   private var viewModel: IgnoredTagCellViewModel?
 

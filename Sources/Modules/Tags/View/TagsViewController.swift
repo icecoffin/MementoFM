@@ -10,7 +10,7 @@ import UIKit
 import UICollectionViewLeftAlignedLayout
 import TPKeyboardAvoiding
 
-class TagsViewController: UIViewController {
+final class TagsViewController: UIViewController {
   private let collectionView: TPKeyboardAvoidingCollectionView
   private let emptyDataSetView = EmptyDataSetView(text: "No tags found".unlocalized)
   private let searchController: UISearchController
