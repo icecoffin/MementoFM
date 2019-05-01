@@ -32,9 +32,11 @@ class StubPersistentStore: PersistentStore {
 
   var customDeletePromise: Promise<Void> = Promise { seal in seal.fulfill(()) }
   var didCallDelete = false
+  var deletedObjectsTypeNames: [String] = []
   func deleteObjects<T: TransientEntity>(ofType type: T.Type) -> Promise<Void>
     where T.PersistentType.TransientType == T {
       didCallDelete = true
+      deletedObjectsTypeNames.append(String(describing: type))
       return customDeletePromise
   }
 

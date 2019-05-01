@@ -11,18 +11,10 @@ import Foundation
 import PromiseKit
 
 class UserStubRepository: UserRepository {
-  let shouldFinishWithSuccess: Bool
-
-  init(shouldFinishWithSuccess: Bool) {
-    self.shouldFinishWithSuccess = shouldFinishWithSuccess
-  }
-
+  var checkedUsername: String?
   func checkUserExists(withUsername username: String) -> Promise<EmptyResponse> {
-    if shouldFinishWithSuccess {
-      return .value(EmptyResponse())
-    } else {
-      let error = NSError(domain: "MementoFM", code: 6, userInfo: nil)
-      return Promise(error: error)
-    }
+    checkedUsername = username
+
+    return .value(EmptyResponse())
   }
 }

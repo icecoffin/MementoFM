@@ -12,113 +12,89 @@ import Nimble
 import PromiseKit
 
 class UserServiceTests: XCTestCase {
-  var realmService: RealmService!
+  var userRepository: UserStubRepository!
+  var userDataStorage: StubUserDataStorage!
+  var persistentStore: StubPersistentStore!
+  var userService: UserService!
 
   override func setUp() {
     super.setUp()
 
-    realmService = RealmService(getRealm: {
-      return RealmFactory.inMemoryRealm()
-    })
+    userRepository = UserStubRepository()
+    userDataStorage = StubUserDataStorage()
+    persistentStore = StubPersistentStore()
+    userService = UserService(persistentStore: persistentStore, repository: userRepository, userDataStorage: userDataStorage)
   }
 
-  override func tearDown() {
-    realmService = nil
-    super.tearDown()
-  }
-
-  func testUsername() {
-    let userRepository = UserStubRepository(shouldFinishWithSuccess: true)
-    let userDataStorage = StubUserDataStorage()
-    let userService = UserService(persistentStore: realmService, repository: userRepository, userDataStorage: userDataStorage)
-
-    userService.username = "test"
-    expect(userDataStorage.didSetUsername).to(beTrue())
+  func test_username_readsFromUserDataStorage() {
     _ = userService.username
-    expect(userDataStorage.didGetUsername).to(beTrue())
+
+    expect(self.userDataStorage.didGetUsername) == true
   }
 
-  func testLastUpdateTimestamp() {
-    let userRepository = UserStubRepository(shouldFinishWithSuccess: true)
-    let userDataStorage = StubUserDataStorage()
-    let userService = UserService(persistentStore: realmService, repository: userRepository, userDataStorage: userDataStorage)
+  func test_setUsername_writesToUserDataStorage() {
+    userService.username = "test"
 
-    userService.lastUpdateTimestamp = 100
-    expect(userDataStorage.didSetLastUpdateTimestamp).to(beTrue())
+    expect(self.userDataStorage.didSetUsername) == true
+  }
+
+  func test_lastUpdateTimestamp_readsFromUserDataStorage() {
     _ = userService.lastUpdateTimestamp
-    expect(userDataStorage.didGetLastUpdateTimestamp).to(beTrue())
+
+    expect(self.userDataStorage.didGetLastUpdateTimestamp) == true
   }
 
-  func testDidReceiveInitialCollection() {
-    let userRepository = UserStubRepository(shouldFinishWithSuccess: true)
-    let userDataStorage = StubUserDataStorage()
-    let userService = UserService(persistentStore: realmService, repository: userRepository, userDataStorage: userDataStorage)
+  func test_setLastUpdateTimestamp_writesToUserDataStorage() {
+    userService.lastUpdateTimestamp = 100
 
-    userService.didReceiveInitialCollection = true
-    expect(userDataStorage.didSetDidReceiveInitialCollection).to(beTrue())
+    expect(self.userDataStorage.didSetLastUpdateTimestamp) == true
+  }
+
+  func test_didReceiveInitialCollection_readsFromUserDataStorage() {
     _ = userService.didReceiveInitialCollection
-    expect(userDataStorage.didGetDidReceiveInitialCollection).to(beTrue())
+
+    expect(self.userDataStorage.didGetDidReceiveInitialCollection) == true
   }
 
-  func testDidFinishOnboarding() {
-    let userRepository = UserStubRepository(shouldFinishWithSuccess: true)
-    let userDataStorage = StubUserDataStorage()
-    let userService = UserService(persistentStore: realmService, repository: userRepository, userDataStorage: userDataStorage)
+  func test_didReceiveInitialCollection_writesToUserDataStorage() {
+    userService.didReceiveInitialCollection = true
 
-    userService.didFinishOnboarding = true
-    expect(userDataStorage.didSetDidFinishOnboarding).to(beTrue())
+    expect(self.userDataStorage.didSetDidReceiveInitialCollection) == true
+  }
+
+  func test_didFinishOnboarding_readsFromUserDataStorage() {
     _ = userService.didFinishOnboarding
-    expect(userDataStorage.didGetDidFinishOnboarding).to(beTrue())
+
+    expect(self.userDataStorage.didGetDidFinishOnboarding) == true
   }
 
-  func testClearingUserData() {
-    let userRepository = UserStubRepository(shouldFinishWithSuccess: true)
-    let userDataStorage = StubUserDataStorage()
-    let userService = UserService(persistentStore: realmService, repository: userRepository, userDataStorage: userDataStorage)
+  func test_didFinishOnboarding_writesToUserDataStorage() {
+    userService.didFinishOnboarding = true
 
-    waitUntil { done in
-      let artists: [Artist] = ModelFactory.generateArtists(inAmount: 5).map { artist in
-        let tags = ModelFactory.generateTags(inAmount: 5, for: artist.name)
-        return artist.updatingTags(to: tags, needsTagsUpdate: artist.needsTagsUpdate)
-      }
-      firstly {
-        self.realmService.save(artists)
-      }.then {
-        userService.clearUserData()
-      }.done { _ in
-        expect(self.realmService.objects(Artist.self)).to(beEmpty())
-        expect(self.realmService.objects(Tag.self)).to(beEmpty())
-        expect(userDataStorage.didCallReset).to(beTrue())
-        done()
-      }.noError()
-    }
+    expect(self.userDataStorage.didSetDidFinishOnboarding) == true
   }
 
-  func testCheckingUserExistsWithSuccess() {
-    let userRepository = UserStubRepository(shouldFinishWithSuccess: true)
-    let userDataStorage = StubUserDataStorage()
-    let userService = UserService(persistentStore: realmService, repository: userRepository, userDataStorage: userDataStorage)
+  func test_clearUserData_deletesArtists() {
+    _ = userService.clearUserData()
 
-    waitUntil { done in
-      userService.checkUserExists(withUsername: "test").done { _ in
-        done()
-      }.catch { _ in
-        fail()
-      }
-    }
+    expect(self.persistentStore.deletedObjectsTypeNames).to(contain(String(describing: Artist.self)))
   }
 
-  func testCheckingUserExistsWithFailure() {
-    let userRepository = UserStubRepository(shouldFinishWithSuccess: false)
-    let userDataStorage = StubUserDataStorage()
-    let userService = UserService(persistentStore: realmService, repository: userRepository, userDataStorage: userDataStorage)
+  func test_clearUserData_deletesTags() {
+    _ = userService.clearUserData()
 
-    waitUntil { done in
-      userService.checkUserExists(withUsername: "test").done { _ in
-        fail()
-      }.catch { _ in
-        done()
-      }
-    }
+    expect(self.persistentStore.deletedObjectsTypeNames).to(contain(String(describing: Tag.self)))
+  }
+
+  func test_clearUserData_resetsUserStorage() {
+    _ = userService.clearUserData()
+
+    expect(self.userDataStorage.didCallReset) == true
+  }
+
+  func test_checkingUserExists_callsUserRepository() {
+    _ = userService.checkUserExists(withUsername: "test")
+
+    expect(self.userRepository.checkedUsername) == "test"
   }
 }
