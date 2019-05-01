@@ -12,58 +12,50 @@ import Nimble
 import PromiseKit
 
 class RecentTracksProcessorTests: XCTestCase {
-  var realmService: RealmService!
+  var persistentStore: StubPersistentStore!
 
   override func setUp() {
     super.setUp()
-    realmService = RealmService {
-      return RealmFactory.inMemoryRealm()
-    }
+
+    persistentStore = StubPersistentStore()
   }
 
-  override func tearDown() {
-    realmService = nil
-    super.tearDown()
+  func test_processTracks_savesToPersistentStore() {
+    let artist1 = ModelFactory.generateArtist(index: 1)
+    let artist2 = ModelFactory.generateArtist(index: 2)
+    let tracks = [Track(artist: artist1), Track(artist: artist1), Track(artist: artist2)]
+
+    let recentTracksProcessor = RecentTracksProcessor()
+    recentTracksProcessor.process(tracks: tracks, using: persistentStore).noError()
+
+    expect(self.persistentStore.saveParameters?.objects.count) == 2
+    expect(self.persistentStore.saveParameters?.update) == true
   }
 
-  func test_processTracks_updatesArtistsInDatabase() {
-    let artist1 = Artist(name: "Artist1",
-                         playcount: 1,
-                         urlString: "",
-                         imageURLString: nil,
-                         needsTagsUpdate: false,
-                         tags: [],
-                         topTags: [])
-    let artist2 = Artist(name: "Artist2",
-                         playcount: 1,
-                         urlString: "",
-                         imageURLString: nil,
-                         needsTagsUpdate: false,
-                         tags: [],
-                         topTags: [])
-    let artist3 = Artist(name: "Artist3",
-                         playcount: 0,
-                         urlString: "",
-                         imageURLString: nil,
-                         needsTagsUpdate: false,
-                         tags: [],
-                         topTags: [])
-    let artists = [artist1, artist2]
+  func test_processTracks_updatesPlaycount() {
+    let artist1 = ModelFactory.generateArtist(index: 1)
+    let artist2 = ModelFactory.generateArtist(index: 2)
+    let tracks = [Track(artist: artist1), Track(artist: artist1), Track(artist: artist2)]
 
-    let tracks = [Track(artist: artist1), Track(artist: artist1), Track(artist: artist3)]
+    let recentTracksProcessor = RecentTracksProcessor()
+    recentTracksProcessor.process(tracks: tracks, using: persistentStore).noError()
 
-    waitUntil { done in
-      self.realmService.save(artists).then { _ -> Promise<Void> in
-        let recentTracksProcessor = RecentTracksProcessor()
-        return recentTracksProcessor.process(tracks: tracks, using: self.realmService)
-      }.done { _ in
-        let artists = self.realmService.objects(Artist.self)
-        expect(artists.count).to(equal(3))
-        expect(artists[0].playcount).to(equal(3))
-        expect(artists[1].playcount).to(equal(1))
-        expect(artists[2].playcount).to(equal(1))
-        done()
-      }.noError()
-    }
+    let artists = (persistentStore.saveParameters?.objects as? [Artist])?.sorted { $0.name < $1.name }
+    let savedArtist1 = artists?[0]
+    let savedArtist2 = artists?[1]
+
+    expect(savedArtist1?.playcount) == 2
+    expect(savedArtist2?.playcount) == 1
+  }
+
+  func test_processTracks_requestsArtistsForKeysFromPersistentStore() {
+    let artist1 = ModelFactory.generateArtist(index: 1)
+    let artist2 = ModelFactory.generateArtist(index: 2)
+    let tracks = [Track(artist: artist1), Track(artist: artist1), Track(artist: artist2)]
+
+    let recentTracksProcessor = RecentTracksProcessor()
+    recentTracksProcessor.process(tracks: tracks, using: persistentStore).noError()
+
+    expect(self.persistentStore.objectPrimaryKeys.sorted()) == ["Artist1", "Artist2"]
   }
 }

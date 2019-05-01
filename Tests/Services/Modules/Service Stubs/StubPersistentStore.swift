@@ -50,10 +50,13 @@ class StubPersistentStore: PersistentStore {
   }
 
   var customObjectForKey: Any?
-  var objectPrimaryKey: String?
+  var objectPrimaryKeys: [String] = []
   func object<T: TransientEntity, K>(ofType type: T.Type, forPrimaryKey key: K) -> T?
     where T.PersistentType.TransientType == T {
-      objectPrimaryKey = key as? String
+      if let key = key as? String {
+        objectPrimaryKeys.append(key)
+      }
+
       guard let customObjectForKey = customObjectForKey else {
         return nil
       }
@@ -61,6 +64,7 @@ class StubPersistentStore: PersistentStore {
       guard let object = customObjectForKey as? T else {
         fatalError("customObject should be of type \(T.self)")
       }
+
       return object
   }
 }

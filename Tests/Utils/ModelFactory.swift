@@ -12,7 +12,7 @@ import Foundation
 class ModelFactory {
   class func generateArtist(index: Int = 1, needsTagsUpdate: Bool = false) -> Artist {
     return Artist(name: "Artist\(index)",
-                  playcount: index,
+                  playcount: 0,
                   urlString: "http://example.com/artist\(index)",
                   imageURLString: "http://example.com/artist\(index).jpg",
                   needsTagsUpdate: needsTagsUpdate,
