@@ -12,38 +12,32 @@ import Nimble
 import PromiseKit
 
 class TagServiceTests: XCTestCase {
-  var realmService: RealmService!
+  var persistentStore: StubPersistentStore!
 
   override func setUp() {
     super.setUp()
-    realmService = RealmService(getRealm: {
-      return RealmFactory.inMemoryRealm()
-    })
+
+    persistentStore = StubPersistentStore()
   }
 
-  override func tearDown() {
-    realmService = nil
-    super.tearDown()
-  }
-
-  func testGettingTopTagsForArtistsWithSuccess() {
+  func test_getTopTags_finishesWithSuccess() {
     let artistCount = 5
     let tagsPerArtist = 5
 
     let tagRepository = TagStubRepository(shouldFailWithError: false, tagProvider: { artist in
       ModelFactory.generateTags(inAmount: tagsPerArtist, for: artist)
     })
-    let tagService = TagService(persistentStore: realmService, repository: tagRepository)
+    let tagService = TagService(persistentStore: persistentStore, repository: tagRepository)
     let artists = ModelFactory.generateArtists(inAmount: artistCount)
 
     var progressCallCount = 0
     waitUntil { done in
       tagService.getTopTags(for: artists, progress: { progress in
         let expectedTags = ModelFactory.generateTags(inAmount: tagsPerArtist, for: progress.artist.name)
-        expect(progress.topTagsList.tags).to(equal(expectedTags))
+        expect(progress.topTagsList.tags) == expectedTags
         progressCallCount += 1
       }).done { _ in
-        expect(progressCallCount).to(equal(artists.count))
+        expect(progressCallCount) == artists.count
         done()
       }.catch { _ in
         fail()
@@ -51,24 +45,22 @@ class TagServiceTests: XCTestCase {
     }
   }
 
-  func testGettingTopTagsForArtistsWithError() {
-    let artistCount = 5
-
+  func test_getTopTags_failsWithError() {
     let tagRepository = TagStubRepository(shouldFailWithError: true, tagProvider: { _ in [] })
-    let tagService = TagService(persistentStore: realmService, repository: tagRepository)
-    let artists = ModelFactory.generateArtists(inAmount: artistCount)
+    let tagService = TagService(persistentStore: persistentStore, repository: tagRepository)
 
-    waitUntil { done in
-      tagService.getTopTags(for: artists).done { _ in
-        fail()
-      }.catch { error in
-        expect(error).toNot(beNil())
-        done()
-      }
+    var didReceiveError = false
+    let artists = ModelFactory.generateArtists(inAmount: 1)
+    tagService.getTopTags(for: artists).done { _ in
+      fail()
+    }.catch { _ in
+      didReceiveError = true
     }
+
+    expect(didReceiveError).toEventually(beTrue())
   }
 
-  func testGettingAllTopTags() {
+  func test_getAllTopTags_returnsTopTagsFromAllArtists() {
     let tags1 = ModelFactory.generateTags(inAmount: 10, for: "Artist1")
     let topTags1 = Array(tags1.prefix(5))
     let tags2 = ModelFactory.generateTags(inAmount: 10, for: "Artist2")
@@ -89,15 +81,12 @@ class TagServiceTests: XCTestCase {
                          tags: tags2,
                          topTags: topTags2)
 
-    let tagService = TagService(persistentStore: realmService, repository: TagEmptyStubRepository())
+    let tagService = TagService(persistentStore: persistentStore, repository: TagEmptyStubRepository())
 
-    waitUntil { done in
-      self.realmService.save([artist1, artist2]).done { _ in
-        let topTags = tagService.getAllTopTags()
-        let expectedTopTags = topTags1 + topTags2
-        expect(expectedTopTags).to(equal(topTags))
-        done()
-      }.noError()
-    }
+    persistentStore.customObjects = [artist1, artist2]
+
+    let topTags = tagService.getAllTopTags()
+    let expectedTopTags = topTags1 + topTags2
+    expect(topTags) == expectedTopTags
   }
 }
