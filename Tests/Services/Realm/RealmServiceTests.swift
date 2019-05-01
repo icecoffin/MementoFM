@@ -30,7 +30,7 @@ class RealmServiceTests: XCTestCase {
     super.tearDown()
   }
 
-  func testSavingSingleObject() {
+  func test_saveSingleObject_writesToRealm() {
     waitUntil { done in
       let ignoredTag = IgnoredTag(uuid: "uuid", name: "name")
       self.realmService.save(ignoredTag).done { _ in
@@ -42,7 +42,7 @@ class RealmServiceTests: XCTestCase {
     }
   }
 
-  func testSavingMultipleObject() {
+  func test_saveMultipleObjets_writesToRealm() {
     waitUntil { done in
       let ignoredTags = [IgnoredTag(uuid: "uuid1", name: "name1"),
                          IgnoredTag(uuid: "uuid2", name: "name2")]
@@ -54,7 +54,7 @@ class RealmServiceTests: XCTestCase {
     }
   }
 
-  func testDeletingObjects() {
+  func test_deleteObjects_deletesFromRealm() {
     waitUntil { done in
       let ignoredTags = [IgnoredTag(uuid: "uuid1", name: "name1"),
                          IgnoredTag(uuid: "uuid2", name: "name2")]
@@ -70,7 +70,7 @@ class RealmServiceTests: XCTestCase {
     }
   }
 
-  func testGettingObjects() {
+  func test_objects_returnsObjectsFromRealm() {
     waitUntil { done in
       let ignoredTags = [IgnoredTag(uuid: "uuid1", name: "name1"),
                          IgnoredTag(uuid: "uuid2", name: "name2")]
@@ -82,7 +82,7 @@ class RealmServiceTests: XCTestCase {
     }
   }
 
-  func testGettingObjectsFilteredByPredicate() {
+  func test_objects_returnsObjectsFromRealm_filteredByPredicate() {
     waitUntil { done in
       let ignoredTags = [IgnoredTag(uuid: "uuid1", name: "name1"),
                          IgnoredTag(uuid: "uuid2", name: "name2")]
@@ -95,7 +95,7 @@ class RealmServiceTests: XCTestCase {
     }
   }
 
-  func testGettingObjectForExistingPrimaryKey() {
+  func test_objectForPrimaryKey_returnsExistingObject() {
     waitUntil { done in
       let ignoredTag = IgnoredTag(uuid: "uuid", name: "name")
       self.realmService.save(ignoredTag).done { _ in
@@ -106,12 +106,12 @@ class RealmServiceTests: XCTestCase {
     }
   }
 
-  func testGettingObjectForMissingPrimaryKey() {
+  func test_objectForPrimaryKey_returnsNilForMissingKey() {
     let missingIgnoredTag = self.realmService.object(ofType: IgnoredTag.self, forPrimaryKey: "test")
     expect(missingIgnoredTag).to(beNil())
   }
 
-  func testCreatingMappedCollection() {
+  func test_mappedCollection_createsMappedCollectionWithCorrectParameters() {
     let predicate = NSPredicate(format: "name contains[cd] '1'")
     let sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
     let mappedCollection: AnyPersistentMappedCollection<IgnoredTag>
