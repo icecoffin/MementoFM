@@ -11,6 +11,8 @@ import PromiseKit
 @testable import MementoFM
 
 final class TestDispatcher: Dispatcher {
+  let queue: DispatchQueue = .main
+
   func dispatch(_ work: @escaping () -> Void) {
     work()
   }

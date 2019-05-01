@@ -10,6 +10,8 @@ import Foundation
 import PromiseKit
 
 protocol Dispatcher {
+  var queue: DispatchQueue { get }
+
   func dispatch(_ work: @escaping () -> Void)
   func dispatch<T>(_ work: @escaping () -> T) -> Guarantee<T>
 }
@@ -18,7 +20,7 @@ final class AsyncDispatcher: Dispatcher {
   static let main = AsyncDispatcher(queue: .main)
   static let global = AsyncDispatcher(queue: .global())
 
-  private let queue: DispatchQueue
+  let queue: DispatchQueue
 
   init(queue: DispatchQueue) {
     self.queue = queue

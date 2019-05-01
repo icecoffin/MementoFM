@@ -28,11 +28,13 @@ final class TagsViewModel {
     self.dependencies = dependencies
   }
 
-  func getTags(searchText: String? = nil) {
-    DispatchQueue.global().async(.promise) {
+  func getTags(searchText: String? = nil,
+               backgroundDispatcher: Dispatcher = AsyncDispatcher.global,
+               mainDispatcher: Dispatcher = AsyncDispatcher.main) {
+    backgroundDispatcher.dispatch {
       let allTopTags = self.dependencies.tagService.getAllTopTags()
       self.createCellViewModels(from: allTopTags, searchText: searchText)
-    }.done(on: DispatchQueue.main) {
+    }.done(on: mainDispatcher.queue) {
       self.onDidUpdateData?(self.filteredCellViewModels.isEmpty)
     }
   }

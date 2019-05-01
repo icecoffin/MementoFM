@@ -27,6 +27,7 @@ class TagsViewModelTests: XCTestCase {
     }
   }
 
+  var dispatcher: TestDispatcher!
   var tagService: StubTagService!
   var dependencies: Dependencies!
 
@@ -41,6 +42,7 @@ class TagsViewModelTests: XCTestCase {
   }
 
   override func setUp() {
+    dispatcher = TestDispatcher()
     tagService = StubTagService()
     dependencies = Dependencies(tagService: tagService)
   }
@@ -52,7 +54,7 @@ class TagsViewModelTests: XCTestCase {
       expectedIsEmpty = isEmpty
     }
 
-    viewModel.getTags()
+    viewModel.getTags(backgroundDispatcher: dispatcher, mainDispatcher: dispatcher)
 
     expect(expectedIsEmpty).toEventually(equal(true))
   }
@@ -66,7 +68,7 @@ class TagsViewModelTests: XCTestCase {
       expectedIsEmpty = isEmpty
     }
 
-    viewModel.getTags()
+    viewModel.getTags(backgroundDispatcher: dispatcher, mainDispatcher: dispatcher)
 
     expect(expectedIsEmpty).toEventually(equal(false))
   }
@@ -75,7 +77,9 @@ class TagsViewModelTests: XCTestCase {
     let tags = sampleTags()
     tagService.stubTopTags = tags
     let viewModel = TagsViewModel(dependencies: dependencies)
-    viewModel.getTags()
+
+    viewModel.getTags(backgroundDispatcher: dispatcher, mainDispatcher: dispatcher)
+
     var expectedNumberOfTags = 0
     viewModel.onDidUpdateData = { [unowned viewModel] _ in
       expectedNumberOfTags = viewModel.numberOfTags
@@ -93,7 +97,7 @@ class TagsViewModelTests: XCTestCase {
       expectedCellViewModel = viewModel.cellViewModel(at: indexPath)
     }
 
-    viewModel.getTags()
+    viewModel.getTags(backgroundDispatcher: dispatcher, mainDispatcher: dispatcher)
 
     expect(expectedCellViewModel?.name).toEventually(equal("Tag2"))
   }
@@ -109,7 +113,7 @@ class TagsViewModelTests: XCTestCase {
       viewModel.selectTag(at: indexPath)
     }
 
-    viewModel.getTags()
+    viewModel.getTags(backgroundDispatcher: dispatcher, mainDispatcher: dispatcher)
 
     expect(delegate.selectedTagName).toEventually(equal("Tag2"))
   }
@@ -133,7 +137,7 @@ class TagsViewModelTests: XCTestCase {
     }
 
     viewModel.onDidUpdateData = onDidGetTags
-    viewModel.getTags()
+    viewModel.getTags(backgroundDispatcher: dispatcher, mainDispatcher: dispatcher)
 
     expect(expectedNumberOfTags).toEventually(equal(1))
   }
@@ -163,7 +167,7 @@ class TagsViewModelTests: XCTestCase {
     }
 
     viewModel.onDidUpdateData = onDidGetTags
-    viewModel.getTags()
+    viewModel.getTags(backgroundDispatcher: dispatcher, mainDispatcher: dispatcher)
 
     expect(expectedNumberOfTags).toEventually(equal(2))
   }
