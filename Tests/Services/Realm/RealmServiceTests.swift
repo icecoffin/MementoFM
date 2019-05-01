@@ -21,7 +21,7 @@ class RealmServiceTests: XCTestCase {
     realm = RealmFactory.inMemoryRealm()
     realmService = RealmService(getRealm: {
       return RealmFactory.inMemoryRealm()
-    })
+    }, backgroundDispatcher: TestDispatcher(), mainDispatcher: TestDispatcher())
   }
 
   override func tearDown() {

@@ -23,4 +23,15 @@ final class TestDispatcher: Dispatcher {
       resolver(result)
     }
   }
+
+  func dispatch<T>(_ work: @escaping () throws -> T) -> Promise<T> {
+    return Promise { seal in
+      do {
+        let result = try work()
+        seal.fulfill(result)
+      } catch {
+        seal.reject(error)
+      }
+    }
+  }
 }

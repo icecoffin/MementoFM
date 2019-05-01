@@ -14,6 +14,9 @@ final class RealmService: PersistentStore {
   private let mainQueueRealm: Realm
   private let getBackgroundQueueRealm: () -> Realm
 
+  private let backgroundDispatcher: Dispatcher
+  private let mainDispatcher: Dispatcher
+
   private var currentQueueRealm: Realm {
     if Thread.isMainThread {
       return self.mainQueueRealm
@@ -23,21 +26,25 @@ final class RealmService: PersistentStore {
   }
 
   // MARK: - Init & factory methods
-  init(getRealm: @escaping () -> Realm) {
+  init(getRealm: @escaping () -> Realm,
+       backgroundDispatcher: Dispatcher = AsyncDispatcher.global,
+       mainDispatcher: Dispatcher = AsyncDispatcher.main) {
     self.mainQueueRealm = getRealm()
     self.getBackgroundQueueRealm = getRealm
+    self.backgroundDispatcher = backgroundDispatcher
+    self.mainDispatcher = mainDispatcher
   }
 
   // MARK: - Writing to Realm
   private func write(block: @escaping (Realm) -> Void) -> Promise<Void> {
-    return DispatchQueue.global().async(.promise) {
+    return backgroundDispatcher.dispatch {
       try self.write(to: self.currentQueueRealm) { realm in
         block(realm)
       }
-    }.then(on: DispatchQueue.main) { _ -> Promise<Void> in
+    }.then(on: mainDispatcher.queue) { _ -> Promise<Void> in
       self.currentQueueRealm.refresh()
       return .value(())
-    }.recover(on: DispatchQueue.main) { error in
+    }.recover(on: mainDispatcher.queue) { error in
       return Promise(error: error)
     }
   }

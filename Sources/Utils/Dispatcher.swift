@@ -14,6 +14,7 @@ protocol Dispatcher {
 
   func dispatch(_ work: @escaping () -> Void)
   func dispatch<T>(_ work: @escaping () -> T) -> Guarantee<T>
+  func dispatch<T>(_ work: @escaping () throws -> T) -> Promise<T>
 }
 
 final class AsyncDispatcher: Dispatcher {
@@ -31,6 +32,10 @@ final class AsyncDispatcher: Dispatcher {
   }
 
   func dispatch<T>(_ work: @escaping () -> T) -> Guarantee<T> {
+    return queue.async(.promise, execute: work)
+  }
+
+  func dispatch<T>(_ work: @escaping () throws -> T) -> Promise<T> {
     return queue.async(.promise, execute: work)
   }
 }
