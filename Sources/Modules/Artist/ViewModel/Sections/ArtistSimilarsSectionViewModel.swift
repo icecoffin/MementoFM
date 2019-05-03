@@ -70,7 +70,7 @@ final class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtoc
   private func setup() {
     for tabViewModel in tabViewModels {
       tabViewModel.onDidUpdateData = { [weak self, unowned tabViewModel] in
-        guard let `self` = self else {
+        guard let self = self else {
           return
         }
 
@@ -80,7 +80,7 @@ final class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtoc
       }
 
       tabViewModel.onDidReceiveError = { [weak self, unowned tabViewModel] error in
-        guard let `self` = self else {
+        guard let self = self else {
           return
         }
 

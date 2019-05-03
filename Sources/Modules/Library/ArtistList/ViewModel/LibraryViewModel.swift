@@ -40,19 +40,22 @@ final class LibraryViewModel: ArtistListViewModel {
     dependencies.libraryUpdater.onDidStartLoading = { [weak self] in
       self?.onDidStartLoading?()
     }
+
     dependencies.libraryUpdater.onDidFinishLoading = { [weak self] in
-      guard let `self` = self else {
+      guard let self = self else {
         return
       }
       self.onDidFinishLoading?()
       self.onDidUpdateData?(self.artists.isEmpty)
     }
+
     dependencies.libraryUpdater.onDidChangeStatus = { [weak self] status in
       guard let `self` = self else {
         return
       }
       self.onDidChangeStatus?(self.stringFromStatus(status))
     }
+
     dependencies.libraryUpdater.onDidReceiveError = { [weak self] error in
       self?.onDidReceiveError?(error)
     }
