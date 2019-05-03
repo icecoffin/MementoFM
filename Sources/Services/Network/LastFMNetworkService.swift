@@ -17,7 +17,7 @@ final class LastFMNetworkService: NetworkService {
 
   init(baseURL: URL = NetworkConstants.LastFM.baseURL) {
     self.baseURL = baseURL
-    queue.maxConcurrentOperationCount = 10
+    queue.maxConcurrentOperationCount = 5
   }
 
   func performRequest<T: Mappable>(method: HTTPMethod,
