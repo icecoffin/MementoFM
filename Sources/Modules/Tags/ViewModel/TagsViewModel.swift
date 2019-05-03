@@ -67,7 +67,10 @@ final class TagsViewModel {
       $0.value > 1
     }
     let result = temp.sorted { value1, value2 in
-      value1.value > value2.value
+      if value1.value == value2.value {
+        return value1.key < value2.key
+      }
+      return value1.value > value2.value
     }.map {
       return Tag(name: $0.key, count: $0.value)
     }

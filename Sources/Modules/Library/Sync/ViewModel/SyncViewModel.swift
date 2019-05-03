@@ -41,7 +41,7 @@ final class SyncViewModel {
       }
       self.onDidChangeStatus?(self.stringFromStatus(status))
     }
-    
+
     dependencies.libraryUpdater.onDidReceiveError = { [weak self] error in
       self?.onDidReceiveError?(error)
     }
