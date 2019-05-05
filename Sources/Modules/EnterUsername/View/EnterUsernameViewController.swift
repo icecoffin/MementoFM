@@ -75,6 +75,7 @@ final class EnterUsernameViewController: UIViewController {
     usernameTextField.borderStyle = .roundedRect
     usernameTextField.backgroundColor = .white
 
+    usernameTextField.autocapitalizationType = .none
     usernameTextField.autocorrectionType = .no
     usernameTextField.returnKeyType = .done
     usernameTextField.delegate = self
