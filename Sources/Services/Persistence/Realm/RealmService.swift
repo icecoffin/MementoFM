@@ -69,7 +69,7 @@ final class RealmService: PersistentStore {
     where T.PersistentType.TransientType == T {
     return write { realm in
       if let realmObject = T.PersistentType.from(transient: object) as? Object {
-        realm.add(realmObject, update: update)
+        realm.add(realmObject, update: .modified)
       }
     }
   }
@@ -78,12 +78,11 @@ final class RealmService: PersistentStore {
     where T.PersistentType.TransientType == T {
     return write { realm in
       let realmObjects = objects.compactMap({ return T.PersistentType.from(transient: $0) as? Object })
-      realm.add(realmObjects, update: update)
+      realm.add(realmObjects, update: .modified)
     }
   }
 
   // MARK: - Deleting objects from Realm
-
   func deleteObjects<T: TransientEntity>(ofType type: T.Type) -> Promise<Void>
     where T.PersistentType.TransientType == T {
       guard let type = type.PersistentType.self as? Object.Type else {
