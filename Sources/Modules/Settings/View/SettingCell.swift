@@ -32,7 +32,7 @@ final class SettingCell: UITableViewCell {
     contentView.addSubview(containerView)
     containerView.snp.makeConstraints { make in
       make.edges.equalToSuperview()
-      make.height.equalTo(60).priority(.high)
+      make.height.equalTo(44).priority(.high)
     }
   }
 
@@ -44,7 +44,7 @@ final class SettingCell: UITableViewCell {
       make.centerY.equalToSuperview()
     }
 
-    titleLabel.font = .ralewayMedium(withSize: 16)
+    titleLabel.font = .raleway(withSize: 16)
   }
 
   func configure(with viewModel: SettingCellViewModel) {
