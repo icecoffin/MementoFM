@@ -78,24 +78,24 @@ final class ArtistListViewController: UIViewController {
   private func bindToViewModel() {
     searchController.searchBar.placeholder = viewModel.searchBarPlaceholder
 
-    viewModel.onDidStartLoading = { [unowned self] in
+    viewModel.didStartLoading = { [unowned self] in
       self.loadingView.isHidden = false
     }
 
-    viewModel.onDidFinishLoading = { [unowned self] in
+    viewModel.didFinishLoading = { [unowned self] in
       self.loadingView.isHidden = true
     }
 
-    viewModel.onDidUpdateData = { [unowned self] isEmpty in
+    viewModel.didUpdateData = { [unowned self] isEmpty in
       self.tableView.reloadData()
       self.tableView.backgroundView?.isHidden = !isEmpty
     }
 
-    viewModel.onDidChangeStatus = { [unowned self] status in
+    viewModel.didChangeStatus = { [unowned self] status in
       self.loadingView.update(with: status)
     }
 
-    viewModel.onDidReceiveError = { [unowned self] error in
+    viewModel.didReceiveError = { [unowned self] error in
       self.showAlert(for: error)
       self.loadingView.isHidden = true
     }

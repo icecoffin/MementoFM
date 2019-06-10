@@ -161,10 +161,10 @@ class LibraryViewModelTests: XCTestCase {
     expect(self.libraryUpdater.didRequestData).to(beTrue())
   }
 
-  func test_onDidStartLoading_isCalledOnLibraryUpdate() {
+  func test_didStartLoading_isCalledOnLibraryUpdate() {
     let viewModel = LibraryViewModel(dependencies: dependencies)
     var didStartLoading = false
-    viewModel.onDidStartLoading = {
+    viewModel.didStartLoading = {
       didStartLoading = true
     }
 
@@ -173,10 +173,10 @@ class LibraryViewModelTests: XCTestCase {
     expect(didStartLoading).to(beTrue())
   }
 
-  func test_onDidFinishLoading_isCalledWhenLibraryIsUpdated() {
+  func test_didFinishLoading_isCalledWhenLibraryIsUpdated() {
     let viewModel = LibraryViewModel(dependencies: dependencies)
     var didFinishLoading = false
-    viewModel.onDidFinishLoading = {
+    viewModel.didFinishLoading = {
       didFinishLoading = true
     }
 
@@ -185,12 +185,12 @@ class LibraryViewModelTests: XCTestCase {
     expect(didFinishLoading).to(beTrue())
   }
 
-  func test_onDidUpdateData_isCalledWhenLibraryIsUpdated() {
+  func test_didUpdateData_isCalledWhenLibraryIsUpdated() {
     let viewModel = LibraryViewModel(dependencies: dependencies)
 
     var didUpdateData = false
     var dataIsEmpty = false
-    viewModel.onDidUpdateData = { isEmpty in
+    viewModel.didUpdateData = { isEmpty in
       didUpdateData = true
       dataIsEmpty = isEmpty
     }
@@ -201,10 +201,10 @@ class LibraryViewModelTests: XCTestCase {
     expect(dataIsEmpty).to(beTrue())
   }
 
-  func test_onDidReceiveError_isCalledOnLibraryUpdateError() {
+  func test_didReceiveError_isCalledOnLibraryUpdateError() {
     let viewModel = LibraryViewModel(dependencies: dependencies)
     var didReceiveError = false
-    viewModel.onDidReceiveError = { _ in
+    viewModel.didReceiveError = { _ in
       didReceiveError = true
     }
 
@@ -213,11 +213,11 @@ class LibraryViewModelTests: XCTestCase {
     expect(didReceiveError).to(beTrue())
   }
 
-  func test_onDidChangeStatus_isCalledWithCorrectStatus_whenStatusChanges() {
+  func test_didChangeStatus_isCalledWithCorrectStatus_whenStatusChanges() {
     let viewModel = LibraryViewModel(dependencies: dependencies)
     var statuses: [String] = []
 
-    viewModel.onDidChangeStatus = { status in
+    viewModel.didChangeStatus = { status in
       statuses.append(status)
     }
 

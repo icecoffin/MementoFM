@@ -73,7 +73,7 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
                                                 requestStrategy: requestStrategy,
                                                 dependencies: dependencies)
     var expectedNumberOfSimilarArtists = 0
-    viewModel.onDidUpdateData = {
+    viewModel.didUpdateData = {
       expectedNumberOfSimilarArtists = viewModel.numberOfSimilarArtists
     }
 
@@ -87,7 +87,7 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
                                                 requestStrategy: requestStrategy,
                                                 dependencies: dependencies)
     var expectedHasSimilarArtists = false
-    viewModel.onDidUpdateData = {
+    viewModel.didUpdateData = {
       expectedHasSimilarArtists = viewModel.hasSimilarArtists
     }
 
@@ -101,7 +101,7 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
                                                 requestStrategy: requestStrategy,
                                                 dependencies: dependencies)
     var expectedArtistNames: [String] = []
-    viewModel.onDidUpdateData = {
+    viewModel.didUpdateData = {
       expectedArtistNames = (0..<viewModel.numberOfSimilarArtists).map {
         let cellViewModel = viewModel.cellViewModel(at: IndexPath(row: $0, section: 0))
         return cellViewModel.name
@@ -120,7 +120,7 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
     let delegate = StubSimilarsSectionTabViewModelDelegate()
     viewModel.delegate = delegate
 
-    viewModel.onDidUpdateData = {
+    viewModel.didUpdateData = {
       let indexPath = IndexPath(item: 1, section: 0)
       viewModel.selectArtist(at: indexPath)
     }
@@ -146,7 +146,7 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
                                                 requestStrategy: requestStrategy,
                                                 dependencies: dependencies)
     var expectedIsLoading = true
-    viewModel.onDidUpdateData = {
+    viewModel.didUpdateData = {
       expectedIsLoading = viewModel.isLoading
     }
 
@@ -155,14 +155,14 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
     expect(expectedIsLoading).toEventually(beFalse())
   }
 
-  func test_getSimilarArtists_callsOnDidReceiveError_whenErrorOccurs() {
+  func test_getSimilarArtists_callsDidReceiveError_whenErrorOccurs() {
     requestStrategy.stubSimilarArtists = []
     requestStrategy.getSimilarArtistsShouldReturnError = true
     let viewModel = SimilarsSectionTabViewModel(artist: sampleArtist,
                                                 requestStrategy: requestStrategy,
                                                 dependencies: dependencies)
     var didReceiveError = false
-    viewModel.onDidReceiveError = { _ in
+    viewModel.didReceiveError = { _ in
       didReceiveError = true
     }
 

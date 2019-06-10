@@ -22,7 +22,7 @@ final class TagsViewModel {
 
   weak var delegate: TagsViewModelDelegate?
 
-  var onDidUpdateData: ((_ isEmpty: Bool) -> Void)?
+  var didUpdateData: ((_ isEmpty: Bool) -> Void)?
 
   init(dependencies: Dependencies) {
     self.dependencies = dependencies
@@ -35,7 +35,7 @@ final class TagsViewModel {
       let allTopTags = self.dependencies.tagService.getAllTopTags()
       self.createCellViewModels(from: allTopTags, searchText: searchText)
     }.done(on: mainDispatcher.queue) {
-      self.onDidUpdateData?(self.filteredCellViewModels.isEmpty)
+      self.didUpdateData?(self.filteredCellViewModels.isEmpty)
     }
   }
 
@@ -88,7 +88,7 @@ final class TagsViewModel {
 
   func performSearch(withText text: String?) {
     createFilteredCellViewModels(filter: text)
-    onDidUpdateData?(filteredCellViewModels.isEmpty)
+    didUpdateData?(filteredCellViewModels.isEmpty)
   }
 
   func cancelSearch() {

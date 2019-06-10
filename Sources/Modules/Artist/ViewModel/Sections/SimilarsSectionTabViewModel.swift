@@ -23,8 +23,8 @@ final class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol 
   private var cellViewModels: [SimilarArtistCellViewModel] = []
   private(set) var isLoading: Bool = false
 
-  var onDidUpdateData: (() -> Void)?
-  var onDidReceiveError: ((Error) -> Void)?
+  var didUpdateData: (() -> Void)?
+  var didReceiveError: ((Error) -> Void)?
 
   weak var delegate: SimilarsSectionTabViewModelDelegate?
 
@@ -60,7 +60,7 @@ final class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol 
     if !isLoading && cellViewModels.isEmpty {
       calculateSimilarArtists()
     } else {
-      onDidUpdateData?()
+      didUpdateData?()
     }
   }
 
@@ -70,10 +70,10 @@ final class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol 
       self?.createCellViewModels(from: artists)
     }.done { _ in
       self.isLoading = false
-      self.onDidUpdateData?()
+      self.didUpdateData?()
     }.catch { error in
       self.isLoading = false
-      self.onDidReceiveError?(error)
+      self.didReceiveError?(error)
     }
   }
 

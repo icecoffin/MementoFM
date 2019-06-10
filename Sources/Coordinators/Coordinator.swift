@@ -10,7 +10,7 @@ import Foundation
 
 protocol Coordinator: class {
   var childCoordinators: [Coordinator] { get set }
-  var onDidFinish: (() -> Void)? { get set }
+  var didFinish: (() -> Void)? { get set }
 
   func start()
   func addChildCoordinator(_ coordinator: Coordinator)
@@ -21,7 +21,7 @@ protocol Coordinator: class {
 
 extension Coordinator {
   func addChildCoordinator(_ coordinator: Coordinator) {
-    coordinator.onDidFinish = { [unowned self, unowned coordinator] in
+    coordinator.didFinish = { [unowned self, unowned coordinator] in
       self.removeChildCoordinator(coordinator)
     }
     childCoordinators.append(coordinator)

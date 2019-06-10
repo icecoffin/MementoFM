@@ -12,8 +12,8 @@ final class ArtistDataSource: NSObject {
   private let viewModel: ArtistViewModelProtocol
   let sectionDataSources: [ArtistSectionDataSource]
 
-  var onDidUpdateData: (() -> Void)?
-  var onDidReceiveError: ((Error) -> Void)?
+  var didUpdateData: (() -> Void)?
+  var didReceiveError: ((Error) -> Void)?
 
   init(viewModel: ArtistViewModelProtocol) {
     self.viewModel = viewModel
@@ -24,11 +24,11 @@ final class ArtistDataSource: NSObject {
   }
 
   private func bindToViewModel() {
-    viewModel.onDidUpdateData = { [unowned self] in
-      self.onDidUpdateData?()
+    viewModel.didUpdateData = { [unowned self] in
+      self.didUpdateData?()
     }
-    viewModel.onDidReceiveError = { [unowned self] error in
-      self.onDidReceiveError?(error)
+    viewModel.didReceiveError = { [unowned self] error in
+      self.didReceiveError?(error)
     }
   }
 

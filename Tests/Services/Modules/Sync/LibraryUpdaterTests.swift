@@ -40,12 +40,12 @@ class LibraryUpdaterTests: XCTestCase {
     expect(libraryUpdater.lastUpdateTimestamp).to(equal(100))
   }
 
-  func test_requestData_callsOnDidStartLoading() {
+  func test_requestData_callsDidStartLoading() {
     let libraryUpdater = makeLibraryUpdater()
 
     var didStartLoading = false
 
-    libraryUpdater.onDidStartLoading = {
+    libraryUpdater.didStartLoading = {
       didStartLoading = true
     }
 
@@ -54,12 +54,12 @@ class LibraryUpdaterTests: XCTestCase {
     expect(didStartLoading).to(beTrue())
   }
 
-  func test_requestData_callsOnDidFinishLoading() {
+  func test_requestData_callsDidFinishLoading() {
     let libraryUpdater = makeLibraryUpdater()
 
     var didFinishLoading = false
 
-    libraryUpdater.onDidFinishLoading = {
+    libraryUpdater.didFinishLoading = {
       didFinishLoading = true
     }
 
@@ -76,11 +76,11 @@ class LibraryUpdaterTests: XCTestCase {
     expect(libraryUpdater.isFirstUpdate).toEventually(beFalse())
   }
 
-  func test_requestData_callsOnDidReceiveError_whenFinishedWithError() {
+  func test_requestData_callsDidReceiveError_whenFinishedWithError() {
     let libraryUpdater = makeLibraryUpdater()
 
     var didReceiveError = false
-    libraryUpdater.onDidReceiveError = { _ in
+    libraryUpdater.didReceiveError = { _ in
       didReceiveError = true
     }
 
@@ -146,7 +146,7 @@ class LibraryUpdaterTests: XCTestCase {
     let libraryUpdater = makeLibraryUpdater()
     var libraryUpdateStatus: LibraryUpdateStatus!
 
-    libraryUpdater.onDidChangeStatus = { status in
+    libraryUpdater.didChangeStatus = { status in
       libraryUpdateStatus = status
     }
 

@@ -11,7 +11,7 @@ import UIKit
 final class ArtistCoordinator: NavigationFlowCoordinator {
   let navigationController: NavigationController
   var childCoordinators: [Coordinator] = []
-  var onDidFinish: (() -> Void)?
+  var didFinish: (() -> Void)?
 
   private let artist: Artist
   private let popTracker: NavigationControllerPopTracker

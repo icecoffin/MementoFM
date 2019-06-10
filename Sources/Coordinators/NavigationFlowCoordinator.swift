@@ -27,7 +27,7 @@ extension NavigationFlowCoordinator {
   func navigationControllerPopTracker(_ tracker: NavigationControllerPopTracker,
                                       didPopViewController viewController: UIViewController) {
     if childCoordinators.isEmpty {
-      onDidFinish?()
+      didFinish?()
     } else {
       childCoordinators.removeLast()
     }

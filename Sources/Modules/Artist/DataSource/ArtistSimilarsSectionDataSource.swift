@@ -17,16 +17,16 @@ final class ArtistSimilarsSectionDataSource: ArtistSectionDataSource {
   private let viewModel: ArtistSimilarsSectionViewModel
   private let prototypeCell = SimilarArtistCell()
 
-  var onDidUpdateData: (() -> Void)?
-  var onDidReceiveError: ((Error) -> Void)?
+  var didUpdateData: (() -> Void)?
+  var didReceiveError: ((Error) -> Void)?
 
   init(viewModel: ArtistSimilarsSectionViewModel) {
     self.viewModel = viewModel
-    viewModel.onDidUpdateData = { [weak self] in
-      self?.onDidUpdateData?()
+    viewModel.didUpdateData = { [weak self] in
+      self?.didUpdateData?()
     }
-    viewModel.onDidReceiveError = { [weak self] error in
-      self?.onDidReceiveError?(error)
+    viewModel.didReceiveError = { [weak self] error in
+      self?.didReceiveError?(error)
     }
     viewModel.getSimilarArtists()
   }

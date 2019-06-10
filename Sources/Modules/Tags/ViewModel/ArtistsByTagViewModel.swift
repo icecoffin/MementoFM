@@ -18,11 +18,11 @@ final class ArtistsByTagViewModel: ArtistListViewModel {
 
   weak var delegate: ArtistListViewModelDelegate?
 
-  var onDidStartLoading: (() -> Void)?
-  var onDidFinishLoading: (() -> Void)?
-  var onDidUpdateData: ((_ isEmpty: Bool) -> Void)?
-  var onDidChangeStatus: ((String) -> Void)?
-  var onDidReceiveError: ((Error) -> Void)?
+  var didStartLoading: (() -> Void)?
+  var didFinishLoading: (() -> Void)?
+  var didUpdateData: ((_ isEmpty: Bool) -> Void)?
+  var didChangeStatus: ((String) -> Void)?
+  var didReceiveError: ((Error) -> Void)?
 
   private lazy var artists: AnyPersistentMappedCollection<Artist> = {
     let playcountSort = NSSortDescriptor(key: "playcount", ascending: false)
@@ -60,6 +60,6 @@ final class ArtistsByTagViewModel: ArtistListViewModel {
     let filterPredicate = NSPredicate(format: "name CONTAINS[cd] %@", text)
     let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [originalPredicate, filterPredicate])
     artists.predicate = compoundPredicate
-    self.onDidUpdateData?(artists.isEmpty)
+    self.didUpdateData?(artists.isEmpty)
   }
 }

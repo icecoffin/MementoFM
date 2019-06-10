@@ -23,9 +23,9 @@ final class EnterUsernameViewModel {
   private let dependencies: Dependencies
   private var currentUsername: String
 
-  var onDidStartRequest: (() -> Void)?
-  var onDidFinishRequest: (() -> Void)?
-  var onDidReceiveError: ((Error) -> Void)?
+  var didStartRequest: (() -> Void)?
+  var didFinishRequest: (() -> Void)?
+  var didReceiveError: ((Error) -> Void)?
 
   weak var delegate: EnterUsernameViewModelDelegate?
 
@@ -65,16 +65,16 @@ final class EnterUsernameViewModel {
 
   func submitUsername() {
     let userService = dependencies.userService
-    onDidStartRequest?()
+    didStartRequest?()
     userService.checkUserExists(withUsername: currentUsername).then { _ -> Promise<Void> in
       userService.username = self.currentUsername
       return userService.clearUserData()
     }.done {
       self.delegate?.enterUsernameViewModelDidFinish(self)
     }.ensure {
-      self.onDidFinishRequest?()
+      self.didFinishRequest?()
     }.catch { error in
-      self.onDidReceiveError?(error)
+      self.didReceiveError?(error)
     }
   }
 }

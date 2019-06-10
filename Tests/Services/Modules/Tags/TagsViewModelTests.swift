@@ -47,10 +47,10 @@ class TagsViewModelTests: XCTestCase {
     dependencies = Dependencies(tagService: tagService)
   }
 
-  func test_getTags_callsOnDidUpdateData_withIsEmptyEqualToTrue() {
+  func test_getTags_callsDidUpdateData_withIsEmptyEqualToTrue() {
     let viewModel = TagsViewModel(dependencies: dependencies)
     var expectedIsEmpty = false
-    viewModel.onDidUpdateData = { isEmpty in
+    viewModel.didUpdateData = { isEmpty in
       expectedIsEmpty = isEmpty
     }
 
@@ -59,12 +59,12 @@ class TagsViewModelTests: XCTestCase {
     expect(expectedIsEmpty).toEventually(equal(true))
   }
 
-  func test_getTags_callsOnDidUpdateData_withIsEmptyEqualToFalse() {
+  func test_getTags_callsDidUpdateData_withIsEmptyEqualToFalse() {
     let tags = sampleTags()
     tagService.stubTopTags = tags
     let viewModel = TagsViewModel(dependencies: dependencies)
     var expectedIsEmpty = true
-    viewModel.onDidUpdateData = { isEmpty in
+    viewModel.didUpdateData = { isEmpty in
       expectedIsEmpty = isEmpty
     }
 
@@ -81,7 +81,7 @@ class TagsViewModelTests: XCTestCase {
     viewModel.getTags(backgroundDispatcher: dispatcher, mainDispatcher: dispatcher)
 
     var expectedNumberOfTags = 0
-    viewModel.onDidUpdateData = { [unowned viewModel] _ in
+    viewModel.didUpdateData = { [unowned viewModel] _ in
       expectedNumberOfTags = viewModel.numberOfTags
     }
     expect(expectedNumberOfTags).toEventually(equal(2))
@@ -92,7 +92,7 @@ class TagsViewModelTests: XCTestCase {
     tagService.stubTopTags = tags
     let viewModel = TagsViewModel(dependencies: dependencies)
     var expectedCellViewModel: TagCellViewModel?
-    viewModel.onDidUpdateData = { [unowned viewModel] _ in
+    viewModel.didUpdateData = { [unowned viewModel] _ in
       let indexPath = IndexPath(row: 1, section: 0)
       expectedCellViewModel = viewModel.cellViewModel(at: indexPath)
     }
@@ -108,7 +108,7 @@ class TagsViewModelTests: XCTestCase {
     let delegate = StubTagsViewModelDelegate()
     let viewModel = TagsViewModel(dependencies: dependencies)
     viewModel.delegate = delegate
-    viewModel.onDidUpdateData = { [unowned viewModel] _ in
+    viewModel.didUpdateData = { [unowned viewModel] _ in
       let indexPath = IndexPath(row: 1, section: 0)
       viewModel.selectTag(at: indexPath)
     }
@@ -124,19 +124,19 @@ class TagsViewModelTests: XCTestCase {
     let viewModel = TagsViewModel(dependencies: dependencies)
     var expectedNumberOfTags = 0
 
-    var onDidGetTags: ((Bool) -> Void)?
-    var onDidPerformSearch: ((Bool) -> Void)?
+    var didGetTags: ((Bool) -> Void)?
+    var didPerformSearch: ((Bool) -> Void)?
 
-    onDidGetTags = { [unowned viewModel] _ in
-      viewModel.onDidUpdateData = onDidPerformSearch
+    didGetTags = { [unowned viewModel] _ in
+      viewModel.didUpdateData = didPerformSearch
       viewModel.performSearch(withText: "1")
     }
 
-    onDidPerformSearch = { [unowned viewModel] _ in
+    didPerformSearch = { [unowned viewModel] _ in
       expectedNumberOfTags = viewModel.numberOfTags
     }
 
-    viewModel.onDidUpdateData = onDidGetTags
+    viewModel.didUpdateData = didGetTags
     viewModel.getTags(backgroundDispatcher: dispatcher, mainDispatcher: dispatcher)
 
     expect(expectedNumberOfTags).toEventually(equal(1))
@@ -148,25 +148,25 @@ class TagsViewModelTests: XCTestCase {
     let viewModel = TagsViewModel(dependencies: dependencies)
     var expectedNumberOfTags = 0
 
-    var onDidGetTags: ((Bool) -> Void)?
-    var onDidPerformSearch: ((Bool) -> Void)?
-    var onDidCancelSearch: ((Bool) -> Void)?
+    var didGetTags: ((Bool) -> Void)?
+    var didPerformSearch: ((Bool) -> Void)?
+    var didCancelSearch: ((Bool) -> Void)?
 
-    onDidGetTags = { [unowned viewModel] _ in
-      viewModel.onDidUpdateData = onDidPerformSearch
+    didGetTags = { [unowned viewModel] _ in
+      viewModel.didUpdateData = didPerformSearch
       viewModel.performSearch(withText: "1")
     }
 
-    onDidPerformSearch = { [unowned viewModel] _ in
-      viewModel.onDidUpdateData = onDidCancelSearch
+    didPerformSearch = { [unowned viewModel] _ in
+      viewModel.didUpdateData = didCancelSearch
       viewModel.cancelSearch()
     }
 
-    onDidCancelSearch = { [unowned viewModel] _ in
+    didCancelSearch = { [unowned viewModel] _ in
       expectedNumberOfTags = viewModel.numberOfTags
     }
 
-    viewModel.onDidUpdateData = onDidGetTags
+    viewModel.didUpdateData = didGetTags
     viewModel.getTags(backgroundDispatcher: dispatcher, mainDispatcher: dispatcher)
 
     expect(expectedNumberOfTags).toEventually(equal(2))

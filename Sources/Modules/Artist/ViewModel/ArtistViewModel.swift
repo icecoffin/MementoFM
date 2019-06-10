@@ -14,8 +14,8 @@ protocol ArtistViewModelDelegate: class {
 }
 
 protocol ArtistViewModelProtocol: class {
-  var onDidUpdateData: (() -> Void)? { get set }
-  var onDidReceiveError: ((Error) -> Void)? { get set }
+  var didUpdateData: (() -> Void)? { get set }
+  var didReceiveError: ((Error) -> Void)? { get set }
 
   var title: String { get }
   var sectionDataSources: [ArtistSectionDataSource] { get }
@@ -29,8 +29,8 @@ final class ArtistViewModel: ArtistViewModelProtocol {
 
   weak var delegate: ArtistViewModelDelegate?
 
-  var onDidUpdateData: (() -> Void)?
-  var onDidReceiveError: ((Error) -> Void)?
+  var didUpdateData: (() -> Void)?
+  var didReceiveError: ((Error) -> Void)?
 
   let sectionDataSources: [ArtistSectionDataSource]
 
@@ -54,11 +54,11 @@ final class ArtistViewModel: ArtistViewModelProtocol {
     topTagsSectionViewModel.delegate = self
     similarsSectionViewModel.delegate = self
 
-    similarsSectionDataSource.onDidUpdateData = { [unowned self] in
-      self.onDidUpdateData?()
+    similarsSectionDataSource.didUpdateData = { [unowned self] in
+      self.didUpdateData?()
     }
-    similarsSectionDataSource.onDidReceiveError = { [unowned self] error in
-      self.onDidReceiveError?(error)
+    similarsSectionDataSource.didReceiveError = { [unowned self] error in
+      self.didReceiveError?(error)
     }
   }
 }

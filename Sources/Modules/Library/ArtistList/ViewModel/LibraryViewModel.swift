@@ -23,11 +23,11 @@ final class LibraryViewModel: ArtistListViewModel {
 
   weak var delegate: ArtistListViewModelDelegate?
 
-  var onDidStartLoading: (() -> Void)?
-  var onDidFinishLoading: (() -> Void)?
-  var onDidUpdateData: ((_ isEmpty: Bool) -> Void)?
-  var onDidChangeStatus: ((String) -> Void)?
-  var onDidReceiveError: ((Error) -> Void)?
+  var didStartLoading: (() -> Void)?
+  var didFinishLoading: (() -> Void)?
+  var didUpdateData: ((_ isEmpty: Bool) -> Void)?
+  var didChangeStatus: ((String) -> Void)?
+  var didReceiveError: ((Error) -> Void)?
 
   init(dependencies: Dependencies, applicationStateObserver: ApplicationStateObserving = ApplicationStateObserver()) {
     self.dependencies = dependencies
@@ -37,27 +37,27 @@ final class LibraryViewModel: ArtistListViewModel {
   }
 
   private func setup() {
-    dependencies.libraryUpdater.onDidStartLoading = { [weak self] in
-      self?.onDidStartLoading?()
+    dependencies.libraryUpdater.didStartLoading = { [weak self] in
+      self?.didStartLoading?()
     }
 
-    dependencies.libraryUpdater.onDidFinishLoading = { [weak self] in
+    dependencies.libraryUpdater.didFinishLoading = { [weak self] in
       guard let self = self else {
         return
       }
-      self.onDidFinishLoading?()
-      self.onDidUpdateData?(self.artists.isEmpty)
+      self.didFinishLoading?()
+      self.didUpdateData?(self.artists.isEmpty)
     }
 
-    dependencies.libraryUpdater.onDidChangeStatus = { [weak self] status in
+    dependencies.libraryUpdater.didChangeStatus = { [weak self] status in
       guard let `self` = self else {
         return
       }
-      self.onDidChangeStatus?(self.stringFromStatus(status))
+      self.didChangeStatus?(self.stringFromStatus(status))
     }
 
-    dependencies.libraryUpdater.onDidReceiveError = { [weak self] error in
-      self?.onDidReceiveError?(error)
+    dependencies.libraryUpdater.didReceiveError = { [weak self] error in
+      self?.didReceiveError?(error)
     }
 
     applicationStateObserver.onApplicationDidBecomeActive = { [weak self] in
@@ -92,7 +92,7 @@ final class LibraryViewModel: ArtistListViewModel {
 
   func performSearch(withText text: String) {
     artists.predicate = text.isEmpty ? nil : NSPredicate(format: "name CONTAINS[cd] %@", text)
-    self.onDidUpdateData?(artists.isEmpty)
+    self.didUpdateData?(artists.isEmpty)
   }
 
   private func stringFromStatus(_ status: LibraryUpdateStatus) -> String {

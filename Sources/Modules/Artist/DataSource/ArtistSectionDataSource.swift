@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ArtistSectionDataSource: class {
-  var onDidUpdateData: (() -> Void)? { get set }
+  var didUpdateData: (() -> Void)? { get set }
 
   var numberOfRows: Int { get }
 

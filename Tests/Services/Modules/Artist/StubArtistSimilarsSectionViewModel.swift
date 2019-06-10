@@ -10,8 +10,8 @@ import Foundation
 @testable import MementoFM
 
 class StubArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtocol {
-  var onDidUpdateData: (() -> Void)?
-  var onDidReceiveError: ((Error) -> Void)?
+  var didUpdateData: (() -> Void)?
+  var didReceiveError: ((Error) -> Void)?
 
   var stubNumberOfSimilarArtists = 0
   var numberOfSimilarArtists: Int {

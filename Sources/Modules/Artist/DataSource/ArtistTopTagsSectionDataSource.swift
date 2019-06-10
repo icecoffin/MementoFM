@@ -11,7 +11,7 @@ import UIKit
 final class ArtistTopTagsSectionDataSource: ArtistSectionDataSource {
   private let viewModel: ArtistTopTagsSectionViewModel
 
-  var onDidUpdateData: (() -> Void)?
+  var didUpdateData: (() -> Void)?
 
   init(viewModel: ArtistTopTagsSectionViewModel) {
     self.viewModel = viewModel

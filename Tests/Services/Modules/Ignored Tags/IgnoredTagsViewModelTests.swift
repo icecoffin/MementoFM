@@ -102,14 +102,14 @@ class IgnoredTagsViewModelTests: XCTestCase {
     expect(updatedCellViewModel.text).to(equal("text"))
   }
 
-  func test_addNewIgnoredTag_callsOnDidAddNewTag() {
+  func test_addNewIgnoredTag_callsDidAddNewTag() {
     let ignoredTags = ModelFactory.generateIgnoredTags(inAmount: 10)
     ignoredTagService.stubIgnoredTags = ignoredTags
 
     let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
 
     var expectedIndexPath: IndexPath?
-    viewModel.onDidAddNewTag = { indexPath in
+    viewModel.didAddNewTag = { indexPath in
       expectedIndexPath = indexPath
     }
 
@@ -140,12 +140,12 @@ class IgnoredTagsViewModelTests: XCTestCase {
     expect(viewModel.numberOfIgnoredTags).to(equal(ignoredTags.count - 1))
   }
 
-  func test_saveChanges_callsOnDidStartSavingChanges() {
+  func test_saveChanges_callsDidStartSavingChanges() {
     let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
 
     var didStartSavingChanges = false
 
-    viewModel.onDidStartSavingChanges = {
+    viewModel.didStartSavingChanges = {
       didStartSavingChanges = true
     }
 
@@ -154,12 +154,12 @@ class IgnoredTagsViewModelTests: XCTestCase {
     expect(didStartSavingChanges).to(beTrue())
   }
 
-  func test_saveChanges_callsOnDidFinishSavingChanges() {
+  func test_saveChanges_callsDidFinishSavingChanges() {
     let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
 
     var didFinishSavingChanges = false
 
-    viewModel.onDidFinishSavingChanges = {
+    viewModel.didFinishSavingChanges = {
       didFinishSavingChanges = true
     }
 

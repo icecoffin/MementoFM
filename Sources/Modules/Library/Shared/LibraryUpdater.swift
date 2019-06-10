@@ -18,10 +18,10 @@ enum LibraryUpdateStatus {
 }
 
 protocol LibraryUpdaterProtocol: class {
-  var onDidStartLoading: (() -> Void)? { get set }
-  var onDidFinishLoading: (() -> Void)? { get set }
-  var onDidChangeStatus: ((LibraryUpdateStatus) -> Void)? { get set }
-  var onDidReceiveError: ((Error) -> Void)? { get set }
+  var didStartLoading: (() -> Void)? { get set }
+  var didFinishLoading: (() -> Void)? { get set }
+  var didChangeStatus: ((LibraryUpdateStatus) -> Void)? { get set }
+  var didReceiveError: ((Error) -> Void)? { get set }
 
   var isFirstUpdate: Bool { get }
   var lastUpdateTimestamp: TimeInterval { get }
@@ -48,10 +48,10 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
     return userService.lastUpdateTimestamp
   }
 
-  var onDidStartLoading: (() -> Void)?
-  var onDidFinishLoading: (() -> Void)?
-  var onDidChangeStatus: ((LibraryUpdateStatus) -> Void)?
-  var onDidReceiveError: ((Error) -> Void)?
+  var didStartLoading: (() -> Void)?
+  var didFinishLoading: (() -> Void)?
+  var didChangeStatus: ((LibraryUpdateStatus) -> Void)?
+  var didReceiveError: ((Error) -> Void)?
 
   init(userService: UserServiceProtocol, artistService: ArtistServiceProtocol, tagService: TagServiceProtocol,
        ignoredTagService: IgnoredTagServiceProtocol, trackService: TrackServiceProtocol, networkService: NetworkService) {
@@ -64,22 +64,22 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
   }
 
   func requestData() {
-    onDidStartLoading?()
+    didStartLoading?()
     firstly {
       self.requestLibrary()
     }.then {
       self.getArtistsTags()
     }.done { _ in
-      self.onDidFinishLoading?()
+      self.didFinishLoading?()
     }.catch { error in
-      self.onDidReceiveError?(error)
+      self.didReceiveError?(error)
     }.finally {
       self.isFirstUpdate = false
     }
   }
 
   func cancelPendingRequests() {
-    onDidChangeStatus?(.artistsFirstPage)
+    didChangeStatus?(.artistsFirstPage)
     networkService.cancelPendingRequests()
   }
 
@@ -92,10 +92,10 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
   }
 
   private func getFullLibrary() -> Promise<Void> {
-    onDidChangeStatus?(.artistsFirstPage)
+    didChangeStatus?(.artistsFirstPage)
     let progress: ((Progress) -> Void) = { [weak self] progress in
       let status: LibraryUpdateStatus = .artists(progress: progress)
-      self?.onDidChangeStatus?(status)
+      self?.didChangeStatus?(status)
     }
     return artistService.getLibrary(for: username, progress: progress)
       .then { artists -> Promise<Void> in
@@ -106,10 +106,10 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
   }
 
   private func getLibraryUpdates() -> Promise<Void> {
-    onDidChangeStatus?(.recentTracksFirstPage)
+    didChangeStatus?(.recentTracksFirstPage)
     let progress: ((Progress) -> Void) = { [weak self] progress in
       let status: LibraryUpdateStatus = .recentTracks(progress: progress)
-      self?.onDidChangeStatus?(status)
+      self?.didChangeStatus?(status)
     }
     return trackService.getRecentTracks(for: username, from: lastUpdateTimestamp, progress: progress)
       .then { tracks -> Promise<Void> in
@@ -135,11 +135,11 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
       self.artistService.updateArtist(requestProgress.artist, with: requestProgress.topTagsList.tags).then { artist in
         return self.artistService.calculateTopTags(for: artist, using: calculator)
       }.catch { error in
-        self.onDidReceiveError?(error)
+        self.didReceiveError?(error)
       }
 
       let status: LibraryUpdateStatus = .tags(artistName: requestProgress.artist.name, progress: requestProgress.progress)
-      self.onDidChangeStatus?(status)
+      self.didChangeStatus?(status)
     }
 
     return tagService.getTopTags(for: artists, progress: progress)

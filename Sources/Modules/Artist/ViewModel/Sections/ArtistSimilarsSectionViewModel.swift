@@ -10,8 +10,8 @@ import Foundation
 import PromiseKit
 
 protocol ArtistSimilarsSectionViewModelProtocol: class {
-  var onDidUpdateData: (() -> Void)? { get set }
-  var onDidReceiveError: ((Error) -> Void)? { get set }
+  var didUpdateData: (() -> Void)? { get set }
+  var didReceiveError: ((Error) -> Void)? { get set }
 
   var numberOfSimilarArtists: Int { get }
   var hasSimilarArtists: Bool { get }
@@ -35,8 +35,8 @@ final class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtoc
   private var tabViewModels: [ArtistSimilarsSectionViewModelProtocol] = []
   private(set) lazy var currentTabViewModel: ArtistSimilarsSectionViewModelProtocol = self.tabViewModels[0]
 
-  var onDidUpdateData: (() -> Void)?
-  var onDidReceiveError: ((Error) -> Void)?
+  var didUpdateData: (() -> Void)?
+  var didReceiveError: ((Error) -> Void)?
 
   weak var delegate: ArtistSimilarsSectionViewModelDelegate?
 
@@ -69,23 +69,23 @@ final class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtoc
 
   private func setup() {
     for tabViewModel in tabViewModels {
-      tabViewModel.onDidUpdateData = { [weak self, unowned tabViewModel] in
+      tabViewModel.didUpdateData = { [weak self, unowned tabViewModel] in
         guard let self = self else {
           return
         }
 
         if tabViewModel === self.currentTabViewModel {
-          self.onDidUpdateData?()
+          self.didUpdateData?()
         }
       }
 
-      tabViewModel.onDidReceiveError = { [weak self, unowned tabViewModel] error in
+      tabViewModel.didReceiveError = { [weak self, unowned tabViewModel] error in
         guard let self = self else {
           return
         }
 
         if tabViewModel === self.currentTabViewModel {
-          self.onDidReceiveError?(error)
+          self.didReceiveError?(error)
         }
       }
     }
@@ -105,7 +105,7 @@ final class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtoc
 
   func selectTab(at index: Int) {
     currentTabViewModel = tabViewModels[index]
-    onDidUpdateData?()
+    didUpdateData?()
     currentTabViewModel.getSimilarArtists()
   }
 }

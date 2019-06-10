@@ -45,11 +45,11 @@ class SyncViewModelTests: XCTestCase {
     expect(self.libraryUpdater.didRequestData).to(beTrue())
   }
 
-  func test_onDidChangeStatus_isCalledWithCorrectStatus_whenLibraryUpdaterChangesStatus() {
+  func test_didChangeStatus_isCalledWithCorrectStatus_whenLibraryUpdaterChangesStatus() {
     let viewModel = SyncViewModel(dependencies: dependencies)
 
     var statuses: [String] = []
-    viewModel.onDidChangeStatus = { status in
+    viewModel.didChangeStatus = { status in
       statuses.append(status)
     }
 
@@ -90,10 +90,10 @@ class SyncViewModelTests: XCTestCase {
     expect(delegate.didFinishLoading).to(beTrue())
   }
 
-  func test_onDidReceiveError_isCalled_whenLibraryUpdaterFinishesWithError() {
+  func test_didReceiveError_isCalled_whenLibraryUpdaterFinishesWithError() {
     let viewModel = SyncViewModel(dependencies: dependencies)
     var expectedError: Error?
-    viewModel.onDidReceiveError = { error in
+    viewModel.didReceiveError = { error in
       expectedError = error
     }
 

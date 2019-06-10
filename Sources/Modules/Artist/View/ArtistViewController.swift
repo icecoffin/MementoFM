@@ -17,11 +17,11 @@ final class ArtistViewController: UIViewController {
     self.dataSource = dataSource
     super.init(nibName: nil, bundle: nil)
 
-    dataSource.onDidUpdateData = { [weak self] in
+    dataSource.didUpdateData = { [weak self] in
       self?.tableView.reloadData()
     }
 
-    dataSource.onDidReceiveError = { [weak self] error in
+    dataSource.didReceiveError = { [weak self] error in
       self?.tableView.reloadData()
       self?.showAlert(for: error)
     }

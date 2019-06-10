@@ -71,7 +71,7 @@ final class TagsViewController: UIViewController {
   }
 
   private func bindToViewModel() {
-    viewModel.onDidUpdateData = { [unowned self] isEmpty in
+    viewModel.didUpdateData = { [unowned self] isEmpty in
       self.collectionView.reloadData()
       self.collectionView.backgroundView?.isHidden = !isEmpty
     }

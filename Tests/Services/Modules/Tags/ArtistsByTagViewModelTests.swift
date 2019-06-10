@@ -100,7 +100,7 @@ class ArtistsByTagViewModelTests: XCTestCase {
     writeArtists()
     let viewModel = ArtistsByTagViewModel(tagName: "Tag1", dependencies: dependencies)
     var expectedIsEmpty = true
-    viewModel.onDidUpdateData = { isEmpty in
+    viewModel.didUpdateData = { isEmpty in
       expectedIsEmpty = isEmpty
     }
 
@@ -114,7 +114,7 @@ class ArtistsByTagViewModelTests: XCTestCase {
     writeArtists()
     let viewModel = ArtistsByTagViewModel(tagName: "Tag1", dependencies: dependencies)
     var expectedIsEmpty = false
-    viewModel.onDidUpdateData = { isEmpty in
+    viewModel.didUpdateData = { isEmpty in
       expectedIsEmpty = isEmpty
     }
 

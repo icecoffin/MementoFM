@@ -14,7 +14,7 @@ protocol MainFlowCoordinatorDelegate: class {
 
 final class MainFlowCoordinator: Coordinator {
   var childCoordinators: [Coordinator] = []
-  var onDidFinish: (() -> Void)?
+  var didFinish: (() -> Void)?
 
   private let window: UIWindow
   private let dependencies: AppDependency

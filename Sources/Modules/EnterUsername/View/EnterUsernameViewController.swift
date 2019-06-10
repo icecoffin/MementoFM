@@ -106,15 +106,15 @@ final class EnterUsernameViewController: UIViewController {
   }
 
   private func bindToViewModel() {
-    viewModel.onDidStartRequest = {
+    viewModel.didStartRequest = {
       HUD.show()
     }
 
-    viewModel.onDidFinishRequest = {
+    viewModel.didFinishRequest = {
       HUD.dismiss()
     }
 
-    viewModel.onDidReceiveError = { [weak self] error in
+    viewModel.didReceiveError = { [weak self] error in
       self?.showAlert(for: error)
     }
 

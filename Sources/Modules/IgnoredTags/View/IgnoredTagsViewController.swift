@@ -57,20 +57,20 @@ final class IgnoredTagsViewController: UIViewController {
   }
 
   private func bindToViewModel() {
-    viewModel.onDidStartSavingChanges = { [unowned self] in
+    viewModel.didStartSavingChanges = { [unowned self] in
       self.view.endEditing(true)
       HUD.show()
     }
 
-    viewModel.onDidFinishSavingChanges = {
+    viewModel.didFinishSavingChanges = {
       HUD.dismiss()
     }
 
-    viewModel.onDidReceiveError = { [unowned self] error in
+    viewModel.didReceiveError = { [unowned self] error in
       self.showAlert(for: error)
     }
 
-    viewModel.onDidAddNewTag = { [unowned self] indexPath in
+    viewModel.didAddNewTag = { [unowned self] indexPath in
       self.tableView.beginUpdates()
       self.tableView.insertRows(at: [indexPath], with: .automatic)
       self.tableView.endUpdates()
@@ -78,7 +78,7 @@ final class IgnoredTagsViewController: UIViewController {
       cell?.becomeFirstResponder()
     }
 
-    viewModel.onDidUpdateTagCount = { [unowned self] isEmpty in
+    viewModel.didUpdateTagCount = { [unowned self] isEmpty in
       self.tableView.backgroundView?.isHidden = !isEmpty
       self.tableView.reloadData()
     }

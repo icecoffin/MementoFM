@@ -63,14 +63,14 @@ class EnterUsernameViewModelTests: XCTestCase {
     expect(viewModel.currentUsernameText).to(equal(viewModel.currentUsernamePrefix + "username"))
   }
 
-  func test_submitUsername_callsOnDidStartRequest() {
+  func test_submitUsername_callsDidStartRequest() {
     let userService = StubUserService()
     let dependencies = Dependencies(userService: userService)
     let viewModel = EnterUsernameViewModel(dependencies: dependencies)
 
     var didStartRequest = false
 
-    viewModel.onDidStartRequest = {
+    viewModel.didStartRequest = {
       didStartRequest = true
     }
 
@@ -80,18 +80,18 @@ class EnterUsernameViewModelTests: XCTestCase {
     expect(didStartRequest).toEventually(beTrue())
   }
 
-  func test_submitUsername_callsOnDidFinishRequest() {
+  func test_submitUsername_callsDidFinishRequest() {
     let userService = StubUserService()
     let dependencies = Dependencies(userService: userService)
     let viewModel = EnterUsernameViewModel(dependencies: dependencies)
 
     var didStartRequest = false
 
-    viewModel.onDidStartRequest = {
+    viewModel.didStartRequest = {
       didStartRequest = true
     }
-    viewModel.onDidReceiveError = { _ in
-      // Test that onDidRecieveError is never called
+    viewModel.didReceiveError = { _ in
+      // Test that didRecieveError is never called
       fail()
     }
 
@@ -144,7 +144,7 @@ class EnterUsernameViewModelTests: XCTestCase {
     expect(userService.didCallClearUserData).toEventually(beTrue())
   }
 
-  func test_submitUsername_callsOnDidReceiveError() {
+  func test_submitUsername_callsDidReceiveError() {
     class StubEnterUsernameViewModelDelegate: EnterUsernameViewModelDelegate {
       func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel) {
         // Test that delegate is not notified
@@ -159,7 +159,7 @@ class EnterUsernameViewModelTests: XCTestCase {
 
     var didReceiveError = false
 
-    viewModel.onDidReceiveError = { _ in
+    viewModel.didReceiveError = { _ in
       didReceiveError = true
     }
 

@@ -10,7 +10,7 @@ import UIKit
 
 final class TagsCoordinator: NSObject, NavigationFlowCoordinator, ArtistsByTagPresenter {
   var childCoordinators: [Coordinator] = []
-  var onDidFinish: (() -> Void)?
+  var didFinish: (() -> Void)?
 
   let navigationController: NavigationController
   private let dependencies: AppDependency

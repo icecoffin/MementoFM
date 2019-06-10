@@ -15,11 +15,11 @@ protocol ArtistListViewModelDelegate: class {
 protocol ArtistListViewModel: class {
   var delegate: ArtistListViewModelDelegate? { get set }
 
-  var onDidStartLoading: (() -> Void)? { get set }
-  var onDidFinishLoading: (() -> Void)? { get set }
-  var onDidUpdateData: ((_ isEmpty: Bool) -> Void)? { get set }
-  var onDidChangeStatus: ((String) -> Void)? { get set }
-  var onDidReceiveError: ((Error) -> Void)? { get set }
+  var didStartLoading: (() -> Void)? { get set }
+  var didFinishLoading: (() -> Void)? { get set }
+  var didUpdateData: ((_ isEmpty: Bool) -> Void)? { get set }
+  var didChangeStatus: ((String) -> Void)? { get set }
+  var didReceiveError: ((Error) -> Void)? { get set }
 
   var itemCount: Int { get }
   var title: String { get }

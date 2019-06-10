@@ -19,8 +19,8 @@ final class SyncViewModel {
 
   weak var delegate: SyncViewModelDelegate?
 
-  var onDidChangeStatus: ((String) -> Void)?
-  var onDidReceiveError: ((Error) -> Void)?
+  var didChangeStatus: ((String) -> Void)?
+  var didReceiveError: ((Error) -> Void)?
 
   init(dependencies: Dependencies) {
     self.dependencies = dependencies
@@ -28,22 +28,22 @@ final class SyncViewModel {
   }
 
   private func setup() {
-    dependencies.libraryUpdater.onDidFinishLoading = { [weak self] in
+    dependencies.libraryUpdater.didFinishLoading = { [weak self] in
       guard let self = self else {
         return
       }
       self.delegate?.syncViewModelDidFinishLoading(self)
     }
 
-    dependencies.libraryUpdater.onDidChangeStatus = { [weak self] status in
+    dependencies.libraryUpdater.didChangeStatus = { [weak self] status in
       guard let self = self else {
         return
       }
-      self.onDidChangeStatus?(self.stringFromStatus(status))
+      self.didChangeStatus?(self.stringFromStatus(status))
     }
 
-    dependencies.libraryUpdater.onDidReceiveError = { [weak self] error in
-      self?.onDidReceiveError?(error)
+    dependencies.libraryUpdater.didReceiveError = { [weak self] error in
+      self?.didReceiveError?(error)
     }
   }
 

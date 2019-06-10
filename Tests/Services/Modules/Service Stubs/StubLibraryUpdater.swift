@@ -11,10 +11,10 @@ import Foundation
 import PromiseKit
 
 class StubLibraryUpdater: LibraryUpdaterProtocol {
-  var onDidStartLoading: (() -> Void)?
-  var onDidFinishLoading: (() -> Void)?
-  var onDidChangeStatus: ((LibraryUpdateStatus) -> Void)?
-  var onDidReceiveError: ((Error) -> Void)?
+  var didStartLoading: (() -> Void)?
+  var didFinishLoading: (() -> Void)?
+  var didChangeStatus: ((LibraryUpdateStatus) -> Void)?
+  var didReceiveError: ((Error) -> Void)?
 
   var isFirstUpdate: Bool = true
   var lastUpdateTimestamp: TimeInterval = 0
@@ -30,18 +30,18 @@ class StubLibraryUpdater: LibraryUpdaterProtocol {
   }
 
   func simulateStartLoading() {
-    onDidStartLoading?()
+    didStartLoading?()
   }
 
   func simulateFinishLoading() {
-    onDidFinishLoading?()
+    didFinishLoading?()
   }
 
   func simulateStatusChange(_ status: LibraryUpdateStatus) {
-    onDidChangeStatus?(status)
+    didChangeStatus?(status)
   }
 
   func simulateError(_ error: Error) {
-    onDidReceiveError?(error)
+    didReceiveError?(error)
   }
 }

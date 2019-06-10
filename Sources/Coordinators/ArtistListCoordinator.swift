@@ -35,7 +35,7 @@ final class ArtistsByTagCoordinatorConfiguration: ArtistListCoordinatorConfigura
 
 final class ArtistListCoordinator: NSObject, NavigationFlowCoordinator {
   var childCoordinators: [Coordinator] = []
-  var onDidFinish: (() -> Void)?
+  var didFinish: (() -> Void)?
 
   let navigationController: NavigationController
   private let popTracker: NavigationControllerPopTracker

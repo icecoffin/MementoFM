@@ -51,7 +51,7 @@ final class SyncViewController: UIViewController {
       make.leading.trailing.equalToSuperview().inset(16)
     }
     errorView.isHidden = true
-    errorView.onDidTapRetry = { [unowned self] in
+    errorView.didTapRetry = { [unowned self] in
       self.errorView.isHidden = true
       self.progressView.isHidden = false
       self.viewModel.syncLibrary()
@@ -59,13 +59,13 @@ final class SyncViewController: UIViewController {
   }
 
   private func bindToViewModel() {
-    viewModel.onDidReceiveError = { [unowned self] error in
+    viewModel.didReceiveError = { [unowned self] error in
       self.progressView.isHidden = true
       self.errorView.isHidden = false
       self.errorView.updateErrorDescription(ErrorConverter.displayMessage(for: error))
     }
 
-    viewModel.onDidChangeStatus = { [unowned self] status in
+    viewModel.didChangeStatus = { [unowned self] status in
       self.progressView.updateStatus(status)
     }
 
@@ -122,7 +122,7 @@ private class SyncErrorView: UIView {
   private let descriptionLabel = UILabel()
   private let retryButton = UIButton(type: .system)
 
-  var onDidTapRetry: (() -> Void)?
+  var didTapRetry: (() -> Void)?
 
   init() {
     super.init(frame: .zero)
@@ -184,6 +184,6 @@ private class SyncErrorView: UIView {
   }
 
   @objc private func retryButtonTapped(_ sender: UIButton) {
-    onDidTapRetry?()
+    didTapRetry?()
   }
 }

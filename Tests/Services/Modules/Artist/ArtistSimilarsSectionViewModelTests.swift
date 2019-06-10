@@ -141,35 +141,35 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
     expect(viewModel.currentTabViewModel).to(beIdenticalTo(tabViewModelFactory.secondTabViewModel))
   }
 
-  func test_onDidUpdateData_isCalled_whenTabViewModelUpdatesData() {
+  func test_didUpdateData_isCalled_whenTabViewModelUpdatesData() {
     let artist = sampleArtist
     let viewModel = ArtistSimilarsSectionViewModel(artist: artist,
                                                    tabViewModelFactory: tabViewModelFactory,
                                                    dependencies: dependencies)
 
     var didUpdateData = false
-    viewModel.onDidUpdateData = {
+    viewModel.didUpdateData = {
       didUpdateData = true
     }
 
-    tabViewModelFactory.firstTabViewModel.onDidUpdateData?()
+    tabViewModelFactory.firstTabViewModel.didUpdateData?()
 
     expect(didUpdateData).to(beTrue())
   }
 
-  func test_onDidReceiveError_isCalled_whenCurrentTabViewModelReceivesError() {
+  func test_didReceiveError_isCalled_whenCurrentTabViewModelReceivesError() {
     let artist = sampleArtist
     let viewModel = ArtistSimilarsSectionViewModel(artist: artist,
                                                    tabViewModelFactory: tabViewModelFactory,
                                                    dependencies: dependencies)
 
     var didReceiveError = false
-    viewModel.onDidReceiveError = { _ in
+    viewModel.didReceiveError = { _ in
       didReceiveError = true
     }
 
     let error = NSError(domain: "MementoFM", code: 6, userInfo: nil)
-    tabViewModelFactory.firstTabViewModel.onDidReceiveError?(error)
+    tabViewModelFactory.firstTabViewModel.didReceiveError?(error)
 
     expect(didReceiveError).to(beTrue())
   }

@@ -19,17 +19,17 @@ final class IgnoredTagsViewModel {
   private let dependencies: Dependencies
   private var ignoredTags: [IgnoredTag] {
     didSet {
-      onDidUpdateTagCount?(ignoredTags.isEmpty)
+      didUpdateTagCount?(ignoredTags.isEmpty)
     }
   }
 
   weak var delegate: IgnoredTagsViewModelDelegate?
 
-  var onDidStartSavingChanges: (() -> Void)?
-  var onDidFinishSavingChanges: (() -> Void)?
-  var onDidReceiveError: ((Error) -> Void)?
-  var onDidAddNewTag: ((IndexPath) -> Void)?
-  var onDidUpdateTagCount: ((_ isEmpty: Bool) -> Void)?
+  var didStartSavingChanges: (() -> Void)?
+  var didFinishSavingChanges: (() -> Void)?
+  var didReceiveError: ((Error) -> Void)?
+  var didAddNewTag: ((IndexPath) -> Void)?
+  var didUpdateTagCount: ((_ isEmpty: Bool) -> Void)?
 
   init(dependencies: Dependencies, shouldAddDefaultTags: Bool) {
     self.dependencies = dependencies
@@ -43,7 +43,7 @@ final class IgnoredTagsViewModel {
     dependencies.ignoredTagService.createDefaultIgnoredTags().done {
       self.ignoredTags = self.dependencies.ignoredTagService.ignoredTags()
     }.catch { error in
-      self.onDidReceiveError?(error)
+      self.didReceiveError?(error)
     }
   }
 
@@ -66,7 +66,7 @@ final class IgnoredTagsViewModel {
     let newTag = IgnoredTag(uuid: UUID().uuidString, name: "")
     ignoredTags.append(newTag)
     let newTagIndexPath = IndexPath(item: ignoredTags.count - 1, section: 0)
-    onDidAddNewTag?(newTagIndexPath)
+    didAddNewTag?(newTagIndexPath)
   }
 
   func deleteIgnoredTag(at indexPath: IndexPath) {
@@ -74,7 +74,7 @@ final class IgnoredTagsViewModel {
   }
 
   func saveChanges() {
-    onDidStartSavingChanges?()
+    didStartSavingChanges?()
 
     let filteredTags = ignoredTags.reduce([]) { result, ignoredTag -> [IgnoredTag] in
       if ignoredTag.name.isEmpty {
@@ -95,10 +95,10 @@ final class IgnoredTagsViewModel {
     }.then {
       self.dependencies.artistService.calculateTopTagsForAllArtists(using: calculator)
     }.done { _ in
-      self.onDidFinishSavingChanges?()
+      self.didFinishSavingChanges?()
       self.delegate?.ignoredTagsViewModelDidSaveChanges(self)
     }.catch { error in
-      self.onDidReceiveError?(error)
+      self.didReceiveError?(error)
     }
   }
 }
