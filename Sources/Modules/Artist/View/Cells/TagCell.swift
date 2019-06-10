@@ -13,7 +13,7 @@ final class TagCell: UICollectionViewCell {
     static let containerViewCornerRadius: CGFloat = 6
     static let textLabelLeadingTrailingOffset: CGFloat = 8
     static let textLabelTopBottomOffset: CGFloat = 4
-    static let textLabelFont: UIFont = .raleway(withSize: 14)
+    static let textLabelFont: UIFont = .contentSecondary
   }
 
   private let containerView = UIView()

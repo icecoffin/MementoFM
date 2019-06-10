@@ -45,7 +45,7 @@ final class SimilarArtistCellViewModel: SimilarArtistCellViewModelProtocol {
     return artist.topTags.map({ tag in
       let name = tag.name
       if commonTags.contains(name) {
-        return NSAttributedString(string: name, attributes: [.font: UIFont.ralewayBold(withSize: 14)])
+        return NSAttributedString(string: name, attributes: [.font: UIFont.boldContentSecondary])
       } else {
         return NSAttributedString(string: name)
       }

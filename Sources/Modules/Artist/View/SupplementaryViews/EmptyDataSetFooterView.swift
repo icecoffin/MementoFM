@@ -31,7 +31,7 @@ final class EmptyDataSetFooterView: UITableViewHeaderFooterView {
     }
 
     messageLabel.numberOfLines = 0
-    messageLabel.font = .ralewayMedium(withSize: 14)
+    messageLabel.font = .contentSecondary
     messageLabel.textColor = .darkGray
   }
 

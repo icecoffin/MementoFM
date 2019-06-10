@@ -44,7 +44,7 @@ final class ArtistSimilarsSectionHeaderView: UITableViewHeaderFooterView {
     }
 
     titleLabel.numberOfLines = 0
-    titleLabel.font = .ralewayBold(withSize: 18)
+    titleLabel.font = .header
   }
 
   private func addSegmentedControl() {

@@ -109,7 +109,7 @@ private class SyncProgressView: UIView {
 
     statusLabel.numberOfLines = 0
     statusLabel.textAlignment = .center
-    statusLabel.font = .raleway(withSize: 16)
+    statusLabel.font = .contentPrimary
   }
 
   func updateStatus(_ newStatus: String) {
@@ -147,7 +147,7 @@ private class SyncErrorView: UIView {
 
     errorLabel.text = "An error occured:".unlocalized
     errorLabel.textAlignment = .center
-    errorLabel.font = .raleway(withSize: 16)
+    errorLabel.font = .contentPrimary
   }
 
   private func addDescriptionLabel() {
@@ -159,7 +159,7 @@ private class SyncErrorView: UIView {
 
     descriptionLabel.numberOfLines = 0
     descriptionLabel.textAlignment = .center
-    descriptionLabel.font = .raleway(withSize: 16)
+    descriptionLabel.font = .contentPrimary
   }
 
   private func addRetryButton() {
@@ -175,7 +175,7 @@ private class SyncErrorView: UIView {
     retryButton.setTitle("Retry".unlocalized, for: .normal)
     retryButton.backgroundColor = .appPrimary
     retryButton.setTitleColor(UIColor.white, for: .normal)
-    retryButton.titleLabel?.font = .ralewayBold(withSize: 18)
+    retryButton.titleLabel?.font = .title
     retryButton.layer.cornerRadius = 6
   }
 

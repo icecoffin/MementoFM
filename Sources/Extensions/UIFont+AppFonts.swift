@@ -9,27 +9,15 @@
 import UIKit
 
 extension UIFont {
-  static func raleway(withSize size: CGFloat) -> UIFont {
-    return font(withName: "Raleway", size: size)
-  }
+  static var tabBarItem = UIFont.systemFont(ofSize: 10)
 
-  static func ralewayMedium(withSize size: CGFloat) -> UIFont {
-    return font(withName: "Raleway-Medium", size: size)
-  }
+  static var navigationBarTitle = UIFont.systemFont(ofSize: 16, weight: .semibold)
+  static var navigationBarLargeTitle = UIFont.systemFont(ofSize: 36, weight: .semibold)
 
-  static func ralewayBold(withSize size: CGFloat) -> UIFont {
-    return font(withName: "Raleway-Bold", size: size)
-  }
+  static var header = UIFont.systemFont(ofSize: 18, weight: .semibold)
+  static var title = UIFont.systemFont(ofSize: 16, weight: .medium)
 
-  private static func font(withName name: String, size: CGFloat, fallbackToSystem: Bool = true) -> UIFont {
-    if let font = UIFont(name: name, size: size) {
-      return font
-    }
-
-    if fallbackToSystem {
-      return UIFont.systemFont(ofSize: size)
-    }
-
-    fatalError("\(name) font is not found; did you forget to add it to the .plist file?")
-  }
+  static var contentPrimary = UIFont.systemFont(ofSize: 16)
+  static var contentSecondary = UIFont.systemFont(ofSize: 14)
+  static var boldContentSecondary = UIFont.systemFont(ofSize: 14, weight: .semibold)
 }

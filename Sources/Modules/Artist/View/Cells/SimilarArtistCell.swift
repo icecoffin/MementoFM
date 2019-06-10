@@ -55,15 +55,15 @@ final class SimilarArtistCell: UITableViewCell {
 
     innerStackView.addArrangedSubview(nameLabel)
     nameLabel.numberOfLines = 0
-    nameLabel.font = .ralewayBold(withSize: 16)
+    nameLabel.font = .title
 
     innerStackView.addArrangedSubview(playcountLabel)
-    playcountLabel.font = .raleway(withSize: 14)
+    playcountLabel.font = .contentSecondary
     playcountLabel.textColor = .gray
 
     innerStackView.addArrangedSubview(tagsLabel)
     tagsLabel.numberOfLines = 0
-    tagsLabel.font = .raleway(withSize: 14)
+    tagsLabel.font = .contentSecondary
     tagsLabel.textColor = .darkGray
 
     contentView.addSubview(separatorView)

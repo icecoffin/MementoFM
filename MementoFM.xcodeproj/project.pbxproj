@@ -82,10 +82,6 @@
 		651F33901FA0FC2500B178D0 /* TrackRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F338F1FA0FC2500B178D0 /* TrackRepository.swift */; };
 		651F33921FA0FD2600B178D0 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F33911FA0FD2600B178D0 /* UserRepository.swift */; };
 		651F9E0B1EC09FDC006D9474 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 651F9D881EC09FDC006D9474 /* Assets.xcassets */; };
-		651F9E0C1EC09FDC006D9474 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 651F9D8A1EC09FDC006D9474 /* OFL.txt */; };
-		651F9E0D1EC09FDC006D9474 /* Raleway-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 651F9D8B1EC09FDC006D9474 /* Raleway-Bold.ttf */; };
-		651F9E0E1EC09FDC006D9474 /* Raleway-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 651F9D8C1EC09FDC006D9474 /* Raleway-Medium.ttf */; };
-		651F9E0F1EC09FDC006D9474 /* Raleway-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 651F9D8D1EC09FDC006D9474 /* Raleway-Regular.ttf */; };
 		651F9E101EC09FDC006D9474 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D901EC09FDC006D9474 /* AppDelegate.swift */; };
 		651F9E111EC09FDC006D9474 /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D911EC09FDC006D9474 /* Dependencies.swift */; };
 		651F9E121EC09FDC006D9474 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D921EC09FDC006D9474 /* Keys.swift */; };
@@ -304,10 +300,6 @@
 		651F338F1FA0FC2500B178D0 /* TrackRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackRepository.swift; sourceTree = "<group>"; };
 		651F33911FA0FD2600B178D0 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		651F9D881EC09FDC006D9474 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		651F9D8A1EC09FDC006D9474 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
-		651F9D8B1EC09FDC006D9474 /* Raleway-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Bold.ttf"; sourceTree = "<group>"; };
-		651F9D8C1EC09FDC006D9474 /* Raleway-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Medium.ttf"; sourceTree = "<group>"; };
-		651F9D8D1EC09FDC006D9474 /* Raleway-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Regular.ttf"; sourceTree = "<group>"; };
 		651F9D901EC09FDC006D9474 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		651F9D911EC09FDC006D9474 /* Dependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
 		651F9D921EC09FDC006D9474 /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
@@ -734,20 +726,8 @@
 			isa = PBXGroup;
 			children = (
 				651F9D881EC09FDC006D9474 /* Assets.xcassets */,
-				651F9D891EC09FDC006D9474 /* Fonts */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		651F9D891EC09FDC006D9474 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				651F9D8A1EC09FDC006D9474 /* OFL.txt */,
-				651F9D8B1EC09FDC006D9474 /* Raleway-Bold.ttf */,
-				651F9D8C1EC09FDC006D9474 /* Raleway-Medium.ttf */,
-				651F9D8D1EC09FDC006D9474 /* Raleway-Regular.ttf */,
-			);
-			path = Fonts;
 			sourceTree = "<group>";
 		};
 		651F9D8E1EC09FDC006D9474 /* Sources */ = {
@@ -1449,11 +1429,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				651F9E0C1EC09FDC006D9474 /* OFL.txt in Resources */,
-				651F9E0F1EC09FDC006D9474 /* Raleway-Regular.ttf in Resources */,
-				651F9E0E1EC09FDC006D9474 /* Raleway-Medium.ttf in Resources */,
 				651F9E601EC09FDD006D9474 /* LaunchScreen.storyboard in Resources */,
-				651F9E0D1EC09FDC006D9474 /* Raleway-Bold.ttf in Resources */,
 				651F9E0B1EC09FDC006D9474 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

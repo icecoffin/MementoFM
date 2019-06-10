@@ -74,13 +74,13 @@ final class IgnoredTagsViewController: UIViewController {
       self.tableView.beginUpdates()
       self.tableView.insertRows(at: [indexPath], with: .automatic)
       self.tableView.endUpdates()
+      self.tableView.backgroundView?.isHidden = self.viewModel.numberOfIgnoredTags != 0
       let cell = self.tableView.cellForRow(at: indexPath)
       cell?.becomeFirstResponder()
     }
 
     viewModel.didUpdateTagCount = { [unowned self] isEmpty in
       self.tableView.backgroundView?.isHidden = !isEmpty
-      self.tableView.reloadData()
     }
 
     tableView.backgroundView?.isHidden = viewModel.numberOfIgnoredTags > 0

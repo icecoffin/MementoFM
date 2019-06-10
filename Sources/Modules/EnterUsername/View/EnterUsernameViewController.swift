@@ -63,7 +63,7 @@ final class EnterUsernameViewController: UIViewController {
   private func addCurrentUsernameLabel() {
     stackView.addArrangedSubview(currentUsernameLabel)
 
-    currentUsernameLabel.font = .raleway(withSize: 16)
+    currentUsernameLabel.font = .contentPrimary
   }
 
   private func addUsernameTextField() {
@@ -81,7 +81,7 @@ final class EnterUsernameViewController: UIViewController {
     usernameTextField.delegate = self
 
     usernameTextField.textAlignment = .center
-    usernameTextField.font = .raleway(withSize: 16)
+    usernameTextField.font = .contentPrimary
 
     usernameTextField.addTarget(self, action: #selector(usernameTextFieldEditingChanged(_:)), for: .editingChanged)
   }
@@ -94,7 +94,7 @@ final class EnterUsernameViewController: UIViewController {
     }
 
     submitButton.setTitleColor(UIColor.white, for: .normal)
-    submitButton.titleLabel?.font = .ralewayBold(withSize: 18)
+    submitButton.titleLabel?.font = .title
     submitButton.layer.cornerRadius = 6
     disableSubmitButton()
 
