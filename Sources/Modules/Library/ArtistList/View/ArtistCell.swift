@@ -46,7 +46,7 @@ final class ArtistCell: UITableViewCell {
     let innerStackView = UIStackView()
     innerStackView.axis = .vertical
     innerStackView.distribution = .fill
-    innerStackView.spacing = 8
+    innerStackView.spacing = 6
     innerStackView.translatesAutoresizingMaskIntoConstraints = false
 
     outerStackView.addArrangedSubview(innerStackView)
@@ -77,7 +77,7 @@ final class ArtistCell: UITableViewCell {
 
   private func configurePlaycountLabel() {
     playcountLabel.font = .contentSecondary
-    playcountLabel.textColor = UIColor.gray
+    playcountLabel.textColor = .gray
   }
 
   func configure(with viewModel: LibraryArtistCellViewModel) {

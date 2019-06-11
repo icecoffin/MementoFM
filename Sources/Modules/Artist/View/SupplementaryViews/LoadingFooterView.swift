@@ -22,7 +22,7 @@ final class LoadingFooterView: UITableViewHeaderFooterView {
 
   private func setup() {
     backgroundView = UIView()
-    contentView.backgroundColor = UIColor.white
+    contentView.backgroundColor = .white
 
     contentView.addSubview(activityIndicator)
     activityIndicator.snp.makeConstraints { make in

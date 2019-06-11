@@ -38,7 +38,7 @@ final class EnterUsernameViewController: UIViewController {
   }
 
   private func configureView() {
-    view.backgroundColor = UIColor.white
+    view.backgroundColor = .white
     addStackView()
     addCurrentUsernameLabel()
     addUsernameTextField()
@@ -93,7 +93,7 @@ final class EnterUsernameViewController: UIViewController {
       make.height.equalTo(40)
     }
 
-    submitButton.setTitleColor(UIColor.white, for: .normal)
+    submitButton.setTitleColor(.white, for: .normal)
     submitButton.titleLabel?.font = .title
     submitButton.layer.cornerRadius = 6
     disableSubmitButton()

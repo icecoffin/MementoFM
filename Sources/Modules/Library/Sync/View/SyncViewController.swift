@@ -174,7 +174,7 @@ private class SyncErrorView: UIView {
     retryButton.addTarget(self, action: #selector(retryButtonTapped(_:)), for: .touchUpInside)
     retryButton.setTitle("Retry".unlocalized, for: .normal)
     retryButton.backgroundColor = .appPrimary
-    retryButton.setTitleColor(UIColor.white, for: .normal)
+    retryButton.setTitleColor(.white, for: .normal)
     retryButton.titleLabel?.font = .title
     retryButton.layer.cornerRadius = 6
   }
