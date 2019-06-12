@@ -30,6 +30,7 @@ final class IgnoredTagsViewModel {
   var didReceiveError: ((Error) -> Void)?
   var didAddNewTag: ((IndexPath) -> Void)?
   var didUpdateTagCount: ((_ isEmpty: Bool) -> Void)?
+  var didAddDefaultTags: (() -> Void)?
 
   init(dependencies: Dependencies, shouldAddDefaultTags: Bool) {
     self.dependencies = dependencies
@@ -42,6 +43,7 @@ final class IgnoredTagsViewModel {
   private func addDefaultTags() {
     dependencies.ignoredTagService.createDefaultIgnoredTags().done {
       self.ignoredTags = self.dependencies.ignoredTagService.ignoredTags()
+      self.didAddDefaultTags?()
     }.catch { error in
       self.didReceiveError?(error)
     }
