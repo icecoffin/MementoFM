@@ -12,6 +12,8 @@ Have you ever tried to find a music band which is similar to the one you're curr
 ## Screenshots
 <img src="Screenshots/screen_1.png" width="280"> <img src="Screenshots/screen_2.png" width="280"> <img src="Screenshots/screen_3.png" width="280">
 
+(Originally there were also photos of the artists but then Last.fm started to return placeholders instead of actual photos. Turns out they don't allow to use those photos anymore.)
+
 ## Running the app
 You'll need a Last.fm API key in order to run this app. Here's how you obtain it:
 
