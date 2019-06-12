@@ -109,7 +109,7 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
     let viewModel = ArtistSimilarsSectionViewModel(artist: artist,
                                                    tabViewModelFactory: tabViewModelFactory,
                                                    dependencies: dependencies)
-    let cellViewModel = SimilarArtistCellViewModel(artist: sampleArtist, commonTags: [])
+    let cellViewModel = SimilarArtistCellViewModel(artist: sampleArtist, commonTags: [], index: 1)
 
     tabViewModelFactory.firstTabViewModel.stubCellViewModel = cellViewModel
     let indexPath = IndexPath(row: 0, section: 0)

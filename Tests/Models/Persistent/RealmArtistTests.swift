@@ -21,7 +21,6 @@ class RealmArtistTests: XCTestCase {
     expect(realmArtist.name).to(beEmpty())
     expect(realmArtist.playcount).to(equal(0))
     expect(realmArtist.urlString).to(beEmpty())
-    expect(realmArtist.imageURLString).to(beNil())
     expect(realmArtist.needsTagsUpdate).to(beTrue())
     expect(realmArtist.tags).to(beEmpty())
     expect(realmArtist.topTags).to(beEmpty())
@@ -33,7 +32,6 @@ class RealmArtistTests: XCTestCase {
     let transientArtist = Artist(name: "Test",
                                  playcount: 10,
                                  urlString: "https://example.com",
-                                 imageURLString: "https://example.com/image.jpg",
                                  needsTagsUpdate: false,
                                  tags: tags,
                                  topTags: topTags)
@@ -41,7 +39,6 @@ class RealmArtistTests: XCTestCase {
     expect(realmArtist.name).to(equal(transientArtist.name))
     expect(realmArtist.playcount).to(equal(transientArtist.playcount))
     expect(realmArtist.urlString).to(equal(transientArtist.urlString))
-    expect(realmArtist.imageURLString).to(equal(transientArtist.imageURLString))
     expect(realmArtist.needsTagsUpdate).to(equal(transientArtist.needsTagsUpdate))
 
     let expectedTags = Array(realmArtist.tags.map { $0.toTransient() })
@@ -55,7 +52,6 @@ class RealmArtistTests: XCTestCase {
     realmArtist.name = "Test"
     realmArtist.playcount = 10
     realmArtist.urlString = "https://example.com"
-    realmArtist.imageURLString = "https://example.com/image.jpg"
     realmArtist.needsTagsUpdate = false
 
     let tags = ModelFactory.generateTags(inAmount: 5, for: "Test")
@@ -71,7 +67,6 @@ class RealmArtistTests: XCTestCase {
     expect(transientArtist.name).to(equal(realmArtist.name))
     expect(transientArtist.playcount).to(equal(realmArtist.playcount))
     expect(transientArtist.urlString).to(equal(realmArtist.urlString))
-    expect(transientArtist.imageURLString).to(equal(realmArtist.imageURLString))
     expect(transientArtist.needsTagsUpdate).to(equal(realmArtist.needsTagsUpdate))
     expect(transientArtist.tags).to(equal(tags))
     expect(transientArtist.topTags).to(equal(topTags))

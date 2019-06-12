@@ -12,9 +12,22 @@ import RealmSwift
 final class ArtistsByTagViewModel: ArtistListViewModel {
   typealias Dependencies = HasArtistService
 
+  // MARK: - Properties
+
   private let tagName: String
   private let dependencies: Dependencies
   private let originalPredicate: NSPredicate
+
+  private let numberFormatter: NumberFormatter = {
+    let numberFormatter = NumberFormatter()
+    numberFormatter.numberStyle = .decimal
+    return numberFormatter
+  }()
+
+  private lazy var artists: AnyPersistentMappedCollection<Artist> = {
+    let playcountSort = NSSortDescriptor(key: "playcount", ascending: false)
+    return self.dependencies.artistService.artists(filteredUsing: self.originalPredicate, sortedBy: [playcountSort])
+  }()
 
   weak var delegate: ArtistListViewModelDelegate?
 
@@ -24,17 +37,6 @@ final class ArtistsByTagViewModel: ArtistListViewModel {
   var didChangeStatus: ((String) -> Void)?
   var didReceiveError: ((Error) -> Void)?
 
-  private lazy var artists: AnyPersistentMappedCollection<Artist> = {
-    let playcountSort = NSSortDescriptor(key: "playcount", ascending: false)
-    return self.dependencies.artistService.artists(filteredUsing: self.originalPredicate, sortedBy: [playcountSort])
-  }()
-
-  init(tagName: String, dependencies: Dependencies) {
-    self.tagName = tagName
-    self.dependencies = dependencies
-    self.originalPredicate = NSPredicate(format: "ANY topTags.name == %@", tagName)
-  }
-
   var itemCount: Int {
     return artists.count
   }
@@ -43,11 +45,23 @@ final class ArtistsByTagViewModel: ArtistListViewModel {
     return tagName
   }
 
+  // MARK: - Init
+
+  init(tagName: String, dependencies: Dependencies) {
+    self.tagName = tagName
+    self.dependencies = dependencies
+    self.originalPredicate = NSPredicate(format: "ANY topTags.name == %@", tagName)
+  }
+
+  // MARK: - Public methods
+
   func requestDataIfNeeded(currentTimestamp: TimeInterval, minTimeInterval: TimeInterval) { }
 
   func artistViewModel(at indexPath: IndexPath) -> LibraryArtistCellViewModel {
     let artist = artists[indexPath.row]
-    let viewModel = LibraryArtistCellViewModel(artist: artist)
+    let viewModel = LibraryArtistCellViewModel(artist: artist,
+                                               index: indexPath.row + 1,
+                                               numberFormatter: numberFormatter)
     return viewModel
   }
 

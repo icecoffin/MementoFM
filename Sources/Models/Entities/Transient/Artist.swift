@@ -9,28 +9,12 @@
 import Foundation
 import Mapper
 
-private func extractImageURLString(from json: Any?) throws -> String {
-  guard let jsonImages = json as? [[String: Any]] else {
-    return ""
-  }
-
-  let large = jsonImages.filter { dictionary in
-    if let size = dictionary["size"] as? String, size == "large" {
-      return true
-    }
-    return false
-  }.first
-
-  return large?["#text"] as? String ?? ""
-}
-
 struct Artist: TransientEntity, Equatable {
   typealias PersistentType = RealmArtist
 
   let name: String
   let playcount: Int
   let urlString: String
-  let imageURLString: String?
 
   let needsTagsUpdate: Bool
   let tags: [Tag]
@@ -43,17 +27,17 @@ struct Artist: TransientEntity, Equatable {
   }
 
   func updatingPlaycount(to playcount: Int) -> Artist {
-    return Artist(name: name, playcount: playcount, urlString: urlString, imageURLString: imageURLString,
+    return Artist(name: name, playcount: playcount, urlString: urlString,
                   needsTagsUpdate: needsTagsUpdate, tags: tags, topTags: topTags)
   }
 
   func updatingTags(to tags: [Tag], needsTagsUpdate: Bool) -> Artist {
-    return Artist(name: name, playcount: playcount, urlString: urlString, imageURLString: imageURLString,
+    return Artist(name: name, playcount: playcount, urlString: urlString,
                   needsTagsUpdate: needsTagsUpdate, tags: tags, topTags: topTags)
   }
 
   func updatingTopTags(to topTags: [Tag]) -> Artist {
-    return Artist(name: name, playcount: playcount, urlString: urlString, imageURLString: imageURLString,
+    return Artist(name: name, playcount: playcount, urlString: urlString,
                   needsTagsUpdate: needsTagsUpdate, tags: tags, topTags: topTags)
   }
 }
@@ -71,7 +55,6 @@ extension Artist: Mappable {
     try name = map.from("name")
     playcount = map.optionalFrom("playcount", transformation: { int(from: $0) }) ?? 0
     urlString = map.optionalFrom("url") ?? ""
-    imageURLString = map.optionalFrom("image", transformation: extractImageURLString)
     needsTagsUpdate = true
     tags = []
     topTags = []

@@ -13,8 +13,16 @@ import PromiseKit
 final class LibraryViewModel: ArtistListViewModel {
   typealias Dependencies = HasLibraryUpdater & HasArtistService & HasUserService
 
+  // MARK: - Properties
+
   private let dependencies: Dependencies
   private let applicationStateObserver: ApplicationStateObserving
+
+  private let numberFormatter: NumberFormatter = {
+    let numberFormatter = NumberFormatter()
+    numberFormatter.numberStyle = .decimal
+    return numberFormatter
+  }()
 
   private lazy var artists: AnyPersistentMappedCollection<Artist> = {
     let playcountSort = NSSortDescriptor(key: "playcount", ascending: false)
@@ -29,12 +37,24 @@ final class LibraryViewModel: ArtistListViewModel {
   var didChangeStatus: ((String) -> Void)?
   var didReceiveError: ((Error) -> Void)?
 
+  var itemCount: Int {
+    return artists.count
+  }
+
+  var title: String {
+    return "Library".unlocalized
+  }
+
+  // MARK: - Init
+
   init(dependencies: Dependencies, applicationStateObserver: ApplicationStateObserving = ApplicationStateObserver()) {
     self.dependencies = dependencies
     self.applicationStateObserver = applicationStateObserver
 
     setup()
   }
+
+  // MARK: - Private methods
 
   private func setup() {
     dependencies.libraryUpdater.didStartLoading = { [weak self] in
@@ -65,36 +85,6 @@ final class LibraryViewModel: ArtistListViewModel {
     }
   }
 
-  func requestDataIfNeeded(currentTimestamp: TimeInterval, minTimeInterval: TimeInterval) {
-    if currentTimestamp - dependencies.libraryUpdater.lastUpdateTimestamp > minTimeInterval
-      || dependencies.libraryUpdater.isFirstUpdate {
-      dependencies.libraryUpdater.requestData()
-    }
-  }
-
-  var itemCount: Int {
-    return artists.count
-  }
-
-  var title: String {
-    return "Library".unlocalized
-  }
-
-  func artistViewModel(at indexPath: IndexPath) -> LibraryArtistCellViewModel {
-    let artist = artists[indexPath.row]
-    return LibraryArtistCellViewModel(artist: artist)
-  }
-
-  func selectArtist(at indexPath: IndexPath) {
-    let artist = artists[indexPath.row]
-    delegate?.artistListViewModel(self, didSelectArtist: artist)
-  }
-
-  func performSearch(withText text: String) {
-    artists.predicate = text.isEmpty ? nil : NSPredicate(format: "name CONTAINS[cd] %@", text)
-    self.didUpdateData?(artists.isEmpty)
-  }
-
   private func stringFromStatus(_ status: LibraryUpdateStatus) -> String {
     switch status {
     case .artistsFirstPage:
@@ -108,5 +98,31 @@ final class LibraryViewModel: ArtistListViewModel {
     case .tags(_, let progress):
       return "Getting tags for artists: \(progress.completedUnitCount) out of \(progress.totalUnitCount)".unlocalized
     }
+  }
+
+  // MARK: - Public methods
+
+  func requestDataIfNeeded(currentTimestamp: TimeInterval, minTimeInterval: TimeInterval) {
+    if currentTimestamp - dependencies.libraryUpdater.lastUpdateTimestamp > minTimeInterval
+      || dependencies.libraryUpdater.isFirstUpdate {
+      dependencies.libraryUpdater.requestData()
+    }
+  }
+
+  func artistViewModel(at indexPath: IndexPath) -> LibraryArtistCellViewModel {
+    let artist = artists[indexPath.row]
+    return LibraryArtistCellViewModel(artist: artist,
+                                      index: indexPath.row + 1,
+                                      numberFormatter: numberFormatter)
+  }
+
+  func selectArtist(at indexPath: IndexPath) {
+    let artist = artists[indexPath.row]
+    delegate?.artistListViewModel(self, didSelectArtist: artist)
+  }
+
+  func performSearch(withText text: String) {
+    artists.predicate = text.isEmpty ? nil : NSPredicate(format: "name CONTAINS[cd] %@", text)
+    self.didUpdateData?(artists.isEmpty)
   }
 }

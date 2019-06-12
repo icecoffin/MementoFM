@@ -26,7 +26,6 @@ class ArtistTests: XCTestCase {
     expect(artist?.name).to(equal("Tiger Army"))
     expect(artist?.playcount).to(equal(730))
     expect(artist?.urlString).to(equal("https://www.last.fm/music/Tiger+Army"))
-    expect(artist?.imageURLString).to(equal("https://lastfm-img2.akamaized.net/i/u/174s/ed7d669ae7e14fd2bf2bb3e55600f687.png"))
     expect(artist?.needsTagsUpdate).to(beTrue())
     expect(artist?.tags).to(beEmpty())
     expect(artist?.topTags).to(beEmpty())
@@ -42,14 +41,12 @@ class ArtistTests: XCTestCase {
     let artist1 = Artist(name: "artist1",
                          playcount: 1,
                          urlString: "",
-                         imageURLString: nil,
                          needsTagsUpdate: false,
                          tags: [],
                          topTags: topTags1)
     let artist2 = Artist(name: "artist2",
                          playcount: 1,
                          urlString: "",
-                         imageURLString: nil,
                          needsTagsUpdate: false,
                          tags: [],
                          topTags: topTags2)
@@ -67,7 +64,6 @@ class ArtistTests: XCTestCase {
     expect(updatedArtist?.name).to(equal(artist?.name))
     expect(updatedArtist?.playcount).to(equal(100))
     expect(updatedArtist?.urlString).to(equal(artist?.urlString))
-    expect(updatedArtist?.imageURLString).to(equal(artist?.imageURLString))
     expect(updatedArtist?.needsTagsUpdate).to(equal(artist?.needsTagsUpdate))
     expect(updatedArtist?.tags).to(equal(artist?.tags))
     expect(updatedArtist?.topTags).to(equal(artist?.topTags))
@@ -81,7 +77,6 @@ class ArtistTests: XCTestCase {
     expect(updatedArtist?.name).to(equal(artist?.name))
     expect(updatedArtist?.playcount).to(equal(artist?.playcount))
     expect(updatedArtist?.urlString).to(equal(artist?.urlString))
-    expect(updatedArtist?.imageURLString).to(equal(artist?.imageURLString))
     expect(updatedArtist?.needsTagsUpdate).to(equal(true))
     expect(updatedArtist?.tags).to(equal(tags))
     expect(updatedArtist?.topTags).to(equal(artist?.topTags))
@@ -95,7 +90,6 @@ class ArtistTests: XCTestCase {
     expect(updatedArtist?.name).to(equal(artist?.name))
     expect(updatedArtist?.playcount).to(equal(artist?.playcount))
     expect(updatedArtist?.urlString).to(equal(artist?.urlString))
-    expect(updatedArtist?.imageURLString).to(equal(artist?.imageURLString))
     expect(updatedArtist?.needsTagsUpdate).to(equal(true))
     expect(updatedArtist?.tags).to(equal(artist?.tags))
     expect(updatedArtist?.topTags).to(equal(topTags))

@@ -20,7 +20,6 @@ class SimilarArtistCellViewModelTests: XCTestCase {
     return Artist(name: "Artist",
                   playcount: 10,
                   urlString: "",
-                  imageURLString: "https://example.com/1.jpg",
                   needsTagsUpdate: false,
                   tags: [],
                   topTags: tags)
@@ -29,19 +28,18 @@ class SimilarArtistCellViewModelTests: XCTestCase {
   let commonTags = ["Tag1", "Tag3"]
 
   func test_name_returnsArtistName() {
-    let viewModel = SimilarArtistCellViewModel(artist: sampleArtist, commonTags: commonTags)
+    let viewModel = SimilarArtistCellViewModel(artist: sampleArtist, commonTags: commonTags, index: 1)
     expect(viewModel.name).to(equal("Artist"))
   }
 
   func test_playcount_returnsCorrectValue_basedOnArtistPlaycount() {
-    let viewModel = SimilarArtistCellViewModel(artist: sampleArtist, commonTags: commonTags)
-    expect(viewModel.playcount).to(equal("10 plays".unlocalized))
+    let viewModel = SimilarArtistCellViewModel(artist: sampleArtist, commonTags: commonTags, index: 1)
+    expect(viewModel.playcount).to(equal("10 plays"))
   }
 
-  func test_imageURL_returnsCorrectURLFromArtist() {
-    let viewModel = SimilarArtistCellViewModel(artist: sampleArtist, commonTags: commonTags)
-    let expectedURL = URL(string: "https://example.com/1.jpg")
-    expect(viewModel.imageURL).to(equal(expectedURL))
+  func test_index_returnsCorrectValue() {
+    let viewModel = SimilarArtistCellViewModel(artist: sampleArtist, commonTags: commonTags, index: 1)
+    expect(viewModel.displayIndex).to(equal("1"))
   }
 
   func test_tags_returnsCorrectlyAttributedTags_basedOnCommonTags() {
@@ -54,7 +52,7 @@ class SimilarArtistCellViewModelTests: XCTestCase {
     expectedTagsArray.append(NSAttributedString(string: "Tag5"))
     let expectedTags = expectedTagsArray.joined(separator: ", ")
 
-    let viewModel = SimilarArtistCellViewModel(artist: sampleArtist, commonTags: commonTags)
+    let viewModel = SimilarArtistCellViewModel(artist: sampleArtist, commonTags: commonTags, index: 1)
     expect(viewModel.tags).to(equal(expectedTags))
   }
 }

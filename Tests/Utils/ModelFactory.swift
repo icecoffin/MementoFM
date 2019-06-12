@@ -14,7 +14,6 @@ class ModelFactory {
     return Artist(name: "Artist\(index)",
                   playcount: 0,
                   urlString: "http://example.com/artist\(index)",
-                  imageURLString: "http://example.com/artist\(index).jpg",
                   needsTagsUpdate: needsTagsUpdate,
                   tags: [],
                   topTags: [])

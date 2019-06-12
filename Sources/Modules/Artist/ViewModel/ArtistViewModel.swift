@@ -42,14 +42,12 @@ final class ArtistViewModel: ArtistViewModelProtocol {
     self.artist = artist
     self.dependencies = dependencies
 
-    let infoSectionViewModel = ArtistInfoSectionViewModel(artist: artist)
     let topTagsSectionViewModel = ArtistTopTagsSectionViewModel(artist: artist)
     let similarsSectionViewModel = ArtistSimilarsSectionViewModel(artist: artist, dependencies: dependencies)
 
-    let infoSectionDataSource = ArtistInfoSectionDataSource(viewModel: infoSectionViewModel)
     let topTagsSectionDataSource = ArtistTopTagsSectionDataSource(viewModel: topTagsSectionViewModel)
     let similarsSectionDataSource = ArtistSimilarsSectionDataSource(viewModel: similarsSectionViewModel)
-    sectionDataSources = [infoSectionDataSource, topTagsSectionDataSource, similarsSectionDataSource]
+    sectionDataSources = [topTagsSectionDataSource, similarsSectionDataSource]
 
     topTagsSectionViewModel.delegate = self
     similarsSectionViewModel.delegate = self

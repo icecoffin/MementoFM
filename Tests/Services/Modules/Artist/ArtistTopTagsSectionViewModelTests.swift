@@ -24,7 +24,6 @@ class ArtistTopTagsSectionViewModelTests: XCTestCase {
     return Artist(name: "Artist",
                   playcount: 1,
                   urlString: "",
-                  imageURLString: "",
                   needsTagsUpdate: false,
                   tags: tags,
                   topTags: tags)
@@ -48,7 +47,6 @@ class ArtistTopTagsSectionViewModelTests: XCTestCase {
     let artistWithNoTags = Artist(name: "Artist",
                                   playcount: 1,
                                   urlString: "",
-                                  imageURLString: "",
                                   needsTagsUpdate: false,
                                   tags: [],
                                   topTags: [])

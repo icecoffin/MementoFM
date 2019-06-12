@@ -37,13 +37,13 @@ class ArtistsByTagViewModelTests: XCTestCase {
     let tag2 = Tag(name: "Tag2", count: 2)
 
     return [
-      Artist(name: "Artist1", playcount: 1, urlString: "", imageURLString: nil, needsTagsUpdate: true, tags: [], topTags: [tag1]),
-      Artist(name: "Artist2", playcount: 1, urlString: "", imageURLString: nil, needsTagsUpdate: true, tags: [], topTags: [tag1]),
-      Artist(name: "Artist3", playcount: 1, urlString: "", imageURLString: nil, needsTagsUpdate: true, tags: [], topTags: [tag1]),
-      Artist(name: "Artist4", playcount: 1, urlString: "", imageURLString: nil, needsTagsUpdate: true, tags: [], topTags: [tag2]),
-      Artist(name: "Artist5", playcount: 1, urlString: "", imageURLString: nil, needsTagsUpdate: true, tags: [], topTags: [tag2]),
-      Artist(name: "Artist6", playcount: 1, urlString: "", imageURLString: nil, needsTagsUpdate: true, tags: [], topTags: [tag2]),
-      Artist(name: "Artist7", playcount: 1, urlString: "", imageURLString: nil, needsTagsUpdate: true, tags: [],
+      Artist(name: "Artist1", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [tag1]),
+      Artist(name: "Artist2", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [tag1]),
+      Artist(name: "Artist3", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [tag1]),
+      Artist(name: "Artist4", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [tag2]),
+      Artist(name: "Artist5", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [tag2]),
+      Artist(name: "Artist6", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [tag2]),
+      Artist(name: "Artist7", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [],
              topTags: [tag1, tag2])
     ]
   }()

@@ -78,20 +78,27 @@ final class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol 
   }
 
   private func createCellViewModels(from artists: [Artist]) {
-    cellViewModels = artists.map({ artist -> (Artist, [String]) in
-      let commonTags = self.artist.intersectingTopTagNames(with: artist)
-      return (artist, commonTags)
-    }).filter({ (_, commonTags) in
-      return commonTags.count >= requestStrategy.minNumberOfIntersectingTags
-    }).sorted(by: { (first: (artist: Artist, commonTags: [String]), second: (artist: Artist, commonTags: [String])) in
-      let commonTagsCount1 = first.commonTags.count
-      let commonTagsCount2 = second.commonTags.count
-      if commonTagsCount1 == commonTagsCount2 {
-        return first.artist.playcount > second.artist.playcount
+    let artistsWithCommonTags = artists
+      .map { artist -> (Artist, [String]) in
+        let commonTags = self.artist.intersectingTopTagNames(with: artist)
+        return (artist, commonTags)
       }
-      return commonTagsCount1 > commonTagsCount2
-    }).map({ (artist, commonTags) in
-      SimilarArtistCellViewModel(artist: artist, commonTags: commonTags)
-    })
+      .filter { (_, commonTags) in
+        return commonTags.count >= requestStrategy.minNumberOfIntersectingTags
+      }
+      .sorted { (first: (artist: Artist, commonTags: [String]), second: (artist: Artist, commonTags: [String])) in
+        let commonTagsCount1 = first.commonTags.count
+        let commonTagsCount2 = second.commonTags.count
+        if commonTagsCount1 == commonTagsCount2 {
+          return first.artist.playcount > second.artist.playcount
+        }
+        return commonTagsCount1 > commonTagsCount2
+      }
+
+    cellViewModels = zip(artistsWithCommonTags, 0..<artistsWithCommonTags.count)
+      .map { (artistWithCommonTags, index) in
+        let (artist, commonTags) = artistWithCommonTags
+        return SimilarArtistCellViewModel(artist: artist, commonTags: commonTags, index: index + 1)
+      }
   }
 }

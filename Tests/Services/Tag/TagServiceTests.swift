@@ -69,14 +69,12 @@ class TagServiceTests: XCTestCase {
     let artist1 = Artist(name: "Artist1",
                          playcount: 1,
                          urlString: "",
-                         imageURLString: nil,
                          needsTagsUpdate: false,
                          tags: tags1,
                          topTags: topTags1)
     let artist2 = Artist(name: "Artist2",
                          playcount: 1,
                          urlString: "",
-                         imageURLString: nil,
                          needsTagsUpdate: false,
                          tags: tags2,
                          topTags: topTags2)

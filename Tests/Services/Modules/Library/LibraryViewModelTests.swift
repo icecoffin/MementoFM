@@ -43,13 +43,13 @@ class LibraryViewModelTests: XCTestCase {
 
   var sampleArtists: [Artist] = {
     return [
-      Artist(name: "Artist1", playcount: 1, urlString: "", imageURLString: nil, needsTagsUpdate: true, tags: [], topTags: []),
-      Artist(name: "Artist2", playcount: 1, urlString: "", imageURLString: nil, needsTagsUpdate: true, tags: [], topTags: []),
-      Artist(name: "Artist3", playcount: 1, urlString: "", imageURLString: nil, needsTagsUpdate: true, tags: [], topTags: []),
-      Artist(name: "Artist4", playcount: 1, urlString: "", imageURLString: nil, needsTagsUpdate: true, tags: [], topTags: []),
-      Artist(name: "Artist5", playcount: 1, urlString: "", imageURLString: nil, needsTagsUpdate: true, tags: [], topTags: []),
-      Artist(name: "Artist6", playcount: 1, urlString: "", imageURLString: nil, needsTagsUpdate: true, tags: [], topTags: []),
-      Artist(name: "Artist7", playcount: 1, urlString: "", imageURLString: nil, needsTagsUpdate: true, tags: [], topTags: [])
+      Artist(name: "Artist1", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: []),
+      Artist(name: "Artist2", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: []),
+      Artist(name: "Artist3", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: []),
+      Artist(name: "Artist4", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: []),
+      Artist(name: "Artist5", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: []),
+      Artist(name: "Artist6", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: []),
+      Artist(name: "Artist7", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [])
     ]
   }()
 
@@ -236,11 +236,11 @@ class LibraryViewModelTests: XCTestCase {
     tagsProgress.completedUnitCount = 1
     libraryUpdater.simulateStatusChange(.tags(artistName: "Artist", progress: tagsProgress))
 
-    let expectedStatuses = ["Getting library...".unlocalized,
-                            "Getting library: page 1 out of 10".unlocalized,
-                            "Getting recent tracks...".unlocalized,
-                            "Getting recent tracks: page 1 out of 10".unlocalized,
-                            "Getting tags for artists: 1 out of 10".unlocalized]
+    let expectedStatuses = ["Getting library...",
+                            "Getting library: page 1 out of 10",
+                            "Getting recent tracks...",
+                            "Getting recent tracks: page 1 out of 10",
+                            "Getting tags for artists: 1 out of 10"]
     expect(statuses).to(equal(expectedStatuses))
   }
 

@@ -9,11 +9,11 @@
 import Foundation
 
 final class LibraryArtistCellViewModel {
-  private let artist: Artist
+  // MARK: - Properties
 
-  init(artist: Artist) {
-    self.artist = artist
-  }
+  private let artist: Artist
+  private let index: Int
+  private let numberFormatter: NumberFormatter
 
   var name: String {
     return artist.name
@@ -23,10 +23,15 @@ final class LibraryArtistCellViewModel {
     return "\(artist.playcount) plays".unlocalized
   }
 
-  var imageURL: URL? {
-    guard let imageURLString = artist.imageURLString, !imageURLString.isEmpty else {
-      return nil
-    }
-    return URL(string: imageURLString)
+  var displayIndex: String? {
+    return numberFormatter.string(from: index as NSNumber)
+  }
+
+  // MARK: - Init
+
+  init(artist: Artist, index: Int, numberFormatter: NumberFormatter) {
+    self.artist = artist
+    self.index = index
+    self.numberFormatter = numberFormatter
   }
 }

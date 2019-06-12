@@ -15,25 +15,27 @@ class LibraryArtistCellViewModelTests: XCTestCase {
     return Artist(name: "Artist",
                   playcount: 10,
                   urlString: "",
-                  imageURLString: "https://example.com/1.jpg",
                   needsTagsUpdate: false,
                   tags: [],
                   topTags: [])
   }
 
   func test_name_returnsArtistName() {
-    let viewModel = LibraryArtistCellViewModel(artist: sampleArtist)
+    let viewModel = LibraryArtistCellViewModel(artist: sampleArtist, index: 1, numberFormatter: NumberFormatter())
     expect(viewModel.name).to(equal("Artist"))
   }
 
   func test_playcount_returnsCorrectValue_basedOnArtistPlaycount() {
-    let viewModel = LibraryArtistCellViewModel(artist: sampleArtist)
+    let viewModel = LibraryArtistCellViewModel(artist: sampleArtist, index: 1, numberFormatter: NumberFormatter())
     expect(viewModel.playcount).to(equal("10 plays"))
   }
 
-  func test_imageURL_returnsCorrectURLFromArtist() {
-    let viewModel = LibraryArtistCellViewModel(artist: sampleArtist)
-    let url = URL(string: "https://example.com/1.jpg")
-    expect(viewModel.imageURL).to(equal(url))
+  func test_displayIndex_returnsCorrectValue() {
+    let numberFormatter = NumberFormatter()
+    numberFormatter.numberStyle = .decimal
+
+    let viewModel = LibraryArtistCellViewModel(artist: sampleArtist, index: 1234, numberFormatter: numberFormatter)
+
+    expect(viewModel.displayIndex) == "1,234"
   }
 }

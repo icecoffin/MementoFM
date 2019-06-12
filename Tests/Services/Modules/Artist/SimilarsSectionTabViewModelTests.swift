@@ -35,7 +35,6 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
     return Artist(name: "Artist",
                   playcount: 1,
                   urlString: "",
-                  imageURLString: nil,
                   needsTagsUpdate: false,
                   tags: [],
                   topTags: tags)
@@ -46,15 +45,15 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
     let tag2 = Tag(name: "Tag2", count: 1)
     let tag3 = Tag(name: "Tag3", count: 1)
 
-    return [Artist(name: "Artist1", playcount: 1, urlString: "", imageURLString: nil, needsTagsUpdate: false, tags: [],
+    return [Artist(name: "Artist1", playcount: 1, urlString: "", needsTagsUpdate: false, tags: [],
                    topTags: [tag1, tag2, tag3]),
-            Artist(name: "Artist2", playcount: 2, urlString: "", imageURLString: nil, needsTagsUpdate: false, tags: [],
+            Artist(name: "Artist2", playcount: 2, urlString: "", needsTagsUpdate: false, tags: [],
                    topTags: [tag1, tag2]),
-            Artist(name: "Artist3", playcount: 3, urlString: "", imageURLString: nil, needsTagsUpdate: false, tags: [],
+            Artist(name: "Artist3", playcount: 3, urlString: "", needsTagsUpdate: false, tags: [],
                    topTags: [tag1, tag2]),
-            Artist(name: "Artist4", playcount: 4, urlString: "", imageURLString: nil, needsTagsUpdate: false, tags: [],
+            Artist(name: "Artist4", playcount: 4, urlString: "", needsTagsUpdate: false, tags: [],
                    topTags: [tag1, tag3]),
-            Artist(name: "Artist5", playcount: 1, urlString: "", imageURLString: nil, needsTagsUpdate: false, tags: [],
+            Artist(name: "Artist5", playcount: 1, urlString: "", needsTagsUpdate: false, tags: [],
                    topTags: [tag1])]
   }()
 

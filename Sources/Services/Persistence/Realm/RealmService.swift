@@ -28,7 +28,10 @@ final class RealmService: PersistentStore {
   // MARK: - Init & factory methods
   init(getRealm: @escaping () -> Realm,
        backgroundDispatcher: Dispatcher = AsyncDispatcher.global,
-       mainDispatcher: Dispatcher = AsyncDispatcher.main) {
+       mainDispatcher: Dispatcher = AsyncDispatcher.main,
+       migrator: RealmMigrating = RealmMigrator()) {
+    migrator.performMigrations()
+
     self.mainQueueRealm = getRealm()
     self.getBackgroundQueueRealm = getRealm
     self.backgroundDispatcher = backgroundDispatcher

@@ -12,17 +12,19 @@ import UIKit.UIFont
 protocol SimilarArtistCellViewModelProtocol {
   var name: String { get }
   var playcount: String { get }
-  var imageURL: URL? { get }
   var tags: NSAttributedString { get }
+  var displayIndex: String { get }
 }
 
 final class SimilarArtistCellViewModel: SimilarArtistCellViewModelProtocol {
   let artist: Artist
   private let commonTags: [String]
+  private let index: Int
 
-  init(artist: Artist, commonTags: [String]) {
+  init(artist: Artist, commonTags: [String], index: Int) {
     self.artist = artist
     self.commonTags = commonTags
+    self.index = index
   }
 
   var name: String {
@@ -31,14 +33,6 @@ final class SimilarArtistCellViewModel: SimilarArtistCellViewModelProtocol {
 
   var playcount: String {
     return "\(artist.playcount) plays".unlocalized
-  }
-
-  var imageURL: URL? {
-    if let imageURLString = artist.imageURLString {
-      return URL(string: imageURLString)
-    } else {
-      return nil
-    }
   }
 
   var tags: NSAttributedString {
@@ -50,5 +44,9 @@ final class SimilarArtistCellViewModel: SimilarArtistCellViewModelProtocol {
         return NSAttributedString(string: name)
       }
     }).joined(separator: ", ")
+  }
+
+  var displayIndex: String {
+    return String(index)
   }
 }

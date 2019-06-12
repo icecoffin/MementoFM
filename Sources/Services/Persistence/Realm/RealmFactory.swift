@@ -14,7 +14,7 @@ final class RealmFactory {
       let realm = try Realm()
       return realm
     } catch {
-      fatalError("Can't create a Realm instance")
+      fatalError("Can't create a Realm instance: \(error.localizedDescription)")
     }
   }
 
@@ -24,7 +24,7 @@ final class RealmFactory {
       let realm = try Realm(configuration: config)
       return realm
     } catch {
-      fatalError("Can't create an in-memory Realm instance")
+      fatalError("Can't create an in-memory Realm instance: \(error.localizedDescription)")
     }
   }
 }
