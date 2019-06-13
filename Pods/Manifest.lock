@@ -1,14 +1,14 @@
 PODS:
   - Alamofire (4.8.2)
-  - Kingfisher (5.5.0)
+  - Kingfisher (5.6.0)
   - ModelMapper (10.0.0):
     - ModelMapper/Core (= 10.0.0)
   - ModelMapper/Core (10.0.0)
   - Nimble (8.0.2)
-  - PromiseKit/Alamofire (6.8.4):
+  - PromiseKit/Alamofire (6.8.5):
     - Alamofire (~> 4.0)
     - PromiseKit/CorePromise
-  - PromiseKit/CorePromise (6.8.4)
+  - PromiseKit/CorePromise (6.8.5)
   - R.swift (5.0.3):
     - R.swift.Library (~> 5.0.0)
   - R.swift.Library (5.0.1)
@@ -30,7 +30,8 @@ DEPENDENCIES:
   - Nimble
   - PromiseKit/Alamofire
   - R.swift
-  - RealmSwift
+  - Realm (from `https://github.com/realm/realm-cocoa.git`, branch `tg/xcode-11-b1`)
+  - RealmSwift (from `https://github.com/realm/realm-cocoa.git`, branch `tg/xcode-11-b1`)
   - SnapKit
   - SVProgressHUD
   - SwiftLint
@@ -47,8 +48,6 @@ SPEC REPOS:
     - PromiseKit
     - R.swift
     - R.swift.Library
-    - Realm
-    - RealmSwift
     - SnapKit
     - SVProgressHUD
     - SwiftLint
@@ -56,12 +55,32 @@ SPEC REPOS:
     - TPKeyboardAvoiding
     - UICollectionViewLeftAlignedLayout
 
+EXTERNAL SOURCES:
+  Realm:
+    :branch: tg/xcode-11-b1
+    :git: https://github.com/realm/realm-cocoa.git
+    :submodules: true
+  RealmSwift:
+    :branch: tg/xcode-11-b1
+    :git: https://github.com/realm/realm-cocoa.git
+    :submodules: true
+
+CHECKOUT OPTIONS:
+  Realm:
+    :commit: 2e58dfe78e5f641262c4c5c7e5a13f05b434c610
+    :git: https://github.com/realm/realm-cocoa.git
+    :submodules: true
+  RealmSwift:
+    :commit: 2e58dfe78e5f641262c4c5c7e5a13f05b434c610
+    :git: https://github.com/realm/realm-cocoa.git
+    :submodules: true
+
 SPEC CHECKSUMS:
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
-  Kingfisher: 6fe5e67a90fd335e49b0f5c075ff55ac5ebedd94
+  Kingfisher: 1a50df6880a60bae26f3e21a0df3d17b892f5e0b
   ModelMapper: a8dbf2a2003bf626627b9fe7c9a22b3405a30404
   Nimble: 622629381bda1dd5678162f21f1368cec7cbba60
-  PromiseKit: 51794a832647e7b819336dc2279039ce9f1cc49b
+  PromiseKit: 9616b0afef31eae56ab9ce044c8ec2b8612a15cd
   R.swift: f5a87643b91ea569d23d6afb3eee9c743edde239
   R.swift.Library: cfe85d569d9bae6cb262922db130e7c3a7a5fad1
   Realm: 601cacc51d8be3b17a377ef787be0f6ee0e76cf1
@@ -73,6 +92,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
   UICollectionViewLeftAlignedLayout: 830bf6fa5bab9f9b464f62e3384f9d2e00b3c0f6
 
-PODFILE CHECKSUM: 1eee61830780f8327cd3043f91616b68bb7bbb01
+PODFILE CHECKSUM: bcdd57ecb19050fbae5c814e5f83337d21ecd497
 
 COCOAPODS: 1.7.1

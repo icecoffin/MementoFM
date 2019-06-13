@@ -8,7 +8,8 @@ target 'MementoFM' do
   pod 'Kingfisher'
   pod 'ModelMapper'
   pod 'PromiseKit/Alamofire'
-  pod 'RealmSwift'
+  pod 'Realm', git: 'https://github.com/realm/realm-cocoa.git', branch: 'tg/xcode-11-b1', submodules: true
+  pod 'RealmSwift', git: 'https://github.com/realm/realm-cocoa.git', branch: 'tg/xcode-11-b1', submodules: true
   pod 'R.swift'
   pod 'SnapKit'
   pod 'SVProgressHUD'
@@ -21,7 +22,8 @@ target 'MementoFM' do
     inherit! :search_paths
     # Pods for testing
     pod 'Nimble'
-    pod 'RealmSwift'
+    pod 'Realm', git: 'https://github.com/realm/realm-cocoa.git', branch: 'tg/xcode-11-b1', submodules: true
+    pod 'RealmSwift', git: 'https://github.com/realm/realm-cocoa.git', branch: 'tg/xcode-11-b1', submodules: true
   end
 
 end
