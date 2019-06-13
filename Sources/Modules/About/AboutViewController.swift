@@ -9,6 +9,7 @@
 import UIKit
 
 final class AboutViewController: UIViewController {
+  private let scrollView = UIScrollView()
   private let textView = UITextView()
 
   override func viewDidLoad() {
@@ -20,13 +21,20 @@ final class AboutViewController: UIViewController {
   private func configureView() {
     view.backgroundColor = .white
 
-    view.addSubview(textView)
+    view.addSubview(scrollView)
+    scrollView.snp.makeConstraints { make in
+      make.edges.equalToSuperview()
+    }
+
+    scrollView.addSubview(textView)
     textView.snp.makeConstraints { make in
       make.edges.equalToSuperview().inset(16)
+      make.centerX.equalToSuperview()
     }
 
     textView.font = .contentPrimary
     textView.isEditable = false
+    textView.isScrollEnabled = false
     textView.dataDetectorTypes = [.link]
     textView.text = aboutTexts().joined(separator: "\n\n")
   }

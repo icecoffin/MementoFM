@@ -55,7 +55,6 @@ final class ArtistSimilarsSectionHeaderView: UITableViewHeaderFooterView {
       make.bottom.equalToSuperview().inset(8).priority(999)
     }
 
-    segmentedControl.tintColor = .appPrimary
     segmentedControl.selectedSegmentIndex = 0
     segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
   }
