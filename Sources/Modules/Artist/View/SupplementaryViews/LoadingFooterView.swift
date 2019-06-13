@@ -9,7 +9,7 @@
 import UIKit
 
 final class LoadingFooterView: UITableViewHeaderFooterView {
-  private let activityIndicator = UIActivityIndicatorView(style: .gray)
+  private let activityIndicator = UIActivityIndicatorView(style: .medium)
 
   override init(reuseIdentifier: String?) {
     super.init(reuseIdentifier: reuseIdentifier)
@@ -29,15 +29,13 @@ final class LoadingFooterView: UITableViewHeaderFooterView {
       make.top.bottom.equalToSuperview().inset(4)
       make.centerX.equalToSuperview()
     }
-    startAnimating()
-  }
-
-  private func startAnimating() {
+    activityIndicator.color = .gray
     activityIndicator.startAnimating()
   }
 
   override func prepareForReuse() {
     super.prepareForReuse()
-    startAnimating()
+
+    activityIndicator.startAnimating()
   }
 }

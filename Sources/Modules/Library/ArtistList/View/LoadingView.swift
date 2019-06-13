@@ -11,7 +11,7 @@ import SnapKit
 
 final class LoadingView: UIView {
   private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-  private let activityIndicator = UIActivityIndicatorView(style: .white)
+  private let activityIndicator = UIActivityIndicatorView(style: .medium)
   private let messageLabel = UILabel()
 
   init() {
@@ -43,6 +43,7 @@ final class LoadingView: UIView {
       make.leading.equalToSuperview().offset(16)
     }
 
+    activityIndicator.color = .white
     activityIndicator.startAnimating()
   }
 

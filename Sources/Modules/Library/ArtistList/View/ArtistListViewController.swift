@@ -72,7 +72,7 @@ final class ArtistListViewController: UIViewController {
 
   private func configureSearchController() {
     searchController.searchResultsUpdater = self
-    searchController.dimsBackgroundDuringPresentation = false
+    searchController.obscuresBackgroundDuringPresentation = false
   }
 
   private func bindToViewModel() {
