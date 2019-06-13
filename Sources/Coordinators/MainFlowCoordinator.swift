@@ -33,30 +33,15 @@ final class MainFlowCoordinator: Coordinator {
     tabBarController.tabBar.isTranslucent = false
 
     let libraryNavigationController = NavigationController()
-    let libraryPopTracker = NavigationControllerPopTracker(navigationController: libraryNavigationController)
-    let libraryTabBarItem = UITabBarItem(title: "Library".unlocalized, image: R.image.iconLibrary(), selectedImage: nil)
-    libraryNavigationController.tabBarItem = libraryTabBarItem
-    let libraryCoordinator = ArtistListCoordinator(navigationController: libraryNavigationController,
-                                                   popTracker: libraryPopTracker,
-                                                   configuration: LibraryCoordinatorConfiguration(),
-                                                   viewModelFactory: LibraryViewModelFactory(dependencies: dependencies),
-                                                   dependencies: dependencies)
+    let libraryCoordinator = makeLibraryCoordinator(with: libraryNavigationController)
     addChildCoordinator(libraryCoordinator)
 
     let tagsNavigationController = NavigationController()
-    let tagsPopTracker = NavigationControllerPopTracker(navigationController: tagsNavigationController)
-    let tagsTabBarItem = UITabBarItem(title: "Tags".unlocalized, image: R.image.iconTag(), selectedImage: nil)
-    tagsNavigationController.tabBarItem = tagsTabBarItem
-    let tagsCoordinator = TagsCoordinator(navigationController: tagsNavigationController,
-                                          popTracker: tagsPopTracker,
-                                          dependencies: dependencies)
+    let tagsCoordinator = makeTagsCoordinator(with: tagsNavigationController)
     addChildCoordinator(tagsCoordinator)
 
     let settingsNavigationController = NavigationController()
-    let settingsTabBarItem = UITabBarItem(title: "Settings".unlocalized, image: R.image.iconSettings(), selectedImage: nil)
-    settingsNavigationController.tabBarItem = settingsTabBarItem
-    let settingsCoordinator = SettingsCoordinator(navigationController: settingsNavigationController, dependencies: dependencies)
-    settingsCoordinator.delegate = self
+    let settingsCoordinator = makeSettingsCoordinator(with: settingsNavigationController)
     addChildCoordinator(settingsCoordinator)
 
     tabBarController.viewControllers = [libraryNavigationController, tagsNavigationController, settingsNavigationController]
@@ -72,6 +57,37 @@ final class MainFlowCoordinator: Coordinator {
     window.makeKeyAndVisible()
 
     startChildren()
+  }
+
+  private func makeLibraryCoordinator(with navigationController: NavigationController) -> ArtistListCoordinator {
+    let popTracker = NavigationControllerPopTracker(navigationController: navigationController)
+    let tabBarItem = UITabBarItem(title: "Library".unlocalized, image: .tabBarLibrary, selectedImage: nil)
+    navigationController.tabBarItem = tabBarItem
+    return ArtistListCoordinator(navigationController: navigationController,
+                                 popTracker: popTracker,
+                                 configuration: LibraryCoordinatorConfiguration(),
+                                 viewModelFactory: LibraryViewModelFactory(dependencies: dependencies),
+                                 dependencies: dependencies)
+
+  }
+
+  private func makeTagsCoordinator(with navigationController: NavigationController) -> TagsCoordinator {
+    let popTracker = NavigationControllerPopTracker(navigationController: navigationController)
+    let tabBarItem = UITabBarItem(title: "Tags".unlocalized, image: .tabBarTags, selectedImage: nil)
+    navigationController.tabBarItem = tabBarItem
+    return TagsCoordinator(navigationController: navigationController,
+                           popTracker: popTracker,
+                           dependencies: dependencies)
+  }
+
+  private func makeSettingsCoordinator(with navigationController: NavigationController) -> SettingsCoordinator {
+    let tabBarItem = UITabBarItem(title: "Settings".unlocalized, image: .tabBarSettings, selectedImage: nil)
+    navigationController.tabBarItem = tabBarItem
+    let settingsCoordinator = SettingsCoordinator(navigationController: navigationController,
+                                                  dependencies: dependencies)
+    settingsCoordinator.delegate = self
+
+    return settingsCoordinator
   }
 }
 

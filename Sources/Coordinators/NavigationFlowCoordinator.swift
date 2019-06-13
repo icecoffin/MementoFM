@@ -14,7 +14,7 @@ protocol NavigationFlowCoordinator: Coordinator, NavigationControllerPopObserver
 
 extension NavigationFlowCoordinator {
   func makeBackButton(tapHandler: (() -> Void)? = nil) -> BlockBarButtonItem {
-    let button = BlockBarButtonItem(image: R.image.iconBack(), style: .plain) { [unowned self] in
+    let button = BlockBarButtonItem(image: .arrowLeft, style: .plain) { [unowned self] in
       self.navigationController.popViewController(animated: true)
       tapHandler?()
     }
