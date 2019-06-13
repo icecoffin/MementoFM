@@ -36,14 +36,6 @@ final class AboutViewController: UIViewController {
     textView.isEditable = false
     textView.isScrollEnabled = false
     textView.dataDetectorTypes = [.link]
-    textView.text = aboutTexts().joined(separator: "\n\n")
-  }
-
-  private func aboutTexts() -> [String] {
-    return [
-      "Artist information, photos and tags are provided by Last.fm (https://last.fm/api/)".unlocalized,
-      // swiftlint:disable:next line_length
-      "Icons are taken from the Subway Icon Set (https://github.com/mariuszostrowski/subway) by Mariusz Ostrowski (https://github.com/mariuszostrowski/), provided under CC BY 4.0. (http://creativecommons.org/licenses/by/4.0/)".unlocalized
-    ]
+    textView.text = "Artist information and tags are provided by Last.fm (https://last.fm/api/).".unlocalized
   }
 }

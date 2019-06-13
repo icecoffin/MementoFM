@@ -67,7 +67,6 @@ fastlane/screenshots
 fastlane/test_output
 
 # Custom
-GeneratedCode/
 
 Keys.swift
 default.profraw
