@@ -66,7 +66,7 @@ final class TagsViewController: UIViewController {
   }
 
   private func configureSearchController() {
-    searchController.dimsBackgroundDuringPresentation = false
+    searchController.obscuresBackgroundDuringPresentation = false
     searchController.searchBar.delegate = self
   }
 
