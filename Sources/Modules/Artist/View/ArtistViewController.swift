@@ -47,7 +47,7 @@ final class ArtistViewController: UIViewController {
     tableView.dataSource = dataSource
     tableView.delegate = dataSource
 
-    tableView.backgroundColor = .white
+    tableView.backgroundColor = .systemBackground
     tableView.separatorStyle = .none
 
     tableView.estimatedRowHeight = 80

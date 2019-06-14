@@ -55,7 +55,7 @@ final class LoadingView: UIView {
       make.trailing.equalToSuperview().inset(16)
     }
 
-    messageLabel.font = .contentSecondary
+    messageLabel.font = .secondaryContent
     messageLabel.textColor = .white
   }
 

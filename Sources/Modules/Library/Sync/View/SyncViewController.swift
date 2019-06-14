@@ -31,7 +31,7 @@ final class SyncViewController: UIViewController {
   }
 
   private func configureView() {
-    view.backgroundColor = .white
+    view.backgroundColor = .systemBackground
     addProgressView()
     addErrorView()
   }
@@ -109,7 +109,7 @@ private class SyncProgressView: UIView {
 
     statusLabel.numberOfLines = 0
     statusLabel.textAlignment = .center
-    statusLabel.font = .contentPrimary
+    statusLabel.font = .primaryContent
   }
 
   func updateStatus(_ newStatus: String) {
@@ -147,7 +147,7 @@ private class SyncErrorView: UIView {
 
     errorLabel.text = "An error occured:".unlocalized
     errorLabel.textAlignment = .center
-    errorLabel.font = .contentPrimary
+    errorLabel.font = .primaryContent
   }
 
   private func addDescriptionLabel() {
@@ -159,7 +159,7 @@ private class SyncErrorView: UIView {
 
     descriptionLabel.numberOfLines = 0
     descriptionLabel.textAlignment = .center
-    descriptionLabel.font = .contentPrimary
+    descriptionLabel.font = .primaryContent
   }
 
   private func addRetryButton() {

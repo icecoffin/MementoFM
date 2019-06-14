@@ -44,7 +44,7 @@ final class SettingCell: UITableViewCell {
       make.centerY.equalToSuperview()
     }
 
-    titleLabel.font = .contentPrimary
+    titleLabel.font = .primaryContent
   }
 
   func configure(with viewModel: SettingCellViewModel) {

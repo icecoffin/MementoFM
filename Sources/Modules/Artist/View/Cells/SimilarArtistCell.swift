@@ -75,7 +75,7 @@ final class SimilarArtistCell: UITableViewCell {
     }
 
     indexLabel.textAlignment = .right
-    indexLabel.font = .contentPrimary
+    indexLabel.font = .primaryContent
     indexLabel.textColor = .darkGray
   }
 
@@ -102,14 +102,14 @@ final class SimilarArtistCell: UITableViewCell {
 
   private func addPlaycountLabel() {
     innerStackView.addArrangedSubview(playcountLabel)
-    playcountLabel.font = .contentSecondary
+    playcountLabel.font = .secondaryContent
     playcountLabel.textColor = .gray
   }
 
   private func addTagsLabel() {
     innerStackView.addArrangedSubview(tagsLabel)
     tagsLabel.numberOfLines = 0
-    tagsLabel.font = .contentSecondary
+    tagsLabel.font = .secondaryContent
     tagsLabel.textColor = .darkGray
   }
 

@@ -180,8 +180,6 @@
 		656D2F051FB211DC0096DE27 /* EnterUsernameViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656D2F041FB211DC0096DE27 /* EnterUsernameViewModelTests.swift */; };
 		656FE2312276265900DD3A8E /* PersistentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656FE2302276265900DD3A8E /* PersistentStore.swift */; };
 		656FE2342276503200DD3A8E /* StubPersistentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656FE23222764FB200DD3A8E /* StubPersistentStore.swift */; };
-		6572D53222B028920064CC61 /* ArtistAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6572D53122B028920064CC61 /* ArtistAvatarView.swift */; };
-		6572D53422B0290D0064CC61 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6572D53322B0290D0064CC61 /* GradientView.swift */; };
 		6574CD611FB4C06E00B7ABE9 /* IgnoredTagsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6574CD601FB4C06E00B7ABE9 /* IgnoredTagsViewModelTests.swift */; };
 		657A56131FDD11D90061FD26 /* SimilarsSectionTabViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657A56121FDD11D90061FD26 /* SimilarsSectionTabViewModelTests.swift */; };
 		657A56151FDD17870061FD26 /* StubSimilarArtistsRequestStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657A56141FDD17870061FD26 /* StubSimilarArtistsRequestStrategy.swift */; };
@@ -397,8 +395,6 @@
 		656D2F041FB211DC0096DE27 /* EnterUsernameViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterUsernameViewModelTests.swift; sourceTree = "<group>"; };
 		656FE2302276265900DD3A8E /* PersistentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentStore.swift; sourceTree = "<group>"; };
 		656FE23222764FB200DD3A8E /* StubPersistentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubPersistentStore.swift; sourceTree = "<group>"; };
-		6572D53122B028920064CC61 /* ArtistAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistAvatarView.swift; sourceTree = "<group>"; };
-		6572D53322B0290D0064CC61 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		6574CD601FB4C06E00B7ABE9 /* IgnoredTagsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoredTagsViewModelTests.swift; sourceTree = "<group>"; };
 		657A56121FDD11D90061FD26 /* SimilarsSectionTabViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarsSectionTabViewModelTests.swift; sourceTree = "<group>"; };
 		657A56141FDD17870061FD26 /* StubSimilarArtistsRequestStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubSimilarArtistsRequestStrategy.swift; sourceTree = "<group>"; };
@@ -1103,8 +1099,6 @@
 			children = (
 				651F9E0A1EC09FDC006D9474 /* EmptyDataSetView.swift */,
 				6555AB551ED032BA00BDDF21 /* NavigationController.swift */,
-				6572D53122B028920064CC61 /* ArtistAvatarView.swift */,
-				6572D53322B0290D0064CC61 /* GradientView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1557,7 +1551,6 @@
 				651F9E5C1EC09FDD006D9474 /* ErrorConverter.swift in Sources */,
 				651CB35F1EC9DCDA00BC452C /* ArtistTopTagsSectionHeaderView.swift in Sources */,
 				651F9E151EC09FDC006D9474 /* AppCoordinator.swift in Sources */,
-				6572D53222B028920064CC61 /* ArtistAvatarView.swift in Sources */,
 				651CB35D1EC9DCDA00BC452C /* SimilarArtistCell.swift in Sources */,
 				65241C281EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift in Sources */,
 				6518B1311EC85C07001F4B74 /* TagCellViewModel.swift in Sources */,
@@ -1600,7 +1593,6 @@
 				653F21751F6D1272009A562A /* SimilarArtistsRequestStrategy.swift in Sources */,
 				651F9E481EC09FDD006D9474 /* SyncViewModel.swift in Sources */,
 				651F9E2A1EC09FDC006D9474 /* TopTagsList.swift in Sources */,
-				6572D53422B0290D0064CC61 /* GradientView.swift in Sources */,
 				65112D6E1F2F181700CBF8BA /* LastFMNetworkService.swift in Sources */,
 				651C3BBE1ECF523B00C00AD5 /* ArtistCoordinator.swift in Sources */,
 				6515EA9B1F49561700081F70 /* IgnoredTagService.swift in Sources */,

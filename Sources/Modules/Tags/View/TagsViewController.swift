@@ -54,7 +54,7 @@ final class TagsViewController: UIViewController {
     collectionView.snp.makeConstraints { make in
       make.edges.equalToSuperview()
     }
-    collectionView.backgroundColor = .white
+    collectionView.backgroundColor = .systemBackground
 
     collectionView.dataSource = self
     collectionView.delegate = self

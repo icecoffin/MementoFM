@@ -72,7 +72,7 @@ final class ArtistCell: UITableViewCell {
     }
 
     indexLabel.textAlignment = .right
-    indexLabel.font = .contentPrimary
+    indexLabel.font = .primaryContent
     indexLabel.textColor = .darkGray
   }
 
@@ -104,7 +104,7 @@ final class ArtistCell: UITableViewCell {
   private func addPlaycountLabel() {
     innerStackView.addArrangedSubview(playcountLabel)
 
-    playcountLabel.font = .contentSecondary
+    playcountLabel.font = .secondaryContent
     playcountLabel.textColor = .gray
   }
 
