@@ -30,7 +30,7 @@ final class ArtistSimilarsSectionHeaderView: UITableViewHeaderFooterView {
 
   private func setup() {
     backgroundView = UIView()
-    contentView.backgroundColor = UIColor.white.withAlphaComponent(0.9)
+    contentView.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.9)
 
     addTitleLabel()
     addSegmentedControl()

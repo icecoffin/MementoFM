@@ -43,7 +43,7 @@ class SimilarArtistCellViewModelTests: XCTestCase {
   }
 
   func test_tags_returnsCorrectlyAttributedTags_basedOnCommonTags() {
-    let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.boldContentSecondary]
+    let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.secondaryContentBold]
     var expectedTagsArray: [NSAttributedString] = []
     expectedTagsArray.append(NSAttributedString(string: "Tag1", attributes: attributes))
     expectedTagsArray.append(NSAttributedString(string: "Tag2"))

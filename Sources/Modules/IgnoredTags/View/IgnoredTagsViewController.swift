@@ -33,7 +33,7 @@ final class IgnoredTagsViewController: UIViewController {
   }
 
   private func configureView() {
-    view.backgroundColor = .white
+    view.backgroundColor = .systemBackground
 
     addTableView()
   }

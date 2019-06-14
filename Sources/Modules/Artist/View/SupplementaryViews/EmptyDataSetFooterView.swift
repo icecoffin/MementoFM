@@ -22,7 +22,7 @@ final class EmptyDataSetFooterView: UITableViewHeaderFooterView {
 
   private func setup() {
     backgroundView = UIView()
-    contentView.backgroundColor = .white
+    contentView.backgroundColor = .systemBackground
 
     contentView.addSubview(messageLabel)
     messageLabel.snp.makeConstraints { make in
@@ -31,7 +31,7 @@ final class EmptyDataSetFooterView: UITableViewHeaderFooterView {
     }
 
     messageLabel.numberOfLines = 0
-    messageLabel.font = .contentSecondary
+    messageLabel.font = .secondaryContent
     messageLabel.textColor = .darkGray
   }
 

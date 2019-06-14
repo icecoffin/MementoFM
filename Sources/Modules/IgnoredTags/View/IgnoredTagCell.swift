@@ -30,7 +30,7 @@ final class IgnoredTagCell: UITableViewCell {
     }
 
     textField.delegate = self
-    textField.font = .contentPrimary
+    textField.font = .primaryContent
   }
 
   func configure(with viewModel: IgnoredTagCellViewModel) {

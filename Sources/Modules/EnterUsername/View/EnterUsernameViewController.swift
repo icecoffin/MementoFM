@@ -38,7 +38,7 @@ final class EnterUsernameViewController: UIViewController {
   }
 
   private func configureView() {
-    view.backgroundColor = .white
+    view.backgroundColor = .systemBackground
     addStackView()
     addCurrentUsernameLabel()
     addUsernameTextField()
@@ -63,7 +63,7 @@ final class EnterUsernameViewController: UIViewController {
   private func addCurrentUsernameLabel() {
     stackView.addArrangedSubview(currentUsernameLabel)
 
-    currentUsernameLabel.font = .contentPrimary
+    currentUsernameLabel.font = .primaryContent
   }
 
   private func addUsernameTextField() {
@@ -73,7 +73,7 @@ final class EnterUsernameViewController: UIViewController {
     }
 
     usernameTextField.borderStyle = .roundedRect
-    usernameTextField.backgroundColor = .white
+    usernameTextField.backgroundColor = .systemBackground
 
     usernameTextField.autocapitalizationType = .none
     usernameTextField.autocorrectionType = .no
@@ -81,7 +81,7 @@ final class EnterUsernameViewController: UIViewController {
     usernameTextField.delegate = self
 
     usernameTextField.textAlignment = .center
-    usernameTextField.font = .contentPrimary
+    usernameTextField.font = .primaryContent
 
     usernameTextField.addTarget(self, action: #selector(usernameTextFieldEditingChanged(_:)), for: .editingChanged)
   }

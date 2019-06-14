@@ -50,7 +50,7 @@ final class ArtistTagsCell: UITableViewCell {
       make.edges.equalToSuperview()
     }
 
-    collectionView.backgroundColor = .white
+    collectionView.backgroundColor = .systemBackground
     collectionView.dataSource = self
     collectionView.delegate = self
 

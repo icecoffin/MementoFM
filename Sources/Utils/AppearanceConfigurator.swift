@@ -30,10 +30,10 @@ enum AppearanceConfigurator {
 
   private static func configureSearchBarAppearance() {
     let textFieldAppearance = UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self])
-    textFieldAppearance.defaultTextAttributes = [.font: UIFont.contentSecondary]
+    textFieldAppearance.defaultTextAttributes = [.font: UIFont.secondaryContent]
 
     let barButtonItemAppearance = UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self])
-    barButtonItemAppearance.setTitleTextAttributes([.font: UIFont.contentPrimary], for: .normal)
+    barButtonItemAppearance.setTitleTextAttributes([.font: UIFont.primaryContent], for: .normal)
   }
 
   private static func configureHUDAppearance() {

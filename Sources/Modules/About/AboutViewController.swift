@@ -19,7 +19,7 @@ final class AboutViewController: UIViewController {
   }
 
   private func configureView() {
-    view.backgroundColor = .white
+    view.backgroundColor = .systemBackground
 
     view.addSubview(scrollView)
     scrollView.snp.makeConstraints { make in
@@ -32,7 +32,7 @@ final class AboutViewController: UIViewController {
       make.centerX.equalToSuperview()
     }
 
-    textView.font = .contentPrimary
+    textView.font = .primaryContent
     textView.isEditable = false
     textView.isScrollEnabled = false
     textView.dataDetectorTypes = [.link]

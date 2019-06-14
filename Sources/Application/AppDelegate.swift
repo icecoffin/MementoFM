@@ -26,7 +26,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     setupLogging()
 
     let window = UIWindow(frame: UIScreen.main.bounds)
-    window.backgroundColor = .white
+    window.backgroundColor = .systemBackground
     AppearanceConfigurator.configureAppearance()
 
     let appCoordinator = AppCoordinator(window: window)
