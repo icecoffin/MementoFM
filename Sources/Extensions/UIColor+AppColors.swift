@@ -9,5 +9,5 @@
 import UIKit
 
 extension UIColor {
-  static let appPrimary = UIColor(red: 113/255.0, green: 178/255.0, blue: 128/255.0, alpha: 1)
+  static let appPrimary = UIColor(named: "appPrimary")
 }
