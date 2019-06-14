@@ -81,7 +81,7 @@ final class ArtistCell: UITableViewCell {
     separatorView.snp.makeConstraints { make in
       make.width.equalTo(0.5)
     }
-    separatorView.backgroundColor = .lightGray
+    separatorView.backgroundColor = .separator
   }
 
   private func addInnerStackView() {

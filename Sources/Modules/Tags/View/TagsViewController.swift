@@ -21,7 +21,7 @@ final class TagsViewController: UIViewController {
   init(searchController: UISearchController, viewModel: TagsViewModel) {
     self.searchController = searchController
     let layout = UICollectionViewLeftAlignedLayout()
-    layout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+    layout.sectionInset = UIEdgeInsets(top: 8, left: 16, bottom: 16, right: 16)
     collectionView = TPKeyboardAvoidingCollectionView(frame: .zero, collectionViewLayout: layout)
 
     self.viewModel = viewModel

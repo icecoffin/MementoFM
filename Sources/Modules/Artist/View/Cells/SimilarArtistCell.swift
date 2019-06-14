@@ -84,7 +84,7 @@ final class SimilarArtistCell: UITableViewCell {
     verticalSeparatorView.snp.makeConstraints { make in
       make.width.equalTo(0.5)
     }
-    verticalSeparatorView.backgroundColor = .lightGray
+    verticalSeparatorView.backgroundColor = .separator
   }
 
   private func addInnerStackView() {
@@ -119,7 +119,7 @@ final class SimilarArtistCell: UITableViewCell {
       make.leading.trailing.bottom.equalToSuperview()
       make.height.equalTo(0.5)
     }
-    horizontalSeparatorView.backgroundColor = .lightGray
+    horizontalSeparatorView.backgroundColor = .separator
   }
 
   // MARK: - Public methods
