@@ -46,9 +46,8 @@ final class MainFlowCoordinator: Coordinator {
 
     tabBarController.viewControllers = [libraryNavigationController, tagsNavigationController, settingsNavigationController]
 
-    if let currentRootView = window.rootViewController?.view {
-      UIView.transition(from: currentRootView, to: tabBarController.view, duration: 0.5,
-                        options: [.transitionFlipFromRight], completion: { _ in
+    if window.rootViewController != nil {
+      UIView.transition(with: window, duration: 0.5, options: .transitionFlipFromRight, animations: {
         self.window.rootViewController = tabBarController
       })
     } else {
