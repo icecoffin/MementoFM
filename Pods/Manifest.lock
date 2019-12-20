@@ -1,24 +1,26 @@
 PODS:
-  - Alamofire (4.8.2)
-  - Kingfisher (5.6.0)
+  - Alamofire (4.9.1)
+  - Kingfisher (5.12.0):
+    - Kingfisher/Core (= 5.12.0)
+  - Kingfisher/Core (5.12.0)
   - ModelMapper (10.0.0):
     - ModelMapper/Core (= 10.0.0)
   - ModelMapper/Core (10.0.0)
-  - Nimble (8.0.2)
-  - PromiseKit/Alamofire (6.9.0):
+  - Nimble (8.0.4)
+  - PromiseKit/Alamofire (6.12.0):
     - Alamofire (~> 4.0)
     - PromiseKit/CorePromise
-  - PromiseKit/CorePromise (6.9.0)
-  - Realm (3.16.2):
-    - Realm/Headers (= 3.16.2)
-  - Realm/Headers (3.16.2)
-  - RealmSwift (3.16.2):
-    - Realm (= 3.16.2)
-  - SnapKit (5.0.0)
+  - PromiseKit/CorePromise (6.12.0)
+  - Realm (4.3.0):
+    - Realm/Headers (= 4.3.0)
+  - Realm/Headers (4.3.0)
+  - RealmSwift (4.3.0):
+    - Realm (= 4.3.0)
+  - SnapKit (5.0.1)
   - SVProgressHUD (2.2.5)
-  - SwiftLint (0.33.0)
-  - SwiftyBeaver (1.7.0)
-  - TPKeyboardAvoiding (1.3.2)
+  - SwiftLint (0.38.0)
+  - SwiftyBeaver (1.8.4)
+  - TPKeyboardAvoiding (1.3.3)
   - UICollectionViewLeftAlignedLayout (1.0.2)
 
 DEPENDENCIES:
@@ -35,7 +37,7 @@ DEPENDENCIES:
   - UICollectionViewLeftAlignedLayout
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Alamofire
     - Kingfisher
     - ModelMapper
@@ -51,20 +53,20 @@ SPEC REPOS:
     - UICollectionViewLeftAlignedLayout
 
 SPEC CHECKSUMS:
-  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
-  Kingfisher: 1a50df6880a60bae26f3e21a0df3d17b892f5e0b
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  Kingfisher: dc6e0f53bb5b12c3e75bedb0e01bbd7a640eea69
   ModelMapper: a8dbf2a2003bf626627b9fe7c9a22b3405a30404
-  Nimble: 622629381bda1dd5678162f21f1368cec7cbba60
-  PromiseKit: 97397236f9e9c443d5b70a941d49cad25160af7a
-  Realm: 0e73b4edeb5b6a90da3d83206883b2e34e00eb38
-  RealmSwift: a81e650171ef0a5f999df1ed8d39ba8d6fce88a4
-  SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
+  Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
+  PromiseKit: c06835ba442ce5454ce3cdde470232804a6e4ff8
+  Realm: 9357c3589555793e1860a7104a7412bca4a48d99
+  RealmSwift: 402f1e379a8ef82c635313037b043f0f06de880c
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
-  SwiftLint: fed9c66336e41fc74dc48a73678380718f0c8b0e
-  SwiftyBeaver: 4cc0080d2e23f980652e28978db11a5c9da39165
-  TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
+  SwiftLint: 4105f061f9812b214568b736dab580ab2c73a582
+  SwiftyBeaver: f9a9aba96a6a6166e21682377804d728b0d20b95
+  TPKeyboardAvoiding: 6dd3fe3268b8f2627beb7ff3d82a3cacbdf66a36
   UICollectionViewLeftAlignedLayout: 830bf6fa5bab9f9b464f62e3384f9d2e00b3c0f6
 
 PODFILE CHECKSUM: cda5aee8d008fb01354224bb16ec02d67cd309ec
 
-COCOAPODS: 1.7.1
+COCOAPODS: 1.8.1
