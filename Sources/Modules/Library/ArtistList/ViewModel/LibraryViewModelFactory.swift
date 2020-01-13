@@ -37,3 +37,17 @@ final class ArtistsByTagViewModelFactory: ArtistListViewModelFactory {
     return ArtistsByTagViewModel(tagName: tagName, dependencies: dependencies)
   }
 }
+
+final class ArtistsByCountryViewModelFactory: ArtistListViewModelFactory {
+  private let dependencies: ArtistsByCountryViewModel.Dependencies
+  private let country: CountryType
+
+  init(country: CountryType, dependencies: ArtistsByCountryViewModel.Dependencies) {
+    self.country = country
+    self.dependencies = dependencies
+  }
+
+  func makeViewModel() -> ArtistListViewModel {
+    return ArtistsByCountryViewModel(country: country, dependencies: dependencies)
+  }
+}

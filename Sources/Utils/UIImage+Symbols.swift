@@ -11,6 +11,7 @@ import UIKit
 extension UIImage {
   static let tabBarLibrary = UIImage(systemName: "music.note.list")
   static let tabBarTags = UIImage(systemName: "tag")
+  static let tabBarCountries = UIImage(systemName: "map")
   static let tabBarSettings = UIImage(systemName: "gear")
 
   static let arrowLeft = UIImage(systemName: "arrow.left")

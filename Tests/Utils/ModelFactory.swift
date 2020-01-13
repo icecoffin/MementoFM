@@ -16,7 +16,8 @@ class ModelFactory {
                   urlString: "http://example.com/artist\(index)",
                   needsTagsUpdate: needsTagsUpdate,
                   tags: [],
-                  topTags: [])
+                  topTags: [],
+                  country: nil)
   }
 
   class func generateArtists(inAmount amount: Int, needsTagsUpdate: Bool = false) -> [Artist] {

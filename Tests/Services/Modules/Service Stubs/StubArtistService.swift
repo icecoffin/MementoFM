@@ -112,4 +112,16 @@ class StubArtistService: ArtistServiceProtocol {
       return .value(stubSimilarArtists)
     }
   }
+
+  var didCallUpdateCountries = false
+  func updateCountries(with countryProvider: CountryProviding,
+                       using dispatcher: Dispatcher) -> Promise<Void> {
+    didCallUpdateCountries = true
+    return .value(())
+  }
+
+  var stubCountriesWithCount: [String: Int] = [:]
+  func getCountriesWithCounts() -> [String: Int] {
+    return stubCountriesWithCount
+  }
 }

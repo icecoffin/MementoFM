@@ -17,7 +17,8 @@ class LibraryArtistCellViewModelTests: XCTestCase {
                   urlString: "",
                   needsTagsUpdate: false,
                   tags: [],
-                  topTags: [])
+                  topTags: [],
+                  country: nil)
   }
 
   func test_name_returnsArtistName() {

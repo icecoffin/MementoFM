@@ -1,0 +1,751 @@
+{
+  "abkhazia": "Abkhazia",
+  "abkhaz": "Abkhazia",
+  "abkhazian": "Abkhazia",
+
+  "afghanistan": "Afghanistan",
+  "afghan": "Afghan",
+
+  "albania": "Albania",
+  "albanian": "Albania",
+
+  "algeria": "Algeria",
+  "algerian": "Algerian",
+
+  "american samoa": "American Samoa",
+  "american samoan": "American Samoan",
+
+  "andorra": "Andorra",
+  "andorran": "Andorra",
+
+  "angola": "Angola",
+  "angolan": "Angola",
+
+  "anguilla": "Anguilla",
+  "anguillan": "Anguillan",
+
+  "antarctica": "Antarctica",
+  "antarctic": "Antarctica",
+
+  "antigua and barbuda": "Antigua and Barbuda",
+  "antigua": "Antigua and Barbuda",
+  "barbuda": "Antigua and Barbuda",
+  "antiguan": "Antigua and Barbuda",
+  "barbudan": "Antigua and Barbuda",
+
+  "argentina": "Argentina",
+  "argentine": "Argentina",
+  "argentinian": "Argentina",
+
+  "armenia": "Armenia",
+  "armenian": "Armenia",
+
+  "aruba": "Aruba",
+  "aruban": "Aruba",
+
+  "australia": "Australia",
+  "australian": "Australia",
+
+  "austria": "Austria",
+  "austrian": "Austria",
+
+  "azerbaijan": "Azerbaijan",
+  "azerbaijani": "Azerbaijan",
+  "azeri": "Azerbaijan",
+
+  "the bahamas": "The Bahamas",
+  "bahamas": "The Bahamas",
+  "bahamian": "The Bahamas",
+
+  "bahrain": "Bahrain",
+  "bahraini": "Bahrain",
+
+  "bangladesh": "Bangladesh",
+  "bangladeshi": "Bangladesh",
+
+  "barbados": "Barbados",
+  "barbadian": "Barbados",
+
+  "belarus": "Belarus",
+  "belarusian": "Belarus",
+  "belarussian": "Belarus",
+
+  "belgium": "Belgium",
+  "belgian": "Belgium",
+
+  "belize": "Belize",
+  "belizean": "Belize",
+
+  "benin": "Benin",
+  "beninese": "Benin",
+  "beninois": "Benin",
+
+  "bermuda": "Bermuda",
+  "bermudian": "Bermuda",
+  "bermudan": "Bermuda",
+
+  "bhutan": "Bhutan",
+  "bhutanese": "Bhutan",
+
+  "bolivia": "Bolivia",
+  "bolivian": "Bolivia",
+
+  "bonaire": "Bonaire",
+
+  "bosnia and herzegovina": "Bosnia and Herzegovina",
+  "bosnia": "Bosnia and Herzegovina",
+  "herzegovina": "Bosnia and Herzegovina",
+  "bosnian": "Bosnia and Herzegovina",
+  "herzegovinian": "Bosnia and Herzegovina",
+
+  "botswana": "Botswana",
+  "motswana": "Botswana",
+  "botswanan": "Botswana",
+
+  "brazil": "Brazil",
+  "brazilian": "Brazil",
+
+  "brunei": "Brunei",
+  "bruneian": "Brunei",
+
+  "bulgaria": "Bulgaria",
+  "bulgarian": "Bulgaria",
+
+  "burkina faso": "Burkina Faso",
+  "burkinabe": "Burkina Faso",
+
+  "burundi": "Burundi",
+  "burundian": "Burundi",
+
+  "cabo verde": "Cabo Verde",
+  "cabo verdean": "Cabo Verde",
+
+  "cambodia": "Cambodia",
+  "cambodian": "Cambodia",
+
+  "cameroon": "Cameroon",
+  "cameroonian": "Cameroon",
+
+  "canada": "Canada",
+  "canadian": "Canada",
+
+  "cayman islands": "Cayman Islands",
+  "caymanian": "Cayman Islands",
+
+  "central african republic": "Central African Republic",
+  "central african": "Central African Republic",
+
+  "chad": "Chad",
+  "chadian": "Chad",
+
+  "chile": "Chile",
+  "chilean": "Chile",
+
+  "china": "China",
+  "chinese": "China",
+  "taiwanese": "Taiwan",
+  "taiwan": "Taiwan",
+
+  "colombia": "Colombia",
+  "colombian": "Colombia",
+
+  "comoros": "Comoros",
+  "comoran": "Comoros",
+  "comorian": "Comoros",
+
+  "congo": "Congo",
+  "congolese": "Congo",
+
+  "cook islands": "Cook Islands",
+  "cook island": "Cook Islands",
+
+  "costa rica": "Costa Rica",
+  "costa rican": "Costa Rica",
+
+  "croatia": "Croatia",
+  "croatian": "Croatia",
+
+  "cuba": "Cuba",
+  "cuban": "Cuba",
+
+  "curacao": "Curaçao",
+  "curacaoan": "Curaçao",
+
+  "cyprus": "Cyprus",
+  "cypriot": "Cyprus",
+
+  "czech republic": "Czech Republic",
+  "czech": "Czech Republic",
+
+  "denmark": "Denmark",
+  "danish": "Denmark",
+
+  "djibouti": "Djibouti",
+  "djiboutian": "Djibouti",
+
+  "dominica": "Dominica",
+  "dominican republic": "Dominican Republic",
+  "dominican": "Dominican Republic",
+
+  "east timor": "East Timor",
+  "east timorese": "East Timor",
+
+  "ecuador": "Ecuador",
+  "ecuadorian": "Ecuador",
+
+  "egypt": "Egypt",
+  "egyptian": "Egypt",
+
+  "el salvador": "El Salvador",
+  "salvadoran": "El Salvador",
+
+  "england": "England",
+  "english": "England",
+
+  "equatorial guinea": "Equatorial Guinea",
+  "equatorial guinean": "Equatorial Guinea",
+  "equatoguinean": "Equatorial Guinea",
+
+  "eritrea": "Eritrea",
+  "eritrean": "Eritrea",
+
+  "estonia": "Estonia",
+  "estonian": "Estonia",
+
+  "eswatini": "Eswatini",
+  "swazi": "Eswatini",
+  "swati": "Eswatini",
+
+  "ethiopia": "Ethiopia",
+  "ethiopian": "Ethiopia",
+
+  "falkland islands": "Falkland Islands",
+
+  "faroe islands": "Faroe Islands",
+  "faroese": "Faroe Islands",
+
+  "finland": "Finland",
+  "finnish": "Finland",
+
+  "fiji": "Fiji",
+  "fijian": "Fiji",
+
+  "france": "France",
+  "french": "France",
+
+  "french guiana": "French Guiana",
+  "french guianese": "French Guiana",
+
+  "french polynesia": "French Polynesia",
+  "french polynesian": "French Polynesia",
+
+  "french southern territories": "French Southern Territories",
+
+  "gabon": "Gabon",
+  "gabonese": "Gabon",
+
+  "gambia": "Gambia",
+  "gambian": "Gambia",
+
+  "georgia": "Georgia",
+  "georgian": "Georgia",
+
+  "germany": "Germany",
+  "german": "Germany",
+
+  "ghana": "Ghana",
+  "ghanian": "Ghana",
+
+  "gibraltar": "Gibraltar",
+
+  "greece": "Greece",
+  "greek": "Greece",
+
+  "greenland": "Greenland",
+  "greenlandic": "Greenland",
+
+  "grenada": "Grenada",
+  "grenadian": "Grenada",
+
+  "guadeloupe": "Guadeloupe",
+
+  "guam": "Guam",
+  "guamanian": "Guam",
+
+  "guatemala": "Guatemala",
+  "guatemalan": "Guatemala",
+
+  "guernsey": "Guernsey",
+
+  "guinea": "Guinea",
+  "guinean": "Guinea",
+
+  "guinea-bissau": "Guinea-Bissau",
+  "bissau-guinean": "Guinea-Bissau",
+
+  "guyana": "Guyana",
+  "guyanese": "Guyana",
+
+  "haiti": "Haiti",
+  "haitian": "Haiti",
+
+  "honduras": "Honduras",
+  "honduran": "Honduras",
+
+  "hong kong": "Hong Kong",
+  "hong konger": "Hong Kong",
+
+  "hungary": "Hungary",
+  "hungarian": "Hungary",
+  "magyar": "Hungary",
+
+  "iceland": "Iceland",
+  "icelandic": "Iceland",
+
+  "india": "India",
+  "indian": "India",
+
+  "indonesia": "Indonesia",
+  "indonesian": "Indonesia",
+
+  "iran": "Iran",
+  "iranian": "Iran",
+  "persian": "Iran",
+
+  "iraq": "Iraq",
+  "iraqi": "Iraq",
+
+  "ireland": "Ireland",
+  "irish": "Ireland",
+
+  "isle of man": "Isle of Man",
+  "manx": "Isle of Man",
+
+  "israel": "Israel",
+  "israeli": "Israel",
+
+  "italy": "Italy",
+  "italian": "Italy",
+
+  "ivory coast": "Ivory Coast",
+  "ivorian": "Ivory Coast",
+
+  "jamaica": "Jamaica",
+  "jamaican": "Jamaica",
+
+  "japan": "Japan",
+  "japanese": "Japan",
+
+  "jersey": "Jersey",
+
+  "jordan": "Jordan",
+  "jordanian": "Jordan",
+
+  "kazakhstan": "Kazakhstan",
+  "kazakhstani": "Kazakhstan",
+  "kazakh": "Kazakhstan",
+
+  "kenya": "Kenya",
+  "kenyan": "Kenya",
+  
+  "kiribati": "Kiribati",
+
+  "north korea": "North Korea",
+  "north korean": "North Korea",
+
+  "south korea": "South Korea",
+  "south korean": "South Korea",
+  "korean": "South Korea",
+
+  "kosovo": "Kosovo",
+  "kosovar": "Kosovo",
+  "kosovan": "Kosovo",
+
+  "kuwait": "Kuwait",
+  "iuwaiti": "Kuwait",
+
+  "kyrgyzstan": "Kyrgyzstan",
+  "kyrgyzstani": "Kyrgyzstan",
+  "kyrgyz": "Kyrgyzstan",
+  "kirgiz": "Kyrgyzstan",
+  "kirghiz": "Kyrgyzstan",
+
+  "laos": "Laos",
+  "lao": "Laos",
+  "laotian": "Laos",
+
+  "latvia": "Latvia",
+  "latvian": "Latvia",
+  "lettish": "Latvia",
+  
+  "lebanon": "Lebanon",
+  "lebanese": "Lebanon",
+
+  "lesotho": "Lesotho",
+  "basotho": "Lesotho",
+
+  "liberia": "Liberia",
+  "liberian": "Liberia",
+
+  "libya": "Libya",
+  "libyan": "Libya",
+
+  "liechtenstein": "Liechtenstein",
+  "liechtensteiner": "Liechtenstein",
+
+  "lithuania": "Lithuania",
+  "lithuanian": "Lithuania",
+
+  "luxembourg": "Luxembourg",
+  "luxembourgish": "Luxembourg",
+
+  "macau": "Macau",
+  "macanese": "Macau",
+
+  "north macedonia": "North Macedonia",
+  "macedonia": "North Macedonia",
+  "macedonian": "North Macedonia",
+
+  "madagascar": "Madagascar",
+  "malagasy": "Madagascar",
+  
+  "malawi": "Malawi",
+  "malawian": "Malawi",
+  
+  "malaysia": "Malaysia",
+  "malaysian": "Malaysia",
+
+  "maldives": "Maldives",
+  "maldivian": "Maldives",
+
+  "mali": "Mali",
+  "malian": "Mali",
+  "malinese": "Mali",
+
+  "malta": "Malta",
+  "maltese": "Malta",
+  
+  "martinique": "Martinique",
+  "martiniquais": "Martinique",
+  "martinican": "Martinique",
+
+  "mauritania": "Mauritania",
+  "mauritanian": "Mauritania",
+
+  "mauritius": "Mauritius",
+  "mauritian": "Mauritius",
+
+  "mayotte": "Mayotte",
+  "mahoran": "Mayotte",
+
+  "mexico": "Mexico",
+  "mexican": "Mexico",
+
+  "federated states of micronesia": "Federated States of Micronesia",
+  "micronesia": "Federated States of Micronesia",
+  "micronesian": "Federated States of Micronesia",
+
+  "moldova": "Moldova",
+  "moldovan": "Moldova",
+
+  "monaco": "Monaco",
+  "monegasque": "Monaco",
+  "monacan": "Monaco",
+
+  "mongolia": "Mongolia",
+  "mongolian": "Mongolia",
+
+  "montenegro": "Montenegro",
+  "montenegrin": "Montenegro",
+
+  "montserrat": "Montserrat",
+  "montserratian": "Montserrat",
+
+  "morocco": "Morocco",
+  "moroccan": "Morocco",
+
+  "mozambique": "Mozambique",
+  "mozambican": "Mozambique",
+
+  "myanmar": "Myanmar",
+  "myanma": "Myanmar",
+  "burma": "Myanmar",
+  "burmese": "Myanmar",
+
+  "namibia": "Namibia",
+  "namibian": "Namibia",
+  
+  "nauru": "Nauru",
+  "nauruan": "Nauru",
+  
+  "nepal": "Nepal",
+  "nepali": "Nepal",
+  "nepalese": "Nepal",
+
+  "netherlands": "Netherlands",
+  "dutch": "Netherlands",
+  "netherlandic": "Netherlands",
+
+  "new caledonia": "New Caledonia",
+  "new caledonian": "New Caledonia",
+
+  "new zealand": "New Zealand",
+  "new zealandic": "New Zealand",
+  
+  "nicaragua": "Nicaragua",
+  "nicaraguan": "Nicaragua",
+
+  "niger": "Niger",
+  "nigerien": "Niger",
+
+  "nigeria": "Nigeria",
+  "nigerian": "Nigeria",
+
+  "niue": "Niue",
+  "niuean": "Niue",
+
+  "northern ireland": "Northern Ireland",
+  "northern irish": "Northern Ireland",
+
+  "norway": "Norway",
+  "norwegian": "Norway",
+
+  "oman": "Oman",
+  "omani": "Oman",
+
+  "pakistan": "Pakistan",
+  "pakistani": "Pakistan",
+
+  "palau": "Palau",
+  "palauan": "Palau",
+
+  "palestine": "Palestine",
+  "palestinian": "Palestine",
+
+  "panama": "Panama",
+  "panamanian": "Panama",
+
+  "papua new guinea": "Papua New Guinea",
+  "papua new guinean": "Papua New Guinea",
+  "Papuan": "Papua New Guinea",
+
+  "paraguay": "Paraguay",
+  "paraguayan": "Paraguay",
+
+  "peru": "Peru",
+  "peruvian": "Peru",
+
+  "philippines": "Philippines",
+  "filipino": "Philippines",
+  "philippine": "Philippines",
+
+  "poland": "Poland",
+  "polish": "Poland",
+
+  "portugal": "Portugal",
+  "portuguese": "Portugal",
+
+  "puerto rico": "Puerto Rico",
+  "puerto rican": "Puerto Rico",
+
+  "qatar": "Qatar",
+  "qatari": "Qatar",
+
+  "romania": "Romania",
+  "romanian": "Romania",
+
+  "russia": "Russia",
+  "russian": "Russia",
+
+  "rwanda": "Rwanda",
+  "rwandan": "Rwanda",
+
+  "saint kitts and nevis": "Saint Kitts and Nevis",
+  "kittitian": "Saint Kitts and Nevis",
+  "nevisian": "Saint Kitts and Nevis",
+
+  "saint lucia": "Saint Lucia",
+  "saint lucian": "Saint Lucia",
+
+  "saint martin": "Saint Martin",
+  "saint-martinoise": "Saint Martin",
+
+  "saint vincent and the grenadines": "Saint Vincent and the Grenadines",
+  "saint vincentian": "Saint Vincent and the Grenadines",
+  "vincentian": "Saint Vincent and the Grenadines",
+
+  "samoa": "Samoa",
+  "samoan": "Samoa",
+
+  "san marino": "San Marino",
+  "sammarinese": "San Marino",
+
+  "sao tome and principe": "São Tomé and Príncipe",
+  "sao tomean": "São Tomé and Príncipe",
+
+  "saudi arabia": "Saudi Arabia",
+  "saudi": "Saudi Arabia",
+  "saudi arabian": "Saudi Arabia",
+
+  "scotland": "Scotland",
+  "scottish": "Scotland",
+
+  "senegal": "Senegal",
+  "senegalese": "Senegal",
+
+  "serbia": "Serbia",
+  "serbian": "Serbian",
+
+  "seychelles": "Seychelles",
+  "seychellois": "Seychelles",
+
+  "sierra leone": "Sierra Leone",
+  "sierra leonean": "Sierra Leone",
+
+  "singapore": "Singapore",
+  "singaporean": "Singapore",
+
+  "sint maarten": "Sint Maarten",
+
+  "slovakia": "Slovakia",
+  "slovak": "Slovakia",
+
+  "slovenia": "Slovenia",
+  "slovenian": "Slovenia",
+  "slovene": "Slovenia",
+
+  "solomon islands": "Solomon Islands",
+
+  "somalia": "Somalia",
+  "somali": "Somalia",
+
+  "somaliland": "Somaliland",
+  "somalilander": "Somaliland",
+
+  "south africa": "South Africa",
+  "south african": "South Africa",
+
+  "south sssetia": "South Ossetia",
+  "south ossetian": "South Ossetia",
+
+  "south sudan": "South Sudan",
+  "south sudanese": "South Sudan",
+
+  "spain": "Spain",
+  "spanish": "Spain",
+
+  "sri lanka": "Sri Lanka",
+  "sri lankan": "Sri Lanka",
+
+  "sudan": "Sudan",
+  "sudanese": "Sudan",
+
+  "suriname": "Suriname",
+  "surinamese": "Suriname",
+
+  "sweden": "Sweden",
+  "swedish": "Sweden",
+
+  "switzerland": "Switzerland",
+  "swiss": "Switzerland",
+
+  "syria": "Syria",
+  "syrian": "Syria",
+
+  "tajikistan": "Tajikistan",
+  "tajikistani": "Tajikistan",
+
+  "tanzania": "Tanzania",
+  "tanzanian": "Tanzania",
+
+  "thailand": "Thailand",
+  "thai": "Thailand",
+
+  "timor-leste": "Timor-Leste",
+  "timorese": "Timor-Leste",
+
+  "togo": "Togo",
+  "togolese": "Togo",
+
+  "tokelau": "Tokelau",
+  "tokelauan": "Tokelau",
+
+  "tonga": "Tonga",
+  "tongan": "Tonga",
+
+  "trinidad and tobago": "Trinidad and Tobago",
+  "trinidadian": "Trinidad and Tobago",
+  "tobagonian": "Trinidad and Tobago",
+
+  "tunisia": "Tunisia",
+  "tunisian": "Tunisia",
+
+  "turkey": "Turkey",
+  "turkish": "Turkey",
+
+  "turkmenistan": "Turkmenistan",
+  "turkmen": "Turkmenistan",
+
+  "tuvalu": "Tuvalu",
+  "tuvaluan": "Tuvalu",
+
+  "uganda": "Uganda",
+  "ugandan": "Uganda",
+
+  "ukraine": "Ukraine",
+  "ukrainian": "Ukraine",
+
+  "united arab emirates": "United Arab Emirates",
+  "emirati": "United Arab Emirates",
+  "emirian": "United Arab Emirates",
+  "emiri": "United Arab Emirates",
+
+  "united kingdom": "UK",
+  "uk": "UK",
+  "british": "UK",
+
+  "united states of america": "USA",
+  "usa": "USA",
+  "american": "USA",
+
+  "uruguay": "Uruguay",
+  "uruguayan": "Uruguay",
+
+  "uzbekistan": "Uzbekistan",
+  "uzbekistani": "Uzbekistan",
+  "uzbek": "Uzbekistan",
+
+  "vanuatu": "Vanuatu",
+  "vanuatuan": "Vanuatuan",
+
+  "vatican": "Vatican",
+
+  "venezuela": "Venezuela",
+  "venezuelan": "Venezuela",
+
+  "vietnam": "Vietnam",
+  "vietnamese": "Vietnam",
+
+  "british virgin islands": "British Virgin Islands",
+  "us virgin islands": "U.S. Virgin Islands",
+
+  "wales": "Wales",
+  "welsh": "Wales",
+
+  "western sahara": "Western Sahara",
+  "sahrawi": "Western Sahara",
+  "sahrawian": "Western Sahara",
+  "sahraouian": "Western Sahara",
+
+  "yemen": "Yemen",
+  "yemeni": "Yemen",
+
+  "zambia": "Zambia",
+  "zambian": "Zambia",
+
+  "zimbabwe": "Zimbabwe",
+  "zimbabwean": "Zimbabwe",
+
+  "usbm": "USA",
+  "txdm": "USA"
+}

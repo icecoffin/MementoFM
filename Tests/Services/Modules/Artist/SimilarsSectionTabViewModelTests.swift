@@ -37,7 +37,8 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
                   urlString: "",
                   needsTagsUpdate: false,
                   tags: [],
-                  topTags: tags)
+                  topTags: tags,
+                  country: nil)
   }()
 
   let similarArtists: [Artist] = {
@@ -46,15 +47,15 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
     let tag3 = Tag(name: "Tag3", count: 1)
 
     return [Artist(name: "Artist1", playcount: 1, urlString: "", needsTagsUpdate: false, tags: [],
-                   topTags: [tag1, tag2, tag3]),
+                   topTags: [tag1, tag2, tag3], country: nil),
             Artist(name: "Artist2", playcount: 2, urlString: "", needsTagsUpdate: false, tags: [],
-                   topTags: [tag1, tag2]),
+                   topTags: [tag1, tag2], country: nil),
             Artist(name: "Artist3", playcount: 3, urlString: "", needsTagsUpdate: false, tags: [],
-                   topTags: [tag1, tag2]),
+                   topTags: [tag1, tag2], country: nil),
             Artist(name: "Artist4", playcount: 4, urlString: "", needsTagsUpdate: false, tags: [],
-                   topTags: [tag1, tag3]),
+                   topTags: [tag1, tag3], country: nil),
             Artist(name: "Artist5", playcount: 1, urlString: "", needsTagsUpdate: false, tags: [],
-                   topTags: [tag1])]
+                   topTags: [tag1], country: nil)]
   }()
 
   override func setUp() {

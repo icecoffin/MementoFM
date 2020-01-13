@@ -41,7 +41,7 @@ final class SettingsViewController: UIViewController {
     tableView.dataSource = self
     tableView.delegate = self
 
-    tableView.estimatedRowHeight = 60
+    tableView.estimatedRowHeight = 44
     tableView.rowHeight = UITableView.automaticDimension
     tableView.tableFooterView = UIView()
 

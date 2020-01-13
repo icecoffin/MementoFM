@@ -14,6 +14,7 @@ final class RealmArtist: Object, PersistentEntity {
   @objc dynamic var playcount = 0
   @objc dynamic var urlString = ""
   @objc dynamic var needsTagsUpdate = true
+  @objc dynamic var country: String?
   var tags = List<RealmTag>()
   var topTags = List<RealmTag>()
 
@@ -28,6 +29,7 @@ final class RealmArtist: Object, PersistentEntity {
     realmArtist.playcount = artist.playcount
     realmArtist.urlString = artist.urlString
     realmArtist.needsTagsUpdate = artist.needsTagsUpdate
+    realmArtist.country = artist.country
     for tag in artist.tags {
       let realmTag = RealmTag.from(transient: tag)
       realmArtist.tags.append(realmTag)
@@ -40,8 +42,12 @@ final class RealmArtist: Object, PersistentEntity {
   }
 
   func toTransient() -> Artist {
-    return Artist(name: name, playcount: playcount, urlString: urlString,
-                  needsTagsUpdate: needsTagsUpdate, tags: tags.map({ $0.toTransient() }),
-                  topTags: topTags.map({ $0.toTransient() }))
+    return Artist(name: name,
+                  playcount: playcount,
+                  urlString: urlString,
+                  needsTagsUpdate: needsTagsUpdate,
+                  tags: tags.map({ $0.toTransient() }),
+                  topTags: topTags.map({ $0.toTransient() }),
+                  country: country)
   }
 }

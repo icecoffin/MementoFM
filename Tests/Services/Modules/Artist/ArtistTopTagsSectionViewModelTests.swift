@@ -26,7 +26,8 @@ class ArtistTopTagsSectionViewModelTests: XCTestCase {
                   urlString: "",
                   needsTagsUpdate: false,
                   tags: tags,
-                  topTags: tags)
+                  topTags: tags,
+                  country: nil)
   }()
 
   func func_numberOfTopTags_returnsCorrectValue() {
@@ -49,7 +50,8 @@ class ArtistTopTagsSectionViewModelTests: XCTestCase {
                                   urlString: "",
                                   needsTagsUpdate: false,
                                   tags: [],
-                                  topTags: [])
+                                  topTags: [],
+                                  country: nil)
     let viewModel2 = ArtistTopTagsSectionViewModel(artist: artistWithNoTags)
 
     expect(viewModel2.hasTags).to(beFalse())

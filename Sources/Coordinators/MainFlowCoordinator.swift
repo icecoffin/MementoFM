@@ -40,11 +40,18 @@ final class MainFlowCoordinator: Coordinator {
     let tagsCoordinator = makeTagsCoordinator(with: tagsNavigationController)
     addChildCoordinator(tagsCoordinator)
 
+    let countriesNavigationController = NavigationController()
+    let countriesCoordinator = makeCountriesCoordinator(with: countriesNavigationController)
+    addChildCoordinator(countriesCoordinator)
+
     let settingsNavigationController = NavigationController()
     let settingsCoordinator = makeSettingsCoordinator(with: settingsNavigationController)
     addChildCoordinator(settingsCoordinator)
 
-    tabBarController.viewControllers = [libraryNavigationController, tagsNavigationController, settingsNavigationController]
+    tabBarController.viewControllers = [libraryNavigationController,
+                                        tagsNavigationController,
+                                        countriesNavigationController,
+                                        settingsNavigationController]
 
     if window.rootViewController != nil {
       UIView.transition(with: window, duration: 0.5, options: .transitionFlipFromRight, animations: {
@@ -77,6 +84,15 @@ final class MainFlowCoordinator: Coordinator {
     return TagsCoordinator(navigationController: navigationController,
                            popTracker: popTracker,
                            dependencies: dependencies)
+  }
+
+  private func makeCountriesCoordinator(with navigationController: NavigationController) -> CountriesCoordinator {
+    let popTracker = NavigationControllerPopTracker(navigationController: navigationController)
+    let tabBarItem = UITabBarItem(title: "Countries".unlocalized, image: .tabBarCountries, selectedImage: nil)
+    navigationController.tabBarItem = tabBarItem
+    return CountriesCoordinator(navigationController: navigationController,
+                                popTracker: popTracker,
+                                dependencies: dependencies)
   }
 
   private func makeSettingsCoordinator(with navigationController: NavigationController) -> SettingsCoordinator {

@@ -34,7 +34,8 @@ class RealmArtistTests: XCTestCase {
                                  urlString: "https://example.com",
                                  needsTagsUpdate: false,
                                  tags: tags,
-                                 topTags: topTags)
+                                 topTags: topTags,
+                                 country: nil)
     let realmArtist = RealmArtist.from(transient: transientArtist)
     expect(realmArtist.name).to(equal(transientArtist.name))
     expect(realmArtist.playcount).to(equal(transientArtist.playcount))

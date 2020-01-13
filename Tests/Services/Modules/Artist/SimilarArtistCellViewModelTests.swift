@@ -22,7 +22,8 @@ class SimilarArtistCellViewModelTests: XCTestCase {
                   urlString: "",
                   needsTagsUpdate: false,
                   tags: [],
-                  topTags: tags)
+                  topTags: tags,
+                  country: nil)
   }()
 
   let commonTags = ["Tag1", "Tag3"]

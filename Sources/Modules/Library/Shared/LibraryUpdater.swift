@@ -37,6 +37,7 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
   private let ignoredTagService: IgnoredTagServiceProtocol
   private let trackService: TrackServiceProtocol
   private let networkService: NetworkService
+  private let countryProvider: CountryProviding
 
   private(set) var isFirstUpdate: Bool = true
 
@@ -53,14 +54,20 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
   var didChangeStatus: ((LibraryUpdateStatus) -> Void)?
   var didReceiveError: ((Error) -> Void)?
 
-  init(userService: UserServiceProtocol, artistService: ArtistServiceProtocol, tagService: TagServiceProtocol,
-       ignoredTagService: IgnoredTagServiceProtocol, trackService: TrackServiceProtocol, networkService: NetworkService) {
+  init(userService: UserServiceProtocol,
+       artistService: ArtistServiceProtocol,
+       tagService: TagServiceProtocol,
+       ignoredTagService: IgnoredTagServiceProtocol,
+       trackService: TrackServiceProtocol,
+       networkService: NetworkService,
+       countryProvider: CountryProviding = CountryProvider()) {
     self.userService = userService
     self.artistService = artistService
     self.tagService = tagService
     self.ignoredTagService = ignoredTagService
     self.trackService = trackService
     self.networkService = networkService
+    self.countryProvider = countryProvider
   }
 
   func requestData() {
@@ -69,6 +76,8 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
       self.requestLibrary()
     }.then {
       self.getArtistsTags()
+    }.then {
+      self.artistService.updateCountries(with: self.countryProvider, using: AsyncDispatcher.global)
     }.done { _ in
       self.didFinishLoading?()
     }.catch { error in
@@ -132,9 +141,11 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
       let ignoredTags = self.ignoredTagService.ignoredTags()
       let calculator = ArtistTopTagsCalculator(ignoredTags: ignoredTags)
 
-      self.artistService.updateArtist(requestProgress.artist, with: requestProgress.topTagsList.tags).then { artist in
+      self.artistService.updateArtist(requestProgress.artist,
+                                      with: requestProgress.topTagsList.tags).then { artist -> Promise<Void> in
         return self.artistService.calculateTopTags(for: artist, using: calculator)
-      }.catch { error in
+      }
+      .catch { error in
         self.didReceiveError?(error)
       }
 

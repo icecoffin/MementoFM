@@ -26,6 +26,10 @@ protocol ArtistServiceProtocol: class {
   func artists(filteredUsing predicate: NSPredicate?,
                sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<Artist>
   func getSimilarArtists(for artist: Artist, limit: Int) -> Promise<[Artist]>
+  // TODO: Country service
+  func updateCountries(with countryProvider: CountryProviding,
+                       using dispatcher: Dispatcher) -> Promise<Void>
+  func getCountriesWithCounts() -> [String: Int]
 }
 
 extension ArtistServiceProtocol {
@@ -141,6 +145,36 @@ final class ArtistService: ArtistServiceProtocol {
       let predicate = NSPredicate(format: "name in %@", artistNames)
       let artists = self.persistentStore.objects(Artist.self, filteredBy: predicate)
       return .value(artists)
+    }
+  }
+
+  func updateCountries(with countryProvider: CountryProviding,
+                       using dispatcher: Dispatcher) -> Promise<Void> {
+    return dispatcher.dispatch { () -> [Artist] in
+      let artists = self.persistentStore.objects(Artist.self)
+      return artists.map {
+        if let country = countryProvider.topCountry(for: $0) {
+          return $0.updatingCountry(to: country)
+        } else {
+          return $0
+        }
+      }
+    }.then { artists in
+      return self.persistentStore.save(artists)
+    }
+  }
+
+  func getCountriesWithCounts() -> [String: Int] {
+    let artists = persistentStore.objects(Artist.self)
+    return artists.reduce([:]) { result, artist in
+      var mutableResult = result
+      let country = artist.country ?? ""
+      if let value = mutableResult[country] {
+        mutableResult[country] = value + 1
+      } else {
+        mutableResult[country] = 1
+      }
+      return mutableResult
     }
   }
 }

@@ -71,13 +71,15 @@ class TagServiceTests: XCTestCase {
                          urlString: "",
                          needsTagsUpdate: false,
                          tags: tags1,
-                         topTags: topTags1)
+                         topTags: topTags1,
+                         country: nil)
     let artist2 = Artist(name: "Artist2",
                          playcount: 1,
                          urlString: "",
                          needsTagsUpdate: false,
                          tags: tags2,
-                         topTags: topTags2)
+                         topTags: topTags2,
+                         country: nil)
 
     let tagService = TagService(persistentStore: persistentStore, repository: TagEmptyStubRepository())
 

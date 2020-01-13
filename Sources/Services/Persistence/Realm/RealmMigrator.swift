@@ -15,9 +15,13 @@ protocol RealmMigrating {
 
 final class RealmMigrator: RealmMigrating {
   func performMigrations() {
-    let config = Realm.Configuration(schemaVersion: 1, migrationBlock: { _, oldSchemaVersion in
+    let config = Realm.Configuration(schemaVersion: 2, migrationBlock: { _, oldSchemaVersion in
       if oldSchemaVersion < 1 {
         // Property 'RealmArtist.imageURLString' has been removed.
+      }
+
+      if oldSchemaVersion < 2 {
+        // Property 'RealmArtist.country' has been added.
       }
     })
 
