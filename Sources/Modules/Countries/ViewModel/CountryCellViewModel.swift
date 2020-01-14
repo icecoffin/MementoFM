@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum CountryType {
+enum CountryType: Equatable {
   case unknown
   case named(name: String)
 
