@@ -7,10 +7,11 @@ Have you ever tried to find a music band which is similar to the one you're curr
 * Browse and search your Last.fm library
 * Find similar artists based on tag intersection
 * Search artists by tag
+* Browse artists by country
 * Setup tags which will be ignored during similarity check (e.g. too broad ones or irrelevant to the actual music content) 
 
 ## Screenshots
-<img src="Screenshots/screen_1.png" width="280"> <img src="Screenshots/screen_2.png" width="280"> <img src="Screenshots/screen_3.png" width="280">
+<img src="Screenshots/screen_1.png" width="190"> <img src="Screenshots/screen_2.png" width="190"> <img src="Screenshots/screen_3.png" width="190"> <img src="Screenshots/screen_4.png" width="190">
 
 (Originally there were also photos of the artists but then Last.fm started to return placeholders instead of actual photos. Turns out they don't allow to use those photos anymore.)
 
