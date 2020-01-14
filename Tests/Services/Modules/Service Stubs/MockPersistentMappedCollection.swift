@@ -12,12 +12,14 @@ import Foundation
 class MockPersistentMappedCollection<Element: TransientEntity>: PersistentMappedCollection {
   var values: [Element.PersistentType.TransientType]
 
+  var customCount: Int?
   var count: Int {
-    return values.count
+    return customCount ?? values.count
   }
 
+  var customIsEmpty: Bool?
   var isEmpty: Bool {
-    return values.isEmpty
+    return customIsEmpty ?? values.isEmpty
   }
 
   var sortDescriptors: [NSSortDescriptor] = []

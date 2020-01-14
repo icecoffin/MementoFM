@@ -35,8 +35,8 @@ class LibraryViewModelTests: XCTestCase {
     var onApplicationDidBecomeActive: (() -> Void)?
   }
 
-  var realm: Realm!
   var libraryUpdater: StubLibraryUpdater!
+  var collection: MockPersistentMappedCollection<Artist>!
   var artistService: StubArtistService!
   var userService: StubUserService!
   var dependencies: Dependencies!
@@ -55,22 +55,24 @@ class LibraryViewModelTests: XCTestCase {
 
   override func setUp() {
     super.setUp()
-    realm = RealmFactory.inMemoryRealm()
+
     libraryUpdater = StubLibraryUpdater()
+    collection = MockPersistentMappedCollection(values: sampleArtists)
     artistService = StubArtistService()
-    artistService.expectedRealmForArtists = realm
+    artistService.customMappedCollection = AnyPersistentMappedCollection(collection)
     userService = StubUserService()
     dependencies = Dependencies(libraryUpdater: libraryUpdater, artistService: artistService, userService: userService)
   }
 
   override func tearDown() {
-    realm = nil
     libraryUpdater = nil
     artistService = nil
     userService = nil
     dependencies = nil
     super.tearDown()
   }
+
+  // MARK: - requestDataIfNeeded
 
   func test_requestDataIfNeeded_requestsDataOnFirstUpdate() {
     let viewModel = LibraryViewModel(dependencies: dependencies)
@@ -103,15 +105,17 @@ class LibraryViewModelTests: XCTestCase {
     expect(self.libraryUpdater.didRequestData).to(beFalse())
   }
 
+  // MARK: - itemCount
+
   func test_itemCount_returnsCorrectValue() {
-    writeArtists()
     let viewModel = LibraryViewModel(dependencies: dependencies)
 
     expect(viewModel.itemCount).to(equal(sampleArtists.count))
   }
 
+  // MARK: - artistViewModelAtIndexPath
+
   func test_artistViewModelAtIndexPath_returnsCorrectValue() {
-    writeArtists()
     let viewModel = LibraryViewModel(dependencies: dependencies)
     let indexPath = IndexPath(row: 1, section: 0)
 
@@ -120,8 +124,9 @@ class LibraryViewModelTests: XCTestCase {
     expect(artistViewModel.name).to(equal(sampleArtists[1].name))
   }
 
+  // MARK: - selectArtistAtIndexPath
+
   func test_selectArtistAtIndexPath_notifiesDelegate() {
-    writeArtists()
     let viewModel = LibraryViewModel(dependencies: dependencies)
     let delegate = StubLibraryViewModelDelegate()
     viewModel.delegate = delegate
@@ -132,23 +137,40 @@ class LibraryViewModelTests: XCTestCase {
     expect(delegate.selectedArtist).to(equal(sampleArtists[1]))
   }
 
-  func test_performSearch_filtersItems_basedOnText() {
-    writeArtists()
-    let viewModel = LibraryViewModel(dependencies: dependencies)
+  // MARK: - performSearch
 
-    viewModel.performSearch(withText: "1")
-
-    expect(viewModel.itemCount).to(equal(1))
-  }
-
-  func test_performSearch_returnsAllItems_whenTextIsEmpty() {
-    writeArtists()
+  func test_performSearch_setsPredicateToNil_ifTextIsEmpty() {
     let viewModel = LibraryViewModel(dependencies: dependencies)
 
     viewModel.performSearch(withText: "")
 
-    expect(viewModel.itemCount).to(equal(sampleArtists.count))
+    let predicateFormat = artistService.customMappedCollection.predicate?.predicateFormat
+    expect(predicateFormat).to(beNil())
   }
+
+  func test_performSearch_setsCorrectPredicate_ifTextIsNotEmpty() {
+    let viewModel = LibraryViewModel(dependencies: dependencies)
+
+    viewModel.performSearch(withText: "test")
+
+    let predicateFormat = artistService.customMappedCollection.predicate?.predicateFormat
+    expect(predicateFormat) == "name CONTAINS[cd] \"test\""
+  }
+
+  func test_performSearch_callsDidUpdateData() {
+    let viewModel = LibraryViewModel(dependencies: dependencies)
+
+    var didUpdateData = false
+    viewModel.didUpdateData = { _ in
+      didUpdateData = true
+    }
+
+    viewModel.performSearch(withText: "test")
+
+    expect(didUpdateData) == true
+  }
+
+  // MARK: - libraryUpdater
 
   func test_libraryUpdater_requestsDataOnApplicationDidBecomeActive() {
     let applicationStateObserver = StubApplicationStateObserver()
@@ -160,6 +182,8 @@ class LibraryViewModelTests: XCTestCase {
 
     expect(self.libraryUpdater.didRequestData).to(beTrue())
   }
+
+  // MARK: - didStartLoading
 
   func test_didStartLoading_isCalledOnLibraryUpdate() {
     let viewModel = LibraryViewModel(dependencies: dependencies)
@@ -173,6 +197,8 @@ class LibraryViewModelTests: XCTestCase {
     expect(didStartLoading).to(beTrue())
   }
 
+  // MARK: - didFinishLoading
+
   func test_didFinishLoading_isCalledWhenLibraryIsUpdated() {
     let viewModel = LibraryViewModel(dependencies: dependencies)
     var didFinishLoading = false
@@ -185,8 +211,11 @@ class LibraryViewModelTests: XCTestCase {
     expect(didFinishLoading).to(beTrue())
   }
 
+  // MARK: - didUpdateData
+
   func test_didUpdateData_isCalledWhenLibraryIsUpdated() {
     let viewModel = LibraryViewModel(dependencies: dependencies)
+    collection.customIsEmpty = true
 
     var didUpdateData = false
     var dataIsEmpty = false
@@ -201,6 +230,8 @@ class LibraryViewModelTests: XCTestCase {
     expect(dataIsEmpty).to(beTrue())
   }
 
+  // MARK: - didReceiveError
+
   func test_didReceiveError_isCalledOnLibraryUpdateError() {
     let viewModel = LibraryViewModel(dependencies: dependencies)
     var didReceiveError = false
@@ -212,6 +243,8 @@ class LibraryViewModelTests: XCTestCase {
 
     expect(didReceiveError).to(beTrue())
   }
+
+  // MARK: - didChangeStatus
 
   func test_didChangeStatus_isCalledWithCorrectStatus_whenStatusChanges() {
     let viewModel = LibraryViewModel(dependencies: dependencies)
@@ -242,12 +275,5 @@ class LibraryViewModelTests: XCTestCase {
                             "Getting recent tracks: page 1 out of 10",
                             "Getting tags for artists: 1 out of 10"]
     expect(statuses).to(equal(expectedStatuses))
-  }
-
-  private func writeArtists() {
-    let realmArtists = sampleArtists.map { RealmArtist.from(transient: $0) }
-    realm.beginWrite()
-    realm.add(realmArtists)
-    try? realm.commitWrite()
   }
 }

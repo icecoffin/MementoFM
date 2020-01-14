@@ -28,9 +28,10 @@ class ArtistsByTagViewModelTests: XCTestCase {
     }
   }
 
-  var realm: Realm!
+  var collection: MockPersistentMappedCollection<Artist>!
   var artistService: StubArtistService!
   var dependencies: Dependencies!
+  var viewModel: ArtistsByTagViewModel!
 
   var sampleArtists: [Artist] = {
     let tag1 = Tag(name: "Tag1", count: 1)
@@ -49,85 +50,71 @@ class ArtistsByTagViewModelTests: XCTestCase {
   }()
 
   override func setUp() {
-    realm = RealmFactory.inMemoryRealm()
     artistService = StubArtistService()
-    artistService.expectedRealmForArtists = realm
+    collection = MockPersistentMappedCollection<Artist>(values: sampleArtists)
+    artistService.customMappedCollection = AnyPersistentMappedCollection(collection)
     dependencies = Dependencies(artistService: artistService)
+
+    viewModel = ArtistsByTagViewModel(tagName: "Tag1", dependencies: dependencies)
   }
 
   override func tearDown() {
-    realm = nil
     artistService = nil
     dependencies = nil
   }
 
-  func test_itemCount_returnsCorrectValue() {
-    writeArtists()
-    let viewModel = ArtistsByTagViewModel(tagName: "Tag1", dependencies: dependencies)
+  // MARK: - itemCount
 
-    expect(viewModel.itemCount).to(equal(4))
+  func test_itemCount_returnsCorrectValue() {
+    collection.customCount = 4
+
+    expect(self.viewModel.itemCount).to(equal(4))
   }
+
+  // MARK: - title
 
   func test_title_returnsCorrectValue() {
-    let viewModel = ArtistsByTagViewModel(tagName: "Tag1", dependencies: dependencies)
-
-    expect(viewModel.title).to(equal("Tag1"))
+    expect(self.viewModel.title).to(equal("Tag1"))
   }
 
+  // MARK: - artistViewModelAtIndexPath
+
   func test_artistViewModelAtIndexPath_returnsCorrectValue() {
-    writeArtists()
-    let viewModel = ArtistsByTagViewModel(tagName: "Tag1", dependencies: dependencies)
     let indexPath = IndexPath(row: 1, section: 0)
     let artistViewModel = viewModel.artistViewModel(at: indexPath)
 
     expect(artistViewModel.name).to(equal("Artist2"))
   }
 
+  // MARK: - selectArtistAtIndexPath
+
   func test_selectArtistAtIndexPath_notifiesDelegate() {
-    let artists = sampleArtists
-    writeArtists()
-    let viewModel = ArtistsByTagViewModel(tagName: "Tag1", dependencies: dependencies)
     let delegate = StubArtistsByTagViewModelDelegate()
     viewModel.delegate = delegate
     let indexPath = IndexPath(row: 1, section: 0)
 
     viewModel.selectArtist(at: indexPath)
 
-    expect(delegate.selectedArtist).to(equal(artists[1]))
+    expect(delegate.selectedArtist).to(equal(sampleArtists[1]))
   }
 
-  func test_performSearch_filtersArtistsBasedOnText() {
-    writeArtists()
-    let viewModel = ArtistsByTagViewModel(tagName: "Tag1", dependencies: dependencies)
-    var expectedIsEmpty = true
-    viewModel.didUpdateData = { isEmpty in
-      expectedIsEmpty = isEmpty
+  // MARK: - performSearch
+
+  func test_performSearch_setsCorrectPredicate() {
+    viewModel.performSearch(withText: "test")
+
+    let predicateFormat = artistService.customMappedCollection.predicate?.predicateFormat
+    expect(predicateFormat) == "ANY topTags.name == \"Tag1\" AND name CONTAINS[cd] \"test\""
+  }
+
+  func test_performSearch_callsDidUpdateData() {
+    var didUpdateData = false
+    viewModel.didUpdateData = { _ in
+      didUpdateData = true
     }
 
-    viewModel.performSearch(withText: "1")
+    viewModel.performSearch(withText: "test")
 
-    expect(viewModel.itemCount).toEventually(equal(1))
-    expect(expectedIsEmpty).toEventually(beFalse())
-  }
-
-  func test_performSearch_returnsEmptyResultForNonExistentText() {
-    writeArtists()
-    let viewModel = ArtistsByTagViewModel(tagName: "Tag1", dependencies: dependencies)
-    var expectedIsEmpty = false
-    viewModel.didUpdateData = { isEmpty in
-      expectedIsEmpty = isEmpty
-    }
-
-    viewModel.performSearch(withText: "231")
-
-    expect(viewModel.itemCount).toEventually(equal(0))
-    expect(expectedIsEmpty).toEventually(beTrue())
-  }
-
-  private func writeArtists() {
-    let realmArtists = sampleArtists.map { RealmArtist.from(transient: $0) }
-    realm.beginWrite()
-    realm.add(realmArtists)
-    try? realm.commitWrite()
+    expect(didUpdateData) == true
   }
 }

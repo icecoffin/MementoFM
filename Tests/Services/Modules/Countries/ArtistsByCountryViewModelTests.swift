@@ -26,6 +26,7 @@ class ArtistsByCountryViewModelTests: XCTestCase {
     }
   }
 
+  var collection: MockPersistentMappedCollection<Artist>!
   var artistService: StubArtistService!
   var dependencies: Dependencies!
   var viewModel: ArtistsByCountryViewModel!
@@ -38,14 +39,16 @@ class ArtistsByCountryViewModelTests: XCTestCase {
     viewModel = ArtistsByCountryViewModel(country: .named(name: "Germany"), dependencies: dependencies)
 
     let artists = ModelFactory.generateArtists(inAmount: 10)
-    let collection = MockPersistentMappedCollection<Artist>(values: artists)
+    collection = MockPersistentMappedCollection<Artist>(values: artists)
     artistService.customMappedCollection = AnyPersistentMappedCollection(collection)
   }
 
   // MARK: - itemCount
 
   func test_itemCount_returnsCorrectValue() {
-    expect(self.viewModel.itemCount) == 10
+    collection.customCount = 5
+
+    expect(self.viewModel.itemCount) == 5
   }
 
   // MARK: - title
@@ -99,7 +102,7 @@ class ArtistsByCountryViewModelTests: XCTestCase {
       didUpdateData = true
     }
 
-    viewModel.performSearch(withText: "Test")
+    viewModel.performSearch(withText: "test")
 
     expect(didUpdateData) == true
   }

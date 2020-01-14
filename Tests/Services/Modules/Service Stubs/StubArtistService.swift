@@ -9,7 +9,6 @@
 import Foundation
 @testable import MementoFM
 import PromiseKit
-import RealmSwift
 
 class StubArtistService: ArtistServiceProtocol {
   var user: String = ""
@@ -90,21 +89,12 @@ class StubArtistService: ArtistServiceProtocol {
     }
   }
 
-  var expectedRealmForArtists: Realm!
   var customMappedCollection: AnyPersistentMappedCollection<Artist>!
   var artistsParameters: (predicate: NSPredicate?, sortDescriptors: [NSSortDescriptor])?
   func artists(filteredUsing predicate: NSPredicate?,
                sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<Artist> {
     artistsParameters = (predicate: predicate, sortDescriptors: sortDescriptors)
-
-    if let customMappedCollection = customMappedCollection {
-      return customMappedCollection
-    }
-
-    let realmMappedCollection = RealmMappedCollection<Artist>(realm: expectedRealmForArtists,
-                                                              predicate: predicate,
-                                                              sortDescriptors: sortDescriptors)
-    return AnyPersistentMappedCollection(realmMappedCollection)
+    return customMappedCollection
   }
 
   var expectedSimilarArtistsArtist: Artist?
