@@ -16,6 +16,7 @@ final class LoadingView: UIView {
 
   init() {
     super.init(frame: .zero)
+
     setup()
   }
 

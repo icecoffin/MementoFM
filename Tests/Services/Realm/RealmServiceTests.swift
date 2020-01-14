@@ -18,6 +18,7 @@ class RealmServiceTests: XCTestCase {
 
   override func setUp() {
     super.setUp()
+
     realm = RealmFactory.inMemoryRealm()
     realmService = RealmService(getRealm: {
       return RealmFactory.inMemoryRealm()

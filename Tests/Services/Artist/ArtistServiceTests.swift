@@ -16,6 +16,7 @@ class ArtistServiceTests: XCTestCase {
 
   override func setUp() {
     super.setUp()
+
     persistentStore = StubPersistentStore()
   }
 

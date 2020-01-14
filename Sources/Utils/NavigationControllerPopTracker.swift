@@ -24,6 +24,7 @@ final class NavigationControllerPopTracker: NSObject {
   init(navigationController: NavigationController) {
     self.navigationController = navigationController
     super.init()
+
     navigationController.delegate = self
   }
 

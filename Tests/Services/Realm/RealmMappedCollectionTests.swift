@@ -17,6 +17,7 @@ class RealmMappedCollectionTests: XCTestCase {
 
   override func setUp() {
     super.setUp()
+
     realm = RealmFactory.inMemoryRealm()
     collection = RealmMappedCollection(realm: realm, sortDescriptors: [])
   }

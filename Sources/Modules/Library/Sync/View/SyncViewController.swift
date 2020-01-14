@@ -79,6 +79,7 @@ private class SyncProgressView: UIView {
 
   init() {
     super.init(frame: .zero)
+
     setup()
   }
 
@@ -126,6 +127,7 @@ private class SyncErrorView: UIView {
 
   init() {
     super.init(frame: .zero)
+
     setup()
   }
 

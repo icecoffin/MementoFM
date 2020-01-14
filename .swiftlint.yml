@@ -41,3 +41,12 @@ custom_rules:
     message: "Use log.%level% instead of print"
     severity: warning
 
+  empty_line_after_guard:
+    name: "Empty line after guard"
+    regex: '(^ *guard[ a-zA-Z0-9=?.\(\),><!`]*\{[ a-zA-Z0-9=?.\(\),><!`\"]*\}\n *(?!(?:return|guard))\S+)'
+    message: 'There should be an empty line after a guard.'
+
+  empty_line_after_super:
+    name: 'Empty line after super'
+    regex: '(^ *super\.[ a-zA-Z0-9=?.\(\)\{\}:,><!`\"]*\n *(?!(?:\}|return))\S+)'
+    message: 'There should be an empty line after super.'

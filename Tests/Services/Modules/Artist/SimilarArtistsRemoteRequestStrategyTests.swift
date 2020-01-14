@@ -27,6 +27,7 @@ class SimilarArtistsRemoteRequestStrategyTests: XCTestCase {
 
   override func setUp() {
     super.setUp()
+
     artistService = StubArtistService()
     dependencies = Dependencies(artistService: artistService)
   }

@@ -37,6 +37,7 @@ final class ArtistTagsCell: UITableViewCell {
     collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 
     super.init(style: style, reuseIdentifier: reuseIdentifier)
+
     setup()
   }
 

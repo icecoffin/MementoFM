@@ -20,6 +20,7 @@ class LibraryUpdaterTests: XCTestCase {
 
   override func setUp() {
     super.setUp()
+
     userService = StubUserService()
     artistService = StubArtistService()
     tagService = StubTagService()

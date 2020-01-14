@@ -21,6 +21,7 @@ final class ArtistSimilarsSectionHeaderView: UITableViewHeaderFooterView {
 
   override init(reuseIdentifier: String?) {
     super.init(reuseIdentifier: reuseIdentifier)
+
     setup()
   }
 

@@ -35,6 +35,7 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
 
   override func setUp() {
     super.setUp()
+
     artistService = StubArtistService()
     tabViewModelFactory = StubArtistSimilarsSectionTabViewModelFactory()
     dependencies = Dependencies(artistService: artistService)

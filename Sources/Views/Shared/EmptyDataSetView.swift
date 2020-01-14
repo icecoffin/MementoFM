@@ -15,6 +15,7 @@ final class EmptyDataSetView: UIView {
   init(text: String) {
     self.text = text
     super.init(frame: .zero)
+
     setup()
   }
 
