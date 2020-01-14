@@ -14,7 +14,7 @@ struct EmptyResponse {
 }
 
 extension EmptyResponse: Mappable {
-  init(map: Mapper) throws {
+    init(map: Mapper) throws {
 
-  }
+    }
 }

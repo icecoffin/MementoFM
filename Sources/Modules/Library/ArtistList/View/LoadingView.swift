@@ -10,61 +10,61 @@ import UIKit
 import SnapKit
 
 final class LoadingView: UIView {
-  private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-  private let activityIndicator = UIActivityIndicatorView(style: .medium)
-  private let messageLabel = UILabel()
+    private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+    private let activityIndicator = UIActivityIndicatorView(style: .medium)
+    private let messageLabel = UILabel()
 
-  init() {
-    super.init(frame: .zero)
+    init() {
+        super.init(frame: .zero)
 
-    setup()
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
-  private func setup() {
-    addBlurView()
-    addActivityIndicator()
-    addMessageLabel()
-  }
-
-  private func addBlurView() {
-    addSubview(blurView)
-    blurView.snp.makeConstraints { make in
-      make.edges.equalToSuperview()
-    }
-  }
-
-  private func addActivityIndicator() {
-    addSubview(activityIndicator)
-    activityIndicator.snp.makeConstraints { make in
-      make.centerY.equalToSuperview()
-      make.leading.equalToSuperview().offset(16)
+        setup()
     }
 
-    activityIndicator.color = .white
-    activityIndicator.startAnimating()
-  }
-
-  private func addMessageLabel() {
-    addSubview(messageLabel)
-    messageLabel.snp.makeConstraints { make in
-      make.leading.equalTo(activityIndicator.snp.trailing).offset(16)
-      make.centerY.equalToSuperview()
-      make.trailing.equalToSuperview().inset(16)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
-    messageLabel.font = .secondaryContent
-    messageLabel.textColor = .white
-  }
+    private func setup() {
+        addBlurView()
+        addActivityIndicator()
+        addMessageLabel()
+    }
 
-  func update(with message: String) {
-    messageLabel.text = message
-  }
+    private func addBlurView() {
+        addSubview(blurView)
+        blurView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
 
-  override var intrinsicContentSize: CGSize {
-    return CGSize(width: UIView.noIntrinsicMetric, height: 50)
-  }
+    private func addActivityIndicator() {
+        addSubview(activityIndicator)
+        activityIndicator.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().offset(16)
+        }
+
+        activityIndicator.color = .white
+        activityIndicator.startAnimating()
+    }
+
+    private func addMessageLabel() {
+        addSubview(messageLabel)
+        messageLabel.snp.makeConstraints { make in
+            make.leading.equalTo(activityIndicator.snp.trailing).offset(16)
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().inset(16)
+        }
+
+        messageLabel.font = .secondaryContent
+        messageLabel.textColor = .white
+    }
+
+    func update(with message: String) {
+        messageLabel.text = message
+    }
+
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: UIView.noIntrinsicMetric, height: 50)
+    }
 }

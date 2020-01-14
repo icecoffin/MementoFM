@@ -11,41 +11,41 @@ import XCTest
 import Nimble
 
 class SimilarArtistsRemoteRequestStrategyTests: XCTestCase {
-  class Dependencies: SimilarArtistsRequestStrategy.Dependencies {
-    let artistService: ArtistServiceProtocol
+    class Dependencies: SimilarArtistsRequestStrategy.Dependencies {
+        let artistService: ArtistServiceProtocol
 
-    init(artistService: ArtistServiceProtocol) {
-      self.artistService = artistService
+        init(artistService: ArtistServiceProtocol) {
+            self.artistService = artistService
+        }
     }
-  }
 
-  let sampleArtist = ModelFactory.generateArtist()
-  let similarArtists = ModelFactory.generateArtists(inAmount: 10)
+    let sampleArtist = ModelFactory.generateArtist()
+    let similarArtists = ModelFactory.generateArtists(inAmount: 10)
 
-  var artistService: StubArtistService!
-  var dependencies: Dependencies!
+    var artistService: StubArtistService!
+    var dependencies: Dependencies!
 
-  override func setUp() {
-    super.setUp()
+    override func setUp() {
+        super.setUp()
 
-    artistService = StubArtistService()
-    dependencies = Dependencies(artistService: artistService)
-  }
+        artistService = StubArtistService()
+        dependencies = Dependencies(artistService: artistService)
+    }
 
-  func test_minNumberOfIntersectingTags_returnsCorrectValueFromStrategy() {
-    let strategy = SimilarArtistsRemoteRequestStrategy(dependencies: dependencies)
-    expect(strategy.minNumberOfIntersectingTags).to(equal(0))
-  }
+    func test_minNumberOfIntersectingTags_returnsCorrectValueFromStrategy() {
+        let strategy = SimilarArtistsRemoteRequestStrategy(dependencies: dependencies)
+        expect(strategy.minNumberOfIntersectingTags).to(equal(0))
+    }
 
-  func test_getSimilarArtists_getsCorrectValueFromArtistService() {
-    artistService.stubSimilarArtists = similarArtists
-    let strategy = SimilarArtistsRemoteRequestStrategy(dependencies: dependencies)
-    var expectedSimilarArtists: [Artist] = []
+    func test_getSimilarArtists_getsCorrectValueFromArtistService() {
+        artistService.stubSimilarArtists = similarArtists
+        let strategy = SimilarArtistsRemoteRequestStrategy(dependencies: dependencies)
+        var expectedSimilarArtists: [Artist] = []
 
-    strategy.getSimilarArtists(for: sampleArtist).done { artists in
-      expectedSimilarArtists = artists
-    }.noError()
+        strategy.getSimilarArtists(for: sampleArtist).done { artists in
+            expectedSimilarArtists = artists
+        }.noError()
 
-    expect(expectedSimilarArtists).toEventually(equal(similarArtists))
-  }
+        expect(expectedSimilarArtists).toEventually(equal(similarArtists))
+    }
 }

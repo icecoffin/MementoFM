@@ -9,81 +9,82 @@
 import UIKit
 
 final class ArtistTopTagsSectionDataSource: ArtistSectionDataSource {
-  private let viewModel: ArtistTopTagsSectionViewModel
+    private let viewModel: ArtistTopTagsSectionViewModel
 
-  var didUpdateData: (() -> Void)?
+    var didUpdateData: (() -> Void)?
 
-  init(viewModel: ArtistTopTagsSectionViewModel) {
-    self.viewModel = viewModel
-  }
-
-  var numberOfRows: Int {
-    return 1
-  }
-
-  func registerReusableViews(in tableView: UITableView) {
-    tableView.register(ArtistTagsCell.self, forCellReuseIdentifier: ArtistTagsCell.reuseIdentifier)
-    tableView.register(ArtistTopTagsSectionHeaderView.self,
-                       forHeaderFooterViewReuseIdentifier: ArtistTopTagsSectionHeaderView.reuseIdentifier)
-    tableView.register(EmptyDataSetFooterView.self, forHeaderFooterViewReuseIdentifier: EmptyDataSetFooterView.reuseIdentifier)
-  }
-
-  func cellForRow(at indexPath: IndexPath, in tableView: UITableView) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: ArtistTagsCell.reuseIdentifier,
-                                                   for: indexPath) as? ArtistTagsCell else {
-      fatalError("ArtistTagsCell is not registered in the collection view")
+    init(viewModel: ArtistTopTagsSectionViewModel) {
+        self.viewModel = viewModel
     }
 
-    cell.dataSource = self
-    cell.delegate = self
-    return cell
-  }
-
-  func viewForHeader(inSection: Int, in tableView: UITableView) -> UITableViewHeaderFooterView? {
-    let reuseIdentifier = ArtistTopTagsSectionHeaderView.reuseIdentifier
-    guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: reuseIdentifier)
-      as? ArtistTopTagsSectionHeaderView else {
-      return nil
+    var numberOfRows: Int {
+        return 1
     }
 
-    headerView.configure(with: viewModel)
-    return headerView
-  }
-
-  func heightForHeader(inSection section: Int, in tableView: UITableView) -> CGFloat {
-    return UITableView.automaticDimension
-  }
-
-  func viewForFooter(inSection: Int, in tableView: UITableView) -> UITableViewHeaderFooterView? {
-    let reuseIdentifier = EmptyDataSetFooterView.reuseIdentifier
-    guard !viewModel.hasTags,
-      let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: reuseIdentifier)
-        as? EmptyDataSetFooterView else {
-      return nil
+    func registerReusableViews(in tableView: UITableView) {
+        tableView.register(ArtistTagsCell.self, forCellReuseIdentifier: ArtistTagsCell.reuseIdentifier)
+        tableView.register(ArtistTopTagsSectionHeaderView.self,
+                           forHeaderFooterViewReuseIdentifier: ArtistTopTagsSectionHeaderView.reuseIdentifier)
+        tableView.register(EmptyDataSetFooterView.self,
+                           forHeaderFooterViewReuseIdentifier: EmptyDataSetFooterView.reuseIdentifier)
     }
 
-    footerView.configure(with: viewModel.emptyDataSetText)
-    return footerView
-  }
+    func cellForRow(at indexPath: IndexPath, in tableView: UITableView) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ArtistTagsCell.reuseIdentifier,
+                                                       for: indexPath) as? ArtistTagsCell else {
+                                                        fatalError("ArtistTagsCell is not registered in the collection view")
+        }
 
-  func heightForFooter(inSection section: Int, in tableView: UITableView) -> CGFloat {
-    return viewModel.hasTags ? CGFloat.leastNormalMagnitude : UITableView.automaticDimension
-  }
+        cell.dataSource = self
+        cell.delegate = self
+        return cell
+    }
+
+    func viewForHeader(inSection: Int, in tableView: UITableView) -> UITableViewHeaderFooterView? {
+        let reuseIdentifier = ArtistTopTagsSectionHeaderView.reuseIdentifier
+        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: reuseIdentifier)
+            as? ArtistTopTagsSectionHeaderView else {
+                return nil
+        }
+
+        headerView.configure(with: viewModel)
+        return headerView
+    }
+
+    func heightForHeader(inSection section: Int, in tableView: UITableView) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+
+    func viewForFooter(inSection: Int, in tableView: UITableView) -> UITableViewHeaderFooterView? {
+        let reuseIdentifier = EmptyDataSetFooterView.reuseIdentifier
+        guard !viewModel.hasTags,
+            let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: reuseIdentifier)
+                as? EmptyDataSetFooterView else {
+                    return nil
+        }
+
+        footerView.configure(with: viewModel.emptyDataSetText)
+        return footerView
+    }
+
+    func heightForFooter(inSection section: Int, in tableView: UITableView) -> CGFloat {
+        return viewModel.hasTags ? CGFloat.leastNormalMagnitude : UITableView.automaticDimension
+    }
 }
 
 extension ArtistTopTagsSectionDataSource: ArtistTagsCellDataSource {
-  func numberOfTopTags(in cell: ArtistTagsCell) -> Int {
-    return viewModel.numberOfTopTags
-  }
+    func numberOfTopTags(in cell: ArtistTagsCell) -> Int {
+        return viewModel.numberOfTopTags
+    }
 
-  func tagCellViewModel(at indexPath: IndexPath, in cell: ArtistTagsCell) -> TagCellViewModel {
-    return viewModel.cellViewModel(at: indexPath)
-  }
+    func tagCellViewModel(at indexPath: IndexPath, in cell: ArtistTagsCell) -> TagCellViewModel {
+        return viewModel.cellViewModel(at: indexPath)
+    }
 }
 
 extension ArtistTopTagsSectionDataSource: ArtistTagsCellDelegate {
-  func artistTagsCell(_ cell: ArtistTagsCell, didSelectTagAt indexPath: IndexPath) {
-    let tagName = viewModel.cellViewModel(at: indexPath).name
-    viewModel.selectTag(withName: tagName)
-  }
+    func artistTagsCell(_ cell: ArtistTagsCell, didSelectTagAt indexPath: IndexPath) {
+        let tagName = viewModel.cellViewModel(at: indexPath).name
+        viewModel.selectTag(withName: tagName)
+    }
 }

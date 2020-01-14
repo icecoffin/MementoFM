@@ -10,21 +10,21 @@ import Foundation
 import RealmSwift
 
 protocol RealmMigrating {
-  func performMigrations()
+    func performMigrations()
 }
 
 final class RealmMigrator: RealmMigrating {
-  func performMigrations() {
-    let config = Realm.Configuration(schemaVersion: 2, migrationBlock: { _, oldSchemaVersion in
-      if oldSchemaVersion < 1 {
-        // Property 'RealmArtist.imageURLString' has been removed.
-      }
+    func performMigrations() {
+        let config = Realm.Configuration(schemaVersion: 2, migrationBlock: { _, oldSchemaVersion in
+            if oldSchemaVersion < 1 {
+                // Property 'RealmArtist.imageURLString' has been removed.
+            }
 
-      if oldSchemaVersion < 2 {
-        // Property 'RealmArtist.country' has been added.
-      }
-    })
+            if oldSchemaVersion < 2 {
+                // Property 'RealmArtist.country' has been added.
+            }
+        })
 
-    Realm.Configuration.defaultConfiguration = config
-  }
+        Realm.Configuration.defaultConfiguration = config
+    }
 }

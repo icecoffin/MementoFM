@@ -9,45 +9,45 @@
 import Foundation
 
 protocol ArtistListViewModelFactory {
-  func makeViewModel() -> ArtistListViewModel
+    func makeViewModel() -> ArtistListViewModel
 }
 
 final class LibraryViewModelFactory: ArtistListViewModelFactory {
-  private let dependencies: LibraryViewModel.Dependencies
+    private let dependencies: LibraryViewModel.Dependencies
 
-  init(dependencies: LibraryViewModel.Dependencies) {
-    self.dependencies = dependencies
-  }
+    init(dependencies: LibraryViewModel.Dependencies) {
+        self.dependencies = dependencies
+    }
 
-  func makeViewModel() -> ArtistListViewModel {
-    return LibraryViewModel(dependencies: dependencies)
-  }
+    func makeViewModel() -> ArtistListViewModel {
+        return LibraryViewModel(dependencies: dependencies)
+    }
 }
 
 final class ArtistsByTagViewModelFactory: ArtistListViewModelFactory {
-  private let dependencies: ArtistsByTagViewModel.Dependencies
-  private let tagName: String
+    private let dependencies: ArtistsByTagViewModel.Dependencies
+    private let tagName: String
 
-  init(tagName: String, dependencies: ArtistsByTagViewModel.Dependencies) {
-    self.tagName = tagName
-    self.dependencies = dependencies
-  }
+    init(tagName: String, dependencies: ArtistsByTagViewModel.Dependencies) {
+        self.tagName = tagName
+        self.dependencies = dependencies
+    }
 
-  func makeViewModel() -> ArtistListViewModel {
-    return ArtistsByTagViewModel(tagName: tagName, dependencies: dependencies)
-  }
+    func makeViewModel() -> ArtistListViewModel {
+        return ArtistsByTagViewModel(tagName: tagName, dependencies: dependencies)
+    }
 }
 
 final class ArtistsByCountryViewModelFactory: ArtistListViewModelFactory {
-  private let dependencies: ArtistsByCountryViewModel.Dependencies
-  private let country: CountryType
+    private let dependencies: ArtistsByCountryViewModel.Dependencies
+    private let country: CountryType
 
-  init(country: CountryType, dependencies: ArtistsByCountryViewModel.Dependencies) {
-    self.country = country
-    self.dependencies = dependencies
-  }
+    init(country: CountryType, dependencies: ArtistsByCountryViewModel.Dependencies) {
+        self.country = country
+        self.dependencies = dependencies
+    }
 
-  func makeViewModel() -> ArtistListViewModel {
-    return ArtistsByCountryViewModel(country: country, dependencies: dependencies)
-  }
+    func makeViewModel() -> ArtistListViewModel {
+        return ArtistsByCountryViewModel(country: country, dependencies: dependencies)
+    }
 }

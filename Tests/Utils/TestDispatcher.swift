@@ -11,27 +11,27 @@ import PromiseKit
 @testable import MementoFM
 
 final class TestDispatcher: Dispatcher {
-  let queue: DispatchQueue = .main
+    let queue: DispatchQueue = .main
 
-  func dispatch(_ work: @escaping () -> Void) {
-    work()
-  }
-
-  func dispatch<T>(_ work: @escaping () -> T) -> Guarantee<T> {
-    let result = work()
-    return Guarantee { resolver in
-      resolver(result)
+    func dispatch(_ work: @escaping () -> Void) {
+        work()
     }
-  }
 
-  func dispatch<T>(_ work: @escaping () throws -> T) -> Promise<T> {
-    return Promise { seal in
-      do {
-        let result = try work()
-        seal.fulfill(result)
-      } catch {
-        seal.reject(error)
-      }
+    func dispatch<T>(_ work: @escaping () -> T) -> Guarantee<T> {
+        let result = work()
+        return Guarantee { resolver in
+            resolver(result)
+        }
     }
-  }
+
+    func dispatch<T>(_ work: @escaping () throws -> T) -> Promise<T> {
+        return Promise { seal in
+            do {
+                let result = try work()
+                seal.fulfill(result)
+            } catch {
+                seal.reject(error)
+            }
+        }
+    }
 }

@@ -9,50 +9,50 @@
 import UIKit
 
 final class AppCoordinator: Coordinator {
-  var childCoordinators: [Coordinator] = []
-  var didFinish: (() -> Void)?
+    var childCoordinators: [Coordinator] = []
+    var didFinish: (() -> Void)?
 
-  private let window: UIWindow
-  private let dependencies: AppDependency
+    private let window: UIWindow
+    private let dependencies: AppDependency
 
-  init(window: UIWindow, dependencies: AppDependency = AppDependency.default) {
-    self.window = window
-    self.dependencies = dependencies
-  }
-
-  func start() {
-    removeAllChildren()
-
-    if dependencies.userService.didFinishOnboarding {
-      startMainFlow()
-    } else {
-      startOnboardingFlow()
+    init(window: UIWindow, dependencies: AppDependency = AppDependency.default) {
+        self.window = window
+        self.dependencies = dependencies
     }
-  }
 
-  func startMainFlow() {
-    let mainFlowCoordinator = MainFlowCoordinator(window: window, dependencies: dependencies)
-    mainFlowCoordinator.delegate = self
-    addChildCoordinator(mainFlowCoordinator)
-    startChildren()
-  }
+    func start() {
+        removeAllChildren()
 
-  func startOnboardingFlow() {
-    let onboardingCoordinator = OnboardingCoordinator(window: window, dependencies: dependencies)
-    onboardingCoordinator.delegate = self
-    addChildCoordinator(onboardingCoordinator)
-    startChildren()
-  }
+        if dependencies.userService.didFinishOnboarding {
+            startMainFlow()
+        } else {
+            startOnboardingFlow()
+        }
+    }
+
+    func startMainFlow() {
+        let mainFlowCoordinator = MainFlowCoordinator(window: window, dependencies: dependencies)
+        mainFlowCoordinator.delegate = self
+        addChildCoordinator(mainFlowCoordinator)
+        startChildren()
+    }
+
+    func startOnboardingFlow() {
+        let onboardingCoordinator = OnboardingCoordinator(window: window, dependencies: dependencies)
+        onboardingCoordinator.delegate = self
+        addChildCoordinator(onboardingCoordinator)
+        startChildren()
+    }
 }
 
 extension AppCoordinator: MainFlowCoordinatorDelegate {
-  func mainFlowCoordinatorDidChangeUsername(_ coordinator: MainFlowCoordinator) {
-    start()
-  }
+    func mainFlowCoordinatorDidChangeUsername(_ coordinator: MainFlowCoordinator) {
+        start()
+    }
 }
 
 extension AppCoordinator: OnboardingCoordinatorDelegate {
-  func onboardingCoordinatorDidFinish(_ coordinator: OnboardingCoordinator) {
-    start()
-  }
+    func onboardingCoordinatorDidFinish(_ coordinator: OnboardingCoordinator) {
+        start()
+    }
 }

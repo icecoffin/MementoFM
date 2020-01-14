@@ -10,11 +10,11 @@ import Foundation
 import Mapper
 
 struct LibraryPageResponse {
-  let libraryPage: LibraryPage
+    let libraryPage: LibraryPage
 }
 
 extension LibraryPageResponse: Mappable {
-  init(map: Mapper) throws {
-    libraryPage = try map.from("artists")
-  }
+    init(map: Mapper) throws {
+        libraryPage = try map.from("artists")
+    }
 }

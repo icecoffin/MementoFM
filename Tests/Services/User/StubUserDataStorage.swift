@@ -10,69 +10,69 @@ import Foundation
 @testable import MementoFM
 
 class StubUserDataStorage: UserDataStoring {
-  private var _username: String = ""
-  var didGetUsername = false
-  var didSetUsername = false
+    private var _username: String = ""
+    var didGetUsername = false
+    var didSetUsername = false
 
-  var username: String {
-    get {
-      didGetUsername = true
-      return _username
+    var username: String {
+        get {
+            didGetUsername = true
+            return _username
+        }
+        set {
+            didSetUsername = true
+            _username = newValue
+        }
     }
-    set {
-      didSetUsername = true
-      _username = newValue
+
+    private var _lastUpdateTimestamp: TimeInterval = 0
+    var didGetLastUpdateTimestamp = false
+    var didSetLastUpdateTimestamp = false
+
+    var lastUpdateTimestamp: TimeInterval {
+        get {
+            didGetLastUpdateTimestamp = true
+            return _lastUpdateTimestamp
+        }
+        set {
+            didSetLastUpdateTimestamp = true
+            _lastUpdateTimestamp = newValue
+        }
     }
-  }
 
-  private var _lastUpdateTimestamp: TimeInterval = 0
-  var didGetLastUpdateTimestamp = false
-  var didSetLastUpdateTimestamp = false
+    private var _didFinishOnboarding: Bool = false
+    var didGetDidFinishOnboarding = false
+    var didSetDidFinishOnboarding = false
 
-  var lastUpdateTimestamp: TimeInterval {
-    get {
-      didGetLastUpdateTimestamp = true
-      return _lastUpdateTimestamp
+    var didFinishOnboarding: Bool {
+        get {
+            didGetDidFinishOnboarding = true
+            return _didFinishOnboarding
+        }
+        set {
+            didSetDidFinishOnboarding = true
+            _didFinishOnboarding = newValue
+        }
     }
-    set {
-      didSetLastUpdateTimestamp = true
-      _lastUpdateTimestamp = newValue
+
+    private var _didReceiveInitialCollection: Bool = false
+    var didGetDidReceiveInitialCollection = false
+    var didSetDidReceiveInitialCollection = false
+
+    var didReceiveInitialCollection: Bool {
+        get {
+            didGetDidReceiveInitialCollection = true
+            return _didReceiveInitialCollection
+        }
+        set {
+            didSetDidReceiveInitialCollection = true
+            _didReceiveInitialCollection = newValue
+        }
     }
-  }
 
-  private var _didFinishOnboarding: Bool = false
-  var didGetDidFinishOnboarding = false
-  var didSetDidFinishOnboarding = false
+    var didCallReset = false
 
-  var didFinishOnboarding: Bool {
-    get {
-      didGetDidFinishOnboarding = true
-      return _didFinishOnboarding
+    func reset() {
+        didCallReset = true
     }
-    set {
-      didSetDidFinishOnboarding = true
-      _didFinishOnboarding = newValue
-    }
-  }
-
-  private var _didReceiveInitialCollection: Bool = false
-  var didGetDidReceiveInitialCollection = false
-  var didSetDidReceiveInitialCollection = false
-
-  var didReceiveInitialCollection: Bool {
-    get {
-      didGetDidReceiveInitialCollection = true
-      return _didReceiveInitialCollection
-    }
-    set {
-      didSetDidReceiveInitialCollection = true
-      _didReceiveInitialCollection = newValue
-    }
-  }
-
-  var didCallReset = false
-
-  func reset() {
-    didCallReset = true
-  }
 }

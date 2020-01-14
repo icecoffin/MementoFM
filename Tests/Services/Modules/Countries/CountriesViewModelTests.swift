@@ -11,75 +11,75 @@ import XCTest
 import Nimble
 
 class CountriesViewModelTests: XCTestCase {
-  class Dependencies: HasArtistService {
-    let artistService: ArtistServiceProtocol
+    class Dependencies: HasArtistService {
+        let artistService: ArtistServiceProtocol
 
-    init(artistService: ArtistServiceProtocol) {
-      self.artistService = artistService
+        init(artistService: ArtistServiceProtocol) {
+            self.artistService = artistService
+        }
     }
-  }
 
-  class StubCountriesViewModelDelegate: CountriesViewModelDelegate {
-    var selectedCountry: CountryType?
-    func countriesViewModel(_ viewModel: CountriesViewModel, didSelectCountry country: CountryType) {
-      selectedCountry = country
+    class StubCountriesViewModelDelegate: CountriesViewModelDelegate {
+        var selectedCountry: CountryType?
+        func countriesViewModel(_ viewModel: CountriesViewModel, didSelectCountry country: CountryType) {
+            selectedCountry = country
+        }
     }
-  }
 
-  var artistService: StubArtistService!
-  var dependencies: Dependencies!
-  var viewModel: CountriesViewModel!
+    var artistService: StubArtistService!
+    var dependencies: Dependencies!
+    var viewModel: CountriesViewModel!
 
-  override func setUp() {
-    super.setUp()
+    override func setUp() {
+        super.setUp()
 
-    artistService = StubArtistService()
-    dependencies = Dependencies(artistService: artistService)
-    viewModel = CountriesViewModel(dependencies: dependencies)
-  }
+        artistService = StubArtistService()
+        dependencies = Dependencies(artistService: artistService)
+        viewModel = CountriesViewModel(dependencies: dependencies)
+    }
 
-  // MARK: - loadData
+    // MARK: - loadData
 
-  func test_loadData_callsArtistService() {
-    artistService.stubCountriesWithCount = ["USA": 50, "Germany": 100]
+    func test_loadData_callsArtistService() {
+        artistService.stubCountriesWithCount = ["USA": 50, "Germany": 100]
 
-    viewModel.loadData()
+        viewModel.loadData()
 
-    expect(self.artistService.didCallGetCountriesWithCount) == true
-  }
+        expect(self.artistService.didCallGetCountriesWithCount) == true
+    }
 
-  func test_loadData_sortsCountriesByArtistCount() {
-    artistService.stubCountriesWithCount = ["USA": 50, "Germany": 100]
+    func test_loadData_sortsCountriesByArtistCount() {
+        artistService.stubCountriesWithCount = ["USA": 50, "Germany": 100]
 
-    viewModel.loadData()
+        viewModel.loadData()
 
-    let indexPath = IndexPath(row: 0, section: 0)
-    let cellViewModel = viewModel.cellViewModel(at: indexPath)
-    expect(cellViewModel.country) == .named(name: "Germany")
-  }
+        let indexPath = IndexPath(row: 0, section: 0)
+        let cellViewModel = viewModel.cellViewModel(at: indexPath)
+        expect(cellViewModel.country) == .named(name: "Germany")
+    }
 
-  // MARK: - numberOfCountries
+    // MARK: - numberOfCountries
 
-  func test_numberOfCountries_returnsCorrectValue() {
-    artistService.stubCountriesWithCount = ["USA": 50, "Germany": 100]
+    func test_numberOfCountries_returnsCorrectValue() {
+        artistService.stubCountriesWithCount = ["USA": 50, "Germany": 100]
 
-    viewModel.loadData()
+        viewModel.loadData()
 
-    expect(self.viewModel.numberOfCountries) == 2
-  }
+        expect(self.viewModel.numberOfCountries) == 2
+    }
 
-  // MARK: - selectCountry
+    // MARK: - selectCountry
 
-  func test_selectCountry_notifiesDelegate() {
-    artistService.stubCountriesWithCount = ["USA": 50, "Germany": 100]
+    func test_selectCountry_notifiesDelegate() {
+        artistService.stubCountriesWithCount = ["USA": 50, "Germany": 100]
 
-    let delegate = StubCountriesViewModelDelegate()
-    viewModel.delegate = delegate
+        let delegate = StubCountriesViewModelDelegate()
+        viewModel.delegate = delegate
 
-    viewModel.loadData()
-    let indexPath = IndexPath(row: 0, section: 0)
-    viewModel.selectCountry(at: indexPath)
+        viewModel.loadData()
+        let indexPath = IndexPath(row: 0, section: 0)
+        viewModel.selectCountry(at: indexPath)
 
-    expect(delegate.selectedCountry) == .named(name: "Germany")
-  }
+        expect(delegate.selectedCountry) == .named(name: "Germany")
+    }
 }

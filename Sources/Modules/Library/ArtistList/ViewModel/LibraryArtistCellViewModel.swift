@@ -9,29 +9,29 @@
 import Foundation
 
 final class LibraryArtistCellViewModel {
-  // MARK: - Properties
+    // MARK: - Properties
 
-  private let artist: Artist
-  private let index: Int
-  private let numberFormatter: NumberFormatter
+    private let artist: Artist
+    private let index: Int
+    private let numberFormatter: NumberFormatter
 
-  var name: String {
-    return artist.name
-  }
+    var name: String {
+        return artist.name
+    }
 
-  var playcount: String {
-    return "\(artist.playcount) plays".unlocalized
-  }
+    var playcount: String {
+        return "\(artist.playcount) plays".unlocalized
+    }
 
-  var displayIndex: String? {
-    return numberFormatter.string(from: index as NSNumber)
-  }
+    var displayIndex: String? {
+        return numberFormatter.string(from: index as NSNumber)
+    }
 
-  // MARK: - Init
+    // MARK: - Init
 
-  init(artist: Artist, index: Int, numberFormatter: NumberFormatter) {
-    self.artist = artist
-    self.index = index
-    self.numberFormatter = numberFormatter
-  }
+    init(artist: Artist, index: Int, numberFormatter: NumberFormatter) {
+        self.artist = artist
+        self.index = index
+        self.numberFormatter = numberFormatter
+    }
 }

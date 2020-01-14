@@ -9,26 +9,26 @@
 import Foundation
 
 protocol ArtistTopTagsCalculating: class {
-  func calculateTopTags(for artist: Artist) -> Artist
+    func calculateTopTags(for artist: Artist) -> Artist
 }
 
 final class ArtistTopTagsCalculator: ArtistTopTagsCalculating {
-  private let ignoredTags: [IgnoredTag]
-  private let numberOfTopTags: Int
+    private let ignoredTags: [IgnoredTag]
+    private let numberOfTopTags: Int
 
-  init(ignoredTags: [IgnoredTag], numberOfTopTags: Int = 5) {
-    self.ignoredTags = ignoredTags
-    self.numberOfTopTags = numberOfTopTags
-  }
+    init(ignoredTags: [IgnoredTag], numberOfTopTags: Int = 5) {
+        self.ignoredTags = ignoredTags
+        self.numberOfTopTags = numberOfTopTags
+    }
 
-  func calculateTopTags(for artist: Artist) -> Artist {
-    let topTags = artist.tags.filter { tag in
-      !ignoredTags.contains(where: { ignoredTag in
-        tag.name == ignoredTag.name
-      })
-    }.sorted(by: {
-      $0.count > $1.count
-    }).prefix(numberOfTopTags)
-    return artist.updatingTopTags(to: Array(topTags))
-  }
+    func calculateTopTags(for artist: Artist) -> Artist {
+        let topTags = artist.tags.filter { tag in
+            !ignoredTags.contains(where: { ignoredTag in
+                tag.name == ignoredTag.name
+            })
+        }.sorted(by: {
+            $0.count > $1.count
+        }).prefix(numberOfTopTags)
+        return artist.updatingTopTags(to: Array(topTags))
+    }
 }

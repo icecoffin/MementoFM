@@ -9,33 +9,33 @@
 import UIKit
 
 final class BlockBarButtonItem: UIBarButtonItem {
-  private let actionHandler: (() -> Void)
+    private let actionHandler: (() -> Void)
 
-  init(image: UIImage?, style: UIBarButtonItem.Style, actionHandler: @escaping (() -> Void)) {
-    self.actionHandler = actionHandler
-    super.init()
+    init(image: UIImage?, style: UIBarButtonItem.Style, actionHandler: @escaping (() -> Void)) {
+        self.actionHandler = actionHandler
+        super.init()
 
-    self.image = image
-    self.style = style
-    self.target = self
-    self.action = #selector(barButtonItemTapped(_:))
-  }
+        self.image = image
+        self.style = style
+        self.target = self
+        self.action = #selector(barButtonItemTapped(_:))
+    }
 
-  init(title: String?, style: UIBarButtonItem.Style, actionHandler: @escaping (() -> Void)) {
-    self.actionHandler = actionHandler
-    super.init()
+    init(title: String?, style: UIBarButtonItem.Style, actionHandler: @escaping (() -> Void)) {
+        self.actionHandler = actionHandler
+        super.init()
 
-    self.title = title
-    self.style = style
-    self.target = self
-    self.action = #selector(barButtonItemTapped(_:))
-  }
+        self.title = title
+        self.style = style
+        self.target = self
+        self.action = #selector(barButtonItemTapped(_:))
+    }
 
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
-  @objc private func barButtonItemTapped(_ sender: UIButton) {
-    actionHandler()
-  }
+    @objc private func barButtonItemTapped(_ sender: UIButton) {
+        actionHandler()
+    }
 }

@@ -10,22 +10,22 @@ import Foundation
 import PromiseKit
 
 protocol UserRepository: class {
-  func checkUserExists(withUsername username: String) -> Promise<EmptyResponse>
+    func checkUserExists(withUsername username: String) -> Promise<EmptyResponse>
 }
 
 final class UserNetworkRepository: UserRepository {
-  private let networkService: NetworkService
+    private let networkService: NetworkService
 
-  init(networkService: NetworkService) {
-    self.networkService = networkService
-  }
+    init(networkService: NetworkService) {
+        self.networkService = networkService
+    }
 
-  func checkUserExists(withUsername username: String) -> Promise<EmptyResponse> {
-    let parameters: [String: Any] = ["method": "user.getInfo",
-                                     "api_key": Keys.LastFM.apiKey,
-                                     "user": username,
-                                     "format": "json"]
+    func checkUserExists(withUsername username: String) -> Promise<EmptyResponse> {
+        let parameters: [String: Any] = ["method": "user.getInfo",
+                                         "api_key": Keys.LastFM.apiKey,
+                                         "user": username,
+                                         "format": "json"]
 
-    return networkService.performRequest(parameters: parameters)
-  }
+        return networkService.performRequest(parameters: parameters)
+    }
 }

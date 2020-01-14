@@ -9,30 +9,30 @@
 import UIKit
 
 final class EmptyDataSetView: UIView {
-  private let text: String
-  private let textLabel = UILabel()
+    private let text: String
+    private let textLabel = UILabel()
 
-  init(text: String) {
-    self.text = text
-    super.init(frame: .zero)
+    init(text: String) {
+        self.text = text
+        super.init(frame: .zero)
 
-    setup()
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
-  private func setup() {
-    addSubview(textLabel)
-    textLabel.snp.makeConstraints { make in
-      make.center.equalToSuperview()
-      make.leading.trailing.equalToSuperview().inset(16).priority(999)
+        setup()
     }
 
-    textLabel.numberOfLines = 0
-    textLabel.textAlignment = .center
-    textLabel.text = text
-    textLabel.font = .primaryContent
-  }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setup() {
+        addSubview(textLabel)
+        textLabel.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(16).priority(999)
+        }
+
+        textLabel.numberOfLines = 0
+        textLabel.textAlignment = .center
+        textLabel.text = text
+        textLabel.font = .primaryContent
+    }
 }

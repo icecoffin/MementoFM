@@ -483,9 +483,9 @@
 				64EB8FD16D32FAFCBA6BFCEC /* Pods */,
 				742EEABE63376162FBE45084 /* Frameworks */,
 			);
-			indentWidth = 2;
+			indentWidth = 4;
 			sourceTree = "<group>";
-			tabWidth = 2;
+			tabWidth = 4;
 		};
 		01D4D3191DAE4A0000BFD7FD /* Products */ = {
 			isa = PBXGroup;

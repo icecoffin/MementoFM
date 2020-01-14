@@ -11,10 +11,10 @@ import Foundation
 import PromiseKit
 
 class UserStubRepository: UserRepository {
-  var checkedUsername: String?
-  func checkUserExists(withUsername username: String) -> Promise<EmptyResponse> {
-    checkedUsername = username
+    var checkedUsername: String?
+    func checkUserExists(withUsername username: String) -> Promise<EmptyResponse> {
+        checkedUsername = username
 
-    return .value(EmptyResponse())
-  }
+        return .value(EmptyResponse())
+    }
 }

@@ -10,31 +10,31 @@ import Foundation
 import Mapper
 
 struct SimilarArtistListResponse {
-  let similarArtistList: SimilarArtistList
+    let similarArtistList: SimilarArtistList
 }
 
 extension SimilarArtistListResponse: Mappable {
-  init(map: Mapper) throws {
-    similarArtistList = try map.from("similarartists")
-  }
+    init(map: Mapper) throws {
+        similarArtistList = try map.from("similarartists")
+    }
 }
 
 struct SimilarArtistList {
-  let similarArtists: [SimilarArtist]
+    let similarArtists: [SimilarArtist]
 }
 
 extension SimilarArtistList: Mappable {
-  init(map: Mapper) throws {
-    similarArtists = try map.from("artist")
-  }
+    init(map: Mapper) throws {
+        similarArtists = try map.from("artist")
+    }
 }
 
 struct SimilarArtist {
-  let name: String
+    let name: String
 }
 
 extension SimilarArtist: Mappable {
-  init(map: Mapper) throws {
-    name = try map.from("name")
-  }
+    init(map: Mapper) throws {
+        name = try map.from("name")
+    }
 }

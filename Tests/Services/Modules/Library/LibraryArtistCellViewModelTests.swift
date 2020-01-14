@@ -11,32 +11,32 @@ import XCTest
 import Nimble
 
 class LibraryArtistCellViewModelTests: XCTestCase {
-  var sampleArtist: Artist {
-    return Artist(name: "Artist",
-                  playcount: 10,
-                  urlString: "",
-                  needsTagsUpdate: false,
-                  tags: [],
-                  topTags: [],
-                  country: nil)
-  }
+    var sampleArtist: Artist {
+        return Artist(name: "Artist",
+                      playcount: 10,
+                      urlString: "",
+                      needsTagsUpdate: false,
+                      tags: [],
+                      topTags: [],
+                      country: nil)
+    }
 
-  func test_name_returnsArtistName() {
-    let viewModel = LibraryArtistCellViewModel(artist: sampleArtist, index: 1, numberFormatter: NumberFormatter())
-    expect(viewModel.name).to(equal("Artist"))
-  }
+    func test_name_returnsArtistName() {
+        let viewModel = LibraryArtistCellViewModel(artist: sampleArtist, index: 1, numberFormatter: NumberFormatter())
+        expect(viewModel.name).to(equal("Artist"))
+    }
 
-  func test_playcount_returnsCorrectValue_basedOnArtistPlaycount() {
-    let viewModel = LibraryArtistCellViewModel(artist: sampleArtist, index: 1, numberFormatter: NumberFormatter())
-    expect(viewModel.playcount).to(equal("10 plays"))
-  }
+    func test_playcount_returnsCorrectValue_basedOnArtistPlaycount() {
+        let viewModel = LibraryArtistCellViewModel(artist: sampleArtist, index: 1, numberFormatter: NumberFormatter())
+        expect(viewModel.playcount).to(equal("10 plays"))
+    }
 
-  func test_displayIndex_returnsCorrectValue() {
-    let numberFormatter = NumberFormatter()
-    numberFormatter.numberStyle = .decimal
+    func test_displayIndex_returnsCorrectValue() {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
 
-    let viewModel = LibraryArtistCellViewModel(artist: sampleArtist, index: 1234, numberFormatter: numberFormatter)
+        let viewModel = LibraryArtistCellViewModel(artist: sampleArtist, index: 1234, numberFormatter: numberFormatter)
 
-    expect(viewModel.displayIndex) == "1,234"
-  }
+        expect(viewModel.displayIndex) == "1,234"
+    }
 }

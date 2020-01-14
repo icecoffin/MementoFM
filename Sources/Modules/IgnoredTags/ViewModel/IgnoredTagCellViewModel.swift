@@ -9,23 +9,23 @@
 import Foundation
 
 final class IgnoredTagCellViewModel {
-  private let tag: IgnoredTag
+    private let tag: IgnoredTag
 
-  var onTextChange: ((String) -> Void)?
+    var onTextChange: ((String) -> Void)?
 
-  init(tag: IgnoredTag) {
-    self.tag = tag
-  }
+    init(tag: IgnoredTag) {
+        self.tag = tag
+    }
 
-  var placeholder: String {
-    return "Enter tag here".unlocalized
-  }
+    var placeholder: String {
+        return "Enter tag here".unlocalized
+    }
 
-  var text: String {
-    return tag.name
-  }
+    var text: String {
+        return tag.name
+    }
 
-  func tagTextDidChange(_ text: String) {
-    onTextChange?(text)
-  }
+    func tagTextDidChange(_ text: String) {
+        onTextChange?(text)
+    }
 }

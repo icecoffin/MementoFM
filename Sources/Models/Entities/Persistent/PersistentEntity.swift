@@ -9,8 +9,8 @@
 import Foundation
 
 protocol PersistentEntity {
-  associatedtype TransientType
+    associatedtype TransientType
 
-  static func from(transient: TransientType) -> Self
-  func toTransient() -> TransientType
+    static func from(transient: TransientType) -> Self
+    func toTransient() -> TransientType
 }

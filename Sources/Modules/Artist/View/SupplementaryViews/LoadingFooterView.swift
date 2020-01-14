@@ -9,34 +9,34 @@
 import UIKit
 
 final class LoadingFooterView: UITableViewHeaderFooterView {
-  private let activityIndicator = UIActivityIndicatorView(style: .medium)
+    private let activityIndicator = UIActivityIndicatorView(style: .medium)
 
-  override init(reuseIdentifier: String?) {
-    super.init(reuseIdentifier: reuseIdentifier)
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
 
-    setup()
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
-  private func setup() {
-    backgroundView = UIView()
-    contentView.backgroundColor = .systemBackground
-
-    contentView.addSubview(activityIndicator)
-    activityIndicator.snp.makeConstraints { make in
-      make.top.bottom.equalToSuperview().inset(4)
-      make.centerX.equalToSuperview()
+        setup()
     }
-    activityIndicator.color = .gray
-    activityIndicator.startAnimating()
-  }
 
-  override func prepareForReuse() {
-    super.prepareForReuse()
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
-    activityIndicator.startAnimating()
-  }
+    private func setup() {
+        backgroundView = UIView()
+        contentView.backgroundColor = .systemBackground
+
+        contentView.addSubview(activityIndicator)
+        activityIndicator.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview().inset(4)
+            make.centerX.equalToSuperview()
+        }
+        activityIndicator.color = .gray
+        activityIndicator.startAnimating()
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        activityIndicator.startAnimating()
+    }
 }

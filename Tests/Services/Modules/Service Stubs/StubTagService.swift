@@ -11,20 +11,20 @@ import Foundation
 import PromiseKit
 
 class StubTagService: TagServiceProtocol {
-  var artists: [Artist] = []
-  var stubProgress: TopTagsRequestProgress?
-  var didRequestTopTags = false
-  func getTopTags(for artists: [Artist], progress: ((TopTagsRequestProgress) -> Void)?) -> Promise<Void> {
-    self.artists = artists
-    if let stubProgress = stubProgress {
-      progress?(stubProgress)
+    var artists: [Artist] = []
+    var stubProgress: TopTagsRequestProgress?
+    var didRequestTopTags = false
+    func getTopTags(for artists: [Artist], progress: ((TopTagsRequestProgress) -> Void)?) -> Promise<Void> {
+        self.artists = artists
+        if let stubProgress = stubProgress {
+            progress?(stubProgress)
+        }
+        didRequestTopTags = true
+        return .value(())
     }
-    didRequestTopTags = true
-    return .value(())
-  }
 
-  var stubTopTags: [Tag] = []
-  func getAllTopTags() -> [Tag] {
-    return stubTopTags
-  }
+    var stubTopTags: [Tag] = []
+    func getAllTopTags() -> [Tag] {
+        return stubTopTags
+    }
 }

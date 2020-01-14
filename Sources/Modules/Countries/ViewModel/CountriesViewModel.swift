@@ -9,46 +9,46 @@
 import Foundation
 
 protocol CountriesViewModelDelegate: class {
-  func countriesViewModel(_ viewModel: CountriesViewModel, didSelectCountry country: CountryType)
+    func countriesViewModel(_ viewModel: CountriesViewModel, didSelectCountry country: CountryType)
 }
 
 final class CountriesViewModel {
-  typealias Dependencies = HasArtistService
+    typealias Dependencies = HasArtistService
 
-  private let dependencies: Dependencies
-  private let numberFormatter: NumberFormatter = {
-    let numberFormatter = NumberFormatter()
-    numberFormatter.numberStyle = .decimal
-    return numberFormatter
-  }()
+    private let dependencies: Dependencies
+    private let numberFormatter: NumberFormatter = {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        return numberFormatter
+    }()
 
-  private var cellViewModels: [CountryCellViewModel] = []
+    private var cellViewModels: [CountryCellViewModel] = []
 
-  weak var delegate: CountriesViewModelDelegate?
+    weak var delegate: CountriesViewModelDelegate?
 
-  var numberOfCountries: Int {
-    return cellViewModels.count
-  }
+    var numberOfCountries: Int {
+        return cellViewModels.count
+    }
 
-  init(dependencies: Dependencies) {
-    self.dependencies = dependencies
-  }
+    init(dependencies: Dependencies) {
+        self.dependencies = dependencies
+    }
 
-  func loadData() {
-    let result = dependencies.artistService.getCountriesWithCounts()
-    cellViewModels = result
-      .sorted { $0.value > $1.value }
-      .map { key, value in
-        return CountryCellViewModel(name: key, count: value, numberFormatter: numberFormatter)
-      }
-  }
+    func loadData() {
+        let result = dependencies.artistService.getCountriesWithCounts()
+        cellViewModels = result
+            .sorted { $0.value > $1.value }
+            .map { key, value in
+                return CountryCellViewModel(name: key, count: value, numberFormatter: numberFormatter)
+        }
+    }
 
-  func cellViewModel(at indexPath: IndexPath) -> CountryCellViewModel {
-    return cellViewModels[indexPath.row]
-  }
+    func cellViewModel(at indexPath: IndexPath) -> CountryCellViewModel {
+        return cellViewModels[indexPath.row]
+    }
 
-  func selectCountry(at indexPath: IndexPath) {
-    let country = cellViewModels[indexPath.row].country
-    delegate?.countriesViewModel(self, didSelectCountry: country)
-  }
+    func selectCountry(at indexPath: IndexPath) {
+        let country = cellViewModels[indexPath.row].country
+        delegate?.countriesViewModel(self, didSelectCountry: country)
+    }
 }

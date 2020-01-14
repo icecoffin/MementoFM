@@ -9,35 +9,35 @@
 import Foundation
 
 protocol Coordinator: class {
-  var childCoordinators: [Coordinator] { get set }
-  var didFinish: (() -> Void)? { get set }
+    var childCoordinators: [Coordinator] { get set }
+    var didFinish: (() -> Void)? { get set }
 
-  func start()
-  func addChildCoordinator(_ coordinator: Coordinator)
-  func removeChildCoordinator(_ coordinator: Coordinator)
-  func startChildren()
-  func removeAllChildren()
+    func start()
+    func addChildCoordinator(_ coordinator: Coordinator)
+    func removeChildCoordinator(_ coordinator: Coordinator)
+    func startChildren()
+    func removeAllChildren()
 }
 
 extension Coordinator {
-  func addChildCoordinator(_ coordinator: Coordinator) {
-    coordinator.didFinish = { [unowned self, unowned coordinator] in
-      self.removeChildCoordinator(coordinator)
+    func addChildCoordinator(_ coordinator: Coordinator) {
+        coordinator.didFinish = { [unowned self, unowned coordinator] in
+            self.removeChildCoordinator(coordinator)
+        }
+        childCoordinators.append(coordinator)
     }
-    childCoordinators.append(coordinator)
-  }
 
-  func removeChildCoordinator(_ coordinator: Coordinator) {
-    if let index = childCoordinators.firstIndex(where: {$0 === coordinator}) {
-      childCoordinators.remove(at: index)
+    func removeChildCoordinator(_ coordinator: Coordinator) {
+        if let index = childCoordinators.firstIndex(where: {$0 === coordinator}) {
+            childCoordinators.remove(at: index)
+        }
     }
-  }
 
-  func startChildren() {
-    childCoordinators.forEach { $0.start() }
-  }
+    func startChildren() {
+        childCoordinators.forEach { $0.start() }
+    }
 
-  func removeAllChildren() {
-    childCoordinators.removeAll()
-  }
+    func removeAllChildren() {
+        childCoordinators.removeAll()
+    }
 }

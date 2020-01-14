@@ -10,11 +10,11 @@ import Foundation
 import Mapper
 
 struct Track: Equatable {
-  let artist: Artist
+    let artist: Artist
 }
 
 extension Track: Mappable {
-  init(map: Mapper) throws {
-    try artist = map.from("artist")
-  }
+    init(map: Mapper) throws {
+        try artist = map.from("artist")
+    }
 }

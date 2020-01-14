@@ -9,13 +9,13 @@
 import Foundation
 
 final class TagCellViewModel {
-  private let tag: Tag
+    private let tag: Tag
 
-  init(tag: Tag) {
-    self.tag = tag
-  }
+    init(tag: Tag) {
+        self.tag = tag
+    }
 
-  var name: String {
-    return tag.name
-  }
+    var name: String {
+        return tag.name
+    }
 }

@@ -14,35 +14,35 @@ let log = SwiftyBeaver.self
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {
 
-  var window: UIWindow?
-  var appCoordinator: AppCoordinator?
+    var window: UIWindow?
+    var appCoordinator: AppCoordinator?
 
-  func application(_ application: UIApplication,
-                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    if NSClassFromString("XCTestCase") != nil {
-      return true
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        if NSClassFromString("XCTestCase") != nil {
+            return true
+        }
+
+        setupLogging()
+
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        window.backgroundColor = .systemBackground
+        AppearanceConfigurator.configureAppearance()
+
+        let appCoordinator = AppCoordinator(window: window)
+        appCoordinator.start()
+        window.makeKeyAndVisible()
+
+        self.window = window
+        self.appCoordinator = appCoordinator
+
+        return true
     }
 
-    setupLogging()
-
-    let window = UIWindow(frame: UIScreen.main.bounds)
-    window.backgroundColor = .systemBackground
-    AppearanceConfigurator.configureAppearance()
-
-    let appCoordinator = AppCoordinator(window: window)
-    appCoordinator.start()
-    window.makeKeyAndVisible()
-
-    self.window = window
-    self.appCoordinator = appCoordinator
-
-    return true
-  }
-
-  private func setupLogging() {
-    let console = ConsoleDestination()
-    console.format = "$Dyyyy-MM-dd HH:mm:ss.SSS$d [$L] $M"
-    log.addDestination(console)
-    log.debug(NSHomeDirectory())
-  }
+    private func setupLogging() {
+        let console = ConsoleDestination()
+        console.format = "$Dyyyy-MM-dd HH:mm:ss.SSS$d [$L] $M"
+        log.addDestination(console)
+        log.debug(NSHomeDirectory())
+    }
 }

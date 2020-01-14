@@ -9,33 +9,33 @@
 import UIKit
 
 final class AboutViewController: UIViewController {
-  private let scrollView = UIScrollView()
-  private let textView = UITextView()
+    private let scrollView = UIScrollView()
+    private let textView = UITextView()
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
-    configureView()
-  }
-
-  private func configureView() {
-    view.backgroundColor = .systemBackground
-
-    view.addSubview(scrollView)
-    scrollView.snp.makeConstraints { make in
-      make.edges.equalToSuperview()
+        configureView()
     }
 
-    scrollView.addSubview(textView)
-    textView.snp.makeConstraints { make in
-      make.edges.equalToSuperview().inset(16)
-      make.centerX.equalToSuperview()
-    }
+    private func configureView() {
+        view.backgroundColor = .systemBackground
 
-    textView.font = .primaryContent
-    textView.isEditable = false
-    textView.isScrollEnabled = false
-    textView.dataDetectorTypes = [.link]
-    textView.text = "Artist information and tags are provided by Last.fm (https://last.fm/api/).".unlocalized
-  }
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+
+        scrollView.addSubview(textView)
+        textView.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(16)
+            make.centerX.equalToSuperview()
+        }
+
+        textView.font = .primaryContent
+        textView.isEditable = false
+        textView.isScrollEnabled = false
+        textView.dataDetectorTypes = [.link]
+        textView.text = "Artist information and tags are provided by Last.fm (https://last.fm/api/).".unlocalized
+    }
 }

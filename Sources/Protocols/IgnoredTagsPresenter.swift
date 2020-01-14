@@ -9,30 +9,30 @@
 import UIKit
 
 protocol IgnoredTagsPresenter: NavigationFlowCoordinator, IgnoredTagsViewModelDelegate {
-  func makeIgnoredTagsViewController(dependencies: IgnoredTagsViewModel.Dependencies,
-                                     shouldAddDefaultTags: Bool) -> IgnoredTagsViewController
+    func makeIgnoredTagsViewController(dependencies: IgnoredTagsViewModel.Dependencies,
+                                       shouldAddDefaultTags: Bool) -> IgnoredTagsViewController
 }
 
 extension IgnoredTagsPresenter {
-  func makeIgnoredTagsViewController(dependencies: IgnoredTagsViewModel.Dependencies,
-                                     shouldAddDefaultTags: Bool) -> IgnoredTagsViewController {
-    let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: shouldAddDefaultTags)
-    viewModel.delegate = self
-    let viewController = IgnoredTagsViewController(viewModel: viewModel)
-    viewController.title = "Ignored Tags".unlocalized
-    viewController.navigationItem.leftBarButtonItem = makeBackButton()
+    func makeIgnoredTagsViewController(dependencies: IgnoredTagsViewModel.Dependencies,
+                                       shouldAddDefaultTags: Bool) -> IgnoredTagsViewController {
+        let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: shouldAddDefaultTags)
+        viewModel.delegate = self
+        let viewController = IgnoredTagsViewController(viewModel: viewModel)
+        viewController.title = "Ignored Tags".unlocalized
+        viewController.navigationItem.leftBarButtonItem = makeBackButton()
 
-    let addButton = BlockBarButtonItem(image: .plus, style: .plain) { [unowned viewModel] in
-      viewModel.addNewIgnoredTag()
+        let addButton = BlockBarButtonItem(image: .plus, style: .plain) { [unowned viewModel] in
+            viewModel.addNewIgnoredTag()
+        }
+
+        let doneButton = BlockBarButtonItem(image: .checkmark, style: .plain) { [unowned viewModel] in
+            viewModel.saveChanges()
+        }
+
+        viewController.navigationItem.rightBarButtonItems = [doneButton, addButton]
+
+        viewController.hidesBottomBarWhenPushed = true
+        return viewController
     }
-
-    let doneButton = BlockBarButtonItem(image: .checkmark, style: .plain) { [unowned viewModel] in
-      viewModel.saveChanges()
-    }
-
-    viewController.navigationItem.rightBarButtonItems = [doneButton, addButton]
-
-    viewController.hidesBottomBarWhenPushed = true
-    return viewController
-  }
 }

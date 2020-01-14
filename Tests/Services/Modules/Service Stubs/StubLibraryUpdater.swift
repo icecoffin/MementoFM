@@ -11,37 +11,37 @@ import Foundation
 import PromiseKit
 
 class StubLibraryUpdater: LibraryUpdaterProtocol {
-  var didStartLoading: (() -> Void)?
-  var didFinishLoading: (() -> Void)?
-  var didChangeStatus: ((LibraryUpdateStatus) -> Void)?
-  var didReceiveError: ((Error) -> Void)?
+    var didStartLoading: (() -> Void)?
+    var didFinishLoading: (() -> Void)?
+    var didChangeStatus: ((LibraryUpdateStatus) -> Void)?
+    var didReceiveError: ((Error) -> Void)?
 
-  var isFirstUpdate: Bool = true
-  var lastUpdateTimestamp: TimeInterval = 0
+    var isFirstUpdate: Bool = true
+    var lastUpdateTimestamp: TimeInterval = 0
 
-  var didRequestData = false
-  func requestData() {
-    didRequestData = true
-  }
+    var didRequestData = false
+    func requestData() {
+        didRequestData = true
+    }
 
-  var didCancelPendingRequests = false
-  func cancelPendingRequests() {
-    didCancelPendingRequests = true
-  }
+    var didCancelPendingRequests = false
+    func cancelPendingRequests() {
+        didCancelPendingRequests = true
+    }
 
-  func simulateStartLoading() {
-    didStartLoading?()
-  }
+    func simulateStartLoading() {
+        didStartLoading?()
+    }
 
-  func simulateFinishLoading() {
-    didFinishLoading?()
-  }
+    func simulateFinishLoading() {
+        didFinishLoading?()
+    }
 
-  func simulateStatusChange(_ status: LibraryUpdateStatus) {
-    didChangeStatus?(status)
-  }
+    func simulateStatusChange(_ status: LibraryUpdateStatus) {
+        didChangeStatus?(status)
+    }
 
-  func simulateError(_ error: Error) {
-    didReceiveError?(error)
-  }
+    func simulateError(_ error: Error) {
+        didReceiveError?(error)
+    }
 }

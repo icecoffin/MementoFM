@@ -9,14 +9,14 @@
 import UIKit
 
 protocol SyncPresenter: NavigationFlowCoordinator, SyncViewModelDelegate {
-  func makeSyncViewController(dependencies: AppDependency) -> SyncViewController
+    func makeSyncViewController(dependencies: AppDependency) -> SyncViewController
 }
 
 extension SyncPresenter {
-  func makeSyncViewController(dependencies: AppDependency) -> SyncViewController {
-    let viewModel = SyncViewModel(dependencies: dependencies)
-    viewModel.delegate = self
-    let viewController = SyncViewController(viewModel: viewModel)
-    return viewController
-  }
+    func makeSyncViewController(dependencies: AppDependency) -> SyncViewController {
+        let viewModel = SyncViewModel(dependencies: dependencies)
+        viewModel.delegate = self
+        let viewController = SyncViewController(viewModel: viewModel)
+        return viewController
+    }
 }

@@ -11,10 +11,10 @@ import Foundation
 import PromiseKit
 
 class TrackEmptyStubRepository: TrackRepository {
-  func getRecentTracksPage(withIndex index: Int,
-                           for user: String,
-                           from: TimeInterval,
-                           limit: Int) -> Promise<RecentTracksPageResponse> {
-    fatalError()
-  }
+    func getRecentTracksPage(withIndex index: Int,
+                             for user: String,
+                             from: TimeInterval,
+                             limit: Int) -> Promise<RecentTracksPageResponse> {
+        fatalError()
+    }
 }

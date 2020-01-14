@@ -10,32 +10,32 @@ import Foundation
 import PromiseKit
 
 protocol TrackRepository: class {
-  func getRecentTracksPage(withIndex index: Int,
-                           for user: String,
-                           from: TimeInterval,
-                           limit: Int) -> Promise<RecentTracksPageResponse>
+    func getRecentTracksPage(withIndex index: Int,
+                             for user: String,
+                             from: TimeInterval,
+                             limit: Int) -> Promise<RecentTracksPageResponse>
 }
 
 final class TrackNetworkRepository: TrackRepository {
-  private let networkService: NetworkService
+    private let networkService: NetworkService
 
-  init(networkService: NetworkService) {
-    self.networkService = networkService
-  }
+    init(networkService: NetworkService) {
+        self.networkService = networkService
+    }
 
-  func getRecentTracksPage(withIndex index: Int,
-                           for user: String,
-                           from: TimeInterval,
-                           limit: Int) -> Promise<RecentTracksPageResponse> {
-    let parameters: [String: Any] = ["method": "user.getrecenttracks",
-                                     "api_key": Keys.LastFM.apiKey,
-                                     "user": user,
-                                     "from": from,
-                                     "extended": 1,
-                                     "format": "json",
-                                     "page": index,
-                                     "limit": limit]
+    func getRecentTracksPage(withIndex index: Int,
+                             for user: String,
+                             from: TimeInterval,
+                             limit: Int) -> Promise<RecentTracksPageResponse> {
+        let parameters: [String: Any] = ["method": "user.getrecenttracks",
+                                         "api_key": Keys.LastFM.apiKey,
+                                         "user": user,
+                                         "from": from,
+                                         "extended": 1,
+                                         "format": "json",
+                                         "page": index,
+                                         "limit": limit]
 
-    return networkService.performRequest(parameters: parameters)
-  }
+        return networkService.performRequest(parameters: parameters)
+    }
 }

@@ -10,11 +10,11 @@ import Foundation
 import SVProgressHUD
 
 enum HUD {
-  static func show() {
-    SVProgressHUD.show()
-  }
+    static func show() {
+        SVProgressHUD.show()
+    }
 
-  static func dismiss() {
-    SVProgressHUD.dismiss()
-  }
+    static func dismiss() {
+        SVProgressHUD.dismiss()
+    }
 }

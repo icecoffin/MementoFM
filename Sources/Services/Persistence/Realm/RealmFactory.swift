@@ -9,22 +9,22 @@
 import RealmSwift
 
 final class RealmFactory {
-  static func realm() -> Realm {
-    do {
-      let realm = try Realm()
-      return realm
-    } catch {
-      fatalError("Can't create a Realm instance: \(error.localizedDescription)")
+    static func realm() -> Realm {
+        do {
+            let realm = try Realm()
+            return realm
+        } catch {
+            fatalError("Can't create a Realm instance: \(error.localizedDescription)")
+        }
     }
-  }
 
-  static func inMemoryRealm() -> Realm {
-    do {
-      let config = Realm.Configuration(inMemoryIdentifier: "InMemory")
-      let realm = try Realm(configuration: config)
-      return realm
-    } catch {
-      fatalError("Can't create an in-memory Realm instance: \(error.localizedDescription)")
+    static func inMemoryRealm() -> Realm {
+        do {
+            let config = Realm.Configuration(inMemoryIdentifier: "InMemory")
+            let realm = try Realm(configuration: config)
+            return realm
+        } catch {
+            fatalError("Can't create an in-memory Realm instance: \(error.localizedDescription)")
+        }
     }
-  }
 }

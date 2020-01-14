@@ -9,17 +9,17 @@
 import Foundation
 
 final class SettingCellViewModel {
-  private let configuration: SettingConfiguration
+    private let configuration: SettingConfiguration
 
-  init(configuration: SettingConfiguration) {
-    self.configuration = configuration
-  }
+    init(configuration: SettingConfiguration) {
+        self.configuration = configuration
+    }
 
-  var title: String {
-    return configuration.title
-  }
+    var title: String {
+        return configuration.title
+    }
 
-  func fireAction() {
-    configuration.action()
-  }
+    func fireAction() {
+        configuration.action()
+    }
 }

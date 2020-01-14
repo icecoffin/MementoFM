@@ -11,24 +11,24 @@ import Foundation
 import PromiseKit
 
 class StubIgnoredTagService: IgnoredTagServiceProtocol {
-  var defaultIgnoredTagNames: [String] = []
+    var defaultIgnoredTagNames: [String] = []
 
-  var didRequestIgnoredTags = false
-  var stubIgnoredTags: [IgnoredTag] = []
-  func ignoredTags() -> [IgnoredTag] {
-    didRequestIgnoredTags = true
-    return stubIgnoredTags
-  }
+    var didRequestIgnoredTags = false
+    var stubIgnoredTags: [IgnoredTag] = []
+    func ignoredTags() -> [IgnoredTag] {
+        didRequestIgnoredTags = true
+        return stubIgnoredTags
+    }
 
-  var createdDefaultIgnoredTagNames: [String] = []
-  func createDefaultIgnoredTags(withNames names: [String]) -> Promise<Void> {
-    createdDefaultIgnoredTagNames = names
-    return .value(())
-  }
+    var createdDefaultIgnoredTagNames: [String] = []
+    func createDefaultIgnoredTags(withNames names: [String]) -> Promise<Void> {
+        createdDefaultIgnoredTagNames = names
+        return .value(())
+    }
 
-  var updatedIgnoredTags: [IgnoredTag] = []
-  func updateIgnoredTags(_ ignoredTags: [IgnoredTag]) -> Promise<Void> {
-    updatedIgnoredTags = ignoredTags
-    return .value(())
-  }
+    var updatedIgnoredTags: [IgnoredTag] = []
+    func updateIgnoredTags(_ ignoredTags: [IgnoredTag]) -> Promise<Void> {
+        updatedIgnoredTags = ignoredTags
+        return .value(())
+    }
 }

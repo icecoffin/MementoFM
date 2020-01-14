@@ -9,6 +9,6 @@
 import Foundation
 
 struct SettingConfiguration {
-  let title: String
-  let action: (() -> Void)
+    let title: String
+    let action: (() -> Void)
 }

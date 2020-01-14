@@ -9,5 +9,5 @@
 import Foundation
 
 protocol TransientEntity {
-  associatedtype PersistentType: PersistentEntity
+    associatedtype PersistentType: PersistentEntity
 }

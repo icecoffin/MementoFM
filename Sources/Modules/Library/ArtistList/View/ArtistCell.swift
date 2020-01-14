@@ -11,109 +11,109 @@ import SnapKit
 import Kingfisher
 
 final class ArtistCell: UITableViewCell {
-  // MARK: - Properties
+    // MARK: - Properties
 
-  private let outerStackView = UIStackView()
-  private let innerStackView = UIStackView()
+    private let outerStackView = UIStackView()
+    private let innerStackView = UIStackView()
 
-  private let indexLabel = UILabel()
-  private let separatorView = UIView()
-  private let nameLabel = UILabel()
-  private let playcountLabel = UILabel()
+    private let indexLabel = UILabel()
+    private let separatorView = UIView()
+    private let nameLabel = UILabel()
+    private let playcountLabel = UILabel()
 
-  // MARK: - Init
+    // MARK: - Init
 
-  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-    super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-    setup()
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
-  // MARK: - Private methods
-
-  private func setup() {
-    addOuterStackView()
-    addIndexLabel()
-    addSeparatorView()
-
-    addInnerStackView()
-    addNameLabel()
-    addPlaycountLabel()
-  }
-
-  private func addOuterStackView() {
-    contentView.addSubview(outerStackView)
-    outerStackView.snp.makeConstraints { make in
-      make.edges.equalToSuperview()
+        setup()
     }
 
-    outerStackView.axis = .horizontal
-    outerStackView.alignment = .fill
-    outerStackView.distribution = .fill
-    outerStackView.spacing = 12
-    outerStackView.layoutMargins = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
-    outerStackView.isLayoutMarginsRelativeArrangement = true
-    outerStackView.translatesAutoresizingMaskIntoConstraints = false
-    outerStackView.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
-  }
-
-  private func addIndexLabel() {
-    let wrapperStackView = UIStackView()
-    outerStackView.addArrangedSubview(wrapperStackView)
-
-    wrapperStackView.alignment = .top
-    wrapperStackView.addArrangedSubview(indexLabel)
-
-    indexLabel.snp.makeConstraints { make in
-      make.width.equalTo(60)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
-    indexLabel.textAlignment = .right
-    indexLabel.font = .primaryContent
-    indexLabel.textColor = .darkGray
-  }
+    // MARK: - Private methods
 
-  private func addSeparatorView() {
-    outerStackView.addArrangedSubview(separatorView)
-    separatorView.snp.makeConstraints { make in
-      make.width.equalTo(0.5)
+    private func setup() {
+        addOuterStackView()
+        addIndexLabel()
+        addSeparatorView()
+
+        addInnerStackView()
+        addNameLabel()
+        addPlaycountLabel()
     }
-    separatorView.backgroundColor = .separator
-  }
 
-  private func addInnerStackView() {
-    outerStackView.addArrangedSubview(innerStackView)
+    private func addOuterStackView() {
+        contentView.addSubview(outerStackView)
+        outerStackView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
 
-    innerStackView.axis = .vertical
-    innerStackView.distribution = .fill
-    innerStackView.spacing = 6
-    innerStackView.translatesAutoresizingMaskIntoConstraints = false
-  }
+        outerStackView.axis = .horizontal
+        outerStackView.alignment = .fill
+        outerStackView.distribution = .fill
+        outerStackView.spacing = 12
+        outerStackView.layoutMargins = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
+        outerStackView.isLayoutMarginsRelativeArrangement = true
+        outerStackView.translatesAutoresizingMaskIntoConstraints = false
+        outerStackView.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+    }
 
-  private func addNameLabel() {
-    innerStackView.addArrangedSubview(nameLabel)
+    private func addIndexLabel() {
+        let wrapperStackView = UIStackView()
+        outerStackView.addArrangedSubview(wrapperStackView)
 
-    nameLabel.numberOfLines = 0
-    nameLabel.lineBreakMode = .byWordWrapping
-    nameLabel.font = .title
-  }
+        wrapperStackView.alignment = .top
+        wrapperStackView.addArrangedSubview(indexLabel)
 
-  private func addPlaycountLabel() {
-    innerStackView.addArrangedSubview(playcountLabel)
+        indexLabel.snp.makeConstraints { make in
+            make.width.equalTo(60)
+        }
 
-    playcountLabel.font = .secondaryContent
-    playcountLabel.textColor = .gray
-  }
+        indexLabel.textAlignment = .right
+        indexLabel.font = .primaryContent
+        indexLabel.textColor = .darkGray
+    }
 
-  // MARK: - Public methods
+    private func addSeparatorView() {
+        outerStackView.addArrangedSubview(separatorView)
+        separatorView.snp.makeConstraints { make in
+            make.width.equalTo(0.5)
+        }
+        separatorView.backgroundColor = .separator
+    }
 
-  func configure(with viewModel: LibraryArtistCellViewModel) {
-    nameLabel.text = viewModel.name
-    playcountLabel.text = viewModel.playcount
-    indexLabel.text = viewModel.displayIndex
-  }
+    private func addInnerStackView() {
+        outerStackView.addArrangedSubview(innerStackView)
+
+        innerStackView.axis = .vertical
+        innerStackView.distribution = .fill
+        innerStackView.spacing = 6
+        innerStackView.translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    private func addNameLabel() {
+        innerStackView.addArrangedSubview(nameLabel)
+
+        nameLabel.numberOfLines = 0
+        nameLabel.lineBreakMode = .byWordWrapping
+        nameLabel.font = .title
+    }
+
+    private func addPlaycountLabel() {
+        innerStackView.addArrangedSubview(playcountLabel)
+
+        playcountLabel.font = .secondaryContent
+        playcountLabel.textColor = .gray
+    }
+
+    // MARK: - Public methods
+
+    func configure(with viewModel: LibraryArtistCellViewModel) {
+        nameLabel.text = viewModel.name
+        playcountLabel.text = viewModel.playcount
+        indexLabel.text = viewModel.displayIndex
+    }
 }

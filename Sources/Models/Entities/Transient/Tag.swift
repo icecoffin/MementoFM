@@ -10,16 +10,16 @@ import Foundation
 import Mapper
 
 struct Tag: Equatable {
-  let name: String
-  let count: Int
+    let name: String
+    let count: Int
 }
 
 extension Tag: Mappable, TransientEntity {
-  typealias PersistentType = RealmTag
+    typealias PersistentType = RealmTag
 
-  init(map: Mapper) throws {
-    let name: String = try map.from("name")
-    self.name = name.lowercased()
-    try count = map.from("count")
-  }
+    init(map: Mapper) throws {
+        let name: String = try map.from("name")
+        self.name = name.lowercased()
+        try count = map.from("count")
+    }
 }

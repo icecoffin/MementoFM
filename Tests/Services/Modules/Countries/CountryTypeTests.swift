@@ -11,15 +11,15 @@ import XCTest
 import Nimble
 
 class CountryTypeTests: XCTestCase {
-  func test_displayName_returnsCorrectValue_forUnknownCountry() {
-    let country = CountryType.unknown
+    func test_displayName_returnsCorrectValue_forUnknownCountry() {
+        let country = CountryType.unknown
 
-    expect(country.displayName) == "unknown"
-  }
+        expect(country.displayName) == "unknown"
+    }
 
-  func test_displayName_returnsCorrectValue_forNamedCountry() {
-    let country = CountryType.named(name: "Germany")
+    func test_displayName_returnsCorrectValue_forNamedCountry() {
+        let country = CountryType.named(name: "Germany")
 
-    expect(country.displayName) == "Germany"
-  }
+        expect(country.displayName) == "Germany"
+    }
 }

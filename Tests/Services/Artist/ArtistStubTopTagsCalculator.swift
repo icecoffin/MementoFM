@@ -10,10 +10,10 @@ import Foundation
 @testable import MementoFM
 
 class ArtistStubTopTagsCalculator: ArtistTopTagsCalculating {
-  var numberOfCalculateTopTagsCalled = 0
+    var numberOfCalculateTopTagsCalled = 0
 
-  func calculateTopTags(for artist: Artist) -> Artist {
-    numberOfCalculateTopTagsCalled += 1
-    return artist
-  }
+    func calculateTopTags(for artist: Artist) -> Artist {
+        numberOfCalculateTopTagsCalled += 1
+        return artist
+    }
 }

@@ -9,44 +9,44 @@
 import UIKit
 
 protocol NavigationControllerPopObserver: class {
-  func navigationControllerPopTracker(_ tracker: NavigationControllerPopTracker,
-                                      didPopViewController viewController: UIViewController)
+    func navigationControllerPopTracker(_ tracker: NavigationControllerPopTracker,
+                                        didPopViewController viewController: UIViewController)
 }
 
 struct NavigationControllerPopObserverContainer {
-  weak var value: NavigationControllerPopObserver?
+    weak var value: NavigationControllerPopObserver?
 }
 
 final class NavigationControllerPopTracker: NSObject {
-  private let navigationController: NavigationController
-  private var viewControllerToObservers: [UIViewController: NavigationControllerPopObserverContainer] = [:]
+    private let navigationController: NavigationController
+    private var viewControllerToObservers: [UIViewController: NavigationControllerPopObserverContainer] = [:]
 
-  init(navigationController: NavigationController) {
-    self.navigationController = navigationController
-    super.init()
+    init(navigationController: NavigationController) {
+        self.navigationController = navigationController
+        super.init()
 
-    navigationController.delegate = self
-  }
+        navigationController.delegate = self
+    }
 
-  func addObserver(_ observer: NavigationControllerPopObserver,
-                   forPopTransitionOf viewController: UIViewController) {
-    let wrappedObserver = NavigationControllerPopObserverContainer(value: observer)
-    viewControllerToObservers[viewController] = wrappedObserver
-  }
+    func addObserver(_ observer: NavigationControllerPopObserver,
+                     forPopTransitionOf viewController: UIViewController) {
+        let wrappedObserver = NavigationControllerPopObserverContainer(value: observer)
+        viewControllerToObservers[viewController] = wrappedObserver
+    }
 }
 
 extension NavigationControllerPopTracker: UINavigationControllerDelegate {
-  func navigationController(_ navigationController: UINavigationController,
-                            didShow viewController: UIViewController,
-                            animated: Bool) {
-    guard let poppingViewController = navigationController.poppingViewController() else {
-      return
-    }
+    func navigationController(_ navigationController: UINavigationController,
+                              didShow viewController: UIViewController,
+                              animated: Bool) {
+        guard let poppingViewController = navigationController.poppingViewController() else {
+            return
+        }
 
-    if let wrappedObserver = viewControllerToObservers[poppingViewController] {
-      let observer = wrappedObserver.value
-      observer?.navigationControllerPopTracker(self, didPopViewController: poppingViewController)
-      viewControllerToObservers.removeValue(forKey: poppingViewController)
+        if let wrappedObserver = viewControllerToObservers[poppingViewController] {
+            let observer = wrappedObserver.value
+            observer?.navigationControllerPopTracker(self, didPopViewController: poppingViewController)
+            viewControllerToObservers.removeValue(forKey: poppingViewController)
+        }
     }
-  }
 }

@@ -11,163 +11,163 @@ import XCTest
 import Nimble
 
 class LibraryUpdaterTests: XCTestCase {
-  var userService: StubUserService!
-  var artistService: StubArtistService!
-  var tagService: StubTagService!
-  var ignoredTagService: StubIgnoredTagService!
-  var trackService: StubTrackService!
-  var networkService: StubNetworkService<EmptyResponse>!
+    var userService: StubUserService!
+    var artistService: StubArtistService!
+    var tagService: StubTagService!
+    var ignoredTagService: StubIgnoredTagService!
+    var trackService: StubTrackService!
+    var networkService: StubNetworkService<EmptyResponse>!
 
-  override func setUp() {
-    super.setUp()
+    override func setUp() {
+        super.setUp()
 
-    userService = StubUserService()
-    artistService = StubArtistService()
-    tagService = StubTagService()
-    ignoredTagService = StubIgnoredTagService()
-    trackService = StubTrackService()
-    networkService = StubNetworkService(response: EmptyResponse())
-  }
-
-  override func tearDown() {
-    super.tearDown()
-  }
-
-  func test_lastUpdateTimestamp_returnsValueFromUserService() {
-    let libraryUpdater = makeLibraryUpdater()
-
-    userService.lastUpdateTimestamp = 100
-
-    expect(libraryUpdater.lastUpdateTimestamp).to(equal(100))
-  }
-
-  func test_requestData_callsDidStartLoading() {
-    let libraryUpdater = makeLibraryUpdater()
-
-    var didStartLoading = false
-
-    libraryUpdater.didStartLoading = {
-      didStartLoading = true
+        userService = StubUserService()
+        artistService = StubArtistService()
+        tagService = StubTagService()
+        ignoredTagService = StubIgnoredTagService()
+        trackService = StubTrackService()
+        networkService = StubNetworkService(response: EmptyResponse())
     }
 
-    libraryUpdater.requestData()
-
-    expect(didStartLoading).to(beTrue())
-  }
-
-  func test_requestData_callsDidFinishLoading() {
-    let libraryUpdater = makeLibraryUpdater()
-
-    var didFinishLoading = false
-
-    libraryUpdater.didFinishLoading = {
-      didFinishLoading = true
+    override func tearDown() {
+        super.tearDown()
     }
 
-    libraryUpdater.requestData()
+    func test_lastUpdateTimestamp_returnsValueFromUserService() {
+        let libraryUpdater = makeLibraryUpdater()
 
-    expect(didFinishLoading).toEventually(beTrue())
-  }
+        userService.lastUpdateTimestamp = 100
 
-  func test_requestData_setsIsFirstUpdateToFalse() {
-    let libraryUpdater = makeLibraryUpdater()
-
-    libraryUpdater.requestData()
-
-    expect(libraryUpdater.isFirstUpdate).toEventually(beFalse())
-  }
-
-  func test_requestData_callsDidReceiveError_whenFinishedWithError() {
-    let libraryUpdater = makeLibraryUpdater()
-
-    var didReceiveError = false
-    libraryUpdater.didReceiveError = { _ in
-      didReceiveError = true
+        expect(libraryUpdater.lastUpdateTimestamp).to(equal(100))
     }
 
-    artistService.getLibraryShouldReturnError = true
+    func test_requestData_callsDidStartLoading() {
+        let libraryUpdater = makeLibraryUpdater()
 
-    libraryUpdater.requestData()
+        var didStartLoading = false
 
-    expect(didReceiveError).toEventually(equal(true))
-  }
+        libraryUpdater.didStartLoading = {
+            didStartLoading = true
+        }
 
-  func test_requestData_updatesLastUpdateTimestamp() {
-    let libraryUpdater = makeLibraryUpdater()
+        libraryUpdater.requestData()
 
-    userService.didReceiveInitialCollection = true
-
-    libraryUpdater.requestData()
-
-    expect(self.userService.lastUpdateTimestamp).toEventually(beGreaterThan(0))
-  }
-
-  func test_requestData_getsRecentTracksAndProcessesThem() {
-    let libraryUpdater = makeLibraryUpdater()
-
-    userService.didReceiveInitialCollection = true
-
-    libraryUpdater.requestData()
-
-    expect(self.trackService.didCallGetRecentTracks).toEventually(beTrue())
-    expect(self.trackService.didCallProcessTracks).toEventually(beTrue())
-  }
-
-  func test_requestsData_requestsInitialCollectionAndSavesIt() {
-    let libraryUpdater = makeLibraryUpdater()
-
-    userService.didReceiveInitialCollection = false
-    libraryUpdater.requestData()
-
-    expect(self.artistService.didRequestLibrary).toEventually(beTrue())
-    expect(self.userService.didReceiveInitialCollection).toEventually(beTrue())
-    expect(self.artistService.didCallSaveArtists).toEventually(beTrue())
-  }
-
-  func test_requestData_requestsArtistsTagsDuringLibraryUpdate() {
-    let libraryUpdater = makeLibraryUpdater()
-
-    let progress = Progress()
-    progress.totalUnitCount = 1
-    progress.completedUnitCount = 1
-    let artist = ModelFactory.generateArtist()
-    let topTagsList = TopTagsList(tags: ModelFactory.generateTags(inAmount: 10, for: artist.name))
-    let topTagsRequestProgress = TopTagsRequestProgress(progress: progress, artist: artist, topTagsList: topTagsList)
-    tagService.stubProgress = topTagsRequestProgress
-
-    libraryUpdater.requestData()
-
-    expect(self.artistService.didRequestArtistsNeedingTagsUpdate).toEventually(beTrue())
-    expect(self.tagService.didRequestTopTags).toEventually(beTrue())
-    expect(self.artistService.didCallUpdateArtist).toEventually(beTrue())
-    expect(self.artistService.didCallCalculateTopTags).toEventually(beTrue())
-  }
-
-  func test_cancelPendingRequests_changesStatusToArtistsFirstPage() {
-    let libraryUpdater = makeLibraryUpdater()
-    var libraryUpdateStatus: LibraryUpdateStatus!
-
-    libraryUpdater.didChangeStatus = { status in
-      libraryUpdateStatus = status
+        expect(didStartLoading).to(beTrue())
     }
 
-    libraryUpdater.cancelPendingRequests()
+    func test_requestData_callsDidFinishLoading() {
+        let libraryUpdater = makeLibraryUpdater()
 
-    expect(self.networkService.didCancelPendingRequests).to(beTrue())
-    expect({
-      guard let status = libraryUpdateStatus, case .artistsFirstPage = status else {
-        return .failed(reason: "libraryUpdateStatus is nil or wrong enum case")
-      }
-      return .succeeded
-    }).to(succeed())
-  }
+        var didFinishLoading = false
 
-  private func makeLibraryUpdater() -> LibraryUpdater {
-    return LibraryUpdater(userService: userService,
-                          artistService: artistService,
-                          tagService: tagService,
-                          ignoredTagService: ignoredTagService,
-                          trackService: trackService,
-                          networkService: networkService)
-  }
+        libraryUpdater.didFinishLoading = {
+            didFinishLoading = true
+        }
+
+        libraryUpdater.requestData()
+
+        expect(didFinishLoading).toEventually(beTrue())
+    }
+
+    func test_requestData_setsIsFirstUpdateToFalse() {
+        let libraryUpdater = makeLibraryUpdater()
+
+        libraryUpdater.requestData()
+
+        expect(libraryUpdater.isFirstUpdate).toEventually(beFalse())
+    }
+
+    func test_requestData_callsDidReceiveError_whenFinishedWithError() {
+        let libraryUpdater = makeLibraryUpdater()
+
+        var didReceiveError = false
+        libraryUpdater.didReceiveError = { _ in
+            didReceiveError = true
+        }
+
+        artistService.getLibraryShouldReturnError = true
+
+        libraryUpdater.requestData()
+
+        expect(didReceiveError).toEventually(equal(true))
+    }
+
+    func test_requestData_updatesLastUpdateTimestamp() {
+        let libraryUpdater = makeLibraryUpdater()
+
+        userService.didReceiveInitialCollection = true
+
+        libraryUpdater.requestData()
+
+        expect(self.userService.lastUpdateTimestamp).toEventually(beGreaterThan(0))
+    }
+
+    func test_requestData_getsRecentTracksAndProcessesThem() {
+        let libraryUpdater = makeLibraryUpdater()
+
+        userService.didReceiveInitialCollection = true
+
+        libraryUpdater.requestData()
+
+        expect(self.trackService.didCallGetRecentTracks).toEventually(beTrue())
+        expect(self.trackService.didCallProcessTracks).toEventually(beTrue())
+    }
+
+    func test_requestsData_requestsInitialCollectionAndSavesIt() {
+        let libraryUpdater = makeLibraryUpdater()
+
+        userService.didReceiveInitialCollection = false
+        libraryUpdater.requestData()
+
+        expect(self.artistService.didRequestLibrary).toEventually(beTrue())
+        expect(self.userService.didReceiveInitialCollection).toEventually(beTrue())
+        expect(self.artistService.didCallSaveArtists).toEventually(beTrue())
+    }
+
+    func test_requestData_requestsArtistsTagsDuringLibraryUpdate() {
+        let libraryUpdater = makeLibraryUpdater()
+
+        let progress = Progress()
+        progress.totalUnitCount = 1
+        progress.completedUnitCount = 1
+        let artist = ModelFactory.generateArtist()
+        let topTagsList = TopTagsList(tags: ModelFactory.generateTags(inAmount: 10, for: artist.name))
+        let topTagsRequestProgress = TopTagsRequestProgress(progress: progress, artist: artist, topTagsList: topTagsList)
+        tagService.stubProgress = topTagsRequestProgress
+
+        libraryUpdater.requestData()
+
+        expect(self.artistService.didRequestArtistsNeedingTagsUpdate).toEventually(beTrue())
+        expect(self.tagService.didRequestTopTags).toEventually(beTrue())
+        expect(self.artistService.didCallUpdateArtist).toEventually(beTrue())
+        expect(self.artistService.didCallCalculateTopTags).toEventually(beTrue())
+    }
+
+    func test_cancelPendingRequests_changesStatusToArtistsFirstPage() {
+        let libraryUpdater = makeLibraryUpdater()
+        var libraryUpdateStatus: LibraryUpdateStatus!
+
+        libraryUpdater.didChangeStatus = { status in
+            libraryUpdateStatus = status
+        }
+
+        libraryUpdater.cancelPendingRequests()
+
+        expect(self.networkService.didCancelPendingRequests).to(beTrue())
+        expect({
+            guard let status = libraryUpdateStatus, case .artistsFirstPage = status else {
+                return .failed(reason: "libraryUpdateStatus is nil or wrong enum case")
+            }
+            return .succeeded
+        }).to(succeed())
+    }
+
+    private func makeLibraryUpdater() -> LibraryUpdater {
+        return LibraryUpdater(userService: userService,
+                              artistService: artistService,
+                              tagService: tagService,
+                              ignoredTagService: ignoredTagService,
+                              trackService: trackService,
+                              networkService: networkService)
+    }
 }

@@ -11,25 +11,25 @@ import Foundation
 import PromiseKit
 
 class TrackStubRepository: TrackRepository {
-  private let totalPages: Int
-  private let shouldFailWithError: Bool
-  private let trackProvider: (() -> [Track])
+    private let totalPages: Int
+    private let shouldFailWithError: Bool
+    private let trackProvider: (() -> [Track])
 
-  init(totalPages: Int, shouldFailWithError: Bool, trackProvider: @escaping (() -> [Track])) {
-    self.totalPages = totalPages
-    self.shouldFailWithError = shouldFailWithError
-    self.trackProvider = trackProvider
-  }
-
-  func getRecentTracksPage(withIndex index: Int, for user: String,
-                           from: TimeInterval, limit: Int) -> Promise<RecentTracksPageResponse> {
-    if shouldFailWithError {
-      return Promise(error: NSError(domain: "MementoFM", code: 1, userInfo: nil))
-    } else {
-      let tracks = trackProvider()
-      let recentTracksPage = RecentTracksPage(index: index, totalPages: totalPages, tracks: tracks)
-      let response = RecentTracksPageResponse(recentTracksPage: recentTracksPage)
-      return .value(response)
+    init(totalPages: Int, shouldFailWithError: Bool, trackProvider: @escaping (() -> [Track])) {
+        self.totalPages = totalPages
+        self.shouldFailWithError = shouldFailWithError
+        self.trackProvider = trackProvider
     }
-  }
+
+    func getRecentTracksPage(withIndex index: Int, for user: String,
+                             from: TimeInterval, limit: Int) -> Promise<RecentTracksPageResponse> {
+        if shouldFailWithError {
+            return Promise(error: NSError(domain: "MementoFM", code: 1, userInfo: nil))
+        } else {
+            let tracks = trackProvider()
+            let recentTracksPage = RecentTracksPage(index: index, totalPages: totalPages, tracks: tracks)
+            let response = RecentTracksPageResponse(recentTracksPage: recentTracksPage)
+            return .value(response)
+        }
+    }
 }

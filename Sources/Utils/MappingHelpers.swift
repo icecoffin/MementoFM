@@ -9,9 +9,9 @@
 import Foundation
 
 func int(from anyString: Any, defaultValue: Int = 0) -> Int {
-  if let stringValue = anyString as? String {
-    return Int(stringValue) ?? defaultValue
-  } else {
-    return defaultValue
-  }
+    if let stringValue = anyString as? String {
+        return Int(stringValue) ?? defaultValue
+    } else {
+        return defaultValue
+    }
 }

@@ -11,28 +11,28 @@ import Foundation
 import PromiseKit
 
 class ArtistLibraryStubRepository: ArtistRepository {
-  private let totalPages: Int
-  private let artistProvider: ((Int) -> [Artist])
-  private let shouldFailWithError: Bool
+    private let totalPages: Int
+    private let artistProvider: ((Int) -> [Artist])
+    private let shouldFailWithError: Bool
 
-  init(totalPages: Int, shouldFailWithError: Bool, artistProvider: @escaping ((Int) -> [Artist])) {
-    self.totalPages = totalPages
-    self.shouldFailWithError = shouldFailWithError
-    self.artistProvider = artistProvider
-  }
-
-  func getLibraryPage(withIndex index: Int, for user: String, limit: Int) -> Promise<LibraryPageResponse> {
-    if shouldFailWithError {
-      return Promise(error: NSError(domain: "MementoFM", code: 1, userInfo: nil))
-    } else {
-      let artists = artistProvider(index)
-      let libraryPage = LibraryPage(index: index, totalPages: totalPages, artists: artists)
-      let response = LibraryPageResponse(libraryPage: libraryPage)
-      return .value(response)
+    init(totalPages: Int, shouldFailWithError: Bool, artistProvider: @escaping ((Int) -> [Artist])) {
+        self.totalPages = totalPages
+        self.shouldFailWithError = shouldFailWithError
+        self.artistProvider = artistProvider
     }
-  }
 
-  func getSimilarArtists(for artist: Artist, limit: Int) -> Promise<SimilarArtistListResponse> {
-    fatalError()
-  }
+    func getLibraryPage(withIndex index: Int, for user: String, limit: Int) -> Promise<LibraryPageResponse> {
+        if shouldFailWithError {
+            return Promise(error: NSError(domain: "MementoFM", code: 1, userInfo: nil))
+        } else {
+            let artists = artistProvider(index)
+            let libraryPage = LibraryPage(index: index, totalPages: totalPages, artists: artists)
+            let response = LibraryPageResponse(libraryPage: libraryPage)
+            return .value(response)
+        }
+    }
+
+    func getSimilarArtists(for artist: Artist, limit: Int) -> Promise<SimilarArtistListResponse> {
+        fatalError()
+    }
 }

@@ -10,11 +10,11 @@ import Foundation
 import Mapper
 
 struct TopTagsResponse {
-  let topTagsList: TopTagsList
+    let topTagsList: TopTagsList
 }
 
 extension TopTagsResponse: Mappable {
-  init(map: Mapper) throws {
-    topTagsList = map.optionalFrom("toptags") ?? TopTagsList(tags: [])
-  }
+    init(map: Mapper) throws {
+        topTagsList = map.optionalFrom("toptags") ?? TopTagsList(tags: [])
+    }
 }

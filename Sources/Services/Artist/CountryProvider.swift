@@ -9,20 +9,20 @@
 import Foundation
 
 protocol CountryProviding {
-  func topCountry(for artist: Artist) -> String?
+    func topCountry(for artist: Artist) -> String?
 }
 
 final class CountryProvider: CountryProviding {
-  private let mapping: CountryMapping
+    private let mapping: CountryMapping
 
-  init(mapping: CountryMapping = .loadFromFile()) {
-    self.mapping = mapping
-  }
+    init(mapping: CountryMapping = .loadFromFile()) {
+        self.mapping = mapping
+    }
 
-  func topCountry(for artist: Artist) -> String? {
-    return artist
-      .tags
-      .compactMap { mapping.map[$0.name] }
-      .first
-  }
+    func topCountry(for artist: Artist) -> String? {
+        return artist
+            .tags
+            .compactMap { mapping.map[$0.name] }
+            .first
+    }
 }

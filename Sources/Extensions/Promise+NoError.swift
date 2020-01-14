@@ -10,7 +10,7 @@ import Foundation
 import PromiseKit
 
 extension Promise {
-  @discardableResult func noError() -> Promise<T> {
-    return self
-  }
+    @discardableResult func noError() -> Promise<T> {
+        return self
+    }
 }

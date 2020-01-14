@@ -9,12 +9,12 @@
 import Foundation
 
 struct IgnoredTag: TransientEntity, Equatable {
-  typealias PersistentType = RealmIgnoredTag
+    typealias PersistentType = RealmIgnoredTag
 
-  let uuid: String
-  let name: String
+    let uuid: String
+    let name: String
 
-  func updatingName(_ newName: String) -> IgnoredTag {
-    return IgnoredTag(uuid: uuid, name: newName)
-  }
+    func updatingName(_ newName: String) -> IgnoredTag {
+        return IgnoredTag(uuid: uuid, name: newName)
+    }
 }

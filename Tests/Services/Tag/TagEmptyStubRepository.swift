@@ -11,7 +11,7 @@ import Foundation
 import PromiseKit
 
 class TagEmptyStubRepository: TagRepository {
-  func getTopTags(for artist: String) -> Promise<TopTagsResponse> {
-    fatalError()
-  }
+    func getTopTags(for artist: String) -> Promise<TopTagsResponse> {
+        fatalError()
+    }
 }

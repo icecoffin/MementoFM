@@ -9,21 +9,21 @@
 import UIKit
 
 protocol ArtistsByTagPresenter: NavigationFlowCoordinator, ArtistListViewModelDelegate {
-  func makeLibraryViewController(forTagWithName tagName: String,
-                                 dependencies: ArtistsByTagViewModel.Dependencies) -> ArtistListViewController
+    func makeLibraryViewController(forTagWithName tagName: String,
+                                   dependencies: ArtistsByTagViewModel.Dependencies) -> ArtistListViewController
 }
 
 extension ArtistsByTagPresenter {
-  func makeLibraryViewController(forTagWithName tagName: String,
-                                 dependencies: ArtistsByTagViewModel.Dependencies) -> ArtistListViewController {
-    let viewModel = ArtistsByTagViewModel(tagName: tagName, dependencies: dependencies)
-    viewModel.delegate = self
-    let searchController = UISearchController(searchResultsController: nil)
-    let viewController = ArtistListViewController(searchController: searchController, viewModel: viewModel)
-    viewController.navigationItem.leftBarButtonItem = makeBackButton()
-    viewController.navigationItem.searchController = searchController
-    viewController.navigationItem.hidesSearchBarWhenScrolling = false
-    viewController.title = viewModel.title
-    return viewController
-  }
+    func makeLibraryViewController(forTagWithName tagName: String,
+                                   dependencies: ArtistsByTagViewModel.Dependencies) -> ArtistListViewController {
+        let viewModel = ArtistsByTagViewModel(tagName: tagName, dependencies: dependencies)
+        viewModel.delegate = self
+        let searchController = UISearchController(searchResultsController: nil)
+        let viewController = ArtistListViewController(searchController: searchController, viewModel: viewModel)
+        viewController.navigationItem.leftBarButtonItem = makeBackButton()
+        viewController.navigationItem.searchController = searchController
+        viewController.navigationItem.hidesSearchBarWhenScrolling = false
+        viewController.title = viewModel.title
+        return viewController
+    }
 }
