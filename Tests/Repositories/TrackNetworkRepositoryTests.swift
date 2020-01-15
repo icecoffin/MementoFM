@@ -13,25 +13,38 @@ import PromiseKit
 import Alamofire
 
 class TrackRepositoryTests: XCTestCase {
-    func testGetRecentTracksRequestParametersAreCorrect() {
+    var networkService: MockNetworkService!
+    var trackRepository: TrackNetworkRepository!
+
+    override func setUp() {
+        super.setUp()
+
+        networkService = MockNetworkService()
+        trackRepository = TrackNetworkRepository(networkService: networkService)
+    }
+
+    func test_getRecentTracks_callsNetworkServiceWithCorrectParameters() {
         let recentTracksPage = RecentTracksPage(index: 1, totalPages: 1, tracks: [])
         let response = RecentTracksPageResponse(recentTracksPage: recentTracksPage)
-        let networkService = StubNetworkService(response: response)
+        networkService.customResponse = response
 
-        let trackRepository = TrackNetworkRepository(networkService: networkService)
-        trackRepository.getRecentTracksPage(withIndex: 1, for: "User", from: TimeInterval(1509982044), limit: 10).done { _ in
-            expect(networkService.method).to(equal(.get))
-            let expectedParameters: [String: AnyHashable] = ["method": "user.getrecenttracks",
-                                                             "api_key": Keys.LastFM.apiKey,
-                                                             "user": "User",
-                                                             "from": TimeInterval(1509982044),
-                                                             "extended": 1,
-                                                             "format": "json",
-                                                             "page": 1,
-                                                             "limit": 10]
-            expect(networkService.parameters as? [String: AnyHashable]).to(equal(expectedParameters))
-            expect(networkService.encoding).to(beAKindOf(URLEncoding.self))
-            expect(networkService.headers).to(beNil())
-        }.noError()
+        trackRepository
+            .getRecentTracksPage(withIndex: 1, for: "User", from: TimeInterval(1509982044), limit: 10)
+            .noError()
+
+        let expectedParameters: [String: AnyHashable] = ["method": "user.getrecenttracks",
+                                                         "api_key": Keys.LastFM.apiKey,
+                                                         "user": "User",
+                                                         "from": TimeInterval(1509982044),
+                                                         "extended": 1,
+                                                         "format": "json",
+                                                         "page": 1,
+                                                         "limit": 10]
+
+        let performRequestParameters = networkService.performRequestParameters
+        expect(performRequestParameters?.method) == .get
+        expect(performRequestParameters?.parameters as? [String: AnyHashable]) == expectedParameters
+        expect(performRequestParameters?.encoding).to(beAKindOf(URLEncoding.self))
+        expect(performRequestParameters?.headers).to(beNil())
     }
 }

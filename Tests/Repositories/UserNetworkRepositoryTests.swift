@@ -13,17 +13,29 @@ import PromiseKit
 import Alamofire
 
 class UserNetworkRepositoryTests: XCTestCase {
-    func testCheckUserExistsRequestParametersAreCorrect() {
-        let networkService = StubNetworkService(response: EmptyResponse())
-        let userRepository = UserNetworkRepository(networkService: networkService)
-        userRepository.checkUserExists(withUsername: "User").done { _ in
-            let expectedParameters: [String: AnyHashable] = ["method": "user.getInfo",
-                                                             "api_key": Keys.LastFM.apiKey,
-                                                             "user": "User",
-                                                             "format": "json"]
-            expect(networkService.parameters as? [String: AnyHashable]).to(equal(expectedParameters))
-            expect(networkService.encoding).to(beAKindOf(URLEncoding.self))
-            expect(networkService.headers).to(beNil())
-        }.noError()
+    var networkService: MockNetworkService!
+    var userRepository: UserNetworkRepository!
+
+    override func setUp() {
+        super.setUp()
+
+        networkService = MockNetworkService()
+        userRepository = UserNetworkRepository(networkService: networkService)
+    }
+
+    func test_checkUserExists_callsNetworkServiceWithCorrectParameters() {
+        networkService.customResponse = EmptyResponse()
+
+        userRepository.checkUserExists(withUsername: "User").noError()
+
+        let expectedParameters: [String: AnyHashable] = ["method": "user.getInfo",
+                                                         "api_key": Keys.LastFM.apiKey,
+                                                         "user": "User",
+                                                         "format": "json"]
+
+        let performRequestParameters = networkService.performRequestParameters
+        expect(performRequestParameters?.parameters as? [String: AnyHashable]) == expectedParameters
+        expect(performRequestParameters?.encoding).to(beAKindOf(URLEncoding.self))
+        expect(performRequestParameters?.headers).to(beNil())
     }
 }

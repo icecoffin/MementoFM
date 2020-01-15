@@ -1,5 +1,5 @@
 //
-//  StubNetworkService.swift
+//  MockNetworkService.swift
 //  MementoFM
 //
 //  Created by Daniel on 06/11/2017.
@@ -11,34 +11,34 @@ import Foundation
 import PromiseKit
 import Mapper
 
-class StubNetworkService<ResponseType>: NetworkService where ResponseType: Mappable {
-    var method: HTTPMethod?
-    var parameters: Parameters?
-    var encoding: ParameterEncoding?
-    var headers: HTTPHeaders?
-
-    let response: ResponseType
-
-    init(response: ResponseType) {
-        self.response = response
+class MockNetworkService: NetworkService {
+    struct PerformRequestParameters {
+        let method: HTTPMethod
+        let parameters: Parameters?
+        let encoding: ParameterEncoding?
+        let headers: HTTPHeaders?
     }
 
+    var performRequestParameters: PerformRequestParameters?
+    var customResponse: Any?
     func performRequest<T>(method: HTTPMethod,
                            parameters: Parameters?,
                            encoding: ParameterEncoding,
                            headers: HTTPHeaders?) -> Promise<T> where T: Mappable {
-        self.method = method
-        self.parameters = parameters
-        self.encoding = encoding
-        self.headers = headers
-        guard let response = response as? T else {
-            fatalError("ResponseType should be the same as performRequest response type")
+        performRequestParameters = PerformRequestParameters(method: method,
+                                                            parameters: parameters,
+                                                            encoding: encoding,
+                                                            headers: headers)
+
+        guard let response = customResponse as? T else {
+            fatalError("Response type should be the same as performRequest response type")
         }
+
         return .value(response)
     }
 
-    var didCancelPendingRequests = false
+    var cancelPendingRequestsCallCount = 0
     func cancelPendingRequests() {
-        didCancelPendingRequests = true
+        cancelPendingRequestsCallCount += 1
     }
 }

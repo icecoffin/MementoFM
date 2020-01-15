@@ -16,7 +16,7 @@ class LibraryUpdaterTests: XCTestCase {
     var tagService: StubTagService!
     var ignoredTagService: StubIgnoredTagService!
     var trackService: StubTrackService!
-    var networkService: StubNetworkService<EmptyResponse>!
+    var networkService: MockNetworkService!
 
     override func setUp() {
         super.setUp()
@@ -26,7 +26,8 @@ class LibraryUpdaterTests: XCTestCase {
         tagService = StubTagService()
         ignoredTagService = StubIgnoredTagService()
         trackService = StubTrackService()
-        networkService = StubNetworkService(response: EmptyResponse())
+        networkService = MockNetworkService()
+        networkService.customResponse = EmptyResponse()
     }
 
     override func tearDown() {
@@ -153,7 +154,7 @@ class LibraryUpdaterTests: XCTestCase {
 
         libraryUpdater.cancelPendingRequests()
 
-        expect(self.networkService.didCancelPendingRequests).to(beTrue())
+        expect(self.networkService.cancelPendingRequestsCallCount) == 1
         expect({
             guard let status = libraryUpdateStatus, case .artistsFirstPage = status else {
                 return .failed(reason: "libraryUpdateStatus is nil or wrong enum case")
