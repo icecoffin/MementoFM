@@ -12,17 +12,18 @@ import Mapper
 import Nimble
 
 class TrackTests: XCTestCase {
-    private func sampleTrack() -> Track? {
+    func test_initWithMap_setsCorrectProperties() {
+        let track = makeSampleTrack()
+
+        expect(track?.artist.name) == "Morphine"
+    }
+
+    private func makeSampleTrack() -> Track? {
         guard let json = Utils.json(forResource: "sample_track", withExtension: "json") as? NSDictionary else {
             return nil
         }
 
         let mapper = Mapper(JSON: json)
         return try? Track(map: mapper)
-    }
-
-    func testInitializingWithMapper() {
-        let track = sampleTrack()
-        expect(track?.artist.name).to(equal("Morphine"))
     }
 }

@@ -12,26 +12,18 @@ import Nimble
 import Mapper
 
 class ArtistTests: XCTestCase {
-    private func sampleArtist() -> Artist? {
-        guard let json = Utils.json(forResource: "sample_artist", withExtension: "json") as? NSDictionary else {
-            return nil
-        }
+    func test_initWithMap_setsCorrectProperties() {
+        let artist = makeSampleArtist()
 
-        let mapper = Mapper(JSON: json)
-        return try? Artist(map: mapper)
-    }
-
-    func testInitializingWithMapper() {
-        let artist = sampleArtist()
-        expect(artist?.name).to(equal("Tiger Army"))
-        expect(artist?.playcount).to(equal(730))
-        expect(artist?.urlString).to(equal("https://www.last.fm/music/Tiger+Army"))
-        expect(artist?.needsTagsUpdate).to(beTrue())
+        expect(artist?.name) == "Tiger Army"
+        expect(artist?.playcount) == 730
+        expect(artist?.urlString) == "https://www.last.fm/music/Tiger+Army"
+        expect(artist?.needsTagsUpdate) == true
         expect(artist?.tags).to(beEmpty())
         expect(artist?.topTags).to(beEmpty())
     }
 
-    func testGettingIntersectingTopTagNames() {
+    func test_intersectingTopTagNames_returnsCorrectValue() {
         let topTags1 = [Tag(name: "tag1", count: 1),
                         Tag(name: "tag2", count: 2),
                         Tag(name: "tag3", count: 3)]
@@ -55,45 +47,56 @@ class ArtistTests: XCTestCase {
 
         let intersectingTopTagNames = artist1.intersectingTopTagNames(with: artist2)
 
-        expect(intersectingTopTagNames).to(equal(["tag1", "tag3"]))
+        expect(intersectingTopTagNames) == ["tag1", "tag3"]
     }
 
-    func testUpdatingPlaycount() {
-        let artist = sampleArtist()
+    func test_updatingPlaycount_setsCorrectProperties() {
+        let artist = makeSampleArtist()
 
         let updatedArtist = artist?.updatingPlaycount(to: 100)
 
-        expect(updatedArtist?.name).to(equal(artist?.name))
-        expect(updatedArtist?.playcount).to(equal(100))
-        expect(updatedArtist?.urlString).to(equal(artist?.urlString))
-        expect(updatedArtist?.needsTagsUpdate).to(equal(artist?.needsTagsUpdate))
-        expect(updatedArtist?.tags).to(equal(artist?.tags))
-        expect(updatedArtist?.topTags).to(equal(artist?.topTags))
+        expect(updatedArtist?.name) == artist?.name
+        expect(updatedArtist?.playcount) == 100
+        expect(updatedArtist?.urlString) == artist?.urlString
+        expect(updatedArtist?.needsTagsUpdate) == artist?.needsTagsUpdate
+        expect(updatedArtist?.tags) == artist?.tags
+        expect(updatedArtist?.topTags) == artist?.topTags
     }
 
-    func testUpdatingTags() {
-        let artist = sampleArtist()
+    func test_updatingTags_setsCorrectProperties() {
+        let artist = makeSampleArtist()
         let tags = ModelFactory.generateTags(inAmount: 5, for: "Artist")
 
         let updatedArtist = artist?.updatingTags(to: tags, needsTagsUpdate: true)
-        expect(updatedArtist?.name).to(equal(artist?.name))
-        expect(updatedArtist?.playcount).to(equal(artist?.playcount))
-        expect(updatedArtist?.urlString).to(equal(artist?.urlString))
-        expect(updatedArtist?.needsTagsUpdate).to(equal(true))
-        expect(updatedArtist?.tags).to(equal(tags))
-        expect(updatedArtist?.topTags).to(equal(artist?.topTags))
+
+        expect(updatedArtist?.name) == artist?.name
+        expect(updatedArtist?.playcount) == artist?.playcount
+        expect(updatedArtist?.urlString) == artist?.urlString
+        expect(updatedArtist?.needsTagsUpdate) == true
+        expect(updatedArtist?.tags) == tags
+        expect(updatedArtist?.topTags) == artist?.topTags
     }
 
-    func testUpdatingTopTags() {
-        let artist = sampleArtist()
+    func test_updatingTopTags_setsCorrectProperties() {
+        let artist = makeSampleArtist()
         let topTags = ModelFactory.generateTags(inAmount: 5, for: "Artist")
 
         let updatedArtist = artist?.updatingTopTags(to: topTags)
-        expect(updatedArtist?.name).to(equal(artist?.name))
-        expect(updatedArtist?.playcount).to(equal(artist?.playcount))
-        expect(updatedArtist?.urlString).to(equal(artist?.urlString))
-        expect(updatedArtist?.needsTagsUpdate).to(equal(true))
-        expect(updatedArtist?.tags).to(equal(artist?.tags))
-        expect(updatedArtist?.topTags).to(equal(topTags))
+
+        expect(updatedArtist?.name) == artist?.name
+        expect(updatedArtist?.playcount) == artist?.playcount
+        expect(updatedArtist?.urlString) == artist?.urlString
+        expect(updatedArtist?.needsTagsUpdate) == true
+        expect(updatedArtist?.tags) == artist?.tags
+        expect(updatedArtist?.topTags) == topTags
+    }
+
+    private func makeSampleArtist() -> Artist? {
+        guard let json = Utils.json(forResource: "sample_artist", withExtension: "json") as? NSDictionary else {
+            return nil
+        }
+
+        let mapper = Mapper(JSON: json)
+        return try? Artist(map: mapper)
     }
 }

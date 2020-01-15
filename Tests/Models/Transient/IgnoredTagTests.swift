@@ -12,10 +12,12 @@ import XCTest
 import Nimble
 
 class IgnoredTagTests: XCTestCase {
-    func testUpdatingName() {
+    func test_updatingName_setsCorrectProperties() {
         let ignoredTag = IgnoredTag(uuid: "uuid", name: "name")
+
         let updatedIgnoredTag = ignoredTag.updatingName("new name")
-        expect(updatedIgnoredTag.uuid).to(equal(ignoredTag.uuid))
-        expect(updatedIgnoredTag.name).to(equal("new name"))
+
+        expect(updatedIgnoredTag.uuid) == ignoredTag.uuid
+        expect(updatedIgnoredTag.name) == "new name"
     }
 }
