@@ -12,64 +12,69 @@ import RealmSwift
 import Nimble
 
 class RealmArtistTests: XCTestCase {
-  func testPrimaryKeyIsSet() {
-    expect(RealmArtist.primaryKey()).to(equal("name"))
-  }
+    func test_primaryKey_isSet() {
+        expect(RealmArtist.primaryKey()) == "name"
+    }
 
-  func testPropertiesAreSetCorrectlyAfterInit() {
-    let realmArtist = RealmArtist()
-    expect(realmArtist.name).to(beEmpty())
-    expect(realmArtist.playcount).to(equal(0))
-    expect(realmArtist.urlString).to(beEmpty())
-    expect(realmArtist.needsTagsUpdate).to(beTrue())
-    expect(realmArtist.tags).to(beEmpty())
-    expect(realmArtist.topTags).to(beEmpty())
-  }
+    func test_init_setsCorrectProperties() {
+        let realmArtist = RealmArtist()
 
-  func testCreatingFromTransient() {
-    let tags = ModelFactory.generateTags(inAmount: 5, for: "Test")
-    let topTags = Array(tags.prefix(3))
-    let transientArtist = Artist(name: "Test",
-                                 playcount: 10,
-                                 urlString: "https://example.com",
-                                 needsTagsUpdate: false,
-                                 tags: tags,
-                                 topTags: topTags,
-                                 country: nil)
-    let realmArtist = RealmArtist.from(transient: transientArtist)
-    expect(realmArtist.name).to(equal(transientArtist.name))
-    expect(realmArtist.playcount).to(equal(transientArtist.playcount))
-    expect(realmArtist.urlString).to(equal(transientArtist.urlString))
-    expect(realmArtist.needsTagsUpdate).to(equal(transientArtist.needsTagsUpdate))
+        expect(realmArtist.name).to(beEmpty())
+        expect(realmArtist.playcount) == 0
+        expect(realmArtist.urlString).to(beEmpty())
+        expect(realmArtist.needsTagsUpdate) == true
+        expect(realmArtist.tags).to(beEmpty())
+        expect(realmArtist.topTags).to(beEmpty())
+    }
 
-    let expectedTags = Array(realmArtist.tags.map { $0.toTransient() })
-    expect(expectedTags).to(equal(transientArtist.tags))
-    let expectedTopTags = Array(realmArtist.topTags.map { $0.toTransient() })
-    expect(expectedTopTags).to(equal(transientArtist.topTags))
-  }
+    func test_fromTransient_setsCorrectProperties() {
+        let tags = ModelFactory.generateTags(inAmount: 5, for: "Test")
+        let topTags = Array(tags.prefix(3))
+        let transientArtist = Artist(name: "Test",
+                                     playcount: 10,
+                                     urlString: "https://example.com",
+                                     needsTagsUpdate: false,
+                                     tags: tags,
+                                     topTags: topTags,
+                                     country: nil)
 
-  func testConvertingToTransient() {
-    let realmArtist = RealmArtist()
-    realmArtist.name = "Test"
-    realmArtist.playcount = 10
-    realmArtist.urlString = "https://example.com"
-    realmArtist.needsTagsUpdate = false
+        let realmArtist = RealmArtist.from(transient: transientArtist)
 
-    let tags = ModelFactory.generateTags(inAmount: 5, for: "Test")
-    let topTags = Array(tags.prefix(3))
+        expect(realmArtist.name) == transientArtist.name
+        expect(realmArtist.playcount) == transientArtist.playcount
+        expect(realmArtist.urlString) == transientArtist.urlString
+        expect(realmArtist.needsTagsUpdate) == transientArtist.needsTagsUpdate
 
-    let realmTags = tags.map { RealmTag.from(transient: $0) }
-    realmArtist.tags.append(objectsIn: realmTags)
+        let expectedTags = Array(realmArtist.tags.map { $0.toTransient() })
+        expect(expectedTags) == transientArtist.tags
 
-    let realmTopTags = topTags.map { RealmTag.from(transient: $0) }
-    realmArtist.topTags.append(objectsIn: realmTopTags)
+        let expectedTopTags = Array(realmArtist.topTags.map { $0.toTransient() })
+        expect(expectedTopTags) == transientArtist.topTags
+    }
 
-    let transientArtist = realmArtist.toTransient()
-    expect(transientArtist.name).to(equal(realmArtist.name))
-    expect(transientArtist.playcount).to(equal(realmArtist.playcount))
-    expect(transientArtist.urlString).to(equal(realmArtist.urlString))
-    expect(transientArtist.needsTagsUpdate).to(equal(realmArtist.needsTagsUpdate))
-    expect(transientArtist.tags).to(equal(tags))
-    expect(transientArtist.topTags).to(equal(topTags))
-  }
+    func test_toTransient_setsCorrectProperties() {
+        let realmArtist = RealmArtist()
+        realmArtist.name = "Test"
+        realmArtist.playcount = 10
+        realmArtist.urlString = "https://example.com"
+        realmArtist.needsTagsUpdate = false
+
+        let tags = ModelFactory.generateTags(inAmount: 5, for: "Test")
+        let topTags = Array(tags.prefix(3))
+
+        let realmTags = tags.map { RealmTag.from(transient: $0) }
+        realmArtist.tags.append(objectsIn: realmTags)
+
+        let realmTopTags = topTags.map { RealmTag.from(transient: $0) }
+        realmArtist.topTags.append(objectsIn: realmTopTags)
+
+        let transientArtist = realmArtist.toTransient()
+
+        expect(transientArtist.name) == realmArtist.name
+        expect(transientArtist.playcount) == realmArtist.playcount
+        expect(transientArtist.urlString) == realmArtist.urlString
+        expect(transientArtist.needsTagsUpdate) == realmArtist.needsTagsUpdate
+        expect(transientArtist.tags) == tags
+        expect(transientArtist.topTags) == topTags
+    }
 }

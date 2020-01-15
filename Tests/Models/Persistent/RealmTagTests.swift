@@ -12,25 +12,28 @@ import RealmSwift
 import Nimble
 
 class RealmTagTests: XCTestCase {
-    func testPropertiesAreSetCorrectlyAfterInit() {
+    func test_init_setsCorrectProperties() {
         let realmTag = RealmTag()
+
         expect(realmTag.name).to(beEmpty())
-        expect(realmTag.count).to(equal(0))
+        expect(realmTag.count) == 0
     }
 
-    func testCreatingFromTransient() {
+    func test_fromTransient_setsCorrectProperties() {
         let transientTag = Tag(name: "Tag", count: 10)
         let realmTag = RealmTag.from(transient: transientTag)
-        expect(realmTag.name).to(equal(transientTag.name))
-        expect(realmTag.count).to(equal(transientTag.count))
+
+        expect(realmTag.name) == transientTag.name
+        expect(realmTag.count) == transientTag.count
     }
 
-    func testConvertingToTransient() {
+    func test_toTransient_setsCorrectProperties() {
         let realmTag = RealmTag()
         realmTag.name = "Tag"
         realmTag.count = 10
         let transientTag = realmTag.toTransient()
-        expect(transientTag.name).to(equal(realmTag.name))
-        expect(transientTag.count).to(equal(realmTag.count))
+
+        expect(transientTag.name) == realmTag.name
+        expect(transientTag.count) == realmTag.count
     }
 }
