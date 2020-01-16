@@ -1,5 +1,5 @@
 //
-//  ArtistEmptyStubRepository.swift
+//  StubArtistEmptyRepository.swift
 //  MementoFM
 //
 //  Created by Daniel on 05/11/2017.
@@ -10,7 +10,7 @@ import Foundation
 @testable import MementoFM
 import PromiseKit
 
-class ArtistEmptyStubRepository: ArtistRepository {
+class StubArtistEmptyRepository: ArtistRepository {
     func getLibraryPage(withIndex index: Int, for user: String, limit: Int) -> Promise<LibraryPageResponse> {
         fatalError()
     }

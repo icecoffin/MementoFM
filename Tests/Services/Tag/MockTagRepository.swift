@@ -1,5 +1,5 @@
 //
-//  TagStubRepository.swift
+//  MockTagRepository.swift
 //  MementoFM
 //
 //  Created by Daniel on 29/10/2017.
@@ -10,14 +10,9 @@ import Foundation
 @testable import MementoFM
 import PromiseKit
 
-class TagStubRepository: TagRepository {
-    private let shouldFailWithError: Bool
-    private let tagProvider: ((String) -> [Tag])
-
-    init(shouldFailWithError: Bool, tagProvider: @escaping ((String) -> [Tag])) {
-        self.shouldFailWithError = shouldFailWithError
-        self.tagProvider = tagProvider
-    }
+class MockTagRepository: TagRepository {
+    var shouldFailWithError = false
+    var tagProvider: ((String) -> [Tag])!
 
     func getTopTags(for artist: String) -> Promise<TopTagsResponse> {
         if shouldFailWithError {

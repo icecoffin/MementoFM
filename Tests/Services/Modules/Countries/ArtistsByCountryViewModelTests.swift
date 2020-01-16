@@ -19,7 +19,7 @@ class ArtistsByCountryViewModelTests: XCTestCase {
         }
     }
 
-    class StubArtistsByCountryViewModelDelegate: ArtistListViewModelDelegate {
+    class TestArtistsByCountryViewModelDelegate: ArtistListViewModelDelegate {
         var selectedArtist: Artist?
         func artistListViewModel(_ viewModel: ArtistListViewModel, didSelectArtist artist: Artist) {
             selectedArtist = artist
@@ -27,14 +27,14 @@ class ArtistsByCountryViewModelTests: XCTestCase {
     }
 
     var collection: MockPersistentMappedCollection<Artist>!
-    var artistService: StubArtistService!
+    var artistService: MockArtistService!
     var dependencies: Dependencies!
     var viewModel: ArtistsByCountryViewModel!
 
     override func setUp() {
         super.setUp()
 
-        artistService = StubArtistService()
+        artistService = MockArtistService()
         dependencies = Dependencies(artistService: artistService)
         viewModel = ArtistsByCountryViewModel(country: .named(name: "Germany"), dependencies: dependencies)
 
@@ -69,7 +69,7 @@ class ArtistsByCountryViewModelTests: XCTestCase {
     // MARK: - selectArtist(at:)
 
     func test_selectArtistAtIndexPath_notifiesDelegate() {
-        let delegate = StubArtistsByCountryViewModelDelegate()
+        let delegate = TestArtistsByCountryViewModelDelegate()
         viewModel.delegate = delegate
 
         let indexPath = IndexPath(row: 0, section: 0)

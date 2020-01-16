@@ -1,5 +1,5 @@
 //
-//  ArtistLibraryStubRepository.swift
+//  MockArtistLibraryRepository.swift
 //  MementoFM
 //
 //  Created by Daniel on 05/11/2017.
@@ -10,7 +10,7 @@ import Foundation
 @testable import MementoFM
 import PromiseKit
 
-class ArtistLibraryStubRepository: ArtistRepository {
+class MockArtistLibraryRepository: ArtistRepository {
     private let totalPages: Int
     private let artistProvider: ((Int) -> [Artist])
     private let shouldFailWithError: Bool

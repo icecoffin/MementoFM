@@ -20,7 +20,7 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
     }
 
     // swiftlint:disable:next type_name
-    class StubArtistSimilarsSectionViewModelDelegate: ArtistSimilarsSectionViewModelDelegate {
+    class TestArtistSimilarsSectionViewModelDelegate: ArtistSimilarsSectionViewModelDelegate {
         var didCallDidSelectArtist = false
         func artistSimilarsSectionViewModel(_ viewModel: ArtistSimilarsSectionViewModel, didSelectArtist artist: Artist) {
             didCallDidSelectArtist = true
@@ -29,15 +29,15 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
 
     let sampleArtist = ModelFactory.generateArtist()
 
-    var artistService: StubArtistService!
+    var artistService: MockArtistService!
     var dependencies: Dependencies!
-    var tabViewModelFactory: StubArtistSimilarsSectionTabViewModelFactory!
+    var tabViewModelFactory: MockArtistSimilarsSectionTabViewModelFactory!
 
     override func setUp() {
         super.setUp()
 
-        artistService = StubArtistService()
-        tabViewModelFactory = StubArtistSimilarsSectionTabViewModelFactory()
+        artistService = MockArtistService()
+        tabViewModelFactory = MockArtistSimilarsSectionTabViewModelFactory()
         dependencies = Dependencies(artistService: artistService)
     }
 
@@ -56,7 +56,7 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
                                                        tabViewModelFactory: tabViewModelFactory,
                                                        dependencies: dependencies)
 
-        tabViewModelFactory.firstTabViewModel.stubNumberOfSimilarArtists = 5
+        tabViewModelFactory.firstTabViewModel.numberOfSimilarArtists = 5
 
         expect(viewModel.numberOfSimilarArtists).to(equal(5))
     }
@@ -67,7 +67,7 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
                                                        tabViewModelFactory: tabViewModelFactory,
                                                        dependencies: dependencies)
 
-        tabViewModelFactory.firstTabViewModel.stubHasSimilarArtists = true
+        tabViewModelFactory.firstTabViewModel.hasSimilarArtists = true
 
         expect(viewModel.hasSimilarArtists).to(beTrue())
     }
@@ -78,7 +78,7 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
                                                        tabViewModelFactory: tabViewModelFactory,
                                                        dependencies: dependencies)
 
-        tabViewModelFactory.firstTabViewModel.stubIsLoading = true
+        tabViewModelFactory.firstTabViewModel.isLoading = true
 
         expect(viewModel.isLoading).to(beTrue())
     }
@@ -89,7 +89,7 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
                                                        tabViewModelFactory: tabViewModelFactory,
                                                        dependencies: dependencies)
 
-        tabViewModelFactory.firstTabViewModel.stubEmptyDataSetText = "Test"
+        tabViewModelFactory.firstTabViewModel.emptyDataSetText = "Test"
 
         expect(viewModel.emptyDataSetText).to(equal("Test"))
     }
@@ -112,7 +112,7 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
                                                        dependencies: dependencies)
         let cellViewModel = SimilarArtistCellViewModel(artist: sampleArtist, commonTags: [], index: 1)
 
-        tabViewModelFactory.firstTabViewModel.stubCellViewModel = cellViewModel
+        tabViewModelFactory.firstTabViewModel.customCellViewModel = cellViewModel
         let indexPath = IndexPath(row: 0, section: 0)
         _ = viewModel.cellViewModel(at: indexPath)
 
@@ -180,7 +180,7 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
         let viewModel = ArtistSimilarsSectionViewModel(artist: artist,
                                                        tabViewModelFactory: tabViewModelFactory,
                                                        dependencies: dependencies)
-        let delegate = StubArtistSimilarsSectionViewModelDelegate()
+        let delegate = TestArtistSimilarsSectionViewModelDelegate()
         viewModel.delegate = delegate
 
         let requestStrategy = SimilarArtistsLocalRequestStrategy(dependencies: dependencies)

@@ -12,7 +12,7 @@ import Nimble
 
 class ArtistTopTagsSectionViewModelTests: XCTestCase {
     // swiftlint:disable:next type_name
-    private class StubArtistTopTagsSectionViewModelDelegate: ArtistTopTagsSectionViewModelDelegate {
+    private class TestArtistTopTagsSectionViewModelDelegate: ArtistTopTagsSectionViewModelDelegate {
         var selectedTagName: String = ""
         func artistTopTagsSectionViewModel(_ viewModel: ArtistTopTagsSectionViewModel, didSelectTagWithName name: String) {
             selectedTagName = name
@@ -70,7 +70,7 @@ class ArtistTopTagsSectionViewModelTests: XCTestCase {
     func test_selectTagWithName_notifiesDelegateCorrectly() {
         let artist = sampleArtist
         let viewModel = ArtistTopTagsSectionViewModel(artist: artist)
-        let delegate = StubArtistTopTagsSectionViewModelDelegate()
+        let delegate = TestArtistTopTagsSectionViewModelDelegate()
         viewModel.delegate = delegate
 
         viewModel.selectTag(withName: "Tag2")

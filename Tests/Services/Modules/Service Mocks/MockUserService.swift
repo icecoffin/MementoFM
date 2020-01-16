@@ -1,5 +1,5 @@
 //
-//  StubUserService.swift
+//  MockUserService.swift
 //  MementoFM
 //
 //  Created by Daniel on 11/11/2017.
@@ -10,7 +10,7 @@ import Foundation
 @testable import MementoFM
 import PromiseKit
 
-class StubUserService: UserServiceProtocol {
+class MockUserService: UserServiceProtocol {
     var shouldFinishWithSuccess = true
 
     var username: String = ""

@@ -1,5 +1,5 @@
 //
-//  StubPersistentStore.swift
+//  MockPersistentStore.swift
 //  MementoFM
 //
 //  Created by Dani on 28/04/2019.
@@ -10,7 +10,7 @@ import Foundation
 @testable import MementoFM
 import PromiseKit
 
-class StubPersistentStore: PersistentStore {
+class MockPersistentStore: PersistentStore {
     var customMappedCollection: Any?
     var mappedCollectionParameters: (predicate: NSPredicate?, sortDescriptors: [NSSortDescriptor])?
     func mappedCollection<T: TransientEntity>(filteredUsing predicate: NSPredicate?,

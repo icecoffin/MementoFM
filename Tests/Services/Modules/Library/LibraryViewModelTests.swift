@@ -24,21 +24,21 @@ class LibraryViewModelTests: XCTestCase {
         }
     }
 
-    class StubLibraryViewModelDelegate: ArtistListViewModelDelegate {
+    class TestLibraryViewModelDelegate: ArtistListViewModelDelegate {
         var selectedArtist: Artist?
         func artistListViewModel(_ viewModel: ArtistListViewModel, didSelectArtist artist: Artist) {
             selectedArtist = artist
         }
     }
 
-    class StubApplicationStateObserver: ApplicationStateObserving {
+    class MockApplicationStateObserver: ApplicationStateObserving {
         var onApplicationDidBecomeActive: (() -> Void)?
     }
 
-    var libraryUpdater: StubLibraryUpdater!
+    var libraryUpdater: MockLibraryUpdater!
     var collection: MockPersistentMappedCollection<Artist>!
-    var artistService: StubArtistService!
-    var userService: StubUserService!
+    var artistService: MockArtistService!
+    var userService: MockUserService!
     var dependencies: Dependencies!
 
     var sampleArtists: [Artist] = {
@@ -56,11 +56,11 @@ class LibraryViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        libraryUpdater = StubLibraryUpdater()
+        libraryUpdater = MockLibraryUpdater()
         collection = MockPersistentMappedCollection(values: sampleArtists)
-        artistService = StubArtistService()
+        artistService = MockArtistService()
         artistService.customMappedCollection = AnyPersistentMappedCollection(collection)
-        userService = StubUserService()
+        userService = MockUserService()
         dependencies = Dependencies(libraryUpdater: libraryUpdater, artistService: artistService, userService: userService)
     }
 
@@ -128,7 +128,7 @@ class LibraryViewModelTests: XCTestCase {
 
     func test_selectArtistAtIndexPath_notifiesDelegate() {
         let viewModel = LibraryViewModel(dependencies: dependencies)
-        let delegate = StubLibraryViewModelDelegate()
+        let delegate = TestLibraryViewModelDelegate()
         viewModel.delegate = delegate
         let indexPath = IndexPath(row: 1, section: 0)
 
@@ -173,7 +173,7 @@ class LibraryViewModelTests: XCTestCase {
     // MARK: - libraryUpdater
 
     func test_libraryUpdater_requestsDataOnApplicationDidBecomeActive() {
-        let applicationStateObserver = StubApplicationStateObserver()
+        let applicationStateObserver = MockApplicationStateObserver()
         let viewModel = LibraryViewModel(dependencies: dependencies, applicationStateObserver: applicationStateObserver)
         // Suppress 'unused variable' warning
         _ = viewModel.delegate

@@ -21,14 +21,14 @@ private class Dependencies: EnterUsernameViewModel.Dependencies {
 
 class EnterUsernameViewModelTests: XCTestCase {
     func test_canSubmitUsername_returnsFalse_forEmptyUsername() {
-        let dependencies = Dependencies(userService: StubUserService())
+        let dependencies = Dependencies(userService: MockUserService())
         let viewModel = EnterUsernameViewModel(dependencies: dependencies)
 
         expect(viewModel.canSubmitUsername).to(beFalse())
     }
 
     func test_canSubmitUsername_returnsTrue_forNewUsername() {
-        let dependencies = Dependencies(userService: StubUserService())
+        let dependencies = Dependencies(userService: MockUserService())
         let viewModel = EnterUsernameViewModel(dependencies: dependencies)
 
         dependencies.userService.username = "foo"
@@ -38,7 +38,7 @@ class EnterUsernameViewModelTests: XCTestCase {
     }
 
     func test_canSubmitUsername_returnsFalse_forExistingUsername() {
-        let dependencies = Dependencies(userService: StubUserService())
+        let dependencies = Dependencies(userService: MockUserService())
         let viewModel = EnterUsernameViewModel(dependencies: dependencies)
 
         viewModel.updateUsername("username")
@@ -48,14 +48,14 @@ class EnterUsernameViewModelTests: XCTestCase {
     }
 
     func test_currentUsername_returnsEmptyString_ifNoUsernameIsSet() {
-        let dependencies = Dependencies(userService: StubUserService())
+        let dependencies = Dependencies(userService: MockUserService())
         let viewModel = EnterUsernameViewModel(dependencies: dependencies)
 
         expect(viewModel.currentUsernameText).to(equal(""))
     }
 
     func test_currentUsername_returnsCorrectValue_basedOnUserService() {
-        let dependencies = Dependencies(userService: StubUserService())
+        let dependencies = Dependencies(userService: MockUserService())
 
         let viewModel = EnterUsernameViewModel(dependencies: dependencies)
         dependencies.userService.username = "username"
@@ -64,7 +64,7 @@ class EnterUsernameViewModelTests: XCTestCase {
     }
 
     func test_submitUsername_callsDidStartRequest() {
-        let userService = StubUserService()
+        let userService = MockUserService()
         let dependencies = Dependencies(userService: userService)
         let viewModel = EnterUsernameViewModel(dependencies: dependencies)
 
@@ -81,7 +81,7 @@ class EnterUsernameViewModelTests: XCTestCase {
     }
 
     func test_submitUsername_callsDidFinishRequest() {
-        let userService = StubUserService()
+        let userService = MockUserService()
         let dependencies = Dependencies(userService: userService)
         let viewModel = EnterUsernameViewModel(dependencies: dependencies)
 
@@ -102,18 +102,18 @@ class EnterUsernameViewModelTests: XCTestCase {
     }
 
     func test_submitUsername_notifiesDelegateOnSuccess() {
-        class StubEnterUsernameViewModelDelegate: EnterUsernameViewModelDelegate {
+        class TestEnterUsernameViewModelDelegate: EnterUsernameViewModelDelegate {
             var didCallEnterUsernameViewModelDidFinish = false
             func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel) {
                 didCallEnterUsernameViewModelDidFinish = true
             }
         }
 
-        let userService = StubUserService()
+        let userService = MockUserService()
         let dependencies = Dependencies(userService: userService)
         let viewModel = EnterUsernameViewModel(dependencies: dependencies)
 
-        let delegate = StubEnterUsernameViewModelDelegate()
+        let delegate = TestEnterUsernameViewModelDelegate()
         viewModel.delegate = delegate
 
         viewModel.updateUsername("username")
@@ -123,7 +123,7 @@ class EnterUsernameViewModelTests: XCTestCase {
     }
 
     func test_submitUsername_checksThatUsernameExists() {
-        let userService = StubUserService()
+        let userService = MockUserService()
         let dependencies = Dependencies(userService: userService)
         let viewModel = EnterUsernameViewModel(dependencies: dependencies)
 
@@ -134,7 +134,7 @@ class EnterUsernameViewModelTests: XCTestCase {
     }
 
     func test_submitUsername_clearsUserDataOnSuccess() {
-        let userService = StubUserService()
+        let userService = MockUserService()
         let dependencies = Dependencies(userService: userService)
         let viewModel = EnterUsernameViewModel(dependencies: dependencies)
 
@@ -145,14 +145,14 @@ class EnterUsernameViewModelTests: XCTestCase {
     }
 
     func test_submitUsername_callsDidReceiveError() {
-        class StubEnterUsernameViewModelDelegate: EnterUsernameViewModelDelegate {
+        class TestEnterUsernameViewModelDelegate: EnterUsernameViewModelDelegate {
             func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel) {
                 // Test that delegate is not notified
                 fail()
             }
         }
 
-        let userService = StubUserService()
+        let userService = MockUserService()
         userService.shouldFinishWithSuccess = false
         let dependencies = Dependencies(userService: userService)
         let viewModel = EnterUsernameViewModel(dependencies: dependencies)
@@ -163,7 +163,7 @@ class EnterUsernameViewModelTests: XCTestCase {
             didReceiveError = true
         }
 
-        let delegate = StubEnterUsernameViewModelDelegate()
+        let delegate = TestEnterUsernameViewModelDelegate()
         viewModel.delegate = delegate
 
         viewModel.updateUsername("username")

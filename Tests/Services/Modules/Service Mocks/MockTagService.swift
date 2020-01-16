@@ -1,5 +1,5 @@
 //
-//  StubTagService.swift
+//  MockTagService.swift
 //  MementoFM
 //
 //  Created by Daniel on 22/11/2017.
@@ -10,21 +10,21 @@ import Foundation
 @testable import MementoFM
 import PromiseKit
 
-class StubTagService: TagServiceProtocol {
+class MockTagService: TagServiceProtocol {
     var artists: [Artist] = []
-    var stubProgress: TopTagsRequestProgress?
+    var customProgress: TopTagsRequestProgress?
     var didRequestTopTags = false
     func getTopTags(for artists: [Artist], progress: ((TopTagsRequestProgress) -> Void)?) -> Promise<Void> {
         self.artists = artists
-        if let stubProgress = stubProgress {
-            progress?(stubProgress)
+        if let customProgress = customProgress {
+            progress?(customProgress)
         }
         didRequestTopTags = true
         return .value(())
     }
 
-    var stubTopTags: [Tag] = []
+    var customTopTags: [Tag] = []
     func getAllTopTags() -> [Tag] {
-        return stubTopTags
+        return customTopTags
     }
 }

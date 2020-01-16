@@ -19,20 +19,20 @@ class SyncViewModelTests: XCTestCase {
         }
     }
 
-    class StubSyncViewModelDelegate: SyncViewModelDelegate {
+    class TestSyncViewModelDelegate: SyncViewModelDelegate {
         var didFinishLoading = false
         func syncViewModelDidFinishLoading(_ viewModel: SyncViewModel) {
             didFinishLoading = true
         }
     }
 
-    var libraryUpdater: StubLibraryUpdater!
+    var libraryUpdater: MockLibraryUpdater!
     var dependencies: Dependencies!
 
     override func setUp() {
         super.setUp()
 
-        libraryUpdater = StubLibraryUpdater()
+        libraryUpdater = MockLibraryUpdater()
         dependencies = Dependencies(libraryUpdater: libraryUpdater)
     }
 
@@ -83,7 +83,7 @@ class SyncViewModelTests: XCTestCase {
 
     func test_didFinishLoading_isCalledOnDelegate_whenLibraryUpdaterFinishesLoading() {
         let viewModel = SyncViewModel(dependencies: dependencies)
-        let delegate = StubSyncViewModelDelegate()
+        let delegate = TestSyncViewModelDelegate()
         viewModel.delegate = delegate
 
         libraryUpdater.simulateFinishLoading()

@@ -1,5 +1,5 @@
 //
-//  StubIgnoredTagService.swift
+//  MockIgnoredTagService.swift
 //  MementoFM
 //
 //  Created by Daniel on 11/11/2017.
@@ -10,14 +10,14 @@ import Foundation
 @testable import MementoFM
 import PromiseKit
 
-class StubIgnoredTagService: IgnoredTagServiceProtocol {
+class MockIgnoredTagService: IgnoredTagServiceProtocol {
     var defaultIgnoredTagNames: [String] = []
 
     var didRequestIgnoredTags = false
-    var stubIgnoredTags: [IgnoredTag] = []
+    var customIgnoredTags: [IgnoredTag] = []
     func ignoredTags() -> [IgnoredTag] {
         didRequestIgnoredTags = true
-        return stubIgnoredTags
+        return customIgnoredTags
     }
 
     var createdDefaultIgnoredTagNames: [String] = []

@@ -22,7 +22,7 @@ class IgnoredTagsViewModelTests: XCTestCase {
         }
     }
 
-    class StubIgnoredTagsViewModelDelegate: IgnoredTagsViewModelDelegate {
+    class TestIgnoredTagsViewModelDelegate: IgnoredTagsViewModelDelegate {
         var didCallDidSaveChanges = false
 
         func ignoredTagsViewModelDidSaveChanges(_ viewModel: IgnoredTagsViewModel) {
@@ -30,13 +30,13 @@ class IgnoredTagsViewModelTests: XCTestCase {
         }
     }
 
-    var ignoredTagService: StubIgnoredTagService!
-    var artistService: StubArtistService!
+    var ignoredTagService: MockIgnoredTagService!
+    var artistService: MockArtistService!
     var dependencies: Dependencies!
 
     override func setUp() {
-        ignoredTagService = StubIgnoredTagService()
-        artistService = StubArtistService()
+        ignoredTagService = MockIgnoredTagService()
+        artistService = MockArtistService()
         dependencies = Dependencies(ignoredTagService: ignoredTagService, artistService: artistService)
     }
 
@@ -45,7 +45,7 @@ class IgnoredTagsViewModelTests: XCTestCase {
         ignoredTagService.defaultIgnoredTagNames = defaultIgnoredTagNames
 
         let ignoredTags = ModelFactory.generateIgnoredTags(inAmount: 10)
-        ignoredTagService.stubIgnoredTags = ignoredTags
+        ignoredTagService.customIgnoredTags = ignoredTags
 
         _ = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
 
@@ -65,7 +65,7 @@ class IgnoredTagsViewModelTests: XCTestCase {
 
     func test_numberOfIgnoredTags_returnsCorrectValue() {
         let ignoredTags = ModelFactory.generateIgnoredTags(inAmount: 10)
-        ignoredTagService.stubIgnoredTags = ignoredTags
+        ignoredTagService.customIgnoredTags = ignoredTags
 
         let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
 
@@ -74,7 +74,7 @@ class IgnoredTagsViewModelTests: XCTestCase {
 
     func test_cellViewModelAtIndexPath_returnsCorrectValue() {
         let ignoredTags = ModelFactory.generateIgnoredTags(inAmount: 10)
-        ignoredTagService.stubIgnoredTags = ignoredTags
+        ignoredTagService.customIgnoredTags = ignoredTags
 
         let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
         let indexPath = IndexPath(row: 0, section: 0)
@@ -89,7 +89,7 @@ class IgnoredTagsViewModelTests: XCTestCase {
 
     func test_cellViewModelAtIndexPath_returnsNewValueOnTextChange() {
         let ignoredTags = ModelFactory.generateIgnoredTags(inAmount: 10)
-        ignoredTagService.stubIgnoredTags = ignoredTags
+        ignoredTagService.customIgnoredTags = ignoredTags
 
         let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
         let indexPath = IndexPath(row: 0, section: 0)
@@ -104,7 +104,7 @@ class IgnoredTagsViewModelTests: XCTestCase {
 
     func test_addNewIgnoredTag_callsDidAddNewTag() {
         let ignoredTags = ModelFactory.generateIgnoredTags(inAmount: 10)
-        ignoredTagService.stubIgnoredTags = ignoredTags
+        ignoredTagService.customIgnoredTags = ignoredTags
 
         let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
 
@@ -120,7 +120,7 @@ class IgnoredTagsViewModelTests: XCTestCase {
 
     func test_addNewIgnoredTag_increasesNumberOfIgnoredTags() {
         let ignoredTags = ModelFactory.generateIgnoredTags(inAmount: 10)
-        ignoredTagService.stubIgnoredTags = ignoredTags
+        ignoredTagService.customIgnoredTags = ignoredTags
 
         let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
 
@@ -131,7 +131,7 @@ class IgnoredTagsViewModelTests: XCTestCase {
 
     func test_deleteIgnoredTagAtIndexPath_decreasesNumberOfIgnoredTags() {
         let ignoredTags = ModelFactory.generateIgnoredTags(inAmount: 10)
-        ignoredTagService.stubIgnoredTags = ignoredTags
+        ignoredTagService.customIgnoredTags = ignoredTags
 
         let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
 
@@ -171,7 +171,7 @@ class IgnoredTagsViewModelTests: XCTestCase {
     func test_saveChanges_notifiesDelegateOnSuccess() {
         let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
 
-        let delegate = StubIgnoredTagsViewModelDelegate()
+        let delegate = TestIgnoredTagsViewModelDelegate()
         viewModel.delegate = delegate
 
         viewModel.saveChanges()
@@ -188,13 +188,13 @@ class IgnoredTagsViewModelTests: XCTestCase {
     }
 
     func test_saveChanges_updatesIgnoredTags() {
-        ignoredTagService.stubIgnoredTags = [IgnoredTag(uuid: "uuid1", name: "tag1"),
-                                             IgnoredTag(uuid: "uuid2", name: "tag1"),
-                                             IgnoredTag(uuid: "uuid3", name: "tag1"),
-                                             IgnoredTag(uuid: "uuid4", name: "tag2"),
-                                             IgnoredTag(uuid: "uuid5", name: "tag2"),
-                                             IgnoredTag(uuid: "uuid6", name: "tag3"),
-                                             IgnoredTag(uuid: "uuid7", name: "")]
+        ignoredTagService.customIgnoredTags = [IgnoredTag(uuid: "uuid1", name: "tag1"),
+                                               IgnoredTag(uuid: "uuid2", name: "tag1"),
+                                               IgnoredTag(uuid: "uuid3", name: "tag1"),
+                                               IgnoredTag(uuid: "uuid4", name: "tag2"),
+                                               IgnoredTag(uuid: "uuid5", name: "tag2"),
+                                               IgnoredTag(uuid: "uuid6", name: "tag3"),
+                                               IgnoredTag(uuid: "uuid7", name: "")]
 
         let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
 

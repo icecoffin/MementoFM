@@ -1,5 +1,5 @@
 //
-//  StubLibraryUpdater.swift
+//  MockLibraryUpdater.swift
 //  MementoFMTests
 //
 //  Created by Daniel on 01/12/2017.
@@ -10,7 +10,7 @@ import Foundation
 @testable import MementoFM
 import PromiseKit
 
-class StubLibraryUpdater: LibraryUpdaterProtocol {
+class MockLibraryUpdater: LibraryUpdaterProtocol {
     var didStartLoading: (() -> Void)?
     var didFinishLoading: (() -> Void)?
     var didChangeStatus: ((LibraryUpdateStatus) -> Void)?

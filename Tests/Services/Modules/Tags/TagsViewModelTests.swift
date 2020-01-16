@@ -20,7 +20,7 @@ class TagsViewModelTests: XCTestCase {
         }
     }
 
-    class StubTagsViewModelDelegate: TagsViewModelDelegate {
+    class TestTagsViewModelDelegate: TagsViewModelDelegate {
         var selectedTagName: String = ""
         func tagsViewModel(_ viewModel: TagsViewModel, didSelectTagWithName name: String) {
             selectedTagName = name
@@ -28,7 +28,7 @@ class TagsViewModelTests: XCTestCase {
     }
 
     var dispatcher: TestDispatcher!
-    var tagService: StubTagService!
+    var tagService: MockTagService!
     var dependencies: Dependencies!
 
     private func sampleTags() -> [Tag] {
@@ -43,7 +43,7 @@ class TagsViewModelTests: XCTestCase {
 
     override func setUp() {
         dispatcher = TestDispatcher()
-        tagService = StubTagService()
+        tagService = MockTagService()
         dependencies = Dependencies(tagService: tagService)
     }
 
@@ -61,7 +61,7 @@ class TagsViewModelTests: XCTestCase {
 
     func test_getTags_callsDidUpdateData_withIsEmptyEqualToFalse() {
         let tags = sampleTags()
-        tagService.stubTopTags = tags
+        tagService.customTopTags = tags
         let viewModel = TagsViewModel(dependencies: dependencies)
         var expectedIsEmpty = true
         viewModel.didUpdateData = { isEmpty in
@@ -75,7 +75,7 @@ class TagsViewModelTests: XCTestCase {
 
     func test_numberOfTags_returnsCorrectValue() {
         let tags = sampleTags()
-        tagService.stubTopTags = tags
+        tagService.customTopTags = tags
         let viewModel = TagsViewModel(dependencies: dependencies)
 
         viewModel.getTags(backgroundDispatcher: dispatcher, mainDispatcher: dispatcher)
@@ -89,7 +89,7 @@ class TagsViewModelTests: XCTestCase {
 
     func func_cellViewModelAtIndexPath_returnsCorrectValue() {
         let tags = sampleTags()
-        tagService.stubTopTags = tags
+        tagService.customTopTags = tags
         let viewModel = TagsViewModel(dependencies: dependencies)
         var expectedCellViewModel: TagCellViewModel?
         viewModel.didUpdateData = { [unowned viewModel] _ in
@@ -104,8 +104,8 @@ class TagsViewModelTests: XCTestCase {
 
     func test_selectTagAtIndexPath_notifiesDelegate() {
         let tags = sampleTags()
-        tagService.stubTopTags = tags
-        let delegate = StubTagsViewModelDelegate()
+        tagService.customTopTags = tags
+        let delegate = TestTagsViewModelDelegate()
         let viewModel = TagsViewModel(dependencies: dependencies)
         viewModel.delegate = delegate
         viewModel.didUpdateData = { [unowned viewModel] _ in
@@ -120,7 +120,7 @@ class TagsViewModelTests: XCTestCase {
 
     func test_performSearch_filtersTagsBasedOnSearchText() {
         let tags = sampleTags()
-        tagService.stubTopTags = tags
+        tagService.customTopTags = tags
         let viewModel = TagsViewModel(dependencies: dependencies)
         var expectedNumberOfTags = 0
 
@@ -144,7 +144,7 @@ class TagsViewModelTests: XCTestCase {
 
     func test_cancelSearch_returnsAllTagsWithoutFiltering() {
         let tags = sampleTags()
-        tagService.stubTopTags = tags
+        tagService.customTopTags = tags
         let viewModel = TagsViewModel(dependencies: dependencies)
         var expectedNumberOfTags = 0
 

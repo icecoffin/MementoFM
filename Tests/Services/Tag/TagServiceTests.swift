@@ -12,21 +12,22 @@ import Nimble
 import PromiseKit
 
 class TagServiceTests: XCTestCase {
-    var persistentStore: StubPersistentStore!
+    var persistentStore: MockPersistentStore!
 
     override func setUp() {
         super.setUp()
 
-        persistentStore = StubPersistentStore()
+        persistentStore = MockPersistentStore()
     }
 
     func test_getTopTags_finishesWithSuccess() {
         let artistCount = 5
         let tagsPerArtist = 5
 
-        let tagRepository = TagStubRepository(shouldFailWithError: false, tagProvider: { artist in
+        let tagRepository = MockTagRepository()
+        tagRepository.tagProvider = { artist in
             ModelFactory.generateTags(inAmount: tagsPerArtist, for: artist)
-        })
+        }
         let tagService = TagService(persistentStore: persistentStore, repository: tagRepository)
         let artists = ModelFactory.generateArtists(inAmount: artistCount)
 
@@ -46,7 +47,8 @@ class TagServiceTests: XCTestCase {
     }
 
     func test_getTopTags_failsWithError() {
-        let tagRepository = TagStubRepository(shouldFailWithError: true, tagProvider: { _ in [] })
+        let tagRepository = MockTagRepository()
+        tagRepository.shouldFailWithError = true
         let tagService = TagService(persistentStore: persistentStore, repository: tagRepository)
 
         var didReceiveError = false
@@ -81,7 +83,7 @@ class TagServiceTests: XCTestCase {
                              topTags: topTags2,
                              country: nil)
 
-        let tagService = TagService(persistentStore: persistentStore, repository: TagEmptyStubRepository())
+        let tagService = TagService(persistentStore: persistentStore, repository: MockTagRepository())
 
         persistentStore.customObjects = [artist1, artist2]
 

@@ -1,5 +1,5 @@
 //
-//  StubUserDataStorage.swift
+//  MockUserDataStorage.swift
 //  MementoFM
 //
 //  Created by Daniel on 03/11/2017.
@@ -9,7 +9,7 @@
 import Foundation
 @testable import MementoFM
 
-class StubUserDataStorage: UserDataStoring {
+class MockUserDataStorage: UserDataStoring {
     private var _username: String = ""
     var didGetUsername = false
     var didSetUsername = false

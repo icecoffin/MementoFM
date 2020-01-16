@@ -12,13 +12,13 @@ import Nimble
 import PromiseKit
 
 class IgnoredTagServiceTests: XCTestCase {
-    var persistentStore: StubPersistentStore!
+    var persistentStore: MockPersistentStore!
     var ignoredTagService: IgnoredTagService!
 
     override func setUp() {
         super.setUp()
 
-        persistentStore = StubPersistentStore()
+        persistentStore = MockPersistentStore()
         ignoredTagService = IgnoredTagService(persistentStore: persistentStore)
     }
 

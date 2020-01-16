@@ -1,5 +1,5 @@
 //
-//  UserStubRepository.swift
+//  MockUserRepository.swift
 //  MementoFM
 //
 //  Created by Daniel on 02/11/2017.
@@ -10,7 +10,7 @@ import Foundation
 @testable import MementoFM
 import PromiseKit
 
-class UserStubRepository: UserRepository {
+class MockUserRepository: UserRepository {
     var checkedUsername: String?
     func checkUserExists(withUsername username: String) -> Promise<EmptyResponse> {
         checkedUsername = username

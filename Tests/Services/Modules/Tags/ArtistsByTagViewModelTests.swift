@@ -21,7 +21,7 @@ class ArtistsByTagViewModelTests: XCTestCase {
         }
     }
 
-    class StubArtistsByTagViewModelDelegate: ArtistListViewModelDelegate {
+    class TestArtistsByTagViewModelDelegate: ArtistListViewModelDelegate {
         var selectedArtist: Artist?
         func artistListViewModel(_ viewModel: ArtistListViewModel, didSelectArtist artist: Artist) {
             selectedArtist = artist
@@ -29,7 +29,7 @@ class ArtistsByTagViewModelTests: XCTestCase {
     }
 
     var collection: MockPersistentMappedCollection<Artist>!
-    var artistService: StubArtistService!
+    var artistService: MockArtistService!
     var dependencies: Dependencies!
     var viewModel: ArtistsByTagViewModel!
 
@@ -50,7 +50,7 @@ class ArtistsByTagViewModelTests: XCTestCase {
     }()
 
     override func setUp() {
-        artistService = StubArtistService()
+        artistService = MockArtistService()
         collection = MockPersistentMappedCollection<Artist>(values: sampleArtists)
         artistService.customMappedCollection = AnyPersistentMappedCollection(collection)
         dependencies = Dependencies(artistService: artistService)
@@ -89,7 +89,7 @@ class ArtistsByTagViewModelTests: XCTestCase {
     // MARK: - selectArtistAtIndexPath
 
     func test_selectArtistAtIndexPath_notifiesDelegate() {
-        let delegate = StubArtistsByTagViewModelDelegate()
+        let delegate = TestArtistsByTagViewModelDelegate()
         viewModel.delegate = delegate
         let indexPath = IndexPath(row: 1, section: 0)
 

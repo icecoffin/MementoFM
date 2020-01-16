@@ -12,12 +12,12 @@ import Nimble
 import PromiseKit
 
 class RecentTracksProcessorTests: XCTestCase {
-    var persistentStore: StubPersistentStore!
+    var persistentStore: MockPersistentStore!
 
     override func setUp() {
         super.setUp()
 
-        persistentStore = StubPersistentStore()
+        persistentStore = MockPersistentStore()
     }
 
     func test_processTracks_savesToPersistentStore() {

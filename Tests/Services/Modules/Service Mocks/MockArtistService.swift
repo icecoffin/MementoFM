@@ -1,5 +1,5 @@
 //
-//  StubArtistService.swift
+//  MockArtistService.swift
 //  MementoFM
 //
 //  Created by Daniel on 11/11/2017.
@@ -10,7 +10,7 @@ import Foundation
 @testable import MementoFM
 import PromiseKit
 
-class StubArtistService: ArtistServiceProtocol {
+class MockArtistService: ArtistServiceProtocol {
     var user: String = ""
     var limit: Int = 0
     var getLibraryShouldReturnError = false
@@ -36,18 +36,18 @@ class StubArtistService: ArtistServiceProtocol {
         return .value(())
     }
 
-    var stubArtistsNeedingTagsUpdate: [Artist] = []
+    var customArtistsNeedingTagsUpdate: [Artist] = []
     var didRequestArtistsNeedingTagsUpdate = false
     func artistsNeedingTagsUpdate() -> [Artist] {
         didRequestArtistsNeedingTagsUpdate = true
-        return stubArtistsNeedingTagsUpdate
+        return customArtistsNeedingTagsUpdate
     }
 
     var intersectingTopTagsArtist: Artist?
-    var stubArtistsWithIntersectingTopTags: [Artist] = []
+    var customArtistsWithIntersectingTopTags: [Artist] = []
     func artistsWithIntersectingTopTags(for artist: Artist) -> [Artist] {
         intersectingTopTagsArtist = artist
-        return stubArtistsWithIntersectingTopTags
+        return customArtistsWithIntersectingTopTags
     }
 
     var updatingArtist: Artist?
@@ -77,11 +77,11 @@ class StubArtistService: ArtistServiceProtocol {
         }
     }
 
-    var stubCalculateTopTagsArtist: Artist?
+    var customCalculateTopTagsArtist: Artist?
     var calculateTopTagsShouldReturnError: Bool = false
     var didCallCalculateTopTags: Bool = false
     func calculateTopTags(for artist: Artist, using calculator: ArtistTopTagsCalculating) -> Promise<Void> {
-        stubCalculateTopTagsArtist = artist
+        customCalculateTopTagsArtist = artist
         didCallCalculateTopTags = true
         if calculateTopTagsShouldReturnError {
             return Promise(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
@@ -101,14 +101,14 @@ class StubArtistService: ArtistServiceProtocol {
     var expectedSimilarArtistsArtist: Artist?
     var expectedSimilarArtistsLimit: Int = 0
     var getSimilarArtistsShouldReturnError: Bool = false
-    var stubSimilarArtists: [Artist] = []
+    var customSimilarArtists: [Artist] = []
     func getSimilarArtists(for artist: Artist, limit: Int) -> Promise<[Artist]> {
         expectedSimilarArtistsArtist = artist
         expectedSimilarArtistsLimit = limit
         if getSimilarArtistsShouldReturnError {
             return Promise(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
         } else {
-            return .value(stubSimilarArtists)
+            return .value(customSimilarArtists)
         }
     }
 
@@ -119,10 +119,10 @@ class StubArtistService: ArtistServiceProtocol {
         return .value(())
     }
 
-    var stubCountriesWithCount: [String: Int] = [:]
+    var customCountriesWithCount: [String: Int] = [:]
     var didCallGetCountriesWithCount = false
     func getCountriesWithCounts() -> [String: Int] {
         didCallGetCountriesWithCount = true
-        return stubCountriesWithCount
+        return customCountriesWithCount
     }
 }

@@ -12,19 +12,19 @@ import Nimble
 import PromiseKit
 
 class ArtistServiceTests: XCTestCase {
-    var persistentStore: StubPersistentStore!
+    var persistentStore: MockPersistentStore!
 
     override func setUp() {
         super.setUp()
 
-        persistentStore = StubPersistentStore()
+        persistentStore = MockPersistentStore()
     }
 
     func test_getLibrary_callsProgress_andReturnsArtistsOnSuccess() {
         let totalPages = 5
         let artistsPerPage = 10
 
-        let repository = ArtistLibraryStubRepository(totalPages: totalPages, shouldFailWithError: false, artistProvider: { _ in
+        let repository = MockArtistLibraryRepository(totalPages: totalPages, shouldFailWithError: false, artistProvider: { _ in
             return ModelFactory.generateArtists(inAmount: artistsPerPage)
         })
         let artistService = ArtistService(persistentStore: persistentStore, repository: repository)
@@ -48,7 +48,7 @@ class ArtistServiceTests: XCTestCase {
         let totalPages = 5
         let artistsPerPage = 10
 
-        let repository = ArtistLibraryStubRepository(totalPages: totalPages,
+        let repository = MockArtistLibraryRepository(totalPages: totalPages,
                                                      shouldFailWithError: true,
                                                      artistProvider: { _ in return [] })
         let artistService = ArtistService(persistentStore: persistentStore, repository: repository)
@@ -64,7 +64,7 @@ class ArtistServiceTests: XCTestCase {
     }
 
     func test_saveArtists_callsPersistentStore() {
-        let artistService = ArtistService(persistentStore: persistentStore, repository: ArtistEmptyStubRepository())
+        let artistService = ArtistService(persistentStore: persistentStore, repository: StubArtistEmptyRepository())
 
         let artists = ModelFactory.generateArtists(inAmount: 5)
         artistService.saveArtists(artists).noError()
@@ -75,7 +75,7 @@ class ArtistServiceTests: XCTestCase {
     }
 
     func test_artistsNeedingTagsUpdate_callsPersistentStoreWithCorrectParameters() {
-        let artistService = ArtistService(persistentStore: persistentStore, repository: ArtistEmptyStubRepository())
+        let artistService = ArtistService(persistentStore: persistentStore, repository: StubArtistEmptyRepository())
 
         _ = artistService.artistsNeedingTagsUpdate()
 
@@ -84,7 +84,7 @@ class ArtistServiceTests: XCTestCase {
     }
 
     func test_artistsWithIntersectingTopTags_callsPersistentStoreWithCorrectParameters() {
-        let artistService = ArtistService(persistentStore: persistentStore, repository: ArtistEmptyStubRepository())
+        let artistService = ArtistService(persistentStore: persistentStore, repository: StubArtistEmptyRepository())
 
         let tags = [Tag(name: "Tag1", count: 1),
                     Tag(name: "Tag2", count: 2),
@@ -98,7 +98,7 @@ class ArtistServiceTests: XCTestCase {
     }
 
     func test_updateArtistWithTags_updatesArtist_andCallsPersistentStoreWithCorrectParameters() {
-        let artistService = ArtistService(persistentStore: persistentStore, repository: ArtistEmptyStubRepository())
+        let artistService = ArtistService(persistentStore: persistentStore, repository: StubArtistEmptyRepository())
 
         let artist = ModelFactory.generateArtist(index: 1, needsTagsUpdate: true)
         let tags = ModelFactory.generateTags(inAmount: 5, for: artist.name)
@@ -114,12 +114,12 @@ class ArtistServiceTests: XCTestCase {
     }
 
     func test_calculateTopTagsForAllArtists_callsCalculatorForEachArtist_andSavesArtists() {
-        let artistService = ArtistService(persistentStore: persistentStore, repository: ArtistEmptyStubRepository())
+        let artistService = ArtistService(persistentStore: persistentStore, repository: StubArtistEmptyRepository())
 
         let artists = ModelFactory.generateArtists(inAmount: 5)
         persistentStore.customObjects = artists
 
-        let calculator = ArtistStubTopTagsCalculator()
+        let calculator = MockArtistTopTagsCalculator()
         artistService.calculateTopTagsForAllArtists(using: calculator, using: TestDispatcher()).noError()
 
         expect(calculator.numberOfCalculateTopTagsCalled) == artists.count
@@ -128,10 +128,10 @@ class ArtistServiceTests: XCTestCase {
     }
 
     func test_calculateTopTagsForArtist_callsCalculatorOnce_andSavesArtist() {
-        let artistService = ArtistService(persistentStore: persistentStore, repository: ArtistEmptyStubRepository())
+        let artistService = ArtistService(persistentStore: persistentStore, repository: StubArtistEmptyRepository())
 
         let artist = ModelFactory.generateArtist(index: 1)
-        let calculator = ArtistStubTopTagsCalculator()
+        let calculator = MockArtistTopTagsCalculator()
 
         artistService.calculateTopTags(for: artist, using: calculator).noError()
 
@@ -141,12 +141,12 @@ class ArtistServiceTests: XCTestCase {
     }
 
     func test_artists_createsCorrectMappedCollection() {
-        let artistService = ArtistService(persistentStore: persistentStore, repository: ArtistEmptyStubRepository())
+        let artistService = ArtistService(persistentStore: persistentStore, repository: StubArtistEmptyRepository())
 
         let predicate = NSPredicate(format: "name contains[cd] '1'")
         let sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
 
-        let mappedCollection = StubPersistentMappedCollection<Artist>()
+        let mappedCollection = MockPersistentMappedCollection<Artist>(values: [])
         persistentStore.customMappedCollection = AnyPersistentMappedCollection(mappedCollection)
 
         _ = artistService.artists(filteredUsing: predicate, sortedBy: sortDescriptors)
@@ -159,7 +159,7 @@ class ArtistServiceTests: XCTestCase {
     func test_getSimilarArtists_finishesWithSuccess() {
         let similarArtistCount = 3
 
-        let repository = ArtistSimilarsStubRepository(shouldFailWithError: false, similarArtistProvider: {
+        let repository = MockArtistSimilarsRepository(shouldFailWithError: false, similarArtistProvider: {
             return ModelFactory.generateSimilarArtists(inAmount: similarArtistCount)
         })
         let artistService = ArtistService(persistentStore: persistentStore, repository: repository)
@@ -177,7 +177,7 @@ class ArtistServiceTests: XCTestCase {
     }
 
     func test_getSimilarArtists_failsWithError() {
-        let repository = ArtistSimilarsStubRepository(shouldFailWithError: true, similarArtistProvider: { [] })
+        let repository = MockArtistSimilarsRepository(shouldFailWithError: true, similarArtistProvider: { [] })
         let artistService = ArtistService(persistentStore: persistentStore, repository: repository)
 
         let artist = ModelFactory.generateArtist()

@@ -22,13 +22,13 @@ class SimilarArtistsRemoteRequestStrategyTests: XCTestCase {
     let sampleArtist = ModelFactory.generateArtist()
     let similarArtists = ModelFactory.generateArtists(inAmount: 10)
 
-    var artistService: StubArtistService!
+    var artistService: MockArtistService!
     var dependencies: Dependencies!
 
     override func setUp() {
         super.setUp()
 
-        artistService = StubArtistService()
+        artistService = MockArtistService()
         dependencies = Dependencies(artistService: artistService)
     }
 
@@ -38,7 +38,7 @@ class SimilarArtistsRemoteRequestStrategyTests: XCTestCase {
     }
 
     func test_getSimilarArtists_getsCorrectValueFromArtistService() {
-        artistService.stubSimilarArtists = similarArtists
+        artistService.customSimilarArtists = similarArtists
         let strategy = SimilarArtistsRemoteRequestStrategy(dependencies: dependencies)
         var expectedSimilarArtists: [Artist] = []
 

@@ -1,5 +1,5 @@
 //
-//  TrackStubRepository.swift
+//  MockTrackRepository.swift
 //  MementoFM
 //
 //  Created by Daniel on 26/10/2017.
@@ -10,16 +10,10 @@ import Foundation
 @testable import MementoFM
 import PromiseKit
 
-class TrackStubRepository: TrackRepository {
-    private let totalPages: Int
-    private let shouldFailWithError: Bool
-    private let trackProvider: (() -> [Track])
-
-    init(totalPages: Int, shouldFailWithError: Bool, trackProvider: @escaping (() -> [Track])) {
-        self.totalPages = totalPages
-        self.shouldFailWithError = shouldFailWithError
-        self.trackProvider = trackProvider
-    }
+class MockTrackRepository: TrackRepository {
+    var totalPages = 0
+    var shouldFailWithError = false
+    var trackProvider: (() -> [Track])!
 
     func getRecentTracksPage(withIndex index: Int, for user: String,
                              from: TimeInterval, limit: Int) -> Promise<RecentTracksPageResponse> {

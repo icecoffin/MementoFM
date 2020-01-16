@@ -1,5 +1,5 @@
 //
-//  StubTrackService.swift
+//  MockTrackService.swift
 //  MementoFM
 //
 //  Created by Daniel on 22/11/2017.
@@ -10,8 +10,8 @@ import Foundation
 @testable import MementoFM
 import PromiseKit
 
-class StubTrackService: TrackServiceProtocol {
-    var stubRecentTracks: [Track] = []
+class MockTrackService: TrackServiceProtocol {
+    var customRecentTracks: [Track] = []
     var user: String = ""
     var from: TimeInterval = 0
     var limit: Int = 0
@@ -21,7 +21,7 @@ class StubTrackService: TrackServiceProtocol {
         self.from = from
         self.limit = limit
         didCallGetRecentTracks = true
-        return .value(stubRecentTracks)
+        return .value(customRecentTracks)
     }
 
     var tracks: [Track] = []

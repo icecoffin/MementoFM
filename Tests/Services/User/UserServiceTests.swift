@@ -12,17 +12,17 @@ import Nimble
 import PromiseKit
 
 class UserServiceTests: XCTestCase {
-    var userRepository: UserStubRepository!
-    var userDataStorage: StubUserDataStorage!
-    var persistentStore: StubPersistentStore!
+    var userRepository: MockUserRepository!
+    var userDataStorage: MockUserDataStorage!
+    var persistentStore: MockPersistentStore!
     var userService: UserService!
 
     override func setUp() {
         super.setUp()
 
-        userRepository = UserStubRepository()
-        userDataStorage = StubUserDataStorage()
-        persistentStore = StubPersistentStore()
+        userRepository = MockUserRepository()
+        userDataStorage = MockUserDataStorage()
+        persistentStore = MockPersistentStore()
         userService = UserService(persistentStore: persistentStore, repository: userRepository, userDataStorage: userDataStorage)
     }
 

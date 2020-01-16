@@ -11,7 +11,7 @@ import Nimble
 @testable import MementoFM
 import PromiseKit
 
-class RecentTracksStubProcessor: RecentTracksProcessing {
+class MockRecentTracksProcessor: RecentTracksProcessing {
     var didCallProcess = false
 
     func process(tracks: [Track], using persistentStore: PersistentStore) -> Promise<Void> {
@@ -21,21 +21,21 @@ class RecentTracksStubProcessor: RecentTracksProcessing {
 }
 
 class TrackServiceTests: XCTestCase {
-    var persistentStore: StubPersistentStore!
+    var persistentStore: MockPersistentStore!
 
     override func setUp() {
         super.setUp()
 
-        persistentStore = StubPersistentStore()
+        persistentStore = MockPersistentStore()
     }
 
     func test_getRecentTracks_finishesWithSuccess() {
         let totalPages = 5
         let limit = 20
 
-        let trackRepository = TrackStubRepository(totalPages: totalPages, shouldFailWithError: false, trackProvider: {
-            ModelFactory.generateTracks(inAmount: limit)
-        })
+        let trackRepository = MockTrackRepository()
+        trackRepository.totalPages = totalPages
+        trackRepository.trackProvider = { ModelFactory.generateTracks(inAmount: limit) }
         let trackService = TrackService(persistentStore: persistentStore, repository: trackRepository)
 
         var progressCallCount = 0
@@ -58,7 +58,9 @@ class TrackServiceTests: XCTestCase {
         let totalPages = 5
         let limit = 20
 
-        let trackRepository = TrackStubRepository(totalPages: totalPages, shouldFailWithError: true, trackProvider: { [] })
+        let trackRepository = MockTrackRepository()
+        trackRepository.totalPages = totalPages
+        trackRepository.shouldFailWithError = true
         let trackService = TrackService(persistentStore: persistentStore, repository: trackRepository)
 
         var didReceiveError = false
@@ -72,8 +74,8 @@ class TrackServiceTests: XCTestCase {
     }
 
     func test_processTracks_callsRecentTracksProcessor() {
-        let trackService = TrackService(persistentStore: persistentStore, repository: TrackEmptyStubRepository())
-        let processor = RecentTracksStubProcessor()
+        let trackService = TrackService(persistentStore: persistentStore, repository: MockTrackRepository())
+        let processor = MockRecentTracksProcessor()
 
         _ = trackService.processTracks([], using: processor)
 

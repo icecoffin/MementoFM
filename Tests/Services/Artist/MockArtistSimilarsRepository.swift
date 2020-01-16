@@ -1,5 +1,5 @@
 //
-//  ArtistSimilarsStubRepository.swift
+//  MockArtistSimilarsRepository.swift
 //  MementoFM
 //
 //  Created by Daniel on 05/11/2017.
@@ -10,7 +10,7 @@ import Foundation
 @testable import MementoFM
 import PromiseKit
 
-class ArtistSimilarsStubRepository: ArtistRepository {
+class MockArtistSimilarsRepository: ArtistRepository {
     private let shouldFailWithError: Bool
     private let similarArtistProvider: (() -> [SimilarArtist])
 

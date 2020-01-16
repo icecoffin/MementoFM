@@ -11,21 +11,21 @@ import XCTest
 import Nimble
 
 class LibraryUpdaterTests: XCTestCase {
-    var userService: StubUserService!
-    var artistService: StubArtistService!
-    var tagService: StubTagService!
-    var ignoredTagService: StubIgnoredTagService!
-    var trackService: StubTrackService!
+    var userService: MockUserService!
+    var artistService: MockArtistService!
+    var tagService: MockTagService!
+    var ignoredTagService: MockIgnoredTagService!
+    var trackService: MockTrackService!
     var networkService: MockNetworkService!
 
     override func setUp() {
         super.setUp()
 
-        userService = StubUserService()
-        artistService = StubArtistService()
-        tagService = StubTagService()
-        ignoredTagService = StubIgnoredTagService()
-        trackService = StubTrackService()
+        userService = MockUserService()
+        artistService = MockArtistService()
+        tagService = MockTagService()
+        ignoredTagService = MockIgnoredTagService()
+        trackService = MockTrackService()
         networkService = MockNetworkService()
         networkService.customResponse = EmptyResponse()
     }
@@ -134,7 +134,7 @@ class LibraryUpdaterTests: XCTestCase {
         let artist = ModelFactory.generateArtist()
         let topTagsList = TopTagsList(tags: ModelFactory.generateTags(inAmount: 10, for: artist.name))
         let topTagsRequestProgress = TopTagsRequestProgress(progress: progress, artist: artist, topTagsList: topTagsList)
-        tagService.stubProgress = topTagsRequestProgress
+        tagService.customProgress = topTagsRequestProgress
 
         libraryUpdater.requestData()
 

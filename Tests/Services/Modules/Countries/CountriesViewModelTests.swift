@@ -19,21 +19,21 @@ class CountriesViewModelTests: XCTestCase {
         }
     }
 
-    class StubCountriesViewModelDelegate: CountriesViewModelDelegate {
+    class TestCountriesViewModelDelegate: CountriesViewModelDelegate {
         var selectedCountry: CountryType?
         func countriesViewModel(_ viewModel: CountriesViewModel, didSelectCountry country: CountryType) {
             selectedCountry = country
         }
     }
 
-    var artistService: StubArtistService!
+    var artistService: MockArtistService!
     var dependencies: Dependencies!
     var viewModel: CountriesViewModel!
 
     override func setUp() {
         super.setUp()
 
-        artistService = StubArtistService()
+        artistService = MockArtistService()
         dependencies = Dependencies(artistService: artistService)
         viewModel = CountriesViewModel(dependencies: dependencies)
     }
@@ -41,7 +41,7 @@ class CountriesViewModelTests: XCTestCase {
     // MARK: - loadData
 
     func test_loadData_callsArtistService() {
-        artistService.stubCountriesWithCount = ["USA": 50, "Germany": 100]
+        artistService.customCountriesWithCount = ["USA": 50, "Germany": 100]
 
         viewModel.loadData()
 
@@ -49,7 +49,7 @@ class CountriesViewModelTests: XCTestCase {
     }
 
     func test_loadData_sortsCountriesByArtistCount() {
-        artistService.stubCountriesWithCount = ["USA": 50, "Germany": 100]
+        artistService.customCountriesWithCount = ["USA": 50, "Germany": 100]
 
         viewModel.loadData()
 
@@ -61,7 +61,7 @@ class CountriesViewModelTests: XCTestCase {
     // MARK: - numberOfCountries
 
     func test_numberOfCountries_returnsCorrectValue() {
-        artistService.stubCountriesWithCount = ["USA": 50, "Germany": 100]
+        artistService.customCountriesWithCount = ["USA": 50, "Germany": 100]
 
         viewModel.loadData()
 
@@ -71,9 +71,9 @@ class CountriesViewModelTests: XCTestCase {
     // MARK: - selectCountry
 
     func test_selectCountry_notifiesDelegate() {
-        artistService.stubCountriesWithCount = ["USA": 50, "Germany": 100]
+        artistService.customCountriesWithCount = ["USA": 50, "Germany": 100]
 
-        let delegate = StubCountriesViewModelDelegate()
+        let delegate = TestCountriesViewModelDelegate()
         viewModel.delegate = delegate
 
         viewModel.loadData()
