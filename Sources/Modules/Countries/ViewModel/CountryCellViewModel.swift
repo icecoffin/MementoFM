@@ -24,10 +24,18 @@ enum CountryType: Equatable {
 
 final class CountryCellViewModel {
     let country: CountryType
+    let subtitle: String?
+
     let countText: String
 
     init(name: String, count: Int, numberFormatter: NumberFormatter) {
-        self.country = name.isEmpty ? .unknown : .named(name: name)
+        if name.isEmpty {
+            country = .unknown
+            subtitle = "usually USA".unlocalized
+        } else {
+            country = .named(name: name)
+            subtitle = nil
+        }
 
         let countText = numberFormatter.string(from: count as NSNumber) ?? "0"
         // Add proper pluralization

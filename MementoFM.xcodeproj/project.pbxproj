@@ -10,6 +10,7 @@
 		57CC53BFD7353556C18C1D49 /* Pods_MementoFMTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54F7345EDE3E86D13A310BC8 /* Pods_MementoFMTests.framework */; };
 		650A931E1FACACA8001DE7A5 /* MockUserDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650A931C1FACACA0001DE7A5 /* MockUserDataStorage.swift */; };
 		650A93221FACD1B9001DE7A5 /* ArtistServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650A93201FACD1B5001DE7A5 /* ArtistServiceTests.swift */; };
+		650BCE2D24048703004AD56C /* CountryCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650BCE2B24048700004AD56C /* CountryCellViewModelTests.swift */; };
 		650D97CE1F1521C1008C1DC6 /* LastFMErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650D97CD1F1521C0008C1DC6 /* LastFMErrorResponse.swift */; };
 		650E0ABB2274E4CE0014EBD8 /* PersistentMappedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650E0ABA2274E4CE0014EBD8 /* PersistentMappedCollection.swift */; };
 		65112D6B1F2F181700CBF8BA /* ArtistService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65112D611F2F181700CBF8BA /* ArtistService.swift */; };
@@ -235,6 +236,7 @@
 		54F7345EDE3E86D13A310BC8 /* Pods_MementoFMTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MementoFMTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		650A931C1FACACA0001DE7A5 /* MockUserDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserDataStorage.swift; sourceTree = "<group>"; };
 		650A93201FACD1B5001DE7A5 /* ArtistServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistServiceTests.swift; sourceTree = "<group>"; };
+		650BCE2B24048700004AD56C /* CountryCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCellViewModelTests.swift; sourceTree = "<group>"; };
 		650D97CD1F1521C0008C1DC6 /* LastFMErrorResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastFMErrorResponse.swift; sourceTree = "<group>"; };
 		650E0ABA2274E4CE0014EBD8 /* PersistentMappedCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentMappedCollection.swift; sourceTree = "<group>"; };
 		65112D611F2F181700CBF8BA /* ArtistService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistService.swift; sourceTree = "<group>"; };
@@ -1333,6 +1335,7 @@
 			isa = PBXGroup;
 			children = (
 				657AC74523CCFFF500E3AE17 /* CountriesViewModelTests.swift */,
+				650BCE2B24048700004AD56C /* CountryCellViewModelTests.swift */,
 				657AC74823CD047500E3AE17 /* CountryTypeTests.swift */,
 				657AC74A23CD080D00E3AE17 /* ArtistsByCountryViewModelTests.swift */,
 			);
@@ -1775,6 +1778,7 @@
 				65B4A0491FC7153500E01881 /* TagsViewModelTests.swift in Sources */,
 				657A56151FDD17870061FD26 /* MockSimilarArtistsRequestStrategy.swift in Sources */,
 				651AA71A1FB082E100EEE40A /* RealmIgnoredTagTests.swift in Sources */,
+				650BCE2D24048703004AD56C /* CountryCellViewModelTests.swift in Sources */,
 				657AC74B23CD080D00E3AE17 /* ArtistsByCountryViewModelTests.swift in Sources */,
 				650A93221FACD1B9001DE7A5 /* ArtistServiceTests.swift in Sources */,
 				65D6BE411FD9A145008519F8 /* ArtistSimilarsSectionViewModelTests.swift in Sources */,
