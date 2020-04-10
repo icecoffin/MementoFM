@@ -36,8 +36,8 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
     private let tagService: TagServiceProtocol
     private let ignoredTagService: IgnoredTagServiceProtocol
     private let trackService: TrackServiceProtocol
+    private let countryService: CountryServiceProtocol
     private let networkService: NetworkService
-    private let countryProvider: CountryProviding
 
     private(set) var isFirstUpdate: Bool = true
 
@@ -59,15 +59,15 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
          tagService: TagServiceProtocol,
          ignoredTagService: IgnoredTagServiceProtocol,
          trackService: TrackServiceProtocol,
-         networkService: NetworkService,
-         countryProvider: CountryProviding = CountryProvider()) {
+         countryService: CountryServiceProtocol,
+         networkService: NetworkService) {
         self.userService = userService
         self.artistService = artistService
         self.tagService = tagService
         self.ignoredTagService = ignoredTagService
         self.trackService = trackService
+        self.countryService = countryService
         self.networkService = networkService
-        self.countryProvider = countryProvider
     }
 
     func requestData() {
@@ -77,7 +77,7 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
         }.then {
             self.getArtistsTags()
         }.then {
-            self.artistService.updateCountries(with: self.countryProvider, using: AsyncDispatcher.global)
+            self.countryService.updateCountries()
         }.done { _ in
             self.didFinishLoading?()
         }.catch { error in

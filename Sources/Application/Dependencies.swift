@@ -24,16 +24,22 @@ protocol HasIgnoredTagService {
     var ignoredTagService: IgnoredTagServiceProtocol { get }
 }
 
+protocol HasCountryService {
+    var countryService: CountryServiceProtocol { get }
+}
+
 protocol HasLibraryUpdater {
     var libraryUpdater: LibraryUpdaterProtocol { get }
 }
 
-struct AppDependency: HasArtistService, HasUserService, HasTagService, HasIgnoredTagService, HasLibraryUpdater {
+struct AppDependency: HasArtistService, HasUserService, HasTagService,
+                      HasIgnoredTagService, HasCountryService, HasLibraryUpdater {
     let artistService: ArtistServiceProtocol
     let userService: UserServiceProtocol
     let tagService: TagServiceProtocol
     let ignoredTagService: IgnoredTagServiceProtocol
     let trackService: TrackServiceProtocol
+    let countryService: CountryServiceProtocol
 
     let libraryUpdater: LibraryUpdaterProtocol
 
@@ -58,11 +64,22 @@ struct AppDependency: HasArtistService, HasUserService, HasTagService, HasIgnore
         let trackRepository = TrackNetworkRepository(networkService: networkService)
         let trackService = TrackService(persistentStore: realmService, repository: trackRepository)
 
-        let libraryUpdater = LibraryUpdater(userService: userService, artistService: artistService, tagService: tagService,
-                                            ignoredTagService: ignoredTagService, trackService: trackService,
+        let countryService = CountryService(persistentStore: realmService)
+
+        let libraryUpdater = LibraryUpdater(userService: userService,
+                                            artistService: artistService,
+                                            tagService: tagService,
+                                            ignoredTagService: ignoredTagService,
+                                            trackService: trackService,
+                                            countryService: countryService,
                                             networkService: networkService)
 
-        return AppDependency(artistService: artistService, userService: userService, tagService: tagService,
-                             ignoredTagService: ignoredTagService, trackService: trackService, libraryUpdater: libraryUpdater)
+        return AppDependency(artistService: artistService,
+                             userService: userService,
+                             tagService: tagService,
+                             ignoredTagService: ignoredTagService,
+                             trackService: trackService,
+                             countryService: countryService,
+                             libraryUpdater: libraryUpdater)
     }
 }

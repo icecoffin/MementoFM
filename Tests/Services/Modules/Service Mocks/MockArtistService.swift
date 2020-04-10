@@ -111,18 +111,4 @@ class MockArtistService: ArtistServiceProtocol {
             return .value(customSimilarArtists)
         }
     }
-
-    var didCallUpdateCountries = false
-    func updateCountries(with countryProvider: CountryProviding,
-                         using dispatcher: Dispatcher) -> Promise<Void> {
-        didCallUpdateCountries = true
-        return .value(())
-    }
-
-    var customCountriesWithCount: [String: Int] = [:]
-    var didCallGetCountriesWithCount = false
-    func getCountriesWithCounts() -> [String: Int] {
-        didCallGetCountriesWithCount = true
-        return customCountriesWithCount
-    }
 }

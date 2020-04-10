@@ -11,11 +11,11 @@ import XCTest
 import Nimble
 
 class CountriesViewModelTests: XCTestCase {
-    class Dependencies: HasArtistService {
-        let artistService: ArtistServiceProtocol
+    class Dependencies: HasCountryService {
+        let countryService: CountryServiceProtocol
 
-        init(artistService: ArtistServiceProtocol) {
-            self.artistService = artistService
+        init(countryService: CountryServiceProtocol) {
+            self.countryService = countryService
         }
     }
 
@@ -26,30 +26,30 @@ class CountriesViewModelTests: XCTestCase {
         }
     }
 
-    var artistService: MockArtistService!
+    var countryService: MockCountryService!
     var dependencies: Dependencies!
     var viewModel: CountriesViewModel!
 
     override func setUp() {
         super.setUp()
 
-        artistService = MockArtistService()
-        dependencies = Dependencies(artistService: artistService)
+        countryService = MockCountryService()
+        dependencies = Dependencies(countryService: countryService)
         viewModel = CountriesViewModel(dependencies: dependencies)
     }
 
     // MARK: - loadData
 
     func test_loadData_callsArtistService() {
-        artistService.customCountriesWithCount = ["USA": 50, "Germany": 100]
+        countryService.customCountriesWithCount = ["USA": 50, "Germany": 100]
 
         viewModel.loadData()
 
-        expect(self.artistService.didCallGetCountriesWithCount) == true
+        expect(self.countryService.didCallGetCountriesWithCount) == true
     }
 
     func test_loadData_sortsCountriesByArtistCount() {
-        artistService.customCountriesWithCount = ["USA": 50, "Germany": 100]
+        countryService.customCountriesWithCount = ["USA": 50, "Germany": 100]
 
         viewModel.loadData()
 
@@ -61,7 +61,7 @@ class CountriesViewModelTests: XCTestCase {
     // MARK: - numberOfCountries
 
     func test_numberOfCountries_returnsCorrectValue() {
-        artistService.customCountriesWithCount = ["USA": 50, "Germany": 100]
+        countryService.customCountriesWithCount = ["USA": 50, "Germany": 100]
 
         viewModel.loadData()
 
@@ -71,7 +71,7 @@ class CountriesViewModelTests: XCTestCase {
     // MARK: - selectCountry
 
     func test_selectCountry_notifiesDelegate() {
-        artistService.customCountriesWithCount = ["USA": 50, "Germany": 100]
+        countryService.customCountriesWithCount = ["USA": 50, "Germany": 100]
 
         let delegate = TestCountriesViewModelDelegate()
         viewModel.delegate = delegate

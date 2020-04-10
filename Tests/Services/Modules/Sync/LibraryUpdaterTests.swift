@@ -16,6 +16,7 @@ class LibraryUpdaterTests: XCTestCase {
     var tagService: MockTagService!
     var ignoredTagService: MockIgnoredTagService!
     var trackService: MockTrackService!
+    var countryService: MockCountryService!
     var networkService: MockNetworkService!
 
     override func setUp() {
@@ -26,6 +27,7 @@ class LibraryUpdaterTests: XCTestCase {
         tagService = MockTagService()
         ignoredTagService = MockIgnoredTagService()
         trackService = MockTrackService()
+        countryService = MockCountryService()
         networkService = MockNetworkService()
         networkService.customResponse = EmptyResponse()
     }
@@ -169,6 +171,7 @@ class LibraryUpdaterTests: XCTestCase {
                               tagService: tagService,
                               ignoredTagService: ignoredTagService,
                               trackService: trackService,
+                              countryService: countryService,
                               networkService: networkService)
     }
 }

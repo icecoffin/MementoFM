@@ -13,7 +13,7 @@ protocol CountriesViewModelDelegate: class {
 }
 
 final class CountriesViewModel {
-    typealias Dependencies = HasArtistService
+    typealias Dependencies = HasCountryService
 
     private let dependencies: Dependencies
     private let numberFormatter: NumberFormatter = {
@@ -35,7 +35,7 @@ final class CountriesViewModel {
     }
 
     func loadData() {
-        let result = dependencies.artistService.getCountriesWithCounts()
+        let result = dependencies.countryService.getCountriesWithCounts()
         cellViewModels = result
             .sorted { $0.value > $1.value }
             .map { key, value in

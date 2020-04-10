@@ -26,10 +26,6 @@ protocol ArtistServiceProtocol: class {
     func artists(filteredUsing predicate: NSPredicate?,
                  sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<Artist>
     func getSimilarArtists(for artist: Artist, limit: Int) -> Promise<[Artist]>
-    // TODO: Country service
-    func updateCountries(with countryProvider: CountryProviding,
-                         using dispatcher: Dispatcher) -> Promise<Void>
-    func getCountriesWithCounts() -> [String: Int]
 }
 
 extension ArtistServiceProtocol {

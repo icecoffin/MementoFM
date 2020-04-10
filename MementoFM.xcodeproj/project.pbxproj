@@ -10,6 +10,8 @@
 		57CC53BFD7353556C18C1D49 /* Pods_MementoFMTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54F7345EDE3E86D13A310BC8 /* Pods_MementoFMTests.framework */; };
 		650A931E1FACACA8001DE7A5 /* MockUserDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650A931C1FACACA0001DE7A5 /* MockUserDataStorage.swift */; };
 		650A93221FACD1B9001DE7A5 /* ArtistServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650A93201FACD1B5001DE7A5 /* ArtistServiceTests.swift */; };
+		650B1D4D2440C53000F770FA /* CountryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650B1D4C2440C53000F770FA /* CountryService.swift */; };
+		650B1D502440D29C00F770FA /* MockCountryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650B1D4E2440D28700F770FA /* MockCountryService.swift */; };
 		650BCE2D24048703004AD56C /* CountryCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650BCE2B24048700004AD56C /* CountryCellViewModelTests.swift */; };
 		650D97CE1F1521C1008C1DC6 /* LastFMErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650D97CD1F1521C0008C1DC6 /* LastFMErrorResponse.swift */; };
 		650E0ABB2274E4CE0014EBD8 /* PersistentMappedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650E0ABA2274E4CE0014EBD8 /* PersistentMappedCollection.swift */; };
@@ -236,6 +238,8 @@
 		54F7345EDE3E86D13A310BC8 /* Pods_MementoFMTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MementoFMTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		650A931C1FACACA0001DE7A5 /* MockUserDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserDataStorage.swift; sourceTree = "<group>"; };
 		650A93201FACD1B5001DE7A5 /* ArtistServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistServiceTests.swift; sourceTree = "<group>"; };
+		650B1D4C2440C53000F770FA /* CountryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryService.swift; sourceTree = "<group>"; };
+		650B1D4E2440D28700F770FA /* MockCountryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCountryService.swift; sourceTree = "<group>"; };
 		650BCE2B24048700004AD56C /* CountryCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCellViewModelTests.swift; sourceTree = "<group>"; };
 		650D97CD1F1521C0008C1DC6 /* LastFMErrorResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastFMErrorResponse.swift; sourceTree = "<group>"; };
 		650E0ABA2274E4CE0014EBD8 /* PersistentMappedCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentMappedCollection.swift; sourceTree = "<group>"; };
@@ -534,6 +538,16 @@
 			path = Artist;
 			sourceTree = "<group>";
 		};
+		650B1D4B2440C51E00F770FA /* Country */ = {
+			isa = PBXGroup;
+			children = (
+				650B1D4C2440C53000F770FA /* CountryService.swift */,
+				6570302223AE815700F706B4 /* CountryProvider.swift */,
+				6570302423AE81CB00F706B4 /* CountryMapping.swift */,
+			);
+			path = Country;
+			sourceTree = "<group>";
+		};
 		650DB4471FA316A800E6F006 /* Track */ = {
 			isa = PBXGroup;
 			children = (
@@ -553,6 +567,7 @@
 				655E97B71F3C6AE3003614C8 /* Tag */,
 				652167641F619DEC005B7273 /* Track */,
 				65112D691F2F181700CBF8BA /* User */,
+				650B1D4B2440C51E00F770FA /* Country */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -563,8 +578,6 @@
 				65112D611F2F181700CBF8BA /* ArtistService.swift */,
 				65112D621F2F181700CBF8BA /* ArtistTopTagsCalculator.swift */,
 				651F338B1FA0E24D00B178D0 /* ArtistRepository.swift */,
-				6570302223AE815700F706B4 /* CountryProvider.swift */,
-				6570302423AE81CB00F706B4 /* CountryMapping.swift */,
 			);
 			path = Artist;
 			sourceTree = "<group>";
@@ -1189,6 +1202,7 @@
 				653347061FB617E80020DC82 /* MockArtistService.swift */,
 				6517B08B1FC5D3D40024DFD9 /* MockTrackService.swift */,
 				6517B08D1FC5D3DD0024DFD9 /* MockTagService.swift */,
+				650B1D4E2440D28700F770FA /* MockCountryService.swift */,
 				656A5B341FD1BD1200A98265 /* MockLibraryUpdater.swift */,
 				656FE23222764FB200DD3A8E /* MockPersistentStore.swift */,
 				657AC74C23CD154700E3AE17 /* MockPersistentMappedCollection.swift */,
@@ -1711,6 +1725,7 @@
 				6518F0291ECB01B000681D5E /* TagsViewController.swift in Sources */,
 				65A0A24B2164D7240037354E /* UIColor+AppColors.swift in Sources */,
 				651F9E391EC09FDC006D9474 /* EnterUsernameViewController.swift in Sources */,
+				650B1D4D2440C53000F770FA /* CountryService.swift in Sources */,
 				651F9E1A1EC09FDC006D9474 /* OnboardingCoordinator.swift in Sources */,
 				651F9E421EC09FDC006D9474 /* LoadingView.swift in Sources */,
 				651F9E331EC09FDC006D9474 /* LibraryPageResponse.swift in Sources */,
@@ -1777,6 +1792,7 @@
 				656FE2342276503200DD3A8E /* MockPersistentStore.swift in Sources */,
 				65B4A0491FC7153500E01881 /* TagsViewModelTests.swift in Sources */,
 				657A56151FDD17870061FD26 /* MockSimilarArtistsRequestStrategy.swift in Sources */,
+				650B1D502440D29C00F770FA /* MockCountryService.swift in Sources */,
 				651AA71A1FB082E100EEE40A /* RealmIgnoredTagTests.swift in Sources */,
 				650BCE2D24048703004AD56C /* CountryCellViewModelTests.swift in Sources */,
 				657AC74B23CD080D00E3AE17 /* ArtistsByCountryViewModelTests.swift in Sources */,
