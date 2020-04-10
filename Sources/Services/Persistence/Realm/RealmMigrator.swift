@@ -9,11 +9,7 @@
 import Foundation
 import RealmSwift
 
-protocol RealmMigrating {
-    func performMigrations()
-}
-
-final class RealmMigrator: RealmMigrating {
+final class RealmMigrator {
     func performMigrations() {
         let config = Realm.Configuration(schemaVersion: 2, migrationBlock: { _, oldSchemaVersion in
             if oldSchemaVersion < 1 {
