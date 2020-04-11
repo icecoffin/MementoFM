@@ -17,7 +17,7 @@ final class ArtistCell: UITableViewCell {
     private let innerStackView = UIStackView()
 
     private let indexLabel = UILabel()
-    private let separatorView = UIView()
+    private let verticalSeparatorView = UIView()
     private let nameLabel = UILabel()
     private let playcountLabel = UILabel()
 
@@ -38,7 +38,7 @@ final class ArtistCell: UITableViewCell {
     private func setup() {
         addOuterStackView()
         addIndexLabel()
-        addSeparatorView()
+        addVerticalSeparatorView()
 
         addInnerStackView()
         addNameLabel()
@@ -77,12 +77,12 @@ final class ArtistCell: UITableViewCell {
         indexLabel.textColor = .darkGray
     }
 
-    private func addSeparatorView() {
-        outerStackView.addArrangedSubview(separatorView)
-        separatorView.snp.makeConstraints { make in
+    private func addVerticalSeparatorView() {
+        outerStackView.addArrangedSubview(verticalSeparatorView)
+        verticalSeparatorView.snp.makeConstraints { make in
             make.width.equalTo(0.5)
         }
-        separatorView.backgroundColor = .separator
+        verticalSeparatorView.backgroundColor = .separator
     }
 
     private func addInnerStackView() {

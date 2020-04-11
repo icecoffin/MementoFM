@@ -20,7 +20,6 @@ final class SimilarArtistCell: UITableViewCell {
     private let nameLabel = UILabel()
     private let playcountLabel = UILabel()
     private let tagsLabel = UILabel()
-    private let horizontalSeparatorView = UIView()
 
     // MARK: - Init
 
@@ -45,8 +44,6 @@ final class SimilarArtistCell: UITableViewCell {
         addNameLabel()
         addPlaycountLabel()
         addTagsLabel()
-
-        addHorizontalSeparatorView()
     }
 
     private func addOuterStackView() {
@@ -112,15 +109,6 @@ final class SimilarArtistCell: UITableViewCell {
         tagsLabel.numberOfLines = 0
         tagsLabel.font = .secondaryContent
         tagsLabel.textColor = .darkGray
-    }
-
-    private func addHorizontalSeparatorView() {
-        contentView.addSubview(horizontalSeparatorView)
-        horizontalSeparatorView.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview()
-            make.height.equalTo(0.5)
-        }
-        horizontalSeparatorView.backgroundColor = .separator
     }
 
     // MARK: - Public methods
