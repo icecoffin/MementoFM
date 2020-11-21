@@ -69,12 +69,13 @@ final class ArtistCell: UITableViewCell {
         wrapperStackView.addArrangedSubview(indexLabel)
 
         indexLabel.snp.makeConstraints { make in
-            make.width.equalTo(60)
+            make.width.equalTo(45)
         }
 
         indexLabel.textAlignment = .right
         indexLabel.font = .primaryContent
         indexLabel.textColor = .darkGray
+        indexLabel.adjustsFontSizeToFitWidth = true
     }
 
     private func addVerticalSeparatorView() {
