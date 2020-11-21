@@ -46,7 +46,7 @@ final class IgnoredTagsViewController: UIViewController {
             make.edges.equalToSuperview()
         }
 
-        tableView.estimatedRowHeight = 44
+        tableView.estimatedRowHeight = 48
         tableView.allowsSelection = false
         tableView.tableFooterView = UIView()
 

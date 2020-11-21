@@ -9,10 +9,16 @@
 import UIKit
 
 final class IgnoredTagCell: UITableViewCell {
+    // MARK: - Private properties
+
+    private let containerView = UIView()
     private let textField = UITextField()
+
     private var viewModel: IgnoredTagCellViewModel?
 
     private var onTextUpdate: ((String) -> Void)?
+
+    // MARK: - Init
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -24,15 +30,45 @@ final class IgnoredTagCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Overrides
+
+    override func becomeFirstResponder() -> Bool {
+        return textField.becomeFirstResponder()
+    }
+
+    // MARK: - Private methods
+
     private func setup() {
-        contentView.addSubview(textField)
+        addContainerView()
+        addTextField()
+    }
+
+    private func addContainerView() {
+        contentView.addSubview(containerView)
+        containerView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.height.equalTo(48).priority(.high)
+        }
+    }
+
+    private func addTextField() {
+        containerView.addSubview(textField)
         textField.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(16)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.center.equalToSuperview()
         }
 
         textField.delegate = self
         textField.font = .primaryContent
     }
+
+    // MARK: - Actions
+
+    @objc private func textFieldEditingChanged(_ textField: UITextField) {
+        textField.text = textField.text?.lowercased()
+    }
+
+    // MARK: - Public methods
 
     func configure(with viewModel: IgnoredTagCellViewModel) {
         self.viewModel = viewModel
@@ -44,15 +80,9 @@ final class IgnoredTagCell: UITableViewCell {
         textField.placeholder = viewModel.placeholder
         textField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
     }
-
-    @objc private func textFieldEditingChanged(_ textField: UITextField) {
-        textField.text = textField.text?.lowercased()
-    }
-
-    override func becomeFirstResponder() -> Bool {
-        return textField.becomeFirstResponder()
-    }
 }
+
+// MARK: - UITextFieldDelegate
 
 extension IgnoredTagCell: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {

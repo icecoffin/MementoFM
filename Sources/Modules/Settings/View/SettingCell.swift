@@ -32,7 +32,7 @@ final class SettingCell: UITableViewCell {
         contentView.addSubview(containerView)
         containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-            make.height.equalTo(44).priority(.high)
+            make.height.equalTo(48).priority(.high)
         }
     }
 

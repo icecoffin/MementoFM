@@ -46,7 +46,7 @@ final class CountryCell: UITableViewCell {
         outerStackView.distribution = .fill
         outerStackView.alignment = .center
         outerStackView.isLayoutMarginsRelativeArrangement = true
-        outerStackView.layoutMargins = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+        outerStackView.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
 
     private func addInnerStackView() {
