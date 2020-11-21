@@ -3609,7 +3609,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SVProgressHUD/SVProgressHUD-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SVProgressHUD/SVProgressHUD-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/SVProgressHUD/SVProgressHUD.modulemap";
 				PRODUCT_MODULE_NAME = SVProgressHUD;
@@ -3671,7 +3671,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/PromiseKit/PromiseKit-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/PromiseKit/PromiseKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/PromiseKit/PromiseKit.modulemap";
 				PRODUCT_MODULE_NAME = PromiseKit;
@@ -3703,7 +3703,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Alamofire/Alamofire-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Alamofire/Alamofire-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/Alamofire/Alamofire.modulemap";
 				PRODUCT_MODULE_NAME = Alamofire;
@@ -3769,7 +3769,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SVProgressHUD/SVProgressHUD-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SVProgressHUD/SVProgressHUD-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/SVProgressHUD/SVProgressHUD.modulemap";
 				PRODUCT_MODULE_NAME = SVProgressHUD;
@@ -3912,7 +3912,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Alamofire/Alamofire-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Alamofire/Alamofire-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/Alamofire/Alamofire.modulemap";
 				PRODUCT_MODULE_NAME = Alamofire;
@@ -4053,7 +4053,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/UICollectionViewLeftAlignedLayout/UICollectionViewLeftAlignedLayout-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/UICollectionViewLeftAlignedLayout/UICollectionViewLeftAlignedLayout-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/UICollectionViewLeftAlignedLayout/UICollectionViewLeftAlignedLayout.modulemap";
 				PRODUCT_MODULE_NAME = UICollectionViewLeftAlignedLayout;
@@ -4340,7 +4340,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/UICollectionViewLeftAlignedLayout/UICollectionViewLeftAlignedLayout-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/UICollectionViewLeftAlignedLayout/UICollectionViewLeftAlignedLayout-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/UICollectionViewLeftAlignedLayout/UICollectionViewLeftAlignedLayout.modulemap";
 				PRODUCT_MODULE_NAME = UICollectionViewLeftAlignedLayout;
@@ -4466,7 +4466,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/PromiseKit/PromiseKit-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/PromiseKit/PromiseKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/PromiseKit/PromiseKit.modulemap";
 				PRODUCT_MODULE_NAME = PromiseKit;
