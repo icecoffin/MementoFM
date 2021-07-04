@@ -35,14 +35,20 @@ final class LastFMNetworkOperation<T: Mappable>: AsynchronousOperation {
         self.encoding = encoding
         self.headers = headers
         self.completionHandler = completionHandler
+
         super.init()
     }
 
     override func main() {
-        request = Alamofire.request(url, method: method, parameters: parameters,
-                                    encoding: encoding, headers: headers).responseJSON { response in
-                                        self.handleResponse(response)
-        }
+        request = Alamofire
+            .request(url,
+                     method: method,
+                     parameters: parameters,
+                     encoding: encoding,
+                     headers: headers)
+            .responseJSON { response in
+                self.handleResponse(response)
+            }
     }
 
     private func handleResponse(_ response: DataResponse<Any>) {

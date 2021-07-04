@@ -15,8 +15,10 @@ class MockTrackRepository: TrackRepository {
     var shouldFailWithError = false
     var trackProvider: (() -> [Track])!
 
-    func getRecentTracksPage(withIndex index: Int, for user: String,
-                             from: TimeInterval, limit: Int) -> Promise<RecentTracksPageResponse> {
+    func getRecentTracksPage(withIndex index: Int,
+                             for user: String,
+                             from: TimeInterval,
+                             limit: Int) -> Promise<RecentTracksPageResponse> {
         if shouldFailWithError {
             return Promise(error: NSError(domain: "MementoFM", code: 1, userInfo: nil))
         } else {

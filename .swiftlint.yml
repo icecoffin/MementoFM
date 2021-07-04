@@ -1,6 +1,7 @@
 opt_in_rules: # some rules are only opt-in
   - empty_count
   - force_unwrapping
+  - multiline_parameters
 
 excluded:
   - Pods
