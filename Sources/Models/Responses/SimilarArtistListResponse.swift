@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Mapper
 
 struct SimilarArtistListResponse: Codable {
     private enum CodingKeys: String, CodingKey {

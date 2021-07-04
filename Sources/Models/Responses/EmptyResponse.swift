@@ -7,6 +7,5 @@
 //
 
 import Foundation
-import Mapper
 
 struct EmptyResponse: Codable { }

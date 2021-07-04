@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Mapper
 
 struct TopTagsList: Codable {
     private enum CodingKeys: String, CodingKey {

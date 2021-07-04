@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Mapper
 
 struct LibraryPage: Codable {
     enum RootCodingKeys: String, CodingKey {

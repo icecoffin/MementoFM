@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Mapper
 
 struct Track: Equatable, Codable {
     let artist: Artist

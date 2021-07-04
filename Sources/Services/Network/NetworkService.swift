@@ -9,7 +9,6 @@
 import Foundation
 import Alamofire
 import PromiseKit
-import Mapper
 
 protocol NetworkService: AnyObject {
     func performRequest<T: Codable>(method: HTTPMethod,

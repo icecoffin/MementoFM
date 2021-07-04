@@ -1,8 +1,5 @@
 PODS:
   - Alamofire (4.9.1)
-  - ModelMapper (10.0.1):
-    - ModelMapper/Core (= 10.0.1)
-  - ModelMapper/Core (10.0.1)
   - Nimble (9.2.0)
   - PromiseKit/Alamofire (6.15.3):
     - Alamofire (~> 4.0)
@@ -20,7 +17,6 @@ PODS:
   - UICollectionViewLeftAlignedLayout (1.0.2)
 
 DEPENDENCIES:
-  - ModelMapper
   - Nimble
   - PromiseKit/Alamofire
   - RealmSwift
@@ -33,7 +29,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
-    - ModelMapper
     - Nimble
     - PromiseKit
     - Realm
@@ -46,7 +41,6 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
-  ModelMapper: 0f68dd4300d0e27290c70f66492c7f795da21bcf
   Nimble: 4f4a345c80b503b3ea13606a4f98405974ee4d0b
   PromiseKit: 3b2b6995e51a954c46dbc550ce3da44fbfb563c5
   Realm: 9feef41ab8230ed706c4dc503fc292594915bf9a
@@ -57,6 +51,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: d55b3ea7b362540af8fcf36aa3ed2e87bf210cc6
   UICollectionViewLeftAlignedLayout: 830bf6fa5bab9f9b464f62e3384f9d2e00b3c0f6
 
-PODFILE CHECKSUM: 99f481148835d022a6ca20c8488a94e339da28be
+PODFILE CHECKSUM: 13102899b1a57593da6620faa47b5d7163188ebb
 
 COCOAPODS: 1.10.1

@@ -8,7 +8,6 @@
 
 import Foundation
 import Alamofire
-import Mapper
 
 final class LastFMNetworkOperation<T: Codable>: AsynchronousOperation {
     typealias CompletionHandler = (Result<T>) -> Void

@@ -8,7 +8,6 @@
 
 import XCTest
 @testable import MementoFM
-import Mapper
 import Nimble
 
 class TagTests: XCTestCase {

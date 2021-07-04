@@ -5,7 +5,6 @@ target 'MementoFM' do
   inhibit_all_warnings!
 
   # Pods for MementoFM
-  pod 'ModelMapper'
   pod 'PromiseKit/Alamofire'
   pod 'RealmSwift'
   pod 'SnapKit'

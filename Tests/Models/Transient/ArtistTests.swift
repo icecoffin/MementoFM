@@ -9,7 +9,6 @@
 import XCTest
 import Nimble
 @testable import MementoFM
-import Mapper
 
 class ArtistTests: XCTestCase {
     func test_initWithMap_setsCorrectProperties() {

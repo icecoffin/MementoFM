@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Mapper
 
 struct LastFMError: Error, Codable {
     enum CodingKeys: String, CodingKey {

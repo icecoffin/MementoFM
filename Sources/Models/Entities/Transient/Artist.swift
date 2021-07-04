@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Mapper
 
 struct Artist: TransientEntity, Equatable, Codable {
     typealias PersistentType = RealmArtist

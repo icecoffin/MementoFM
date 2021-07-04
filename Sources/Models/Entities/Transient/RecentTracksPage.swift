@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Mapper
 
 struct RecentTracksPage: Codable {
     enum RootCodingKeys: String, CodingKey {

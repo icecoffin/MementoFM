@@ -9,7 +9,6 @@
 import Foundation
 import Alamofire
 import PromiseKit
-import Mapper
 
 final class LastFMNetworkService: NetworkService {
     let baseURL: URL

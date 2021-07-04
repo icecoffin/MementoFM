@@ -9,7 +9,6 @@
 import Foundation
 @testable import MementoFM
 import PromiseKit
-import Mapper
 
 class MockNetworkService: NetworkService {
     struct PerformRequestParameters {

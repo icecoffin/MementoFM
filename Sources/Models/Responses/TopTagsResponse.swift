@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Mapper
 
 struct TopTagsResponse: Codable {
     private enum CodingKeys: String, CodingKey {

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Mapper
 
 struct LibraryPageResponse: Codable {
     private enum CodingKeys: String, CodingKey {

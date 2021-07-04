@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Mapper
 
 struct Tag: Equatable, Codable, TransientEntity {
     typealias PersistentType = RealmTag
