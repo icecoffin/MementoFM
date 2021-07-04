@@ -9,7 +9,11 @@
 import Foundation
 import Mapper
 
-struct RecentTracksPageResponse {
+struct RecentTracksPageResponse: Codable {
+    private enum CodingKeys: String, CodingKey {
+        case recentTracksPage = "recenttracks"
+    }
+
     let recentTracksPage: RecentTracksPage
 }
 

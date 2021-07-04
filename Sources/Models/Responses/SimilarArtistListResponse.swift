@@ -9,7 +9,11 @@
 import Foundation
 import Mapper
 
-struct SimilarArtistListResponse {
+struct SimilarArtistListResponse: Codable {
+    private enum CodingKeys: String, CodingKey {
+        case similarArtistList = "similarartists"
+    }
+
     let similarArtistList: SimilarArtistList
 }
 
@@ -19,7 +23,11 @@ extension SimilarArtistListResponse: Mappable {
     }
 }
 
-struct SimilarArtistList {
+struct SimilarArtistList: Codable {
+    private enum CodingKeys: String, CodingKey {
+        case similarArtists = "artist"
+    }
+
     let similarArtists: [SimilarArtist]
 }
 
@@ -29,7 +37,7 @@ extension SimilarArtistList: Mappable {
     }
 }
 
-struct SimilarArtist {
+struct SimilarArtist: Codable {
     let name: String
 }
 

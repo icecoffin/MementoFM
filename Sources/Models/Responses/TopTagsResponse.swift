@@ -9,8 +9,23 @@
 import Foundation
 import Mapper
 
-struct TopTagsResponse {
+struct TopTagsResponse: Codable {
+    private enum CodingKeys: String, CodingKey {
+        case topTagsList = "toptags"
+    }
+
     let topTagsList: TopTagsList
+}
+
+extension TopTagsResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        if let topTagsList = try container.decodeIfPresent(TopTagsList.self, forKey: .topTagsList) {
+            self.topTagsList = topTagsList
+        } else {
+            self.topTagsList = TopTagsList(tags: [])
+        }
+    }
 }
 
 extension TopTagsResponse: Mappable {

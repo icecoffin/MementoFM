@@ -20,10 +20,10 @@ final class LastFMNetworkService: NetworkService {
         queue.maxConcurrentOperationCount = 5
     }
 
-    func performRequest<T: Mappable>(method: HTTPMethod,
-                                     parameters: Parameters?,
-                                     encoding: ParameterEncoding,
-                                     headers: HTTPHeaders?) -> Promise<T> {
+    func performRequest<T: Codable>(method: HTTPMethod,
+                                    parameters: Parameters?,
+                                    encoding: ParameterEncoding,
+                                    headers: HTTPHeaders?) -> Promise<T> {
         return Promise { seal in
             let operation = LastFMNetworkOperation<T>(url: baseURL,
                                                       parameters: parameters,

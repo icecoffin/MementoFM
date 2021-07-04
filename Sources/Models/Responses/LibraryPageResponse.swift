@@ -9,7 +9,11 @@
 import Foundation
 import Mapper
 
-struct LibraryPageResponse {
+struct LibraryPageResponse: Codable {
+    private enum CodingKeys: String, CodingKey {
+        case libraryPage = "artists"
+    }
+
     let libraryPage: LibraryPage
 }
 

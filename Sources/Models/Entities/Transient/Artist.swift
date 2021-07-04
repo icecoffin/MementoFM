@@ -9,7 +9,13 @@
 import Foundation
 import Mapper
 
-struct Artist: TransientEntity, Equatable {
+struct Artist: TransientEntity, Equatable, Codable {
+    enum CodingKeys: String, CodingKey {
+        case name
+        case playcount
+        case urlString = "url"
+    }
+
     typealias PersistentType = RealmArtist
 
     let name: String
@@ -66,6 +72,26 @@ struct Artist: TransientEntity, Equatable {
                       tags: tags,
                       topTags: topTags,
                       country: country)
+    }
+}
+
+extension Artist {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        name = try container.decode(String.self, forKey: .name)
+        if let playcountString = try container.decodeIfPresent(String.self, forKey: .playcount) {
+            self.playcount = int(from: playcountString)
+        } else {
+            self.playcount = 0
+        }
+
+        urlString = try container.decodeIfPresent(String.self, forKey: .urlString) ?? ""
+
+        needsTagsUpdate = true
+        tags = []
+        topTags = []
+        country = nil
     }
 }
 

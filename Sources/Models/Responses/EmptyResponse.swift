@@ -9,7 +9,7 @@
 import Foundation
 import Mapper
 
-struct EmptyResponse {
+struct EmptyResponse: Codable {
 
 }
 

@@ -9,9 +9,23 @@
 import Foundation
 import Mapper
 
-struct Tag: Equatable {
+struct Tag: Equatable, Codable {
+    enum CodingKeys: String, CodingKey {
+        case name
+        case count
+    }
+
     let name: String
     let count: Int
+}
+
+extension Tag {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let name = try container.decode(String.self, forKey: .name)
+        self.name = name.lowercased()
+        count = try container.decode(Int.self, forKey: .count)
+    }
 }
 
 extension Tag: Mappable, TransientEntity {

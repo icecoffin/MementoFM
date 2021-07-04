@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 import Mapper
 
-final class LastFMNetworkOperation<T: Mappable>: AsynchronousOperation {
+final class LastFMNetworkOperation<T: Codable>: AsynchronousOperation {
     typealias CompletionHandler = (Result<T>) -> Void
 
     private let url: URLConvertible
@@ -59,9 +59,12 @@ final class LastFMNetworkOperation<T: Mappable>: AsynchronousOperation {
                 self.completionHandler(.failure(errorResponse.error))
             } else {
                 do {
-                    let object = try T.from(value)
+                    let jsonDecoder = JSONDecoder()
+                    let object = try jsonDecoder.decode(T.self, from: response.data ?? Data())
+//                    let object = try T.from(value)
                     self.completionHandler(.success(object))
                 } catch {
+                    log.debug(error)
                     self.completionHandler(.failure(error))
                 }
             }

@@ -9,7 +9,11 @@
 import Foundation
 import Mapper
 
-struct TopTagsList {
+struct TopTagsList: Codable {
+    private enum CodingKeys: String, CodingKey {
+        case tags = "tag"
+    }
+
     let tags: [Tag]
 }
 

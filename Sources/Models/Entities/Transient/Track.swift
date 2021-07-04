@@ -9,7 +9,7 @@
 import Foundation
 import Mapper
 
-struct Track: Equatable {
+struct Track: Equatable, Codable {
     let artist: Artist
 }
 

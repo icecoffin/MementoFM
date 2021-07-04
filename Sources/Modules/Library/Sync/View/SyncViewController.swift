@@ -147,7 +147,7 @@ private class SyncErrorView: UIView {
             make.top.leading.trailing.equalToSuperview()
         }
 
-        errorLabel.text = "An error occured:".unlocalized
+        errorLabel.text = "An error occurred:".unlocalized
         errorLabel.textAlignment = .center
         errorLabel.font = .primaryContent
     }

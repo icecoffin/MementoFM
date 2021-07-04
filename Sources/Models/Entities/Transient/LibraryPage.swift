@@ -9,10 +9,33 @@
 import Foundation
 import Mapper
 
-struct LibraryPage {
+struct LibraryPage: Codable {
+    enum RootCodingKeys: String, CodingKey {
+        case artists = "artist"
+        case attributes = "@attr"
+    }
+
+    enum AttributesCodingKeys: String, CodingKey {
+        case index = "page"
+        case totalPages
+    }
+
     let index: Int
     let totalPages: Int
     let artists: [Artist]
+
+    init(from decoder: Decoder) throws {
+        let rootContainer = try decoder.container(keyedBy: RootCodingKeys.self)
+
+        artists = try rootContainer.decode([Artist].self, forKey: .artists)
+
+        let attributesContainer = try rootContainer.nestedContainer(keyedBy: AttributesCodingKeys.self, forKey: .attributes)
+        let indexString = try attributesContainer.decode(String.self, forKey: .index)
+        index = int(from: indexString)
+
+        let totalPagesString = try attributesContainer.decode(String.self, forKey: .totalPages)
+        totalPages = int(from: totalPagesString)
+    }
 }
 
 extension LibraryPage: Mappable {
