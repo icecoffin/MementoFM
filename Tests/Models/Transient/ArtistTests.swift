@@ -92,11 +92,11 @@ class ArtistTests: XCTestCase {
     }
 
     private func makeSampleArtist() -> Artist? {
-        guard let json = Utils.json(forResource: "sample_artist", withExtension: "json") as? NSDictionary else {
+        guard let data = Utils.data(fromResource: "sample_artist", withExtension: "json") else {
             return nil
         }
 
-        let mapper = Mapper(JSON: json)
-        return try? Artist(map: mapper)
+        let jsonDecoder = JSONDecoder()
+        return try? jsonDecoder.decode(Artist.self, from: data)
     }
 }

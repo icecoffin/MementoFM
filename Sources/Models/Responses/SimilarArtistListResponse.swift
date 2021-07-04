@@ -17,12 +17,6 @@ struct SimilarArtistListResponse: Codable {
     let similarArtistList: SimilarArtistList
 }
 
-extension SimilarArtistListResponse: Mappable {
-    init(map: Mapper) throws {
-        similarArtistList = try map.from("similarartists")
-    }
-}
-
 struct SimilarArtistList: Codable {
     private enum CodingKeys: String, CodingKey {
         case similarArtists = "artist"
@@ -31,18 +25,6 @@ struct SimilarArtistList: Codable {
     let similarArtists: [SimilarArtist]
 }
 
-extension SimilarArtistList: Mappable {
-    init(map: Mapper) throws {
-        similarArtists = try map.from("artist")
-    }
-}
-
 struct SimilarArtist: Codable {
     let name: String
-}
-
-extension SimilarArtist: Mappable {
-    init(map: Mapper) throws {
-        name = try map.from("name")
-    }
 }

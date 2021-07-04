@@ -16,9 +16,3 @@ struct RecentTracksPageResponse: Codable {
 
     let recentTracksPage: RecentTracksPage
 }
-
-extension RecentTracksPageResponse: Mappable {
-    init(map: Mapper) throws {
-        recentTracksPage = try map.from("recenttracks")
-    }
-}

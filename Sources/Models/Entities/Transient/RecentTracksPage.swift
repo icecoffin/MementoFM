@@ -23,7 +23,9 @@ struct RecentTracksPage: Codable {
     let index: Int
     let totalPages: Int
     let tracks: [Track]
+}
 
+extension RecentTracksPage {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: RootCodingKeys.self)
         tracks = try container.decode([Track].self, forKey: .tracks)
@@ -34,13 +36,5 @@ struct RecentTracksPage: Codable {
 
         let totalPagesString = try attributesContainer.decode(String.self, forKey: .totalPages)
         totalPages = int(from: totalPagesString)
-    }
-}
-
-extension RecentTracksPage: Mappable {
-    init(map: Mapper) throws {
-        try index = map.from("@attr.page") { int(from: $0) }
-        try totalPages = map.from("@attr.totalPages") { int(from: $0) }
-        try tracks = map.from("track")
     }
 }

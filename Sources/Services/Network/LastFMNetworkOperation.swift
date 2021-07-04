@@ -46,22 +46,21 @@ final class LastFMNetworkOperation<T: Codable>: AsynchronousOperation {
                      parameters: parameters,
                      encoding: encoding,
                      headers: headers)
-            .responseJSON { response in
+            .responseData { response in
                 self.handleResponse(response)
             }
     }
 
-    private func handleResponse(_ response: DataResponse<Any>) {
+    private func handleResponse(_ response: DataResponse<Data>) {
+        let jsonDecoder = JSONDecoder()
         let result = response.result
         switch result {
         case .success(let value):
-            if let errorResponse = try? LastFMErrorResponse.from(value) {
+            if let errorResponse = try? jsonDecoder.decode(LastFMError.self, from: value) {
                 self.completionHandler(.failure(errorResponse.error))
             } else {
                 do {
-                    let jsonDecoder = JSONDecoder()
-                    let object = try jsonDecoder.decode(T.self, from: response.data ?? Data())
-//                    let object = try T.from(value)
+                    let object = try jsonDecoder.decode(T.self, from: value)
                     self.completionHandler(.success(object))
                 } catch {
                     log.debug(error)

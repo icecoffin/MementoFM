@@ -9,7 +9,9 @@
 import Foundation
 import Mapper
 
-struct Tag: Equatable, Codable {
+struct Tag: Equatable, Codable, TransientEntity {
+    typealias PersistentType = RealmTag
+
     enum CodingKeys: String, CodingKey {
         case name
         case count
@@ -25,15 +27,5 @@ extension Tag {
         let name = try container.decode(String.self, forKey: .name)
         self.name = name.lowercased()
         count = try container.decode(Int.self, forKey: .count)
-    }
-}
-
-extension Tag: Mappable, TransientEntity {
-    typealias PersistentType = RealmTag
-
-    init(map: Mapper) throws {
-        let name: String = try map.from("name")
-        self.name = name.lowercased()
-        try count = map.from("count")
     }
 }

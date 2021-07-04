@@ -16,9 +16,3 @@ struct LibraryPageResponse: Codable {
 
     let libraryPage: LibraryPage
 }
-
-extension LibraryPageResponse: Mappable {
-    init(map: Mapper) throws {
-        libraryPage = try map.from("artists")
-    }
-}

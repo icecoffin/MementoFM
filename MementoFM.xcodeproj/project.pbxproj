@@ -91,7 +91,6 @@
 		651F9E191EC09FDC006D9474 /* NavigationFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D9B1EC09FDC006D9474 /* NavigationFlowCoordinator.swift */; };
 		651F9E1A1EC09FDC006D9474 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D9C1EC09FDC006D9474 /* OnboardingCoordinator.swift */; };
 		651F9E1B1EC09FDC006D9474 /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D9D1EC09FDC006D9474 /* SettingsCoordinator.swift */; };
-		651F9E1C1EC09FDC006D9474 /* Mappable+FromAny.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D9F1EC09FDC006D9474 /* Mappable+FromAny.swift */; };
 		651F9E1E1EC09FDC006D9474 /* String+Unlocalized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DA11EC09FDC006D9474 /* String+Unlocalized.swift */; };
 		651F9E1F1EC09FDC006D9474 /* UITableView+HeaderVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DA21EC09FDC006D9474 /* UITableView+HeaderVIew.swift */; };
 		651F9E201EC09FDC006D9474 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DA31EC09FDC006D9474 /* UIViewController+Alert.swift */; };
@@ -318,7 +317,6 @@
 		651F9D9B1EC09FDC006D9474 /* NavigationFlowCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationFlowCoordinator.swift; sourceTree = "<group>"; };
 		651F9D9C1EC09FDC006D9474 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
 		651F9D9D1EC09FDC006D9474 /* SettingsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
-		651F9D9F1EC09FDC006D9474 /* Mappable+FromAny.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Mappable+FromAny.swift"; sourceTree = "<group>"; };
 		651F9DA11EC09FDC006D9474 /* String+Unlocalized.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Unlocalized.swift"; sourceTree = "<group>"; };
 		651F9DA21EC09FDC006D9474 /* UITableView+HeaderVIew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+HeaderVIew.swift"; sourceTree = "<group>"; };
 		651F9DA31EC09FDC006D9474 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
@@ -803,7 +801,6 @@
 		651F9D9E1EC09FDC006D9474 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				651F9D9F1EC09FDC006D9474 /* Mappable+FromAny.swift */,
 				6516A53C1ECDFD830021E43C /* NSAttributedString+Join.swift */,
 				65895CEE203957DA00003FCB /* Promise+NoError.swift */,
 				651F9DA11EC09FDC006D9474 /* String+Unlocalized.swift */,
@@ -1622,7 +1619,6 @@
 			files = (
 				6513540C1EDD875E0061B879 /* LibraryViewModelFactory.swift in Sources */,
 				65206EC31EC4C07700A83DA1 /* ArtistSectionDataSource.swift in Sources */,
-				651F9E1C1EC09FDC006D9474 /* Mappable+FromAny.swift in Sources */,
 				651F9E581EC09FDD006D9474 /* AppearanceConfigurator.swift in Sources */,
 				65C05C0E2692046D00517784 /* UITableView+Reusable.swift in Sources */,
 				6518F02B1ECB01B800681D5E /* TagsViewModel.swift in Sources */,

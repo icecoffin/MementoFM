@@ -20,11 +20,11 @@ class TagTests: XCTestCase {
     }
 
     private func makeSampleTag() -> Tag? {
-        guard let json = Utils.json(forResource: "sample_tag", withExtension: "json") as? NSDictionary else {
+        guard let data = Utils.data(fromResource: "sample_tag", withExtension: "json") else {
             return nil
         }
 
-        let mapper = Mapper(JSON: json)
-        return try? Tag(map: mapper)
+        let jsonDecoder = JSONDecoder()
+        return try? jsonDecoder.decode(Tag.self, from: data)
     }
 }

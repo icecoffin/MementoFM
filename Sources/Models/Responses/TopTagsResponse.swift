@@ -27,9 +27,3 @@ extension TopTagsResponse {
         }
     }
 }
-
-extension TopTagsResponse: Mappable {
-    init(map: Mapper) throws {
-        topTagsList = map.optionalFrom("toptags") ?? TopTagsList(tags: [])
-    }
-}

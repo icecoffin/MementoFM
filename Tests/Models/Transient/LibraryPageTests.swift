@@ -21,11 +21,11 @@ class LibraryPageTests: XCTestCase {
     }
 
     private func makeSampleLibraryPage() -> LibraryPage? {
-        guard let json = Utils.json(forResource: "sample_library_page", withExtension: "json") as? NSDictionary else {
+        guard let data = Utils.data(fromResource: "sample_library_page", withExtension: "json") else {
             return nil
         }
 
-        let mapper = Mapper(JSON: json)
-        return try? LibraryPage(map: mapper)
+        let jsonDecoder = JSONDecoder()
+        return try? jsonDecoder.decode(LibraryPage.self, from: data)
     }
 }

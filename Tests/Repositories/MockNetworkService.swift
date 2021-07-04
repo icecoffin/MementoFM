@@ -24,7 +24,7 @@ class MockNetworkService: NetworkService {
     func performRequest<T>(method: HTTPMethod,
                            parameters: Parameters?,
                            encoding: ParameterEncoding,
-                           headers: HTTPHeaders?) -> Promise<T> where T: Mappable {
+                           headers: HTTPHeaders?) -> Promise<T> where T: Codable {
         performRequestParameters = PerformRequestParameters(method: method,
                                                             parameters: parameters,
                                                             encoding: encoding,

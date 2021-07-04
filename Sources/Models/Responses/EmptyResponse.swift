@@ -9,12 +9,4 @@
 import Foundation
 import Mapper
 
-struct EmptyResponse: Codable {
-
-}
-
-extension EmptyResponse: Mappable {
-    init(map: Mapper) throws {
-
-    }
-}
+struct EmptyResponse: Codable { }

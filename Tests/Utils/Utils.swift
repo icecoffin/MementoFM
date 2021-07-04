@@ -9,13 +9,12 @@
 import Foundation
 
 class Utils {
-    static func json(forResource resource: String, withExtension ext: String) -> Any? {
+    static func data(fromResource resource: String, withExtension ext: String) -> Data? {
         guard let url = Bundle(for: self).url(forResource: resource, withExtension: ext),
-            let data = try? Data(contentsOf: url),
-            let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []) else {
-                return nil
+              let data = try? Data(contentsOf: url) else {
+            return nil
         }
 
-        return jsonObject
+        return data
     }
 }

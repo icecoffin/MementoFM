@@ -19,11 +19,11 @@ class TopTagsListTests: XCTestCase {
     }
 
     private func makeSampleTopTagsList(fileName: String) -> TopTagsList? {
-        guard let json = Utils.json(forResource: fileName, withExtension: "json") as? NSDictionary else {
+        guard let data = Utils.data(fromResource: fileName, withExtension: "json") else {
             return nil
         }
 
-        let mapper = Mapper(JSON: json)
-        return try? TopTagsList(map: mapper)
+        let jsonDecoder = JSONDecoder()
+        return try? jsonDecoder.decode(TopTagsList.self, from: data)
     }
 }

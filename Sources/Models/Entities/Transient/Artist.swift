@@ -10,13 +10,13 @@ import Foundation
 import Mapper
 
 struct Artist: TransientEntity, Equatable, Codable {
+    typealias PersistentType = RealmArtist
+
     enum CodingKeys: String, CodingKey {
         case name
         case playcount
         case urlString = "url"
     }
-
-    typealias PersistentType = RealmArtist
 
     let name: String
     let playcount: Int
@@ -100,17 +100,5 @@ extension Artist: Hashable {
         hasher.combine(name)
         hasher.combine(playcount)
         hasher.combine(urlString)
-    }
-}
-
-extension Artist: Mappable {
-    init(map: Mapper) throws {
-        try name = map.from("name")
-        playcount = map.optionalFrom("playcount", transformation: { int(from: $0) }) ?? 0
-        urlString = map.optionalFrom("url") ?? ""
-        needsTagsUpdate = true
-        tags = []
-        topTags = []
-        country = nil
     }
 }

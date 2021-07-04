@@ -21,11 +21,11 @@ class RecentTracksPageTests: XCTestCase {
     }
 
     private func makeSampleRecentTracksPage() -> RecentTracksPage? {
-        guard let json = Utils.json(forResource: "sample_recent_tracks_page", withExtension: "json") as? NSDictionary else {
+        guard let data = Utils.data(fromResource: "sample_recent_tracks_page", withExtension: "json") else {
             return nil
         }
 
-        let mapper = Mapper(JSON: json)
-        return try? RecentTracksPage(map: mapper)
+        let jsonDecoder = JSONDecoder()
+        return try? jsonDecoder.decode(RecentTracksPage.self, from: data)
     }
 }

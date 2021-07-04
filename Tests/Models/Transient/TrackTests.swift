@@ -19,11 +19,11 @@ class TrackTests: XCTestCase {
     }
 
     private func makeSampleTrack() -> Track? {
-        guard let json = Utils.json(forResource: "sample_track", withExtension: "json") as? NSDictionary else {
+        guard let data = Utils.data(fromResource: "sample_track", withExtension: "json") else {
             return nil
         }
 
-        let mapper = Mapper(JSON: json)
-        return try? Track(map: mapper)
+        let jsonDecoder = JSONDecoder()
+        return try? jsonDecoder.decode(Track.self, from: data)
     }
 }

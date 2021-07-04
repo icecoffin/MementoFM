@@ -23,7 +23,9 @@ struct LibraryPage: Codable {
     let index: Int
     let totalPages: Int
     let artists: [Artist]
+}
 
+extension LibraryPage {
     init(from decoder: Decoder) throws {
         let rootContainer = try decoder.container(keyedBy: RootCodingKeys.self)
 
@@ -35,13 +37,5 @@ struct LibraryPage: Codable {
 
         let totalPagesString = try attributesContainer.decode(String.self, forKey: .totalPages)
         totalPages = int(from: totalPagesString)
-    }
-}
-
-extension LibraryPage: Mappable {
-    init(map: Mapper) throws {
-        try index = map.from("@attr.page") { int(from: $0) }
-        try totalPages = map.from("@attr.totalPages") { int(from: $0) }
-        try artists = map.from("artist")
     }
 }

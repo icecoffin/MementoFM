@@ -12,9 +12,3 @@ import Mapper
 struct Track: Equatable, Codable {
     let artist: Artist
 }
-
-extension Track: Mappable {
-    init(map: Mapper) throws {
-        try artist = map.from("artist")
-    }
-}

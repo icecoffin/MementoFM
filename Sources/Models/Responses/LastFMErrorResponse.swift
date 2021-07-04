@@ -9,17 +9,16 @@
 import Foundation
 import Mapper
 
-struct LastFMError: Error {
+struct LastFMError: Error, Codable {
+    enum CodingKeys: String, CodingKey {
+        case errorCode = "error"
+        case message
+    }
+
     let errorCode: Int
     let message: String
-}
 
-struct LastFMErrorResponse: Mappable {
-    let error: LastFMError
-
-    init(map: Mapper) throws {
-        let errorCode: Int = try map.from("error")
-        let message: String = try map.from("message")
-        self.error = LastFMError(errorCode: errorCode, message: message)
+    var error: LastFMError {
+        return LastFMError(errorCode: errorCode, message: message)
     }
 }

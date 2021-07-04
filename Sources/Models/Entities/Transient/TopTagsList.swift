@@ -16,9 +16,3 @@ struct TopTagsList: Codable {
 
     let tags: [Tag]
 }
-
-extension TopTagsList: Mappable {
-    init(map: Mapper) throws {
-        tags = try map.from("tag")
-    }
-}
