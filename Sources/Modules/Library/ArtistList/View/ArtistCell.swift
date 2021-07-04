@@ -8,7 +8,6 @@
 
 import UIKit
 import SnapKit
-import Kingfisher
 
 final class ArtistCell: UITableViewCell {
     // MARK: - Properties

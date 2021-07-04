@@ -1,6 +1,5 @@
 PODS:
   - Alamofire (4.9.1)
-  - Kingfisher (6.3.0)
   - ModelMapper (10.0.1):
     - ModelMapper/Core (= 10.0.1)
   - ModelMapper/Core (10.0.1)
@@ -21,7 +20,6 @@ PODS:
   - UICollectionViewLeftAlignedLayout (1.0.2)
 
 DEPENDENCIES:
-  - Kingfisher
   - ModelMapper
   - Nimble
   - PromiseKit/Alamofire
@@ -35,7 +33,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
-    - Kingfisher
     - ModelMapper
     - Nimble
     - PromiseKit
@@ -49,7 +46,6 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
-  Kingfisher: 6c3df386db71d82c0817a429d2c9421a77396529
   ModelMapper: 0f68dd4300d0e27290c70f66492c7f795da21bcf
   Nimble: 4f4a345c80b503b3ea13606a4f98405974ee4d0b
   PromiseKit: 3b2b6995e51a954c46dbc550ce3da44fbfb563c5
@@ -61,6 +57,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: d55b3ea7b362540af8fcf36aa3ed2e87bf210cc6
   UICollectionViewLeftAlignedLayout: 830bf6fa5bab9f9b464f62e3384f9d2e00b3c0f6
 
-PODFILE CHECKSUM: de06f160beb50bddb74179f75c53514c018ccc25
+PODFILE CHECKSUM: 99f481148835d022a6ca20c8488a94e339da28be
 
 COCOAPODS: 1.10.1

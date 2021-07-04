@@ -1515,7 +1515,6 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MementoFM/Pods-MementoFM-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/ModelMapper/Mapper.framework",
 				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
@@ -1528,7 +1527,6 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
@@ -1991,8 +1989,6 @@
 					"-framework",
 					"\"Foundation\"",
 					"-framework",
-					"\"Kingfisher\"",
-					"-framework",
 					"\"Mapper\"",
 					"-framework",
 					"\"PromiseKit\"",
@@ -2044,8 +2040,6 @@
 					"\"CFNetwork\"",
 					"-framework",
 					"\"Foundation\"",
-					"-framework",
-					"\"Kingfisher\"",
 					"-framework",
 					"\"Mapper\"",
 					"-framework",

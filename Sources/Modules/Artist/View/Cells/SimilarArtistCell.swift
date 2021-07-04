@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 final class SimilarArtistCell: UITableViewCell {
     // MARK: - Properties
