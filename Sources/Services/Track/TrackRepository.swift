@@ -9,7 +9,7 @@
 import Foundation
 import PromiseKit
 
-protocol TrackRepository: class {
+protocol TrackRepository: AnyObject {
     func getRecentTracksPage(withIndex index: Int,
                              for user: String,
                              from: TimeInterval,

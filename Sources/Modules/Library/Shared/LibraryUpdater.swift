@@ -17,7 +17,7 @@ enum LibraryUpdateStatus {
     case tags(artistName: String, progress: Progress)
 }
 
-protocol LibraryUpdaterProtocol: class {
+protocol LibraryUpdaterProtocol: AnyObject {
     var didStartLoading: (() -> Void)? { get set }
     var didFinishLoading: (() -> Void)? { get set }
     var didChangeStatus: ((LibraryUpdateStatus) -> Void)? { get set }

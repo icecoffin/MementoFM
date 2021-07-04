@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol SettingsCoordinatorDelegate: class {
+protocol SettingsCoordinatorDelegate: AnyObject {
     func settingsCoordinatorDidChangeUsername(_ coordinator: SettingsCoordinator)
 }
 

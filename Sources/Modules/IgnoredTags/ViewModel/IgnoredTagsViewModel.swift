@@ -9,7 +9,7 @@
 import Foundation
 import PromiseKit
 
-protocol IgnoredTagsViewModelDelegate: class {
+protocol IgnoredTagsViewModelDelegate: AnyObject {
     func ignoredTagsViewModelDidSaveChanges(_ viewModel: IgnoredTagsViewModel)
 }
 

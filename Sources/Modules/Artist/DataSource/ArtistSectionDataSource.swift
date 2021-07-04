@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ArtistSectionDataSource: class {
+protocol ArtistSectionDataSource: AnyObject {
     var didUpdateData: (() -> Void)? { get set }
 
     var numberOfRows: Int { get }

@@ -9,7 +9,7 @@
 import Foundation
 import PromiseKit
 
-protocol TrackServiceProtocol: class {
+protocol TrackServiceProtocol: AnyObject {
     func getRecentTracks(for user: String, from: TimeInterval, limit: Int, progress: ((Progress) -> Void)?) -> Promise<[Track]>
     func processTracks(_ tracks: [Track], using processor: RecentTracksProcessing) -> Promise<Void>
 }

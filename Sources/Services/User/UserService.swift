@@ -9,7 +9,7 @@
 import Foundation
 import PromiseKit
 
-protocol UserServiceProtocol: class {
+protocol UserServiceProtocol: AnyObject {
     var username: String { get set }
     var lastUpdateTimestamp: TimeInterval { get set }
     var didReceiveInitialCollection: Bool { get set }

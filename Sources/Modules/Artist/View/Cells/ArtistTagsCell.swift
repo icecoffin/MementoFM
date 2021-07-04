@@ -9,12 +9,12 @@
 import UIKit
 import UICollectionViewLeftAlignedLayout
 
-protocol ArtistTagsCellDataSource: class {
+protocol ArtistTagsCellDataSource: AnyObject {
     func numberOfTopTags(in cell: ArtistTagsCell) -> Int
     func tagCellViewModel(at indexPath: IndexPath, in cell: ArtistTagsCell) -> TagCellViewModel
 }
 
-protocol ArtistTagsCellDelegate: class {
+protocol ArtistTagsCellDelegate: AnyObject {
     func artistTagsCell(_ cell: ArtistTagsCell, didSelectTagAt indexPath: IndexPath)
 }
 

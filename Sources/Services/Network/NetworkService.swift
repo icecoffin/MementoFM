@@ -11,7 +11,7 @@ import Alamofire
 import PromiseKit
 import Mapper
 
-protocol NetworkService: class {
+protocol NetworkService: AnyObject {
     func performRequest<T: Mappable>(method: HTTPMethod,
                                      parameters: Parameters?,
                                      encoding: ParameterEncoding,

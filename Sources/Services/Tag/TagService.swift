@@ -9,7 +9,7 @@
 import Foundation
 import PromiseKit
 
-protocol TagServiceProtocol: class {
+protocol TagServiceProtocol: AnyObject {
     func getTopTags(for artists: [Artist], progress: ((TopTagsRequestProgress) -> Void)?) -> Promise<Void>
     func getAllTopTags() -> [Tag]
 }

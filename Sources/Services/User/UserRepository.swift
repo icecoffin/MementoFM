@@ -9,7 +9,7 @@
 import Foundation
 import PromiseKit
 
-protocol UserRepository: class {
+protocol UserRepository: AnyObject {
     func checkUserExists(withUsername username: String) -> Promise<EmptyResponse>
 }
 

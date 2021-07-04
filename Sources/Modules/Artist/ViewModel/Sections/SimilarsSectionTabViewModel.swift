@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol SimilarsSectionTabViewModelDelegate: class {
+protocol SimilarsSectionTabViewModelDelegate: AnyObject {
     func similarsSectionTabViewModel(_ viewModel: SimilarsSectionTabViewModel,
                                      didSelectArtist artist: Artist)
 }

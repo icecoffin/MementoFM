@@ -9,7 +9,7 @@
 import Foundation
 import PromiseKit
 
-protocol TagRepository: class {
+protocol TagRepository: AnyObject {
     func getTopTags(for artist: String) -> Promise<TopTagsResponse>
 }
 

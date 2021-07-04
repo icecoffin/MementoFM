@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol SettingsViewModelDelegate: class {
+protocol SettingsViewModelDelegate: AnyObject {
     func settingsViewModelDidRequestOpenIgnoredTags(_ viewModel: SettingsViewModel)
     func settingsViewModelDidRequestChangeUser(_ viewModel: SettingsViewModel)
     func settingsViewModelDidRequestOpenAbout(_ viewModel: SettingsViewModel)

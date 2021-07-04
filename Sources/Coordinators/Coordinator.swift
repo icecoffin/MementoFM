@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol Coordinator: class {
+protocol Coordinator: AnyObject {
     var childCoordinators: [Coordinator] { get set }
     var didFinish: (() -> Void)? { get set }
 

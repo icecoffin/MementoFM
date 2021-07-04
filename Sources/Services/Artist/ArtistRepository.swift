@@ -6,7 +6,7 @@
 import Foundation
 import PromiseKit
 
-protocol ArtistRepository: class {
+protocol ArtistRepository: AnyObject {
     func getLibraryPage(withIndex index: Int, for user: String, limit: Int) -> Promise<LibraryPageResponse>
     func getSimilarArtists(for artist: Artist, limit: Int) -> Promise<SimilarArtistListResponse>
 }

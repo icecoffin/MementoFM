@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ApplicationStateObserving: class {
+protocol ApplicationStateObserving: AnyObject {
     var onApplicationDidBecomeActive: (() -> Void)? { get set }
 }
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol CountriesViewModelDelegate: class {
+protocol CountriesViewModelDelegate: AnyObject {
     func countriesViewModel(_ viewModel: CountriesViewModel, didSelectCountry country: CountryType)
 }
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol SyncViewModelDelegate: class {
+protocol SyncViewModelDelegate: AnyObject {
     func syncViewModelDidFinishLoading(_ viewModel: SyncViewModel)
 }
 

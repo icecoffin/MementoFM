@@ -9,7 +9,7 @@
 import Foundation
 import PromiseKit
 
-protocol IgnoredTagServiceProtocol: class {
+protocol IgnoredTagServiceProtocol: AnyObject {
     var defaultIgnoredTagNames: [String] { get }
 
     func ignoredTags() -> [IgnoredTag]

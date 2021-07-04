@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ArtistTopTagsCalculating: class {
+protocol ArtistTopTagsCalculating: AnyObject {
     func calculateTopTags(for artist: Artist) -> Artist
 }
 

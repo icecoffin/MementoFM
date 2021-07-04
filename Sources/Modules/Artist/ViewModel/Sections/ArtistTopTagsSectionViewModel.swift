@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ArtistTopTagsSectionViewModelDelegate: class {
+protocol ArtistTopTagsSectionViewModelDelegate: AnyObject {
     func artistTopTagsSectionViewModel(_ viewModel: ArtistTopTagsSectionViewModel, didSelectTagWithName name: String)
 }
 

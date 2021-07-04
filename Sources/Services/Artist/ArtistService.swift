@@ -15,7 +15,7 @@ struct TopTagsRequestProgress {
     let topTagsList: TopTagsList
 }
 
-protocol ArtistServiceProtocol: class {
+protocol ArtistServiceProtocol: AnyObject {
     func getLibrary(for user: String, limit: Int, progress: ((Progress) -> Void)?) -> Promise<[Artist]>
     func saveArtists(_ artists: [Artist]) -> Promise<Void>
     func artistsNeedingTagsUpdate() -> [Artist]

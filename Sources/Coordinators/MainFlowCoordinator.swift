@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol MainFlowCoordinatorDelegate: class {
+protocol MainFlowCoordinatorDelegate: AnyObject {
     func mainFlowCoordinatorDidChangeUsername(_ coordinator: MainFlowCoordinator)
 }
 

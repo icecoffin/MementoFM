@@ -9,7 +9,7 @@
 import Foundation
 import PromiseKit
 
-protocol TagsViewModelDelegate: class {
+protocol TagsViewModelDelegate: AnyObject {
     func tagsViewModel(_ viewModel: TagsViewModel, didSelectTagWithName name: String)
 }
 

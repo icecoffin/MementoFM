@@ -8,11 +8,11 @@
 
 import Foundation
 
-protocol ArtistListViewModelDelegate: class {
+protocol ArtistListViewModelDelegate: AnyObject {
     func artistListViewModel(_ viewModel: ArtistListViewModel, didSelectArtist artist: Artist)
 }
 
-protocol ArtistListViewModel: class {
+protocol ArtistListViewModel: AnyObject {
     var delegate: ArtistListViewModelDelegate? { get set }
 
     var didStartLoading: (() -> Void)? { get set }

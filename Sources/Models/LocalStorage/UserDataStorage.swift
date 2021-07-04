@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol UserDataStoring: class {
+protocol UserDataStoring: AnyObject {
     var username: String { get set }
     var lastUpdateTimestamp: TimeInterval { get set }
     var didFinishOnboarding: Bool { get set }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ArtistSimilarsSectionHeaderViewDelegate: class {
+protocol ArtistSimilarsSectionHeaderViewDelegate: AnyObject {
     func artistSimilarsSectionHeaderView(_ headerView: ArtistSimilarsSectionHeaderView,
                                          didSelectSegmentWithIndex index: Int)
 }

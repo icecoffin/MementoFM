@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol ArtistViewModelDelegate: class {
+protocol ArtistViewModelDelegate: AnyObject {
     func artistViewModel(_ viewModel: ArtistViewModel, didSelectTagWithName name: String)
     func artistViewModel(_ viewModel: ArtistViewModel, didSelectArtist artist: Artist)
 }
 
-protocol ArtistViewModelProtocol: class {
+protocol ArtistViewModelProtocol: AnyObject {
     var didUpdateData: (() -> Void)? { get set }
     var didReceiveError: ((Error) -> Void)? { get set }
 

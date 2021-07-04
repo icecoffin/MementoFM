@@ -13,7 +13,7 @@ enum EnterUsernameViewModelAction {
     case submit, cancel
 }
 
-protocol EnterUsernameViewModelDelegate: class {
+protocol EnterUsernameViewModelDelegate: AnyObject {
     func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel)
 }
 

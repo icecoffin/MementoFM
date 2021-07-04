@@ -9,7 +9,7 @@
 import Foundation
 import PromiseKit
 
-protocol ArtistSimilarsSectionViewModelProtocol: class {
+protocol ArtistSimilarsSectionViewModelProtocol: AnyObject {
     var didUpdateData: (() -> Void)? { get set }
     var didReceiveError: ((Error) -> Void)? { get set }
 
@@ -24,7 +24,7 @@ protocol ArtistSimilarsSectionViewModelProtocol: class {
     func selectArtist(at indexPath: IndexPath)
 }
 
-protocol ArtistSimilarsSectionViewModelDelegate: class {
+protocol ArtistSimilarsSectionViewModelDelegate: AnyObject {
     func artistSimilarsSectionViewModel(_ viewModel: ArtistSimilarsSectionViewModel,
                                         didSelectArtist artist: Artist)
 }

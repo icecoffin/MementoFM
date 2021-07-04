@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol NavigationControllerPopObserver: class {
+protocol NavigationControllerPopObserver: AnyObject {
     func navigationControllerPopTracker(_ tracker: NavigationControllerPopTracker,
                                         didPopViewController viewController: UIViewController)
 }
