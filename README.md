@@ -21,4 +21,12 @@ You'll need a Last.fm API key in order to run this app. Here's how you obtain it
 1. Create a regular user account on [Last.fm](https://www.last.fm/).
 2. Create an API account on [http://www.last.fm/api/account/create](http://www.last.fm/api/account/create). 
 3. Find the `Keys.example.swift` file in `Sources/Application/` and rename it to `Keys.swift`. Use the API key from the previous step to replace the `YOUR_API_KEY` placeholder.
-4. Build and run the app.
+
+The app is using [Git LFS](https://git-lfs.github.com/). Install `git-lfs` and pull the dependencies after cloning the repo:
+```
+$ brew install git-lfs
+$ git lfs install
+$ git lfs pull
+```
+
+Then build and run the app.
