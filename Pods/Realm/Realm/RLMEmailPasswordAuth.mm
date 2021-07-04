@@ -17,11 +17,12 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #import "RLMEmailPasswordAuth.h"
+
+#import "RLMApp_Private.hpp"
+#import "RLMBSON_Private.hpp"
 #import "RLMProviderClient_Private.hpp"
 
-#import "RLMBSON_Private.hpp"
-#import "RLMApp_Private.hpp"
-#import "sync/app.hpp"
+#import <realm/object-store/sync/app.hpp>
 
 @implementation RLMEmailPasswordAuth
 
@@ -41,6 +42,13 @@
             tokenId:(NSString *)tokenId
          completion:(RLMEmailPasswordAuthOptionalErrorBlock)completion {
     self.client.confirm_user(token.UTF8String, tokenId.UTF8String, ^(realm::util::Optional<realm::app::AppError> error) {
+        [self handleResponse:error completion:completion];
+    });
+}
+
+- (void)retryCustomConfirmation:(NSString *)email
+                     completion:(RLMEmailPasswordAuthOptionalErrorBlock)completion {
+    self.client.retry_custom_confirmation(email.UTF8String, ^(realm::util::Optional<realm::app::AppError> error) {
         [self handleResponse:error completion:completion];
     });
 }

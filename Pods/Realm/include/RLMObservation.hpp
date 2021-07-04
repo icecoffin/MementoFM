@@ -18,9 +18,8 @@
 
 #import <Foundation/Foundation.h>
 
-#import "binding_context.hpp"
-
 #import <realm/obj.hpp>
+#import <realm/object-store/binding_context.hpp>
 #import <realm/table.hpp>
 
 @class RLMObjectBase, RLMRealm, RLMSchema, RLMProperty, RLMObjectSchema;
@@ -33,7 +32,7 @@ namespace realm {
 }
 
 // RLMObservationInfo stores all of the KVO-related data for RLMObjectBase and
-// RLMArray. There is a one-to-one relationship between observed objects and
+// RLMSet/Array. There is a one-to-one relationship between observed objects and
 // RLMObservationInfo instances, so it could be folded into RLMObjectBase, and
 // is a separate class mostly to avoid making all accessor objects far larger.
 //
@@ -51,7 +50,7 @@ public:
     RLMObservationInfo(RLMClassInfo &objectSchema, realm::ObjKey row, id object);
     ~RLMObservationInfo();
 
-    realm::ConstObj const& getRow() const {
+    realm::Obj const& getRow() const {
         return row;
     }
 
@@ -85,14 +84,13 @@ public:
     id valueForKey(NSString *key);
 
     void prepareForInvalidation();
-
 private:
     // Doubly-linked-list of observed objects for the same row as this
     RLMObservationInfo *next = nullptr;
     RLMObservationInfo *prev = nullptr;
 
     // Row being observed
-    realm::ConstObj row;
+    realm::Obj row;
     RLMClassInfo *objectSchema = nullptr;
 
     // Object doing the observing

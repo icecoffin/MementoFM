@@ -429,6 +429,11 @@ import Realm.Private
         if update != .error && object.objectSchema.primaryKeyProperty == nil {
             throwRealmException("'\(object.objectSchema.className)' does not have a primary key and can not be updated")
         }
+        // remove any observers still attached to the Realm.
+        // if not using SwiftUI, this is a noop
+        if #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *) {
+            SwiftUIKVO.removeObservers(object: object)
+        }
         RLMAddObjectToRealm(object, rlmRealm, RLMUpdatePolicy(rawValue: UInt(update.rawValue))!)
     }
 
@@ -603,7 +608,20 @@ import Realm.Private
      :nodoc:
      */
     public func delete<Element: ObjectBase>(_ objects: List<Element>) {
-        rlmRealm.deleteObjects(objects._rlmArray)
+        rlmRealm.deleteObjects(objects._rlmCollection)
+    }
+
+    /**
+     Deletes zero or more objects from the Realm.
+
+     - warning: This method may only be called during a write transaction.
+
+     - parameter objects: A map of objects to delete.
+
+     :nodoc:
+     */
+    public func delete<Key: _MapKey, Value: ObjectBase>(_ map: Map<Key, Value?>) {
+        rlmRealm.deleteObjects(map._rlmCollection)
     }
 
     /**
@@ -808,6 +826,16 @@ import Realm.Private
     }
 
     /**
+     Returns a live (mutable) reference of this Realm.
+
+     All objects and collections read from the returned Realm reference will no longer be frozen.
+     Will return self if called on a Realm that is not already frozen.
+     */
+    public func thaw() -> Realm {
+        return isFrozen ? Realm(rlmRealm.thaw()) : self
+    }
+
+    /**
      Returns a frozen (immutable) snapshot of the given object.
 
      The frozen copy is an immutable object which contains the same data as the given object
@@ -820,6 +848,16 @@ import Realm.Private
      */
     public func freeze<T: ObjectBase>(_ obj: T) -> T {
         return RLMObjectFreeze(obj) as! T
+    }
+
+    /**
+     Returns a live (mutable) reference of this object.
+
+     This method creates a managed accessor to a live copy of the same frozen object.
+     Will return self if called on an already live object.
+     */
+    public func thaw<T: ObjectBase>(_ obj: T) -> T? {
+        return RLMObjectThaw(obj) as? T
     }
 
     /**
@@ -856,8 +894,7 @@ import Realm.Private
      and a new read transaction is implicitly begun the next time data is read from the Realm.
 
      Calling this method multiple times in a row without reading any data from the
-     Realm, or before ever reading any data from the Realm, is a no-op. This method
-     may not be called on a read-only Realm.
+     Realm, or before ever reading any data from the Realm, is a no-op.
      */
     public func invalidate() {
         rlmRealm.invalidate()
