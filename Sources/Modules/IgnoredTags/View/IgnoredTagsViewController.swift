@@ -52,7 +52,7 @@ final class IgnoredTagsViewController: UIViewController {
 
         tableView.backgroundView = emptyDataSetView
 
-        tableView.register(IgnoredTagCell.self, forCellReuseIdentifier: IgnoredTagCell.reuseIdentifier)
+        tableView.register(IgnoredTagCell.self)
 
         tableView.dataSource = self
         tableView.delegate = self
@@ -99,10 +99,7 @@ extension IgnoredTagsViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: IgnoredTagCell.reuseIdentifier,
-                                                       for: indexPath) as? IgnoredTagCell else {
-                                                        fatalError("IgnoredTagCell is not registered in the table view")
-        }
+        let cell = tableView.dequeueReusableCell(ofType: IgnoredTagCell.self, for: indexPath)
 
         let cellViewModel = viewModel.cellViewModel(at: indexPath)
         cell.configure(with: cellViewModel)

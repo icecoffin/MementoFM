@@ -59,7 +59,7 @@ final class TagsViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
 
-        collectionView.register(TagCell.self, forCellWithReuseIdentifier: TagCell.reuseIdentifier)
+        collectionView.register(TagCell.self)
 
         collectionView.backgroundView = emptyDataSetView
         collectionView.backgroundView?.isHidden = true
@@ -84,13 +84,11 @@ extension TagsViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCell.reuseIdentifier,
-                                                            for: indexPath) as? TagCell else {
-                                                                fatalError("TagCell is not registered in the collection view")
-        }
+        let cell = collectionView.dequeueReusableCell(ofType: TagCell.self, for: indexPath)
 
         let cellViewModel = viewModel.cellViewModel(at: indexPath)
         cell.configure(with: cellViewModel)
+
         return cell
     }
 }

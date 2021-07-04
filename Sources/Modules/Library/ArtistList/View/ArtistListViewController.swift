@@ -49,7 +49,7 @@ final class ArtistListViewController: UIViewController {
             make.edges.equalToSuperview()
         }
 
-        tableView.register(ArtistCell.self, forCellReuseIdentifier: ArtistCell.reuseIdentifier)
+        tableView.register(ArtistCell.self)
 
         tableView.dataSource = self
         tableView.delegate = self
@@ -111,10 +111,7 @@ extension ArtistListViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let reuseIdentifier = ArtistCell.reuseIdentifier
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? ArtistCell else {
-            fatalError("ArtistCell is not registered in the table view")
-        }
+        let cell = tableView.dequeueReusableCell(ofType: ArtistCell.self, for: indexPath)
 
         let artistViewModel = viewModel.artistViewModel(at: indexPath)
         cell.configure(with: artistViewModel)

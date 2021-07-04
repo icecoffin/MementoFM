@@ -57,7 +57,7 @@ final class ArtistTagsCell: UITableViewCell {
 
         collectionView.isScrollEnabled = false
 
-        collectionView.register(TagCell.self, forCellWithReuseIdentifier: TagCell.reuseIdentifier)
+        collectionView.register(TagCell.self)
     }
 
     override func systemLayoutSizeFitting(_ targetSize: CGSize,
@@ -74,14 +74,12 @@ extension ArtistTagsCell: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCell.reuseIdentifier,
-                                                            for: indexPath) as? TagCell else {
-                                                                fatalError("TagCell is not registered in the collection view")
-        }
+        let cell = collectionView.dequeueReusableCell(ofType: TagCell.self, for: indexPath)
 
         if let cellViewModel = dataSource?.tagCellViewModel(at: indexPath, in: self) {
             cell.configure(with: cellViewModel)
         }
+
         return cell
     }
 }

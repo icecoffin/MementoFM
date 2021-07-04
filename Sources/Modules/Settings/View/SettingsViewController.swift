@@ -45,7 +45,7 @@ final class SettingsViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView()
 
-        tableView.register(SettingCell.self, forCellReuseIdentifier: SettingCell.reuseIdentifier)
+        tableView.register(SettingCell.self)
     }
 }
 
@@ -55,10 +55,7 @@ extension SettingsViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingCell.reuseIdentifier,
-                                                       for: indexPath) as? SettingCell else {
-                                                        return UITableViewCell()
-        }
+        let cell = tableView.dequeueReusableCell(ofType: SettingCell.self, for: indexPath)
 
         let cellViewModel = viewModel.cellViewModel(at: indexPath.row)
         cell.configure(with: cellViewModel)

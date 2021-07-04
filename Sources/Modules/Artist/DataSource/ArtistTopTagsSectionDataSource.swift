@@ -22,32 +22,25 @@ final class ArtistTopTagsSectionDataSource: ArtistSectionDataSource {
     }
 
     func registerReusableViews(in tableView: UITableView) {
-        tableView.register(ArtistTagsCell.self, forCellReuseIdentifier: ArtistTagsCell.reuseIdentifier)
-        tableView.register(ArtistTopTagsSectionHeaderView.self,
-                           forHeaderFooterViewReuseIdentifier: ArtistTopTagsSectionHeaderView.reuseIdentifier)
-        tableView.register(EmptyDataSetFooterView.self,
-                           forHeaderFooterViewReuseIdentifier: EmptyDataSetFooterView.reuseIdentifier)
+        tableView.register(ArtistTagsCell.self)
+        tableView.register(ArtistTopTagsSectionHeaderView.self)
+        tableView.register(EmptyDataSetFooterView.self)
     }
 
     func cellForRow(at indexPath: IndexPath, in tableView: UITableView) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ArtistTagsCell.reuseIdentifier,
-                                                       for: indexPath) as? ArtistTagsCell else {
-                                                        fatalError("ArtistTagsCell is not registered in the collection view")
-        }
+        let cell = tableView.dequeueReusableCell(ofType: ArtistTagsCell.self, for: indexPath)
 
         cell.dataSource = self
         cell.delegate = self
+
         return cell
     }
 
     func viewForHeader(inSection: Int, in tableView: UITableView) -> UITableViewHeaderFooterView? {
-        let reuseIdentifier = ArtistTopTagsSectionHeaderView.reuseIdentifier
-        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: reuseIdentifier)
-            as? ArtistTopTagsSectionHeaderView else {
-                return nil
-        }
+        let headerView = tableView.dequeueReusableHeaderFooterView(ofType: ArtistTopTagsSectionHeaderView.self)
 
         headerView.configure(with: viewModel)
+
         return headerView
     }
 
@@ -56,14 +49,12 @@ final class ArtistTopTagsSectionDataSource: ArtistSectionDataSource {
     }
 
     func viewForFooter(inSection: Int, in tableView: UITableView) -> UITableViewHeaderFooterView? {
-        let reuseIdentifier = EmptyDataSetFooterView.reuseIdentifier
-        guard !viewModel.hasTags,
-            let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: reuseIdentifier)
-                as? EmptyDataSetFooterView else {
-                    return nil
-        }
+        guard !viewModel.hasTags else { return nil }
+
+        let footerView = tableView.dequeueReusableHeaderFooterView(ofType: EmptyDataSetFooterView.self)
 
         footerView.configure(with: viewModel.emptyDataSetText)
+
         return footerView
     }
 

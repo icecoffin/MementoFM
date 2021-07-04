@@ -43,7 +43,7 @@ final class CountriesViewController: UIViewController {
         tableView.rowHeight = 48
         tableView.tableFooterView = UIView()
 
-        tableView.register(CountryCell.self, forCellReuseIdentifier: CountryCell.reuseIdentifier)
+        tableView.register(CountryCell.self)
     }
 }
 
@@ -53,14 +53,10 @@ extension CountriesViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryCell.reuseIdentifier,
-                                                       for: indexPath) as? CountryCell else {
-                                                        fatalError("CountryCell is not registered in the collection view")
-        }
+        let cell = tableView.dequeueReusableCell(ofType: CountryCell.self, for: indexPath)
 
         let cellViewModel = viewModel.cellViewModel(at: indexPath)
         cell.configure(with: cellViewModel)
-
         cell.accessoryType = .disclosureIndicator
 
         return cell
