@@ -1463,10 +1463,9 @@
 			};
 			buildConfigurationList = 01D4D3131DAE4A0000BFD7FD /* Build configuration list for PBXProject "MementoFM" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
