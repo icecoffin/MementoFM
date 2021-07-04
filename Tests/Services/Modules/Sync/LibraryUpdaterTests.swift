@@ -157,12 +157,12 @@ class LibraryUpdaterTests: XCTestCase {
         libraryUpdater.cancelPendingRequests()
 
         expect(self.networkService.cancelPendingRequestsCallCount) == 1
-        expect({
+        expect {
             guard let status = libraryUpdateStatus, case .artistsFirstPage = status else {
-                return .failed(reason: "libraryUpdateStatus is nil or wrong enum case")
+                return { .failed(reason: "libraryUpdateStatus is nil or wrong enum case") }
             }
-            return .succeeded
-        }).to(succeed())
+            return { .succeeded }
+        }.to(succeed())
     }
 
     private func makeLibraryUpdater() -> LibraryUpdater {
