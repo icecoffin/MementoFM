@@ -15,6 +15,7 @@ protocol ArtistSimilarsSectionViewModelProtocol: AnyObject {
 
     var numberOfSimilarArtists: Int { get }
     var hasSimilarArtists: Bool { get }
+    var canSelectSimilarArtists: Bool { get }
 
     var isLoading: Bool { get }
 
@@ -50,6 +51,10 @@ final class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtoc
 
     var hasSimilarArtists: Bool {
         return currentTabViewModel.hasSimilarArtists
+    }
+
+    var canSelectSimilarArtists: Bool {
+        return currentTabViewModel.canSelectSimilarArtists
     }
 
     var isLoading: Bool {

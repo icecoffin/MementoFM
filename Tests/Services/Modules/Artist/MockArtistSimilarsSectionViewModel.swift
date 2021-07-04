@@ -15,6 +15,7 @@ class MockArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtocol
 
     var numberOfSimilarArtists = 0
     var hasSimilarArtists = false
+    var canSelectSimilarArtists = false
     var isLoading = false
     var emptyDataSetText = ""
 

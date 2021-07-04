@@ -23,6 +23,8 @@ final class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol 
     private var cellViewModels: [SimilarArtistCellViewModel] = []
     private(set) var isLoading: Bool = false
 
+    let canSelectSimilarArtists: Bool
+
     var didUpdateData: (() -> Void)?
     var didReceiveError: ((Error) -> Void)?
 
@@ -40,8 +42,12 @@ final class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol 
         return "There are no similar artists.".unlocalized
     }
 
-    init(artist: Artist, requestStrategy: SimilarArtistsRequestStrategy, dependencies: Dependencies) {
+    init(artist: Artist,
+         canSelectSimilarArtists: Bool,
+         requestStrategy: SimilarArtistsRequestStrategy,
+         dependencies: Dependencies) {
         self.artist = artist
+        self.canSelectSimilarArtists = canSelectSimilarArtists
         self.requestStrategy = requestStrategy
         self.dependencies = dependencies
         self.cellViewModels = []

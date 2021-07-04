@@ -8,11 +8,6 @@
 
 import UIKit
 
-enum SimilarArtistsSource: Int {
-    case local = 0
-    case lastFM
-}
-
 final class ArtistSimilarsSectionDataSource: ArtistSectionDataSource {
     private let viewModel: ArtistSimilarsSectionViewModel
     private let prototypeCell = SimilarArtistCell()
@@ -84,7 +79,7 @@ final class ArtistSimilarsSectionDataSource: ArtistSectionDataSource {
     }
 
     func shouldHighlightRow(at indexPath: IndexPath, in tableView: UITableView) -> Bool {
-        return true
+        return viewModel.canSelectSimilarArtists
     }
 
     func selectRow(at indexPath: IndexPath, in tableView: UITableView) {

@@ -70,6 +70,7 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
 
     func test_getSimilarArtists_updatesNumberOfSimilarArtists() {
         let viewModel = SimilarsSectionTabViewModel(artist: sampleArtist,
+                                                    canSelectSimilarArtists: true,
                                                     requestStrategy: requestStrategy,
                                                     dependencies: dependencies)
         var expectedNumberOfSimilarArtists = 0
@@ -84,6 +85,7 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
 
     func test_getSimilarArtists_updatesHasSimilarArtists() {
         let viewModel = SimilarsSectionTabViewModel(artist: sampleArtist,
+                                                    canSelectSimilarArtists: true,
                                                     requestStrategy: requestStrategy,
                                                     dependencies: dependencies)
         var expectedHasSimilarArtists = false
@@ -98,6 +100,7 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
 
     func test_cellViewModelAtIndexPath_returnsCorrectValue() {
         let viewModel = SimilarsSectionTabViewModel(artist: sampleArtist,
+                                                    canSelectSimilarArtists: true,
                                                     requestStrategy: requestStrategy,
                                                     dependencies: dependencies)
         var expectedArtistNames: [String] = []
@@ -115,6 +118,7 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
 
     func test_selectingArtistAtIndexPath_returnsCorrectValue() {
         let viewModel = SimilarsSectionTabViewModel(artist: sampleArtist,
+                                                    canSelectSimilarArtists: true,
                                                     requestStrategy: requestStrategy,
                                                     dependencies: dependencies)
         let delegate = TestSimilarsSectionTabViewModelDelegate()
@@ -133,6 +137,7 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
     func test_getSimilarArtists_setsIsLoadingToTrue() {
         requestStrategy.customSimilarArtists = []
         let viewModel = SimilarsSectionTabViewModel(artist: sampleArtist,
+                                                    canSelectSimilarArtists: true,
                                                     requestStrategy: requestStrategy,
                                                     dependencies: dependencies)
         viewModel.getSimilarArtists()
@@ -143,6 +148,7 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
     func test_getSimilarArtists_setsIsLoadingToFalse_afterUpdatingData() {
         requestStrategy.customSimilarArtists = []
         let viewModel = SimilarsSectionTabViewModel(artist: sampleArtist,
+                                                    canSelectSimilarArtists: true,
                                                     requestStrategy: requestStrategy,
                                                     dependencies: dependencies)
         var expectedIsLoading = true
@@ -159,6 +165,7 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
         requestStrategy.customSimilarArtists = []
         requestStrategy.getSimilarArtistsShouldReturnError = true
         let viewModel = SimilarsSectionTabViewModel(artist: sampleArtist,
+                                                    canSelectSimilarArtists: true,
                                                     requestStrategy: requestStrategy,
                                                     dependencies: dependencies)
         var didReceiveError = false

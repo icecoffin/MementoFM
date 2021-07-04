@@ -185,11 +185,23 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
 
         let requestStrategy = SimilarArtistsLocalRequestStrategy(dependencies: dependencies)
         let tabViewModel = SimilarsSectionTabViewModel(artist: artist,
+                                                       canSelectSimilarArtists: true,
                                                        requestStrategy: requestStrategy,
                                                        dependencies: dependencies)
 
         viewModel.similarsSectionTabViewModel(tabViewModel, didSelectArtist: artist)
 
         expect(delegate.didCallDidSelectArtist).to(beTrue())
+    }
+
+    func test_canSelectSimilarArtists_returnsValueFromCurrentTabViewModel() {
+        let artist = sampleArtist
+        let viewModel = ArtistSimilarsSectionViewModel(artist: artist,
+                                                       tabViewModelFactory: tabViewModelFactory,
+                                                       dependencies: dependencies)
+
+        tabViewModelFactory.firstTabViewModel.canSelectSimilarArtists = true
+
+        expect(viewModel.canSelectSimilarArtists) == true
     }
 }
