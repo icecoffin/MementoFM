@@ -195,7 +195,6 @@
 		657AC74923CD047500E3AE17 /* CountryTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657AC74823CD047500E3AE17 /* CountryTypeTests.swift */; };
 		657AC74B23CD080D00E3AE17 /* ArtistsByCountryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657AC74A23CD080D00E3AE17 /* ArtistsByCountryViewModelTests.swift */; };
 		657AC74D23CD154700E3AE17 /* MockPersistentMappedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657AC74C23CD154700E3AE17 /* MockPersistentMappedCollection.swift */; };
-		657B3EE423CFA9310025C5AA /* sample_top_tags_list_short.json in Resources */ = {isa = PBXBuildFile; fileRef = 657B3EE223CFA8BB0025C5AA /* sample_top_tags_list_short.json */; };
 		6588C5AD23AD5BD700214359 /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = 6588C5AC23AD5BD700214359 /* countries.json */; };
 		65895CEF203957DA00003FCB /* Promise+NoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65895CEE203957DA00003FCB /* Promise+NoError.swift */; };
 		658B26B61FAB518600E3A6EA /* IgnoredTagServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658B26B41FAB518300E3A6EA /* IgnoredTagServiceTests.swift */; };
@@ -424,7 +423,6 @@
 		657AC74823CD047500E3AE17 /* CountryTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryTypeTests.swift; sourceTree = "<group>"; };
 		657AC74A23CD080D00E3AE17 /* ArtistsByCountryViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsByCountryViewModelTests.swift; sourceTree = "<group>"; };
 		657AC74C23CD154700E3AE17 /* MockPersistentMappedCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPersistentMappedCollection.swift; sourceTree = "<group>"; };
-		657B3EE223CFA8BB0025C5AA /* sample_top_tags_list_short.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_top_tags_list_short.json; sourceTree = "<group>"; };
 		6588C5AC23AD5BD700214359 /* countries.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
 		65895CEE203957DA00003FCB /* Promise+NoError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Promise+NoError.swift"; sourceTree = "<group>"; };
 		658B26B41FAB518300E3A6EA /* IgnoredTagServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoredTagServiceTests.swift; sourceTree = "<group>"; };
@@ -668,7 +666,6 @@
 				651AA6FB1FB047AB00EEE40A /* sample_recent_tracks_page.json */,
 				651AA7021FB05F8E00EEE40A /* sample_tag.json */,
 				651AA70A1FB063F300EEE40A /* sample_top_tags_list.json */,
-				657B3EE223CFA8BB0025C5AA /* sample_top_tags_list_short.json */,
 				651AA7121FB066CA00EEE40A /* sample_track.json */,
 			);
 			path = "Sample Data";
@@ -1504,7 +1501,6 @@
 				651B663D1F9C922F003C436E /* sample_artist.json in Resources */,
 				651AA6FD1FB04B5300EEE40A /* sample_recent_tracks_page.json in Resources */,
 				651AA70C1FB0658E00EEE40A /* sample_top_tags_list.json in Resources */,
-				657B3EE423CFA9310025C5AA /* sample_top_tags_list_short.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,15 +13,9 @@ import Nimble
 
 class TopTagsListTests: XCTestCase {
     func test_initWithMap_setsCorrectProperties() {
-        let topTagsList = makeSampleTopTagsList(fileName: "sample_top_tags_list_short")
-
-        expect(topTagsList?.tags.count) == 4
-    }
-
-    func test_initWithMap_limitsTopTagsCount() {
         let topTagsList = makeSampleTopTagsList(fileName: "sample_top_tags_list")
 
-        expect(topTagsList?.tags.count) == TopTagsList.maxTagCount
+        expect(topTagsList?.tags.count) == 47
     }
 
     private func makeSampleTopTagsList(fileName: String) -> TopTagsList? {

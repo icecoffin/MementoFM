@@ -20,9 +20,13 @@ final class CountryProvider: CountryProviding {
     }
 
     func topCountry(for artist: Artist) -> String? {
-        return artist
+        let country = artist
             .tags
             .compactMap { mapping.map[$0.name] }
             .first
+        if country == nil || country?.isEmpty == true {
+            log.debug("[DEBUG] \(artist.name): \(artist.tags)")
+        }
+        return country
     }
 }

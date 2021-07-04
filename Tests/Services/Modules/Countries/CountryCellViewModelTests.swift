@@ -25,20 +25,6 @@ class CountryCellViewModelTests: XCTestCase {
         expect(viewModel.country) == .named(name: "Test")
     }
 
-    // MARK: - subtitle
-
-    func test_subtitle_isCorrect_ifCountryIsUnknown() {
-        let viewModel = CountryCellViewModel(name: "", count: 1, numberFormatter: NumberFormatter())
-
-        expect(viewModel.subtitle) == "usually USA"
-    }
-
-    func test_subtitle_isNil_isCountryIsNamed() {
-        let viewModel = CountryCellViewModel(name: "Test", count: 1, numberFormatter: NumberFormatter())
-
-        expect(viewModel.subtitle).to(beNil())
-    }
-
     // MARK: - countText
 
     func test_countText_isCorrectInSingular() {
