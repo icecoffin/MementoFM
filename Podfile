@@ -10,7 +10,6 @@ target 'MementoFM' do
   pod 'PromiseKit/Alamofire'
   pod 'RealmSwift'
   pod 'SnapKit'
-  pod 'SVProgressHUD'
   pod 'SwiftyBeaver'
   pod 'SwiftLint'
   pod 'TPKeyboardAvoiding'

@@ -61,11 +61,11 @@ final class IgnoredTagsViewController: UIViewController {
     private func bindToViewModel() {
         viewModel.didStartSavingChanges = { [unowned self] in
             self.view.endEditing(true)
-            HUD.show()
+            self.tableView.isUserInteractionEnabled = false
         }
 
         viewModel.didFinishSavingChanges = {
-            HUD.dismiss()
+            self.tableView.isUserInteractionEnabled = true
         }
 
         viewModel.didReceiveError = { [unowned self] error in

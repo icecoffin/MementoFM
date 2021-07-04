@@ -13,6 +13,7 @@ final class EnterUsernameViewController: UIViewController {
     private let currentUsernameLabel = UILabel()
     private let usernameTextField = UITextField()
     private let submitButton = UIButton(type: .system)
+    private let activityIndicator = UIActivityIndicatorView(style: .medium)
 
     private let viewModel: EnterUsernameViewModel
 
@@ -43,13 +44,14 @@ final class EnterUsernameViewController: UIViewController {
         addCurrentUsernameLabel()
         addUsernameTextField()
         addSubmitButton()
+        addActivityIndicator()
     }
 
     private func addStackView() {
         view.addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.centerY.equalToSuperview().offset(-100)
+            make.top.equalToSuperview().offset(250)
         }
 
         stackView.axis = .vertical
@@ -101,20 +103,30 @@ final class EnterUsernameViewController: UIViewController {
         submitButton.addTarget(self, action: #selector(submitButtonTapped(_:)), for: .touchUpInside)
     }
 
+    private func addActivityIndicator() {
+        stackView.addArrangedSubview(activityIndicator)
+        activityIndicator.color = .gray
+        activityIndicator.hidesWhenStopped = true
+    }
+
     @objc private func submitButtonTapped(_ sender: UIButton) {
         viewModel.submitUsername()
     }
 
     private func bindToViewModel() {
-        viewModel.didStartRequest = {
-            HUD.show()
+        viewModel.didStartRequest = { [unowned self] in
+            self.disableSubmitButton()
+            self.activityIndicator.startAnimating()
         }
 
-        viewModel.didFinishRequest = {
-            HUD.dismiss()
+        viewModel.didFinishRequest = { [unowned self] in
+            self.enableSubmitButton()
+            self.activityIndicator.stopAnimating()
         }
 
         viewModel.didReceiveError = { [weak self] error in
+            self?.enableSubmitButton()
+            self?.activityIndicator.stopAnimating()
             self?.showAlert(for: error)
         }
 

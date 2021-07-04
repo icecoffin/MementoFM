@@ -150,7 +150,6 @@
 		652167661F619E1A005B7273 /* TrackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652167651F619E1A005B7273 /* TrackService.swift */; };
 		652287F92278D911006BD04E /* Dispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652287F82278D911006BD04E /* Dispatcher.swift */; };
 		652287FC2278E273006BD04E /* TestDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652287FA2278E259006BD04E /* TestDispatcher.swift */; };
-		65236C2A1F91E06F00BE100A /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65236C291F91E06F00BE100A /* HUD.swift */; };
 		65236C2C1F91E37500BE100A /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65236C2B1F91E37500BE100A /* EmptyResponse.swift */; };
 		65241C271EC6E96300927749 /* ArtistSimilarsSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C221EC6E96300927749 /* ArtistSimilarsSectionViewModel.swift */; };
 		65241C281EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C231EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift */; };
@@ -380,7 +379,6 @@
 		652167651F619E1A005B7273 /* TrackService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackService.swift; sourceTree = "<group>"; };
 		652287F82278D911006BD04E /* Dispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dispatcher.swift; sourceTree = "<group>"; };
 		652287FA2278E259006BD04E /* TestDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDispatcher.swift; sourceTree = "<group>"; };
-		65236C291F91E06F00BE100A /* HUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
 		65236C2B1F91E37500BE100A /* EmptyResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResponse.swift; sourceTree = "<group>"; };
 		65241C221EC6E96300927749 /* ArtistSimilarsSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistSimilarsSectionViewModel.swift; sourceTree = "<group>"; };
 		65241C231EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistTopTagsSectionViewModel.swift; sourceTree = "<group>"; };
@@ -1117,7 +1115,6 @@
 				651F9E031EC09FDC006D9474 /* MappingHelpers.swift */,
 				653669EE1EE5753B00E9D56C /* NavigationControllerPopTracker.swift */,
 				65C10DF31F0BD0170072BF09 /* ApplicationStateObserver.swift */,
-				65236C291F91E06F00BE100A /* HUD.swift */,
 				652287F82278D911006BD04E /* Dispatcher.swift */,
 				65FC807622B2E80B000207EE /* UIImage+Symbols.swift */,
 			);
@@ -1527,7 +1524,6 @@
 				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
 				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework",
@@ -1541,7 +1537,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoiding.framework",
@@ -1658,7 +1653,6 @@
 				651F9E281EC09FDC006D9474 /* SettingConfiguration.swift in Sources */,
 				65C10DF41F0BD0170072BF09 /* ApplicationStateObserver.swift in Sources */,
 				65112D6F1F2F181800CBF8BA /* NetworkConstants.swift in Sources */,
-				65236C2A1F91E06F00BE100A /* HUD.swift in Sources */,
 				651F338C1FA0E24D00B178D0 /* ArtistRepository.swift in Sources */,
 				65112D701F2F181800CBF8BA /* RealmService.swift in Sources */,
 				651F9E3F1EC09FDC006D9474 /* IgnoredTagsViewModel.swift in Sources */,
@@ -2013,8 +2007,6 @@
 					"-framework",
 					"\"RealmSwift\"",
 					"-framework",
-					"\"SVProgressHUD\"",
-					"-framework",
 					"\"Security\"",
 					"-framework",
 					"\"SnapKit\"",
@@ -2068,8 +2060,6 @@
 					"\"Realm\"",
 					"-framework",
 					"\"RealmSwift\"",
-					"-framework",
-					"\"SVProgressHUD\"",
 					"-framework",
 					"\"Security\"",
 					"-framework",
