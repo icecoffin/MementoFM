@@ -9,10 +9,6 @@
 import Foundation
 import PromiseKit
 
-enum EnterUsernameViewModelAction {
-    case submit, cancel
-}
-
 protocol EnterUsernameViewModelDelegate: AnyObject {
     func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel)
 }

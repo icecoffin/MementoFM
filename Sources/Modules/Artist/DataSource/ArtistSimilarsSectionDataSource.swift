@@ -10,7 +10,6 @@ import UIKit
 
 final class ArtistSimilarsSectionDataSource: ArtistSectionDataSource {
     private let viewModel: ArtistSimilarsSectionViewModel
-    private let prototypeCell = SimilarArtistCell()
 
     var didUpdateData: (() -> Void)?
     var didReceiveError: ((Error) -> Void)?
