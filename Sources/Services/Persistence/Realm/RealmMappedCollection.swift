@@ -80,10 +80,10 @@ final class RealmMappedCollection<Element: TransientEntity>: PersistentMappedCol
     }
 }
 
-extension SortDescriptor {
+extension RealmSwift.SortDescriptor {
     init?(nsSortDescriptor: NSSortDescriptor) {
         guard let key = nsSortDescriptor.key else { return nil }
 
-        self = SortDescriptor(keyPath: key, ascending: nsSortDescriptor.ascending)
+        self = RealmSwift.SortDescriptor(keyPath: key, ascending: nsSortDescriptor.ascending)
     }
 }
