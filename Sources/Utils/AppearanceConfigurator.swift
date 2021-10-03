@@ -13,6 +13,7 @@ enum AppearanceConfigurator {
         configureNavigationBarAppearance()
         configureTabBarItemAppearance()
         configureSearchBarAppearance()
+        configureTableViewAppearance()
     }
 
     private static func configureNavigationBarAppearance() {
@@ -42,5 +43,11 @@ enum AppearanceConfigurator {
 
         let barButtonItemAppearance = UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self])
         barButtonItemAppearance.setTitleTextAttributes([.font: UIFont.primaryContent], for: .normal)
+    }
+
+    private static func configureTableViewAppearance() {
+        if #available(iOS 15.0, *) {
+            UITableView.appearance().sectionHeaderTopPadding = 0
+        }
     }
 }
