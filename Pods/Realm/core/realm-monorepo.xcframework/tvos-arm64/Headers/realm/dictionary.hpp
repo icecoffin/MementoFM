@@ -63,7 +63,7 @@ public:
     bool is_null(size_t ndx) const final;
     Mixed get_any(size_t ndx) const final;
     size_t find_any(Mixed value) const final;
-    size_t find_any_key(Mixed value) const;
+    size_t find_any_key(Mixed value) const noexcept;
 
     util::Optional<Mixed> min(size_t* return_ndx = nullptr) const final;
     util::Optional<Mixed> max(size_t* return_ndx = nullptr) const final;
@@ -102,10 +102,11 @@ public:
     }
 
     bool contains(Mixed key) const noexcept;
-    Iterator find(Mixed key);
+    Iterator find(Mixed key) const noexcept;
 
     void erase(Mixed key);
     void erase(Iterator it);
+    bool try_erase(Mixed key);
 
     void nullify(Mixed);
     void remove_backlinks(CascadeState& state) const;
@@ -178,7 +179,7 @@ private:
     template <typename T, typename Op>
     friend class CollectionColumnAggregate;
     friend class DictionaryLinkValues;
-    mutable DictionaryClusterTree* m_clusters = nullptr;
+    mutable std::unique_ptr<DictionaryClusterTree> m_clusters;
     DataType m_key_type = type_String;
 
 #ifdef REALM_DEBUG

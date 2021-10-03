@@ -1,17 +1,17 @@
 PODS:
   - Alamofire (4.9.1)
-  - Nimble (9.2.0)
+  - Nimble (9.2.1)
   - PromiseKit/Alamofire (6.15.3):
     - Alamofire (~> 4.0)
     - PromiseKit/CorePromise
   - PromiseKit/CorePromise (6.15.3)
-  - Realm (10.9.0):
-    - Realm/Headers (= 10.9.0)
-  - Realm/Headers (10.9.0)
-  - RealmSwift (10.9.0):
-    - Realm (= 10.9.0)
+  - Realm (10.16.0):
+    - Realm/Headers (= 10.16.0)
+  - Realm/Headers (10.16.0)
+  - RealmSwift (10.16.0):
+    - Realm (= 10.16.0)
   - SnapKit (5.0.1)
-  - SwiftLint (0.43.1)
+  - SwiftLint (0.44.0)
   - SwiftyBeaver (1.9.5)
   - TPKeyboardAvoiding (1.3.5)
   - UICollectionViewLeftAlignedLayout (1.0.2)
@@ -41,16 +41,16 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
-  Nimble: 4f4a345c80b503b3ea13606a4f98405974ee4d0b
+  Nimble: e7e615c0335ee4bf5b0d786685451e62746117d5
   PromiseKit: 3b2b6995e51a954c46dbc550ce3da44fbfb563c5
-  Realm: 9feef41ab8230ed706c4dc503fc292594915bf9a
-  RealmSwift: 91246183b772e0ea1bf777116c4b8d9939f983b3
+  Realm: b6027801398f3743fc222f096faa85281b506e6c
+  RealmSwift: b02a3d0e4947955da960b642c98ad3a461fc4e70
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
-  SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
+  SwiftLint: e96c0a8c770c7ebbc4d36c55baf9096bb65c4584
   SwiftyBeaver: 84069991dd5dca07d7069100985badaca7f0ce82
   TPKeyboardAvoiding: d55b3ea7b362540af8fcf36aa3ed2e87bf210cc6
   UICollectionViewLeftAlignedLayout: 830bf6fa5bab9f9b464f62e3384f9d2e00b3c0f6
 
-PODFILE CHECKSUM: 13102899b1a57593da6620faa47b5d7163188ebb
+PODFILE CHECKSUM: d534767ddc5ab4a3d93f724850c0043b3cf4ac76
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2
