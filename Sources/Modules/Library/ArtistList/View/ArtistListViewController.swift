@@ -15,12 +15,16 @@ final class ArtistListViewController: UIViewController {
         static let estimatedRowHeight: CGFloat = 60
     }
 
+    // MARK: - Private properties
+
     private let viewModel: ArtistListViewModel
 
     private let searchController: UISearchController
     private let tableView = TPKeyboardAvoidingTableView()
     private let loadingView = LoadingView()
     private let emptyDataSetView = EmptyDataSetView(text: "No artists found".unlocalized)
+
+    // MARK: - Init
 
     init(searchController: UISearchController, viewModel: ArtistListViewModel) {
         self.searchController = searchController
@@ -32,6 +36,8 @@ final class ArtistListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - View life cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -42,6 +48,8 @@ final class ArtistListViewController: UIViewController {
         addLoadingView()
         bindToViewModel()
     }
+
+    // MARK: - Private methods
 
     private func addTableView() {
         view.addSubview(tableView)
@@ -104,7 +112,8 @@ final class ArtistListViewController: UIViewController {
     }
 }
 
-// MARK: UITableViewDataSource
+// MARK: - UITableViewDataSource
+
 extension ArtistListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.itemCount
@@ -120,7 +129,8 @@ extension ArtistListViewController: UITableViewDataSource {
     }
 }
 
-// MARK: UITableViewDelegate
+// MARK: - UITableViewDelegate
+
 extension ArtistListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
@@ -128,7 +138,8 @@ extension ArtistListViewController: UITableViewDelegate {
     }
 }
 
-// MARK: UISearchResultsUpdating
+// MARK: - UISearchResultsUpdating
+
 extension ArtistListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         viewModel.performSearch(withText: searchController.searchBar.text ?? "")

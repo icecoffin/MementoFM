@@ -8,7 +8,9 @@
 
 import UIKit
 
-final class TagsCoordinator: NSObject, NavigationFlowCoordinator, ArtistsByTagPresenter {
+// MARK: - TagsCoordinator
+
+final class TagsCoordinator: NavigationFlowCoordinator {
     var childCoordinators: [Coordinator] = []
     var didFinish: (() -> Void)?
 
@@ -22,7 +24,6 @@ final class TagsCoordinator: NSObject, NavigationFlowCoordinator, ArtistsByTagPr
         self.navigationController = navigationController
         self.popTracker = popTracker
         self.dependencies = dependencies
-        super.init()
     }
 
     func start() {
@@ -37,18 +38,22 @@ final class TagsCoordinator: NSObject, NavigationFlowCoordinator, ArtistsByTagPr
     }
 }
 
+// MARK: - TagsViewModelDelegate
+
 extension TagsCoordinator: TagsViewModelDelegate {
     func tagsViewModel(_ viewModel: TagsViewModel, didSelectTagWithName name: String) {
         let viewModelFactory = ArtistsByTagViewModelFactory(tagName: name, dependencies: dependencies)
         let artistListCoordinator = ArtistListCoordinator(navigationController: navigationController,
                                                           popTracker: popTracker,
-                                                          configuration: ArtistsByTagCoordinatorConfiguration(),
+                                                          shouldStartAnimated: true,
                                                           viewModelFactory: viewModelFactory,
                                                           dependencies: dependencies)
         addChildCoordinator(artistListCoordinator)
         artistListCoordinator.start()
     }
 }
+
+// MARK: - ArtistListViewModelDelegate
 
 extension TagsCoordinator: ArtistListViewModelDelegate {
     func artistListViewModel(_ viewModel: ArtistListViewModel, didSelectArtist artist: Artist) {

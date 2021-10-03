@@ -8,9 +8,13 @@
 
 import UIKit
 
+// MARK: - SettingsCoordinatorDelegate
+
 protocol SettingsCoordinatorDelegate: AnyObject {
     func settingsCoordinatorDidChangeUsername(_ coordinator: SettingsCoordinator)
 }
+
+// MARK: - SettingsCoordinator
 
 final class SettingsCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter, SyncPresenter {
     var childCoordinators: [Coordinator] = []
@@ -31,9 +35,12 @@ final class SettingsCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter
         settingsViewModel.delegate = self
         let settingsViewController = SettingsViewController(viewModel: settingsViewModel)
         settingsViewController.title = "Settings".unlocalized
+        settingsViewController.navigationItem.backButtonDisplayMode = .minimal
         navigationController.pushViewController(settingsViewController, animated: false)
     }
 }
+
+// MARK: - SettingsViewModelDelegate
 
 extension SettingsCoordinator: SettingsViewModelDelegate {
     func settingsViewModelDidRequestOpenIgnoredTags(_ viewModel: SettingsViewModel) {
@@ -46,18 +53,19 @@ extension SettingsCoordinator: SettingsViewModelDelegate {
         viewModel.delegate = self
         let viewController = EnterUsernameViewController(viewModel: viewModel)
         viewController.title = "Change Username".unlocalized
-        viewController.navigationItem.leftBarButtonItem = makeBackButton()
+        viewController.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(viewController, animated: true)
     }
 
     func settingsViewModelDidRequestOpenAbout(_ viewModel: SettingsViewModel) {
         let viewController = AboutViewController()
         viewController.title = "About".unlocalized
-        viewController.navigationItem.leftBarButtonItem = makeBackButton()
         viewController.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(viewController, animated: true)
     }
 }
+
+// MARK: - EnterUsernameViewModelDelegate
 
 extension SettingsCoordinator: EnterUsernameViewModelDelegate {
     func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel) {
@@ -73,11 +81,15 @@ extension SettingsCoordinator: EnterUsernameViewModelDelegate {
     }
 }
 
+// MARK: - IgnoredTagsViewModelDelegate
+
 extension SettingsCoordinator: IgnoredTagsViewModelDelegate {
     func ignoredTagsViewModelDidSaveChanges(_ viewModel: IgnoredTagsViewModel) {
         navigationController.popViewController(animated: true)
     }
 }
+
+// MARK: - SyncViewModelDelegate
 
 extension SettingsCoordinator: SyncViewModelDelegate {
     func syncViewModelDidFinishLoading(_ viewModel: SyncViewModel) {

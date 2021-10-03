@@ -8,6 +8,8 @@
 
 import UIKit
 
+// MARK: - AppCoordinator
+
 final class AppCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     var didFinish: (() -> Void)?
@@ -45,11 +47,15 @@ final class AppCoordinator: Coordinator {
     }
 }
 
+// MARK: - MainFlowCoordinatorDelegate
+
 extension AppCoordinator: MainFlowCoordinatorDelegate {
     func mainFlowCoordinatorDidChangeUsername(_ coordinator: MainFlowCoordinator) {
         start()
     }
 }
+
+// MARK: - OnboardingCoordinatorDelegate
 
 extension AppCoordinator: OnboardingCoordinatorDelegate {
     func onboardingCoordinatorDidFinish(_ coordinator: OnboardingCoordinator) {

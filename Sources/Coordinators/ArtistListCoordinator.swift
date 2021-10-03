@@ -8,52 +8,28 @@
 
 import UIKit
 
-protocol ArtistListCoordinatorConfiguration {
-    var shouldStartAnimated: Bool { get }
-    func backButtonItem(for coordinator: NavigationFlowCoordinator) -> UIBarButtonItem?
-}
+// MARK: - ArtistListCoordinator
 
-final class LibraryCoordinatorConfiguration: ArtistListCoordinatorConfiguration {
-    var shouldStartAnimated: Bool {
-        return false
-    }
-
-    func backButtonItem(for coordinator: NavigationFlowCoordinator) -> UIBarButtonItem? {
-        return nil
-    }
-}
-
-final class ArtistsByTagCoordinatorConfiguration: ArtistListCoordinatorConfiguration {
-    var shouldStartAnimated: Bool {
-        return true
-    }
-
-    func backButtonItem(for coordinator: NavigationFlowCoordinator) -> UIBarButtonItem? {
-        return coordinator.makeBackButton()
-    }
-}
-
-final class ArtistListCoordinator: NSObject, NavigationFlowCoordinator {
+final class ArtistListCoordinator: NavigationFlowCoordinator {
     var childCoordinators: [Coordinator] = []
     var didFinish: (() -> Void)?
 
     let navigationController: NavigationController
     private let popTracker: NavigationControllerPopTracker
-    private let configuration: ArtistListCoordinatorConfiguration
+    private let shouldStartAnimated: Bool
     private let viewModelFactory: ArtistListViewModelFactory
     private let dependencies: AppDependency
 
     init(navigationController: NavigationController,
          popTracker: NavigationControllerPopTracker,
-         configuration: ArtistListCoordinatorConfiguration,
+         shouldStartAnimated: Bool,
          viewModelFactory: ArtistListViewModelFactory,
          dependencies: AppDependency) {
         self.navigationController = navigationController
         self.popTracker = popTracker
-        self.configuration = configuration
+        self.shouldStartAnimated = shouldStartAnimated
         self.viewModelFactory = viewModelFactory
         self.dependencies = dependencies
-        super.init()
     }
 
     deinit {
@@ -66,20 +42,22 @@ final class ArtistListCoordinator: NSObject, NavigationFlowCoordinator {
 
         let searchController = UISearchController(searchResultsController: nil)
         let viewController = ArtistListViewController(searchController: searchController, viewModel: viewModel)
-        viewController.navigationItem.leftBarButtonItem = configuration.backButtonItem(for: self)
+        viewController.navigationItem.backButtonDisplayMode = .minimal
         viewController.navigationItem.searchController = searchController
         viewController.navigationItem.hidesSearchBarWhenScrolling = false
         viewController.title = viewModel.title
 
         popTracker.addObserver(self, forPopTransitionOf: viewController)
 
-        navigationController.pushViewController(viewController, animated: configuration.shouldStartAnimated)
+        navigationController.pushViewController(viewController, animated: shouldStartAnimated)
     }
 
     private func unsubscribeFromNotifications() {
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 }
+
+// MARK: - ArtistListViewModelDelegate
 
 extension ArtistListCoordinator: ArtistListViewModelDelegate {
     func artistListViewModel(_ viewModel: ArtistListViewModel, didSelectArtist artist: Artist) {

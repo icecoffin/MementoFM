@@ -8,7 +8,9 @@
 
 import UIKit
 
-final class ArtistCoordinator: NavigationFlowCoordinator {
+// MARK: - ArtistCoordinator
+
+final class ArtistCoordinator: NavigationFlowCoordinator, NavigationControllerPopObserver {
     let navigationController: NavigationController
     var childCoordinators: [Coordinator] = []
     var didFinish: (() -> Void)?
@@ -34,7 +36,7 @@ final class ArtistCoordinator: NavigationFlowCoordinator {
 
         let viewController = ArtistViewController(dataSource: dataSource)
         viewController.title = viewModel.title
-        viewController.navigationItem.leftBarButtonItem = makeBackButton()
+        viewController.navigationItem.backButtonDisplayMode = .minimal
         viewController.hidesBottomBarWhenPushed = true
 
         popTracker.addObserver(self, forPopTransitionOf: viewController)
@@ -43,12 +45,14 @@ final class ArtistCoordinator: NavigationFlowCoordinator {
     }
 }
 
+// MARK: - ArtistViewModelDelegate
+
 extension ArtistCoordinator: ArtistViewModelDelegate {
     func artistViewModel(_ viewModel: ArtistViewModel, didSelectTagWithName name: String) {
         let viewModelFactory = ArtistsByTagViewModelFactory(tagName: name, dependencies: dependencies)
         let artistListCoordinator = ArtistListCoordinator(navigationController: navigationController,
                                                           popTracker: popTracker,
-                                                          configuration: ArtistsByTagCoordinatorConfiguration(),
+                                                          shouldStartAnimated: true,
                                                           viewModelFactory: viewModelFactory,
                                                           dependencies: dependencies)
         addChildCoordinator(artistListCoordinator)

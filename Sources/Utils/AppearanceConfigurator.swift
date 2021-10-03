@@ -16,9 +16,19 @@ enum AppearanceConfigurator {
     }
 
     private static func configureNavigationBarAppearance() {
-        let appearance = UINavigationBar.appearance()
+        let appearance = UINavigationBarAppearance()
+
+        appearance.configureWithOpaqueBackground()
+        appearance.shadowColor = .clear
+        appearance.setBackIndicatorImage(.arrowLeft, transitionMaskImage: .arrowLeft)
+
+        appearance.backButtonAppearance = UIBarButtonItemAppearance.init(style: .plain)
+
         appearance.titleTextAttributes = [.font: UIFont.navigationBarTitle]
         appearance.largeTitleTextAttributes = [.font: UIFont.navigationBarLargeTitle]
+
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
 
     private static func configureTabBarItemAppearance() {

@@ -9,9 +9,13 @@
 import UIKit
 
 final class CountriesViewController: UIViewController {
+    // MARK: - Private properties
+
     private let viewModel: CountriesViewModel
 
     private let tableView = UITableView()
+
+    // MARK: - Init
 
     init(viewModel: CountriesViewModel) {
         self.viewModel = viewModel
@@ -22,6 +26,8 @@ final class CountriesViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - View life cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,6 +36,8 @@ final class CountriesViewController: UIViewController {
         viewModel.loadData()
         tableView.reloadData()
     }
+
+    // MARK: - Private methods
 
     private func addTableView() {
         view.addSubview(tableView)
@@ -47,6 +55,8 @@ final class CountriesViewController: UIViewController {
     }
 }
 
+// MARK: - UITableViewDataSource
+
 extension CountriesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfCountries
@@ -62,6 +72,8 @@ extension CountriesViewController: UITableViewDataSource {
         return cell
     }
 }
+
+// MARK: - UITableViewDelegate
 
 extension CountriesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

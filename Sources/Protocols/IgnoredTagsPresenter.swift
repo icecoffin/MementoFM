@@ -20,7 +20,6 @@ extension IgnoredTagsPresenter {
         viewModel.delegate = self
         let viewController = IgnoredTagsViewController(viewModel: viewModel)
         viewController.title = "Ignored Tags".unlocalized
-        viewController.navigationItem.leftBarButtonItem = makeBackButton()
 
         let addButton = BlockBarButtonItem(image: .plus, style: .plain) { [unowned viewModel] in
             viewModel.addNewIgnoredTag()

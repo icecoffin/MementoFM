@@ -8,9 +8,13 @@
 
 import UIKit
 
+// MARK: - MainFlowCoordinatorDelegate
+
 protocol MainFlowCoordinatorDelegate: AnyObject {
     func mainFlowCoordinatorDidChangeUsername(_ coordinator: MainFlowCoordinator)
 }
+
+// MARK: - MainFlowCoordinator
 
 final class MainFlowCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
@@ -71,7 +75,7 @@ final class MainFlowCoordinator: Coordinator {
         navigationController.tabBarItem = tabBarItem
         return ArtistListCoordinator(navigationController: navigationController,
                                      popTracker: popTracker,
-                                     configuration: LibraryCoordinatorConfiguration(),
+                                     shouldStartAnimated: false,
                                      viewModelFactory: LibraryViewModelFactory(dependencies: dependencies),
                                      dependencies: dependencies)
 
@@ -105,6 +109,8 @@ final class MainFlowCoordinator: Coordinator {
         return settingsCoordinator
     }
 }
+
+// MARK: - SettingsCoordinatorDelegate
 
 extension MainFlowCoordinator: SettingsCoordinatorDelegate {
     func settingsCoordinatorDidChangeUsername(_ coordinator: SettingsCoordinator) {

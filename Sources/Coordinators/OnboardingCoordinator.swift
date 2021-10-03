@@ -8,9 +8,13 @@
 
 import UIKit
 
+// MARK: - OnboardingCoordinatorDelegate
+
 protocol OnboardingCoordinatorDelegate: AnyObject {
     func onboardingCoordinatorDidFinish(_ coordinator: OnboardingCoordinator)
 }
+
+// MARK: - OnboardingCoordinator
 
 final class OnboardingCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter, SyncPresenter {
     var childCoordinators: [Coordinator] = []
@@ -62,17 +66,23 @@ final class OnboardingCoordinator: NavigationFlowCoordinator, IgnoredTagsPresent
     }
 }
 
+// MARK: - EnterUsernameViewModelDelegate
+
 extension OnboardingCoordinator: EnterUsernameViewModelDelegate {
     func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel) {
         showIgnoredTagsViewController(animated: true)
     }
 }
 
+// MARK: - IgnoredTagsViewModelDelegate
+
 extension OnboardingCoordinator: IgnoredTagsViewModelDelegate {
     func ignoredTagsViewModelDidSaveChanges(_ viewModel: IgnoredTagsViewModel) {
         showSyncViewController()
     }
 }
+
+// MARK: - SyncViewModelDelegate
 
 extension OnboardingCoordinator: SyncViewModelDelegate {
     func syncViewModelDidFinishLoading(_ viewModel: SyncViewModel) {

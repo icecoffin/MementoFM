@@ -8,6 +8,8 @@
 
 import Foundation
 
+// MARK: - CountriesCoordinator
+
 final class CountriesCoordinator: NavigationFlowCoordinator {
     let navigationController: NavigationController
     var childCoordinators: [Coordinator] = []
@@ -29,16 +31,19 @@ final class CountriesCoordinator: NavigationFlowCoordinator {
         viewModel.delegate = self
         let viewController = CountriesViewController(viewModel: viewModel)
         viewController.title = "Countries".unlocalized
+        viewController.navigationItem.backButtonDisplayMode = .minimal
         navigationController.pushViewController(viewController, animated: false)
     }
 }
+
+// MARK: - CountriesViewModelDelegate
 
 extension CountriesCoordinator: CountriesViewModelDelegate {
     func countriesViewModel(_ viewModel: CountriesViewModel, didSelectCountry country: CountryType) {
         let viewModelFactory = ArtistsByCountryViewModelFactory(country: country, dependencies: dependencies)
         let artistListCoordinator = ArtistListCoordinator(navigationController: navigationController,
                                                           popTracker: popTracker,
-                                                          configuration: ArtistsByTagCoordinatorConfiguration(),
+                                                          shouldStartAnimated: true,
                                                           viewModelFactory: viewModelFactory,
                                                           dependencies: dependencies)
         addChildCoordinator(artistListCoordinator)

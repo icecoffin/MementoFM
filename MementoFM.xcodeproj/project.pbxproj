@@ -151,7 +151,6 @@
 		65236C2C1F91E37500BE100A /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65236C2B1F91E37500BE100A /* EmptyResponse.swift */; };
 		65241C271EC6E96300927749 /* ArtistSimilarsSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C221EC6E96300927749 /* ArtistSimilarsSectionViewModel.swift */; };
 		65241C281EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C231EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift */; };
-		653277DC1EDC804F00BEBCAC /* ArtistsByTagPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653277DB1EDC804F00BEBCAC /* ArtistsByTagPresenter.swift */; };
 		653347041FB6168C0020DC82 /* MockIgnoredTagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653347001FB616800020DC82 /* MockIgnoredTagService.swift */; };
 		653347051FB6168C0020DC82 /* MockUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653347021FB616880020DC82 /* MockUserService.swift */; };
 		653669EF1EE5753B00E9D56C /* NavigationControllerPopTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653669EE1EE5753B00E9D56C /* NavigationControllerPopTracker.swift */; };
@@ -376,7 +375,6 @@
 		65236C2B1F91E37500BE100A /* EmptyResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResponse.swift; sourceTree = "<group>"; };
 		65241C221EC6E96300927749 /* ArtistSimilarsSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistSimilarsSectionViewModel.swift; sourceTree = "<group>"; };
 		65241C231EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistTopTagsSectionViewModel.swift; sourceTree = "<group>"; };
-		653277DB1EDC804F00BEBCAC /* ArtistsByTagPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistsByTagPresenter.swift; sourceTree = "<group>"; };
 		653347001FB616800020DC82 /* MockIgnoredTagService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockIgnoredTagService.swift; sourceTree = "<group>"; };
 		653347021FB616880020DC82 /* MockUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserService.swift; sourceTree = "<group>"; };
 		653347061FB617E80020DC82 /* MockArtistService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockArtistService.swift; sourceTree = "<group>"; };
@@ -1088,7 +1086,6 @@
 				651F9DF71EC09FDC006D9474 /* Reusable.swift */,
 				651F9DF81EC09FDC006D9474 /* IgnoredTagsPresenter.swift */,
 				651F9DF91EC09FDC006D9474 /* SyncPresenter.swift */,
-				653277DB1EDC804F00BEBCAC /* ArtistsByTagPresenter.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1719,7 +1716,6 @@
 				6518F02D1ECB044900681D5E /* TagsCoordinator.swift in Sources */,
 				656FE2312276265900DD3A8E /* PersistentStore.swift in Sources */,
 				653F21771F6D8484009A562A /* SimilarArtistListResponse.swift in Sources */,
-				653277DC1EDC804F00BEBCAC /* ArtistsByTagPresenter.swift in Sources */,
 				653669EF1EE5753B00E9D56C /* NavigationControllerPopTracker.swift in Sources */,
 				651F9E211EC09FDC006D9474 /* RealmArtist.swift in Sources */,
 				651F9E161EC09FDC006D9474 /* Coordinator.swift in Sources */,
@@ -1840,6 +1836,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1887,7 +1884,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1901,6 +1898,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1942,7 +1940,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -1959,7 +1957,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = FH27F664XD;
 				INFOPLIST_FILE = "$(SRCROOT)/SupportingFiles/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2009,7 +2007,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = FH27F664XD;
 				INFOPLIST_FILE = "$(SRCROOT)/SupportingFiles/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
