@@ -8,8 +8,6 @@
 
 import UIKit
 
-// MARK: - AppCoordinator
-
 final class AppCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     var didFinish: (() -> Void)?

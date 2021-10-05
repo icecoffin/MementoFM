@@ -11,12 +11,16 @@ import UICollectionViewLeftAlignedLayout
 import TPKeyboardAvoiding
 
 final class TagsViewController: UIViewController {
+    // MARK: - Private properties
+
     private let collectionView: TPKeyboardAvoidingCollectionView
     private let emptyDataSetView = EmptyDataSetView(text: "No tags found".unlocalized)
     private let searchController: UISearchController
 
     private let viewModel: TagsViewModel
     private let prototypeCell = TagCell()
+
+    // MARK: - Init
 
     init(searchController: UISearchController, viewModel: TagsViewModel) {
         self.searchController = searchController
@@ -33,6 +37,8 @@ final class TagsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - View life cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -48,6 +54,8 @@ final class TagsViewController: UIViewController {
 
         viewModel.getTags(searchText: searchController.searchBar.text)
     }
+
+    // MARK: - Private methods
 
     private func configureView() {
         view.addSubview(collectionView)
@@ -78,6 +86,8 @@ final class TagsViewController: UIViewController {
     }
 }
 
+// MARK: - UICollectionViewDataSource
+
 extension TagsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.numberOfTags
@@ -93,6 +103,8 @@ extension TagsViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
+
 extension TagsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         viewModel.selectTag(at: indexPath)
@@ -105,6 +117,8 @@ extension TagsViewController: UICollectionViewDelegateFlowLayout {
         return prototypeCell.sizeForViewModel(cellViewModel)
     }
 }
+
+// MARK: - UISearchBarDelegate
 
 extension TagsViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

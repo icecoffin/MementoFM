@@ -8,8 +8,6 @@
 
 import UIKit
 
-// MARK: - TagsCoordinator
-
 final class TagsCoordinator: NavigationFlowCoordinator {
     var childCoordinators: [Coordinator] = []
     var didFinish: (() -> Void)?

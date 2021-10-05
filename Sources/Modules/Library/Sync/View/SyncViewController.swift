@@ -8,11 +8,17 @@
 
 import UIKit
 
+// MARK: - SyncViewController
+
 final class SyncViewController: UIViewController {
+    // MARK: - Private properties
+
     private let viewModel: SyncViewModel
 
     private let progressView = SyncProgressView()
     private let errorView = SyncErrorView()
+
+    // MARK: - Init
 
     init(viewModel: SyncViewModel) {
         self.viewModel = viewModel
@@ -23,12 +29,16 @@ final class SyncViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - View life cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureView()
         bindToViewModel()
     }
+
+    // MARK: - Private methods
 
     private func configureView() {
         view.backgroundColor = .systemBackground
@@ -73,9 +83,15 @@ final class SyncViewController: UIViewController {
     }
 }
 
+// MARK: - SyncProgressView
+
 private class SyncProgressView: UIView {
+    // MARK: - Private properties
+
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     private let statusLabel = UILabel()
+
+    // MARK: - Init
 
     init() {
         super.init(frame: .zero)
@@ -86,6 +102,8 @@ private class SyncProgressView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - Private methods
 
     private func setup() {
         addActivityIndicator()
@@ -113,17 +131,27 @@ private class SyncProgressView: UIView {
         statusLabel.font = .primaryContent
     }
 
+    // MARK: - Public methods
+
     func updateStatus(_ newStatus: String) {
         statusLabel.text = newStatus
     }
 }
 
+// MARK: - SyncErrorView
+
 private class SyncErrorView: UIView {
+    // MARK: - Private properties
+
     private let errorLabel = UILabel()
     private let descriptionLabel = UILabel()
     private let retryButton = UIButton(type: .system)
 
+    // MARK: - Public properties
+
     var didTapRetry: (() -> Void)?
+
+    // MARK: - Init
 
     init() {
         super.init(frame: .zero)
@@ -134,6 +162,8 @@ private class SyncErrorView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - Private methods
 
     private func setup() {
         addErrorLabel()
@@ -181,11 +211,15 @@ private class SyncErrorView: UIView {
         retryButton.layer.cornerRadius = 6
     }
 
-    func updateErrorDescription(_ description: String) {
-        descriptionLabel.text = description
-    }
+    // MARK: - Actions
 
     @objc private func retryButtonTapped(_ sender: UIButton) {
         didTapRetry?()
+    }
+
+    // MARK: - Public methods
+
+    func updateErrorDescription(_ description: String) {
+        descriptionLabel.text = description
     }
 }

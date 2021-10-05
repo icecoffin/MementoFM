@@ -8,8 +8,6 @@
 
 import UIKit
 
-// MARK: - CountriesCoordinator
-
 final class CountriesCoordinator: NavigationFlowCoordinator {
     let navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []

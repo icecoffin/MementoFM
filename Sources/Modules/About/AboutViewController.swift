@@ -9,14 +9,20 @@
 import UIKit
 
 final class AboutViewController: UIViewController {
+    // MARK: - Private properties
+
     private let scrollView = UIScrollView()
     private let textView = UITextView()
+
+    // MARK: - View life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureView()
     }
+
+    // MARK: - Private methods
 
     private func configureView() {
         view.backgroundColor = .systemBackground

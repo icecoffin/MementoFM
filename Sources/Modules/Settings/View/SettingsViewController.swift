@@ -9,9 +9,13 @@
 import UIKit
 
 final class SettingsViewController: UIViewController {
+    // MARK: - Private properties
+
     private let viewModel: SettingsViewModel
 
     private let tableView = UITableView()
+
+    // MARK: - Init
 
     init(viewModel: SettingsViewModel) {
         self.viewModel = viewModel
@@ -22,11 +26,15 @@ final class SettingsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - View life cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureView()
     }
+
+    // MARK: - Private methods
 
     private func configureView() {
         addTableView()
@@ -49,6 +57,8 @@ final class SettingsViewController: UIViewController {
     }
 }
 
+// MARK: - UITableViewDataSource
+
 extension SettingsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.itemCount
@@ -63,6 +73,8 @@ extension SettingsViewController: UITableViewDataSource {
         return cell
     }
 }
+
+// MARK: - UITableViewDelegate
 
 extension SettingsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

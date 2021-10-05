@@ -8,8 +8,6 @@
 
 import UIKit
 
-// MARK: - ArtistListCoordinator
-
 final class ArtistListCoordinator: NavigationFlowCoordinator {
     var childCoordinators: [Coordinator] = []
     var didFinish: (() -> Void)?

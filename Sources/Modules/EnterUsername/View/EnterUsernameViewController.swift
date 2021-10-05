@@ -9,6 +9,8 @@
 import UIKit
 
 final class EnterUsernameViewController: UIViewController {
+    // MARK: - Private properties
+
     private let stackView = UIStackView()
     private let currentUsernameLabel = UILabel()
     private let usernameTextField = UITextField()
@@ -16,6 +18,8 @@ final class EnterUsernameViewController: UIViewController {
     private let activityIndicator = UIActivityIndicatorView(style: .medium)
 
     private let viewModel: EnterUsernameViewModel
+
+    // MARK: - Init
 
     init(viewModel: EnterUsernameViewModel) {
         self.viewModel = viewModel
@@ -25,6 +29,8 @@ final class EnterUsernameViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - View life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +43,8 @@ final class EnterUsernameViewController: UIViewController {
 
         bindToViewModel()
     }
+
+    // MARK: - Private methods
 
     private func configureView() {
         view.backgroundColor = .systemBackground
@@ -135,7 +143,8 @@ final class EnterUsernameViewController: UIViewController {
         currentUsernameLabel.text = viewModel.currentUsernameText
     }
 
-    // MARK: Actions
+    // MARK: - Actions
+    
     @objc private func usernameTextFieldEditingChanged(_ textField: UITextField) {
         viewModel.updateUsername(textField.text)
         if viewModel.canSubmitUsername {
@@ -156,7 +165,8 @@ final class EnterUsernameViewController: UIViewController {
     }
 }
 
-// MARK: UITextField delegate
+// MARK: - UITextFieldDelegate
+
 extension EnterUsernameViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

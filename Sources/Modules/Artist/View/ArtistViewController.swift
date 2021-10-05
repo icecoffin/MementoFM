@@ -9,9 +9,13 @@
 import UIKit
 
 final class ArtistViewController: UIViewController {
+    // MARK: - Private properties
+
     private let dataSource: ArtistDataSource
 
     private let tableView = UITableView()
+
+    // MARK: - Init
 
     init(dataSource: ArtistDataSource) {
         self.dataSource = dataSource
@@ -31,12 +35,16 @@ final class ArtistViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - View life cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureView()
         dataSource.registerReusableViews(in: tableView)
     }
+
+    // MARK: - Private methods
 
     private func configureView() {
         view.addSubview(tableView)

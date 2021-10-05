@@ -10,10 +10,14 @@ import UIKit
 import TPKeyboardAvoiding
 
 final class IgnoredTagsViewController: UIViewController {
+    // MARK: - Private properties
+
     private let viewModel: IgnoredTagsViewModel
 
     private let tableView = TPKeyboardAvoidingTableView()
     private let emptyDataSetView: EmptyDataSetView
+
+    // MARK: - Init
 
     init(viewModel: IgnoredTagsViewModel) {
         self.viewModel = viewModel
@@ -27,12 +31,16 @@ final class IgnoredTagsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - View life cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureView()
         bindToViewModel()
     }
+
+    // MARK: - Private methods
 
     private func configureView() {
         view.backgroundColor = .systemBackground
@@ -93,6 +101,8 @@ final class IgnoredTagsViewController: UIViewController {
     }
 }
 
+// MARK: - UITableViewDataSource
+
 extension IgnoredTagsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfIgnoredTags
@@ -107,6 +117,8 @@ extension IgnoredTagsViewController: UITableViewDataSource {
         return cell
     }
 }
+
+// MARK: - UITableViewDelegate
 
 extension IgnoredTagsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

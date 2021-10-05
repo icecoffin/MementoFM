@@ -8,8 +8,6 @@
 
 import UIKit
 
-// MARK: - ArtistCoordinator
-
 final class ArtistCoordinator: NavigationFlowCoordinator, NavigationControllerPopObserver {
     let navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []
