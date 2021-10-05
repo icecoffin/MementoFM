@@ -14,11 +14,11 @@ final class TagsCoordinator: NavigationFlowCoordinator {
     var childCoordinators: [Coordinator] = []
     var didFinish: (() -> Void)?
 
-    let navigationController: NavigationController
+    let navigationController: UINavigationController
     private let dependencies: AppDependency
     private let popTracker: NavigationControllerPopTracker
 
-    init(navigationController: NavigationController,
+    init(navigationController: UINavigationController,
          popTracker: NavigationControllerPopTracker,
          dependencies: AppDependency) {
         self.navigationController = navigationController

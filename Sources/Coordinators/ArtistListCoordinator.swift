@@ -14,13 +14,13 @@ final class ArtistListCoordinator: NavigationFlowCoordinator {
     var childCoordinators: [Coordinator] = []
     var didFinish: (() -> Void)?
 
-    let navigationController: NavigationController
+    let navigationController: UINavigationController
     private let popTracker: NavigationControllerPopTracker
     private let shouldStartAnimated: Bool
     private let viewModelFactory: ArtistListViewModelFactory
     private let dependencies: AppDependency
 
-    init(navigationController: NavigationController,
+    init(navigationController: UINavigationController,
          popTracker: NavigationControllerPopTracker,
          shouldStartAnimated: Bool,
          viewModelFactory: ArtistListViewModelFactory,

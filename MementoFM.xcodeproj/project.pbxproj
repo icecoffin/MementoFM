@@ -161,7 +161,6 @@
 		6544307F1FA2417200923356 /* MockTrackRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6544307B1FA2414700923356 /* MockTrackRepository.swift */; };
 		654430801FA2417400923356 /* ModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6544307D1FA2416900923356 /* ModelFactory.swift */; };
 		655116D822B171C400463BE1 /* RealmMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655116D722B171C400463BE1 /* RealmMigrator.swift */; };
-		6555AB561ED032BA00BDDF21 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6555AB551ED032BA00BDDF21 /* NavigationController.swift */; };
 		6555AB581ED0AC1600BDDF21 /* ArtistTagsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6555AB571ED0AC1600BDDF21 /* ArtistTagsCell.swift */; };
 		6557BD701F717D1300E08DD4 /* SimilarsSectionTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6557BD6F1F717D1300E08DD4 /* SimilarsSectionTabViewModel.swift */; };
 		655E97B91F3C6AEC003614C8 /* TagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655E97B81F3C6AEC003614C8 /* TagService.swift */; };
@@ -209,6 +208,7 @@
 		65C10DF41F0BD0170072BF09 /* ApplicationStateObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C10DF31F0BD0170072BF09 /* ApplicationStateObserver.swift */; };
 		65D6BE3F1FD99EEC008519F8 /* ArtistTopTagsSectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D6BE3E1FD99EEC008519F8 /* ArtistTopTagsSectionViewModelTests.swift */; };
 		65D6BE411FD9A145008519F8 /* ArtistSimilarsSectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D6BE401FD9A144008519F8 /* ArtistSimilarsSectionViewModelTests.swift */; };
+		65DABC4A270CD43000727F56 /* UINavigationController+Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DABC49270CD43000727F56 /* UINavigationController+Transition.swift */; };
 		65DC8F611FD0620F007299DB /* ArtistsByTagViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DC8F601FD0620F007299DB /* ArtistsByTagViewModelTests.swift */; };
 		65FC807722B2E80B000207EE /* UIImage+Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FC807622B2E80B000207EE /* UIImage+Symbols.swift */; };
 		9F43E2411B39BE7B45A44303 /* Pods_MementoFM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA52817501538FC095064AC8 /* Pods_MementoFM.framework */; };
@@ -386,7 +386,6 @@
 		6544307B1FA2414700923356 /* MockTrackRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTrackRepository.swift; sourceTree = "<group>"; };
 		6544307D1FA2416900923356 /* ModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelFactory.swift; sourceTree = "<group>"; };
 		655116D722B171C400463BE1 /* RealmMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmMigrator.swift; sourceTree = "<group>"; };
-		6555AB551ED032BA00BDDF21 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		6555AB571ED0AC1600BDDF21 /* ArtistTagsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistTagsCell.swift; sourceTree = "<group>"; };
 		6557BD6F1F717D1300E08DD4 /* SimilarsSectionTabViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimilarsSectionTabViewModel.swift; sourceTree = "<group>"; };
 		655E97B81F3C6AEC003614C8 /* TagService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagService.swift; sourceTree = "<group>"; };
@@ -434,6 +433,7 @@
 		65C4D89A1FD3D7C2004B0CF3 /* LibraryViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewModelTests.swift; sourceTree = "<group>"; };
 		65D6BE3E1FD99EEC008519F8 /* ArtistTopTagsSectionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistTopTagsSectionViewModelTests.swift; sourceTree = "<group>"; };
 		65D6BE401FD9A144008519F8 /* ArtistSimilarsSectionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSimilarsSectionViewModelTests.swift; sourceTree = "<group>"; };
+		65DABC49270CD43000727F56 /* UINavigationController+Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Transition.swift"; sourceTree = "<group>"; };
 		65DC8F601FD0620F007299DB /* ArtistsByTagViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistsByTagViewModelTests.swift; sourceTree = "<group>"; };
 		65FC807622B2E80B000207EE /* UIImage+Symbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Symbols.swift"; sourceTree = "<group>"; };
 		7D2D2255AF2A192DD77241EC /* Pods_LastFMNotifier.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LastFMNotifier.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -803,6 +803,7 @@
 				651F9DA31EC09FDC006D9474 /* UIViewController+Alert.swift */,
 				65A0A24A2164D7240037354E /* UIColor+AppColors.swift */,
 				65A0A24C2164D7490037354E /* UIFont+AppFonts.swift */,
+				65DABC49270CD43000727F56 /* UINavigationController+Transition.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1127,7 +1128,6 @@
 			isa = PBXGroup;
 			children = (
 				651F9E0A1EC09FDC006D9474 /* EmptyDataSetView.swift */,
-				6555AB551ED032BA00BDDF21 /* NavigationController.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1648,6 +1648,7 @@
 				651F9E491EC09FDD006D9474 /* SettingCell.swift in Sources */,
 				651F338E1FA0FB7D00B178D0 /* TagRepository.swift in Sources */,
 				6511361F1F2AE6DB0079411F /* TransientEntity.swift in Sources */,
+				65DABC4A270CD43000727F56 /* UINavigationController+Transition.swift in Sources */,
 				651F9E201EC09FDC006D9474 /* UIViewController+Alert.swift in Sources */,
 				651F9E111EC09FDC006D9474 /* Dependencies.swift in Sources */,
 				651F9E241EC09FDC006D9474 /* Artist.swift in Sources */,
@@ -1663,7 +1664,6 @@
 				65112D6E1F2F181700CBF8BA /* LastFMNetworkService.swift in Sources */,
 				651C3BBE1ECF523B00C00AD5 /* ArtistCoordinator.swift in Sources */,
 				6515EA9B1F49561700081F70 /* IgnoredTagService.swift in Sources */,
-				6555AB561ED032BA00BDDF21 /* NavigationController.swift in Sources */,
 				6511361D1F2AE6B40079411F /* PersistentEntity.swift in Sources */,
 				651F9E451EC09FDC006D9474 /* RecentTracksProcessor.swift in Sources */,
 				651F9E5E1EC09FDD006D9474 /* MappingHelpers.swift in Sources */,

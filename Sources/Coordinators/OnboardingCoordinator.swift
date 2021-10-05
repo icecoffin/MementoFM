@@ -20,13 +20,13 @@ final class OnboardingCoordinator: NavigationFlowCoordinator, IgnoredTagsPresent
     var childCoordinators: [Coordinator] = []
     var didFinish: (() -> Void)?
 
-    let navigationController: NavigationController
+    let navigationController: UINavigationController
     let dependencies: AppDependency
 
     weak var delegate: OnboardingCoordinatorDelegate?
 
     init(window: UIWindow, dependencies: AppDependency) {
-        self.navigationController = NavigationController()
+        self.navigationController = UINavigationController()
         window.rootViewController = self.navigationController
         self.dependencies = dependencies
     }
@@ -61,7 +61,7 @@ final class OnboardingCoordinator: NavigationFlowCoordinator, IgnoredTagsPresent
     private func showSyncViewController() {
         let viewController = makeSyncViewController(dependencies: dependencies)
         navigationController.setNavigationBarHidden(true, animated: false)
-        navigationController.isInteractivePopGestureEnabled = false
+        navigationController.interactivePopGestureRecognizer?.isEnabled = false
         navigationController.pushViewController(viewController, animated: true)
     }
 }

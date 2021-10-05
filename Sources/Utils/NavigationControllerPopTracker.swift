@@ -18,10 +18,10 @@ struct NavigationControllerPopObserverContainer {
 }
 
 final class NavigationControllerPopTracker: NSObject {
-    private let navigationController: NavigationController
+    private let navigationController: UINavigationController
     private var viewControllerToObservers: [UIViewController: NavigationControllerPopObserverContainer] = [:]
 
-    init(navigationController: NavigationController) {
+    init(navigationController: UINavigationController) {
         self.navigationController = navigationController
         super.init()
 

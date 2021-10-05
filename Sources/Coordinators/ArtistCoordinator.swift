@@ -11,7 +11,7 @@ import UIKit
 // MARK: - ArtistCoordinator
 
 final class ArtistCoordinator: NavigationFlowCoordinator, NavigationControllerPopObserver {
-    let navigationController: NavigationController
+    let navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []
     var didFinish: (() -> Void)?
 
@@ -20,7 +20,7 @@ final class ArtistCoordinator: NavigationFlowCoordinator, NavigationControllerPo
     private let dependencies: AppDependency
 
     init(artist: Artist,
-         navigationController: NavigationController,
+         navigationController: UINavigationController,
          popTracker: NavigationControllerPopTracker,
          dependencies: AppDependency) {
         self.artist = artist

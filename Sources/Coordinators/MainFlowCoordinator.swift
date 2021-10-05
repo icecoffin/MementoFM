@@ -36,19 +36,23 @@ final class MainFlowCoordinator: Coordinator {
         let tabBarController = UITabBarController()
         tabBarController.tabBar.isTranslucent = false
 
-        let libraryNavigationController = NavigationController()
+        let libraryNavigationController = UINavigationController()
+        libraryNavigationController.navigationBar.prefersLargeTitles = true
         let libraryCoordinator = makeLibraryCoordinator(with: libraryNavigationController)
         addChildCoordinator(libraryCoordinator)
 
-        let tagsNavigationController = NavigationController()
+        let tagsNavigationController = UINavigationController()
+        tagsNavigationController.navigationBar.prefersLargeTitles = true
         let tagsCoordinator = makeTagsCoordinator(with: tagsNavigationController)
         addChildCoordinator(tagsCoordinator)
 
-        let countriesNavigationController = NavigationController()
+        let countriesNavigationController = UINavigationController()
+        countriesNavigationController.navigationBar.prefersLargeTitles = true
         let countriesCoordinator = makeCountriesCoordinator(with: countriesNavigationController)
         addChildCoordinator(countriesCoordinator)
 
-        let settingsNavigationController = NavigationController()
+        let settingsNavigationController = UINavigationController()
+        settingsNavigationController.navigationBar.prefersLargeTitles = true
         let settingsCoordinator = makeSettingsCoordinator(with: settingsNavigationController)
         addChildCoordinator(settingsCoordinator)
 
@@ -69,7 +73,7 @@ final class MainFlowCoordinator: Coordinator {
         startChildren()
     }
 
-    private func makeLibraryCoordinator(with navigationController: NavigationController) -> ArtistListCoordinator {
+    private func makeLibraryCoordinator(with navigationController: UINavigationController) -> ArtistListCoordinator {
         let popTracker = NavigationControllerPopTracker(navigationController: navigationController)
         let tabBarItem = UITabBarItem(title: "Library".unlocalized, image: .tabBarLibrary, selectedImage: nil)
         navigationController.tabBarItem = tabBarItem
@@ -81,7 +85,7 @@ final class MainFlowCoordinator: Coordinator {
 
     }
 
-    private func makeTagsCoordinator(with navigationController: NavigationController) -> TagsCoordinator {
+    private func makeTagsCoordinator(with navigationController: UINavigationController) -> TagsCoordinator {
         let popTracker = NavigationControllerPopTracker(navigationController: navigationController)
         let tabBarItem = UITabBarItem(title: "Tags".unlocalized, image: .tabBarTags, selectedImage: nil)
         navigationController.tabBarItem = tabBarItem
@@ -90,7 +94,7 @@ final class MainFlowCoordinator: Coordinator {
                                dependencies: dependencies)
     }
 
-    private func makeCountriesCoordinator(with navigationController: NavigationController) -> CountriesCoordinator {
+    private func makeCountriesCoordinator(with navigationController: UINavigationController) -> CountriesCoordinator {
         let popTracker = NavigationControllerPopTracker(navigationController: navigationController)
         let tabBarItem = UITabBarItem(title: "Countries".unlocalized, image: .tabBarCountries, selectedImage: nil)
         navigationController.tabBarItem = tabBarItem
@@ -99,7 +103,7 @@ final class MainFlowCoordinator: Coordinator {
                                     dependencies: dependencies)
     }
 
-    private func makeSettingsCoordinator(with navigationController: NavigationController) -> SettingsCoordinator {
+    private func makeSettingsCoordinator(with navigationController: UINavigationController) -> SettingsCoordinator {
         let tabBarItem = UITabBarItem(title: "Settings".unlocalized, image: .tabBarSettings, selectedImage: nil)
         navigationController.tabBarItem = tabBarItem
         let settingsCoordinator = SettingsCoordinator(navigationController: navigationController,

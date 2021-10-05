@@ -20,12 +20,12 @@ final class SettingsCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter
     var childCoordinators: [Coordinator] = []
     var didFinish: (() -> Void)?
 
-    let navigationController: NavigationController
+    let navigationController: UINavigationController
     let dependencies: AppDependency
 
     weak var delegate: SettingsCoordinatorDelegate?
 
-    init(navigationController: NavigationController, dependencies: AppDependency) {
+    init(navigationController: UINavigationController, dependencies: AppDependency) {
         self.navigationController = navigationController
         self.dependencies = dependencies
     }
@@ -76,7 +76,7 @@ extension SettingsCoordinator: EnterUsernameViewModelDelegate {
         let syncViewController = makeSyncViewController(dependencies: dependencies)
         syncViewController.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(syncViewController, animated: true)
-        navigationController.isInteractivePopGestureEnabled = false
+        navigationController.interactivePopGestureRecognizer?.isEnabled = false
         navigationController.setNavigationBarHidden(true, animated: false)
     }
 }

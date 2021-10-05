@@ -6,19 +6,19 @@
 //  Copyright © 2019 icecoffin. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 // MARK: - CountriesCoordinator
 
 final class CountriesCoordinator: NavigationFlowCoordinator {
-    let navigationController: NavigationController
+    let navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []
     var didFinish: (() -> Void)?
 
     private let dependencies: AppDependency
     private let popTracker: NavigationControllerPopTracker
 
-    init(navigationController: NavigationController,
+    init(navigationController: UINavigationController,
          popTracker: NavigationControllerPopTracker,
          dependencies: AppDependency) {
         self.navigationController = navigationController

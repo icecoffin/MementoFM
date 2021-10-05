@@ -9,7 +9,7 @@
 import UIKit
 
 protocol NavigationFlowCoordinator: Coordinator, NavigationControllerPopObserver {
-    var navigationController: NavigationController { get }
+    var navigationController: UINavigationController { get }
 }
 
 // MARK: - NavigationControllerPopObserver
