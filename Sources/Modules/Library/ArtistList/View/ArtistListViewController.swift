@@ -13,6 +13,8 @@ import TPKeyboardAvoiding
 final class ArtistListViewController: UIViewController {
     private struct Constants {
         static let estimatedRowHeight: CGFloat = 60
+        static let loadingViewAnimationDuration = 0.3
+        static let loadingViewAnimationDelay = 0.2
     }
 
     // MARK: - Private properties
@@ -47,6 +49,12 @@ final class ArtistListViewController: UIViewController {
         addTableView()
         addLoadingView()
         bindToViewModel()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        viewModel.requestDataIfNeeded()
     }
 
     // MARK: - Private methods
@@ -87,11 +95,11 @@ final class ArtistListViewController: UIViewController {
         searchController.searchBar.placeholder = viewModel.searchBarPlaceholder
 
         viewModel.didStartLoading = { [unowned self] in
-            self.loadingView.isHidden = false
+            self.showLoadingView()
         }
 
         viewModel.didFinishLoading = { [unowned self] in
-            self.loadingView.isHidden = true
+            self.hideLoadingView()
         }
 
         viewModel.didUpdateData = { [unowned self] isEmpty in
@@ -105,10 +113,38 @@ final class ArtistListViewController: UIViewController {
 
         viewModel.didReceiveError = { [unowned self] error in
             self.showAlert(for: error)
-            self.loadingView.isHidden = true
+            self.hideLoadingView()
+        }
+    }
+
+    private func showLoadingView() {
+        loadingView.snp.updateConstraints { make in
+            make.bottom.equalToSuperview().offset(loadingView.bounds.height)
+        }
+        view.layoutIfNeeded()
+
+        loadingView.isHidden = false
+
+        UIView.animate(withDuration: Constants.loadingViewAnimationDuration,
+                       delay: Constants.loadingViewAnimationDelay) {
+            self.loadingView.snp.updateConstraints { make in
+                make.bottom.equalToSuperview()
+            }
+            self.view.layoutIfNeeded()
+        }
+    }
+
+    private func hideLoadingView() {
+        self.loadingView.snp.updateConstraints { make in
+            make.bottom.equalToSuperview().offset(self.loadingView.bounds.height)
         }
 
-        viewModel.requestDataIfNeeded()
+        UIView.animate(withDuration: Constants.loadingViewAnimationDuration,
+                       delay: Constants.loadingViewAnimationDelay) {
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            self.loadingView.isHidden = true
+        }
     }
 }
 

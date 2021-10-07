@@ -47,6 +47,7 @@ final class LoadingView: UIView {
         blurView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        blurView.alpha = 0.9
     }
 
     private func addActivityIndicator() {
