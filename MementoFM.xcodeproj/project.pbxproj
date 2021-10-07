@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		57CC53BFD7353556C18C1D49 /* Pods_MementoFMTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54F7345EDE3E86D13A310BC8 /* Pods_MementoFMTests.framework */; };
 		650A931E1FACACA8001DE7A5 /* MockUserDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650A931C1FACACA0001DE7A5 /* MockUserDataStorage.swift */; };
 		650A93221FACD1B9001DE7A5 /* ArtistServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650A93201FACD1B5001DE7A5 /* ArtistServiceTests.swift */; };
 		650B1D4D2440C53000F770FA /* CountryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650B1D4C2440C53000F770FA /* CountryService.swift */; };
@@ -211,7 +210,8 @@
 		65DABC4A270CD43000727F56 /* UINavigationController+Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DABC49270CD43000727F56 /* UINavigationController+Transition.swift */; };
 		65DC8F611FD0620F007299DB /* ArtistsByTagViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DC8F601FD0620F007299DB /* ArtistsByTagViewModelTests.swift */; };
 		65FC807722B2E80B000207EE /* UIImage+Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FC807622B2E80B000207EE /* UIImage+Symbols.swift */; };
-		9F43E2411B39BE7B45A44303 /* Pods_MementoFM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA52817501538FC095064AC8 /* Pods_MementoFM.framework */; };
+		C22717ED05010403712EE6F4 /* Pods_MementoFM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC6CC2B0ECF7E9A26C0EF7EE /* Pods_MementoFM.framework */; };
+		F9FB0EE3F01D7CD48AF77C25 /* Pods_MementoFMTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92A1004A04C35D541522816D /* Pods_MementoFMTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -220,7 +220,7 @@
 			containerPortal = 01D4D3101DAE4A0000BFD7FD /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 01D4D3171DAE4A0000BFD7FD;
-			remoteInfo = LastFMNotifier;
+			remoteInfo = MementoFM;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -228,10 +228,7 @@
 		01D4D3181DAE4A0000BFD7FD /* MementoFM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MementoFM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01D4D32C1DAE4A0000BFD7FD /* MementoFMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MementoFMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		01D4D3321DAE4A0000BFD7FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1325F94CA066BC04255604B2 /* Pods-LastFMNotifier.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LastFMNotifier.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LastFMNotifier/Pods-LastFMNotifier.debug.xcconfig"; sourceTree = "<group>"; };
-		2D89EF6B90057CC1DCFBD6A6 /* Pods-LastFMNotifier.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LastFMNotifier.release.xcconfig"; path = "Pods/Target Support Files/Pods-LastFMNotifier/Pods-LastFMNotifier.release.xcconfig"; sourceTree = "<group>"; };
 		4E75EA4AA335D543060C18B9 /* Pods-MementoFM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MementoFM.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MementoFM/Pods-MementoFM.debug.xcconfig"; sourceTree = "<group>"; };
-		54F7345EDE3E86D13A310BC8 /* Pods_MementoFMTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MementoFMTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		650A931C1FACACA0001DE7A5 /* MockUserDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserDataStorage.swift; sourceTree = "<group>"; };
 		650A93201FACD1B5001DE7A5 /* ArtistServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistServiceTests.swift; sourceTree = "<group>"; };
 		650B1D4C2440C53000F770FA /* CountryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryService.swift; sourceTree = "<group>"; };
@@ -436,13 +433,10 @@
 		65DABC49270CD43000727F56 /* UINavigationController+Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Transition.swift"; sourceTree = "<group>"; };
 		65DC8F601FD0620F007299DB /* ArtistsByTagViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistsByTagViewModelTests.swift; sourceTree = "<group>"; };
 		65FC807622B2E80B000207EE /* UIImage+Symbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Symbols.swift"; sourceTree = "<group>"; };
-		7D2D2255AF2A192DD77241EC /* Pods_LastFMNotifier.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LastFMNotifier.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7DA0674F9B99F1C73DD95155 /* Pods-LastFMNotifierTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LastFMNotifierTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LastFMNotifierTests/Pods-LastFMNotifierTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7FE38FF7C97840AA7B03AE41 /* Pods-MementoFM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MementoFM.release.xcconfig"; path = "Pods/Target Support Files/Pods-MementoFM/Pods-MementoFM.release.xcconfig"; sourceTree = "<group>"; };
+		92A1004A04C35D541522816D /* Pods_MementoFMTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MementoFMTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B13B9EF38352CA27AB226C6 /* Pods-MementoFMTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MementoFMTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MementoFMTests/Pods-MementoFMTests.debug.xcconfig"; sourceTree = "<group>"; };
-		BA52817501538FC095064AC8 /* Pods_MementoFM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MementoFM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D1EB62EA0D8FE3964F218DE8 /* Pods-LastFMNotifierTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LastFMNotifierTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LastFMNotifierTests/Pods-LastFMNotifierTests.release.xcconfig"; sourceTree = "<group>"; };
-		D29BF0DB16DD5BB044FE9504 /* Pods_LastFMNotifierTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LastFMNotifierTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC6CC2B0ECF7E9A26C0EF7EE /* Pods_MementoFM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MementoFM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0AEA5D3E711C8E647C4AC07 /* Pods-MementoFMTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MementoFMTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MementoFMTests/Pods-MementoFMTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -451,7 +445,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F43E2411B39BE7B45A44303 /* Pods_MementoFM.framework in Frameworks */,
+				C22717ED05010403712EE6F4 /* Pods_MementoFM.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,7 +453,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57CC53BFD7353556C18C1D49 /* Pods_MementoFMTests.framework in Frameworks */,
+				F9FB0EE3F01D7CD48AF77C25 /* Pods_MementoFMTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,7 +469,7 @@
 				01D4D32F1DAE4A0000BFD7FD /* Tests */,
 				01D4D3191DAE4A0000BFD7FD /* Products */,
 				64EB8FD16D32FAFCBA6BFCEC /* Pods */,
-				742EEABE63376162FBE45084 /* Frameworks */,
+				D842A923FD0819E83F475733 /* Frameworks */,
 			);
 			indentWidth = 4;
 			sourceTree = "<group>";
@@ -505,10 +499,6 @@
 		64EB8FD16D32FAFCBA6BFCEC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				1325F94CA066BC04255604B2 /* Pods-LastFMNotifier.debug.xcconfig */,
-				2D89EF6B90057CC1DCFBD6A6 /* Pods-LastFMNotifier.release.xcconfig */,
-				7DA0674F9B99F1C73DD95155 /* Pods-LastFMNotifierTests.debug.xcconfig */,
-				D1EB62EA0D8FE3964F218DE8 /* Pods-LastFMNotifierTests.release.xcconfig */,
 				4E75EA4AA335D543060C18B9 /* Pods-MementoFM.debug.xcconfig */,
 				7FE38FF7C97840AA7B03AE41 /* Pods-MementoFM.release.xcconfig */,
 				9B13B9EF38352CA27AB226C6 /* Pods-MementoFMTests.debug.xcconfig */,
@@ -1371,13 +1361,11 @@
 			path = Tags;
 			sourceTree = "<group>";
 		};
-		742EEABE63376162FBE45084 /* Frameworks */ = {
+		D842A923FD0819E83F475733 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7D2D2255AF2A192DD77241EC /* Pods_LastFMNotifier.framework */,
-				D29BF0DB16DD5BB044FE9504 /* Pods_LastFMNotifierTests.framework */,
-				BA52817501538FC095064AC8 /* Pods_MementoFM.framework */,
-				54F7345EDE3E86D13A310BC8 /* Pods_MementoFMTests.framework */,
+				CC6CC2B0ECF7E9A26C0EF7EE /* Pods_MementoFM.framework */,
+				92A1004A04C35D541522816D /* Pods_MementoFMTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1401,7 +1389,7 @@
 			dependencies = (
 			);
 			name = MementoFM;
-			productName = LastFMNotifier;
+			productName = MementoFM;
 			productReference = 01D4D3181DAE4A0000BFD7FD /* MementoFM.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -1421,7 +1409,7 @@
 				01D4D32E1DAE4A0000BFD7FD /* PBXTargetDependency */,
 			);
 			name = MementoFMTests;
-			productName = LastFMNotifierTests;
+			productName = MementoFMTests;
 			productReference = 01D4D32C1DAE4A0000BFD7FD /* MementoFMTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
@@ -2057,7 +2045,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.icecoffin.LastFMNotifierTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.icecoffin.MementoFMTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -2073,7 +2061,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.icecoffin.LastFMNotifierTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.icecoffin.MementoFMTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MementoFM.app/MementoFM";
