@@ -8,12 +8,16 @@
 
 import Foundation
 
+// MARK: - CountriesViewModelDelegate
+
 protocol CountriesViewModelDelegate: AnyObject {
     func countriesViewModel(_ viewModel: CountriesViewModel, didSelectCountry country: CountryType)
 }
 
 final class CountriesViewModel {
     typealias Dependencies = HasCountryService
+
+    // MARK: - Private properties
 
     private let dependencies: Dependencies
     private let numberFormatter: NumberFormatter = {
@@ -24,15 +28,21 @@ final class CountriesViewModel {
 
     private var cellViewModels: [CountryCellViewModel] = []
 
+    // MARK: - Public properties
+
     weak var delegate: CountriesViewModelDelegate?
 
     var numberOfCountries: Int {
         return cellViewModels.count
     }
 
+    // MARK: - Init
+
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
     }
+
+    // MARK: - Public methods
 
     func loadData() {
         let result = dependencies.countryService.getCountriesWithCounts()

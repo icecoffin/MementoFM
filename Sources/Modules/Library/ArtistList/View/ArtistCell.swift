@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 final class ArtistCell: UITableViewCell {
-    // MARK: - Properties
+    // MARK: - Private properties
 
     private let outerStackView = UIStackView()
     private let innerStackView = UIStackView()

@@ -8,16 +8,24 @@
 
 import UIKit
 
+// MARK: - ArtistSimilarsSectionHeaderViewDelegate
+
 protocol ArtistSimilarsSectionHeaderViewDelegate: AnyObject {
     func artistSimilarsSectionHeaderView(_ headerView: ArtistSimilarsSectionHeaderView,
                                          didSelectSegmentWithIndex index: Int)
 }
 
+// MARK: - ArtistSimilarsSectionHeaderView
+
 final class ArtistSimilarsSectionHeaderView: UITableViewHeaderFooterView {
+    // MARK: - Private properties
+
     private let titleLabel = UILabel()
     private let segmentedControl = UISegmentedControl(items: ["Local".unlocalized, "Last.fm".unlocalized])
 
     weak var delegate: ArtistSimilarsSectionHeaderViewDelegate?
+
+    // MARK: - Init
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -28,6 +36,8 @@ final class ArtistSimilarsSectionHeaderView: UITableViewHeaderFooterView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - Private methods
 
     private func setup() {
         backgroundView = UIView()
@@ -60,11 +70,13 @@ final class ArtistSimilarsSectionHeaderView: UITableViewHeaderFooterView {
         segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
     }
 
-    func configure(with viewModel: ArtistSimilarsSectionViewModel) {
-        titleLabel.text = viewModel.sectionHeaderText
-    }
-
     @objc private func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         delegate?.artistSimilarsSectionHeaderView(self, didSelectSegmentWithIndex: sender.selectedSegmentIndex)
+    }
+
+    // MARK: - Public methods
+
+    func configure(with viewModel: ArtistSimilarsSectionViewModel) {
+        titleLabel.text = viewModel.sectionHeaderText
     }
 }

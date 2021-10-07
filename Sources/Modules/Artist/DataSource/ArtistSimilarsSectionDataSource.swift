@@ -9,10 +9,20 @@
 import UIKit
 
 final class ArtistSimilarsSectionDataSource: ArtistSectionDataSource {
+    // MARK: - Private properties
+
     private let viewModel: ArtistSimilarsSectionViewModel
+
+    // MARK: - Public properties
 
     var didUpdateData: (() -> Void)?
     var didReceiveError: ((Error) -> Void)?
+
+    var numberOfRows: Int {
+        return viewModel.numberOfSimilarArtists
+    }
+
+    // MARK: - Init
 
     init(viewModel: ArtistSimilarsSectionViewModel) {
         self.viewModel = viewModel
@@ -25,9 +35,7 @@ final class ArtistSimilarsSectionDataSource: ArtistSectionDataSource {
         viewModel.getSimilarArtists()
     }
 
-    var numberOfRows: Int {
-        return viewModel.numberOfSimilarArtists
-    }
+    // MARK: - Public methods
 
     func registerReusableViews(in tableView: UITableView) {
         tableView.register(SimilarArtistCell.self)
@@ -87,6 +95,7 @@ final class ArtistSimilarsSectionDataSource: ArtistSectionDataSource {
 }
 
 // MARK: - ArtistSimilarsSectionHeaderViewDelegate
+
 extension ArtistSimilarsSectionDataSource: ArtistSimilarsSectionHeaderViewDelegate {
     func artistSimilarsSectionHeaderView(_ headerView: ArtistSimilarsSectionHeaderView,
                                          didSelectSegmentWithIndex index: Int) {

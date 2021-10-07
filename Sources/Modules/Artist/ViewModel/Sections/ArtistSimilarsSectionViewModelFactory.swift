@@ -5,11 +5,15 @@
 
 import Foundation
 
+// MARK: - ArtistSimilarsSectionTabViewModelFactoryProtocol
+
 protocol ArtistSimilarsSectionTabViewModelFactoryProtocol {
     func makeTabViewModels(for artist: Artist,
                            dependencies: ArtistSimilarsSectionViewModel.Dependencies,
                            delegate: SimilarsSectionTabViewModelDelegate) -> [ArtistSimilarsSectionViewModelProtocol]
 }
+
+// MARK: - ArtistSimilarsSectionTabViewModelFactory
 
 final class ArtistSimilarsSectionTabViewModelFactory: ArtistSimilarsSectionTabViewModelFactoryProtocol {
     func makeTabViewModels(for artist: Artist,

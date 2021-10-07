@@ -9,7 +9,11 @@
 import UIKit
 
 final class ArtistTopTagsSectionHeaderView: UITableViewHeaderFooterView {
+    // MARK: - Private properties
+
     private let titleLabel = UILabel()
+
+    // MARK: - Init
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -20,6 +24,8 @@ final class ArtistTopTagsSectionHeaderView: UITableViewHeaderFooterView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - Private methods
 
     private func setup() {
         backgroundView = UIView()
@@ -34,6 +40,8 @@ final class ArtistTopTagsSectionHeaderView: UITableViewHeaderFooterView {
 
         titleLabel.font = .header
     }
+
+    // MARK: - Public methods
 
     func configure(with viewModel: ArtistTopTagsSectionViewModel) {
         titleLabel.text = viewModel.sectionHeaderText

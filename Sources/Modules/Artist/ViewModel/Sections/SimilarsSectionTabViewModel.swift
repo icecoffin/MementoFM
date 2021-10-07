@@ -8,19 +8,28 @@
 
 import Foundation
 
+// MARK: - SimilarsSectionTabViewModelDelegate
+
 protocol SimilarsSectionTabViewModelDelegate: AnyObject {
     func similarsSectionTabViewModel(_ viewModel: SimilarsSectionTabViewModel,
                                      didSelectArtist artist: Artist)
 }
 
+// MARK: - SimilarsSectionTabViewModel
+
 final class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol {
     typealias Dependencies = HasArtistService
+
+    // MARK: - Private properties
 
     private let artist: Artist
     private let requestStrategy: SimilarArtistsRequestStrategy
     private let dependencies: Dependencies
 
     private var cellViewModels: [SimilarArtistCellViewModel] = []
+
+    // MARK: - Pubic properties
+
     private(set) var isLoading: Bool = false
 
     let canSelectSimilarArtists: Bool
@@ -42,6 +51,8 @@ final class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol 
         return "There are no similar artists.".unlocalized
     }
 
+    // MARK: - Init
+
     init(artist: Artist,
          canSelectSimilarArtists: Bool,
          requestStrategy: SimilarArtistsRequestStrategy,
@@ -53,22 +64,7 @@ final class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol 
         self.cellViewModels = []
     }
 
-    func cellViewModel(at indexPath: IndexPath) -> SimilarArtistCellViewModelProtocol {
-        return cellViewModels[indexPath.item]
-    }
-
-    func selectArtist(at indexPath: IndexPath) {
-        let cellViewModel = cellViewModels[indexPath.row]
-        delegate?.similarsSectionTabViewModel(self, didSelectArtist: cellViewModel.artist)
-    }
-
-    func getSimilarArtists() {
-        if !isLoading && cellViewModels.isEmpty {
-            calculateSimilarArtists()
-        } else {
-            didUpdateData?()
-        }
-    }
+    // MARK: - Private methods
 
     private func calculateSimilarArtists() {
         isLoading = true
@@ -105,6 +101,25 @@ final class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol 
             .map { (artistWithCommonTags, index) in
                 let (artist, commonTags) = artistWithCommonTags
                 return SimilarArtistCellViewModel(artist: artist, commonTags: commonTags, index: index + 1)
+        }
+    }
+
+    // MARK: - Public methods
+
+    func cellViewModel(at indexPath: IndexPath) -> SimilarArtistCellViewModelProtocol {
+        return cellViewModels[indexPath.item]
+    }
+
+    func selectArtist(at indexPath: IndexPath) {
+        let cellViewModel = cellViewModels[indexPath.row]
+        delegate?.similarsSectionTabViewModel(self, didSelectArtist: cellViewModel.artist)
+    }
+
+    func getSimilarArtists() {
+        if !isLoading && cellViewModels.isEmpty {
+            calculateSimilarArtists()
+        } else {
+            didUpdateData?()
         }
     }
 }

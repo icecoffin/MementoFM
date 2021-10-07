@@ -9,8 +9,12 @@
 import UIKit
 
 final class EmptyDataSetView: UIView {
+    // MARK: - Private properties
+
     private let text: String
     private let textLabel = UILabel()
+
+    // MARK: - Init
 
     init(text: String) {
         self.text = text
@@ -22,6 +26,8 @@ final class EmptyDataSetView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - Private methods
 
     private func setup() {
         addSubview(textLabel)

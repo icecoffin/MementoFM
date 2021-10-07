@@ -10,9 +10,19 @@ import UIKit
 import SnapKit
 
 final class LoadingView: UIView {
+    // MARK: - Private properties
+
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     private let activityIndicator = UIActivityIndicatorView(style: .medium)
     private let messageLabel = UILabel()
+
+    // MARK: - Public properties
+
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: UIView.noIntrinsicMetric, height: 50)
+    }
+
+    // MARK: - Init
 
     init() {
         super.init(frame: .zero)
@@ -23,6 +33,8 @@ final class LoadingView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - Private methods
 
     private func setup() {
         addBlurView()
@@ -60,11 +72,9 @@ final class LoadingView: UIView {
         messageLabel.textColor = .white
     }
 
+    // MARK: - Public methods
+
     func update(with message: String) {
         messageLabel.text = message
-    }
-
-    override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIView.noIntrinsicMetric, height: 50)
     }
 }

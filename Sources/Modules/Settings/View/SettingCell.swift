@@ -9,8 +9,12 @@
 import UIKit
 
 final class SettingCell: UITableViewCell {
+    // MARK: - Private properties
+
     private let containerView = UIView()
     private let titleLabel = UILabel()
+
+    // MARK: - Init
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -21,6 +25,8 @@ final class SettingCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - Private methods
 
     private func setup() {
         addContainerView()
@@ -46,6 +52,8 @@ final class SettingCell: UITableViewCell {
 
         titleLabel.font = .primaryContent
     }
+
+    // MARK: - Public methods
 
     func configure(with viewModel: SettingCellViewModel) {
         titleLabel.text = viewModel.title

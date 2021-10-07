@@ -9,12 +9,18 @@
 import Foundation
 import PromiseKit
 
+// MARK: - IgnoredTagsViewModelDelegate
+
 protocol IgnoredTagsViewModelDelegate: AnyObject {
     func ignoredTagsViewModelDidSaveChanges(_ viewModel: IgnoredTagsViewModel)
 }
 
+// MARK: - IgnoredTagsViewModel
+
 final class IgnoredTagsViewModel {
     typealias Dependencies = HasIgnoredTagService & HasArtistService
+
+    // MARK: - Private properties
 
     private let dependencies: Dependencies
     private var ignoredTags: [IgnoredTag] {
@@ -22,6 +28,8 @@ final class IgnoredTagsViewModel {
             didUpdateTagCount?(ignoredTags.isEmpty)
         }
     }
+
+    // MARK: - Public properties
 
     weak var delegate: IgnoredTagsViewModelDelegate?
 
@@ -32,6 +40,12 @@ final class IgnoredTagsViewModel {
     var didUpdateTagCount: ((_ isEmpty: Bool) -> Void)?
     var didAddDefaultTags: (() -> Void)?
 
+    var numberOfIgnoredTags: Int {
+        return ignoredTags.count
+    }
+
+    // MARK: - Init
+
     init(dependencies: Dependencies, shouldAddDefaultTags: Bool) {
         self.dependencies = dependencies
         self.ignoredTags = dependencies.ignoredTagService.ignoredTags()
@@ -39,6 +53,8 @@ final class IgnoredTagsViewModel {
             addDefaultTags()
         }
     }
+
+    // MARK: - Private methods
 
     private func addDefaultTags() {
         dependencies.ignoredTagService.createDefaultIgnoredTags().done {
@@ -49,9 +65,7 @@ final class IgnoredTagsViewModel {
         }
     }
 
-    var numberOfIgnoredTags: Int {
-        return ignoredTags.count
-    }
+    // MARK: - Public methods
 
     func cellViewModel(at indexPath: IndexPath) -> IgnoredTagCellViewModel {
         let cellViewModel = IgnoredTagCellViewModel(tag: ignoredTags[indexPath.row])

@@ -9,6 +9,8 @@
 import Foundation
 import PromiseKit
 
+// MARK: - SimilarArtistsRequestStrategy
+
 protocol SimilarArtistsRequestStrategy {
     typealias Dependencies = HasArtistService
 
@@ -17,16 +19,26 @@ protocol SimilarArtistsRequestStrategy {
     func getSimilarArtists(for artist: Artist) -> Promise<[Artist]>
 }
 
+// MARK: - SimilarArtistsLocalRequestStrategy
+
 final class SimilarArtistsLocalRequestStrategy: SimilarArtistsRequestStrategy {
+    // MARK: - Private properties
+
     private let dependencies: Dependencies
+
+    // MARK: - Public properties
 
     var minNumberOfIntersectingTags: Int {
         return 2
     }
 
+    // MARK: - Init
+
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
     }
+
+    // MARK: - Public methods
 
     func getSimilarArtists(for artist: Artist) -> Promise<[Artist]> {
         let similarArtists = dependencies.artistService.artistsWithIntersectingTopTags(for: artist)
@@ -34,16 +46,26 @@ final class SimilarArtistsLocalRequestStrategy: SimilarArtistsRequestStrategy {
     }
 }
 
+// MARK: - SimilarArtistsRemoteRequestStrategy
+
 final class SimilarArtistsRemoteRequestStrategy: SimilarArtistsRequestStrategy {
+    // MARK: - Private properties
+
     private let dependencies: Dependencies
+
+    // MARK: - Public properties
 
     var minNumberOfIntersectingTags: Int {
         return 0
     }
 
+    // MARK: - Init
+
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
     }
+
+    // MARK: - Public methods
 
     func getSimilarArtists(for artist: Artist) -> Promise<[Artist]> {
         return dependencies.artistService.getSimilarArtists(for: artist)

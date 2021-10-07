@@ -9,11 +9,18 @@
 import UIKit
 
 final class ArtistDataSource: NSObject {
+    // MARK: - Private properties
+
     private let viewModel: ArtistViewModelProtocol
+
+    // MARK: - Public properties
+
     let sectionDataSources: [ArtistSectionDataSource]
 
     var didUpdateData: (() -> Void)?
     var didReceiveError: ((Error) -> Void)?
+
+    // MARK: - Init
 
     init(viewModel: ArtistViewModelProtocol) {
         self.viewModel = viewModel
@@ -22,6 +29,8 @@ final class ArtistDataSource: NSObject {
 
         bindToViewModel()
     }
+
+    // MARK: - Private properties
 
     private func bindToViewModel() {
         viewModel.didUpdateData = { [unowned self] in
@@ -32,12 +41,15 @@ final class ArtistDataSource: NSObject {
         }
     }
 
+    // MARK: - Public methods
+
     func registerReusableViews(in tableView: UITableView) {
         sectionDataSources.forEach { $0.registerReusableViews(in: tableView) }
     }
 }
 
 // MARK: - UITableViewDataSource
+
 extension ArtistDataSource: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return sectionDataSources.count
@@ -53,6 +65,7 @@ extension ArtistDataSource: UITableViewDataSource {
 }
 
 // MARK: - UITableViewDelegate
+
 extension ArtistDataSource: UITableViewDelegate {
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         return sectionDataSources[indexPath.section].shouldHighlightRow(at: indexPath, in: tableView)

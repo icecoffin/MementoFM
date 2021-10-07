@@ -8,24 +8,36 @@
 
 import Foundation
 
+// MARK: - SyncViewModelDelegate
+
 protocol SyncViewModelDelegate: AnyObject {
     func syncViewModelDidFinishLoading(_ viewModel: SyncViewModel)
 }
 
+// MARK: - SyncViewModel
+
 final class SyncViewModel {
     typealias Dependencies = HasLibraryUpdater
 
+    // MARK: - Private properties
+
     private let dependencies: Dependencies
+
+    // MARK: - Public properties
 
     weak var delegate: SyncViewModelDelegate?
 
     var didChangeStatus: ((String) -> Void)?
     var didReceiveError: ((Error) -> Void)?
 
+    // MARK: - Init
+
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
         setup()
     }
+
+    // MARK: - Private methods
 
     private func setup() {
         dependencies.libraryUpdater.didFinishLoading = { [weak self] in
@@ -45,11 +57,6 @@ final class SyncViewModel {
         dependencies.libraryUpdater.didReceiveError = { [weak self] error in
             self?.didReceiveError?(error)
         }
-    }
-
-    func syncLibrary() {
-        dependencies.libraryUpdater.cancelPendingRequests()
-        dependencies.libraryUpdater.requestData()
     }
 
     private func stringFromStatus(_ status: LibraryUpdateStatus) -> String {
@@ -75,5 +82,12 @@ final class SyncViewModel {
                 .joined(separator: "\n")
                 .unlocalized
         }
+    }
+
+    // MARK: - Public methods
+
+    func syncLibrary() {
+        dependencies.libraryUpdater.cancelPendingRequests()
+        dependencies.libraryUpdater.requestData()
     }
 }

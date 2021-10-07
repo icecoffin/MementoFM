@@ -9,15 +9,23 @@
 import Foundation
 import PromiseKit
 
+// MARK: - EnterUsernameViewModelDelegate
+
 protocol EnterUsernameViewModelDelegate: AnyObject {
     func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel)
 }
 
+// MARK: - EnterUsernameViewModel
+
 final class EnterUsernameViewModel {
     typealias Dependencies = HasUserService
 
+    // MARK: - Private properties
+
     private let dependencies: Dependencies
     private var currentUsername: String
+
+    // MARK: - Public properties
 
     var didStartRequest: (() -> Void)?
     var didFinishRequest: (() -> Void)?
@@ -27,11 +35,6 @@ final class EnterUsernameViewModel {
 
     var canSubmitUsername: Bool {
         return !currentUsername.isEmpty && currentUsername != dependencies.userService.username
-    }
-
-    init(dependencies: Dependencies) {
-        self.dependencies = dependencies
-        currentUsername = ""
     }
 
     var usernameTextFieldPlaceholder: String {
@@ -54,6 +57,15 @@ final class EnterUsernameViewModel {
             return currentUsernamePrefix + username
         }
     }
+
+    // MARK: - Init
+
+    init(dependencies: Dependencies) {
+        self.dependencies = dependencies
+        currentUsername = ""
+    }
+
+    // MARK: - Public methods
 
     func updateUsername(_ username: String?) {
         currentUsername = username ?? ""

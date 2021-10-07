@@ -144,7 +144,7 @@ final class EnterUsernameViewController: UIViewController {
     }
 
     // MARK: - Actions
-    
+
     @objc private func usernameTextFieldEditingChanged(_ textField: UITextField) {
         viewModel.updateUsername(textField.text)
         if viewModel.canSubmitUsername {

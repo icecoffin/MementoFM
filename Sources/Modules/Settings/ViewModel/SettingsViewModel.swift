@@ -8,6 +8,8 @@
 
 import Foundation
 
+// MARK: - SettingsViewModelDelegate
+
 protocol SettingsViewModelDelegate: AnyObject {
     func settingsViewModelDidRequestOpenIgnoredTags(_ viewModel: SettingsViewModel)
     func settingsViewModelDidRequestChangeUser(_ viewModel: SettingsViewModel)
@@ -15,12 +17,19 @@ protocol SettingsViewModelDelegate: AnyObject {
 }
 
 final class SettingsViewModel {
+    // MARK: - Private properties
+
     private lazy var cellViewModels: [SettingCellViewModel] = self.createCellViewModels()
+
+    // MARK: - Public properties
+
     weak var delegate: SettingsViewModelDelegate?
 
     var itemCount: Int {
         return cellViewModels.count
     }
+
+    // MARK: - Private properties
 
     private func createCellViewModels() -> [SettingCellViewModel] {
         let ignoredTagsConfiguration = SettingConfiguration(title: "Ignored tags".unlocalized) { [unowned self] in
@@ -39,6 +48,8 @@ final class SettingsViewModel {
                 SettingCellViewModel(configuration: changeUserConfiguration),
                 SettingCellViewModel(configuration: aboutConfiguration)]
     }
+
+    // MARK: - Public methods
 
     func cellViewModel(at index: Int) -> SettingCellViewModel {
         return cellViewModels[index]

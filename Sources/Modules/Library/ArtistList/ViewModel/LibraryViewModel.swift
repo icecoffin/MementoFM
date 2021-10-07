@@ -13,7 +13,7 @@ import PromiseKit
 final class LibraryViewModel: ArtistListViewModel {
     typealias Dependencies = HasLibraryUpdater & HasArtistService & HasUserService
 
-    // MARK: - Properties
+    // MARK: - Private properties
 
     private let dependencies: Dependencies
     private let applicationStateObserver: ApplicationStateObserving
@@ -28,6 +28,8 @@ final class LibraryViewModel: ArtistListViewModel {
         let playcountSort = NSSortDescriptor(key: "playcount", ascending: false)
         return self.dependencies.artistService.artists(sortedBy: [playcountSort])
     }()
+
+    // MARK: - Public properties
 
     weak var delegate: ArtistListViewModelDelegate?
 

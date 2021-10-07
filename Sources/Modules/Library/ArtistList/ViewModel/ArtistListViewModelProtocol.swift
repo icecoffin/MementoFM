@@ -8,9 +8,13 @@
 
 import Foundation
 
+// MARK: - ArtistListViewModelDelegate
+
 protocol ArtistListViewModelDelegate: AnyObject {
     func artistListViewModel(_ viewModel: ArtistListViewModel, didSelectArtist artist: Artist)
 }
+
+// MARK: - ArtistListViewModel
 
 protocol ArtistListViewModel: AnyObject {
     var delegate: ArtistListViewModelDelegate? { get set }

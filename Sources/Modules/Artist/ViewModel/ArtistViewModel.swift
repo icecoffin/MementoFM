@@ -8,10 +8,14 @@
 
 import Foundation
 
+// MARK: - ArtistViewModelDelegate
+
 protocol ArtistViewModelDelegate: AnyObject {
     func artistViewModel(_ viewModel: ArtistViewModel, didSelectTagWithName name: String)
     func artistViewModel(_ viewModel: ArtistViewModel, didSelectArtist artist: Artist)
 }
+
+// MARK: - ArtistViewModelProtocol
 
 protocol ArtistViewModelProtocol: AnyObject {
     var didUpdateData: (() -> Void)? { get set }
@@ -21,13 +25,19 @@ protocol ArtistViewModelProtocol: AnyObject {
     var sectionDataSources: [ArtistSectionDataSource] { get }
 }
 
+// MARK: - ArtistViewModel
+
 final class ArtistViewModel: ArtistViewModelProtocol {
     typealias Dependencies = HasArtistService
+
+    // MARK: - Private properties
 
     private let artist: Artist
     private let dependencies: Dependencies
 
     weak var delegate: ArtistViewModelDelegate?
+
+    // MARK: - Public properties
 
     var didUpdateData: (() -> Void)?
     var didReceiveError: ((Error) -> Void)?
@@ -37,6 +47,8 @@ final class ArtistViewModel: ArtistViewModelProtocol {
     var title: String {
         return artist.name
     }
+
+    // MARK: - Init
 
     init(artist: Artist, dependencies: Dependencies) {
         self.artist = artist
@@ -61,11 +73,16 @@ final class ArtistViewModel: ArtistViewModelProtocol {
     }
 }
 
+// MARK: - ArtistTopTagsSectionViewModelDelegate
+
 extension ArtistViewModel: ArtistTopTagsSectionViewModelDelegate {
-    func artistTopTagsSectionViewModel(_ viewModel: ArtistTopTagsSectionViewModel, didSelectTagWithName name: String) {
+    func artistTopTagsSectionViewModel(_ viewModel: ArtistTopTagsSectionViewModel,
+                                       didSelectTagWithName name: String) {
         delegate?.artistViewModel(self, didSelectTagWithName: name)
     }
 }
+
+// MARK: - ArtistSimilarsSectionViewModelDelegate
 
 extension ArtistViewModel: ArtistSimilarsSectionViewModelDelegate {
     func artistSimilarsSectionViewModel(_ viewModel: ArtistSimilarsSectionViewModel,

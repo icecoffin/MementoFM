@@ -9,15 +9,23 @@
 import Foundation
 
 final class SettingCellViewModel {
+    // MARK: - Private properties
+
     private let configuration: SettingConfiguration
+
+    // MARK: - Public properties
+
+    var title: String {
+        return configuration.title
+    }
+
+    // MARK: - Init
 
     init(configuration: SettingConfiguration) {
         self.configuration = configuration
     }
 
-    var title: String {
-        return configuration.title
-    }
+    // MARK: - Public methods
 
     func fireAction() {
         configuration.action()

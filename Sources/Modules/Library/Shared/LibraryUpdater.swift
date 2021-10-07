@@ -9,6 +9,8 @@
 import Foundation
 import PromiseKit
 
+// MARK: - LibraryUpdateStatus
+
 enum LibraryUpdateStatus {
     case artistsFirstPage
     case artists(progress: Progress)
@@ -16,6 +18,8 @@ enum LibraryUpdateStatus {
     case recentTracks(progress: Progress)
     case tags(artistName: String, progress: Progress)
 }
+
+// MARK: - LibraryUpdaterProtocol
 
 protocol LibraryUpdaterProtocol: AnyObject {
     var didStartLoading: (() -> Void)? { get set }
@@ -30,7 +34,11 @@ protocol LibraryUpdaterProtocol: AnyObject {
     func cancelPendingRequests()
 }
 
+// MARK: - LibraryUpdater
+
 final class LibraryUpdater: LibraryUpdaterProtocol {
+    // MARK: - Private properties
+
     private let userService: UserServiceProtocol
     private let artistService: ArtistServiceProtocol
     private let tagService: TagServiceProtocol
@@ -39,20 +47,24 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
     private let countryService: CountryServiceProtocol
     private let networkService: NetworkService
 
-    private(set) var isFirstUpdate: Bool = true
-
     private var username: String {
         return userService.username
     }
 
-    var lastUpdateTimestamp: TimeInterval {
-        return userService.lastUpdateTimestamp
-    }
+    // MARK: - Public methods
+
+    private(set) var isFirstUpdate: Bool = true
 
     var didStartLoading: (() -> Void)?
     var didFinishLoading: (() -> Void)?
     var didChangeStatus: ((LibraryUpdateStatus) -> Void)?
     var didReceiveError: ((Error) -> Void)?
+
+    var lastUpdateTimestamp: TimeInterval {
+        return userService.lastUpdateTimestamp
+    }
+
+    // MARK: - Init
 
     init(userService: UserServiceProtocol,
          artistService: ArtistServiceProtocol,
@@ -70,27 +82,7 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
         self.networkService = networkService
     }
 
-    func requestData() {
-        didStartLoading?()
-        firstly {
-            self.requestLibrary()
-        }.then {
-            self.getArtistsTags()
-        }.then {
-            self.countryService.updateCountries()
-        }.done { _ in
-            self.didFinishLoading?()
-        }.catch { error in
-            self.didReceiveError?(error)
-        }.finally {
-            self.isFirstUpdate = false
-        }
-    }
-
-    func cancelPendingRequests() {
-        didChangeStatus?(.artistsFirstPage)
-        networkService.cancelPendingRequests()
-    }
+    // MARK: - Private methods
 
     private func requestLibrary() -> Promise<Void> {
         if userService.didReceiveInitialCollection {
@@ -154,5 +146,29 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
         }
 
         return tagService.getTopTags(for: artists, progress: progress)
+    }
+
+    // MARK: - Public methods
+
+    func requestData() {
+        didStartLoading?()
+        firstly {
+            self.requestLibrary()
+        }.then {
+            self.getArtistsTags()
+        }.then {
+            self.countryService.updateCountries()
+        }.done { _ in
+            self.didFinishLoading?()
+        }.catch { error in
+            self.didReceiveError?(error)
+        }.finally {
+            self.isFirstUpdate = false
+        }
+    }
+
+    func cancelPendingRequests() {
+        didChangeStatus?(.artistsFirstPage)
+        networkService.cancelPendingRequests()
     }
 }

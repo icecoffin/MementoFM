@@ -9,6 +9,8 @@
 import Foundation
 import UIKit.UIFont
 
+// MARK: - SimilarArtistCellViewModelProtocol
+
 protocol SimilarArtistCellViewModelProtocol {
     var name: String { get }
     var playcount: String { get }
@@ -16,16 +18,17 @@ protocol SimilarArtistCellViewModelProtocol {
     var displayIndex: String { get }
 }
 
+// MARK: - SimilarArtistCellViewModel
+
 final class SimilarArtistCellViewModel: SimilarArtistCellViewModelProtocol {
-    let artist: Artist
+    // MARK: - Private properties
+
     private let commonTags: [String]
     private let index: Int
 
-    init(artist: Artist, commonTags: [String], index: Int) {
-        self.artist = artist
-        self.commonTags = commonTags
-        self.index = index
-    }
+    // MARK: - Public properties
+
+    let artist: Artist
 
     var name: String {
         return artist.name
@@ -48,5 +51,13 @@ final class SimilarArtistCellViewModel: SimilarArtistCellViewModelProtocol {
 
     var displayIndex: String {
         return String(index)
+    }
+
+    // MARK: - Init
+
+    init(artist: Artist, commonTags: [String], index: Int) {
+        self.artist = artist
+        self.commonTags = commonTags
+        self.index = index
     }
 }

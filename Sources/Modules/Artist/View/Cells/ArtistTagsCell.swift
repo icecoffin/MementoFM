@@ -9,16 +9,24 @@
 import UIKit
 import UICollectionViewLeftAlignedLayout
 
+// MARK: - ArtistTagsCellDataSource
+
 protocol ArtistTagsCellDataSource: AnyObject {
     func numberOfTopTags(in cell: ArtistTagsCell) -> Int
     func tagCellViewModel(at indexPath: IndexPath, in cell: ArtistTagsCell) -> TagCellViewModel
 }
 
+// MARK: - ArtistTagsCellDelegate
+
 protocol ArtistTagsCellDelegate: AnyObject {
     func artistTagsCell(_ cell: ArtistTagsCell, didSelectTagAt indexPath: IndexPath)
 }
 
+// MARK: - ArtistTagsCell
+
 final class ArtistTagsCell: UITableViewCell {
+    // MARK: - Private properties
+
     private let collectionView: UICollectionView
     private let prototypeCell = TagCell()
 
@@ -29,6 +37,8 @@ final class ArtistTagsCell: UITableViewCell {
     }
 
     weak var delegate: ArtistTagsCellDelegate?
+
+    // MARK: - Init
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         let layout = UICollectionViewLeftAlignedLayout()
@@ -45,6 +55,8 @@ final class ArtistTagsCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Private methods
+
     private func setup() {
         contentView.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
@@ -60,6 +72,8 @@ final class ArtistTagsCell: UITableViewCell {
         collectionView.register(TagCell.self)
     }
 
+    // MARK: - Overrides
+
     override func systemLayoutSizeFitting(_ targetSize: CGSize,
                                           withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority,
                                           verticalFittingPriority: UILayoutPriority) -> CGSize {
@@ -67,6 +81,8 @@ final class ArtistTagsCell: UITableViewCell {
         return collectionView.collectionViewLayout.collectionViewContentSize
     }
 }
+
+// MARK: - UICollectionViewDataSource
 
 extension ArtistTagsCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -83,6 +99,8 @@ extension ArtistTagsCell: UICollectionViewDataSource {
         return cell
     }
 }
+
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension ArtistTagsCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

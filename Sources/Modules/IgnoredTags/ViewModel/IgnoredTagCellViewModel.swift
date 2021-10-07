@@ -9,13 +9,13 @@
 import Foundation
 
 final class IgnoredTagCellViewModel {
+    // MARK: - Private properties
+
     private let tag: IgnoredTag
 
-    var onTextChange: ((String) -> Void)?
+    // MARK: - Public properties
 
-    init(tag: IgnoredTag) {
-        self.tag = tag
-    }
+    var onTextChange: ((String) -> Void)?
 
     var placeholder: String {
         return "Enter tag here".unlocalized
@@ -24,6 +24,14 @@ final class IgnoredTagCellViewModel {
     var text: String {
         return tag.name
     }
+
+    // MARK: - Init
+
+    init(tag: IgnoredTag) {
+        self.tag = tag
+    }
+
+    // MARK: - Public methods
 
     func tagTextDidChange(_ text: String) {
         onTextChange?(text)

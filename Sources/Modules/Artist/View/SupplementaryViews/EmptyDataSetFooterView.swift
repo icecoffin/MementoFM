@@ -9,7 +9,11 @@
 import UIKit
 
 final class EmptyDataSetFooterView: UITableViewHeaderFooterView {
+    // MARK: - Private properties
+
     let messageLabel = UILabel()
+
+    // MARK: - Init
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -20,6 +24,8 @@ final class EmptyDataSetFooterView: UITableViewHeaderFooterView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - Private methods
 
     private func setup() {
         backgroundView = UIView()
@@ -35,6 +41,8 @@ final class EmptyDataSetFooterView: UITableViewHeaderFooterView {
         messageLabel.font = .secondaryContent
         messageLabel.textColor = .darkGray
     }
+
+    // MARK: - Public methods
 
     func configure(with text: String) {
         messageLabel.text = text

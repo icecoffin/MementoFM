@@ -9,13 +9,19 @@
 import Foundation
 
 final class TagCellViewModel {
+    // MARK: - Private properties
+
     private let tag: Tag
 
-    init(tag: Tag) {
-        self.tag = tag
-    }
+    // MARK: - Public properties
 
     var name: String {
         return tag.name
+    }
+
+    // MARK: - Init
+
+    init(tag: Tag) {
+        self.tag = tag
     }
 }

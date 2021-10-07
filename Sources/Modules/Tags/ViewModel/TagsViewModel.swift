@@ -9,48 +9,40 @@
 import Foundation
 import PromiseKit
 
+// MARK: - TagsViewModelDelegate
+
 protocol TagsViewModelDelegate: AnyObject {
     func tagsViewModel(_ viewModel: TagsViewModel, didSelectTagWithName name: String)
 }
 
+// MARK: - TagsViewModel
+
 final class TagsViewModel {
     typealias Dependencies = HasTagService
+
+    // MARK: - Private properties
 
     private let dependencies: Dependencies
     private var allCellViewModels: [TagCellViewModel] = []
     private var filteredCellViewModels: [TagCellViewModel] = []
 
+    // MARK: - Public properties
+
     weak var delegate: TagsViewModelDelegate?
 
     var didUpdateData: ((_ isEmpty: Bool) -> Void)?
-
-    init(dependencies: Dependencies) {
-        self.dependencies = dependencies
-    }
-
-    func getTags(searchText: String? = nil,
-                 backgroundDispatcher: Dispatcher = AsyncDispatcher.global,
-                 mainDispatcher: Dispatcher = AsyncDispatcher.main) {
-        backgroundDispatcher.dispatch {
-            let allTopTags = self.dependencies.tagService.getAllTopTags()
-            self.createCellViewModels(from: allTopTags, searchText: searchText)
-        }.done(on: mainDispatcher.queue) {
-            self.didUpdateData?(self.filteredCellViewModels.isEmpty)
-        }
-    }
 
     var numberOfTags: Int {
         return filteredCellViewModels.count
     }
 
-    func cellViewModel(at indexPath: IndexPath) -> TagCellViewModel {
-        return filteredCellViewModels[indexPath.row]
+    // MARK: - Init
+
+    init(dependencies: Dependencies) {
+        self.dependencies = dependencies
     }
 
-    func selectTag(at indexPath: IndexPath) {
-        let tagName = cellViewModel(at: indexPath).name
-        delegate?.tagsViewModel(self, didSelectTagWithName: tagName)
-    }
+    // MARK: - Private methods
 
     private func createCellViewModels(from tags: [Tag], searchText: String?) {
         var uniqueTagNamesWithCounts = [String: Int]()
@@ -84,6 +76,28 @@ final class TagsViewModel {
         } else {
             filteredCellViewModels = allCellViewModels
         }
+    }
+
+    // MARK: - Public methods
+
+    func getTags(searchText: String? = nil,
+                 backgroundDispatcher: Dispatcher = AsyncDispatcher.global,
+                 mainDispatcher: Dispatcher = AsyncDispatcher.main) {
+        backgroundDispatcher.dispatch {
+            let allTopTags = self.dependencies.tagService.getAllTopTags()
+            self.createCellViewModels(from: allTopTags, searchText: searchText)
+        }.done(on: mainDispatcher.queue) {
+            self.didUpdateData?(self.filteredCellViewModels.isEmpty)
+        }
+    }
+
+    func cellViewModel(at indexPath: IndexPath) -> TagCellViewModel {
+        return filteredCellViewModels[indexPath.row]
+    }
+
+    func selectTag(at indexPath: IndexPath) {
+        let tagName = cellViewModel(at: indexPath).name
+        delegate?.tagsViewModel(self, didSelectTagWithName: tagName)
     }
 
     func performSearch(withText text: String?) {

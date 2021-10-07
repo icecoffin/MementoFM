@@ -44,8 +44,8 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
     func test_currentTabViewModel_returnsFirstTabAfterInit() {
         let artist = sampleArtist
         let viewModel = ArtistSimilarsSectionViewModel(artist: artist,
-                                                       tabViewModelFactory: tabViewModelFactory,
-                                                       dependencies: dependencies)
+                                                       dependencies: dependencies,
+                                                       tabViewModelFactory: tabViewModelFactory)
 
         expect(viewModel.currentTabViewModel).to(beIdenticalTo(tabViewModelFactory.firstTabViewModel))
     }
@@ -53,8 +53,8 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
     func test_numberOfSimilarArtists_returnsValueFromCurrentTabViewModel() {
         let artist = sampleArtist
         let viewModel = ArtistSimilarsSectionViewModel(artist: artist,
-                                                       tabViewModelFactory: tabViewModelFactory,
-                                                       dependencies: dependencies)
+                                                       dependencies: dependencies,
+                                                       tabViewModelFactory: tabViewModelFactory)
 
         tabViewModelFactory.firstTabViewModel.numberOfSimilarArtists = 5
 
@@ -64,8 +64,8 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
     func test_hasSimilarArtists_returnsValueFromCurrentTabViewModel() {
         let artist = sampleArtist
         let viewModel = ArtistSimilarsSectionViewModel(artist: artist,
-                                                       tabViewModelFactory: tabViewModelFactory,
-                                                       dependencies: dependencies)
+                                                       dependencies: dependencies,
+                                                       tabViewModelFactory: tabViewModelFactory)
 
         tabViewModelFactory.firstTabViewModel.hasSimilarArtists = true
 
@@ -75,8 +75,8 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
     func test_isLoading_returnsValueFromCurrentTabViewModel() {
         let artist = sampleArtist
         let viewModel = ArtistSimilarsSectionViewModel(artist: artist,
-                                                       tabViewModelFactory: tabViewModelFactory,
-                                                       dependencies: dependencies)
+                                                       dependencies: dependencies,
+                                                       tabViewModelFactory: tabViewModelFactory)
 
         tabViewModelFactory.firstTabViewModel.isLoading = true
 
@@ -86,8 +86,8 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
     func test_emptyDataSetText_returnsValueFromCurrentTabViewModel() {
         let artist = sampleArtist
         let viewModel = ArtistSimilarsSectionViewModel(artist: artist,
-                                                       tabViewModelFactory: tabViewModelFactory,
-                                                       dependencies: dependencies)
+                                                       dependencies: dependencies,
+                                                       tabViewModelFactory: tabViewModelFactory)
 
         tabViewModelFactory.firstTabViewModel.emptyDataSetText = "Test"
 
@@ -97,8 +97,8 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
     func test_getSimilarArtists_callsMethodOnCurrentTabViewModel() {
         let artist = sampleArtist
         let viewModel = ArtistSimilarsSectionViewModel(artist: artist,
-                                                       tabViewModelFactory: tabViewModelFactory,
-                                                       dependencies: dependencies)
+                                                       dependencies: dependencies,
+                                                       tabViewModelFactory: tabViewModelFactory)
 
         viewModel.getSimilarArtists()
 
@@ -108,8 +108,8 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
     func test_cellViewModelAtIndexPath_callsMethodOnCurrentTabViewModel() {
         let artist = sampleArtist
         let viewModel = ArtistSimilarsSectionViewModel(artist: artist,
-                                                       tabViewModelFactory: tabViewModelFactory,
-                                                       dependencies: dependencies)
+                                                       dependencies: dependencies,
+                                                       tabViewModelFactory: tabViewModelFactory)
         let cellViewModel = SimilarArtistCellViewModel(artist: sampleArtist, commonTags: [], index: 1)
 
         tabViewModelFactory.firstTabViewModel.customCellViewModel = cellViewModel
@@ -122,8 +122,8 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
     func test_selectArtistAtIndexPath_callsMethodOnCurrentTabViewModel() {
         let artist = sampleArtist
         let viewModel = ArtistSimilarsSectionViewModel(artist: artist,
-                                                       tabViewModelFactory: tabViewModelFactory,
-                                                       dependencies: dependencies)
+                                                       dependencies: dependencies,
+                                                       tabViewModelFactory: tabViewModelFactory)
 
         let indexPath = IndexPath(row: 0, section: 0)
         viewModel.selectArtist(at: indexPath)
@@ -134,8 +134,8 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
     func test_selectTabAtIndex_changesCurrentTabViewModel() {
         let artist = sampleArtist
         let viewModel = ArtistSimilarsSectionViewModel(artist: artist,
-                                                       tabViewModelFactory: tabViewModelFactory,
-                                                       dependencies: dependencies)
+                                                       dependencies: dependencies,
+                                                       tabViewModelFactory: tabViewModelFactory)
 
         viewModel.selectTab(at: 1)
 
@@ -145,8 +145,8 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
     func test_didUpdateData_isCalled_whenTabViewModelUpdatesData() {
         let artist = sampleArtist
         let viewModel = ArtistSimilarsSectionViewModel(artist: artist,
-                                                       tabViewModelFactory: tabViewModelFactory,
-                                                       dependencies: dependencies)
+                                                       dependencies: dependencies,
+                                                       tabViewModelFactory: tabViewModelFactory)
 
         var didUpdateData = false
         viewModel.didUpdateData = {
@@ -161,8 +161,8 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
     func test_didReceiveError_isCalled_whenCurrentTabViewModelReceivesError() {
         let artist = sampleArtist
         let viewModel = ArtistSimilarsSectionViewModel(artist: artist,
-                                                       tabViewModelFactory: tabViewModelFactory,
-                                                       dependencies: dependencies)
+                                                       dependencies: dependencies,
+                                                       tabViewModelFactory: tabViewModelFactory)
 
         var didReceiveError = false
         viewModel.didReceiveError = { _ in
@@ -178,8 +178,8 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
     func test_selectArtist_onTabViewModel_notifiesDelegateCorrectly() {
         let artist = sampleArtist
         let viewModel = ArtistSimilarsSectionViewModel(artist: artist,
-                                                       tabViewModelFactory: tabViewModelFactory,
-                                                       dependencies: dependencies)
+                                                       dependencies: dependencies,
+                                                       tabViewModelFactory: tabViewModelFactory)
         let delegate = TestArtistSimilarsSectionViewModelDelegate()
         viewModel.delegate = delegate
 
@@ -197,8 +197,8 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
     func test_canSelectSimilarArtists_returnsValueFromCurrentTabViewModel() {
         let artist = sampleArtist
         let viewModel = ArtistSimilarsSectionViewModel(artist: artist,
-                                                       tabViewModelFactory: tabViewModelFactory,
-                                                       dependencies: dependencies)
+                                                       dependencies: dependencies,
+                                                       tabViewModelFactory: tabViewModelFactory)
 
         tabViewModelFactory.firstTabViewModel.canSelectSimilarArtists = true
 

@@ -9,9 +9,13 @@
 import Foundation
 import PromiseKit
 
+// MARK: - RecentTracksProcessing
+
 protocol RecentTracksProcessing {
     func process(tracks: [Track], using persistentStore: PersistentStore) -> Promise<Void>
 }
+
+// MARK: - RecentTracksProcessor
 
 final class RecentTracksProcessor: RecentTracksProcessing {
     func process(tracks: [Track], using persistentStore: PersistentStore) -> Promise<Void> {

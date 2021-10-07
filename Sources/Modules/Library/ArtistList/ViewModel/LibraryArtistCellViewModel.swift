@@ -9,11 +9,13 @@
 import Foundation
 
 final class LibraryArtistCellViewModel {
-    // MARK: - Properties
+    // MARK: - Private properties
 
     private let artist: Artist
     private let index: Int
     private let numberFormatter: NumberFormatter
+
+    // MARK: - Public properties
 
     var name: String {
         return artist.name

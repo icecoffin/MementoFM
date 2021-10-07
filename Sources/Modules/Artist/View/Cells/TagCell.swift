@@ -16,8 +16,12 @@ final class TagCell: UICollectionViewCell {
         static let textLabelFont: UIFont = .secondaryContent
     }
 
+    // MARK: - Private properties
+
     private let containerView = UIView()
     private let textLabel = UILabel()
+
+    // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,6 +32,8 @@ final class TagCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - Private methods
 
     private func setup() {
         contentView.addSubview(containerView)
@@ -45,6 +51,8 @@ final class TagCell: UICollectionViewCell {
         textLabel.font = Constants.textLabelFont
         textLabel.textColor = .white
     }
+
+    // MARK: - Public methods
 
     func configure(with viewModel: TagCellViewModel) {
         textLabel.text = viewModel.name

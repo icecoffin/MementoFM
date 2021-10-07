@@ -8,18 +8,28 @@
 
 import UIKit
 
+// MARK: - ArtistTopTagsSectionDataSource
+
 final class ArtistTopTagsSectionDataSource: ArtistSectionDataSource {
+    // MARK: - Private properties
+
     private let viewModel: ArtistTopTagsSectionViewModel
 
+    // MARK: - Public properties
+
     var didUpdateData: (() -> Void)?
+
+    var numberOfRows: Int {
+        return 1
+    }
+
+    // MARK: - Init
 
     init(viewModel: ArtistTopTagsSectionViewModel) {
         self.viewModel = viewModel
     }
 
-    var numberOfRows: Int {
-        return 1
-    }
+    // MARK: - Public methods
 
     func registerReusableViews(in tableView: UITableView) {
         tableView.register(ArtistTagsCell.self)
@@ -63,6 +73,8 @@ final class ArtistTopTagsSectionDataSource: ArtistSectionDataSource {
     }
 }
 
+// MARK: - ArtistTagsCellDataSource
+
 extension ArtistTopTagsSectionDataSource: ArtistTagsCellDataSource {
     func numberOfTopTags(in cell: ArtistTagsCell) -> Int {
         return viewModel.numberOfTopTags
@@ -72,6 +84,8 @@ extension ArtistTopTagsSectionDataSource: ArtistTagsCellDataSource {
         return viewModel.cellViewModel(at: indexPath)
     }
 }
+
+// MARK: - ArtistTagsCellDelegate
 
 extension ArtistTopTagsSectionDataSource: ArtistTagsCellDelegate {
     func artistTagsCell(_ cell: ArtistTagsCell, didSelectTagAt indexPath: IndexPath) {

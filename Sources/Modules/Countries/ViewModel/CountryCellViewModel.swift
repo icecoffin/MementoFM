@@ -8,6 +8,8 @@
 
 import Foundation
 
+// MARK: - CountryType
+
 enum CountryType: Equatable {
     case unknown
     case named(name: String)
@@ -22,10 +24,15 @@ enum CountryType: Equatable {
     }
 }
 
-final class CountryCellViewModel {
-    let country: CountryType
+// MARK: - CountryCellViewModel
 
+final class CountryCellViewModel {
+    // MARK: - Public properties
+
+    let country: CountryType
     let countText: String
+
+    // MARK: - Init
 
     init(name: String, count: Int, numberFormatter: NumberFormatter) {
         if name.isEmpty {

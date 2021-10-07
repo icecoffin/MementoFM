@@ -9,6 +9,8 @@
 import Foundation
 import PromiseKit
 
+// MARK: - ArtistSimilarsSectionViewModelProtocol
+
 protocol ArtistSimilarsSectionViewModelProtocol: AnyObject {
     var didUpdateData: (() -> Void)? { get set }
     var didReceiveError: ((Error) -> Void)? { get set }
@@ -25,15 +27,24 @@ protocol ArtistSimilarsSectionViewModelProtocol: AnyObject {
     func selectArtist(at indexPath: IndexPath)
 }
 
+// MARK: - ArtistSimilarsSectionViewModelDelegate
+
 protocol ArtistSimilarsSectionViewModelDelegate: AnyObject {
     func artistSimilarsSectionViewModel(_ viewModel: ArtistSimilarsSectionViewModel,
                                         didSelectArtist artist: Artist)
 }
 
+// MARK: - ArtistSimilarsSectionViewModel
+
 final class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtocol {
     typealias Dependencies = HasArtistService
 
+    // MARK: - Private properties
+
     private var tabViewModels: [ArtistSimilarsSectionViewModelProtocol] = []
+
+    // MARK: - Public properties
+
     private(set) lazy var currentTabViewModel: ArtistSimilarsSectionViewModelProtocol = self.tabViewModels[0]
 
     var didUpdateData: (() -> Void)?
@@ -65,12 +76,16 @@ final class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtoc
         return currentTabViewModel.emptyDataSetText
     }
 
+    // MARK: - Init
+
     init(artist: Artist,
-         tabViewModelFactory: ArtistSimilarsSectionTabViewModelFactoryProtocol = ArtistSimilarsSectionTabViewModelFactory(),
-         dependencies: Dependencies) {
+         dependencies: Dependencies,
+         tabViewModelFactory: ArtistSimilarsSectionTabViewModelFactoryProtocol = ArtistSimilarsSectionTabViewModelFactory()) {
         tabViewModels = tabViewModelFactory.makeTabViewModels(for: artist, dependencies: dependencies, delegate: self)
         setup()
     }
+
+    // MARK: - Private properties
 
     private func setup() {
         for tabViewModel in tabViewModels {
@@ -96,6 +111,8 @@ final class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtoc
         }
     }
 
+    // MARK: - Public methods
+
     func getSimilarArtists() {
         currentTabViewModel.getSimilarArtists()
     }
@@ -114,6 +131,8 @@ final class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtoc
         currentTabViewModel.getSimilarArtists()
     }
 }
+
+// MARK: - SimilarsSectionTabViewModelDelegate
 
 extension ArtistSimilarsSectionViewModel: SimilarsSectionTabViewModelDelegate {
     func similarsSectionTabViewModel(_ viewModel: SimilarsSectionTabViewModel,

@@ -12,7 +12,7 @@ import RealmSwift
 final class ArtistsByTagViewModel: ArtistListViewModel {
     typealias Dependencies = HasArtistService
 
-    // MARK: - Properties
+    // MARK: - Private properties
 
     private let tagName: String
     private let dependencies: Dependencies
@@ -28,6 +28,8 @@ final class ArtistsByTagViewModel: ArtistListViewModel {
         let playcountSort = NSSortDescriptor(key: "playcount", ascending: false)
         return self.dependencies.artistService.artists(filteredUsing: self.originalPredicate, sortedBy: [playcountSort])
     }()
+
+    // MARK: - Public properties
 
     weak var delegate: ArtistListViewModelDelegate?
 
