@@ -8,15 +8,15 @@
 
 import UIKit
 
-enum AppearanceConfigurator {
-    static func configureAppearance() {
+final class AppearanceConfigurator {
+    class func configureAppearance() {
         configureNavigationBarAppearance()
         configureTabBarItemAppearance()
         configureSearchBarAppearance()
         configureTableViewAppearance()
     }
 
-    private static func configureNavigationBarAppearance() {
+    private class func configureNavigationBarAppearance() {
         let appearance = UINavigationBarAppearance()
 
         appearance.configureWithOpaqueBackground()
@@ -32,12 +32,12 @@ enum AppearanceConfigurator {
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
 
-    private static func configureTabBarItemAppearance() {
+    private class func configureTabBarItemAppearance() {
         let appearance = UITabBarItem.appearance()
         appearance.setTitleTextAttributes([.font: UIFont.tabBarItem], for: .normal)
     }
 
-    private static func configureSearchBarAppearance() {
+    private class func configureSearchBarAppearance() {
         let textFieldAppearance = UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self])
         textFieldAppearance.defaultTextAttributes = [.font: UIFont.secondaryContent]
 
@@ -45,7 +45,7 @@ enum AppearanceConfigurator {
         barButtonItemAppearance.setTitleTextAttributes([.font: UIFont.primaryContent], for: .normal)
     }
 
-    private static func configureTableViewAppearance() {
+    private class func configureTableViewAppearance() {
         if #available(iOS 15.0, *) {
             UITableView.appearance().sectionHeaderTopPadding = 0
         }
