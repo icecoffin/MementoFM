@@ -105,7 +105,7 @@ final class RealmService: PersistentStore {
     }
 
     // MARK: - Obtaining objects from Realm
-    
+
     func objects<T: TransientEntity>(_ type: T.Type, filteredBy predicate: NSPredicate?) -> [T]
         where T.PersistentType.TransientType == T {
             guard let type = T.PersistentType.self as? Object.Type else {

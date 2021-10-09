@@ -9,7 +9,7 @@
 import Foundation
 
 final class ErrorConverter {
-    class func displayMessage(for error: Error) -> String {
+    static func displayMessage(for error: Error) -> String {
         if let lastFMError = error as? LastFMError {
             return "\(lastFMError.message) (Error code: \(lastFMError.errorCode))"
         } else {

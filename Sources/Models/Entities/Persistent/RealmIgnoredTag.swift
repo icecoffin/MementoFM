@@ -17,7 +17,7 @@ final class RealmIgnoredTag: Object, PersistentEntity {
         return "uuid"
     }
 
-    class func from(transient: IgnoredTag) -> RealmIgnoredTag {
+    static func from(transient: IgnoredTag) -> RealmIgnoredTag {
         let ignoredTag = transient
         let realmIgnoredTag = RealmIgnoredTag()
         realmIgnoredTag.uuid = ignoredTag.uuid

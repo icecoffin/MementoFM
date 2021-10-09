@@ -22,7 +22,7 @@ final class RealmArtist: Object, PersistentEntity {
         return "name"
     }
 
-    class func from(transient: Artist) -> RealmArtist {
+    static func from(transient: Artist) -> RealmArtist {
         let artist = transient
         let realmArtist = RealmArtist()
         realmArtist.name = artist.name
