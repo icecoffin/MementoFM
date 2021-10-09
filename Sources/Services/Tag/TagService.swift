@@ -9,6 +9,8 @@
 import Foundation
 import PromiseKit
 
+// MARK: - TagServiceProtocol
+
 protocol TagServiceProtocol: AnyObject {
     func getTopTags(for artists: [Artist], progress: ((TopTagsRequestProgress) -> Void)?) -> Promise<Void>
     func getAllTopTags() -> [Tag]
@@ -20,14 +22,22 @@ extension TagServiceProtocol {
     }
 }
 
+// MARK: - TagService
+
 final class TagService: TagServiceProtocol {
+    // MARK: - Private properties
+
     private let persistentStore: PersistentStore
     private let repository: TagRepository
+
+    // MARK: - Init
 
     init(persistentStore: PersistentStore, repository: TagRepository) {
         self.persistentStore = persistentStore
         self.repository = repository
     }
+
+    // MARK: - Public methods
 
     func getTopTags(for artists: [Artist], progress: ((TopTagsRequestProgress) -> Void)?) -> Promise<Void> {
         return Promise { seal in

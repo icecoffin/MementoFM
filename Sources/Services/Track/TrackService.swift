@@ -9,6 +9,8 @@
 import Foundation
 import PromiseKit
 
+// MARK: - TrackServiceProtocol
+
 protocol TrackServiceProtocol: AnyObject {
     func getRecentTracks(for user: String, from: TimeInterval, limit: Int, progress: ((Progress) -> Void)?) -> Promise<[Track]>
     func processTracks(_ tracks: [Track], using processor: RecentTracksProcessing) -> Promise<Void>
@@ -24,14 +26,22 @@ extension TrackServiceProtocol {
     }
 }
 
+// MARK: - TrackService
+
 final class TrackService: TrackServiceProtocol {
+    // MARK: - Private properties
+
     private let persistentStore: PersistentStore
     private let repository: TrackRepository
+
+    // MARK: - Init
 
     init(persistentStore: PersistentStore, repository: TrackRepository) {
         self.persistentStore = persistentStore
         self.repository = repository
     }
+
+    // MARK: - Public methods
 
     func getRecentTracks(for user: String,
                          from: TimeInterval,

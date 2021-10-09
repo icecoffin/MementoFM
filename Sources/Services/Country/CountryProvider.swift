@@ -8,16 +8,26 @@
 
 import Foundation
 
+// MARK: - CountryProviding
+
 protocol CountryProviding {
     func topCountry(for artist: Artist) -> String?
 }
 
+// MARK: - CountryProvider
+
 final class CountryProvider: CountryProviding {
+    // MARK: - Private properties
+
     private let mapping: CountryMapping
+
+    // MARK: - Init
 
     init(mapping: CountryMapping = .loadFromFile()) {
         self.mapping = mapping
     }
+
+    // MARK: - Public methods
 
     func topCountry(for artist: Artist) -> String? {
         return artist

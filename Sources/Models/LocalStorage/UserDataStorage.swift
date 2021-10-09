@@ -8,6 +8,8 @@
 
 import Foundation
 
+// MARK: - UserDataStoring
+
 protocol UserDataStoring: AnyObject {
     var username: String { get set }
     var lastUpdateTimestamp: TimeInterval { get set }
@@ -17,6 +19,8 @@ protocol UserDataStoring: AnyObject {
     func reset()
 }
 
+// MARK: - UserDataStorage
+
 final class UserDataStorage: UserDataStoring {
     private struct UserDefaultsKeys {
         static let username = "username"
@@ -25,11 +29,11 @@ final class UserDataStorage: UserDataStoring {
         static let didReceiveInitialCollection = "didReceiveInitialCollection"
     }
 
+    // MARK: - Private properties
+
     private let userDefaults: UserDefaults
 
-    init(userDefaults: UserDefaults = .standard) {
-        self.userDefaults = userDefaults
-    }
+    // MARK: - Public properties
 
     var username: String {
         get {
@@ -66,6 +70,14 @@ final class UserDataStorage: UserDataStoring {
             userDefaults.set(newValue, forKey: UserDefaultsKeys.didReceiveInitialCollection)
         }
     }
+
+    // MARK: - Init
+
+    init(userDefaults: UserDefaults = .standard) {
+        self.userDefaults = userDefaults
+    }
+
+    // MARK: - Public methods
 
     func reset() {
         lastUpdateTimestamp = 0

@@ -11,13 +11,19 @@ import Alamofire
 import PromiseKit
 
 final class LastFMNetworkService: NetworkService {
-    let baseURL: URL
-    let queue = OperationQueue()
+    // MARK: - Private properties
 
-    init(baseURL: URL = NetworkConstants.LastFM.baseURL) {
+    private let baseURL: URL
+    private let queue = OperationQueue()
+
+    // MARK: - Init
+
+    init(baseURL: URL = NetworkConstants.LastFM.baseURL, maxConcurrentOperationCount: Int = 5) {
         self.baseURL = baseURL
-        queue.maxConcurrentOperationCount = 5
+        queue.maxConcurrentOperationCount = maxConcurrentOperationCount
     }
+
+    // MARK: - Public methods
 
     func performRequest<T: Codable>(method: HTTPMethod,
                                     parameters: Parameters?,

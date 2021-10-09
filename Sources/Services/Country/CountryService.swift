@@ -9,15 +9,23 @@
 import Foundation
 import PromiseKit
 
+// MARK: - CountryServiceProtocol
+
 protocol CountryServiceProtocol {
     func updateCountries() -> Promise<Void>
     func getCountriesWithCounts() -> [String: Int]
 }
 
+// MARK: - CountryService
+
 final class CountryService: CountryServiceProtocol {
+    // MARK: - Public properties
+
     private let persistentStore: PersistentStore
     private let countryProvider: CountryProviding
     private let dispatcher: Dispatcher
+
+    // MARK: - Init
 
     init(persistentStore: PersistentStore,
          countryProvider: CountryProviding = CountryProvider(),
@@ -26,6 +34,8 @@ final class CountryService: CountryServiceProtocol {
         self.countryProvider = countryProvider
         self.dispatcher = dispatcher
     }
+
+    // MARK: - Public methods
 
     func updateCountries() -> Promise<Void> {
         return dispatcher.dispatch { () -> [Artist] in

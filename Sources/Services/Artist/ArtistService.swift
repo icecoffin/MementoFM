@@ -9,11 +9,15 @@
 import Foundation
 import PromiseKit
 
+// MARK: - TopTagsRequestProgress
+
 struct TopTagsRequestProgress {
     let progress: Progress
     let artist: Artist
     let topTagsList: TopTagsList
 }
+
+// MARK: - ArtistServiceProtocol
 
 protocol ArtistServiceProtocol: AnyObject {
     func getLibrary(for user: String, limit: Int, progress: ((Progress) -> Void)?) -> Promise<[Artist]>
@@ -50,14 +54,22 @@ extension ArtistServiceProtocol {
     }
 }
 
+// MARK: - ArtistService
+
 final class ArtistService: ArtistServiceProtocol {
+    // MARK: - Private properties
+
     private let persistentStore: PersistentStore
     private let repository: ArtistRepository
+
+    // MARK: - Init
 
     init(persistentStore: PersistentStore, repository: ArtistRepository) {
         self.persistentStore = persistentStore
         self.repository = repository
     }
+
+    // MARK: - Public properties
 
     func getLibrary(for user: String, limit: Int, progress: ((Progress) -> Void)?) -> Promise<[Artist]> {
         return Promise { seal in

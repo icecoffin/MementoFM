@@ -11,6 +11,8 @@ import RealmSwift
 import PromiseKit
 
 final class RealmService: PersistentStore {
+    // MARK: - Private properties
+
     private let mainQueueRealm: Realm
     private let getBackgroundQueueRealm: () -> Realm
 
@@ -25,7 +27,8 @@ final class RealmService: PersistentStore {
         }
     }
 
-    // MARK: - Init & factory methods
+    // MARK: - Init
+
     init(getRealm: @escaping () -> Realm,
          backgroundDispatcher: Dispatcher = AsyncDispatcher.global,
          mainDispatcher: Dispatcher = AsyncDispatcher.main) {
@@ -35,7 +38,8 @@ final class RealmService: PersistentStore {
         self.mainDispatcher = mainDispatcher
     }
 
-    // MARK: - Writing to Realm
+    // MARK: - Private methods
+
     private func write(block: @escaping (Realm) -> Void) -> Promise<Void> {
         return backgroundDispatcher.dispatch {
             try self.write(to: self.currentQueueRealm) { realm in
@@ -55,7 +59,10 @@ final class RealmService: PersistentStore {
         }
     }
 
+    // MARK: - Public methods
+
     // MARK: - Realm mapped collection
+
     func mappedCollection<T: TransientEntity>(filteredUsing predicate: NSPredicate?,
                                               sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<T> {
         let realmMappedCollection = RealmMappedCollection<T>(realm: currentQueueRealm,
@@ -65,6 +72,7 @@ final class RealmService: PersistentStore {
     }
 
     // MARK: - Saving objects to Realm
+
     func save<T: TransientEntity>(_ object: T, update: Bool = true) -> Promise<Void>
         where T.PersistentType.TransientType == T {
             return write { realm in
@@ -83,6 +91,7 @@ final class RealmService: PersistentStore {
     }
 
     // MARK: - Deleting objects from Realm
+
     func deleteObjects<T: TransientEntity>(ofType type: T.Type) -> Promise<Void>
         where T.PersistentType.TransientType == T {
             guard let type = type.PersistentType.self as? Object.Type else {
@@ -96,6 +105,7 @@ final class RealmService: PersistentStore {
     }
 
     // MARK: - Obtaining objects from Realm
+    
     func objects<T: TransientEntity>(_ type: T.Type, filteredBy predicate: NSPredicate?) -> [T]
         where T.PersistentType.TransientType == T {
             guard let type = T.PersistentType.self as? Object.Type else {

@@ -9,6 +9,8 @@
 import Foundation
 import PromiseKit
 
+// MARK: - IgnoredTagServiceProtocol
+
 protocol IgnoredTagServiceProtocol: AnyObject {
     var defaultIgnoredTagNames: [String] { get }
 
@@ -27,12 +29,20 @@ extension IgnoredTagServiceProtocol {
     }
 }
 
+// MARK: - IgnoredTagService
+
 final class IgnoredTagService: IgnoredTagServiceProtocol {
+    // MARK: - Private properties
+
     private let persistentStore: PersistentStore
+
+    // MARK: - Init
 
     init(persistentStore: PersistentStore) {
         self.persistentStore = persistentStore
     }
+
+    // MARK: - Public methods
 
     func ignoredTags() -> [IgnoredTag] {
         return persistentStore.objects(IgnoredTag.self)

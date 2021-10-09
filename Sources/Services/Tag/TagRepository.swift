@@ -9,16 +9,26 @@
 import Foundation
 import PromiseKit
 
+// MARK: - TagRepository
+
 protocol TagRepository: AnyObject {
     func getTopTags(for artist: String) -> Promise<TopTagsResponse>
 }
 
+// MARK: - TagNetworkRepository
+
 final class TagNetworkRepository: TagRepository {
+    // MARK: - Private properties
+
     private let networkService: NetworkService
+
+    // MARK: - Init
 
     init(networkService: NetworkService) {
         self.networkService = networkService
     }
+
+    // MARK: - Public methods
 
     func getTopTags(for artist: String) -> Promise<TopTagsResponse> {
         let parameters: [String: Any] = ["method": "artist.gettoptags",

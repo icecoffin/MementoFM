@@ -9,6 +9,8 @@
 import Foundation
 import PromiseKit
 
+// MARK: - TrackRepository
+
 protocol TrackRepository: AnyObject {
     func getRecentTracksPage(withIndex index: Int,
                              for user: String,
@@ -16,12 +18,20 @@ protocol TrackRepository: AnyObject {
                              limit: Int) -> Promise<RecentTracksPageResponse>
 }
 
+// MARK: - TrackNetworkRepository
+
 final class TrackNetworkRepository: TrackRepository {
+    // MARK: - Private properties
+
     private let networkService: NetworkService
+
+    // MARK: - Init
 
     init(networkService: NetworkService) {
         self.networkService = networkService
     }
+
+    // MARK: - Public methods
 
     func getRecentTracksPage(withIndex index: Int,
                              for user: String,

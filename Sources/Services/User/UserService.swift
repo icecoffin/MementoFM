@@ -9,6 +9,8 @@
 import Foundation
 import PromiseKit
 
+// MARK: - UserServiceProtocol
+
 protocol UserServiceProtocol: AnyObject {
     var username: String { get set }
     var lastUpdateTimestamp: TimeInterval { get set }
@@ -19,10 +21,16 @@ protocol UserServiceProtocol: AnyObject {
     func checkUserExists(withUsername username: String) -> Promise<EmptyResponse>
 }
 
+// MARK: - UserService
+
 final class UserService: UserServiceProtocol {
+    // MARK: - Private properties
+
     private let persistentStore: PersistentStore
     private let repository: UserRepository
     private let userDataStorage: UserDataStoring
+
+    // MARK: - Public properties
 
     var username: String {
         get {
@@ -59,11 +67,15 @@ final class UserService: UserServiceProtocol {
         }
     }
 
+    // MARK: - Init
+
     init(persistentStore: PersistentStore, repository: UserRepository, userDataStorage: UserDataStoring) {
         self.persistentStore = persistentStore
         self.repository = repository
         self.userDataStorage = userDataStorage
     }
+
+    // MARK: - Public methods
 
     func clearUserData() -> Promise<Void> {
         userDataStorage.reset()

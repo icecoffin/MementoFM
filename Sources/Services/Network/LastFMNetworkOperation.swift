@@ -12,6 +12,8 @@ import Alamofire
 final class LastFMNetworkOperation<T: Codable>: AsynchronousOperation {
     typealias CompletionHandler = (Result<T>) -> Void
 
+    // MARK: - Private properties
+
     private let url: URLConvertible
     private let method: HTTPMethod
     private let parameters: Parameters?
@@ -19,8 +21,12 @@ final class LastFMNetworkOperation<T: Codable>: AsynchronousOperation {
     private let headers: HTTPHeaders?
     private let completionHandler: CompletionHandler
 
+    // MARK: - Public properties
+
     weak var request: Request?
     var onCancel: (() -> Void)?
+
+    // MARK: - Init
 
     init(url: URLConvertible,
          method: HTTPMethod = .get,
@@ -38,17 +44,7 @@ final class LastFMNetworkOperation<T: Codable>: AsynchronousOperation {
         super.init()
     }
 
-    override func main() {
-        request = Alamofire
-            .request(url,
-                     method: method,
-                     parameters: parameters,
-                     encoding: encoding,
-                     headers: headers)
-            .responseData { response in
-                self.handleResponse(response)
-            }
-    }
+    // MARK: - Private methods
 
     private func handleResponse(_ response: DataResponse<Data>) {
         let jsonDecoder = JSONDecoder()
@@ -70,6 +66,20 @@ final class LastFMNetworkOperation<T: Codable>: AsynchronousOperation {
             self.completionHandler(.failure(error))
         }
         self.completeOperation()
+    }
+
+    // MARK: - Overrides
+
+    override func main() {
+        request = Alamofire
+            .request(url,
+                     method: method,
+                     parameters: parameters,
+                     encoding: encoding,
+                     headers: headers)
+            .responseData { response in
+                self.handleResponse(response)
+            }
     }
 
     override func cancel() {
