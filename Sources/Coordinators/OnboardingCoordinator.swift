@@ -27,6 +27,7 @@ final class OnboardingCoordinator: NavigationFlowCoordinator, IgnoredTagsPresent
 
     init(window: UIWindow, dependencies: AppDependency) {
         self.navigationController = UINavigationController()
+        self.navigationController.navigationBar.prefersLargeTitles = true
         window.rootViewController = self.navigationController
         self.dependencies = dependencies
     }
@@ -43,9 +44,10 @@ final class OnboardingCoordinator: NavigationFlowCoordinator, IgnoredTagsPresent
         let viewModel = EnterUsernameViewModel(dependencies: dependencies)
         viewModel.delegate = self
         let viewController = EnterUsernameViewController(viewModel: viewModel)
+        viewController.navigationItem.backButtonDisplayMode = .minimal
         viewController.title = "Welcome!".unlocalized
         if alreadyHasUsername {
-            let forwardButton = BlockBarButtonItem(image: .arrowLeft, style: .plain) { [unowned self] in
+            let forwardButton = BlockBarButtonItem(image: .arrowRight, style: .plain) { [unowned self] in
                 self.showIgnoredTagsViewController(animated: true)
             }
             viewController.navigationItem.rightBarButtonItem = forwardButton
