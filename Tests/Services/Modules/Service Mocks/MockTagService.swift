@@ -14,13 +14,14 @@ class MockTagService: TagServiceProtocol {
     var artists: [Artist] = []
     var customProgress: TopTagsRequestProgress?
     var didRequestTopTags = false
-    func getTopTags(for artists: [Artist], progress: ((TopTagsRequestProgress) -> Void)?) -> Promise<Void> {
+    func getTopTags(for artists: [Artist], progress: ((TopTagsRequestProgress) -> Promise<Void>)?) -> Promise<Void> {
         self.artists = artists
-        if let customProgress = customProgress {
-            progress?(customProgress)
-        }
         didRequestTopTags = true
-        return .value(())
+        if let progress = progress, let customProgress = customProgress {
+            return progress(customProgress)
+        } else {
+            return .value(())
+        }
     }
 
     var customTopTags: [Tag] = []

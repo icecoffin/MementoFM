@@ -125,24 +125,22 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
 
     private func getArtistsTags() -> Promise<Void> {
         let artists = artistService.artistsNeedingTagsUpdate()
-        let progress: ((TopTagsRequestProgress) -> Void) = { [weak self] requestProgress in
+        let progress: ((TopTagsRequestProgress) -> Promise<Void>) = { [weak self] requestProgress -> Promise<Void> in
             guard let self = self else {
-                return
+                return .value(())
             }
 
             let ignoredTags = self.ignoredTagService.ignoredTags()
             let calculator = ArtistTopTagsCalculator(ignoredTags: ignoredTags)
 
-            self.artistService.updateArtist(requestProgress.artist,
-                                            with: requestProgress.topTagsList.tags).then { artist -> Promise<Void> in
-                                                return self.artistService.calculateTopTags(for: artist, using: calculator)
-            }
-            .catch { error in
-                self.didReceiveError?(error)
-            }
-
             let status: LibraryUpdateStatus = .tags(artistName: requestProgress.artist.name, progress: requestProgress.progress)
             self.didChangeStatus?(status)
+
+            return self.artistService.updateArtist(requestProgress.artist,
+                                            with: requestProgress.topTagsList.tags)
+                .then { artist -> Promise<Void> in
+                    return self.artistService.calculateTopTags(for: artist, using: calculator)
+                }
         }
 
         return tagService.getTopTags(for: artists, progress: progress)

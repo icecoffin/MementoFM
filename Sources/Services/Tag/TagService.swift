@@ -12,7 +12,7 @@ import PromiseKit
 // MARK: - TagServiceProtocol
 
 protocol TagServiceProtocol: AnyObject {
-    func getTopTags(for artists: [Artist], progress: ((TopTagsRequestProgress) -> Void)?) -> Promise<Void>
+    func getTopTags(for artists: [Artist], progress: ((TopTagsRequestProgress) -> Promise<Void>)?) -> Promise<Void>
     func getAllTopTags() -> [Tag]
 }
 
@@ -39,15 +39,15 @@ final class TagService: TagServiceProtocol {
 
     // MARK: - Public methods
 
-    func getTopTags(for artists: [Artist], progress: ((TopTagsRequestProgress) -> Void)?) -> Promise<Void> {
+    func getTopTags(for artists: [Artist], progress: ((TopTagsRequestProgress) -> Promise<Void>)?) -> Promise<Void> {
         return Promise { seal in
             let totalProgress = Progress(totalUnitCount: Int64(artists.count))
 
             let promises = artists.map { artist in
-                return repository.getTopTags(for: artist.name).done { topTagsResponse in
+                return repository.getTopTags(for: artist.name).compactMap { topTagsResponse -> Promise<Void>? in
                     totalProgress.completedUnitCount += 1
                     let topTagsList = topTagsResponse.topTagsList
-                    progress?(TopTagsRequestProgress(progress: totalProgress, artist: artist, topTagsList: topTagsList))
+                    return progress?(TopTagsRequestProgress(progress: totalProgress, artist: artist, topTagsList: topTagsList))
                 }
             }
 

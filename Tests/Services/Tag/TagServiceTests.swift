@@ -37,6 +37,7 @@ class TagServiceTests: XCTestCase {
                 let expectedTags = ModelFactory.generateTags(inAmount: tagsPerArtist, for: progress.artist.name)
                 expect(progress.topTagsList.tags) == expectedTags
                 progressCallCount += 1
+                return .value(())
             }).done { _ in
                 expect(progressCallCount) == artists.count
                 done()
