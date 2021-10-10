@@ -27,7 +27,13 @@ struct RecentTracksPage: Codable {
 extension RecentTracksPage {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: RootCodingKeys.self)
-        tracks = try container.decode([Track].self, forKey: .tracks)
+        do {
+            tracks = try container.decode([Track].self, forKey: .tracks)
+        } catch {
+            // In case there is only one recent track, the API will return a dictionary instead of an array
+            let track = try container.decode(Track.self, forKey: .tracks)
+            tracks = [track]
+        }
 
         let attributesContainer = try container.nestedContainer(keyedBy: AttributesCodingKeys.self, forKey: .attributes)
         let indexString = try attributesContainer.decode(String.self, forKey: .index)

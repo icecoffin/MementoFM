@@ -11,16 +11,34 @@ import XCTest
 import Nimble
 
 class RecentTracksPageTests: XCTestCase {
-    func test_initWithMap_setsCorrectProperties() {
-        let recentTracksPage = makeSampleRecentTracksPage()
+    func test_initWithMap_setsCorrectProperties_forMultiTrackPage() {
+        let recentTracksPage = makeMultipleRecentTracksPage()
 
         expect(recentTracksPage?.index) == 2
         expect(recentTracksPage?.totalPages) == 75698
         expect(recentTracksPage?.tracks.count) == 2
     }
 
-    private func makeSampleRecentTracksPage() -> RecentTracksPage? {
-        guard let data = Utils.data(fromResource: "sample_recent_tracks_page", withExtension: "json") else {
+    func test_initWithMap_setsCorrectProperties_forSingleTrackPage() {
+        let recentTracksPage = makeSingleRecentTrackPage()
+
+        expect(recentTracksPage?.index) == 2
+        expect(recentTracksPage?.totalPages) == 75698
+        expect(recentTracksPage?.tracks.count) == 1
+    }
+
+    // MARK: - Helpers
+
+    private func makeSingleRecentTrackPage() -> RecentTracksPage? {
+        return makeSampleRecentTracksPage(fileName: "sample_single_recent_track_page")
+    }
+
+    private func makeMultipleRecentTracksPage() -> RecentTracksPage? {
+        return makeSampleRecentTracksPage(fileName: "sample_recent_tracks_page")
+    }
+
+    private func makeSampleRecentTracksPage(fileName: String) -> RecentTracksPage? {
+        guard let data = Utils.data(fromResource: fileName, withExtension: "json") else {
             return nil
         }
 
