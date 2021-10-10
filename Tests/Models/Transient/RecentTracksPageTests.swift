@@ -11,7 +11,7 @@ import XCTest
 import Nimble
 
 class RecentTracksPageTests: XCTestCase {
-    func test_initWithMap_setsCorrectProperties_forMultiTrackPage() {
+    func test_decodeFromJSON_setsCorrectProperties_forMultiTrackPage() {
         let recentTracksPage = makeMultipleRecentTracksPage()
 
         expect(recentTracksPage?.index) == 2
@@ -19,7 +19,7 @@ class RecentTracksPageTests: XCTestCase {
         expect(recentTracksPage?.tracks.count) == 2
     }
 
-    func test_initWithMap_setsCorrectProperties_forSingleTrackPage() {
+    func test_decodeFromJSON_setsCorrectProperties_forSingleTrackPage() {
         let recentTracksPage = makeSingleRecentTrackPage()
 
         expect(recentTracksPage?.index) == 2

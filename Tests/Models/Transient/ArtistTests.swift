@@ -11,7 +11,7 @@ import Nimble
 @testable import MementoFM
 
 class ArtistTests: XCTestCase {
-    func test_initWithMap_setsCorrectProperties() {
+    func test_decodeFromJSON_setsCorrectProperties() {
         let artist = makeSampleArtist()
 
         expect(artist?.name) == "Tiger Army"
@@ -89,6 +89,8 @@ class ArtistTests: XCTestCase {
         expect(updatedArtist?.tags) == artist?.tags
         expect(updatedArtist?.topTags) == topTags
     }
+
+    // MARK: - Helpers
 
     private func makeSampleArtist() -> Artist? {
         guard let data = Utils.data(fromResource: "sample_artist", withExtension: "json") else {

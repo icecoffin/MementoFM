@@ -11,11 +11,13 @@ import XCTest
 import Nimble
 
 class TrackTests: XCTestCase {
-    func test_initWithMap_setsCorrectProperties() {
+    func test_decodeFromJSON_setsCorrectProperties() {
         let track = makeSampleTrack()
 
         expect(track?.artist.name) == "Morphine"
     }
+
+    // MARK: - Helpers
 
     private func makeSampleTrack() -> Track? {
         guard let data = Utils.data(fromResource: "sample_track", withExtension: "json") else {

@@ -11,13 +11,15 @@ import XCTest
 import Nimble
 
 class LibraryPageTests: XCTestCase {
-    func test_initWithMap_setsCorrectProperties() {
+    func test_decodeFromJSON_setsCorrectProperties() {
         let libraryPage = makeSampleLibraryPage()
 
         expect(libraryPage?.index) == 2
         expect(libraryPage?.totalPages) == 720
         expect(libraryPage?.artists.count) == 2
     }
+
+    // MARK: - Helpers
 
     private func makeSampleLibraryPage() -> LibraryPage? {
         guard let data = Utils.data(fromResource: "sample_library_page", withExtension: "json") else {

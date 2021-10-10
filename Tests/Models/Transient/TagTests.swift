@@ -11,12 +11,14 @@ import XCTest
 import Nimble
 
 class TagTests: XCTestCase {
-    func test_initWithMap_setsCorrectProperties() {
+    func test_decodeFromJSON_setsCorrectProperties() {
         let tag = makeSampleTag()
 
         expect(tag?.count) == 100
         expect(tag?.name) == "psychedelic rock"
     }
+
+    // MARK: - Helpers
 
     private func makeSampleTag() -> Tag? {
         guard let data = Utils.data(fromResource: "sample_tag", withExtension: "json") else {

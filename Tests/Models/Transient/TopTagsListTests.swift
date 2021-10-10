@@ -11,11 +11,13 @@ import XCTest
 import Nimble
 
 class TopTagsListTests: XCTestCase {
-    func test_initWithMap_setsCorrectProperties() {
+    func test_decodeFromJSON_setsCorrectProperties() {
         let topTagsList = makeSampleTopTagsList(fileName: "sample_top_tags_list")
 
         expect(topTagsList?.tags.count) == 47
     }
+
+    // MARK: - Helpers
 
     private func makeSampleTopTagsList(fileName: String) -> TopTagsList? {
         guard let data = Utils.data(fromResource: fileName, withExtension: "json") else {
