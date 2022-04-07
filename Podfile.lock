@@ -11,7 +11,6 @@ PODS:
   - RealmSwift (10.16.0):
     - Realm (= 10.16.0)
   - SnapKit (5.0.1)
-  - SwiftyBeaver (1.9.5)
   - TPKeyboardAvoiding (1.3.5)
 
 DEPENDENCIES:
@@ -19,7 +18,6 @@ DEPENDENCIES:
   - PromiseKit/Alamofire
   - RealmSwift
   - SnapKit
-  - SwiftyBeaver
   - TPKeyboardAvoiding
 
 SPEC REPOS:
@@ -30,7 +28,6 @@ SPEC REPOS:
     - Realm
     - RealmSwift
     - SnapKit
-    - SwiftyBeaver
     - TPKeyboardAvoiding
 
 SPEC CHECKSUMS:
@@ -40,9 +37,8 @@ SPEC CHECKSUMS:
   Realm: b6027801398f3743fc222f096faa85281b506e6c
   RealmSwift: b02a3d0e4947955da960b642c98ad3a461fc4e70
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
-  SwiftyBeaver: 84069991dd5dca07d7069100985badaca7f0ce82
   TPKeyboardAvoiding: d55b3ea7b362540af8fcf36aa3ed2e87bf210cc6
 
-PODFILE CHECKSUM: f122a0923228183efba69659878ff775dbd52f74
+PODFILE CHECKSUM: 5ce4bf2cf6684ff1c06d0036c04dd371a9c3dcfb
 
 COCOAPODS: 1.11.2

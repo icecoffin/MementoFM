@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import SwiftyBeaver
 
-let log = SwiftyBeaver.self
+let log = Logger.self
 
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,7 +21,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
 
-        setupLogging()
+        log.debug(NSHomeDirectory())
 
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.backgroundColor = .systemBackground
@@ -39,12 +38,5 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         self.appCoordinator = appCoordinator
 
         return true
-    }
-
-    private func setupLogging() {
-        let console = ConsoleDestination()
-        console.format = "$Dyyyy-MM-dd HH:mm:ss.SSS$d [$L] $M"
-        log.addDestination(console)
-        log.debug(NSHomeDirectory())
     }
 }

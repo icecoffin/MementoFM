@@ -29,7 +29,6 @@ extension CountryMapping {
 
             return CountryMapping(map: jsonDictionary)
         } catch {
-            log.error(error.localizedDescription)
             return CountryMapping(map: [:])
         }
     }

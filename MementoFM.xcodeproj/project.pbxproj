@@ -211,6 +211,7 @@
 		65DABC4A270CD43000727F56 /* UINavigationController+Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DABC49270CD43000727F56 /* UINavigationController+Transition.swift */; };
 		65DABC4C27133D9900727F56 /* sample_single_recent_track_page.json in Resources */ = {isa = PBXBuildFile; fileRef = 65DABC4B27133D9900727F56 /* sample_single_recent_track_page.json */; };
 		65DC8F611FD0620F007299DB /* ArtistsByTagViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DC8F601FD0620F007299DB /* ArtistsByTagViewModelTests.swift */; };
+		65FB48B127FF7367008BB121 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FB48B027FF7367008BB121 /* Logger.swift */; };
 		65FC807722B2E80B000207EE /* UIImage+Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FC807622B2E80B000207EE /* UIImage+Symbols.swift */; };
 		C22717ED05010403712EE6F4 /* Pods_MementoFM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC6CC2B0ECF7E9A26C0EF7EE /* Pods_MementoFM.framework */; };
 		F9FB0EE3F01D7CD48AF77C25 /* Pods_MementoFMTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92A1004A04C35D541522816D /* Pods_MementoFMTests.framework */; };
@@ -436,6 +437,7 @@
 		65DABC49270CD43000727F56 /* UINavigationController+Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Transition.swift"; sourceTree = "<group>"; };
 		65DABC4B27133D9900727F56 /* sample_single_recent_track_page.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_single_recent_track_page.json; sourceTree = "<group>"; };
 		65DC8F601FD0620F007299DB /* ArtistsByTagViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistsByTagViewModelTests.swift; sourceTree = "<group>"; };
+		65FB48B027FF7367008BB121 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		65FC807622B2E80B000207EE /* UIImage+Symbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Symbols.swift"; sourceTree = "<group>"; };
 		7FE38FF7C97840AA7B03AE41 /* Pods-MementoFM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MementoFM.release.xcconfig"; path = "Pods/Target Support Files/Pods-MementoFM/Pods-MementoFM.release.xcconfig"; sourceTree = "<group>"; };
 		92A1004A04C35D541522816D /* Pods_MementoFMTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MementoFMTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1099,6 +1101,7 @@
 				652287F82278D911006BD04E /* Dispatcher.swift */,
 				65FC807622B2E80B000207EE /* UIImage+Symbols.swift */,
 				65AF2B0A27FF62AE0079040D /* UICollectionViewLeftAlignedLayout.swift */,
+				65FB48B027FF7367008BB121 /* Logger.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1502,7 +1505,6 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
 				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -1512,7 +1514,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoiding.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1634,6 +1635,7 @@
 				650D97CE1F1521C1008C1DC6 /* LastFMErrorResponse.swift in Sources */,
 				6555AB581ED0AC1600BDDF21 /* ArtistTagsCell.swift in Sources */,
 				6570302323AE815700F706B4 /* CountryProvider.swift in Sources */,
+				65FB48B127FF7367008BB121 /* Logger.swift in Sources */,
 				651F9E611EC09FDD006D9474 /* EmptyDataSetView.swift in Sources */,
 				651F9E3D1EC09FDC006D9474 /* IgnoredTagsViewController.swift in Sources */,
 				651C3BBA1ECF2F4E00C00AD5 /* ArtistsByTagViewModel.swift in Sources */,
