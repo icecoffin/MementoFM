@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -212,6 +212,7 @@
 		65DABC4C27133D9900727F56 /* sample_single_recent_track_page.json in Resources */ = {isa = PBXBuildFile; fileRef = 65DABC4B27133D9900727F56 /* sample_single_recent_track_page.json */; };
 		65DC8F611FD0620F007299DB /* ArtistsByTagViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DC8F601FD0620F007299DB /* ArtistsByTagViewModelTests.swift */; };
 		65FB48B127FF7367008BB121 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FB48B027FF7367008BB121 /* Logger.swift */; };
+		65FB48B427FF7900008BB121 /* TPKeyboardAvoiding in Frameworks */ = {isa = PBXBuildFile; productRef = 65FB48B327FF7900008BB121 /* TPKeyboardAvoiding */; };
 		65FC807722B2E80B000207EE /* UIImage+Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FC807622B2E80B000207EE /* UIImage+Symbols.swift */; };
 		C22717ED05010403712EE6F4 /* Pods_MementoFM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC6CC2B0ECF7E9A26C0EF7EE /* Pods_MementoFM.framework */; };
 		F9FB0EE3F01D7CD48AF77C25 /* Pods_MementoFMTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92A1004A04C35D541522816D /* Pods_MementoFMTests.framework */; };
@@ -451,6 +452,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65FB48B427FF7900008BB121 /* TPKeyboardAvoiding in Frameworks */,
 				C22717ED05010403712EE6F4 /* Pods_MementoFM.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1398,6 +1400,9 @@
 			dependencies = (
 			);
 			name = MementoFM;
+			packageProductDependencies = (
+				65FB48B327FF7900008BB121 /* TPKeyboardAvoiding */,
+			);
 			productName = MementoFM;
 			productReference = 01D4D3181DAE4A0000BFD7FD /* MementoFM.app */;
 			productType = "com.apple.product-type.application";
@@ -1455,6 +1460,9 @@
 				Base,
 			);
 			mainGroup = 01D4D30F1DAE4A0000BFD7FD;
+			packageReferences = (
+				65FB48B227FF7900008BB121 /* XCRemoteSwiftPackageReference "TPKeyboardAvoiding" */,
+			);
 			productRefGroup = 01D4D3191DAE4A0000BFD7FD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1505,7 +1513,6 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1514,7 +1521,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoiding.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1939,7 +1945,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 4.0;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1954,7 +1961,10 @@
 				DEVELOPMENT_TEAM = FH27F664XD;
 				INFOPLIST_FILE = "$(SRCROOT)/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.icecoffin.mementofm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1971,7 +1981,10 @@
 				DEVELOPMENT_TEAM = FH27F664XD;
 				INFOPLIST_FILE = "$(SRCROOT)/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.icecoffin.mementofm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1986,7 +1999,11 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.icecoffin.MementoFMTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2002,7 +2019,11 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.icecoffin.MementoFMTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -2041,6 +2062,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		65FB48B227FF7900008BB121 /* XCRemoteSwiftPackageReference "TPKeyboardAvoiding" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/michaeltyson/TPKeyboardAvoiding";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		65FB48B327FF7900008BB121 /* TPKeyboardAvoiding */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 65FB48B227FF7900008BB121 /* XCRemoteSwiftPackageReference "TPKeyboardAvoiding" */;
+			productName = TPKeyboardAvoiding;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 01D4D3101DAE4A0000BFD7FD /* Project object */;
 }

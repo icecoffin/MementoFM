@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "TPKeyboardAvoiding",
+        "repositoryURL": "https://github.com/michaeltyson/TPKeyboardAvoiding",
+        "state": {
+          "branch": null,
+          "revision": "3217d6287a6b0ecb1db65a214a2e0fba9934e417",
+          "version": "1.3.5"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

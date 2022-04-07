@@ -8,7 +8,6 @@ target 'MementoFM' do
   pod 'PromiseKit/Alamofire'
   pod 'RealmSwift'
   pod 'SnapKit'
-  pod 'TPKeyboardAvoiding'
 
   target 'MementoFMTests' do
     inherit! :search_paths
