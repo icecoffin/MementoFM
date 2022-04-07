@@ -200,6 +200,7 @@
 		65A305C41F9B383900E1D9C4 /* RealmServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A305C21F9B383400E1D9C4 /* RealmServiceTests.swift */; };
 		65A4811523AFDA34002DC892 /* CountryCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A4811423AFDA34002DC892 /* CountryCellViewModel.swift */; };
 		65A4811723AFDEAC002DC892 /* CountryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A4811623AFDEAC002DC892 /* CountryCell.swift */; };
+		65AF2B0B27FF62AE0079040D /* UICollectionViewLeftAlignedLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AF2B0A27FF62AE0079040D /* UICollectionViewLeftAlignedLayout.swift */; };
 		65B4A0491FC7153500E01881 /* TagsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B4A0481FC7153500E01881 /* TagsViewModelTests.swift */; };
 		65B772891EC5C5E500892698 /* ArtistDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B772881EC5C5E500892698 /* ArtistDataSource.swift */; };
 		65C05C0E2692046D00517784 /* UITableView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C05C0D2692046D00517784 /* UITableView+Reusable.swift */; };
@@ -423,6 +424,7 @@
 		65A305C21F9B383400E1D9C4 /* RealmServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmServiceTests.swift; sourceTree = "<group>"; };
 		65A4811423AFDA34002DC892 /* CountryCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCellViewModel.swift; sourceTree = "<group>"; };
 		65A4811623AFDEAC002DC892 /* CountryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCell.swift; sourceTree = "<group>"; };
+		65AF2B0A27FF62AE0079040D /* UICollectionViewLeftAlignedLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewLeftAlignedLayout.swift; sourceTree = "<group>"; };
 		65B4A0481FC7153500E01881 /* TagsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsViewModelTests.swift; sourceTree = "<group>"; };
 		65B772881EC5C5E500892698 /* ArtistDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistDataSource.swift; sourceTree = "<group>"; };
 		65C05C0D2692046D00517784 /* UITableView+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Reusable.swift"; sourceTree = "<group>"; };
@@ -1096,6 +1098,7 @@
 				65C10DF31F0BD0170072BF09 /* ApplicationStateObserver.swift */,
 				652287F82278D911006BD04E /* Dispatcher.swift */,
 				65FC807622B2E80B000207EE /* UIImage+Symbols.swift */,
+				65AF2B0A27FF62AE0079040D /* UICollectionViewLeftAlignedLayout.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1501,7 +1504,6 @@
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
 				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework",
-				"${BUILT_PRODUCTS_DIR}/UICollectionViewLeftAlignedLayout/UICollectionViewLeftAlignedLayout.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1512,7 +1514,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoiding.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICollectionViewLeftAlignedLayout.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1636,6 +1637,7 @@
 				651F9E611EC09FDD006D9474 /* EmptyDataSetView.swift in Sources */,
 				651F9E3D1EC09FDC006D9474 /* IgnoredTagsViewController.swift in Sources */,
 				651C3BBA1ECF2F4E00C00AD5 /* ArtistsByTagViewModel.swift in Sources */,
+				65AF2B0B27FF62AE0079040D /* UICollectionViewLeftAlignedLayout.swift in Sources */,
 				651F9E441EC09FDC006D9474 /* LibraryViewModel.swift in Sources */,
 				651F9E491EC09FDD006D9474 /* SettingCell.swift in Sources */,
 				651F338E1FA0FB7D00B178D0 /* TagRepository.swift in Sources */,
@@ -1951,39 +1953,6 @@
 				INFOPLIST_FILE = "$(SRCROOT)/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-l\"c++\"",
-					"-l\"z\"",
-					"-framework",
-					"\"Accelerate\"",
-					"-framework",
-					"\"Alamofire\"",
-					"-framework",
-					"\"CFNetwork\"",
-					"-framework",
-					"\"Foundation\"",
-					"-framework",
-					"\"PromiseKit\"",
-					"-framework",
-					"\"QuartzCore\"",
-					"-framework",
-					"\"Realm\"",
-					"-framework",
-					"\"RealmSwift\"",
-					"-framework",
-					"\"Security\"",
-					"-framework",
-					"\"SnapKit\"",
-					"-framework",
-					"\"SwiftyBeaver\"",
-					"-framework",
-					"\"TPKeyboardAvoiding\"",
-					"-framework",
-					"\"UICollectionViewLeftAlignedLayout\"",
-					"-fprofile-instr-generate",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.icecoffin.mementofm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -2001,39 +1970,6 @@
 				INFOPLIST_FILE = "$(SRCROOT)/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-l\"c++\"",
-					"-l\"z\"",
-					"-framework",
-					"\"Accelerate\"",
-					"-framework",
-					"\"Alamofire\"",
-					"-framework",
-					"\"CFNetwork\"",
-					"-framework",
-					"\"Foundation\"",
-					"-framework",
-					"\"PromiseKit\"",
-					"-framework",
-					"\"QuartzCore\"",
-					"-framework",
-					"\"Realm\"",
-					"-framework",
-					"\"RealmSwift\"",
-					"-framework",
-					"\"Security\"",
-					"-framework",
-					"\"SnapKit\"",
-					"-framework",
-					"\"SwiftyBeaver\"",
-					"-framework",
-					"\"TPKeyboardAvoiding\"",
-					"-framework",
-					"\"UICollectionViewLeftAlignedLayout\"",
-					"-fprofile-instr-generate",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.icecoffin.mementofm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

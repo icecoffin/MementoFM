@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import UICollectionViewLeftAlignedLayout
 import TPKeyboardAvoiding
 
 final class TagsViewController: UIViewController {

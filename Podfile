@@ -11,7 +11,6 @@ target 'MementoFM' do
   pod 'SwiftyBeaver'
   pod 'SwiftLint'
   pod 'TPKeyboardAvoiding'
-  pod 'UICollectionViewLeftAlignedLayout'
 
   target 'MementoFMTests' do
     inherit! :search_paths
