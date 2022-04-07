@@ -9,7 +9,6 @@ target 'MementoFM' do
   pod 'RealmSwift'
   pod 'SnapKit'
   pod 'SwiftyBeaver'
-  pod 'SwiftLint'
   pod 'TPKeyboardAvoiding'
 
   target 'MementoFMTests' do

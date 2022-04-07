@@ -15,6 +15,13 @@ Have you ever tried to find a music band which is similar to the one you're curr
 
 (Originally there were also photos of the artists but then Last.fm started to return placeholders instead of actual photos. Turns out they don't allow to use those photos anymore.)
 
+## Mint
+
+[Mint](https://github.com/yonaskolb/Mint) is used to install dependencies like SwiftLint:
+```
+$ mint bootstrap --link
+```
+
 ## Running the app
 You'll need a Last.fm API key in order to run this app. Here's how you obtain it:
 
