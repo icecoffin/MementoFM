@@ -214,6 +214,7 @@
 		65FB48B127FF7367008BB121 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FB48B027FF7367008BB121 /* Logger.swift */; };
 		65FB48B427FF7900008BB121 /* TPKeyboardAvoiding in Frameworks */ = {isa = PBXBuildFile; productRef = 65FB48B327FF7900008BB121 /* TPKeyboardAvoiding */; };
 		65FB48B727FF7A73008BB121 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 65FB48B627FF7A73008BB121 /* SnapKit */; };
+		65FB48BA27FF8410008BB121 /* PMKAlamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 65FB48B927FF8410008BB121 /* PMKAlamofire */; };
 		65FC807722B2E80B000207EE /* UIImage+Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FC807622B2E80B000207EE /* UIImage+Symbols.swift */; };
 		C22717ED05010403712EE6F4 /* Pods_MementoFM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC6CC2B0ECF7E9A26C0EF7EE /* Pods_MementoFM.framework */; };
 		F9FB0EE3F01D7CD48AF77C25 /* Pods_MementoFMTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92A1004A04C35D541522816D /* Pods_MementoFMTests.framework */; };
@@ -453,6 +454,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65FB48BA27FF8410008BB121 /* PMKAlamofire in Frameworks */,
 				65FB48B727FF7A73008BB121 /* SnapKit in Frameworks */,
 				65FB48B427FF7900008BB121 /* TPKeyboardAvoiding in Frameworks */,
 				C22717ED05010403712EE6F4 /* Pods_MementoFM.framework in Frameworks */,
@@ -1405,6 +1407,7 @@
 			packageProductDependencies = (
 				65FB48B327FF7900008BB121 /* TPKeyboardAvoiding */,
 				65FB48B627FF7A73008BB121 /* SnapKit */,
+				65FB48B927FF8410008BB121 /* PMKAlamofire */,
 			);
 			productName = MementoFM;
 			productReference = 01D4D3181DAE4A0000BFD7FD /* MementoFM.app */;
@@ -1466,6 +1469,7 @@
 			packageReferences = (
 				65FB48B227FF7900008BB121 /* XCRemoteSwiftPackageReference "TPKeyboardAvoiding" */,
 				65FB48B527FF7A73008BB121 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				65FB48B827FF8410008BB121 /* XCRemoteSwiftPackageReference "PMKAlamofire" */,
 			);
 			productRefGroup = 01D4D3191DAE4A0000BFD7FD /* Products */;
 			projectDirPath = "";
@@ -1512,15 +1516,11 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MementoFM/Pods-MementoFM-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 			);
@@ -2082,6 +2082,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		65FB48B827FF8410008BB121 /* XCRemoteSwiftPackageReference "PMKAlamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/PromiseKit/PMKAlamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2094,6 +2102,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 65FB48B527FF7A73008BB121 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		65FB48B927FF8410008BB121 /* PMKAlamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 65FB48B827FF8410008BB121 /* XCRemoteSwiftPackageReference "PMKAlamofire" */;
+			productName = PMKAlamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

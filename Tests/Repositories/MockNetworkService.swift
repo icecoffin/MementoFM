@@ -8,6 +8,7 @@
 
 import Foundation
 @testable import MementoFM
+import Alamofire
 import PromiseKit
 
 class MockNetworkService: NetworkService {

@@ -1,10 +1,5 @@
 PODS:
-  - Alamofire (4.9.1)
   - Nimble (9.2.1)
-  - PromiseKit/Alamofire (6.15.3):
-    - Alamofire (~> 4.0)
-    - PromiseKit/CorePromise
-  - PromiseKit/CorePromise (6.15.3)
   - Realm (10.16.0):
     - Realm/Headers (= 10.16.0)
   - Realm/Headers (10.16.0)
@@ -13,24 +8,19 @@ PODS:
 
 DEPENDENCIES:
   - Nimble
-  - PromiseKit/Alamofire
   - RealmSwift
 
 SPEC REPOS:
   trunk:
-    - Alamofire
     - Nimble
-    - PromiseKit
     - Realm
     - RealmSwift
 
 SPEC CHECKSUMS:
-  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   Nimble: e7e615c0335ee4bf5b0d786685451e62746117d5
-  PromiseKit: 3b2b6995e51a954c46dbc550ce3da44fbfb563c5
   Realm: b6027801398f3743fc222f096faa85281b506e6c
   RealmSwift: b02a3d0e4947955da960b642c98ad3a461fc4e70
 
-PODFILE CHECKSUM: b944e5a36499e54480288d0aaf179a4515dfaa54
+PODFILE CHECKSUM: e887378b2b69afe6e53c546087b01ae97dcfb73e
 
 COCOAPODS: 1.11.3

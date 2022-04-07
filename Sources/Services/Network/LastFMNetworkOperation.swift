@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 
 final class LastFMNetworkOperation<T: Codable>: AsynchronousOperation {
-    typealias CompletionHandler = (Result<T>) -> Void
+    typealias CompletionHandler = (Result<T, Error>) -> Void
 
     // MARK: - Private properties
 
@@ -46,7 +46,7 @@ final class LastFMNetworkOperation<T: Codable>: AsynchronousOperation {
 
     // MARK: - Private methods
 
-    private func handleResponse(_ response: DataResponse<Data>) {
+    private func handleResponse(_ response: DataResponse<Data, AFError>) {
         let jsonDecoder = JSONDecoder()
         let result = response.result
         switch result {
@@ -71,7 +71,7 @@ final class LastFMNetworkOperation<T: Codable>: AsynchronousOperation {
     // MARK: - Overrides
 
     override func main() {
-        request = Alamofire
+        request = AF
             .request(url,
                      method: method,
                      parameters: parameters,
