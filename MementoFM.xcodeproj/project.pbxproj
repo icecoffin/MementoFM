@@ -1125,8 +1125,7 @@
 			children = (
 				651F9E6B1EC0A1B9006D9474 /* Info.plist */,
 			);
-			name = "Supporting Files";
-			path = SupportingFiles;
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		65206EC11EC4C06100A83DA1 /* DataSource */ = {
@@ -1445,7 +1444,7 @@
 				65FB48B227FF7900008BB121 /* XCRemoteSwiftPackageReference "TPKeyboardAvoiding" */,
 				65FB48B527FF7A73008BB121 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				65FB48B827FF8410008BB121 /* XCRemoteSwiftPackageReference "PMKAlamofire" */,
-				65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift.git" */,
+				65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				65B67BA72800C0CF00940A34 /* XCRemoteSwiftPackageReference "Nimble" */,
 			);
 			productRefGroup = 01D4D3191DAE4A0000BFD7FD /* Products */;
@@ -1861,7 +1860,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = FH27F664XD;
-				INFOPLIST_FILE = "$(SRCROOT)/SupportingFiles/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.icecoffin.mementofm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1876,7 +1875,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = FH27F664XD;
-				INFOPLIST_FILE = "$(SRCROOT)/SupportingFiles/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.icecoffin.mementofm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1977,7 +1976,7 @@
 				minimumVersion = 4.0.0;
 			};
 		};
-		65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift.git" */ = {
+		65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift.git";
 			requirement = {
@@ -2010,12 +2009,12 @@
 		};
 		65FB48BF27FF8C3C008BB121 /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift.git" */;
+			package = 65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = Realm;
 		};
 		65FB48C127FF8C3C008BB121 /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift.git" */;
+			package = 65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
