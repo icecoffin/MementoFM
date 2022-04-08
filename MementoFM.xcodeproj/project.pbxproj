@@ -202,6 +202,7 @@
 		65A4811723AFDEAC002DC892 /* CountryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A4811623AFDEAC002DC892 /* CountryCell.swift */; };
 		65AF2B0B27FF62AE0079040D /* UICollectionViewLeftAlignedLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AF2B0A27FF62AE0079040D /* UICollectionViewLeftAlignedLayout.swift */; };
 		65B4A0491FC7153500E01881 /* TagsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B4A0481FC7153500E01881 /* TagsViewModelTests.swift */; };
+		65B67BA92800C0CF00940A34 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = 65B67BA82800C0CF00940A34 /* Nimble */; };
 		65B772891EC5C5E500892698 /* ArtistDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B772881EC5C5E500892698 /* ArtistDataSource.swift */; };
 		65C05C0E2692046D00517784 /* UITableView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C05C0D2692046D00517784 /* UITableView+Reusable.swift */; };
 		65C05C102692049200517784 /* UICollectionView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C05C0F2692049200517784 /* UICollectionView+Reusable.swift */; };
@@ -215,10 +216,10 @@
 		65FB48B427FF7900008BB121 /* TPKeyboardAvoiding in Frameworks */ = {isa = PBXBuildFile; productRef = 65FB48B327FF7900008BB121 /* TPKeyboardAvoiding */; };
 		65FB48B727FF7A73008BB121 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 65FB48B627FF7A73008BB121 /* SnapKit */; };
 		65FB48BA27FF8410008BB121 /* PMKAlamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 65FB48B927FF8410008BB121 /* PMKAlamofire */; };
-		65FB48BD27FF8981008BB121 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = 65FB48BC27FF8981008BB121 /* Nimble */; };
+		65FB48C027FF8C3C008BB121 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 65FB48BF27FF8C3C008BB121 /* Realm */; };
+		65FB48C227FF8C3C008BB121 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 65FB48C127FF8C3C008BB121 /* RealmSwift */; };
 		65FC807722B2E80B000207EE /* UIImage+Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FC807622B2E80B000207EE /* UIImage+Symbols.swift */; };
 		C22717ED05010403712EE6F4 /* Pods_MementoFM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC6CC2B0ECF7E9A26C0EF7EE /* Pods_MementoFM.framework */; };
-		F9FB0EE3F01D7CD48AF77C25 /* Pods_MementoFMTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92A1004A04C35D541522816D /* Pods_MementoFMTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -444,10 +445,7 @@
 		65FB48B027FF7367008BB121 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		65FC807622B2E80B000207EE /* UIImage+Symbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Symbols.swift"; sourceTree = "<group>"; };
 		7FE38FF7C97840AA7B03AE41 /* Pods-MementoFM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MementoFM.release.xcconfig"; path = "Pods/Target Support Files/Pods-MementoFM/Pods-MementoFM.release.xcconfig"; sourceTree = "<group>"; };
-		92A1004A04C35D541522816D /* Pods_MementoFMTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MementoFMTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9B13B9EF38352CA27AB226C6 /* Pods-MementoFMTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MementoFMTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MementoFMTests/Pods-MementoFMTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CC6CC2B0ECF7E9A26C0EF7EE /* Pods_MementoFM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MementoFM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F0AEA5D3E711C8E647C4AC07 /* Pods-MementoFMTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MementoFMTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MementoFMTests/Pods-MementoFMTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -455,7 +453,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65FB48BD27FF8981008BB121 /* Nimble in Frameworks */,
+				65FB48C027FF8C3C008BB121 /* Realm in Frameworks */,
+				65FB48C227FF8C3C008BB121 /* RealmSwift in Frameworks */,
 				65FB48BA27FF8410008BB121 /* PMKAlamofire in Frameworks */,
 				65FB48B727FF7A73008BB121 /* SnapKit in Frameworks */,
 				65FB48B427FF7900008BB121 /* TPKeyboardAvoiding in Frameworks */,
@@ -467,7 +466,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F9FB0EE3F01D7CD48AF77C25 /* Pods_MementoFMTests.framework in Frameworks */,
+				65B67BA92800C0CF00940A34 /* Nimble in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -515,8 +514,6 @@
 			children = (
 				4E75EA4AA335D543060C18B9 /* Pods-MementoFM.debug.xcconfig */,
 				7FE38FF7C97840AA7B03AE41 /* Pods-MementoFM.release.xcconfig */,
-				9B13B9EF38352CA27AB226C6 /* Pods-MementoFMTests.debug.xcconfig */,
-				F0AEA5D3E711C8E647C4AC07 /* Pods-MementoFMTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1382,7 +1379,6 @@
 			isa = PBXGroup;
 			children = (
 				CC6CC2B0ECF7E9A26C0EF7EE /* Pods_MementoFM.framework */,
-				92A1004A04C35D541522816D /* Pods_MementoFMTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1399,7 +1395,6 @@
 				01D4D3141DAE4A0000BFD7FD /* Sources */,
 				01D4D3151DAE4A0000BFD7FD /* Frameworks */,
 				01D4D3161DAE4A0000BFD7FD /* Resources */,
-				0EB0A82E503FA4E862A74975 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1410,7 +1405,8 @@
 				65FB48B327FF7900008BB121 /* TPKeyboardAvoiding */,
 				65FB48B627FF7A73008BB121 /* SnapKit */,
 				65FB48B927FF8410008BB121 /* PMKAlamofire */,
-				65FB48BC27FF8981008BB121 /* Nimble */,
+				65FB48BF27FF8C3C008BB121 /* Realm */,
+				65FB48C127FF8C3C008BB121 /* RealmSwift */,
 			);
 			productName = MementoFM;
 			productReference = 01D4D3181DAE4A0000BFD7FD /* MementoFM.app */;
@@ -1420,11 +1416,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 01D4D3381DAE4A0000BFD7FD /* Build configuration list for PBXNativeTarget "MementoFMTests" */;
 			buildPhases = (
-				FB561C7DCCFC0F2510C095C9 /* [CP] Check Pods Manifest.lock */,
 				01D4D3281DAE4A0000BFD7FD /* Sources */,
 				01D4D3291DAE4A0000BFD7FD /* Frameworks */,
 				01D4D32A1DAE4A0000BFD7FD /* Resources */,
-				A6665349F41C84CDB782A882 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1432,6 +1426,9 @@
 				01D4D32E1DAE4A0000BFD7FD /* PBXTargetDependency */,
 			);
 			name = MementoFMTests;
+			packageProductDependencies = (
+				65B67BA82800C0CF00940A34 /* Nimble */,
+			);
 			productName = MementoFMTests;
 			productReference = 01D4D32C1DAE4A0000BFD7FD /* MementoFMTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -1473,7 +1470,8 @@
 				65FB48B227FF7900008BB121 /* XCRemoteSwiftPackageReference "TPKeyboardAvoiding" */,
 				65FB48B527FF7A73008BB121 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				65FB48B827FF8410008BB121 /* XCRemoteSwiftPackageReference "PMKAlamofire" */,
-				65FB48BB27FF8981008BB121 /* XCRemoteSwiftPackageReference "Nimble" */,
+				65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				65B67BA72800C0CF00940A34 /* XCRemoteSwiftPackageReference "Nimble" */,
 			);
 			productRefGroup = 01D4D3191DAE4A0000BFD7FD /* Products */;
 			projectDirPath = "";
@@ -1513,26 +1511,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0EB0A82E503FA4E862A74975 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MementoFM/Pods-MementoFM-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
-				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MementoFM/Pods-MementoFM-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		575809D299E94D84B4875A43 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1564,44 +1542,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export PATH=\"$PATH:~/.mint/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
-		A6665349F41C84CDB782A882 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MementoFMTests/Pods-MementoFMTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
-				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MementoFMTests/Pods-MementoFMTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FB561C7DCCFC0F2510C095C9 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MementoFMTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1967,10 +1907,6 @@
 				DEVELOPMENT_TEAM = FH27F664XD;
 				INFOPLIST_FILE = "$(SRCROOT)/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.icecoffin.mementofm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1987,10 +1923,6 @@
 				DEVELOPMENT_TEAM = FH27F664XD;
 				INFOPLIST_FILE = "$(SRCROOT)/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.icecoffin.mementofm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -2000,16 +1932,10 @@
 		};
 		01D4D3391DAE4A0000BFD7FD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9B13B9EF38352CA27AB226C6 /* Pods-MementoFMTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.icecoffin.MementoFMTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2020,16 +1946,10 @@
 		};
 		01D4D33A1DAE4A0000BFD7FD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F0AEA5D3E711C8E647C4AC07 /* Pods-MementoFMTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.icecoffin.MementoFMTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -2070,6 +1990,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		65B67BA72800C0CF00940A34 /* XCRemoteSwiftPackageReference "Nimble" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Quick/Nimble";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.2.1;
+			};
+		};
 		65FB48B227FF7900008BB121 /* XCRemoteSwiftPackageReference "TPKeyboardAvoiding" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/michaeltyson/TPKeyboardAvoiding";
@@ -2094,17 +2022,22 @@
 				minimumVersion = 4.0.0;
 			};
 		};
-		65FB48BB27FF8981008BB121 /* XCRemoteSwiftPackageReference "Nimble" */ = {
+		65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Quick/Nimble";
+			repositoryURL = "https://github.com/realm/realm-swift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 9.2.1;
+				minimumVersion = 10.25.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		65B67BA82800C0CF00940A34 /* Nimble */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 65B67BA72800C0CF00940A34 /* XCRemoteSwiftPackageReference "Nimble" */;
+			productName = Nimble;
+		};
 		65FB48B327FF7900008BB121 /* TPKeyboardAvoiding */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 65FB48B227FF7900008BB121 /* XCRemoteSwiftPackageReference "TPKeyboardAvoiding" */;
@@ -2120,10 +2053,15 @@
 			package = 65FB48B827FF8410008BB121 /* XCRemoteSwiftPackageReference "PMKAlamofire" */;
 			productName = PMKAlamofire;
 		};
-		65FB48BC27FF8981008BB121 /* Nimble */ = {
+		65FB48BF27FF8C3C008BB121 /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 65FB48BB27FF8981008BB121 /* XCRemoteSwiftPackageReference "Nimble" */;
-			productName = Nimble;
+			package = 65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		65FB48C127FF8C3C008BB121 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

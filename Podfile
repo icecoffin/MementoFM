@@ -4,14 +4,7 @@ target 'MementoFM' do
   use_frameworks!
   inhibit_all_warnings!
 
-  # Pods for MementoFM
-  pod 'RealmSwift'
 
-  target 'MementoFMTests' do
-    inherit! :search_paths
-    # Pods for testing
-    pod 'RealmSwift'
-  end
 
 end
 
