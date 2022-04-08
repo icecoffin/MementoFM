@@ -219,7 +219,6 @@
 		65FB48C027FF8C3C008BB121 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 65FB48BF27FF8C3C008BB121 /* Realm */; };
 		65FB48C227FF8C3C008BB121 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 65FB48C127FF8C3C008BB121 /* RealmSwift */; };
 		65FC807722B2E80B000207EE /* UIImage+Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FC807622B2E80B000207EE /* UIImage+Symbols.swift */; };
-		C22717ED05010403712EE6F4 /* Pods_MementoFM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC6CC2B0ECF7E9A26C0EF7EE /* Pods_MementoFM.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -236,7 +235,6 @@
 		01D4D3181DAE4A0000BFD7FD /* MementoFM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MementoFM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01D4D32C1DAE4A0000BFD7FD /* MementoFMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MementoFMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		01D4D3321DAE4A0000BFD7FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4E75EA4AA335D543060C18B9 /* Pods-MementoFM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MementoFM.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MementoFM/Pods-MementoFM.debug.xcconfig"; sourceTree = "<group>"; };
 		650A931C1FACACA0001DE7A5 /* MockUserDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserDataStorage.swift; sourceTree = "<group>"; };
 		650A93201FACD1B5001DE7A5 /* ArtistServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistServiceTests.swift; sourceTree = "<group>"; };
 		650B1D4C2440C53000F770FA /* CountryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryService.swift; sourceTree = "<group>"; };
@@ -444,8 +442,6 @@
 		65DC8F601FD0620F007299DB /* ArtistsByTagViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistsByTagViewModelTests.swift; sourceTree = "<group>"; };
 		65FB48B027FF7367008BB121 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		65FC807622B2E80B000207EE /* UIImage+Symbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Symbols.swift"; sourceTree = "<group>"; };
-		7FE38FF7C97840AA7B03AE41 /* Pods-MementoFM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MementoFM.release.xcconfig"; path = "Pods/Target Support Files/Pods-MementoFM/Pods-MementoFM.release.xcconfig"; sourceTree = "<group>"; };
-		CC6CC2B0ECF7E9A26C0EF7EE /* Pods_MementoFM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MementoFM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -458,7 +454,6 @@
 				65FB48BA27FF8410008BB121 /* PMKAlamofire in Frameworks */,
 				65FB48B727FF7A73008BB121 /* SnapKit in Frameworks */,
 				65FB48B427FF7900008BB121 /* TPKeyboardAvoiding in Frameworks */,
-				C22717ED05010403712EE6F4 /* Pods_MementoFM.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -481,8 +476,6 @@
 				651F9E6A1EC0A1B9006D9474 /* Supporting Files */,
 				01D4D32F1DAE4A0000BFD7FD /* Tests */,
 				01D4D3191DAE4A0000BFD7FD /* Products */,
-				64EB8FD16D32FAFCBA6BFCEC /* Pods */,
-				D842A923FD0819E83F475733 /* Frameworks */,
 			);
 			indentWidth = 4;
 			sourceTree = "<group>";
@@ -507,15 +500,6 @@
 				654430771FA230A000923356 /* Services */,
 			);
 			path = Tests;
-			sourceTree = "<group>";
-		};
-		64EB8FD16D32FAFCBA6BFCEC /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				4E75EA4AA335D543060C18B9 /* Pods-MementoFM.debug.xcconfig */,
-				7FE38FF7C97840AA7B03AE41 /* Pods-MementoFM.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		650A931F1FACD19C001DE7A5 /* Artist */ = {
@@ -1375,14 +1359,6 @@
 			path = Tags;
 			sourceTree = "<group>";
 		};
-		D842A923FD0819E83F475733 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				CC6CC2B0ECF7E9A26C0EF7EE /* Pods_MementoFM.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1390,7 +1366,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 01D4D3351DAE4A0000BFD7FD /* Build configuration list for PBXNativeTarget "MementoFM" */;
 			buildPhases = (
-				575809D299E94D84B4875A43 /* [CP] Check Pods Manifest.lock */,
 				65291E041FBC241B00AE07BC /* Run SwiftLint */,
 				01D4D3141DAE4A0000BFD7FD /* Sources */,
 				01D4D3151DAE4A0000BFD7FD /* Frameworks */,
@@ -1470,7 +1445,7 @@
 				65FB48B227FF7900008BB121 /* XCRemoteSwiftPackageReference "TPKeyboardAvoiding" */,
 				65FB48B527FF7A73008BB121 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				65FB48B827FF8410008BB121 /* XCRemoteSwiftPackageReference "PMKAlamofire" */,
-				65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift.git" */,
 				65B67BA72800C0CF00940A34 /* XCRemoteSwiftPackageReference "Nimble" */,
 			);
 			productRefGroup = 01D4D3191DAE4A0000BFD7FD /* Products */;
@@ -1511,24 +1486,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		575809D299E94D84B4875A43 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MementoFM-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		65291E041FBC241B00AE07BC /* Run SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1900,7 +1857,6 @@
 		};
 		01D4D3361DAE4A0000BFD7FD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4E75EA4AA335D543060C18B9 /* Pods-MementoFM.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1916,7 +1872,6 @@
 		};
 		01D4D3371DAE4A0000BFD7FD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7FE38FF7C97840AA7B03AE41 /* Pods-MementoFM.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -2022,7 +1977,7 @@
 				minimumVersion = 4.0.0;
 			};
 		};
-		65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+		65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift.git";
 			requirement = {
@@ -2055,12 +2010,12 @@
 		};
 		65FB48BF27FF8C3C008BB121 /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			package = 65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift.git" */;
 			productName = Realm;
 		};
 		65FB48C127FF8C3C008BB121 /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			package = 65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift.git" */;
 			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */

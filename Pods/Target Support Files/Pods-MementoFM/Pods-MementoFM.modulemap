@@ -1,6 +1,0 @@
-framework module Pods_MementoFM {
-  umbrella header "Pods-MementoFM-umbrella.h"
-
-  export *
-  module * { export * }
-}
