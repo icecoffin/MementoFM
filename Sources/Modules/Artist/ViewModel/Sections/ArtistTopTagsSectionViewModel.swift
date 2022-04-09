@@ -50,7 +50,7 @@ final class ArtistTopTagsSectionViewModel {
 
     required init(artist: Artist) {
         self.artist = artist
-        cellViewModels = artist.topTags.map({ TagCellViewModel(tag: $0) })
+        cellViewModels = artist.topTags.map({ TagCellViewModel(tag: $0, showCount: false) })
     }
 
     // MARK: - Public methods

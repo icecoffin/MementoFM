@@ -12,6 +12,7 @@ final class TagCellViewModel {
     // MARK: - Private properties
 
     private let tag: Tag
+    private let showCount: Bool
 
     // MARK: - Public properties
 
@@ -19,9 +20,18 @@ final class TagCellViewModel {
         return tag.name
     }
 
+    var text: String {
+        if showCount {
+            return "\(name) (\(tag.count))"
+        } else {
+            return name
+        }
+    }
+
     // MARK: - Init
 
-    init(tag: Tag) {
+    init(tag: Tag, showCount: Bool) {
         self.tag = tag
+        self.showCount = showCount
     }
 }

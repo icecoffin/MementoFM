@@ -66,7 +66,7 @@ final class TagsViewModel {
         }.map {
             return Tag(name: $0.key, count: $0.value)
         }
-        allCellViewModels = result.map { TagCellViewModel(tag: $0) }
+        allCellViewModels = result.map { TagCellViewModel(tag: $0, showCount: true) }
         createFilteredCellViewModels(filter: searchText)
     }
 
