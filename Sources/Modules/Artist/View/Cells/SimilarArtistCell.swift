@@ -61,19 +61,30 @@ final class SimilarArtistCell: UITableViewCell {
 
     private func addIndexLabel() {
         let wrapperStackView = UIStackView()
-        outerStackView.addArrangedSubview(wrapperStackView)
-
         wrapperStackView.alignment = .top
-        wrapperStackView.distribution = .fill
+        wrapperStackView.axis = .vertical
+
+        outerStackView.addArrangedSubview(wrapperStackView)
+        wrapperStackView.snp.makeConstraints { make in
+            make.width.equalTo(35)
+        }
+
+        let spacerView = UIView()
+        wrapperStackView.addArrangedSubview(spacerView)
+        spacerView.snp.makeConstraints { make in
+            make.height.equalTo(3)
+        }
 
         wrapperStackView.addArrangedSubview(indexLabel)
         indexLabel.snp.makeConstraints { make in
-            make.width.equalTo(60)
+            make.width.equalToSuperview()
         }
-
         indexLabel.textAlignment = .right
-        indexLabel.font = .primaryContent
+        indexLabel.font = .subtitle
         indexLabel.textColor = .darkGray
+        indexLabel.adjustsFontSizeToFitWidth = true
+
+        wrapperStackView.addArrangedSubview(UIView())
     }
 
     private func addVerticalSeparatorView() {

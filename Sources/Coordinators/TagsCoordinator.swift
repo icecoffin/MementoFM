@@ -30,6 +30,7 @@ final class TagsCoordinator: NavigationFlowCoordinator {
         let searchController = UISearchController(searchResultsController: nil)
         let viewController = TagsViewController(searchController: searchController, viewModel: viewModel)
         viewController.title = "Tags".unlocalized
+        viewController.navigationItem.backButtonDisplayMode = .minimal
         viewController.navigationItem.searchController = searchController
         viewController.navigationItem.hidesSearchBarWhenScrolling = false
         navigationController.pushViewController(viewController, animated: false)

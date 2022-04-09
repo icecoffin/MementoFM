@@ -62,19 +62,30 @@ final class ArtistCell: UITableViewCell {
 
     private func addIndexLabel() {
         let wrapperStackView = UIStackView()
-        outerStackView.addArrangedSubview(wrapperStackView)
-
         wrapperStackView.alignment = .top
-        wrapperStackView.addArrangedSubview(indexLabel)
+        wrapperStackView.axis = .vertical
 
-        indexLabel.snp.makeConstraints { make in
-            make.width.equalTo(45)
+        outerStackView.addArrangedSubview(wrapperStackView)
+        wrapperStackView.snp.makeConstraints { make in
+            make.width.equalTo(35)
         }
 
+        let spacerView = UIView()
+        wrapperStackView.addArrangedSubview(spacerView)
+        spacerView.snp.makeConstraints { make in
+            make.height.equalTo(3)
+        }
+
+        wrapperStackView.addArrangedSubview(indexLabel)
+        indexLabel.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+        }
         indexLabel.textAlignment = .right
-        indexLabel.font = .primaryContent
+        indexLabel.font = .subtitle
         indexLabel.textColor = .darkGray
         indexLabel.adjustsFontSizeToFitWidth = true
+
+        wrapperStackView.addArrangedSubview(UIView())
     }
 
     private func addVerticalSeparatorView() {
