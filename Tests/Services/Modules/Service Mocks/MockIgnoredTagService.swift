@@ -9,6 +9,7 @@
 import Foundation
 @testable import MementoFM
 import PromiseKit
+import Combine
 
 class MockIgnoredTagService: IgnoredTagServiceProtocol {
     var defaultIgnoredTagNames: [String] = []
@@ -27,8 +28,10 @@ class MockIgnoredTagService: IgnoredTagServiceProtocol {
     }
 
     var updatedIgnoredTags: [IgnoredTag] = []
-    func updateIgnoredTags(_ ignoredTags: [IgnoredTag]) -> Promise<Void> {
+    func updateIgnoredTags(_ ignoredTags: [IgnoredTag]) -> AnyPublisher<Void, Error> {
         updatedIgnoredTags = ignoredTags
-        return .value(())
+        return Just(())
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
     }
 }

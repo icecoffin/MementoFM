@@ -212,6 +212,7 @@
 		65DABC4A270CD43000727F56 /* UINavigationController+Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DABC49270CD43000727F56 /* UINavigationController+Transition.swift */; };
 		65DABC4C27133D9900727F56 /* sample_single_recent_track_page.json in Resources */ = {isa = PBXBuildFile; fileRef = 65DABC4B27133D9900727F56 /* sample_single_recent_track_page.json */; };
 		65DC5B6F2801F4F200AB4544 /* TagCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DC5B6E2801F4F200AB4544 /* TagCellViewModelTests.swift */; };
+		65DC5B78280321B200AB4544 /* CombineSchedulers in Frameworks */ = {isa = PBXBuildFile; productRef = 65DC5B77280321B200AB4544 /* CombineSchedulers */; };
 		65DC8F611FD0620F007299DB /* ArtistsByTagViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DC8F601FD0620F007299DB /* ArtistsByTagViewModelTests.swift */; };
 		65FB48B127FF7367008BB121 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FB48B027FF7367008BB121 /* Logger.swift */; };
 		65FB48B427FF7900008BB121 /* TPKeyboardAvoiding in Frameworks */ = {isa = PBXBuildFile; productRef = 65FB48B327FF7900008BB121 /* TPKeyboardAvoiding */; };
@@ -453,6 +454,7 @@
 			files = (
 				65FB48C027FF8C3C008BB121 /* Realm in Frameworks */,
 				65FB48C227FF8C3C008BB121 /* RealmSwift in Frameworks */,
+				65DC5B78280321B200AB4544 /* CombineSchedulers in Frameworks */,
 				65FB48BA27FF8410008BB121 /* PMKAlamofire in Frameworks */,
 				65FB48B727FF7A73008BB121 /* SnapKit in Frameworks */,
 				65FB48B427FF7900008BB121 /* TPKeyboardAvoiding in Frameworks */,
@@ -1384,6 +1386,7 @@
 				65FB48B927FF8410008BB121 /* PMKAlamofire */,
 				65FB48BF27FF8C3C008BB121 /* Realm */,
 				65FB48C127FF8C3C008BB121 /* RealmSwift */,
+				65DC5B77280321B200AB4544 /* CombineSchedulers */,
 			);
 			productName = MementoFM;
 			productReference = 01D4D3181DAE4A0000BFD7FD /* MementoFM.app */;
@@ -1449,6 +1452,7 @@
 				65FB48B827FF8410008BB121 /* XCRemoteSwiftPackageReference "PMKAlamofire" */,
 				65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				65B67BA72800C0CF00940A34 /* XCRemoteSwiftPackageReference "Nimble" */,
+				65DC5B76280321B200AB4544 /* XCRemoteSwiftPackageReference "combine-schedulers" */,
 			);
 			productRefGroup = 01D4D3191DAE4A0000BFD7FD /* Products */;
 			projectDirPath = "";
@@ -1956,6 +1960,14 @@
 				minimumVersion = 9.2.1;
 			};
 		};
+		65DC5B76280321B200AB4544 /* XCRemoteSwiftPackageReference "combine-schedulers" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/combine-schedulers";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.3;
+			};
+		};
 		65FB48B227FF7900008BB121 /* XCRemoteSwiftPackageReference "TPKeyboardAvoiding" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/michaeltyson/TPKeyboardAvoiding";
@@ -1995,6 +2007,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 65B67BA72800C0CF00940A34 /* XCRemoteSwiftPackageReference "Nimble" */;
 			productName = Nimble;
+		};
+		65DC5B77280321B200AB4544 /* CombineSchedulers */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 65DC5B76280321B200AB4544 /* XCRemoteSwiftPackageReference "combine-schedulers" */;
+			productName = CombineSchedulers;
 		};
 		65FB48B327FF7900008BB121 /* TPKeyboardAvoiding */ = {
 			isa = XCSwiftPackageProductDependency;

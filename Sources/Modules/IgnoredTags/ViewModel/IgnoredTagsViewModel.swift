@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import PromiseKit
+import Combine
 
 // MARK: - IgnoredTagsViewModelDelegate
 
@@ -28,13 +28,13 @@ final class IgnoredTagsViewModel {
             didUpdateTagCount?(ignoredTags.isEmpty)
         }
     }
+    private var cancelBag = Set<AnyCancellable>()
 
     // MARK: - Public properties
 
     weak var delegate: IgnoredTagsViewModelDelegate?
 
     var didStartSavingChanges: (() -> Void)?
-    var didFinishSavingChanges: (() -> Void)?
     var didReceiveError: ((Error) -> Void)?
     var didAddNewTag: ((IndexPath) -> Void)?
     var didUpdateTagCount: ((_ isEmpty: Bool) -> Void)?
@@ -106,15 +106,18 @@ final class IgnoredTagsViewModel {
         }
 
         let calculator = ArtistTopTagsCalculator(ignoredTags: filteredTags)
-        firstly {
-            self.dependencies.ignoredTagService.updateIgnoredTags(filteredTags)
-        }.then {
-            self.dependencies.artistService.calculateTopTagsForAllArtists(using: calculator)
-        }.done { _ in
-            self.didFinishSavingChanges?()
-            self.delegate?.ignoredTagsViewModelDidSaveChanges(self)
-        }.catch { error in
-            self.didReceiveError?(error)
-        }
+        dependencies.ignoredTagService.updateIgnoredTags(filteredTags)
+            .flatMap {
+                return self.dependencies.artistService.calculateTopTagsForAllArtists(using: calculator)
+            }
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    self.delegate?.ignoredTagsViewModelDidSaveChanges(self)
+                case .failure(let error):
+                    self.didReceiveError?(error)
+                }
+            }, receiveValue: { })
+            .store(in: &cancelBag)
     }
 }

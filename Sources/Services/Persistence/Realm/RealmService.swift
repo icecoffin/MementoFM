@@ -9,6 +9,7 @@
 import Foundation
 import RealmSwift
 import PromiseKit
+import Combine
 
 final class RealmService: PersistentStore {
     // MARK: - Private properties
@@ -39,6 +40,21 @@ final class RealmService: PersistentStore {
     }
 
     // MARK: - Private methods
+
+    private func write(block: @escaping (Realm) -> Void) -> AnyPublisher<Void, Error> {
+        return Just(())
+            .receive(on: DispatchQueue.global())
+            .tryMap { _ in
+                try self.write(to: self.currentQueueRealm) { realm in
+                    block(realm)
+                }
+            }
+            .receive(on: DispatchQueue.main)
+            .map {
+                self.currentQueueRealm.refresh()
+            }
+            .eraseToAnyPublisher()
+    }
 
     private func write(block: @escaping (Realm) -> Void) -> Promise<Void> {
         return backgroundDispatcher.dispatch {
@@ -82,7 +98,24 @@ final class RealmService: PersistentStore {
             }
     }
 
+    func save<T: TransientEntity>(_ object: T, update: Bool = true) -> AnyPublisher<Void, Error>
+        where T.PersistentType.TransientType == T {
+            return write { realm in
+                if let realmObject = T.PersistentType.from(transient: object) as? Object {
+                    realm.add(realmObject, update: .modified)
+                }
+            }
+    }
+
     func save<T: TransientEntity>(_ objects: [T], update: Bool = true) -> Promise<Void>
+        where T.PersistentType.TransientType == T {
+            return write { realm in
+                let realmObjects = objects.compactMap({ return T.PersistentType.from(transient: $0) as? Object })
+                realm.add(realmObjects, update: .modified)
+            }
+    }
+
+    func save<T: TransientEntity>(_ objects: [T], update: Bool = true) -> AnyPublisher<Void, Error>
         where T.PersistentType.TransientType == T {
             return write { realm in
                 let realmObjects = objects.compactMap({ return T.PersistentType.from(transient: $0) as? Object })
@@ -93,6 +126,18 @@ final class RealmService: PersistentStore {
     // MARK: - Deleting objects from Realm
 
     func deleteObjects<T: TransientEntity>(ofType type: T.Type) -> Promise<Void>
+        where T.PersistentType.TransientType == T {
+            guard let type = type.PersistentType.self as? Object.Type else {
+                fatalError("The provided Element.PersistentType is not a Realm Object subclass")
+            }
+
+            return write { realm in
+                let realmObjects = realm.objects(type)
+                realm.delete(realmObjects)
+            }
+    }
+
+    func deleteObjects<T: TransientEntity>(ofType type: T.Type) -> AnyPublisher<Void, Error>
         where T.PersistentType.TransientType == T {
             guard let type = type.PersistentType.self as? Object.Type else {
                 fatalError("The provided Element.PersistentType is not a Realm Object subclass")

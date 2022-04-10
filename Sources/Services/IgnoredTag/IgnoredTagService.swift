@@ -8,6 +8,7 @@
 
 import Foundation
 import PromiseKit
+import Combine
 
 // MARK: - IgnoredTagServiceProtocol
 
@@ -16,7 +17,7 @@ protocol IgnoredTagServiceProtocol: AnyObject {
 
     func ignoredTags() -> [IgnoredTag]
     func createDefaultIgnoredTags(withNames names: [String]) -> Promise<Void>
-    func updateIgnoredTags(_ ignoredTags: [IgnoredTag]) -> Promise<Void>
+    func updateIgnoredTags(_ ignoredTags: [IgnoredTag]) -> AnyPublisher<Void, Error>
 }
 
 extension IgnoredTagServiceProtocol {
@@ -55,9 +56,12 @@ final class IgnoredTagService: IgnoredTagServiceProtocol {
         return persistentStore.save(ignoredTags)
     }
 
-    func updateIgnoredTags(_ ignoredTags: [IgnoredTag]) -> Promise<Void> {
-        return persistentStore.deleteObjects(ofType: IgnoredTag.self).then {
-            return self.persistentStore.save(ignoredTags)
-        }
+    func updateIgnoredTags(_ ignoredTags: [IgnoredTag]) -> AnyPublisher<Void, Error> {
+        return persistentStore
+            .deleteObjects(ofType: IgnoredTag.self)
+            .flatMap {
+                return self.persistentStore.save(ignoredTags)
+            }
+            .eraseToAnyPublisher()
     }
 }

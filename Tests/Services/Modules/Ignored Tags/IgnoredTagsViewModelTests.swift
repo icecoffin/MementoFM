@@ -154,20 +154,6 @@ class IgnoredTagsViewModelTests: XCTestCase {
         expect(didStartSavingChanges).to(beTrue())
     }
 
-    func test_saveChanges_callsDidFinishSavingChanges() {
-        let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
-
-        var didFinishSavingChanges = false
-
-        viewModel.didFinishSavingChanges = {
-            didFinishSavingChanges = true
-        }
-
-        viewModel.saveChanges()
-
-        expect(didFinishSavingChanges).toEventually(beTrue())
-    }
-
     func test_saveChanges_notifiesDelegateOnSuccess() {
         let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
 

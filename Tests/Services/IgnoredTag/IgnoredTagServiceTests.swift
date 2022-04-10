@@ -46,8 +46,9 @@ class IgnoredTagServiceTests: XCTestCase {
         let ignoredTags = ModelFactory.generateIgnoredTags(inAmount: 3)
 
         _ = ignoredTagService.updateIgnoredTags(ignoredTags)
+            .sink(receiveCompletion: { _ in }, receiveValue: { })
 
         expect(self.persistentStore.didCallDelete) == true
-        expect(self.persistentStore.saveParameters?.objects as? [IgnoredTag]).toEventually(equal(ignoredTags))
+        expect(self.persistentStore.saveParameters?.objects as? [IgnoredTag]) == ignoredTags
     }
 }

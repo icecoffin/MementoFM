@@ -9,6 +9,7 @@
 import Foundation
 @testable import MementoFM
 import PromiseKit
+import Combine
 
 class MockPersistentStore: PersistentStore {
     var customMappedCollection: Any?
@@ -30,6 +31,14 @@ class MockPersistentStore: PersistentStore {
             return customSavePromise
     }
 
+    func save<T: TransientEntity>(_ objects: [T], update: Bool) -> AnyPublisher<Void, Error>
+    where T.PersistentType.TransientType == T {
+        saveParameters = (objects: objects, update: update)
+        return Just(())
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+    }
+
     var customDeletePromise: Promise<Void> = Promise { seal in seal.fulfill(()) }
     var didCallDelete = false
     var deletedObjectsTypeNames: [String] = []
@@ -38,6 +47,15 @@ class MockPersistentStore: PersistentStore {
             didCallDelete = true
             deletedObjectsTypeNames.append(String(describing: type))
             return customDeletePromise
+    }
+
+    func deleteObjects<T: TransientEntity>(ofType type: T.Type) -> AnyPublisher<Void, Error>
+    where T.PersistentType.TransientType == T {
+        didCallDelete = true
+        deletedObjectsTypeNames.append(String(describing: type))
+        return Just(())
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
     }
 
     var customObjects: [Any] = []

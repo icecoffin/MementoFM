@@ -9,6 +9,7 @@
 import Foundation
 @testable import MementoFM
 import PromiseKit
+import Combine
 
 class MockArtistService: ArtistServiceProtocol {
     var user: String = ""
@@ -67,13 +68,15 @@ class MockArtistService: ArtistServiceProtocol {
 
     var didCallCalculateTopTagsForAllArtists: Bool = false
     var calculateTopTagsForAllShouldReturnError: Bool = false
-    func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating,
-                                       using dispatcher: Dispatcher) -> Promise<Void> {
+    func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating) -> AnyPublisher<Void, Error> {
         didCallCalculateTopTagsForAllArtists = true
-        if calculateTopTagsForAllShouldReturnError {
-            return Promise(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
+        if calculateTopTagsShouldReturnError {
+            return Fail(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
+                .eraseToAnyPublisher()
         } else {
-            return .value(())
+            return Just(())
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
         }
     }
 

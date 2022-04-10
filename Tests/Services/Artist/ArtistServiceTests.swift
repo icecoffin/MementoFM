@@ -10,14 +10,17 @@ import XCTest
 @testable import MementoFM
 import Nimble
 import PromiseKit
+import CombineSchedulers
 
 class ArtistServiceTests: XCTestCase {
     var persistentStore: MockPersistentStore!
+    var scheduler: AnySchedulerOf<DispatchQueue>!
 
     override func setUp() {
         super.setUp()
 
         persistentStore = MockPersistentStore()
+        scheduler = .immediate
     }
 
     func test_getLibrary_callsProgress_andReturnsArtistsOnSuccess() {
@@ -114,17 +117,21 @@ class ArtistServiceTests: XCTestCase {
     }
 
     func test_calculateTopTagsForAllArtists_callsCalculatorForEachArtist_andSavesArtists() {
-        let artistService = ArtistService(persistentStore: persistentStore, repository: StubArtistEmptyRepository())
+        let artistService = ArtistService(persistentStore: persistentStore,
+                                          repository: StubArtistEmptyRepository(),
+                                          mainScheduler: scheduler,
+                                          backgroundScheduler: scheduler)
 
         let artists = ModelFactory.generateArtists(inAmount: 5)
         persistentStore.customObjects = artists
 
         let calculator = MockArtistTopTagsCalculator()
-        artistService.calculateTopTagsForAllArtists(using: calculator, using: TestDispatcher()).noError()
+        _ = artistService.calculateTopTagsForAllArtists(using: calculator)
+            .sink(receiveCompletion: { _ in }, receiveValue: { })
 
         expect(calculator.numberOfCalculateTopTagsCalled) == artists.count
-        expect(self.persistentStore.saveParameters?.objects as? [Artist]).toEventually(equal(artists))
-        expect(self.persistentStore.saveParameters?.update).toEventually(beTrue())
+        expect(self.persistentStore.saveParameters?.objects as? [Artist]) == artists
+        expect(self.persistentStore.saveParameters?.update) == true
     }
 
     func test_calculateTopTagsForArtist_callsCalculatorOnce_andSavesArtist() {

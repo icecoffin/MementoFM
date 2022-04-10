@@ -15,6 +15,8 @@ final class IgnoredTagsViewController: UIViewController {
     private let viewModel: IgnoredTagsViewModel
 
     private let tableView = TPKeyboardAvoidingTableView()
+    private let loadingOverlayView = UIView()
+    private let activityIndicatorView = UIActivityIndicatorView(style: .large)
     private let emptyDataSetView: EmptyDataSetView
 
     // MARK: - Init
@@ -46,6 +48,8 @@ final class IgnoredTagsViewController: UIViewController {
         view.backgroundColor = .systemBackground
 
         addTableView()
+        addLoadingOverlayView()
+        addActivityIndicatorView()
     }
 
     private func addTableView() {
@@ -66,14 +70,28 @@ final class IgnoredTagsViewController: UIViewController {
         tableView.delegate = self
     }
 
+    private func addLoadingOverlayView() {
+        view.addSubview(loadingOverlayView)
+        loadingOverlayView.snp.makeConstraints { make in
+            make.edges.equalTo(tableView)
+        }
+        loadingOverlayView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.6)
+        loadingOverlayView.isHidden = true
+    }
+
+    private func addActivityIndicatorView() {
+        loadingOverlayView.addSubview(activityIndicatorView)
+        activityIndicatorView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+
     private func bindToViewModel() {
         viewModel.didStartSavingChanges = { [unowned self] in
             self.view.endEditing(true)
+            self.activityIndicatorView.startAnimating()
+            self.loadingOverlayView.isHidden = false
             self.tableView.isUserInteractionEnabled = false
-        }
-
-        viewModel.didFinishSavingChanges = {
-            self.tableView.isUserInteractionEnabled = true
         }
 
         viewModel.didReceiveError = { [unowned self] error in

@@ -8,6 +8,8 @@
 
 import Foundation
 import PromiseKit
+import Combine
+import CombineSchedulers
 
 // MARK: - TopTagsRequestProgress
 
@@ -25,7 +27,7 @@ protocol ArtistServiceProtocol: AnyObject {
     func artistsNeedingTagsUpdate() -> [Artist]
     func artistsWithIntersectingTopTags(for artist: Artist) -> [Artist]
     func updateArtist(_ artist: Artist, with tags: [Tag]) -> Promise<Artist>
-    func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating, using dispatcher: Dispatcher) -> Promise<Void>
+    func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating) -> AnyPublisher<Void, Error>
     func calculateTopTags(for artist: Artist, using calculator: ArtistTopTagsCalculating) -> Promise<Void>
     func artists(filteredUsing predicate: NSPredicate?,
                  sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<Artist>
@@ -48,10 +50,6 @@ extension ArtistServiceProtocol {
     func getSimilarArtists(for artist: Artist) -> Promise<[Artist]> {
         return getSimilarArtists(for: artist, limit: 20)
     }
-
-    func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating) -> Promise<Void> {
-        return calculateTopTagsForAllArtists(using: calculator, using: AsyncDispatcher.global)
-    }
 }
 
 // MARK: - ArtistService
@@ -61,12 +59,19 @@ final class ArtistService: ArtistServiceProtocol {
 
     private let persistentStore: PersistentStore
     private let repository: ArtistRepository
+    private let mainScheduler: AnySchedulerOf<DispatchQueue>
+    private let backgroundScheduler: AnySchedulerOf<DispatchQueue>
 
     // MARK: - Init
 
-    init(persistentStore: PersistentStore, repository: ArtistRepository) {
+    init(persistentStore: PersistentStore,
+         repository: ArtistRepository,
+         mainScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.main.eraseToAnyScheduler(),
+         backgroundScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.global().eraseToAnyScheduler()) {
         self.persistentStore = persistentStore
         self.repository = repository
+        self.mainScheduler = mainScheduler
+        self.backgroundScheduler = backgroundScheduler
     }
 
     // MARK: - Public properties
@@ -128,14 +133,18 @@ final class ArtistService: ArtistServiceProtocol {
         }
     }
 
-    func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating,
-                                       using dispatcher: Dispatcher) -> Promise<Void> {
-        return dispatcher.dispatch { () -> [Artist] in
-            let artists = self.persistentStore.objects(Artist.self)
-            return artists.map({ return calculator.calculateTopTags(for: $0) })
-        }.then { artists in
-            return self.persistentStore.save(artists)
-        }
+    func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating) -> AnyPublisher<Void, Error> {
+        return Just(())
+            .receive(on: backgroundScheduler)
+            .map { _ -> [Artist] in
+                let artists = self.persistentStore.objects(Artist.self)
+                return artists.map { return calculator.calculateTopTags(for: $0) }
+            }
+            .flatMap { artists in
+                return self.persistentStore.save(artists)
+            }
+            .receive(on: mainScheduler)
+            .eraseToAnyPublisher()
     }
 
     func calculateTopTags(for artist: Artist, using calculator: ArtistTopTagsCalculating) -> Promise<Void> {
@@ -170,20 +179,6 @@ final class ArtistService: ArtistServiceProtocol {
             }
         }.then { artists in
             return self.persistentStore.save(artists)
-        }
-    }
-
-    func getCountriesWithCounts() -> [String: Int] {
-        let artists = persistentStore.objects(Artist.self)
-        return artists.reduce([:]) { result, artist in
-            var mutableResult = result
-            let country = artist.country ?? ""
-            if let value = mutableResult[country] {
-                mutableResult[country] = value + 1
-            } else {
-                mutableResult[country] = 1
-            }
-            return mutableResult
         }
     }
 }
