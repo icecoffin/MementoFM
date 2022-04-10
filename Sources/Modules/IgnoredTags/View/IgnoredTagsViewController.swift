@@ -112,7 +112,9 @@ final class IgnoredTagsViewController: UIViewController {
         }
 
         viewModel.didAddDefaultTags = { [unowned self] in
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
 
         tableView.backgroundView?.isHidden = viewModel.numberOfIgnoredTags > 0

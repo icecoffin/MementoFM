@@ -57,12 +57,19 @@ final class IgnoredTagsViewModel {
     // MARK: - Private methods
 
     private func addDefaultTags() {
-        dependencies.ignoredTagService.createDefaultIgnoredTags().done {
-            self.ignoredTags = self.dependencies.ignoredTagService.ignoredTags()
-            self.didAddDefaultTags?()
-        }.catch { error in
-            self.didReceiveError?(error)
-        }
+        return dependencies.ignoredTagService.createDefaultIgnoredTags()
+            .sink(receiveCompletion: { [weak self] completion in
+                guard let self = self else { return }
+
+                switch completion {
+                case .finished:
+                    self.ignoredTags = self.dependencies.ignoredTagService.ignoredTags()
+                    self.didAddDefaultTags?()
+                case .failure(let error):
+                    self.didReceiveError?(error)
+                }
+            }, receiveValue: { })
+            .store(in: &cancelBag)
     }
 
     // MARK: - Public methods
@@ -110,7 +117,9 @@ final class IgnoredTagsViewModel {
             .flatMap {
                 return self.dependencies.artistService.calculateTopTagsForAllArtists(using: calculator)
             }
-            .sink(receiveCompletion: { completion in
+            .sink(receiveCompletion: { [weak self] completion in
+                guard let self = self else { return }
+
                 switch completion {
                 case .finished:
                     self.delegate?.ignoredTagsViewModelDidSaveChanges(self)

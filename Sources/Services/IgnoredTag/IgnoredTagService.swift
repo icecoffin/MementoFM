@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import PromiseKit
 import Combine
 
 // MARK: - IgnoredTagServiceProtocol
@@ -16,7 +15,7 @@ protocol IgnoredTagServiceProtocol: AnyObject {
     var defaultIgnoredTagNames: [String] { get }
 
     func ignoredTags() -> [IgnoredTag]
-    func createDefaultIgnoredTags(withNames names: [String]) -> Promise<Void>
+    func createDefaultIgnoredTags(withNames names: [String]) -> AnyPublisher<Void, Error>
     func updateIgnoredTags(_ ignoredTags: [IgnoredTag]) -> AnyPublisher<Void, Error>
 }
 
@@ -25,7 +24,7 @@ extension IgnoredTagServiceProtocol {
         return ["rock", "metal", "indie", "alternative", "seen live", "under 2000 listeners"]
     }
 
-    func createDefaultIgnoredTags() -> Promise<Void> {
+    func createDefaultIgnoredTags() -> AnyPublisher<Void, Error> {
         return createDefaultIgnoredTags(withNames: defaultIgnoredTagNames)
     }
 }
@@ -49,7 +48,7 @@ final class IgnoredTagService: IgnoredTagServiceProtocol {
         return persistentStore.objects(IgnoredTag.self)
     }
 
-    func createDefaultIgnoredTags(withNames names: [String]) -> Promise<Void> {
+    func createDefaultIgnoredTags(withNames names: [String]) -> AnyPublisher<Void, Error> {
         let ignoredTags = names.map { name in
             return IgnoredTag(uuid: UUID().uuidString, name: name)
         }
