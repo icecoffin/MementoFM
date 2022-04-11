@@ -172,15 +172,21 @@ class ArtistServiceTests: XCTestCase {
         let artistService = ArtistService(persistentStore: persistentStore, repository: repository)
 
         let artist = ModelFactory.generateArtist()
-        artistService.getSimilarArtists(for: artist).catch { _ in
-            fail()
-        }
+        _ = artistService.getSimilarArtists(for: artist)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    break
+                case .failure:
+                    fail()
+                }
+            }, receiveValue: { _ in })
 
         expect(repository.getSimilarArtistsParameters?.artist) == artist
         expect(repository.getSimilarArtistsParameters?.limit) == 20
 
         let predicateFormat = "name IN {\"Artist1\", \"Artist2\", \"Artist3\"}"
-        expect(self.persistentStore.objectsPredicate?.predicateFormat).toEventually(equal(predicateFormat))
+        expect(self.persistentStore.objectsPredicate?.predicateFormat) == predicateFormat
     }
 
     func test_getSimilarArtists_failsWithError() {
@@ -189,14 +195,18 @@ class ArtistServiceTests: XCTestCase {
 
         let artist = ModelFactory.generateArtist()
 
-        var didCatchError = false
-        artistService.getSimilarArtists(for: artist).done { _ in
-            fail()
-        }.catch { _ in
-            didCatchError = true
-        }
+        var didReceiveError = false
+        _ = artistService.getSimilarArtists(for: artist)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    break
+                case .failure:
+                    didReceiveError = true
+                }
+            }, receiveValue: { _ in })
 
-        expect(didCatchError).toEventually(beTrue())
-        expect(self.persistentStore.objectsPredicate).toEventually(beNil())
+        expect(didReceiveError) == true
+        expect(self.persistentStore.objectsPredicate).to(beNil())
     }
 }

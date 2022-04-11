@@ -105,13 +105,16 @@ class MockArtistService: ArtistServiceProtocol {
     var expectedSimilarArtistsLimit: Int = 0
     var getSimilarArtistsShouldReturnError: Bool = false
     var customSimilarArtists: [Artist] = []
-    func getSimilarArtists(for artist: Artist, limit: Int) -> Promise<[Artist]> {
+    func getSimilarArtists(for artist: Artist, limit: Int) -> AnyPublisher<[Artist], Error> {
         expectedSimilarArtistsArtist = artist
         expectedSimilarArtistsLimit = limit
         if getSimilarArtistsShouldReturnError {
-            return Promise(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
+            return Fail(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
+                .eraseToAnyPublisher()
         } else {
-            return .value(customSimilarArtists)
+            return Just(customSimilarArtists)
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
         }
     }
 }

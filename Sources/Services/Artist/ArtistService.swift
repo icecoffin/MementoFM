@@ -31,7 +31,7 @@ protocol ArtistServiceProtocol: AnyObject {
     func calculateTopTags(for artist: Artist, using calculator: ArtistTopTagsCalculating) -> Promise<Void>
     func artists(filteredUsing predicate: NSPredicate?,
                  sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<Artist>
-    func getSimilarArtists(for artist: Artist, limit: Int) -> Promise<[Artist]>
+    func getSimilarArtists(for artist: Artist, limit: Int) -> AnyPublisher<[Artist], Error>
 }
 
 extension ArtistServiceProtocol {
@@ -47,7 +47,7 @@ extension ArtistServiceProtocol {
         return artists(filteredUsing: nil, sortedBy: sortDescriptors)
     }
 
-    func getSimilarArtists(for artist: Artist) -> Promise<[Artist]> {
+    func getSimilarArtists(for artist: Artist) -> AnyPublisher<[Artist], Error> {
         return getSimilarArtists(for: artist, limit: 20)
     }
 }
@@ -157,13 +157,15 @@ final class ArtistService: ArtistServiceProtocol {
         return persistentStore.mappedCollection(filteredUsing: predicate, sortedBy: sortDescriptors)
     }
 
-    func getSimilarArtists(for artist: Artist, limit: Int) -> Promise<[Artist]> {
-        return repository.getSimilarArtists(for: artist, limit: limit).then { response -> Promise<[Artist]> in
-            let artistNames = response.similarArtistList.similarArtists.map({ $0.name })
-            let predicate = NSPredicate(format: "name in %@", artistNames)
-            let artists = self.persistentStore.objects(Artist.self, filteredBy: predicate)
-            return .value(artists)
-        }
+    func getSimilarArtists(for artist: Artist, limit: Int) -> AnyPublisher<[Artist], Error> {
+        return repository.getSimilarArtists(for: artist, limit: limit)
+            .map { response -> [Artist] in
+                let artistNames = response.similarArtistList.similarArtists.map({ $0.name })
+                let predicate = NSPredicate(format: "name in %@", artistNames)
+                let artists = self.persistentStore.objects(Artist.self, filteredBy: predicate)
+                return artists
+            }
+            .eraseToAnyPublisher()
     }
 
     func updateCountries(with countryProvider: CountryProviding,

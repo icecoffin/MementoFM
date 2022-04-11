@@ -34,7 +34,7 @@ class SimilarArtistsRemoteRequestStrategyTests: XCTestCase {
 
     func test_minNumberOfIntersectingTags_returnsCorrectValueFromStrategy() {
         let strategy = SimilarArtistsRemoteRequestStrategy(dependencies: dependencies)
-        expect(strategy.minNumberOfIntersectingTags).to(equal(0))
+        expect(strategy.minNumberOfIntersectingTags) == 0
     }
 
     func test_getSimilarArtists_getsCorrectValueFromArtistService() {
@@ -42,10 +42,12 @@ class SimilarArtistsRemoteRequestStrategyTests: XCTestCase {
         let strategy = SimilarArtistsRemoteRequestStrategy(dependencies: dependencies)
         var expectedSimilarArtists: [Artist] = []
 
-        strategy.getSimilarArtists(for: sampleArtist).done { artists in
-            expectedSimilarArtists = artists
-        }.noError()
+        _ = strategy.getSimilarArtists(for: sampleArtist)
+            .sink(receiveCompletion: { _ in },
+                  receiveValue: { artists in
+                expectedSimilarArtists = artists
+            })
 
-        expect(expectedSimilarArtists).toEventually(equal(similarArtists))
+        expect(expectedSimilarArtists) == similarArtists
     }
 }

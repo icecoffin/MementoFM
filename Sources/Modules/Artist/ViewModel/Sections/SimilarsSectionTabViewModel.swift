@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 // MARK: - SimilarsSectionTabViewModelDelegate
 
@@ -27,8 +28,9 @@ final class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol 
     private let dependencies: Dependencies
 
     private var cellViewModels: [SimilarArtistCellViewModel] = []
+    private var cancelBag = Set<AnyCancellable>()
 
-    // MARK: - Pubic properties
+    // MARK: - Public properties
 
     private(set) var isLoading: Bool = false
 
@@ -68,15 +70,21 @@ final class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol 
 
     private func calculateSimilarArtists() {
         isLoading = true
-        requestStrategy.getSimilarArtists(for: artist).map { [weak self] artists in
-            self?.createCellViewModels(from: artists)
-        }.done { _ in
-            self.isLoading = false
-            self.didUpdateData?()
-        }.catch { error in
-            self.isLoading = false
-            self.didReceiveError?(error)
-        }
+        requestStrategy.getSimilarArtists(for: artist)
+            .sink { [weak self] completion in
+                guard let self = self else { return }
+
+                self.isLoading = false
+                switch completion {
+                case .finished:
+                    self.didUpdateData?()
+                case .failure(let error):
+                    self.didReceiveError?(error)
+                }
+            } receiveValue: { [weak self] artists in
+                self?.createCellViewModels(from: artists)
+            }
+            .store(in: &cancelBag)
     }
 
     private func createCellViewModels(from artists: [Artist]) {

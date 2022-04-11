@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import PromiseKit
+import Combine
 
 final class LastFMNetworkService: NetworkService {
     // MARK: - Private properties
@@ -48,6 +49,18 @@ final class LastFMNetworkService: NetworkService {
             }
             queue.addOperation(operation)
         }
+    }
+
+    func performRequest<T: Codable>(method: HTTPMethod,
+                                    parameters: Parameters?,
+                                    encoding: ParameterEncoding,
+                                    headers: HTTPHeaders?) -> AnyPublisher<T, Error> {
+        let publisher = AF
+            .request(baseURL, method: method, parameters: parameters, headers: headers)
+            .publishDecodable(type: T.self)
+        return publisher.value()
+            .mapError { $0 as Error }
+            .eraseToAnyPublisher()
     }
 
     func cancelPendingRequests() {

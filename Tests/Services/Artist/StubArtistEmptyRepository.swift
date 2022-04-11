@@ -9,13 +9,14 @@
 import Foundation
 @testable import MementoFM
 import PromiseKit
+import Combine
 
 class StubArtistEmptyRepository: ArtistRepository {
     func getLibraryPage(withIndex index: Int, for user: String, limit: Int) -> Promise<LibraryPageResponse> {
         fatalError()
     }
 
-    func getSimilarArtists(for artist: Artist, limit: Int) -> Promise<SimilarArtistListResponse> {
+    func getSimilarArtists(for artist: Artist, limit: Int) -> AnyPublisher<SimilarArtistListResponse, Error> {
         fatalError()
     }
 }

@@ -134,33 +134,6 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
         expect(delegate.selectedArtist?.name).toEventually(equal("Artist4"))
     }
 
-    func test_getSimilarArtists_setsIsLoadingToTrue() {
-        requestStrategy.customSimilarArtists = []
-        let viewModel = SimilarsSectionTabViewModel(artist: sampleArtist,
-                                                    canSelectSimilarArtists: true,
-                                                    requestStrategy: requestStrategy,
-                                                    dependencies: dependencies)
-        viewModel.getSimilarArtists()
-
-        expect(viewModel.isLoading).to(beTrue())
-    }
-
-    func test_getSimilarArtists_setsIsLoadingToFalse_afterUpdatingData() {
-        requestStrategy.customSimilarArtists = []
-        let viewModel = SimilarsSectionTabViewModel(artist: sampleArtist,
-                                                    canSelectSimilarArtists: true,
-                                                    requestStrategy: requestStrategy,
-                                                    dependencies: dependencies)
-        var expectedIsLoading = true
-        viewModel.didUpdateData = {
-            expectedIsLoading = viewModel.isLoading
-        }
-
-        viewModel.getSimilarArtists()
-
-        expect(expectedIsLoading).toEventually(beFalse())
-    }
-
     func test_getSimilarArtists_callsDidReceiveError_whenErrorOccurs() {
         requestStrategy.customSimilarArtists = []
         requestStrategy.getSimilarArtistsShouldReturnError = true
@@ -175,6 +148,6 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
 
         viewModel.getSimilarArtists()
 
-        expect(didReceiveError).toEventually(beTrue())
+        expect(didReceiveError) == true
     }
 }

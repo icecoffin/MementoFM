@@ -9,6 +9,7 @@
 import Foundation
 @testable import MementoFM
 import PromiseKit
+import Combine
 
 class MockArtistSimilarsRepository: ArtistRepository {
     private let shouldFailWithError: Bool
@@ -24,15 +25,18 @@ class MockArtistSimilarsRepository: ArtistRepository {
     }
 
     var getSimilarArtistsParameters: (artist: Artist, limit: Int)?
-    func getSimilarArtists(for artist: Artist, limit: Int) -> Promise<SimilarArtistListResponse> {
+    func getSimilarArtists(for artist: Artist, limit: Int) -> AnyPublisher<SimilarArtistListResponse, Error> {
         getSimilarArtistsParameters = (artist, limit)
         if shouldFailWithError {
-            return Promise(error: NSError(domain: "MementoFM", code: 1, userInfo: nil))
+            return Fail(error: NSError(domain: "MementoFM", code: 1, userInfo: nil))
+                .eraseToAnyPublisher()
         } else {
             let similarArtists = similarArtistProvider()
             let similarArtistList = SimilarArtistList(similarArtists: similarArtists)
             let response = SimilarArtistListResponse(similarArtistList: similarArtistList)
-            return .value(response)
+            return Just(response)
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
         }
     }
 }

@@ -5,12 +5,13 @@
 
 import Foundation
 import PromiseKit
+import Combine
 
 // MARK: - ArtistRepository
 
 protocol ArtistRepository: AnyObject {
     func getLibraryPage(withIndex index: Int, for user: String, limit: Int) -> Promise<LibraryPageResponse>
-    func getSimilarArtists(for artist: Artist, limit: Int) -> Promise<SimilarArtistListResponse>
+    func getSimilarArtists(for artist: Artist, limit: Int) -> AnyPublisher<SimilarArtistListResponse, Error>
 }
 
 // MARK: - ArtistNetworkRepository
@@ -39,7 +40,7 @@ final class ArtistNetworkRepository: ArtistRepository {
         return networkService.performRequest(parameters: parameters)
     }
 
-    func getSimilarArtists(for artist: Artist, limit: Int) -> Promise<SimilarArtistListResponse> {
+    func getSimilarArtists(for artist: Artist, limit: Int) -> AnyPublisher<SimilarArtistListResponse, Error> {
         let parameters: [String: Any] = ["method": "artist.getsimilar",
                                          "api_key": Keys.LastFM.apiKey,
                                          "artist": artist.name,

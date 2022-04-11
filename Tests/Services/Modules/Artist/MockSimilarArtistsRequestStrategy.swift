@@ -8,18 +8,21 @@
 
 import Foundation
 @testable import MementoFM
-import PromiseKit
+import Combine
 
 class MockSimilarArtistsRequestStrategy: SimilarArtistsRequestStrategy {
     var minNumberOfIntersectingTags: Int = 0
 
     var customSimilarArtists: [Artist] = []
     var getSimilarArtistsShouldReturnError = false
-    func getSimilarArtists(for artist: Artist) -> Promise<[Artist]> {
+    func getSimilarArtists(for artist: Artist) -> AnyPublisher<[Artist], Error> {
         if getSimilarArtistsShouldReturnError {
-            return Promise(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
+            return Fail(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
+                .eraseToAnyPublisher()
         } else {
-            return .value(customSimilarArtists)
+            return Just(customSimilarArtists)
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
         }
     }
 }

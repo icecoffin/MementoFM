@@ -49,7 +49,7 @@ class ArtistNetworkRepositoryTests: XCTestCase {
         networkService.customResponse = response
 
         let artist = ModelFactory.generateArtist()
-        artistRepository.getSimilarArtists(for: artist, limit: 10).noError()
+        _ = artistRepository.getSimilarArtists(for: artist, limit: 10)
 
         let expectedParameters: [String: AnyHashable] = ["method": "artist.getsimilar",
                                                          "api_key": Keys.LastFM.apiKey,
