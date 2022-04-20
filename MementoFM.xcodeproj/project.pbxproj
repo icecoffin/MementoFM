@@ -193,6 +193,7 @@
 		659F759228107CF700ACC306 /* TagServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651742101FA59C04004FCFF4 /* TagServiceTests.swift */; };
 		659F759328107EA900ACC306 /* ArtistServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650A93201FACD1B5001DE7A5 /* ArtistServiceTests.swift */; };
 		659F759428109BDA00ACC306 /* RealmServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A305C21F9B383400E1D9C4 /* RealmServiceTests.swift */; };
+		659F759728109FBC00ACC306 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 659F759628109FBC00ACC306 /* Alamofire */; };
 		65A0A24B2164D7240037354E /* UIColor+AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A0A24A2164D7240037354E /* UIColor+AppColors.swift */; };
 		65A0A24D2164D7490037354E /* UIFont+AppFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A0A24C2164D7490037354E /* UIFont+AppFonts.swift */; };
 		65A4811523AFDA34002DC892 /* CountryCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A4811423AFDA34002DC892 /* CountryCellViewModel.swift */; };
@@ -215,7 +216,6 @@
 		65FB48B127FF7367008BB121 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FB48B027FF7367008BB121 /* Logger.swift */; };
 		65FB48B427FF7900008BB121 /* TPKeyboardAvoiding in Frameworks */ = {isa = PBXBuildFile; productRef = 65FB48B327FF7900008BB121 /* TPKeyboardAvoiding */; };
 		65FB48B727FF7A73008BB121 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 65FB48B627FF7A73008BB121 /* SnapKit */; };
-		65FB48BA27FF8410008BB121 /* PMKAlamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 65FB48B927FF8410008BB121 /* PMKAlamofire */; };
 		65FB48C027FF8C3C008BB121 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 65FB48BF27FF8C3C008BB121 /* Realm */; };
 		65FB48C227FF8C3C008BB121 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 65FB48C127FF8C3C008BB121 /* RealmSwift */; };
 		65FC807722B2E80B000207EE /* UIImage+Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FC807622B2E80B000207EE /* UIImage+Symbols.swift */; };
@@ -451,7 +451,7 @@
 				65FB48C027FF8C3C008BB121 /* Realm in Frameworks */,
 				65FB48C227FF8C3C008BB121 /* RealmSwift in Frameworks */,
 				65DC5B78280321B200AB4544 /* CombineSchedulers in Frameworks */,
-				65FB48BA27FF8410008BB121 /* PMKAlamofire in Frameworks */,
+				659F759728109FBC00ACC306 /* Alamofire in Frameworks */,
 				65FB48B727FF7A73008BB121 /* SnapKit in Frameworks */,
 				65FB48B427FF7900008BB121 /* TPKeyboardAvoiding in Frameworks */,
 			);
@@ -1377,10 +1377,10 @@
 			packageProductDependencies = (
 				65FB48B327FF7900008BB121 /* TPKeyboardAvoiding */,
 				65FB48B627FF7A73008BB121 /* SnapKit */,
-				65FB48B927FF8410008BB121 /* PMKAlamofire */,
 				65FB48BF27FF8C3C008BB121 /* Realm */,
 				65FB48C127FF8C3C008BB121 /* RealmSwift */,
 				65DC5B77280321B200AB4544 /* CombineSchedulers */,
+				659F759628109FBC00ACC306 /* Alamofire */,
 			);
 			productName = MementoFM;
 			productReference = 01D4D3181DAE4A0000BFD7FD /* MementoFM.app */;
@@ -1443,10 +1443,10 @@
 			packageReferences = (
 				65FB48B227FF7900008BB121 /* XCRemoteSwiftPackageReference "TPKeyboardAvoiding" */,
 				65FB48B527FF7A73008BB121 /* XCRemoteSwiftPackageReference "SnapKit" */,
-				65FB48B827FF8410008BB121 /* XCRemoteSwiftPackageReference "PMKAlamofire" */,
 				65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				65B67BA72800C0CF00940A34 /* XCRemoteSwiftPackageReference "Nimble" */,
 				65DC5B76280321B200AB4544 /* XCRemoteSwiftPackageReference "combine-schedulers" */,
+				659F759528109FBC00ACC306 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 01D4D3191DAE4A0000BFD7FD /* Products */;
 			projectDirPath = "";
@@ -1944,6 +1944,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		659F759528109FBC00ACC306 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		65B67BA72800C0CF00940A34 /* XCRemoteSwiftPackageReference "Nimble" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Quick/Nimble";
@@ -1976,14 +1984,6 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		65FB48B827FF8410008BB121 /* XCRemoteSwiftPackageReference "PMKAlamofire" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/PromiseKit/PMKAlamofire";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.0;
-			};
-		};
 		65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift.git";
@@ -1995,6 +1995,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		659F759628109FBC00ACC306 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 659F759528109FBC00ACC306 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
 		65B67BA82800C0CF00940A34 /* Nimble */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 65B67BA72800C0CF00940A34 /* XCRemoteSwiftPackageReference "Nimble" */;
@@ -2014,11 +2019,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 65FB48B527FF7A73008BB121 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		65FB48B927FF8410008BB121 /* PMKAlamofire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 65FB48B827FF8410008BB121 /* XCRemoteSwiftPackageReference "PMKAlamofire" */;
-			productName = PMKAlamofire;
 		};
 		65FB48BF27FF8C3C008BB121 /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -46,24 +46,6 @@
       }
     },
     {
-      "identity" : "pmkalamofire",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/PromiseKit/PMKAlamofire",
-      "state" : {
-        "revision" : "e1791b81d309d4b4853127d72473978f86e96ebe",
-        "version" : "4.0.0"
-      }
-    },
-    {
-      "identity" : "promisekit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mxcl/PromiseKit.git",
-      "state" : {
-        "revision" : "3fd8c77ded8a4bbee548e3bd6c987ffe8c1e3574",
-        "version" : "6.17.0"
-      }
-    },
-    {
       "identity" : "realm-core",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/realm/realm-core",
