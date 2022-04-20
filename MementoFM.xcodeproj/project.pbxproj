@@ -15,7 +15,6 @@
 		650E0ABB2274E4CE0014EBD8 /* PersistentMappedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650E0ABA2274E4CE0014EBD8 /* PersistentMappedCollection.swift */; };
 		65112D6B1F2F181700CBF8BA /* ArtistService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65112D611F2F181700CBF8BA /* ArtistService.swift */; };
 		65112D6C1F2F181700CBF8BA /* ArtistTopTagsCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65112D621F2F181700CBF8BA /* ArtistTopTagsCalculator.swift */; };
-		65112D6D1F2F181700CBF8BA /* LastFMNetworkOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65112D641F2F181700CBF8BA /* LastFMNetworkOperation.swift */; };
 		65112D6E1F2F181700CBF8BA /* LastFMNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65112D651F2F181700CBF8BA /* LastFMNetworkService.swift */; };
 		65112D6F1F2F181800CBF8BA /* NetworkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65112D661F2F181700CBF8BA /* NetworkConstants.swift */; };
 		65112D701F2F181800CBF8BA /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65112D681F2F181700CBF8BA /* RealmService.swift */; };
@@ -133,7 +132,6 @@
 		651F9E551EC09FDD006D9474 /* IgnoredTagsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DF81EC09FDC006D9474 /* IgnoredTagsPresenter.swift */; };
 		651F9E561EC09FDD006D9474 /* SyncPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DF91EC09FDC006D9474 /* SyncPresenter.swift */; };
 		651F9E581EC09FDD006D9474 /* AppearanceConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DFD1EC09FDC006D9474 /* AppearanceConfigurator.swift */; };
-		651F9E591EC09FDD006D9474 /* AsynchronousOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DFE1EC09FDC006D9474 /* AsynchronousOperation.swift */; };
 		651F9E5A1EC09FDD006D9474 /* BlockBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DFF1EC09FDC006D9474 /* BlockBarButtonItem.swift */; };
 		651F9E5C1EC09FDD006D9474 /* ErrorConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9E011EC09FDC006D9474 /* ErrorConverter.swift */; };
 		651F9E5E1EC09FDD006D9474 /* MappingHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9E031EC09FDC006D9474 /* MappingHelpers.swift */; };
@@ -244,7 +242,6 @@
 		650E0ABA2274E4CE0014EBD8 /* PersistentMappedCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentMappedCollection.swift; sourceTree = "<group>"; };
 		65112D611F2F181700CBF8BA /* ArtistService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistService.swift; sourceTree = "<group>"; };
 		65112D621F2F181700CBF8BA /* ArtistTopTagsCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistTopTagsCalculator.swift; sourceTree = "<group>"; };
-		65112D641F2F181700CBF8BA /* LastFMNetworkOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastFMNetworkOperation.swift; sourceTree = "<group>"; };
 		65112D651F2F181700CBF8BA /* LastFMNetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastFMNetworkService.swift; sourceTree = "<group>"; };
 		65112D661F2F181700CBF8BA /* NetworkConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkConstants.swift; sourceTree = "<group>"; };
 		65112D681F2F181700CBF8BA /* RealmService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
@@ -362,7 +359,6 @@
 		651F9DF81EC09FDC006D9474 /* IgnoredTagsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IgnoredTagsPresenter.swift; sourceTree = "<group>"; };
 		651F9DF91EC09FDC006D9474 /* SyncPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncPresenter.swift; sourceTree = "<group>"; };
 		651F9DFD1EC09FDC006D9474 /* AppearanceConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceConfigurator.swift; sourceTree = "<group>"; };
-		651F9DFE1EC09FDC006D9474 /* AsynchronousOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsynchronousOperation.swift; sourceTree = "<group>"; };
 		651F9DFF1EC09FDC006D9474 /* BlockBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockBarButtonItem.swift; sourceTree = "<group>"; };
 		651F9E011EC09FDC006D9474 /* ErrorConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorConverter.swift; sourceTree = "<group>"; };
 		651F9E031EC09FDC006D9474 /* MappingHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MappingHelpers.swift; sourceTree = "<group>"; };
@@ -565,7 +561,6 @@
 				651AA71D1FB0ACD400EEE40A /* NetworkService.swift */,
 				65112D661F2F181700CBF8BA /* NetworkConstants.swift */,
 				65112D651F2F181700CBF8BA /* LastFMNetworkService.swift */,
-				65112D641F2F181700CBF8BA /* LastFMNetworkOperation.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1079,7 +1074,6 @@
 			isa = PBXGroup;
 			children = (
 				651F9DFD1EC09FDC006D9474 /* AppearanceConfigurator.swift */,
-				651F9DFE1EC09FDC006D9474 /* AsynchronousOperation.swift */,
 				651F9DFF1EC09FDC006D9474 /* BlockBarButtonItem.swift */,
 				651F9E011EC09FDC006D9474 /* ErrorConverter.swift */,
 				651F9E031EC09FDC006D9474 /* MappingHelpers.swift */,
@@ -1587,7 +1581,6 @@
 				65178A8A1F6ACD6D006A29E8 /* ArtistSimilarsSectionHeaderView.swift in Sources */,
 				651F9E251EC09FDC006D9474 /* IgnoredTag.swift in Sources */,
 				651F9E3A1EC09FDC006D9474 /* EnterUsernameViewModel.swift in Sources */,
-				651F9E591EC09FDD006D9474 /* AsynchronousOperation.swift in Sources */,
 				651F9E101EC09FDC006D9474 /* AppDelegate.swift in Sources */,
 				65B772891EC5C5E500892698 /* ArtistDataSource.swift in Sources */,
 				655116D822B171C400463BE1 /* RealmMigrator.swift in Sources */,
@@ -1624,7 +1617,6 @@
 				6570302C23AE9B0500F706B4 /* CountriesViewController.swift in Sources */,
 				651F9E431EC09FDC006D9474 /* LibraryArtistCellViewModel.swift in Sources */,
 				6570302E23AE9B4400F706B4 /* CountriesViewModel.swift in Sources */,
-				65112D6D1F2F181700CBF8BA /* LastFMNetworkOperation.swift in Sources */,
 				65A4811523AFDA34002DC892 /* CountryCellViewModel.swift in Sources */,
 				651F9E2D1EC09FDC006D9474 /* RealmFactory.swift in Sources */,
 				651F9E221EC09FDC006D9474 /* RealmIgnoredTag.swift in Sources */,
