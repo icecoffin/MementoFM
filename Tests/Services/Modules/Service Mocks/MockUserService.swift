@@ -8,7 +8,7 @@
 
 import Foundation
 @testable import MementoFM
-import PromiseKit
+import Combine
 
 class MockUserService: UserServiceProtocol {
     var shouldFinishWithSuccess = true
@@ -19,18 +19,23 @@ class MockUserService: UserServiceProtocol {
     var didFinishOnboarding: Bool = false
 
     var didCallClearUserData = false
-    func clearUserData() -> Promise<Void> {
+    func clearUserData() -> AnyPublisher<Void, Error> {
         didCallClearUserData = true
-        return .value(())
+        return Just(())
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
     }
 
     var usernameBeingChecked = ""
-    func checkUserExists(withUsername username: String) -> Promise<EmptyResponse> {
+    func checkUserExists(withUsername username: String) -> AnyPublisher<EmptyResponse, Error> {
         usernameBeingChecked = username
         if shouldFinishWithSuccess {
-            return .value(EmptyResponse())
+            return Just(EmptyResponse())
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
         } else {
-            return Promise(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
+            return Fail(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
+                .eraseToAnyPublisher()
         }
     }
 }

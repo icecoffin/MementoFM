@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import PromiseKit
+import Combine
 
 // MARK: - EnterUsernameViewModelDelegate
 
@@ -24,6 +24,7 @@ final class EnterUsernameViewModel {
 
     private let dependencies: Dependencies
     private var currentUsername: String
+    private var cancelBag = Set<AnyCancellable>()
 
     // MARK: - Public properties
 
@@ -74,15 +75,20 @@ final class EnterUsernameViewModel {
     func submitUsername() {
         let userService = dependencies.userService
         didStartRequest?()
-        userService.checkUserExists(withUsername: currentUsername).then { _ -> Promise<Void> in
-            userService.username = self.currentUsername
-            return userService.clearUserData()
-        }.done {
-            self.delegate?.enterUsernameViewModelDidFinish(self)
-        }.ensure {
-            self.didFinishRequest?()
-        }.catch { error in
-            self.didReceiveError?(error)
-        }
+        userService.checkUserExists(withUsername: currentUsername)
+            .flatMap { _ -> AnyPublisher<Void, Error> in
+                userService.username = self.currentUsername
+                return userService.clearUserData()
+            }
+            .sink { completion in
+                self.didFinishRequest?()
+                switch completion {
+                case .finished:
+                    self.delegate?.enterUsernameViewModelDidFinish(self)
+                case .failure(let error):
+                    self.didReceiveError?(error)
+                }
+            } receiveValue: { _ in }
+            .store(in: &cancelBag)
     }
 }

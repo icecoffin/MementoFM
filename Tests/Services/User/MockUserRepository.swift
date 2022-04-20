@@ -8,13 +8,15 @@
 
 import Foundation
 @testable import MementoFM
-import PromiseKit
+import Combine
 
 class MockUserRepository: UserRepository {
     var checkedUsername: String?
-    func checkUserExists(withUsername username: String) -> Promise<EmptyResponse> {
+    func checkUserExists(withUsername username: String) -> AnyPublisher<EmptyResponse, Error> {
         checkedUsername = username
 
-        return .value(EmptyResponse())
+        return Just(EmptyResponse())
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
     }
 }

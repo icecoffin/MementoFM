@@ -25,7 +25,7 @@ class UserNetworkRepositoryTests: XCTestCase {
     func test_checkUserExists_callsNetworkServiceWithCorrectParameters() {
         networkService.customResponse = EmptyResponse()
 
-        userRepository.checkUserExists(withUsername: "User").noError()
+        _ = userRepository.checkUserExists(withUsername: "User")
 
         let expectedParameters: [String: AnyHashable] = ["method": "user.getInfo",
                                                          "api_key": Keys.LastFM.apiKey,

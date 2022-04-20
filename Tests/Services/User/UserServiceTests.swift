@@ -9,7 +9,6 @@
 import XCTest
 @testable import MementoFM
 import Nimble
-import PromiseKit
 
 class UserServiceTests: XCTestCase {
     var userRepository: MockUserRepository!
@@ -76,12 +75,14 @@ class UserServiceTests: XCTestCase {
 
     func test_clearUserData_deletesArtists() {
         _ = userService.clearUserData()
+            .sink(receiveCompletion: { _ in }, receiveValue: { _ in })
 
         expect(self.persistentStore.deletedObjectsTypeNames).to(contain(String(describing: Artist.self)))
     }
 
     func test_clearUserData_deletesTags() {
         _ = userService.clearUserData()
+            .sink(receiveCompletion: { _ in }, receiveValue: { _ in })
 
         expect(self.persistentStore.deletedObjectsTypeNames).to(contain(String(describing: Tag.self)))
     }

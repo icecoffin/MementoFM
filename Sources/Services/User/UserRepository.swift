@@ -7,12 +7,12 @@
 //
 
 import Foundation
-import PromiseKit
+import Combine
 
 // MARK: - UserRepository
 
 protocol UserRepository: AnyObject {
-    func checkUserExists(withUsername username: String) -> Promise<EmptyResponse>
+    func checkUserExists(withUsername username: String) -> AnyPublisher<EmptyResponse, Error>
 }
 
 // MARK: - UserNetworkRepository
@@ -30,7 +30,7 @@ final class UserNetworkRepository: UserRepository {
 
     // MARK: - Public methods
 
-    func checkUserExists(withUsername username: String) -> Promise<EmptyResponse> {
+    func checkUserExists(withUsername username: String) -> AnyPublisher<EmptyResponse, Error> {
         let parameters: [String: Any] = ["method": "user.getInfo",
                                          "api_key": Keys.LastFM.apiKey,
                                          "user": username,

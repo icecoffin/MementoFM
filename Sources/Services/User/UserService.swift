@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import PromiseKit
+import Combine
 
 // MARK: - UserServiceProtocol
 
@@ -17,8 +17,8 @@ protocol UserServiceProtocol: AnyObject {
     var didReceiveInitialCollection: Bool { get set }
     var didFinishOnboarding: Bool { get set }
 
-    func clearUserData() -> Promise<Void>
-    func checkUserExists(withUsername username: String) -> Promise<EmptyResponse>
+    func clearUserData() -> AnyPublisher<Void, Error>
+    func checkUserExists(withUsername username: String) -> AnyPublisher<EmptyResponse, Error>
 }
 
 // MARK: - UserService
@@ -77,13 +77,16 @@ final class UserService: UserServiceProtocol {
 
     // MARK: - Public methods
 
-    func clearUserData() -> Promise<Void> {
+    func clearUserData() -> AnyPublisher<Void, Error> {
         userDataStorage.reset()
-        return when(fulfilled: [persistentStore.deleteObjects(ofType: Artist.self),
-                                persistentStore.deleteObjects(ofType: Tag.self)])
+        return persistentStore.deleteObjects(ofType: Artist.self)
+            .flatMap { _ in
+                return self.persistentStore.deleteObjects(ofType: Tag.self)
+            }
+            .eraseToAnyPublisher()
     }
 
-    func checkUserExists(withUsername username: String) -> Promise<EmptyResponse> {
+    func checkUserExists(withUsername username: String) -> AnyPublisher<EmptyResponse, Error> {
         return repository.checkUserExists(withUsername: username)
     }
 }
