@@ -23,7 +23,7 @@ class EnterUsernameViewModelTests: XCTestCase {
         let dependencies = Dependencies(userService: MockUserService())
         let viewModel = EnterUsernameViewModel(dependencies: dependencies)
 
-        expect(viewModel.canSubmitUsername).to(beFalse())
+        expect(viewModel.canSubmitUsername) == false
     }
 
     func test_canSubmitUsername_returnsTrue_forNewUsername() {
@@ -33,7 +33,7 @@ class EnterUsernameViewModelTests: XCTestCase {
         dependencies.userService.username = "foo"
         viewModel.updateUsername("username")
 
-        expect(viewModel.canSubmitUsername).to(beTrue())
+        expect(viewModel.canSubmitUsername) == true
     }
 
     func test_canSubmitUsername_returnsFalse_forExistingUsername() {
@@ -43,14 +43,14 @@ class EnterUsernameViewModelTests: XCTestCase {
         viewModel.updateUsername("username")
         dependencies.userService.username = "username"
 
-        expect(viewModel.canSubmitUsername).to(beFalse())
+        expect(viewModel.canSubmitUsername) == false
     }
 
     func test_currentUsername_returnsEmptyString_ifNoUsernameIsSet() {
         let dependencies = Dependencies(userService: MockUserService())
         let viewModel = EnterUsernameViewModel(dependencies: dependencies)
 
-        expect(viewModel.currentUsernameText).to(equal(""))
+        expect(viewModel.currentUsernameText).to(beEmpty())
     }
 
     func test_currentUsername_returnsCorrectValue_basedOnUserService() {
@@ -59,7 +59,7 @@ class EnterUsernameViewModelTests: XCTestCase {
         let viewModel = EnterUsernameViewModel(dependencies: dependencies)
         dependencies.userService.username = "username"
 
-        expect(viewModel.currentUsernameText).to(equal(viewModel.currentUsernamePrefix + "username"))
+        expect(viewModel.currentUsernameText) == viewModel.currentUsernamePrefix + "username"
     }
 
     func test_submitUsername_callsDidStartRequest() {

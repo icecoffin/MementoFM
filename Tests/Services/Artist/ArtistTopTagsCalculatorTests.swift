@@ -27,6 +27,6 @@ class ArtistTopTagsCalculatorTests: XCTestCase {
         let allTags = [tag1, tag2, tag3, tag4, tag5, tag6]
         let artist = ModelFactory.generateArtist().updatingTags(to: allTags, needsTagsUpdate: false)
         let expectedArtist = calculator.calculateTopTags(for: artist)
-        expect(expectedArtist.topTags).to(equal([tag6, tag5, tag4]))
+        expect(expectedArtist.topTags) == [tag6, tag5, tag4]
     }
 }

@@ -34,14 +34,14 @@ class ArtistTopTagsSectionViewModelTests: XCTestCase {
         let artist = sampleArtist
         let viewModel = ArtistTopTagsSectionViewModel(artist: artist)
 
-        expect(viewModel.numberOfTopTags).to(equal(sampleArtist.topTags.count))
+        expect(viewModel.numberOfTopTags) == sampleArtist.topTags.count
     }
 
     func test_hasTags_returnsTrue_whenArtistHasTags() {
         let artist = sampleArtist
         let viewModel1 = ArtistTopTagsSectionViewModel(artist: artist)
 
-        expect(viewModel1.hasTags).to(beTrue())
+        expect(viewModel1.hasTags) == true
     }
 
     func test_hasTags_returnsFalse_whenArtistHasNoTags() {
@@ -54,7 +54,7 @@ class ArtistTopTagsSectionViewModelTests: XCTestCase {
                                       country: nil)
         let viewModel2 = ArtistTopTagsSectionViewModel(artist: artistWithNoTags)
 
-        expect(viewModel2.hasTags).to(beFalse())
+        expect(viewModel2.hasTags) == false
     }
 
     func test_cellViewModelAtIndexPath_returnsCorrectValue() {
@@ -64,7 +64,7 @@ class ArtistTopTagsSectionViewModelTests: XCTestCase {
 
         let cellViewModel = viewModel.cellViewModel(at: indexPath)
 
-        expect(cellViewModel.name).to(equal("Tag2"))
+        expect(cellViewModel.name) == "Tag2"
     }
 
     func test_selectTagWithName_notifiesDelegateCorrectly() {
@@ -75,6 +75,6 @@ class ArtistTopTagsSectionViewModelTests: XCTestCase {
 
         viewModel.selectTag(withName: "Tag2")
 
-        expect(delegate.selectedTagName).to(equal("Tag2"))
+        expect(delegate.selectedTagName) == "Tag2"
     }
 }

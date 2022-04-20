@@ -58,7 +58,7 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
 
         tabViewModelFactory.firstTabViewModel.numberOfSimilarArtists = 5
 
-        expect(viewModel.numberOfSimilarArtists).to(equal(5))
+        expect(viewModel.numberOfSimilarArtists) == 5
     }
 
     func test_hasSimilarArtists_returnsValueFromCurrentTabViewModel() {
@@ -69,7 +69,7 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
 
         tabViewModelFactory.firstTabViewModel.hasSimilarArtists = true
 
-        expect(viewModel.hasSimilarArtists).to(beTrue())
+        expect(viewModel.hasSimilarArtists) == true
     }
 
     func test_isLoading_returnsValueFromCurrentTabViewModel() {
@@ -80,7 +80,7 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
 
         tabViewModelFactory.firstTabViewModel.isLoading = true
 
-        expect(viewModel.isLoading).to(beTrue())
+        expect(viewModel.isLoading) == true
     }
 
     func test_emptyDataSetText_returnsValueFromCurrentTabViewModel() {
@@ -91,7 +91,7 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
 
         tabViewModelFactory.firstTabViewModel.emptyDataSetText = "Test"
 
-        expect(viewModel.emptyDataSetText).to(equal("Test"))
+        expect(viewModel.emptyDataSetText) == "Test"
     }
 
     func test_getSimilarArtists_callsMethodOnCurrentTabViewModel() {
@@ -102,7 +102,7 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
 
         viewModel.getSimilarArtists()
 
-        expect(self.tabViewModelFactory.firstTabViewModel.didCallGetSimilarArtists).to(beTrue())
+        expect(self.tabViewModelFactory.firstTabViewModel.didCallGetSimilarArtists) == true
     }
 
     func test_cellViewModelAtIndexPath_callsMethodOnCurrentTabViewModel() {
@@ -116,7 +116,7 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
         let indexPath = IndexPath(row: 0, section: 0)
         _ = viewModel.cellViewModel(at: indexPath)
 
-        expect(self.tabViewModelFactory.firstTabViewModel.cellViewModelIndexPath).to(equal(indexPath))
+        expect(self.tabViewModelFactory.firstTabViewModel.cellViewModelIndexPath) == indexPath
     }
 
     func test_selectArtistAtIndexPath_callsMethodOnCurrentTabViewModel() {
@@ -128,7 +128,7 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
         let indexPath = IndexPath(row: 0, section: 0)
         viewModel.selectArtist(at: indexPath)
 
-        expect(self.tabViewModelFactory.firstTabViewModel.selectedArtistIndexPath).to(equal(indexPath))
+        expect(self.tabViewModelFactory.firstTabViewModel.selectedArtistIndexPath) == indexPath
     }
 
     func test_selectTabAtIndex_changesCurrentTabViewModel() {
@@ -155,7 +155,7 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
 
         tabViewModelFactory.firstTabViewModel.didUpdateData?()
 
-        expect(didUpdateData).to(beTrue())
+        expect(didUpdateData) == true
     }
 
     func test_didReceiveError_isCalled_whenCurrentTabViewModelReceivesError() {
@@ -172,7 +172,7 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
         let error = NSError(domain: "MementoFM", code: 6, userInfo: nil)
         tabViewModelFactory.firstTabViewModel.didReceiveError?(error)
 
-        expect(didReceiveError).to(beTrue())
+        expect(didReceiveError) == true
     }
 
     func test_selectArtist_onTabViewModel_notifiesDelegateCorrectly() {
@@ -191,7 +191,7 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
 
         viewModel.similarsSectionTabViewModel(tabViewModel, didSelectArtist: artist)
 
-        expect(delegate.didCallDidSelectArtist).to(beTrue())
+        expect(delegate.didCallDidSelectArtist) == true
     }
 
     func test_canSelectSimilarArtists_returnsValueFromCurrentTabViewModel() {

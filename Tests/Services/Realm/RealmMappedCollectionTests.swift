@@ -37,7 +37,7 @@ class RealmMappedCollectionTests: XCTestCase {
     }
 
     func test_isEmpty_returnsTrue_whenCollectionIsEmpty() {
-        expect(self.collection.isEmpty).to(beTrue())
+        expect(self.collection.isEmpty) == true
     }
 
     func test_isEmpty_returnsFalse_whenCollectionIsNotEmpty() {

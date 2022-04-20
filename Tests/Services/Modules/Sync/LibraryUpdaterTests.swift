@@ -41,7 +41,7 @@ class LibraryUpdaterTests: XCTestCase {
 
         userService.lastUpdateTimestamp = 100
 
-        expect(libraryUpdater.lastUpdateTimestamp).to(equal(100))
+        expect(libraryUpdater.lastUpdateTimestamp) == 100
     }
 
     func test_requestData_callsDidStartLoading() {
@@ -55,7 +55,7 @@ class LibraryUpdaterTests: XCTestCase {
 
         libraryUpdater.requestData()
 
-        expect(didStartLoading).to(beTrue())
+        expect(didStartLoading) == true
     }
 
     func test_requestData_callsDidFinishLoading() {

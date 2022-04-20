@@ -67,13 +67,13 @@ class ArtistsByTagViewModelTests: XCTestCase {
     func test_itemCount_returnsCorrectValue() {
         collection.customCount = 4
 
-        expect(self.viewModel.itemCount).to(equal(4))
+        expect(self.viewModel.itemCount) == 4
     }
 
     // MARK: - title
 
     func test_title_returnsCorrectValue() {
-        expect(self.viewModel.title).to(equal("Tag1"))
+        expect(self.viewModel.title) == "Tag1"
     }
 
     // MARK: - artistViewModelAtIndexPath
@@ -82,7 +82,7 @@ class ArtistsByTagViewModelTests: XCTestCase {
         let indexPath = IndexPath(row: 1, section: 0)
         let artistViewModel = viewModel.artistViewModel(at: indexPath)
 
-        expect(artistViewModel.name).to(equal("Artist2"))
+        expect(artistViewModel.name) == "Artist2"
     }
 
     // MARK: - selectArtistAtIndexPath
@@ -94,7 +94,7 @@ class ArtistsByTagViewModelTests: XCTestCase {
 
         viewModel.selectArtist(at: indexPath)
 
-        expect(delegate.selectedArtist).to(equal(sampleArtists[1]))
+        expect(delegate.selectedArtist) == sampleArtists[1]
     }
 
     // MARK: - performSearch

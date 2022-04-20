@@ -81,7 +81,7 @@ class LibraryViewModelTests: XCTestCase {
 
         viewModel.requestDataIfNeeded()
 
-        expect(self.libraryUpdater.didRequestData).to(beTrue())
+        expect(self.libraryUpdater.didRequestData) == true
     }
 
     func test_requestDataIfNeeded_requestsDataAfterMinTimeInterval() {
@@ -91,7 +91,7 @@ class LibraryViewModelTests: XCTestCase {
 
         viewModel.requestDataIfNeeded(currentTimestamp: 131, minTimeInterval: 30)
 
-        expect(self.libraryUpdater.didRequestData).to(beTrue())
+        expect(self.libraryUpdater.didRequestData) == true
     }
 
     func test_requestDataIfNeeded_doesNotRequestDataBeforeMinTimeInterval() {
@@ -102,7 +102,7 @@ class LibraryViewModelTests: XCTestCase {
 
         viewModel.requestDataIfNeeded(currentTimestamp: 110, minTimeInterval: 30)
 
-        expect(self.libraryUpdater.didRequestData).to(beFalse())
+        expect(self.libraryUpdater.didRequestData) == false
     }
 
     // MARK: - itemCount
@@ -110,7 +110,7 @@ class LibraryViewModelTests: XCTestCase {
     func test_itemCount_returnsCorrectValue() {
         let viewModel = LibraryViewModel(dependencies: dependencies)
 
-        expect(viewModel.itemCount).to(equal(sampleArtists.count))
+        expect(viewModel.itemCount) == sampleArtists.count
     }
 
     // MARK: - artistViewModelAtIndexPath
@@ -121,7 +121,7 @@ class LibraryViewModelTests: XCTestCase {
 
         let artistViewModel = viewModel.artistViewModel(at: indexPath)
 
-        expect(artistViewModel.name).to(equal(sampleArtists[1].name))
+        expect(artistViewModel.name) == sampleArtists[1].name
     }
 
     // MARK: - selectArtistAtIndexPath
@@ -134,7 +134,7 @@ class LibraryViewModelTests: XCTestCase {
 
         viewModel.selectArtist(at: indexPath)
 
-        expect(delegate.selectedArtist).to(equal(sampleArtists[1]))
+        expect(delegate.selectedArtist) == sampleArtists[1]
     }
 
     // MARK: - performSearch
@@ -180,7 +180,7 @@ class LibraryViewModelTests: XCTestCase {
 
         applicationStateObserver.onApplicationDidBecomeActive?()
 
-        expect(self.libraryUpdater.didRequestData).to(beTrue())
+        expect(self.libraryUpdater.didRequestData) == true
     }
 
     // MARK: - didStartLoading
@@ -194,7 +194,7 @@ class LibraryViewModelTests: XCTestCase {
 
         libraryUpdater.simulateStartLoading()
 
-        expect(didStartLoading).to(beTrue())
+        expect(didStartLoading) == true
     }
 
     // MARK: - didFinishLoading
@@ -208,7 +208,7 @@ class LibraryViewModelTests: XCTestCase {
 
         libraryUpdater.simulateFinishLoading()
 
-        expect(didFinishLoading).to(beTrue())
+        expect(didFinishLoading) == true
     }
 
     // MARK: - didUpdateData
@@ -226,8 +226,8 @@ class LibraryViewModelTests: XCTestCase {
 
         libraryUpdater.simulateFinishLoading()
 
-        expect(didUpdateData).to(beTrue())
-        expect(dataIsEmpty).to(beTrue())
+        expect(didUpdateData) == true
+        expect(dataIsEmpty) == true
     }
 
     // MARK: - didReceiveError
@@ -241,7 +241,7 @@ class LibraryViewModelTests: XCTestCase {
 
         libraryUpdater.simulateError(NSError(domain: "MementoFM", code: 6, userInfo: nil))
 
-        expect(didReceiveError).to(beTrue())
+        expect(didReceiveError) == true
     }
 
     // MARK: - didChangeStatus
@@ -272,6 +272,6 @@ class LibraryViewModelTests: XCTestCase {
                                 "Getting recent tracks...",
                                 "Getting recent tracks: page 1 out of 10",
                                 "Getting tags for artists: 1 out of 10"]
-        expect(statuses).to(equal(expectedStatuses))
+        expect(statuses) == expectedStatuses
     }
 }

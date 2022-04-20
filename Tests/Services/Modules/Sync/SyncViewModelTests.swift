@@ -41,8 +41,8 @@ class SyncViewModelTests: XCTestCase {
 
         viewModel.syncLibrary()
 
-        expect(self.libraryUpdater.didCancelPendingRequests).to(beTrue())
-        expect(self.libraryUpdater.didRequestData).to(beTrue())
+        expect(self.libraryUpdater.didCancelPendingRequests) == true
+        expect(self.libraryUpdater.didRequestData) == true
     }
 
     func test_didChangeStatus_isCalledWithCorrectStatus_whenLibraryUpdaterChangesStatus() {
@@ -72,7 +72,7 @@ class SyncViewModelTests: XCTestCase {
                                 "Getting recent tracks (page 1 out of 10)",
                                 "Getting tags for\nArtist\n(1 out of 10)"]
 
-        expect(statuses).to(equal(expectedStatuses))
+        expect(statuses) == expectedStatuses
     }
 
     func test_didFinishLoading_isCalledOnDelegate_whenLibraryUpdaterFinishesLoading() {
@@ -81,7 +81,7 @@ class SyncViewModelTests: XCTestCase {
         viewModel.delegate = delegate
 
         libraryUpdater.simulateFinishLoading()
-        expect(delegate.didFinishLoading).to(beTrue())
+        expect(delegate.didFinishLoading) == true
     }
 
     func test_didReceiveError_isCalled_whenLibraryUpdaterFinishesWithError() {

@@ -30,17 +30,17 @@ class SimilarArtistCellViewModelTests: XCTestCase {
 
     func test_name_returnsArtistName() {
         let viewModel = SimilarArtistCellViewModel(artist: sampleArtist, commonTags: commonTags, index: 1)
-        expect(viewModel.name).to(equal("Artist"))
+        expect(viewModel.name) == "Artist"
     }
 
     func test_playcount_returnsCorrectValue_basedOnArtistPlaycount() {
         let viewModel = SimilarArtistCellViewModel(artist: sampleArtist, commonTags: commonTags, index: 1)
-        expect(viewModel.playcount).to(equal("10 plays"))
+        expect(viewModel.playcount) == "10 plays"
     }
 
     func test_index_returnsCorrectValue() {
         let viewModel = SimilarArtistCellViewModel(artist: sampleArtist, commonTags: commonTags, index: 1)
-        expect(viewModel.displayIndex).to(equal("1"))
+        expect(viewModel.displayIndex) == "1"
     }
 
     func test_tags_returnsCorrectlyAttributedTags_basedOnCommonTags() {
@@ -54,6 +54,6 @@ class SimilarArtistCellViewModelTests: XCTestCase {
         let expectedTags = expectedTagsArray.joined(separator: ", ")
 
         let viewModel = SimilarArtistCellViewModel(artist: sampleArtist, commonTags: commonTags, index: 1)
-        expect(viewModel.tags).to(equal(expectedTags))
+        expect(viewModel.tags) == expectedTags
     }
 }

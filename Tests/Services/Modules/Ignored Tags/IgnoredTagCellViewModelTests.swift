@@ -15,7 +15,7 @@ class IgnoredTagCellViewModelTests: XCTestCase {
     func test_text_returnsTagName() {
         let tag = IgnoredTag(uuid: "uuid", name: "name")
         let viewModel = IgnoredTagCellViewModel(tag: tag)
-        expect(viewModel.text).to(equal(tag.name))
+        expect(viewModel.text) == tag.name
     }
 
     func test_tagTextDidChange_callsOnTextChange() {

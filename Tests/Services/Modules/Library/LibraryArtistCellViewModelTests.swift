@@ -23,12 +23,12 @@ class LibraryArtistCellViewModelTests: XCTestCase {
 
     func test_name_returnsArtistName() {
         let viewModel = LibraryArtistCellViewModel(artist: sampleArtist, index: 1, numberFormatter: NumberFormatter())
-        expect(viewModel.name).to(equal("Artist"))
+        expect(viewModel.name) == "Artist"
     }
 
     func test_playcount_returnsCorrectValue_basedOnArtistPlaycount() {
         let viewModel = LibraryArtistCellViewModel(artist: sampleArtist, index: 1, numberFormatter: NumberFormatter())
-        expect(viewModel.playcount).to(equal("10 plays"))
+        expect(viewModel.playcount) == "10 plays"
     }
 
     func test_displayIndex_returnsCorrectValue() {
