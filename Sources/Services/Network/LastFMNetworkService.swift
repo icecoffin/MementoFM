@@ -57,8 +57,24 @@ final class LastFMNetworkService: NetworkService {
                                     headers: HTTPHeaders?) -> AnyPublisher<T, Error> {
         let publisher = AF
             .request(baseURL, method: method, parameters: parameters, headers: headers)
-            .publishDecodable(type: T.self)
-        return publisher.value()
+            .publishData()
+            .value()
+            .tryMap { value -> T in
+                let jsonDecoder = JSONDecoder()
+                if let errorResponse = try? jsonDecoder.decode(LastFMError.self, from: value) {
+                    log.debug(errorResponse.error)
+                    throw errorResponse.error
+                } else {
+                    do {
+                        let object = try jsonDecoder.decode(T.self, from: value)
+                        return object
+                    } catch {
+                        log.debug(error)
+                        throw error
+                    }
+                }
+            }
+        return publisher
             .mapError { $0 as Error }
             .eraseToAnyPublisher()
     }

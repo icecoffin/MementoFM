@@ -55,21 +55,15 @@ class SyncViewModelTests: XCTestCase {
 
         libraryUpdater.simulateStatusChange(.artistsFirstPage)
 
-        let artistsProgress = Progress()
-        artistsProgress.totalUnitCount = 10
-        artistsProgress.completedUnitCount = 1
+        let artistsProgress = PageProgress(current: 1, total: 10)
         libraryUpdater.simulateStatusChange(.artists(progress: artistsProgress))
 
         libraryUpdater.simulateStatusChange(.recentTracksFirstPage)
 
-        let recentTracksProgress = Progress()
-        recentTracksProgress.totalUnitCount = 10
-        recentTracksProgress.completedUnitCount = 1
+        let recentTracksProgress = PageProgress(current: 1, total: 10)
         libraryUpdater.simulateStatusChange(.recentTracks(progress: recentTracksProgress))
 
-        let tagsProgress = Progress()
-        tagsProgress.totalUnitCount = 10
-        tagsProgress.completedUnitCount = 1
+        let tagsProgress = PageProgress(current: 1, total: 10)
         libraryUpdater.simulateStatusChange(.tags(artistName: "Artist", progress: tagsProgress))
 
         let expectedStatuses = ["Updating library...",

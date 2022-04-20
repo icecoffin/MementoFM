@@ -9,14 +9,16 @@
 import XCTest
 import Nimble
 @testable import MementoFM
-import PromiseKit
+import Combine
 
-class MockRecentTracksProcessor: RecentTracksProcessing {
+final class MockRecentTracksProcessor: RecentTracksProcessing {
     var didCallProcess = false
 
-    func process(tracks: [Track], using persistentStore: PersistentStore) -> Promise<Void> {
+    func process(tracks: [Track], using persistentStore: PersistentStore) -> AnyPublisher<Void, Error> {
         didCallProcess = true
-        return .value(())
+        return Just(())
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
     }
 }
 
@@ -38,20 +40,20 @@ class TrackServiceTests: XCTestCase {
         trackRepository.trackProvider = { ModelFactory.generateTracks(inAmount: limit) }
         let trackService = TrackService(persistentStore: persistentStore, repository: trackRepository)
 
-        var progressCallCount = 0
-        waitUntil { done in
-            trackService.getRecentTracks(for: "User", from: 0, limit: limit) { _ in
-                progressCallCount += 1
-            }.done { tracks in
-                expect(progressCallCount) == totalPages - 1
+        var recentTracksPages: [RecentTracksPage] = []
+        _ = trackService.getRecentTracks(for: "User", from: 0, limit: limit)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    break
+                case .failure:
+                    fail()
+                }
+            }, receiveValue: { recentTracksPage in
+                recentTracksPages.append(recentTracksPage)
+            })
 
-                let expectedTracks = (0..<totalPages).flatMap { _ in ModelFactory.generateTracks(inAmount: limit) }
-                expect(tracks) == expectedTracks
-                done()
-            }.catch { _ in
-                fail()
-            }
-        }
+        expect(recentTracksPages.count) == totalPages
     }
 
     func test_getRecentTracks_failsWithError() {
@@ -64,13 +66,17 @@ class TrackServiceTests: XCTestCase {
         let trackService = TrackService(persistentStore: persistentStore, repository: trackRepository)
 
         var didReceiveError = false
-        trackService.getRecentTracks(for: "User", from: 0, limit: limit).done { _ in
-            fail()
-        }.catch { _ in
-            didReceiveError = true
-        }
+        _ = trackService.getRecentTracks(for: "User", from: 0, limit: limit)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    fail()
+                case .failure:
+                    didReceiveError = true
+                }
+            }, receiveValue: { _ in fail() })
 
-        expect(didReceiveError).toEventually(beTrue())
+        expect(didReceiveError) == true
     }
 
     func test_processTracks_callsRecentTracksProcessor() {

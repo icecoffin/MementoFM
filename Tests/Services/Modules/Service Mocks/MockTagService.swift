@@ -8,20 +8,16 @@
 
 import Foundation
 @testable import MementoFM
-import PromiseKit
+import Combine
 
 class MockTagService: TagServiceProtocol {
     var artists: [Artist] = []
-    var customProgress: TopTagsRequestProgress?
     var didRequestTopTags = false
-    func getTopTags(for artists: [Artist], progress: ((TopTagsRequestProgress) -> Promise<Void>)?) -> Promise<Void> {
+    var customTopTagsPages: [TopTagsPage] = []
+    func getTopTags(for artists: [Artist]) -> AnyPublisher<TopTagsPage, Error> {
         self.artists = artists
         didRequestTopTags = true
-        if let progress = progress, let customProgress = customProgress {
-            return progress(customProgress)
-        } else {
-            return .value(())
-        }
+        return Publishers.Sequence(sequence: customTopTagsPages).eraseToAnyPublisher()
     }
 
     var customTopTags: [Tag] = []

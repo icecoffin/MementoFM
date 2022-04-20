@@ -128,6 +128,9 @@ class LibraryUpdaterTests: XCTestCase {
     }
 
     func test_requestData_requestsArtistsTagsDuringLibraryUpdate() {
+        artistService.customArtistsNeedingTagsUpdate = ModelFactory.generateArtists(inAmount: 10)
+        ignoredTagService.customIgnoredTags = ModelFactory.generateIgnoredTags(inAmount: 10)
+
         let libraryUpdater = makeLibraryUpdater()
 
         let progress = Progress()
@@ -135,8 +138,7 @@ class LibraryUpdaterTests: XCTestCase {
         progress.completedUnitCount = 1
         let artist = ModelFactory.generateArtist()
         let topTagsList = TopTagsList(tags: ModelFactory.generateTags(inAmount: 10, for: artist.name))
-        let topTagsRequestProgress = TopTagsRequestProgress(progress: progress, artist: artist, topTagsList: topTagsList)
-        tagService.customProgress = topTagsRequestProgress
+        tagService.customTopTagsPages = [TopTagsPage(artist: artist, topTagsList: topTagsList)]
 
         libraryUpdater.requestData()
 

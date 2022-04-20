@@ -4,13 +4,12 @@
 //
 
 import Foundation
-import PromiseKit
 import Combine
 
 // MARK: - ArtistRepository
 
 protocol ArtistRepository: AnyObject {
-    func getLibraryPage(withIndex index: Int, for user: String, limit: Int) -> Promise<LibraryPageResponse>
+    func getLibraryPage(withIndex index: Int, for user: String, limit: Int) -> AnyPublisher<LibraryPageResponse, Error>
     func getSimilarArtists(for artist: Artist, limit: Int) -> AnyPublisher<SimilarArtistListResponse, Error>
 }
 
@@ -29,7 +28,7 @@ final class ArtistNetworkRepository: ArtistRepository {
 
     // MARK: - Public methods
 
-    func getLibraryPage(withIndex index: Int, for user: String, limit: Int) -> Promise<LibraryPageResponse> {
+    func getLibraryPage(withIndex index: Int, for user: String, limit: Int) -> AnyPublisher<LibraryPageResponse, Error> {
         let parameters: [String: Any] = ["method": "library.getartists",
                                          "api_key": Keys.LastFM.apiKey,
                                          "user": user,

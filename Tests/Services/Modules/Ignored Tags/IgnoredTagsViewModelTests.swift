@@ -9,7 +9,6 @@
 import XCTest
 @testable import MementoFM
 import Nimble
-import PromiseKit
 
 class IgnoredTagsViewModelTests: XCTestCase {
     class Dependencies: IgnoredTagsViewModel.Dependencies {
@@ -30,9 +29,9 @@ class IgnoredTagsViewModelTests: XCTestCase {
         }
     }
 
-    var ignoredTagService: MockIgnoredTagService!
-    var artistService: MockArtistService!
-    var dependencies: Dependencies!
+    private var ignoredTagService: MockIgnoredTagService!
+    private var artistService: MockArtistService!
+    private var dependencies: Dependencies!
 
     override func setUp() {
         ignoredTagService = MockIgnoredTagService()

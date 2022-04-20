@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import PromiseKit
+import Combine
 
 // MARK: - TrackRepository
 
@@ -15,7 +15,7 @@ protocol TrackRepository: AnyObject {
     func getRecentTracksPage(withIndex index: Int,
                              for user: String,
                              from: TimeInterval,
-                             limit: Int) -> Promise<RecentTracksPageResponse>
+                             limit: Int) -> AnyPublisher<RecentTracksPageResponse, Error>
 }
 
 // MARK: - TrackNetworkRepository
@@ -36,7 +36,7 @@ final class TrackNetworkRepository: TrackRepository {
     func getRecentTracksPage(withIndex index: Int,
                              for user: String,
                              from: TimeInterval,
-                             limit: Int) -> Promise<RecentTracksPageResponse> {
+                             limit: Int) -> AnyPublisher<RecentTracksPageResponse, Error> {
         let parameters: [String: Any] = ["method": "user.getrecenttracks",
                                          "api_key": Keys.LastFM.apiKey,
                                          "user": user,

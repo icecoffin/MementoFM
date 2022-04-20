@@ -8,7 +8,6 @@
 
 import Foundation
 @testable import MementoFM
-import PromiseKit
 import Combine
 
 class MockArtistSimilarsRepository: ArtistRepository {
@@ -20,7 +19,7 @@ class MockArtistSimilarsRepository: ArtistRepository {
         self.similarArtistProvider = similarArtistProvider
     }
 
-    func getLibraryPage(withIndex index: Int, for user: String, limit: Int) -> Promise<LibraryPageResponse> {
+    func getLibraryPage(withIndex index: Int, for user: String, limit: Int) -> AnyPublisher<LibraryPageResponse, Error> {
         fatalError()
     }
 

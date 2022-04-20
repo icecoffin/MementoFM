@@ -8,20 +8,22 @@
 
 import Foundation
 @testable import MementoFM
-import PromiseKit
+import Combine
 
 class MockTagRepository: TagRepository {
     var shouldFailWithError = false
     var tagProvider: ((String) -> [Tag])!
 
-    func getTopTags(for artist: String) -> Promise<TopTagsResponse> {
+    func getTopTags(for artist: String) -> AnyPublisher<TopTagsResponse, Error> {
         if shouldFailWithError {
-            return Promise(error: NSError(domain: "MementoFM", code: 1, userInfo: nil))
+            return Fail(error: NSError(domain: "MementoFM", code: 1, userInfo: nil)).eraseToAnyPublisher()
         } else {
             let tags = tagProvider(artist)
             let topTagsList = TopTagsList(tags: tags)
             let response = TopTagsResponse(topTagsList: topTagsList)
-            return .value(response)
+            return Just(response)
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
         }
     }
 }

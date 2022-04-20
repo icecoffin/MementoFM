@@ -9,7 +9,6 @@
 import XCTest
 @testable import MementoFM
 import Nimble
-import PromiseKit
 
 class RecentTracksProcessorTests: XCTestCase {
     var persistentStore: MockPersistentStore!
@@ -26,7 +25,7 @@ class RecentTracksProcessorTests: XCTestCase {
         let tracks = [Track(artist: artist1), Track(artist: artist1), Track(artist: artist2)]
 
         let recentTracksProcessor = RecentTracksProcessor()
-        recentTracksProcessor.process(tracks: tracks, using: persistentStore).noError()
+        _ = recentTracksProcessor.process(tracks: tracks, using: persistentStore)
 
         expect(self.persistentStore.saveParameters?.objects.count) == 2
         expect(self.persistentStore.saveParameters?.update) == true
@@ -38,7 +37,7 @@ class RecentTracksProcessorTests: XCTestCase {
         let tracks = [Track(artist: artist1), Track(artist: artist1), Track(artist: artist2)]
 
         let recentTracksProcessor = RecentTracksProcessor()
-        recentTracksProcessor.process(tracks: tracks, using: persistentStore).noError()
+        _ = recentTracksProcessor.process(tracks: tracks, using: persistentStore)
 
         let artists = (persistentStore.saveParameters?.objects as? [Artist])?.sorted { $0.name < $1.name }
         let savedArtist1 = artists?[0]
@@ -54,7 +53,7 @@ class RecentTracksProcessorTests: XCTestCase {
         let tracks = [Track(artist: artist1), Track(artist: artist1), Track(artist: artist2)]
 
         let recentTracksProcessor = RecentTracksProcessor()
-        recentTracksProcessor.process(tracks: tracks, using: persistentStore).noError()
+        _ = recentTracksProcessor.process(tracks: tracks, using: persistentStore)
 
         expect(self.persistentStore.objectPrimaryKeys.sorted()) == ["Artist1", "Artist2"]
     }

@@ -8,7 +8,6 @@
 
 import Foundation
 @testable import MementoFM
-import PromiseKit
 import Combine
 
 class MockArtistLibraryRepository: ArtistRepository {
@@ -22,14 +21,16 @@ class MockArtistLibraryRepository: ArtistRepository {
         self.artistProvider = artistProvider
     }
 
-    func getLibraryPage(withIndex index: Int, for user: String, limit: Int) -> Promise<LibraryPageResponse> {
+    func getLibraryPage(withIndex index: Int, for user: String, limit: Int) -> AnyPublisher<LibraryPageResponse, Error> {
         if shouldFailWithError {
-            return Promise(error: NSError(domain: "MementoFM", code: 1, userInfo: nil))
+            return Fail(error: NSError(domain: "MementoFM", code: 1, userInfo: nil)).eraseToAnyPublisher()
         } else {
             let artists = artistProvider(index)
             let libraryPage = LibraryPage(index: index, totalPages: totalPages, artists: artists)
             let response = LibraryPageResponse(libraryPage: libraryPage)
-            return .value(response)
+            return Just(response)
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
         }
     }
 

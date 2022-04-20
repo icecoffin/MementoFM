@@ -9,7 +9,6 @@
 import XCTest
 @testable import MementoFM
 import Nimble
-import PromiseKit
 import Alamofire
 
 class ArtistNetworkRepositoryTests: XCTestCase {
@@ -28,7 +27,7 @@ class ArtistNetworkRepositoryTests: XCTestCase {
         let response = LibraryPageResponse(libraryPage: libraryPage)
         networkService.customResponse = response
 
-        artistRepository.getLibraryPage(withIndex: 1, for: "User", limit: 10).noError()
+        _ = artistRepository.getLibraryPage(withIndex: 1, for: "User", limit: 10)
 
         let expectedParameters: [String: AnyHashable] = ["method": "library.getartists",
                                                          "api_key": Keys.LastFM.apiKey,

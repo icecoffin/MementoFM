@@ -8,13 +8,15 @@
 
 import Foundation
 @testable import MementoFM
-import PromiseKit
+import Combine
 
 class MockCountryService: CountryServiceProtocol {
     var didCallUpdateCountries = false
-    func updateCountries() -> Promise<Void> {
+    func updateCountries() -> AnyPublisher<Void, Error> {
         didCallUpdateCountries = true
-        return .value(())
+        return Just(())
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
     }
 
     var customCountriesWithCount: [String: Int] = [:]

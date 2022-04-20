@@ -7,21 +7,21 @@
 //
 
 import Foundation
-import PromiseKit
+import Combine
 
 // MARK: - TrackServiceProtocol
 
 protocol TrackServiceProtocol: AnyObject {
-    func getRecentTracks(for user: String, from: TimeInterval, limit: Int, progress: ((Progress) -> Void)?) -> Promise<[Track]>
-    func processTracks(_ tracks: [Track], using processor: RecentTracksProcessing) -> Promise<Void>
+    func getRecentTracks(for user: String, from: TimeInterval, limit: Int) -> AnyPublisher<RecentTracksPage, Error>
+    func processTracks(_ tracks: [Track], using processor: RecentTracksProcessing) -> AnyPublisher<Void, Error>
 }
 
 extension TrackServiceProtocol {
-    func getRecentTracks(for user: String, from: TimeInterval, progress: ((Progress) -> Void)?) -> Promise<[Track]> {
-        return getRecentTracks(for: user, from: from, limit: 200, progress: progress)
+    func getRecentTracks(for user: String, from: TimeInterval) -> AnyPublisher<RecentTracksPage, Error> {
+        return getRecentTracks(for: user, from: from, limit: 200)
     }
 
-    func processTracks(_ tracks: [Track]) -> Promise<Void> {
+    func processTracks(_ tracks: [Track]) -> AnyPublisher<Void, Error> {
         return processTracks(tracks, using: RecentTracksProcessor())
     }
 }
@@ -43,49 +43,32 @@ final class TrackService: TrackServiceProtocol {
 
     // MARK: - Public methods
 
-    func getRecentTracks(for user: String,
-                         from: TimeInterval,
-                         limit: Int = 200,
-                         progress: ((Progress) -> Void)? = nil) -> Promise<[Track]> {
-        return Promise { seal in
-            let initialIndex = 1
-            repository.getRecentTracksPage(withIndex: initialIndex, for: user,
-                                           from: from, limit: limit).done { response in
-                                            let page = response.recentTracksPage
-                                            if page.totalPages <= initialIndex {
-                                                seal.fulfill(page.tracks)
-                                                return
-                                            }
+    func getRecentTracks(for user: String, from: TimeInterval, limit: Int) -> AnyPublisher<RecentTracksPage, Error> {
+        let initialIndex = 1
+        let firstPage = repository
+            .getRecentTracksPage(withIndex: initialIndex, for: user, from: from, limit: limit)
+            .map { $0.recentTracksPage }
 
-                                            let totalProgress = Progress(totalUnitCount: Int64(page.totalPages - 1))
-                                            let pagePromises = (initialIndex+1...page.totalPages).map { index in
-                                                return self.repository.getRecentTracksPage(withIndex: index,
-                                                                                           for: user,
-                                                                                           from: from,
-                                                                                           limit: limit).ensure {
-                                                    totalProgress.completedUnitCount += 1
-                                                    progress?(totalProgress)
-                                                }
-                                            }
-
-                                            when(fulfilled: pagePromises).done { pageResponses in
-                                                let pages = pageResponses.map({ $0.recentTracksPage })
-                                                let tracks = ([page] + pages).flatMap({ $0.tracks })
-                                                seal.fulfill(tracks)
-                                            }.catch { error in
-                                                if !error.isCancelled {
-                                                    seal.reject(error)
-                                                }
-                                            }
-            }.catch { error in
-                if !error.isCancelled {
-                    seal.reject(error)
-                }
+        let otherPages = firstPage.flatMap { recentTracksPage -> AnyPublisher<RecentTracksPage, Error> in
+            if recentTracksPage.totalPages <= initialIndex {
+                return Empty()
+                    .eraseToAnyPublisher()
             }
+
+            let publishers = (initialIndex+1...recentTracksPage.totalPages).map { index in
+                return self.repository.getRecentTracksPage(withIndex: index, for: user, from: from, limit: limit)
+                    .map { $0.recentTracksPage }
+                    .eraseToAnyPublisher()
+            }
+            return Publishers.Sequence(sequence: publishers)
+                .flatMap(maxPublishers: .max(5)) { $0 }
+                .eraseToAnyPublisher()
         }
+
+        return Publishers.Merge(firstPage, otherPages).eraseToAnyPublisher()
     }
 
-    func processTracks(_ tracks: [Track], using processor: RecentTracksProcessing = RecentTracksProcessor()) -> Promise<Void> {
+    func processTracks(_ tracks: [Track], using processor: RecentTracksProcessing) -> AnyPublisher<Void, Error> {
         return processor.process(tracks: tracks, using: persistentStore)
     }
 }

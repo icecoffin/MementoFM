@@ -7,18 +7,18 @@
 //
 
 import Foundation
-import PromiseKit
+import Combine
 
 // MARK: - RecentTracksProcessing
 
 protocol RecentTracksProcessing {
-    func process(tracks: [Track], using persistentStore: PersistentStore) -> Promise<Void>
+    func process(tracks: [Track], using persistentStore: PersistentStore) -> AnyPublisher<Void, Error>
 }
 
 // MARK: - RecentTracksProcessor
 
 final class RecentTracksProcessor: RecentTracksProcessing {
-    func process(tracks: [Track], using persistentStore: PersistentStore) -> Promise<Void> {
+    func process(tracks: [Track], using persistentStore: PersistentStore) -> AnyPublisher<Void, Error> {
         var artistNamesWithPlayCounts = [Artist: Int]()
 
         for track in tracks {

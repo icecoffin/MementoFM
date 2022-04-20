@@ -28,7 +28,12 @@ extension LibraryPage {
     init(from decoder: Decoder) throws {
         let rootContainer = try decoder.container(keyedBy: RootCodingKeys.self)
 
-        artists = try rootContainer.decode([Artist].self, forKey: .artists)
+        if let artists = try? rootContainer.decodeIfPresent([Artist].self, forKey: .artists) {
+            self.artists = artists
+        } else {
+            let singleArtist = try rootContainer.decode(Artist.self, forKey: .artists)
+            self.artists = [singleArtist]
+        }
 
         let attributesContainer = try rootContainer.nestedContainer(keyedBy: AttributesCodingKeys.self, forKey: .attributes)
         let indexString = try attributesContainer.decode(String.self, forKey: .index)

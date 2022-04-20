@@ -8,7 +8,6 @@
 
 import Foundation
 @testable import MementoFM
-import PromiseKit
 
 class MockLibraryUpdater: LibraryUpdaterProtocol {
     var didStartLoading: (() -> Void)?

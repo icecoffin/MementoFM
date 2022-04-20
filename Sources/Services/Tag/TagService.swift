@@ -7,19 +7,20 @@
 //
 
 import Foundation
-import PromiseKit
+import Combine
+
+// MARK: - TopTagsPage
+
+struct TopTagsPage {
+    let artist: Artist
+    let topTagsList: TopTagsList
+}
 
 // MARK: - TagServiceProtocol
 
 protocol TagServiceProtocol: AnyObject {
-    func getTopTags(for artists: [Artist], progress: ((TopTagsRequestProgress) -> Promise<Void>)?) -> Promise<Void>
+    func getTopTags(for artists: [Artist]) -> AnyPublisher<TopTagsPage, Error>
     func getAllTopTags() -> [Tag]
-}
-
-extension TagServiceProtocol {
-    func getTopTags(for artists: [Artist]) -> Promise<Void> {
-        return getTopTags(for: artists, progress: nil)
-    }
 }
 
 // MARK: - TagService
@@ -39,26 +40,16 @@ final class TagService: TagServiceProtocol {
 
     // MARK: - Public methods
 
-    func getTopTags(for artists: [Artist], progress: ((TopTagsRequestProgress) -> Promise<Void>)?) -> Promise<Void> {
-        return Promise { seal in
-            let totalProgress = Progress(totalUnitCount: Int64(artists.count))
-
-            let promises = artists.map { artist in
-                return repository.getTopTags(for: artist.name).compactMap { topTagsResponse -> Promise<Void>? in
-                    totalProgress.completedUnitCount += 1
-                    let topTagsList = topTagsResponse.topTagsList
-                    return progress?(TopTagsRequestProgress(progress: totalProgress, artist: artist, topTagsList: topTagsList))
-                }
-            }
-
-            when(fulfilled: promises).done { _ in
-                seal.fulfill(())
-            }.catch { error in
-                if !error.isCancelled {
-                    seal.reject(error)
-                }
-            }
+    func getTopTags(for artists: [Artist]) -> AnyPublisher<TopTagsPage, Error> {
+        let publishers = artists.map { artist -> AnyPublisher<TopTagsPage, Error> in
+            return repository.getTopTags(for: artist.name)
+                .map { TopTagsPage(artist: artist, topTagsList: $0.topTagsList) }
+                .eraseToAnyPublisher()
         }
+
+        return Publishers.Sequence(sequence: publishers)
+            .flatMap(maxPublishers: .max(5)) { $0 }
+            .eraseToAnyPublisher()
     }
 
     func getAllTopTags() -> [Tag] {

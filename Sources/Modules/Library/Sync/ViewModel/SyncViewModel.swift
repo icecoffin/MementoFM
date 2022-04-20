@@ -64,18 +64,18 @@ final class SyncViewModel {
         case .artistsFirstPage:
             return "Updating library...".unlocalized
         case .artists(let progress):
-            let currentPage = progress.completedUnitCount
-            let totalPageCount = progress.totalUnitCount
+            let currentPage = progress.current
+            let totalPageCount = progress.total
             return "Updating library (page \(currentPage) out of \(totalPageCount))".unlocalized
         case .recentTracksFirstPage:
             return "Getting recent tracks...".unlocalized
         case .recentTracks(let progress):
-            let currentPage = progress.completedUnitCount
-            let totalPageCount = progress.totalUnitCount
+            let currentPage = progress.current
+            let totalPageCount = progress.total
             return "Getting recent tracks (page \(currentPage) out of \(totalPageCount))".unlocalized
         case .tags(let artistName, let progress):
-            let currentIndex = progress.completedUnitCount
-            let totalArtistCount = progress.totalUnitCount
+            let currentIndex = progress.current
+            let totalArtistCount = progress.total
             return ["Getting tags for",
                     artistName,
                     "(\(currentIndex) out of \(totalArtistCount))"]

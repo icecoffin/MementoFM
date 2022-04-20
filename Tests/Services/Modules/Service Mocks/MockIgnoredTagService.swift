@@ -23,7 +23,9 @@ class MockIgnoredTagService: IgnoredTagServiceProtocol {
     var createdDefaultIgnoredTagNames: [String] = []
     func createDefaultIgnoredTags(withNames names: [String]) -> AnyPublisher<Void, Error> {
         createdDefaultIgnoredTagNames = names
-        return Just(()).setFailureType(to: Error.self).eraseToAnyPublisher()
+        return Just(())
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
     }
 
     var updatedIgnoredTags: [IgnoredTag] = []

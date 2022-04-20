@@ -8,7 +8,7 @@
 
 import Foundation
 @testable import MementoFM
-import PromiseKit
+import Combine
 
 class MockTrackService: TrackServiceProtocol {
     var customRecentTracks: [Track] = []
@@ -16,19 +16,22 @@ class MockTrackService: TrackServiceProtocol {
     var from: TimeInterval = 0
     var limit: Int = 0
     var didCallGetRecentTracks = false
-    func getRecentTracks(for user: String, from: TimeInterval, limit: Int, progress: ((Progress) -> Void)?) -> Promise<[Track]> {
+    var customRecentTracksPages: [RecentTracksPage] = []
+    func getRecentTracks(for user: String, from: TimeInterval, limit: Int) -> AnyPublisher<RecentTracksPage, Error> {
         self.user = user
         self.from = from
         self.limit = limit
         didCallGetRecentTracks = true
-        return .value(customRecentTracks)
+        return Publishers.Sequence(sequence: customRecentTracksPages).eraseToAnyPublisher()
     }
 
     var tracks: [Track] = []
     var didCallProcessTracks = false
-    func processTracks(_ tracks: [Track], using processor: RecentTracksProcessing) -> Promise<Void> {
+    func processTracks(_ tracks: [Track], using processor: RecentTracksProcessing) -> AnyPublisher<Void, Error> {
         self.tracks = tracks
         didCallProcessTracks = true
-        return .value(())
+        return Just(())
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
     }
 }

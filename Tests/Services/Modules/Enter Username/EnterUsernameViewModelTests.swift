@@ -9,7 +9,6 @@
 import XCTest
 @testable import MementoFM
 import Nimble
-import PromiseKit
 
 private class Dependencies: EnterUsernameViewModel.Dependencies {
     let userService: UserServiceProtocol

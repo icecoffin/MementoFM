@@ -7,12 +7,12 @@
 //
 
 import Foundation
-import PromiseKit
+import Combine
 
 // MARK: - TagRepository
 
 protocol TagRepository: AnyObject {
-    func getTopTags(for artist: String) -> Promise<TopTagsResponse>
+    func getTopTags(for artist: String) -> AnyPublisher<TopTagsResponse, Error>
 }
 
 // MARK: - TagNetworkRepository
@@ -30,7 +30,7 @@ final class TagNetworkRepository: TagRepository {
 
     // MARK: - Public methods
 
-    func getTopTags(for artist: String) -> Promise<TopTagsResponse> {
+    func getTopTags(for artist: String) -> AnyPublisher<TopTagsResponse, Error> {
         let parameters: [String: Any] = ["method": "artist.gettoptags",
                                          "api_key": Keys.LastFM.apiKey,
                                          "artist": artist,

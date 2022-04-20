@@ -9,7 +9,6 @@
 import XCTest
 @testable import MementoFM
 import Nimble
-import PromiseKit
 import Alamofire
 
 class TagNetworkRepositoryTests: XCTestCase {
@@ -28,7 +27,7 @@ class TagNetworkRepositoryTests: XCTestCase {
         let response = TopTagsResponse(topTagsList: topTagsList)
         networkService.customResponse = response
 
-        tagRepository.getTopTags(for: "Artist").noError()
+        _ = tagRepository.getTopTags(for: "Artist")
 
         let expectedParameters: [String: AnyHashable] = ["method": "artist.gettoptags",
                                                          "api_key": Keys.LastFM.apiKey,

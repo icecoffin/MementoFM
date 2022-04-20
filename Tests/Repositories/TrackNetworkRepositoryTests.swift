@@ -9,7 +9,6 @@
 import XCTest
 @testable import MementoFM
 import Nimble
-import PromiseKit
 import Alamofire
 
 class TrackRepositoryTests: XCTestCase {
@@ -28,9 +27,8 @@ class TrackRepositoryTests: XCTestCase {
         let response = RecentTracksPageResponse(recentTracksPage: recentTracksPage)
         networkService.customResponse = response
 
-        trackRepository
+        _ = trackRepository
             .getRecentTracksPage(withIndex: 1, for: "User", from: TimeInterval(1509982044), limit: 10)
-            .noError()
 
         let expectedParameters: [String: AnyHashable] = ["method": "user.getrecenttracks",
                                                          "api_key": Keys.LastFM.apiKey,

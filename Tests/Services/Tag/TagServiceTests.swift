@@ -9,7 +9,6 @@
 import XCTest
 import Nimble
 @testable import MementoFM
-import PromiseKit
 
 class TagServiceTests: XCTestCase {
     var persistentStore: MockPersistentStore!
@@ -31,20 +30,23 @@ class TagServiceTests: XCTestCase {
         let tagService = TagService(persistentStore: persistentStore, repository: tagRepository)
         let artists = ModelFactory.generateArtists(inAmount: artistCount)
 
-        var progressCallCount = 0
-        waitUntil { done in
-            tagService.getTopTags(for: artists, progress: { progress in
-                let expectedTags = ModelFactory.generateTags(inAmount: tagsPerArtist, for: progress.artist.name)
-                expect(progress.topTagsList.tags) == expectedTags
-                progressCallCount += 1
-                return .value(())
-            }).done { _ in
-                expect(progressCallCount) == artists.count
-                done()
-            }.catch { _ in
-                fail()
+        var topTagsPages: [TopTagsPage] = []
+        _ = tagService.getTopTags(for: artists)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    break
+                case .failure:
+                    fail()
+                }
+            } receiveValue: { topTagsPage in
+                topTagsPages.append(topTagsPage)
             }
-        }
+
+        let expectedTags = topTagsPages
+            .map { ModelFactory.generateTags(inAmount: tagsPerArtist, for: $0.artist.name) }
+        let receivedTags = topTagsPages.map { $0.topTagsList.tags }
+        expect(receivedTags) == expectedTags
     }
 
     func test_getTopTags_failsWithError() {
@@ -54,13 +56,17 @@ class TagServiceTests: XCTestCase {
 
         var didReceiveError = false
         let artists = ModelFactory.generateArtists(inAmount: 1)
-        tagService.getTopTags(for: artists).done { _ in
-            fail()
-        }.catch { _ in
-            didReceiveError = true
-        }
+        _ = tagService.getTopTags(for: artists)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    fail()
+                case .failure:
+                    didReceiveError = true
+                }
+            } receiveValue: { _ in fail() }
 
-        expect(didReceiveError).toEventually(beTrue())
+        expect(didReceiveError) == true
     }
 
     func test_getAllTopTags_returnsTopTagsFromAllArtists() {

@@ -9,7 +9,6 @@
 import XCTest
 @testable import MementoFM
 import Nimble
-import PromiseKit
 import RealmSwift
 
 class ArtistTopTagsCalculatorTests: XCTestCase {

@@ -9,7 +9,6 @@
 import XCTest
 @testable import MementoFM
 import Nimble
-import PromiseKit
 import CombineSchedulers
 
 class ArtistServiceTests: XCTestCase {
@@ -32,19 +31,24 @@ class ArtistServiceTests: XCTestCase {
         })
         let artistService = ArtistService(persistentStore: persistentStore, repository: repository)
 
-        var progressCallCount = 0
-        var expectedArtists: [Artist] = []
-        artistService.getLibrary(for: "user", limit: artistsPerPage, progress: { _ in
-            progressCallCount += 1
-        }).done { artists in
-            expectedArtists = artists
-        }.catch { _ in
-            fail()
-        }
+        var libraryPages: [LibraryPage] = []
+        _ = artistService.getLibrary(for: "user", limit: artistsPerPage)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    break
+                case .failure:
+                    fail()
+                }
+            }, receiveValue: { libraryPage in
+                libraryPages.append(libraryPage)
+            })
 
-        let artists = (0..<totalPages).flatMap { _ in ModelFactory.generateArtists(inAmount: artistsPerPage) }
-        expect(expectedArtists).toEventually(equal(artists))
-        expect(progressCallCount).toEventually(equal(totalPages - 1))
+        expect(libraryPages.count) == totalPages
+
+        let expectedArtists = (0..<totalPages).flatMap { _ in ModelFactory.generateArtists(inAmount: artistsPerPage) }
+        let receivedArtists = libraryPages.map { $0.artists }.flatMap { $0 }
+        expect(receivedArtists) == expectedArtists
     }
 
     func test_getLibrary_returnsErrorOnFailure() {
@@ -57,20 +61,24 @@ class ArtistServiceTests: XCTestCase {
         let artistService = ArtistService(persistentStore: persistentStore, repository: repository)
 
         var didCatchError = false
-        artistService.getLibrary(for: "user", limit: artistsPerPage, progress: nil).done { _ in
-            fail()
-        }.catch { _ in
-            didCatchError = true
-        }
+        _ = artistService.getLibrary(for: "user", limit: artistsPerPage)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    fail()
+                case .failure:
+                    didCatchError = true
+                }
+            }, receiveValue: { _ in fail() })
 
-        expect(didCatchError).toEventually(beTrue())
+        expect(didCatchError) == true
     }
 
     func test_saveArtists_callsPersistentStore() {
         let artistService = ArtistService(persistentStore: persistentStore, repository: StubArtistEmptyRepository())
 
         let artists = ModelFactory.generateArtists(inAmount: 5)
-        artistService.saveArtists(artists).noError()
+        _ = artistService.saveArtists(artists)
 
         let saveParameters = persistentStore.saveParameters
         expect(saveParameters?.objects as? [Artist]) == artists
@@ -106,7 +114,7 @@ class ArtistServiceTests: XCTestCase {
         let artist = ModelFactory.generateArtist(index: 1, needsTagsUpdate: true)
         let tags = ModelFactory.generateTags(inAmount: 5, for: artist.name)
 
-        artistService.updateArtist(artist, with: tags).noError()
+        _ = artistService.updateArtist(artist, with: tags)
 
         let saveParameters = persistentStore.saveParameters
         expect(saveParameters?.update) == true
@@ -140,7 +148,7 @@ class ArtistServiceTests: XCTestCase {
         let artist = ModelFactory.generateArtist(index: 1)
         let calculator = MockArtistTopTagsCalculator()
 
-        artistService.calculateTopTags(for: artist, using: calculator).noError()
+        _ = artistService.calculateTopTags(for: artist, using: calculator)
 
         expect(calculator.numberOfCalculateTopTagsCalled) == 1
         expect(self.persistentStore.saveParameters?.objects.first as? Artist) == artist

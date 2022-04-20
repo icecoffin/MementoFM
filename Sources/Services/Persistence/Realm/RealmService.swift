@@ -10,6 +10,7 @@ import Foundation
 import RealmSwift
 import PromiseKit
 import Combine
+import CombineSchedulers
 
 final class RealmService: PersistentStore {
     // MARK: - Private properties
@@ -19,6 +20,8 @@ final class RealmService: PersistentStore {
 
     private let backgroundDispatcher: Dispatcher
     private let mainDispatcher: Dispatcher
+    private let backgroundScheduler: AnySchedulerOf<DispatchQueue>
+    private let mainScheduler: AnySchedulerOf<DispatchQueue>
 
     private var currentQueueRealm: Realm {
         if Thread.isMainThread {
@@ -32,28 +35,37 @@ final class RealmService: PersistentStore {
 
     init(getRealm: @escaping () -> Realm,
          backgroundDispatcher: Dispatcher = AsyncDispatcher.global,
-         mainDispatcher: Dispatcher = AsyncDispatcher.main) {
+         mainDispatcher: Dispatcher = AsyncDispatcher.main,
+         backgroundScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.global().eraseToAnyScheduler(),
+         mainScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.main.eraseToAnyScheduler()) {
         self.mainQueueRealm = getRealm()
         self.getBackgroundQueueRealm = getRealm
         self.backgroundDispatcher = backgroundDispatcher
         self.mainDispatcher = mainDispatcher
+        self.backgroundScheduler = backgroundScheduler
+        self.mainScheduler = mainScheduler
     }
 
     // MARK: - Private methods
 
     private func write(block: @escaping (Realm) -> Void) -> AnyPublisher<Void, Error> {
-        return Just(())
-            .receive(on: DispatchQueue.global())
-            .tryMap { _ in
-                try self.write(to: self.currentQueueRealm) { realm in
-                    block(realm)
+        return Future<Void, Error>() { promise in
+            self.backgroundScheduler.schedule {
+                do {
+                    try self.write(to: self.currentQueueRealm) { realm in
+                        block(realm)
+                        promise(.success(()))
+                    }
+                } catch {
+                    promise(.failure(error))
                 }
             }
-            .receive(on: DispatchQueue.main)
-            .map {
-                self.currentQueueRealm.refresh()
-            }
-            .eraseToAnyPublisher()
+        }
+        .receive(on: mainScheduler)
+        .map {
+            self.currentQueueRealm.refresh()
+        }
+        .eraseToAnyPublisher()
     }
 
     private func write(block: @escaping (Realm) -> Void) -> Promise<Void> {

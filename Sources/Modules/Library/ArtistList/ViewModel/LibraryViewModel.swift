@@ -8,7 +8,6 @@
 
 import Foundation
 import RealmSwift
-import PromiseKit
 
 final class LibraryViewModel: ArtistListViewModel {
     typealias Dependencies = HasLibraryUpdater & HasArtistService & HasUserService
@@ -92,13 +91,13 @@ final class LibraryViewModel: ArtistListViewModel {
         case .artistsFirstPage:
             return "Getting library...".unlocalized
         case .artists(let progress):
-            return "Getting library: page \(progress.completedUnitCount) out of \(progress.totalUnitCount)".unlocalized
+            return "Getting library: page \(progress.current) out of \(progress.total)".unlocalized
         case .recentTracksFirstPage:
             return "Getting recent tracks..."
         case .recentTracks(let progress):
-            return "Getting recent tracks: page \(progress.completedUnitCount) out of \(progress.totalUnitCount)".unlocalized
+            return "Getting recent tracks: page \(progress.current) out of \(progress.total)".unlocalized
         case .tags(_, let progress):
-            return "Getting tags for artists: \(progress.completedUnitCount) out of \(progress.totalUnitCount)".unlocalized
+            return "Getting tags for artists: \(progress.current) out of \(progress.total)".unlocalized
         }
     }
 

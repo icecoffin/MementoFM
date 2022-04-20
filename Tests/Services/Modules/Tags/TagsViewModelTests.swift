@@ -9,7 +9,6 @@
 import XCTest
 @testable import MementoFM
 import Nimble
-import PromiseKit
 
 class TagsViewModelTests: XCTestCase {
     class Dependencies: TagsViewModel.Dependencies {

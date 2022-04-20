@@ -8,33 +8,35 @@
 
 import Foundation
 @testable import MementoFM
-import PromiseKit
 import Combine
 
 class MockArtistService: ArtistServiceProtocol {
     var user: String = ""
     var limit: Int = 0
     var getLibraryShouldReturnError = false
-    var progress = Progress()
     var didRequestLibrary = false
-    func getLibrary(for user: String, limit: Int, progress: ((Progress) -> Void)?) -> Promise<[Artist]> {
+    var customLibraryPages: [LibraryPage] = []
+    func getLibrary(for user: String, limit: Int) -> AnyPublisher<LibraryPage, Error> {
         self.user = user
         self.limit = limit
         didRequestLibrary = true
         if getLibraryShouldReturnError {
-            return Promise(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
+            return Fail(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
+                .eraseToAnyPublisher()
         } else {
-            progress?(self.progress)
-            return .value([])
+            return Publishers.Sequence(sequence: customLibraryPages)
+                .eraseToAnyPublisher()
         }
     }
 
     var savingArtists = [Artist]()
     var didCallSaveArtists = false
-    func saveArtists(_ artists: [Artist]) -> Promise<Void> {
+    func saveArtists(_ artists: [Artist]) -> AnyPublisher<Void, Error> {
         savingArtists = artists
         didCallSaveArtists = true
-        return .value(())
+        return Just(())
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
     }
 
     var customArtistsNeedingTagsUpdate: [Artist] = []
@@ -55,14 +57,17 @@ class MockArtistService: ArtistServiceProtocol {
     var updatingTags: [Tag] = []
     var updateArtistShouldReturnError: Bool = false
     var didCallUpdateArtist: Bool = false
-    func updateArtist(_ artist: Artist, with tags: [Tag]) -> Promise<Artist> {
+    func updateArtist(_ artist: Artist, with tags: [Tag]) -> AnyPublisher<Artist, Error> {
         updatingArtist = artist
         updatingTags = tags
         didCallUpdateArtist = true
         if updateArtistShouldReturnError {
-            return Promise(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
+            return Fail(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
+                .eraseToAnyPublisher()
         } else {
-            return .value(artist)
+            return Just(artist)
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
         }
     }
 
@@ -83,13 +88,16 @@ class MockArtistService: ArtistServiceProtocol {
     var customCalculateTopTagsArtist: Artist?
     var calculateTopTagsShouldReturnError: Bool = false
     var didCallCalculateTopTags: Bool = false
-    func calculateTopTags(for artist: Artist, using calculator: ArtistTopTagsCalculating) -> Promise<Void> {
+    func calculateTopTags(for artist: Artist, using calculator: ArtistTopTagsCalculating) -> AnyPublisher<Void, Error> {
         customCalculateTopTagsArtist = artist
         didCallCalculateTopTags = true
         if calculateTopTagsShouldReturnError {
-            return Promise(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
+            return Fail(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
+                .eraseToAnyPublisher()
         } else {
-            return .value(())
+            return Just(())
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
         }
     }
 

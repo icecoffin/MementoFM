@@ -8,7 +8,7 @@
 
 import Foundation
 @testable import MementoFM
-import PromiseKit
+import Combine
 
 class MockTrackRepository: TrackRepository {
     var totalPages = 0
@@ -18,14 +18,16 @@ class MockTrackRepository: TrackRepository {
     func getRecentTracksPage(withIndex index: Int,
                              for user: String,
                              from: TimeInterval,
-                             limit: Int) -> Promise<RecentTracksPageResponse> {
+                             limit: Int) -> AnyPublisher<RecentTracksPageResponse, Error> {
         if shouldFailWithError {
-            return Promise(error: NSError(domain: "MementoFM", code: 1, userInfo: nil))
+            return Fail(error: NSError(domain: "MementoFM", code: 1, userInfo: nil)).eraseToAnyPublisher()
         } else {
             let tracks = trackProvider()
             let recentTracksPage = RecentTracksPage(index: index, totalPages: totalPages, tracks: tracks)
             let response = RecentTracksPageResponse(recentTracksPage: recentTracksPage)
-            return .value(response)
+            return Just(response)
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
         }
     }
 }

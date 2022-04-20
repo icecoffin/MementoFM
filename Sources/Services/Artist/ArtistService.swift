@@ -7,40 +7,33 @@
 //
 
 import Foundation
-import PromiseKit
 import Combine
 import CombineSchedulers
-
-// MARK: - TopTagsRequestProgress
-
-struct TopTagsRequestProgress {
-    let progress: Progress
-    let artist: Artist
-    let topTagsList: TopTagsList
-}
 
 // MARK: - ArtistServiceProtocol
 
 protocol ArtistServiceProtocol: AnyObject {
-    func getLibrary(for user: String, limit: Int, progress: ((Progress) -> Void)?) -> Promise<[Artist]>
-    func saveArtists(_ artists: [Artist]) -> Promise<Void>
+    func getLibrary(for user: String, limit: Int) -> AnyPublisher<LibraryPage, Error>
+
+    func saveArtists(_ artists: [Artist]) -> AnyPublisher<Void, Error>
+
     func artistsNeedingTagsUpdate() -> [Artist]
     func artistsWithIntersectingTopTags(for artist: Artist) -> [Artist]
-    func updateArtist(_ artist: Artist, with tags: [Tag]) -> Promise<Artist>
+
+    func updateArtist(_ artist: Artist, with tags: [Tag]) -> AnyPublisher<Artist, Error>
+
     func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating) -> AnyPublisher<Void, Error>
-    func calculateTopTags(for artist: Artist, using calculator: ArtistTopTagsCalculating) -> Promise<Void>
+
+    func calculateTopTags(for artist: Artist, using calculator: ArtistTopTagsCalculating) -> AnyPublisher<Void, Error>
+
     func artists(filteredUsing predicate: NSPredicate?,
                  sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<Artist>
     func getSimilarArtists(for artist: Artist, limit: Int) -> AnyPublisher<[Artist], Error>
 }
 
 extension ArtistServiceProtocol {
-    func getLibrary(for user: String, progress: ((Progress) -> Void)?) -> Promise<[Artist]> {
-        return getLibrary(for: user, limit: 200, progress: progress)
-    }
-
-    func getLibrary(for user: String) -> Promise<[Artist]> {
-        return getLibrary(for: user, limit: 200, progress: nil)
+    func getLibrary(for user: String) -> AnyPublisher<LibraryPage, Error> {
+        return getLibrary(for: user, limit: 200)
     }
 
     func artists(sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<Artist> {
@@ -76,42 +69,32 @@ final class ArtistService: ArtistServiceProtocol {
 
     // MARK: - Public properties
 
-    func getLibrary(for user: String, limit: Int, progress: ((Progress) -> Void)?) -> Promise<[Artist]> {
-        return Promise { seal in
-            let initialIndex = 1
-            repository.getLibraryPage(withIndex: initialIndex, for: user, limit: limit).done { pageResponse in
-                let page = pageResponse.libraryPage
-                if page.totalPages <= initialIndex {
-                    seal.fulfill(page.artists)
-                    return
-                }
+    func getLibrary(for user: String, limit: Int) -> AnyPublisher<LibraryPage, Error> {
+        let initialIndex = 1
+        let firstPage = repository
+            .getLibraryPage(withIndex: initialIndex, for: user, limit: limit)
+            .map { $0.libraryPage }
 
-                let totalProgress = Progress(totalUnitCount: Int64(page.totalPages - 1))
-                let pagePromises = (initialIndex+1...page.totalPages).map { index in
-                    return self.repository.getLibraryPage(withIndex: index, for: user, limit: limit).ensure {
-                        totalProgress.completedUnitCount += 1
-                        progress?(totalProgress)
-                    }
-                }
-
-                when(fulfilled: pagePromises).done { pageResponses in
-                    let pages = pageResponses.map({ $0.libraryPage })
-                    let artists = ([page] + pages).flatMap { $0.artists }
-                    seal.fulfill(artists)
-                }.catch { error in
-                    if !error.isCancelled {
-                        seal.reject(error)
-                    }
-                }
-            }.catch { error in
-                if !error.isCancelled {
-                    seal.reject(error)
-                }
+        let otherPages = firstPage.flatMap { libraryPage -> AnyPublisher<LibraryPage, Error> in
+            if libraryPage.totalPages <= initialIndex {
+                return Empty()
+                    .eraseToAnyPublisher()
             }
+
+            let publishers = (initialIndex+1...libraryPage.totalPages).map { index in
+                return self.repository.getLibraryPage(withIndex: index, for: user, limit: limit)
+                    .map { $0.libraryPage }
+                    .eraseToAnyPublisher()
+            }
+            return Publishers.Sequence(sequence: publishers)
+                .flatMap(maxPublishers: .max(5)) { $0 }
+                .eraseToAnyPublisher()
         }
+
+        return Publishers.Merge(firstPage, otherPages).eraseToAnyPublisher()
     }
 
-    func saveArtists(_ artists: [Artist]) -> Promise<Void> {
+    func saveArtists(_ artists: [Artist]) -> AnyPublisher<Void, Error> {
         return persistentStore.save(artists)
     }
 
@@ -126,28 +109,31 @@ final class ArtistService: ArtistServiceProtocol {
         return self.persistentStore.objects(Artist.self, filteredBy: predicate)
     }
 
-    func updateArtist(_ artist: Artist, with tags: [Tag]) -> Promise<Artist> {
+    func updateArtist(_ artist: Artist, with tags: [Tag]) -> AnyPublisher<Artist, Error> {
         let updatedArtist = artist.updatingTags(to: tags, needsTagsUpdate: false)
-        return self.persistentStore.save(updatedArtist).then { _ -> Promise<Artist> in
-            return .value(updatedArtist)
-        }
-    }
-
-    func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating) -> AnyPublisher<Void, Error> {
-        return Just(())
-            .receive(on: backgroundScheduler)
-            .map { _ -> [Artist] in
-                let artists = self.persistentStore.objects(Artist.self)
-                return artists.map { return calculator.calculateTopTags(for: $0) }
+        return self.persistentStore.save(updatedArtist)
+            .map { _ in
+                return updatedArtist
             }
-            .flatMap { artists in
-                return self.persistentStore.save(artists)
-            }
-            .receive(on: mainScheduler)
             .eraseToAnyPublisher()
     }
 
-    func calculateTopTags(for artist: Artist, using calculator: ArtistTopTagsCalculating) -> Promise<Void> {
+    func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating) -> AnyPublisher<Void, Error> {
+        return Future<[Artist], Error>() { promise in
+            self.backgroundScheduler.schedule {
+                let artists = self.persistentStore.objects(Artist.self)
+                let updatedArtists = artists.map { return calculator.calculateTopTags(for: $0) }
+                promise(.success(updatedArtists))
+            }
+        }
+        .flatMap { artists in
+            return self.persistentStore.save(artists)
+        }
+        .receive(on: mainScheduler)
+        .eraseToAnyPublisher()
+    }
+
+    func calculateTopTags(for artist: Artist, using calculator: ArtistTopTagsCalculating) -> AnyPublisher<Void, Error> {
         let updatedArtist = calculator.calculateTopTags(for: artist)
         return persistentStore.save(updatedArtist)
     }
@@ -166,21 +152,5 @@ final class ArtistService: ArtistServiceProtocol {
                 return artists
             }
             .eraseToAnyPublisher()
-    }
-
-    func updateCountries(with countryProvider: CountryProviding,
-                         using dispatcher: Dispatcher) -> Promise<Void> {
-        return dispatcher.dispatch { () -> [Artist] in
-            let artists = self.persistentStore.objects(Artist.self)
-            return artists.map {
-                if let country = countryProvider.topCountry(for: $0) {
-                    return $0.updatingCountry(to: country)
-                } else {
-                    return $0
-                }
-            }
-        }.then { artists in
-            return self.persistentStore.save(artists)
-        }
     }
 }
