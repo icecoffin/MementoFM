@@ -8,7 +8,6 @@
 
 import Foundation
 import RealmSwift
-import PromiseKit
 import Combine
 import CombineSchedulers
 
@@ -18,8 +17,6 @@ final class RealmService: PersistentStore {
     private let mainQueueRealm: Realm
     private let getBackgroundQueueRealm: () -> Realm
 
-    private let backgroundDispatcher: Dispatcher
-    private let mainDispatcher: Dispatcher
     private let backgroundScheduler: AnySchedulerOf<DispatchQueue>
     private let mainScheduler: AnySchedulerOf<DispatchQueue>
 
@@ -34,14 +31,10 @@ final class RealmService: PersistentStore {
     // MARK: - Init
 
     init(getRealm: @escaping () -> Realm,
-         backgroundDispatcher: Dispatcher = AsyncDispatcher.global,
-         mainDispatcher: Dispatcher = AsyncDispatcher.main,
          backgroundScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.global().eraseToAnyScheduler(),
          mainScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.main.eraseToAnyScheduler()) {
         self.mainQueueRealm = getRealm()
         self.getBackgroundQueueRealm = getRealm
-        self.backgroundDispatcher = backgroundDispatcher
-        self.mainDispatcher = mainDispatcher
         self.backgroundScheduler = backgroundScheduler
         self.mainScheduler = mainScheduler
     }
@@ -68,19 +61,6 @@ final class RealmService: PersistentStore {
         .eraseToAnyPublisher()
     }
 
-    private func write(block: @escaping (Realm) -> Void) -> Promise<Void> {
-        return backgroundDispatcher.dispatch {
-            try self.write(to: self.currentQueueRealm) { realm in
-                block(realm)
-            }
-        }.then(on: mainDispatcher.queue) { _ -> Promise<Void> in
-            self.currentQueueRealm.refresh()
-            return .value(())
-        }.recover(on: mainDispatcher.queue) { error in
-            return Promise(error: error)
-        }
-    }
-
     private func write(to realm: Realm, block: (Realm) -> Void) throws {
         try realm.write {
             block(realm)
@@ -101,29 +81,12 @@ final class RealmService: PersistentStore {
 
     // MARK: - Saving objects to Realm
 
-    func save<T: TransientEntity>(_ object: T, update: Bool = true) -> Promise<Void>
-        where T.PersistentType.TransientType == T {
-            return write { realm in
-                if let realmObject = T.PersistentType.from(transient: object) as? Object {
-                    realm.add(realmObject, update: .modified)
-                }
-            }
-    }
-
     func save<T: TransientEntity>(_ object: T, update: Bool = true) -> AnyPublisher<Void, Error>
         where T.PersistentType.TransientType == T {
             return write { realm in
                 if let realmObject = T.PersistentType.from(transient: object) as? Object {
                     realm.add(realmObject, update: .modified)
                 }
-            }
-    }
-
-    func save<T: TransientEntity>(_ objects: [T], update: Bool = true) -> Promise<Void>
-        where T.PersistentType.TransientType == T {
-            return write { realm in
-                let realmObjects = objects.compactMap({ return T.PersistentType.from(transient: $0) as? Object })
-                realm.add(realmObjects, update: .modified)
             }
     }
 
@@ -136,18 +99,6 @@ final class RealmService: PersistentStore {
     }
 
     // MARK: - Deleting objects from Realm
-
-    func deleteObjects<T: TransientEntity>(ofType type: T.Type) -> Promise<Void>
-        where T.PersistentType.TransientType == T {
-            guard let type = type.PersistentType.self as? Object.Type else {
-                fatalError("The provided Element.PersistentType is not a Realm Object subclass")
-            }
-
-            return write { realm in
-                let realmObjects = realm.objects(type)
-                realm.delete(realmObjects)
-            }
-    }
 
     func deleteObjects<T: TransientEntity>(ofType type: T.Type) -> AnyPublisher<Void, Error>
         where T.PersistentType.TransientType == T {

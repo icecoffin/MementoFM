@@ -24,7 +24,6 @@ final class CountryService: CountryServiceProtocol {
 
     private let persistentStore: PersistentStore
     private let countryProvider: CountryProviding
-    private let dispatcher: Dispatcher
     private let mainScheduler: AnySchedulerOf<DispatchQueue>
     private let backgroundScheduler: AnySchedulerOf<DispatchQueue>
 
@@ -32,12 +31,10 @@ final class CountryService: CountryServiceProtocol {
 
     init(persistentStore: PersistentStore,
          countryProvider: CountryProviding = CountryProvider(),
-         dispatcher: Dispatcher = AsyncDispatcher.global,
          mainScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.main.eraseToAnyScheduler(),
          backgroundScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.global().eraseToAnyScheduler()) {
         self.persistentStore = persistentStore
         self.countryProvider = countryProvider
-        self.dispatcher = dispatcher
         self.mainScheduler = mainScheduler
         self.backgroundScheduler = backgroundScheduler
     }

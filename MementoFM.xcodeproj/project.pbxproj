@@ -143,8 +143,6 @@
 		65206EC71EC4C0CF00A83DA1 /* ArtistTopTagsSectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65206EC61EC4C0CF00A83DA1 /* ArtistTopTagsSectionDataSource.swift */; };
 		65206EC91EC4C11400A83DA1 /* ArtistSimilarsSectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65206EC81EC4C11400A83DA1 /* ArtistSimilarsSectionDataSource.swift */; };
 		652167661F619E1A005B7273 /* TrackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652167651F619E1A005B7273 /* TrackService.swift */; };
-		652287F92278D911006BD04E /* Dispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652287F82278D911006BD04E /* Dispatcher.swift */; };
-		652287FC2278E273006BD04E /* TestDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652287FA2278E259006BD04E /* TestDispatcher.swift */; };
 		65236C2C1F91E37500BE100A /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65236C2B1F91E37500BE100A /* EmptyResponse.swift */; };
 		65241C271EC6E96300927749 /* ArtistSimilarsSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C221EC6E96300927749 /* ArtistSimilarsSectionViewModel.swift */; };
 		65241C281EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C231EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift */; };
@@ -186,7 +184,6 @@
 		657AC74B23CD080D00E3AE17 /* ArtistsByCountryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657AC74A23CD080D00E3AE17 /* ArtistsByCountryViewModelTests.swift */; };
 		657AC74D23CD154700E3AE17 /* MockPersistentMappedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657AC74C23CD154700E3AE17 /* MockPersistentMappedCollection.swift */; };
 		6588C5AD23AD5BD700214359 /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = 6588C5AC23AD5BD700214359 /* countries.json */; };
-		65895CEF203957DA00003FCB /* Promise+NoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65895CEE203957DA00003FCB /* Promise+NoError.swift */; };
 		658B26B61FAB518600E3A6EA /* IgnoredTagServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658B26B41FAB518300E3A6EA /* IgnoredTagServiceTests.swift */; };
 		658B26B91FAB6C2F00E3A6EA /* UserServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658B26B81FAB6C2E00E3A6EA /* UserServiceTests.swift */; };
 		658B26BC1FAB6D3C00E3A6EA /* MockUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658B26BA1FAB6D3A00E3A6EA /* MockUserRepository.swift */; };
@@ -195,9 +192,9 @@
 		659F75912810799F00ACC306 /* TrackServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654430781FA231A700923356 /* TrackServiceTests.swift */; };
 		659F759228107CF700ACC306 /* TagServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651742101FA59C04004FCFF4 /* TagServiceTests.swift */; };
 		659F759328107EA900ACC306 /* ArtistServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650A93201FACD1B5001DE7A5 /* ArtistServiceTests.swift */; };
+		659F759428109BDA00ACC306 /* RealmServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A305C21F9B383400E1D9C4 /* RealmServiceTests.swift */; };
 		65A0A24B2164D7240037354E /* UIColor+AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A0A24A2164D7240037354E /* UIColor+AppColors.swift */; };
 		65A0A24D2164D7490037354E /* UIFont+AppFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A0A24C2164D7490037354E /* UIFont+AppFonts.swift */; };
-		65A305C41F9B383900E1D9C4 /* RealmServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A305C21F9B383400E1D9C4 /* RealmServiceTests.swift */; };
 		65A4811523AFDA34002DC892 /* CountryCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A4811423AFDA34002DC892 /* CountryCellViewModel.swift */; };
 		65A4811723AFDEAC002DC892 /* CountryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A4811623AFDEAC002DC892 /* CountryCell.swift */; };
 		65AF2B0B27FF62AE0079040D /* UICollectionViewLeftAlignedLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AF2B0A27FF62AE0079040D /* UICollectionViewLeftAlignedLayout.swift */; };
@@ -376,8 +373,6 @@
 		65206EC61EC4C0CF00A83DA1 /* ArtistTopTagsSectionDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistTopTagsSectionDataSource.swift; sourceTree = "<group>"; };
 		65206EC81EC4C11400A83DA1 /* ArtistSimilarsSectionDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistSimilarsSectionDataSource.swift; sourceTree = "<group>"; };
 		652167651F619E1A005B7273 /* TrackService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackService.swift; sourceTree = "<group>"; };
-		652287F82278D911006BD04E /* Dispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dispatcher.swift; sourceTree = "<group>"; };
-		652287FA2278E259006BD04E /* TestDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDispatcher.swift; sourceTree = "<group>"; };
 		65236C2B1F91E37500BE100A /* EmptyResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResponse.swift; sourceTree = "<group>"; };
 		65241C221EC6E96300927749 /* ArtistSimilarsSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistSimilarsSectionViewModel.swift; sourceTree = "<group>"; };
 		65241C231EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistTopTagsSectionViewModel.swift; sourceTree = "<group>"; };
@@ -421,7 +416,6 @@
 		657AC74A23CD080D00E3AE17 /* ArtistsByCountryViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsByCountryViewModelTests.swift; sourceTree = "<group>"; };
 		657AC74C23CD154700E3AE17 /* MockPersistentMappedCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPersistentMappedCollection.swift; sourceTree = "<group>"; };
 		6588C5AC23AD5BD700214359 /* countries.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
-		65895CEE203957DA00003FCB /* Promise+NoError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Promise+NoError.swift"; sourceTree = "<group>"; };
 		658B26B41FAB518300E3A6EA /* IgnoredTagServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoredTagServiceTests.swift; sourceTree = "<group>"; };
 		658B26B81FAB6C2E00E3A6EA /* UserServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceTests.swift; sourceTree = "<group>"; };
 		658B26BA1FAB6D3A00E3A6EA /* MockUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserRepository.swift; sourceTree = "<group>"; };
@@ -706,7 +700,6 @@
 			children = (
 				651B66381F9C9218003C436E /* Utils.swift */,
 				6544307D1FA2416900923356 /* ModelFactory.swift */,
-				652287FA2278E259006BD04E /* TestDispatcher.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -788,7 +781,6 @@
 			isa = PBXGroup;
 			children = (
 				6516A53C1ECDFD830021E43C /* NSAttributedString+Join.swift */,
-				65895CEE203957DA00003FCB /* Promise+NoError.swift */,
 				651F9DA11EC09FDC006D9474 /* String+Unlocalized.swift */,
 				65C05C0D2692046D00517784 /* UITableView+Reusable.swift */,
 				65C05C0F2692049200517784 /* UICollectionView+Reusable.swift */,
@@ -1093,7 +1085,6 @@
 				651F9E031EC09FDC006D9474 /* MappingHelpers.swift */,
 				653669EE1EE5753B00E9D56C /* NavigationControllerPopTracker.swift */,
 				65C10DF31F0BD0170072BF09 /* ApplicationStateObserver.swift */,
-				652287F82278D911006BD04E /* Dispatcher.swift */,
 				65FC807622B2E80B000207EE /* UIImage+Symbols.swift */,
 				65AF2B0A27FF62AE0079040D /* UICollectionViewLeftAlignedLayout.swift */,
 				65FB48B027FF7367008BB121 /* Logger.swift */,
@@ -1567,7 +1558,6 @@
 				651F33901FA0FC2500B178D0 /* TrackRepository.swift in Sources */,
 				656589EF1FDB093B00859414 /* ArtistSimilarsSectionViewModelFactory.swift in Sources */,
 				65236C2C1F91E37500BE100A /* EmptyResponse.swift in Sources */,
-				65895CEF203957DA00003FCB /* Promise+NoError.swift in Sources */,
 				657AC74323CCF62D00E3AE17 /* ArtistsByCountryViewModel.swift in Sources */,
 				653F21751F6D1272009A562A /* SimilarArtistsRequestStrategy.swift in Sources */,
 				651F9E481EC09FDD006D9474 /* SyncViewModel.swift in Sources */,
@@ -1592,7 +1582,6 @@
 				651F9E291EC09FDC006D9474 /* Tag.swift in Sources */,
 				651F9E371EC09FDC006D9474 /* ArtistViewController.swift in Sources */,
 				651F33921FA0FD2600B178D0 /* UserRepository.swift in Sources */,
-				652287F92278D911006BD04E /* Dispatcher.swift in Sources */,
 				651F9E181EC09FDC006D9474 /* MainFlowCoordinator.swift in Sources */,
 				6516A53D1ECDFD830021E43C /* NSAttributedString+Join.swift in Sources */,
 				65178A8A1F6ACD6D006A29E8 /* ArtistSimilarsSectionHeaderView.swift in Sources */,
@@ -1663,7 +1652,6 @@
 				656D2ED21FB1F6980096DE27 /* TagNetworkRepositoryTests.swift in Sources */,
 				656D2F051FB211DC0096DE27 /* EnterUsernameViewModelTests.swift in Sources */,
 				656A5B2E1FD1A8BF00A98265 /* RecentTracksProcessorTests.swift in Sources */,
-				65A305C41F9B383900E1D9C4 /* RealmServiceTests.swift in Sources */,
 				659095E723D107AB00A77E25 /* StubArtistEmptyRepository.swift in Sources */,
 				6517A3C81EBCE5DA002BC634 /* RealmHelpers.swift in Sources */,
 				656D2ED41FB1F78C0096DE27 /* ArtistNetworkRepositoryTests.swift in Sources */,
@@ -1674,7 +1662,6 @@
 				651AA71C1FB0830800EEE40A /* RealmTagTests.swift in Sources */,
 				657AC74723CD002E00E3AE17 /* CountriesViewModelTests.swift in Sources */,
 				6517B08F1FC5D3E60024DFD9 /* MockTrackService.swift in Sources */,
-				652287FC2278E273006BD04E /* TestDispatcher.swift in Sources */,
 				651B663C1F9C922C003C436E /* ArtistTests.swift in Sources */,
 				657AC74923CD047500E3AE17 /* CountryTypeTests.swift in Sources */,
 				656FE2342276503200DD3A8E /* MockPersistentStore.swift in Sources */,
@@ -1689,6 +1676,7 @@
 				650A931E1FACACA8001DE7A5 /* MockUserDataStorage.swift in Sources */,
 				65D6BE3F1FD99EEC008519F8 /* ArtistTopTagsSectionViewModelTests.swift in Sources */,
 				651AA7061FB062C000EEE40A /* TopTagsListTests.swift in Sources */,
+				659F759428109BDA00ACC306 /* RealmServiceTests.swift in Sources */,
 				6517B0901FC5D3E60024DFD9 /* MockTagService.swift in Sources */,
 				651AA6F41FB0338A00EEE40A /* LibraryPageTests.swift in Sources */,
 				656A5B351FD1BD1200A98265 /* MockLibraryUpdater.swift in Sources */,

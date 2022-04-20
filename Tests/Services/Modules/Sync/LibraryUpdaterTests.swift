@@ -69,7 +69,7 @@ class LibraryUpdaterTests: XCTestCase {
 
         libraryUpdater.requestData()
 
-        expect(didFinishLoading).toEventually(beTrue())
+        expect(didFinishLoading) == true
     }
 
     func test_requestData_setsIsFirstUpdateToFalse() {
@@ -77,7 +77,7 @@ class LibraryUpdaterTests: XCTestCase {
 
         libraryUpdater.requestData()
 
-        expect(libraryUpdater.isFirstUpdate).toEventually(beFalse())
+        expect(libraryUpdater.isFirstUpdate) == false
     }
 
     func test_requestData_callsDidReceiveError_whenFinishedWithError() {
@@ -92,7 +92,7 @@ class LibraryUpdaterTests: XCTestCase {
 
         libraryUpdater.requestData()
 
-        expect(didReceiveError).toEventually(equal(true))
+        expect(didReceiveError) == true
     }
 
     func test_requestData_updatesLastUpdateTimestamp() {
@@ -102,7 +102,7 @@ class LibraryUpdaterTests: XCTestCase {
 
         libraryUpdater.requestData()
 
-        expect(self.userService.lastUpdateTimestamp).toEventually(beGreaterThan(0))
+        expect(self.userService.lastUpdateTimestamp) > 0
     }
 
     func test_requestData_getsRecentTracksAndProcessesThem() {
@@ -112,8 +112,8 @@ class LibraryUpdaterTests: XCTestCase {
 
         libraryUpdater.requestData()
 
-        expect(self.trackService.didCallGetRecentTracks).toEventually(beTrue())
-        expect(self.trackService.didCallProcessTracks).toEventually(beTrue())
+        expect(self.trackService.didCallGetRecentTracks) == true
+        expect(self.trackService.didCallProcessTracks) == true
     }
 
     func test_requestsData_requestsInitialCollectionAndSavesIt() {
@@ -122,9 +122,9 @@ class LibraryUpdaterTests: XCTestCase {
         userService.didReceiveInitialCollection = false
         libraryUpdater.requestData()
 
-        expect(self.artistService.didRequestLibrary).toEventually(beTrue())
-        expect(self.userService.didReceiveInitialCollection).toEventually(beTrue())
-        expect(self.artistService.didCallSaveArtists).toEventually(beTrue())
+        expect(self.artistService.didRequestLibrary) == true
+        expect(self.userService.didReceiveInitialCollection) == true
+        expect(self.artistService.didCallSaveArtists) == true
     }
 
     func test_requestData_requestsArtistsTagsDuringLibraryUpdate() {
@@ -142,10 +142,10 @@ class LibraryUpdaterTests: XCTestCase {
 
         libraryUpdater.requestData()
 
-        expect(self.artistService.didRequestArtistsNeedingTagsUpdate).toEventually(beTrue())
-        expect(self.tagService.didRequestTopTags).toEventually(beTrue())
-        expect(self.artistService.didCallUpdateArtist).toEventually(beTrue())
-        expect(self.artistService.didCallCalculateTopTags).toEventually(beTrue())
+        expect(self.artistService.didRequestArtistsNeedingTagsUpdate) == true
+        expect(self.tagService.didRequestTopTags) == true
+        expect(self.artistService.didCallUpdateArtist) == true
+        expect(self.artistService.didCallCalculateTopTags) == true
     }
 
     func test_cancelPendingRequests_changesStatusToArtistsFirstPage() {
@@ -158,7 +158,6 @@ class LibraryUpdaterTests: XCTestCase {
 
         libraryUpdater.cancelPendingRequests()
 
-        expect(self.networkService.cancelPendingRequestsCallCount) == 1
         expect {
             guard let status = libraryUpdateStatus, case .artistsFirstPage = status else {
                 return { .failed(reason: "libraryUpdateStatus is nil or wrong enum case") }

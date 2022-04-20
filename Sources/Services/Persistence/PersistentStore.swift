@@ -7,20 +7,13 @@
 //
 
 import Foundation
-import PromiseKit
 import Combine
 
 protocol PersistentStore {
     func mappedCollection<T: TransientEntity>(filteredUsing predicate: NSPredicate?,
                                               sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<T>
 
-    func save<T: TransientEntity>(_ objects: [T], update: Bool) -> Promise<Void>
-        where T.PersistentType.TransientType == T
-
     func save<T: TransientEntity>(_ objects: [T], update: Bool) -> AnyPublisher<Void, Error>
-        where T.PersistentType.TransientType == T
-
-    func deleteObjects<T: TransientEntity>(ofType type: T.Type) -> Promise<Void>
         where T.PersistentType.TransientType == T
 
     func deleteObjects<T: TransientEntity>(ofType type: T.Type) -> AnyPublisher<Void, Error>
@@ -39,19 +32,9 @@ extension PersistentStore {
             return objects(type, filteredBy: nil)
     }
 
-    func save<T: TransientEntity>(_ objects: [T]) -> Promise<Void>
-        where T.PersistentType.TransientType == T {
-            return save(objects, update: true)
-    }
-
     func save<T: TransientEntity>(_ objects: [T]) -> AnyPublisher<Void, Error>
         where T.PersistentType.TransientType == T {
             return save(objects, update: true)
-    }
-
-    func save<T: TransientEntity>(_ object: T, update: Bool = true) -> Promise<Void>
-        where T.PersistentType.TransientType == T {
-            return save([object], update: update)
     }
 
     func save<T: TransientEntity>(_ object: T, update: Bool = true) -> AnyPublisher<Void, Error>

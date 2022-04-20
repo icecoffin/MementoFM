@@ -114,7 +114,7 @@ class IgnoredTagsViewModelTests: XCTestCase {
 
         viewModel.addNewIgnoredTag()
 
-        expect(expectedIndexPath).toEventually(equal(IndexPath(row: ignoredTags.count, section: 0)))
+        expect(expectedIndexPath) == IndexPath(row: ignoredTags.count, section: 0)
     }
 
     func test_addNewIgnoredTag_increasesNumberOfIgnoredTags() {
@@ -161,7 +161,7 @@ class IgnoredTagsViewModelTests: XCTestCase {
 
         viewModel.saveChanges()
 
-        expect(delegate.didCallDidSaveChanges).toEventually(beTrue())
+        expect(delegate.didCallDidSaveChanges) == true
     }
 
     func test_saveChanges_callsArtistService() {
@@ -169,7 +169,7 @@ class IgnoredTagsViewModelTests: XCTestCase {
 
         viewModel.saveChanges()
 
-        expect(self.artistService.didCallCalculateTopTagsForAllArtists).toEventually(beTrue())
+        expect(self.artistService.didCallCalculateTopTagsForAllArtists) == true
     }
 
     func test_saveChanges_updatesIgnoredTags() {

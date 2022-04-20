@@ -80,7 +80,7 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
 
         viewModel.getSimilarArtists()
 
-        expect(expectedNumberOfSimilarArtists).toEventually(equal(4))
+        expect(expectedNumberOfSimilarArtists) == 4
     }
 
     func test_getSimilarArtists_updatesHasSimilarArtists() {
@@ -95,7 +95,7 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
 
         viewModel.getSimilarArtists()
 
-        expect(expectedHasSimilarArtists).toEventually(beTrue())
+        expect(expectedHasSimilarArtists) == true
     }
 
     func test_cellViewModelAtIndexPath_returnsCorrectValue() {
@@ -113,7 +113,7 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
 
         viewModel.getSimilarArtists()
 
-        expect(expectedArtistNames).toEventually(equal(["Artist1", "Artist4", "Artist3", "Artist2"]))
+        expect(expectedArtistNames) == ["Artist1", "Artist4", "Artist3", "Artist2"]
     }
 
     func test_selectingArtistAtIndexPath_returnsCorrectValue() {
@@ -131,7 +131,7 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
 
         viewModel.getSimilarArtists()
 
-        expect(delegate.selectedArtist?.name).toEventually(equal("Artist4"))
+        expect(delegate.selectedArtist?.name) == "Artist4"
     }
 
     func test_getSimilarArtists_callsDidReceiveError_whenErrorOccurs() {

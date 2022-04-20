@@ -33,7 +33,7 @@ class RealmMappedCollectionTests: XCTestCase {
             let tag = RealmTag()
             realm.add(tag)
         }
-        expect(self.collection.count).toEventually(equal(1))
+        expect(self.collection.count) == 1
     }
 
     func test_isEmpty_returnsTrue_whenCollectionIsEmpty() {
@@ -45,7 +45,7 @@ class RealmMappedCollectionTests: XCTestCase {
             let tag = RealmTag()
             realm.add(tag)
         }
-        expect(self.collection.isEmpty).toEventually(beFalse())
+        expect(self.collection.isEmpty) == false
     }
 
     func test_subscript_returnsCorrectItemForIndex() {
@@ -56,8 +56,8 @@ class RealmMappedCollectionTests: XCTestCase {
         }
 
         let secondTag = collection[1]
-        expect(secondTag.name).toEventually(equal("metal"))
-        expect(secondTag.count).toEventually(equal(2))
+        expect(secondTag.name) == "metal"
+        expect(secondTag.count) == 2
     }
 
     func test_settingPredicate_filtersCollection() {
@@ -68,10 +68,10 @@ class RealmMappedCollectionTests: XCTestCase {
         }
         let predicate = NSPredicate(format: "count > 1")
         collection.predicate = predicate
-        expect(self.collection.count).toEventually(equal(1))
+        expect(self.collection.count) == 1
 
         collection.predicate = nil
-        expect(self.collection.count).toEventually(equal(2))
+        expect(self.collection.count) == 2
     }
 
     func test_settingSortDescriptors_sortsCollection() {
@@ -85,8 +85,8 @@ class RealmMappedCollectionTests: XCTestCase {
                                NSSortDescriptor(key: "count", ascending: false)]
         collection.sortDescriptors = sortDescriptors
 
-        expect(self.collection[0].count).toEventually(equal(3))
-        expect(self.collection[0].name).toEventually(equal(self.collection[1].name))
-        expect(self.collection[2].name).toEventually(equal("rock"))
+        expect(self.collection[0].count) == 3
+        expect(self.collection[0].name) == collection[1].name
+        expect(self.collection[2].name) == "rock"
     }
 }

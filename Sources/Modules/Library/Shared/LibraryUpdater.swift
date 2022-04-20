@@ -236,6 +236,5 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
         didChangeStatus?(.artistsFirstPage)
         // TODO: implement cancelling publishers
         cancelBag.forEach { $0.cancel() }
-        networkService.cancelPendingRequests()
     }
 }

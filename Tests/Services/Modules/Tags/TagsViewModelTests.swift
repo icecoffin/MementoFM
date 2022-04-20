@@ -9,6 +9,7 @@
 import XCTest
 @testable import MementoFM
 import Nimble
+import CombineSchedulers
 
 class TagsViewModelTests: XCTestCase {
     class Dependencies: TagsViewModel.Dependencies {
@@ -26,7 +27,7 @@ class TagsViewModelTests: XCTestCase {
         }
     }
 
-    var dispatcher: TestDispatcher!
+    var scheduler: AnySchedulerOf<DispatchQueue>!
     var tagService: MockTagService!
     var dependencies: Dependencies!
 
@@ -41,86 +42,86 @@ class TagsViewModelTests: XCTestCase {
     }
 
     override func setUp() {
-        dispatcher = TestDispatcher()
+        scheduler = .immediate
         tagService = MockTagService()
         dependencies = Dependencies(tagService: tagService)
     }
 
     func test_getTags_callsDidUpdateData_withIsEmptyEqualToTrue() {
-        let viewModel = TagsViewModel(dependencies: dependencies)
+        let viewModel = makeTagsViewModel()
         var expectedIsEmpty = false
         viewModel.didUpdateData = { isEmpty in
             expectedIsEmpty = isEmpty
         }
 
-        viewModel.getTags(backgroundDispatcher: dispatcher, mainDispatcher: dispatcher)
+        viewModel.getTags()
 
-        expect(expectedIsEmpty).toEventually(equal(true))
+        expect(expectedIsEmpty) == true
     }
 
     func test_getTags_callsDidUpdateData_withIsEmptyEqualToFalse() {
         let tags = sampleTags()
         tagService.customTopTags = tags
-        let viewModel = TagsViewModel(dependencies: dependencies)
+        let viewModel = makeTagsViewModel()
         var expectedIsEmpty = true
         viewModel.didUpdateData = { isEmpty in
             expectedIsEmpty = isEmpty
         }
 
-        viewModel.getTags(backgroundDispatcher: dispatcher, mainDispatcher: dispatcher)
+        viewModel.getTags()
 
-        expect(expectedIsEmpty).toEventually(equal(false))
+        expect(expectedIsEmpty) == false
     }
 
     func test_numberOfTags_returnsCorrectValue() {
         let tags = sampleTags()
         tagService.customTopTags = tags
-        let viewModel = TagsViewModel(dependencies: dependencies)
-
-        viewModel.getTags(backgroundDispatcher: dispatcher, mainDispatcher: dispatcher)
-
+        let viewModel = makeTagsViewModel()
         var expectedNumberOfTags = 0
         viewModel.didUpdateData = { [unowned viewModel] _ in
             expectedNumberOfTags = viewModel.numberOfTags
         }
-        expect(expectedNumberOfTags).toEventually(equal(2))
+
+        viewModel.getTags()
+
+        expect(expectedNumberOfTags) == 2
     }
 
     func func_cellViewModelAtIndexPath_returnsCorrectValue() {
         let tags = sampleTags()
         tagService.customTopTags = tags
-        let viewModel = TagsViewModel(dependencies: dependencies)
+        let viewModel = makeTagsViewModel()
         var expectedCellViewModel: TagCellViewModel?
         viewModel.didUpdateData = { [unowned viewModel] _ in
             let indexPath = IndexPath(row: 1, section: 0)
             expectedCellViewModel = viewModel.cellViewModel(at: indexPath)
         }
 
-        viewModel.getTags(backgroundDispatcher: dispatcher, mainDispatcher: dispatcher)
+        viewModel.getTags()
 
-        expect(expectedCellViewModel?.name).toEventually(equal("Tag2"))
+        expect(expectedCellViewModel?.name) == "Tag2"
     }
 
     func test_selectTagAtIndexPath_notifiesDelegate() {
         let tags = sampleTags()
         tagService.customTopTags = tags
         let delegate = TestTagsViewModelDelegate()
-        let viewModel = TagsViewModel(dependencies: dependencies)
+        let viewModel = makeTagsViewModel()
         viewModel.delegate = delegate
         viewModel.didUpdateData = { [unowned viewModel] _ in
             let indexPath = IndexPath(row: 1, section: 0)
             viewModel.selectTag(at: indexPath)
         }
 
-        viewModel.getTags(backgroundDispatcher: dispatcher, mainDispatcher: dispatcher)
+        viewModel.getTags()
 
-        expect(delegate.selectedTagName).toEventually(equal("Tag2"))
+        expect(delegate.selectedTagName) == "Tag2"
     }
 
     func test_performSearch_filtersTagsBasedOnSearchText() {
         let tags = sampleTags()
         tagService.customTopTags = tags
-        let viewModel = TagsViewModel(dependencies: dependencies)
+        let viewModel = makeTagsViewModel()
         var expectedNumberOfTags = 0
 
         var didGetTags: ((Bool) -> Void)?
@@ -136,15 +137,15 @@ class TagsViewModelTests: XCTestCase {
         }
 
         viewModel.didUpdateData = didGetTags
-        viewModel.getTags(backgroundDispatcher: dispatcher, mainDispatcher: dispatcher)
+        viewModel.getTags()
 
-        expect(expectedNumberOfTags).toEventually(equal(1))
+        expect(expectedNumberOfTags) == 1
     }
 
     func test_cancelSearch_returnsAllTagsWithoutFiltering() {
         let tags = sampleTags()
         tagService.customTopTags = tags
-        let viewModel = TagsViewModel(dependencies: dependencies)
+        let viewModel = makeTagsViewModel()
         var expectedNumberOfTags = 0
 
         var didGetTags: ((Bool) -> Void)?
@@ -166,8 +167,14 @@ class TagsViewModelTests: XCTestCase {
         }
 
         viewModel.didUpdateData = didGetTags
-        viewModel.getTags(backgroundDispatcher: dispatcher, mainDispatcher: dispatcher)
+        viewModel.getTags()
 
-        expect(expectedNumberOfTags).toEventually(equal(2))
+        expect(expectedNumberOfTags) == 2
+    }
+
+    private func makeTagsViewModel() -> TagsViewModel {
+        return TagsViewModel(dependencies: dependencies,
+                             backgroundScheduler: scheduler,
+                             mainScheduler: scheduler)
     }
 }

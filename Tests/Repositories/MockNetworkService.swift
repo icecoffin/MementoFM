@@ -9,7 +9,6 @@
 import Foundation
 @testable import MementoFM
 import Alamofire
-import PromiseKit
 import Combine
 
 class MockNetworkService: NetworkService {
@@ -22,22 +21,6 @@ class MockNetworkService: NetworkService {
 
     var performRequestParameters: PerformRequestParameters?
     var customResponse: Any?
-    func performRequest<T>(method: HTTPMethod,
-                           parameters: Parameters?,
-                           encoding: ParameterEncoding,
-                           headers: HTTPHeaders?) -> Promise<T> where T: Codable {
-        performRequestParameters = PerformRequestParameters(method: method,
-                                                            parameters: parameters,
-                                                            encoding: encoding,
-                                                            headers: headers)
-
-        guard let response = customResponse as? T else {
-            fatalError("Response type should be the same as performRequest response type")
-        }
-
-        return .value(response)
-    }
-
     func performRequest<T: Codable>(method: HTTPMethod,
                                     parameters: Parameters?,
                                     encoding: ParameterEncoding,
@@ -54,10 +37,5 @@ class MockNetworkService: NetworkService {
         return Just(response)
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
-    }
-
-    var cancelPendingRequestsCallCount = 0
-    func cancelPendingRequests() {
-        cancelPendingRequestsCallCount += 1
     }
 }

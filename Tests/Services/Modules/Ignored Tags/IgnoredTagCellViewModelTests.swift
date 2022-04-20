@@ -27,6 +27,6 @@ class IgnoredTagCellViewModelTests: XCTestCase {
             updatedText = text
         }
         viewModel.tagTextDidChange("new")
-        expect(updatedText).toEventually(equal("new"))
+        expect(updatedText) == "new"
     }
 }

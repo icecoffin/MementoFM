@@ -76,7 +76,7 @@ class EnterUsernameViewModelTests: XCTestCase {
         viewModel.updateUsername("username")
         viewModel.submitUsername()
 
-        expect(didStartRequest).toEventually(beTrue())
+        expect(didStartRequest) == true
     }
 
     func test_submitUsername_callsDidFinishRequest() {
@@ -90,14 +90,14 @@ class EnterUsernameViewModelTests: XCTestCase {
             didStartRequest = true
         }
         viewModel.didReceiveError = { _ in
-            // Test that didRecieveError is never called
+            // Test that didReceiveError is never called
             fail()
         }
 
         viewModel.updateUsername("username")
         viewModel.submitUsername()
 
-        expect(didStartRequest).toEventually(beTrue())
+        expect(didStartRequest) == true
     }
 
     func test_submitUsername_notifiesDelegateOnSuccess() {
@@ -118,7 +118,7 @@ class EnterUsernameViewModelTests: XCTestCase {
         viewModel.updateUsername("username")
         viewModel.submitUsername()
 
-        expect(delegate.didCallEnterUsernameViewModelDidFinish).toEventually(beTrue())
+        expect(delegate.didCallEnterUsernameViewModelDidFinish) == true
     }
 
     func test_submitUsername_checksThatUsernameExists() {
@@ -129,7 +129,7 @@ class EnterUsernameViewModelTests: XCTestCase {
         viewModel.updateUsername("username")
         viewModel.submitUsername()
 
-        expect(userService.usernameBeingChecked).toEventually(equal("username"))
+        expect(userService.usernameBeingChecked) == "username"
     }
 
     func test_submitUsername_clearsUserDataOnSuccess() {
@@ -140,7 +140,7 @@ class EnterUsernameViewModelTests: XCTestCase {
         viewModel.updateUsername("username")
         viewModel.submitUsername()
 
-        expect(userService.didCallClearUserData).toEventually(beTrue())
+        expect(userService.didCallClearUserData) == true
     }
 
     func test_submitUsername_callsDidReceiveError() {
@@ -168,6 +168,6 @@ class EnterUsernameViewModelTests: XCTestCase {
         viewModel.updateUsername("username")
         viewModel.submitUsername()
 
-        expect(didReceiveError).toEventually(beTrue())
+        expect(didReceiveError) == true
     }
 }

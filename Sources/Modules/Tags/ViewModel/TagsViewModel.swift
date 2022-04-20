@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CombineSchedulers
 
 // MARK: - TagsViewModelDelegate
 
@@ -25,6 +26,9 @@ final class TagsViewModel {
     private var allCellViewModels: [TagCellViewModel] = []
     private var filteredCellViewModels: [TagCellViewModel] = []
 
+    private let backgroundScheduler: AnySchedulerOf<DispatchQueue>
+    private let mainScheduler: AnySchedulerOf<DispatchQueue>
+
     // MARK: - Public properties
 
     weak var delegate: TagsViewModelDelegate?
@@ -37,8 +41,12 @@ final class TagsViewModel {
 
     // MARK: - Init
 
-    init(dependencies: Dependencies) {
+    init(dependencies: Dependencies,
+         backgroundScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.global().eraseToAnyScheduler(),
+         mainScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.main.eraseToAnyScheduler()) {
         self.dependencies = dependencies
+        self.backgroundScheduler = backgroundScheduler
+        self.mainScheduler = mainScheduler
     }
 
     // MARK: - Private methods
@@ -79,14 +87,13 @@ final class TagsViewModel {
 
     // MARK: - Public methods
 
-    func getTags(searchText: String? = nil,
-                 backgroundDispatcher: Dispatcher = AsyncDispatcher.global,
-                 mainDispatcher: Dispatcher = AsyncDispatcher.main) {
-        backgroundDispatcher.dispatch {
+    func getTags(searchText: String? = nil) {
+        backgroundScheduler.schedule {
             let allTopTags = self.dependencies.tagService.getAllTopTags()
             self.createCellViewModels(from: allTopTags, searchText: searchText)
-        }.done(on: mainDispatcher.queue) {
-            self.didUpdateData?(self.filteredCellViewModels.isEmpty)
+            self.mainScheduler.schedule {
+                self.didUpdateData?(self.filteredCellViewModels.isEmpty)
+            }
         }
     }
 
