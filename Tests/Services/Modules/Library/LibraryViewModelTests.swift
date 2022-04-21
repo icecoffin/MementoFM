@@ -10,6 +10,7 @@ import XCTest
 @testable import MementoFM
 import Nimble
 import RealmSwift
+import Combine
 
 class LibraryViewModelTests: XCTestCase {
     class Dependencies: LibraryViewModel.Dependencies {
@@ -32,7 +33,11 @@ class LibraryViewModelTests: XCTestCase {
     }
 
     class MockApplicationStateObserver: ApplicationStateObserving {
-        var onApplicationDidBecomeActive: (() -> Void)?
+        private(set) var applicationDidBecomeActiveSubject = PassthroughSubject<Void, Never>()
+
+        var applicationDidBecomeActive: AnyPublisher<Void, Never> {
+            return applicationDidBecomeActiveSubject.eraseToAnyPublisher()
+        }
     }
 
     var libraryUpdater: MockLibraryUpdater!
@@ -178,7 +183,7 @@ class LibraryViewModelTests: XCTestCase {
         // Suppress 'unused variable' warning
         _ = viewModel.delegate
 
-        applicationStateObserver.onApplicationDidBecomeActive?()
+        applicationStateObserver.applicationDidBecomeActiveSubject.send(())
 
         expect(self.libraryUpdater.didRequestData) == true
     }

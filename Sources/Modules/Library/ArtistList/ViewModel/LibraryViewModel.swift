@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import Combine
 
 final class LibraryViewModel: ArtistListViewModel {
     typealias Dependencies = HasLibraryUpdater & HasArtistService & HasUserService
@@ -16,6 +17,8 @@ final class LibraryViewModel: ArtistListViewModel {
 
     private let dependencies: Dependencies
     private let applicationStateObserver: ApplicationStateObserving
+
+    private var cancelBag = Set<AnyCancellable>()
 
     private let numberFormatter: NumberFormatter = {
         let numberFormatter = NumberFormatter()
@@ -81,9 +84,11 @@ final class LibraryViewModel: ArtistListViewModel {
             self?.didReceiveError?(error)
         }
 
-        applicationStateObserver.onApplicationDidBecomeActive = { [weak self] in
-            self?.requestDataIfNeeded()
-        }
+        applicationStateObserver.applicationDidBecomeActive
+            .sink { _ in
+                self.requestDataIfNeeded()
+            }
+            .store(in: &cancelBag)
     }
 
     private func stringFromStatus(_ status: LibraryUpdateStatus) -> String {

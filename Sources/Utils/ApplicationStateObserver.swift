@@ -7,31 +7,34 @@
 //
 
 import UIKit
+import Combine
 
 protocol ApplicationStateObserving: AnyObject {
-    var onApplicationDidBecomeActive: (() -> Void)? { get set }
+    var applicationDidBecomeActive: AnyPublisher<Void, Never> { get }
 }
 
 final class ApplicationStateObserver: ApplicationStateObserving {
-    var onApplicationDidBecomeActive: (() -> Void)?
-    private var isFirstLaunch = true
+    private let notificationCenter: NotificationCenter
+    private var cancelBag = Set<AnyCancellable>()
 
-    init() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(applicationDidBecomeActive(_:)),
-                                               name: UIApplication.didBecomeActiveNotification,
-                                               object: nil)
+    private var applicationDidBecomeActiveSubject = PassthroughSubject<Void, Never>()
+
+    var applicationDidBecomeActive: AnyPublisher<Void, Never> {
+        return applicationDidBecomeActiveSubject.eraseToAnyPublisher()
     }
 
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+    init(notificationCenter: NotificationCenter = .default) {
+        self.notificationCenter = notificationCenter
+
+        subscribeToNotifications()
     }
 
-    @objc private func applicationDidBecomeActive(_ notification: Notification) {
-        if isFirstLaunch {
-            isFirstLaunch = false
-        } else {
-            onApplicationDidBecomeActive?()
-        }
+    private func subscribeToNotifications() {
+        notificationCenter.publisher(for: UIApplication.didBecomeActiveNotification)
+            .dropFirst()
+            .sink { [weak self] _ in
+                self?.applicationDidBecomeActiveSubject.send(())
+            }
+            .store(in: &cancelBag)
     }
 }
