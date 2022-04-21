@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 // MARK: - ArtistViewModelDelegate
 
@@ -18,8 +19,7 @@ protocol ArtistViewModelDelegate: AnyObject {
 // MARK: - ArtistViewModelProtocol
 
 protocol ArtistViewModelProtocol: AnyObject {
-    var didUpdateData: (() -> Void)? { get set }
-    var didReceiveError: ((Error) -> Void)? { get set }
+    var didUpdateData: AnyPublisher<Void, Error> { get }
 
     var title: String { get }
     var sectionDataSources: [ArtistSectionDataSource] { get }
@@ -35,12 +35,16 @@ final class ArtistViewModel: ArtistViewModelProtocol {
     private let artist: Artist
     private let dependencies: Dependencies
 
+    private var didUpdateDataSubject = PassthroughSubject<Void, Error>()
+    private var cancelBag = Set<AnyCancellable>()
+
     weak var delegate: ArtistViewModelDelegate?
 
     // MARK: - Public properties
 
-    var didUpdateData: (() -> Void)?
-    var didReceiveError: ((Error) -> Void)?
+    var didUpdateData: AnyPublisher<Void, Error> {
+        return didUpdateDataSubject.eraseToAnyPublisher()
+    }
 
     let sectionDataSources: [ArtistSectionDataSource]
 
@@ -64,12 +68,13 @@ final class ArtistViewModel: ArtistViewModelProtocol {
         topTagsSectionViewModel.delegate = self
         similarsSectionViewModel.delegate = self
 
-        similarsSectionDataSource.didUpdateData = { [unowned self] in
-            self.didUpdateData?()
-        }
-        similarsSectionDataSource.didReceiveError = { [unowned self] error in
-            self.didReceiveError?(error)
-        }
+        similarsSectionDataSource.didUpdateData
+            .sink { [weak self] completion in
+                self?.didUpdateDataSubject.send(completion: completion)
+            } receiveValue: { [weak self] in
+                self?.didUpdateDataSubject.send()
+            }
+            .store(in: &cancelBag)
     }
 }
 

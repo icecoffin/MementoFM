@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Combine
 
 // MARK: - ArtistTopTagsSectionDataSource
 
@@ -17,7 +18,9 @@ final class ArtistTopTagsSectionDataSource: ArtistSectionDataSource {
 
     // MARK: - Public properties
 
-    var didUpdateData: (() -> Void)?
+    var didUpdateData: AnyPublisher<Void, Error> {
+        return Empty().eraseToAnyPublisher()
+    }
 
     var numberOfRows: Int {
         return 1

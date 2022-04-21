@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import Combine
 
 protocol ArtistSectionDataSource: AnyObject {
-    var didUpdateData: (() -> Void)? { get set }
+    var didUpdateData: AnyPublisher<Void, Error> { get }
 
     var numberOfRows: Int { get }
 

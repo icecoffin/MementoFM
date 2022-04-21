@@ -183,7 +183,7 @@ class LibraryViewModelTests: XCTestCase {
         // Suppress 'unused variable' warning
         _ = viewModel.delegate
 
-        applicationStateObserver.applicationDidBecomeActiveSubject.send(())
+        applicationStateObserver.applicationDidBecomeActiveSubject.send()
 
         expect(self.libraryUpdater.didRequestData) == true
     }

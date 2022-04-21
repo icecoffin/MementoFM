@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Combine
 
 final class ArtistViewController: UIViewController {
     // MARK: - Private properties
@@ -14,6 +15,7 @@ final class ArtistViewController: UIViewController {
     private let dataSource: ArtistDataSource
 
     private let tableView = UITableView()
+    private var cancelBag = Set<AnyCancellable>()
 
     // MARK: - Init
 
@@ -21,14 +23,15 @@ final class ArtistViewController: UIViewController {
         self.dataSource = dataSource
         super.init(nibName: nil, bundle: nil)
 
-        dataSource.didUpdateData = { [weak self] in
+        dataSource.didUpdateData.sink { [weak self] completion in
+            if case .failure(let error) = completion {
+                self?.tableView.reloadData()
+                self?.showAlert(for: error)
+            }
+        } receiveValue: { [weak self] in
             self?.tableView.reloadData()
         }
-
-        dataSource.didReceiveError = { [weak self] error in
-            self?.tableView.reloadData()
-            self?.showAlert(for: error)
-        }
+        .store(in: &cancelBag)
     }
 
     required init?(coder aDecoder: NSCoder) {

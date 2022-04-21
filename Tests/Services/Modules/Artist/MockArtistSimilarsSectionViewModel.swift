@@ -8,10 +8,13 @@
 
 import Foundation
 @testable import MementoFM
+import Combine
 
 class MockArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtocol {
-    var didUpdateData: (() -> Void)?
-    var didReceiveError: ((Error) -> Void)?
+    var didUpdateDataSubject = PassthroughSubject<Void, Error>()
+    var didUpdateData: AnyPublisher<Void, Error> {
+        return didUpdateDataSubject.eraseToAnyPublisher()
+    }
 
     var numberOfSimilarArtists = 0
     var hasSimilarArtists = false

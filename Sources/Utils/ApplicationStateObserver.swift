@@ -33,7 +33,7 @@ final class ApplicationStateObserver: ApplicationStateObserving {
         notificationCenter.publisher(for: UIApplication.didBecomeActiveNotification)
             .dropFirst()
             .sink { [weak self] _ in
-                self?.applicationDidBecomeActiveSubject.send(())
+                self?.applicationDidBecomeActiveSubject.send()
             }
             .store(in: &cancelBag)
     }

@@ -9,6 +9,7 @@
 import XCTest
 @testable import MementoFM
 import Nimble
+import Combine
 
 class ArtistSimilarsSectionViewModelTests: XCTestCase {
     class Dependencies: ArtistSimilarsSectionViewModel.Dependencies {
@@ -32,6 +33,8 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
     var artistService: MockArtistService!
     var dependencies: Dependencies!
     var tabViewModelFactory: MockArtistSimilarsSectionTabViewModelFactory!
+
+    private var cancelBag = Set<AnyCancellable>()
 
     override func setUp() {
         super.setUp()
@@ -149,11 +152,11 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
                                                        tabViewModelFactory: tabViewModelFactory)
 
         var didUpdateData = false
-        viewModel.didUpdateData = {
-            didUpdateData = true
-        }
+        viewModel.didUpdateData.sink(receiveCompletion: { _ in },
+                                     receiveValue: { didUpdateData = true })
+        .store(in: &cancelBag)
 
-        tabViewModelFactory.firstTabViewModel.didUpdateData?()
+        tabViewModelFactory.firstTabViewModel.didUpdateDataSubject.send()
 
         expect(didUpdateData) == true
     }
@@ -165,12 +168,18 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
                                                        tabViewModelFactory: tabViewModelFactory)
 
         var didReceiveError = false
-        viewModel.didReceiveError = { _ in
-            didReceiveError = true
-        }
+        viewModel.didUpdateData.sink(receiveCompletion: { completion in
+            switch completion {
+            case .finished:
+                fail()
+            case .failure:
+                didReceiveError = true
+            }
+        }, receiveValue: { _ in })
+        .store(in: &cancelBag)
 
         let error = NSError(domain: "MementoFM", code: 6, userInfo: nil)
-        tabViewModelFactory.firstTabViewModel.didReceiveError?(error)
+        tabViewModelFactory.firstTabViewModel.didUpdateDataSubject.send(completion: .failure(error))
 
         expect(didReceiveError) == true
     }

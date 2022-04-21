@@ -7,18 +7,23 @@
 //
 
 import UIKit
+import Combine
 
 final class ArtistDataSource: NSObject {
     // MARK: - Private properties
 
     private let viewModel: ArtistViewModelProtocol
 
+    private var didUpdateDataSubject = PassthroughSubject<Void, Error>()
+    private var cancelBag = Set<AnyCancellable>()
+
     // MARK: - Public properties
 
     let sectionDataSources: [ArtistSectionDataSource]
 
-    var didUpdateData: (() -> Void)?
-    var didReceiveError: ((Error) -> Void)?
+    var didUpdateData: AnyPublisher<Void, Error> {
+        return didUpdateDataSubject.eraseToAnyPublisher()
+    }
 
     // MARK: - Init
 
@@ -33,12 +38,13 @@ final class ArtistDataSource: NSObject {
     // MARK: - Private properties
 
     private func bindToViewModel() {
-        viewModel.didUpdateData = { [unowned self] in
-            self.didUpdateData?()
-        }
-        viewModel.didReceiveError = { [unowned self] error in
-            self.didReceiveError?(error)
-        }
+        viewModel.didUpdateData
+            .sink { [unowned self] completion in
+                self.didUpdateDataSubject.send(completion: completion)
+            } receiveValue: { [unowned self] in
+                self.didUpdateDataSubject.send()
+            }
+            .store(in: &cancelBag)
     }
 
     // MARK: - Public methods

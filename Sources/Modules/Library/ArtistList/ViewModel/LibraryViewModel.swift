@@ -84,6 +84,7 @@ final class LibraryViewModel: ArtistListViewModel {
             self?.didReceiveError?(error)
         }
 
+        // TODO: check weak/unowned for all sinks
         applicationStateObserver.applicationDidBecomeActive
             .sink { _ in
                 self.requestDataIfNeeded()

@@ -7,16 +7,20 @@
 //
 
 import UIKit
+import Combine
 
 final class ArtistSimilarsSectionDataSource: ArtistSectionDataSource {
     // MARK: - Private properties
 
     private let viewModel: ArtistSimilarsSectionViewModel
+    private let didUpdateDataSubject = PassthroughSubject<Void, Error>()
+    private var cancelBag = Set<AnyCancellable>()
 
     // MARK: - Public properties
 
-    var didUpdateData: (() -> Void)?
-    var didReceiveError: ((Error) -> Void)?
+    var didUpdateData: AnyPublisher<Void, Error> {
+        return didUpdateDataSubject.eraseToAnyPublisher()
+    }
 
     var numberOfRows: Int {
         return viewModel.numberOfSimilarArtists
@@ -26,12 +30,15 @@ final class ArtistSimilarsSectionDataSource: ArtistSectionDataSource {
 
     init(viewModel: ArtistSimilarsSectionViewModel) {
         self.viewModel = viewModel
-        viewModel.didUpdateData = { [weak self] in
-            self?.didUpdateData?()
-        }
-        viewModel.didReceiveError = { [weak self] error in
-            self?.didReceiveError?(error)
-        }
+
+        viewModel.didUpdateData
+            .sink { [weak self] completion in
+                self?.didUpdateDataSubject.send(completion: completion)
+            } receiveValue: { [weak self] in
+                self?.didUpdateDataSubject.send()
+            }
+            .store(in: &cancelBag)
+
         viewModel.getSimilarArtists()
     }
 
