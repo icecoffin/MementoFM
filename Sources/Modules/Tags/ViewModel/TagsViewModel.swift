@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 import CombineSchedulers
 
 // MARK: - TagsViewModelDelegate
@@ -29,11 +30,16 @@ final class TagsViewModel {
     private let backgroundScheduler: AnySchedulerOf<DispatchQueue>
     private let mainScheduler: AnySchedulerOf<DispatchQueue>
 
+    private var didUpdateDataSubject = PassthroughSubject<Bool, Never>()
+    private var cancelBag = Set<AnyCancellable>()
+
     // MARK: - Public properties
 
     weak var delegate: TagsViewModelDelegate?
 
-    var didUpdateData: ((_ isEmpty: Bool) -> Void)?
+    var didUpdateData: AnyPublisher<Bool, Never> {
+        return didUpdateDataSubject.eraseToAnyPublisher()
+    }
 
     var numberOfTags: Int {
         return filteredCellViewModels.count
@@ -92,7 +98,7 @@ final class TagsViewModel {
             let allTopTags = self.dependencies.tagService.getAllTopTags()
             self.createCellViewModels(from: allTopTags, searchText: searchText)
             self.mainScheduler.schedule {
-                self.didUpdateData?(self.filteredCellViewModels.isEmpty)
+                self.didUpdateDataSubject.send(self.filteredCellViewModels.isEmpty)
             }
         }
     }
@@ -108,7 +114,7 @@ final class TagsViewModel {
 
     func performSearch(withText text: String?) {
         createFilteredCellViewModels(filter: text)
-        didUpdateData?(filteredCellViewModels.isEmpty)
+        didUpdateDataSubject.send(filteredCellViewModels.isEmpty)
     }
 
     func cancelSearch() {

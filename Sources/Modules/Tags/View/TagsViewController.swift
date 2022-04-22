@@ -8,6 +8,7 @@
 
 import UIKit
 import TPKeyboardAvoiding
+import Combine
 
 final class TagsViewController: UIViewController {
     // MARK: - Private properties
@@ -18,6 +19,7 @@ final class TagsViewController: UIViewController {
 
     private let viewModel: TagsViewModel
     private let prototypeCell = TagCell()
+    private var cancelBag = Set<AnyCancellable>()
 
     // MARK: - Init
 
@@ -78,10 +80,12 @@ final class TagsViewController: UIViewController {
     }
 
     private func bindToViewModel() {
-        viewModel.didUpdateData = { [unowned self] isEmpty in
-            self.collectionView.reloadData()
-            self.collectionView.backgroundView?.isHidden = !isEmpty
-        }
+        viewModel.didUpdateData
+            .sink(receiveValue: { [unowned self] isEmpty in
+                self.collectionView.reloadData()
+                self.collectionView.backgroundView?.isHidden = !isEmpty
+            })
+            .store(in: &cancelBag)
     }
 }
 

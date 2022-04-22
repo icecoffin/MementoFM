@@ -9,6 +9,7 @@
 import XCTest
 @testable import MementoFM
 import Nimble
+import Combine
 import CombineSchedulers
 
 class TagsViewModelTests: XCTestCase {
@@ -31,6 +32,8 @@ class TagsViewModelTests: XCTestCase {
     var tagService: MockTagService!
     var dependencies: Dependencies!
 
+    private var cancelBag = Set<AnyCancellable>()
+
     private func sampleTags() -> [Tag] {
         return [Tag(name: "Tag1", count: 1),
                 Tag(name: "Tag1", count: 2),
@@ -50,9 +53,11 @@ class TagsViewModelTests: XCTestCase {
     func test_getTags_callsDidUpdateData_withIsEmptyEqualToTrue() {
         let viewModel = makeTagsViewModel()
         var expectedIsEmpty = false
-        viewModel.didUpdateData = { isEmpty in
-            expectedIsEmpty = isEmpty
-        }
+        viewModel.didUpdateData
+            .sink(receiveValue: { isEmpty in
+                expectedIsEmpty = isEmpty
+            })
+            .store(in: &cancelBag)
 
         viewModel.getTags()
 
@@ -64,9 +69,11 @@ class TagsViewModelTests: XCTestCase {
         tagService.customTopTags = tags
         let viewModel = makeTagsViewModel()
         var expectedIsEmpty = true
-        viewModel.didUpdateData = { isEmpty in
-            expectedIsEmpty = isEmpty
-        }
+        viewModel.didUpdateData
+            .sink(receiveValue: { isEmpty in
+                expectedIsEmpty = isEmpty
+            })
+            .store(in: &cancelBag)
 
         viewModel.getTags()
 
@@ -78,9 +85,11 @@ class TagsViewModelTests: XCTestCase {
         tagService.customTopTags = tags
         let viewModel = makeTagsViewModel()
         var expectedNumberOfTags = 0
-        viewModel.didUpdateData = { [unowned viewModel] _ in
-            expectedNumberOfTags = viewModel.numberOfTags
-        }
+        viewModel.didUpdateData
+            .sink(receiveValue: { [unowned viewModel] _ in
+                expectedNumberOfTags = viewModel.numberOfTags
+            })
+            .store(in: &cancelBag)
 
         viewModel.getTags()
 
@@ -92,10 +101,12 @@ class TagsViewModelTests: XCTestCase {
         tagService.customTopTags = tags
         let viewModel = makeTagsViewModel()
         var expectedCellViewModel: TagCellViewModel?
-        viewModel.didUpdateData = { [unowned viewModel] _ in
-            let indexPath = IndexPath(row: 1, section: 0)
-            expectedCellViewModel = viewModel.cellViewModel(at: indexPath)
-        }
+        viewModel.didUpdateData
+            .sink(receiveValue: { [unowned viewModel] _ in
+                let indexPath = IndexPath(row: 1, section: 0)
+                expectedCellViewModel = viewModel.cellViewModel(at: indexPath)
+            })
+            .store(in: &cancelBag)
 
         viewModel.getTags()
 
@@ -108,10 +119,12 @@ class TagsViewModelTests: XCTestCase {
         let delegate = TestTagsViewModelDelegate()
         let viewModel = makeTagsViewModel()
         viewModel.delegate = delegate
-        viewModel.didUpdateData = { [unowned viewModel] _ in
-            let indexPath = IndexPath(row: 1, section: 0)
-            viewModel.selectTag(at: indexPath)
-        }
+        viewModel.didUpdateData
+            .sink(receiveValue: { [unowned viewModel] _ in
+                let indexPath = IndexPath(row: 1, section: 0)
+                viewModel.selectTag(at: indexPath)
+            })
+            .store(in: &cancelBag)
 
         viewModel.getTags()
 
@@ -123,21 +136,14 @@ class TagsViewModelTests: XCTestCase {
         tagService.customTopTags = tags
         let viewModel = makeTagsViewModel()
         var expectedNumberOfTags = 0
+        viewModel.didUpdateData
+            .sink { [unowned viewModel] _ in
+                expectedNumberOfTags = viewModel.numberOfTags
+            }
+            .store(in: &cancelBag)
 
-        var didGetTags: ((Bool) -> Void)?
-        var didPerformSearch: ((Bool) -> Void)?
-
-        didGetTags = { [unowned viewModel] _ in
-            viewModel.didUpdateData = didPerformSearch
-            viewModel.performSearch(withText: "1")
-        }
-
-        didPerformSearch = { [unowned viewModel] _ in
-            expectedNumberOfTags = viewModel.numberOfTags
-        }
-
-        viewModel.didUpdateData = didGetTags
         viewModel.getTags()
+        viewModel.performSearch(withText: "1")
 
         expect(expectedNumberOfTags) == 1
     }
@@ -147,27 +153,15 @@ class TagsViewModelTests: XCTestCase {
         tagService.customTopTags = tags
         let viewModel = makeTagsViewModel()
         var expectedNumberOfTags = 0
+        viewModel.didUpdateData
+            .sink { [unowned viewModel] _ in
+                expectedNumberOfTags = viewModel.numberOfTags
+            }
+            .store(in: &cancelBag)
 
-        var didGetTags: ((Bool) -> Void)?
-        var didPerformSearch: ((Bool) -> Void)?
-        var didCancelSearch: ((Bool) -> Void)?
-
-        didGetTags = { [unowned viewModel] _ in
-            viewModel.didUpdateData = didPerformSearch
-            viewModel.performSearch(withText: "1")
-        }
-
-        didPerformSearch = { [unowned viewModel] _ in
-            viewModel.didUpdateData = didCancelSearch
-            viewModel.cancelSearch()
-        }
-
-        didCancelSearch = { [unowned viewModel] _ in
-            expectedNumberOfTags = viewModel.numberOfTags
-        }
-
-        viewModel.didUpdateData = didGetTags
         viewModel.getTags()
+        viewModel.performSearch(withText: "1")
+        viewModel.cancelSearch()
 
         expect(expectedNumberOfTags) == 2
     }
