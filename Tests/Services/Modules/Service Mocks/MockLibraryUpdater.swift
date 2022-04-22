@@ -7,13 +7,25 @@
 //
 
 import Foundation
+import Combine
 @testable import MementoFM
 
 class MockLibraryUpdater: LibraryUpdaterProtocol {
-    var didStartLoading: (() -> Void)?
-    var didFinishLoading: (() -> Void)?
-    var didChangeStatus: ((LibraryUpdateStatus) -> Void)?
-    var didReceiveError: ((Error) -> Void)?
+    var isLoadingSubject = PassthroughSubject<Bool, Never>()
+    var statusSubject = PassthroughSubject<LibraryUpdateStatus, Never>()
+    var errorSubject = PassthroughSubject<Error, Never>()
+
+    var isLoading: AnyPublisher<Bool, Never> {
+        return isLoadingSubject.eraseToAnyPublisher()
+    }
+
+    var status: AnyPublisher<LibraryUpdateStatus, Never> {
+        return statusSubject.eraseToAnyPublisher()
+    }
+
+    var error: AnyPublisher<Error, Never> {
+        return errorSubject.eraseToAnyPublisher()
+    }
 
     var isFirstUpdate: Bool = true
     var lastUpdateTimestamp: TimeInterval = 0
@@ -29,18 +41,18 @@ class MockLibraryUpdater: LibraryUpdaterProtocol {
     }
 
     func simulateStartLoading() {
-        didStartLoading?()
+        isLoadingSubject.send(true)
     }
 
     func simulateFinishLoading() {
-        didFinishLoading?()
+        isLoadingSubject.send(false)
     }
 
     func simulateStatusChange(_ status: LibraryUpdateStatus) {
-        didChangeStatus?(status)
+        statusSubject.send(status)
     }
 
     func simulateError(_ error: Error) {
-        didReceiveError?(error)
+        errorSubject.send(error)
     }
 }

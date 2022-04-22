@@ -22,10 +22,9 @@ enum LibraryUpdateStatus {
 // MARK: - LibraryUpdaterProtocol
 
 protocol LibraryUpdaterProtocol: AnyObject {
-    var didStartLoading: (() -> Void)? { get set }
-    var didFinishLoading: (() -> Void)? { get set }
-    var didChangeStatus: ((LibraryUpdateStatus) -> Void)? { get set }
-    var didReceiveError: ((Error) -> Void)? { get set }
+    var isLoading: AnyPublisher<Bool, Never> { get }
+    var status: AnyPublisher<LibraryUpdateStatus, Never> { get }
+    var error: AnyPublisher<Error, Never> { get }
 
     var isFirstUpdate: Bool { get }
     var lastUpdateTimestamp: TimeInterval { get }
@@ -51,16 +50,26 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
         return userService.username
     }
 
+    private var isLoadingSubject = PassthroughSubject<Bool, Never>()
+    private var statusSubject = PassthroughSubject<LibraryUpdateStatus, Never>()
+    private var errorSubject = PassthroughSubject<Error, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
     // MARK: - Public methods
 
     private(set) var isFirstUpdate: Bool = true
 
-    var didStartLoading: (() -> Void)?
-    var didFinishLoading: (() -> Void)?
-    var didChangeStatus: ((LibraryUpdateStatus) -> Void)?
-    var didReceiveError: ((Error) -> Void)?
+    var isLoading: AnyPublisher<Bool, Never> {
+        return isLoadingSubject.eraseToAnyPublisher()
+    }
+
+    var status: AnyPublisher<LibraryUpdateStatus, Never> {
+        return statusSubject.eraseToAnyPublisher()
+    }
+
+    var error: AnyPublisher<Error, Never> {
+        return errorSubject.eraseToAnyPublisher()
+    }
 
     var lastUpdateTimestamp: TimeInterval {
         return userService.lastUpdateTimestamp
@@ -95,7 +104,7 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
     }
 
     private func getFullLibrary() -> AnyPublisher<Void, Error> {
-        didChangeStatus?(.artistsFirstPage)
+        statusSubject.send(.artistsFirstPage)
 
         let getLibrary = artistService
             .getLibrary(for: username)
@@ -111,7 +120,7 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
             })
             .sink { _ in
             } receiveValue: { [weak self] pageProgress in
-                self?.didChangeStatus?(.artists(progress: pageProgress))
+                self?.statusSubject.send(.artists(progress: pageProgress))
             }
             .store(in: &cancelBag)
 
@@ -132,7 +141,7 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
     }
 
     private func getLibraryUpdates() -> AnyPublisher<Void, Error> {
-        didChangeStatus?(.recentTracksFirstPage)
+        statusSubject.send(.recentTracksFirstPage)
         let getRecentTracks = trackService
             .getRecentTracks(for: username, from: lastUpdateTimestamp)
 
@@ -146,7 +155,7 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
             })
             .sink { _ in
             } receiveValue: { [weak self] pageProgress in
-                self?.didChangeStatus?(.recentTracks(progress: pageProgress))
+                self?.statusSubject.send(.recentTracks(progress: pageProgress))
             }
             .store(in: &cancelBag)
 
@@ -188,7 +197,7 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
         Publishers.Zip(pages, artistNames)
             .sink { _ in
             } receiveValue: { [weak self] (pageProgress, artistName) in
-                self?.didChangeStatus?(.tags(artistName: artistName, progress: pageProgress))
+                self?.statusSubject.send(.tags(artistName: artistName, progress: pageProgress))
             }
             .store(in: &cancelBag)
 
@@ -211,7 +220,7 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
     // MARK: - Public methods
 
     func requestData() {
-        didStartLoading?()
+        isLoadingSubject.send(true)
 
         requestLibrary()
             .flatMap { _ -> AnyPublisher<Void, Error> in
@@ -220,20 +229,18 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
             .flatMap { _ -> AnyPublisher<Void, Error> in
                 return self.countryService.updateCountries()
             }
-            .sink { completion in
-                self.isFirstUpdate = false
-                switch completion {
-                case .finished:
-                    self.didFinishLoading?()
-                case .failure(let error):
-                    self.didReceiveError?(error)
+            .sink { [weak self] completion in
+                self?.isFirstUpdate = false
+                self?.isLoadingSubject.send(false)
+                if case .failure(let error) = completion {
+                    self?.errorSubject.send(error)
                 }
             } receiveValue: { _ in }
             .store(in: &cancelBag)
     }
 
     func cancelPendingRequests() {
-        didChangeStatus?(.artistsFirstPage)
+        statusSubject.send(.artistsFirstPage)
         // TODO: implement cancelling publishers
         cancelBag.forEach { $0.cancel() }
     }

@@ -9,6 +9,7 @@
 import XCTest
 @testable import MementoFM
 import Nimble
+import Combine
 
 class LibraryUpdaterTests: XCTestCase {
     var userService: MockUserService!
@@ -18,6 +19,8 @@ class LibraryUpdaterTests: XCTestCase {
     var trackService: MockTrackService!
     var countryService: MockCountryService!
     var networkService: MockNetworkService!
+
+    private var cancelBag = Set<AnyCancellable>()
 
     override func setUp() {
         super.setUp()
@@ -44,32 +47,20 @@ class LibraryUpdaterTests: XCTestCase {
         expect(libraryUpdater.lastUpdateTimestamp) == 100
     }
 
-    func test_requestData_callsDidStartLoading() {
+    func test_requestData_startsAndFinishesLoading() {
         let libraryUpdater = makeLibraryUpdater()
 
-        var didStartLoading = false
+        var loadingStates: [Bool] = []
 
-        libraryUpdater.didStartLoading = {
-            didStartLoading = true
-        }
+        libraryUpdater.isLoading
+            .sink(receiveValue: { isLoading in
+                loadingStates.append(isLoading)
+            })
+            .store(in: &cancelBag)
 
         libraryUpdater.requestData()
 
-        expect(didStartLoading) == true
-    }
-
-    func test_requestData_callsDidFinishLoading() {
-        let libraryUpdater = makeLibraryUpdater()
-
-        var didFinishLoading = false
-
-        libraryUpdater.didFinishLoading = {
-            didFinishLoading = true
-        }
-
-        libraryUpdater.requestData()
-
-        expect(didFinishLoading) == true
+        expect(loadingStates) == [true, false]
     }
 
     func test_requestData_setsIsFirstUpdateToFalse() {
@@ -84,9 +75,11 @@ class LibraryUpdaterTests: XCTestCase {
         let libraryUpdater = makeLibraryUpdater()
 
         var didReceiveError = false
-        libraryUpdater.didReceiveError = { _ in
-            didReceiveError = true
-        }
+        libraryUpdater.error
+            .sink(receiveValue: { _ in
+                didReceiveError = true
+            })
+            .store(in: &cancelBag)
 
         artistService.getLibraryShouldReturnError = true
 
@@ -152,9 +145,11 @@ class LibraryUpdaterTests: XCTestCase {
         let libraryUpdater = makeLibraryUpdater()
         var libraryUpdateStatus: LibraryUpdateStatus!
 
-        libraryUpdater.didChangeStatus = { status in
-            libraryUpdateStatus = status
-        }
+        libraryUpdater.status
+            .sink(receiveValue: { status in
+                libraryUpdateStatus = status
+            })
+            .store(in: &cancelBag)
 
         libraryUpdater.cancelPendingRequests()
 

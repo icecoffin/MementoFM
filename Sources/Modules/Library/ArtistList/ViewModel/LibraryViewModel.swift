@@ -61,33 +61,37 @@ final class LibraryViewModel: ArtistListViewModel {
     // MARK: - Private methods
 
     private func setup() {
-        dependencies.libraryUpdater.didStartLoading = { [weak self] in
-            self?.didStartLoading?()
-        }
+        dependencies.libraryUpdater.isLoading
+            .sink(receiveValue: { [weak self] isLoading in
+                guard let self = self else { return }
 
-        dependencies.libraryUpdater.didFinishLoading = { [weak self] in
-            guard let self = self else {
-                return
-            }
-            self.didFinishLoading?()
-            self.didUpdateData?(self.artists.isEmpty)
-        }
+                if isLoading {
+                    self.didStartLoading?()
+                } else {
+                    self.didFinishLoading?()
+                    self.didUpdateData?(self.artists.isEmpty)
+                }
+            })
+            .store(in: &cancelBag)
 
-        dependencies.libraryUpdater.didChangeStatus = { [weak self] status in
-            guard let `self` = self else {
-                return
-            }
-            self.didChangeStatus?(self.stringFromStatus(status))
-        }
+        dependencies.libraryUpdater.status
+            .sink(receiveValue: { [weak self] status in
+                guard let self = self else { return }
 
-        dependencies.libraryUpdater.didReceiveError = { [weak self] error in
-            self?.didReceiveError?(error)
-        }
+                self.didChangeStatus?(self.stringFromStatus(status))
+            })
+            .store(in: &cancelBag)
+
+        dependencies.libraryUpdater.error
+            .sink(receiveValue: { [weak self] error in
+                self?.didReceiveError?(error)
+            })
+            .store(in: &cancelBag)
 
         // TODO: check weak/unowned for all sinks
         applicationStateObserver.applicationDidBecomeActive
-            .sink { _ in
-                self.requestDataIfNeeded()
+            .sink { [weak self] _ in
+                self?.requestDataIfNeeded()
             }
             .store(in: &cancelBag)
     }

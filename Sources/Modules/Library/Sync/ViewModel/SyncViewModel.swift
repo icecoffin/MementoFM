@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 // MARK: - SyncViewModelDelegate
 
@@ -22,6 +23,8 @@ final class SyncViewModel {
     // MARK: - Private properties
 
     private let dependencies: Dependencies
+
+    private var cancelBag = Set<AnyCancellable>()
 
     // MARK: - Public properties
 
@@ -40,23 +43,30 @@ final class SyncViewModel {
     // MARK: - Private methods
 
     private func setup() {
-        dependencies.libraryUpdater.didFinishLoading = { [weak self] in
-            guard let self = self else {
-                return
-            }
-            self.delegate?.syncViewModelDidFinishLoading(self)
-        }
+        dependencies.libraryUpdater.isLoading
+            .sink(receiveValue: { [weak self] isLoading in
+                guard let self = self else { return }
 
-        dependencies.libraryUpdater.didChangeStatus = { [weak self] status in
-            guard let self = self else {
-                return
-            }
-            self.didChangeStatus?(self.stringFromStatus(status))
-        }
+                if !isLoading {
+                    self.delegate?.syncViewModelDidFinishLoading(self)
+                }
+            })
+            .store(in: &cancelBag)
 
-        dependencies.libraryUpdater.didReceiveError = { [weak self] error in
-            self?.didReceiveError?(error)
-        }
+        dependencies.libraryUpdater.status
+            .sink(receiveValue: { [weak self] status in
+                guard let self = self else {
+                    return
+                }
+                self.didChangeStatus?(self.stringFromStatus(status))
+            })
+            .store(in: &cancelBag)
+
+        dependencies.libraryUpdater.error
+            .sink(receiveValue: { [weak self] error in
+                self?.didReceiveError?(error)
+            })
+            .store(in: &cancelBag)
     }
 
     private func stringFromStatus(_ status: LibraryUpdateStatus) -> String {
