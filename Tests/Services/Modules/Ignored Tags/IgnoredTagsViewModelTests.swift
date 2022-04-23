@@ -84,7 +84,7 @@ class IgnoredTagsViewModelTests: XCTestCase {
         let cellViewModel = viewModel.cellViewModel(at: indexPath)
         expect(cellViewModel.text) == ignoredTags[0].name
 
-        cellViewModel.onTextChange?("text")
+        cellViewModel.tagTextDidChange("text")
         let updatedCellViewModel = viewModel.cellViewModel(at: indexPath)
         expect(updatedCellViewModel.text) == "text"
     }
@@ -97,7 +97,7 @@ class IgnoredTagsViewModelTests: XCTestCase {
         let indexPath = IndexPath(row: 0, section: 0)
 
         let cellViewModel = viewModel.cellViewModel(at: indexPath)
-        cellViewModel.onTextChange?("text")
+        cellViewModel.tagTextDidChange("text")
 
         let updatedCellViewModel = viewModel.cellViewModel(at: indexPath)
 

@@ -7,10 +7,18 @@
 //
 
 import XCTest
-@testable import MementoFM
 import Nimble
+import Combine
+@testable import MementoFM
 
 class IgnoredTagCellViewModelTests: XCTestCase {
+    private var cancelBag: Set<AnyCancellable>!
+
+    override func setUp() {
+        super.setUp()
+
+        cancelBag = .init()
+    }
 
     func test_text_returnsTagName() {
         let tag = IgnoredTag(uuid: "uuid", name: "name")
@@ -23,10 +31,14 @@ class IgnoredTagCellViewModelTests: XCTestCase {
         let viewModel = IgnoredTagCellViewModel(tag: tag)
 
         var updatedText: String = ""
-        viewModel.onTextChange = { text in
-            updatedText = text
-        }
+        viewModel.textChange
+            .sink(receiveValue: { text in
+                updatedText = text
+            })
+            .store(in: &cancelBag)
+
         viewModel.tagTextDidChange("new")
+
         expect(updatedText) == "new"
     }
 }

@@ -97,12 +97,14 @@ final class IgnoredTagsViewModel {
 
     func cellViewModel(at indexPath: IndexPath) -> IgnoredTagCellViewModel {
         let cellViewModel = IgnoredTagCellViewModel(tag: ignoredTags[indexPath.row])
-        cellViewModel.onTextChange = { [unowned self] text in
-            if indexPath.row < self.ignoredTags.count {
-                let ignoredTag = self.ignoredTags[indexPath.row].updatingName(text.lowercased())
-                self.ignoredTags[indexPath.row] = ignoredTag
-            }
-        }
+        cellViewModel.textChange
+            .sink(receiveValue: { [unowned self] text in
+                if indexPath.row < self.ignoredTags.count {
+                    let ignoredTag = self.ignoredTags[indexPath.row].updatingName(text.lowercased())
+                    self.ignoredTags[indexPath.row] = ignoredTag
+                }
+            })
+            .store(in: &cancelBag)
         return cellViewModel
     }
 

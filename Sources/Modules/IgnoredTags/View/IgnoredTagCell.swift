@@ -16,8 +16,6 @@ final class IgnoredTagCell: UITableViewCell {
 
     private var viewModel: IgnoredTagCellViewModel?
 
-    private var onTextUpdate: ((String) -> Void)?
-
     // MARK: - Init
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -60,6 +58,9 @@ final class IgnoredTagCell: UITableViewCell {
 
         textField.delegate = self
         textField.font = .primaryContent
+
+        textField.returnKeyType = .done
+        textField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
     }
 
     // MARK: - Actions
@@ -72,13 +73,9 @@ final class IgnoredTagCell: UITableViewCell {
 
     func configure(with viewModel: IgnoredTagCellViewModel) {
         self.viewModel = viewModel
-        onTextUpdate = { [unowned self] text in
-            self.viewModel?.tagTextDidChange(text)
-        }
 
         textField.text = viewModel.text
         textField.placeholder = viewModel.placeholder
-        textField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
     }
 }
 
@@ -86,10 +83,12 @@ final class IgnoredTagCell: UITableViewCell {
 
 extension IgnoredTagCell: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
-        onTextUpdate?(textField.text ?? "")
+        let text = textField.text ?? ""
+        self.viewModel?.tagTextDidChange(text)
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
         return true
     }
 }

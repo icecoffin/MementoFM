@@ -7,15 +7,19 @@
 //
 
 import Foundation
+import Combine
 
 final class IgnoredTagCellViewModel {
     // MARK: - Private properties
 
     private let tag: IgnoredTag
+    private let textChangeSubject = PassthroughSubject<String, Never>()
 
     // MARK: - Public properties
 
-    var onTextChange: ((String) -> Void)?
+    var textChange: AnyPublisher<String, Never> {
+        return textChangeSubject.eraseToAnyPublisher()
+    }
 
     var placeholder: String {
         return "Enter tag here".unlocalized
@@ -34,6 +38,6 @@ final class IgnoredTagCellViewModel {
     // MARK: - Public methods
 
     func tagTextDidChange(_ text: String) {
-        onTextChange?(text)
+        textChangeSubject.send(text)
     }
 }
