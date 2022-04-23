@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Combine
 import TPKeyboardAvoiding
 
 final class IgnoredTagsViewController: UIViewController {
@@ -18,6 +19,8 @@ final class IgnoredTagsViewController: UIViewController {
     private let loadingOverlayView = UIView()
     private let activityIndicatorView = UIActivityIndicatorView(style: .large)
     private let emptyDataSetView: EmptyDataSetView
+
+    private var cancelBag = Set<AnyCancellable>()
 
     // MARK: - Init
 
@@ -87,35 +90,46 @@ final class IgnoredTagsViewController: UIViewController {
     }
 
     private func bindToViewModel() {
-        viewModel.didStartSavingChanges = { [unowned self] in
-            self.view.endEditing(true)
-            self.activityIndicatorView.startAnimating()
-            self.loadingOverlayView.isHidden = false
-            self.tableView.isUserInteractionEnabled = false
-        }
+        viewModel.isSavingChanges
+            .sink(receiveValue: { [unowned self] isSaving in
+                if isSaving {
+                    self.view.endEditing(true)
+                    self.activityIndicatorView.startAnimating()
+                    self.loadingOverlayView.isHidden = false
+                    self.tableView.isUserInteractionEnabled = false
+                }
+            })
+            .store(in: &cancelBag)
 
-        viewModel.didReceiveError = { [unowned self] error in
-            self.showAlert(for: error)
-        }
+        viewModel.error
+            .sink(receiveValue: { [unowned self] error in
+                self.showAlert(for: error)
+            })
+            .store(in: &cancelBag)
 
-        viewModel.didAddNewTag = { [unowned self] indexPath in
+        viewModel.didAddNewTag
+            .sink(receiveValue: { [unowned self] indexPath in
             self.tableView.beginUpdates()
             self.tableView.insertRows(at: [indexPath], with: .automatic)
             self.tableView.endUpdates()
             self.tableView.backgroundView?.isHidden = self.viewModel.numberOfIgnoredTags != 0
             let cell = self.tableView.cellForRow(at: indexPath)
             cell?.becomeFirstResponder()
-        }
+        })
+            .store(in: &cancelBag)
 
-        viewModel.didUpdateTagCount = { [unowned self] isEmpty in
-            self.tableView.backgroundView?.isHidden = !isEmpty
-        }
+        viewModel.areTagsEmpty
+            .sink(receiveValue: { [unowned self] isEmpty in
+                self.tableView.backgroundView?.isHidden = !isEmpty
+            })
+            .store(in: &cancelBag)
 
-        viewModel.didAddDefaultTags = { [unowned self] in
-            DispatchQueue.main.async {
+        viewModel.didAddDefaultTags
+            .receive(on: DispatchQueue.main.eraseToAnyScheduler())
+            .sink(receiveValue: { [unowned self] in
                 self.tableView.reloadData()
-            }
-        }
+            })
+            .store(in: &cancelBag)
 
         tableView.backgroundView?.isHidden = viewModel.numberOfIgnoredTags > 0
     }

@@ -25,20 +25,41 @@ final class IgnoredTagsViewModel {
     private let dependencies: Dependencies
     private var ignoredTags: [IgnoredTag] {
         didSet {
-            didUpdateTagCount?(ignoredTags.isEmpty)
+            areTagsEmptySubject.send(ignoredTags.isEmpty)
         }
     }
+
+    private let isSavingChangesSubject = PassthroughSubject<Bool, Never>()
+    private let errorSubject = PassthroughSubject<Error, Never>()
+    private let didAddNewTagSubject = PassthroughSubject<IndexPath, Never>()
+    private let areTagsEmptySubject = PassthroughSubject<Bool, Never>()
+    private let didAddDefaultTagsSubject = PassthroughSubject<Void, Never>()
+
     private var cancelBag = Set<AnyCancellable>()
 
     // MARK: - Public properties
 
     weak var delegate: IgnoredTagsViewModelDelegate?
 
-    var didStartSavingChanges: (() -> Void)?
-    var didReceiveError: ((Error) -> Void)?
-    var didAddNewTag: ((IndexPath) -> Void)?
-    var didUpdateTagCount: ((_ isEmpty: Bool) -> Void)?
-    var didAddDefaultTags: (() -> Void)?
+    var isSavingChanges: AnyPublisher<Bool, Never> {
+        return isSavingChangesSubject.eraseToAnyPublisher()
+    }
+
+    var error: AnyPublisher<Error, Never> {
+        return errorSubject.eraseToAnyPublisher()
+    }
+
+    var didAddNewTag: AnyPublisher<IndexPath, Never> {
+        return didAddNewTagSubject.eraseToAnyPublisher()
+    }
+
+    var areTagsEmpty: AnyPublisher<Bool, Never> {
+        return areTagsEmptySubject.eraseToAnyPublisher()
+    }
+
+    var didAddDefaultTags: AnyPublisher<Void, Never> {
+        return didAddDefaultTagsSubject.eraseToAnyPublisher()
+    }
 
     var numberOfIgnoredTags: Int {
         return ignoredTags.count
@@ -64,9 +85,9 @@ final class IgnoredTagsViewModel {
                 switch completion {
                 case .finished:
                     self.ignoredTags = self.dependencies.ignoredTagService.ignoredTags()
-                    self.didAddDefaultTags?()
+                    self.didAddDefaultTagsSubject.send()
                 case .failure(let error):
-                    self.didReceiveError?(error)
+                    self.errorSubject.send(error)
                 }
             }, receiveValue: { })
             .store(in: &cancelBag)
@@ -89,7 +110,7 @@ final class IgnoredTagsViewModel {
         let newTag = IgnoredTag(uuid: UUID().uuidString, name: "")
         ignoredTags.append(newTag)
         let newTagIndexPath = IndexPath(item: ignoredTags.count - 1, section: 0)
-        didAddNewTag?(newTagIndexPath)
+        didAddNewTagSubject.send(newTagIndexPath)
     }
 
     func deleteIgnoredTag(at indexPath: IndexPath) {
@@ -97,7 +118,7 @@ final class IgnoredTagsViewModel {
     }
 
     func saveChanges() {
-        didStartSavingChanges?()
+        isSavingChangesSubject.send(true)
 
         let filteredTags = ignoredTags.reduce([]) { result, ignoredTag -> [IgnoredTag] in
             if ignoredTag.name.isEmpty {
@@ -120,11 +141,12 @@ final class IgnoredTagsViewModel {
             .sink(receiveCompletion: { [weak self] completion in
                 guard let self = self else { return }
 
+                self.isSavingChangesSubject.send(false)
                 switch completion {
                 case .finished:
                     self.delegate?.ignoredTagsViewModelDidSaveChanges(self)
                 case .failure(let error):
-                    self.didReceiveError?(error)
+                    self.errorSubject.send(error)
                 }
             }, receiveValue: { })
             .store(in: &cancelBag)

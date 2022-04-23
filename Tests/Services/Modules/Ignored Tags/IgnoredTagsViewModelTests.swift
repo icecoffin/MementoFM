@@ -7,8 +7,9 @@
 //
 
 import XCTest
-@testable import MementoFM
 import Nimble
+import Combine
+@testable import MementoFM
 
 class IgnoredTagsViewModelTests: XCTestCase {
     class Dependencies: IgnoredTagsViewModel.Dependencies {
@@ -32,11 +33,13 @@ class IgnoredTagsViewModelTests: XCTestCase {
     private var ignoredTagService: MockIgnoredTagService!
     private var artistService: MockArtistService!
     private var dependencies: Dependencies!
+    private var cancelBag: Set<AnyCancellable>!
 
     override func setUp() {
         ignoredTagService = MockIgnoredTagService()
         artistService = MockArtistService()
         dependencies = Dependencies(ignoredTagService: ignoredTagService, artistService: artistService)
+        cancelBag = .init()
     }
 
     func test_init_doesNotCreateDefaultIgnoredTags_whenShouldAddDefaultTagsIsFalse() {
@@ -108,9 +111,11 @@ class IgnoredTagsViewModelTests: XCTestCase {
         let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
 
         var expectedIndexPath: IndexPath?
-        viewModel.didAddNewTag = { indexPath in
-            expectedIndexPath = indexPath
-        }
+        viewModel.didAddNewTag
+            .sink(receiveValue: { indexPath in
+                expectedIndexPath = indexPath
+            })
+            .store(in: &cancelBag)
 
         viewModel.addNewIgnoredTag()
 
@@ -139,18 +144,20 @@ class IgnoredTagsViewModelTests: XCTestCase {
         expect(viewModel.numberOfIgnoredTags) == ignoredTags.count - 1
     }
 
-    func test_saveChanges_callsDidStartSavingChanges() {
+    func test_saveChanges_startsAndFinishesSavingChanges() {
         let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
 
-        var didStartSavingChanges = false
+        var savingChangesStates: [Bool] = []
 
-        viewModel.didStartSavingChanges = {
-            didStartSavingChanges = true
-        }
+        viewModel.isSavingChanges
+            .sink(receiveValue: { isSaving in
+                savingChangesStates.append(isSaving)
+            })
+            .store(in: &cancelBag)
 
         viewModel.saveChanges()
 
-        expect(didStartSavingChanges) == true
+        expect(savingChangesStates) == [true, false]
     }
 
     func test_saveChanges_notifiesDelegateOnSuccess() {
