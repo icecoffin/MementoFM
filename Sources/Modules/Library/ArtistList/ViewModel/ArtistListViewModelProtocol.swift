@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 // MARK: - ArtistListViewModelDelegate
 
@@ -19,11 +20,9 @@ protocol ArtistListViewModelDelegate: AnyObject {
 protocol ArtistListViewModel: AnyObject {
     var delegate: ArtistListViewModelDelegate? { get set }
 
-    var didStartLoading: (() -> Void)? { get set }
-    var didFinishLoading: (() -> Void)? { get set }
-    var didUpdateData: ((_ isEmpty: Bool) -> Void)? { get set }
-    var didChangeStatus: ((String) -> Void)? { get set }
-    var didReceiveError: ((Error) -> Void)? { get set }
+    var isLoading: AnyPublisher<Bool, Never> { get }
+    var didUpdate: AnyPublisher<Result<Bool, Error>, Never> { get }
+    var status: AnyPublisher<String, Never> { get }
 
     var itemCount: Int { get }
     var title: String { get }

@@ -7,8 +7,9 @@
 //
 
 import XCTest
-@testable import MementoFM
 import Nimble
+import Combine
+@testable import MementoFM
 
 class ArtistsByCountryViewModelTests: XCTestCase {
     class Dependencies: HasArtistService {
@@ -31,6 +32,8 @@ class ArtistsByCountryViewModelTests: XCTestCase {
     var dependencies: Dependencies!
     var viewModel: ArtistsByCountryViewModel!
 
+    private var cancelBag: Set<AnyCancellable>!
+
     override func setUp() {
         super.setUp()
 
@@ -41,6 +44,8 @@ class ArtistsByCountryViewModelTests: XCTestCase {
         let artists = ModelFactory.generateArtists(inAmount: 10)
         collection = MockPersistentMappedCollection<Artist>(values: artists)
         artistService.customMappedCollection = AnyPersistentMappedCollection(collection)
+
+        cancelBag = .init()
     }
 
     // MARK: - itemCount
@@ -98,9 +103,11 @@ class ArtistsByCountryViewModelTests: XCTestCase {
 
     func test_performSearch_callsDidUpdateData() {
         var didUpdateData = false
-        viewModel.didUpdateData = { _ in
-            didUpdateData = true
-        }
+        viewModel.didUpdate
+            .sink(receiveValue: { _ in
+                didUpdateData = true
+            })
+            .store(in: &cancelBag)
 
         viewModel.performSearch(withText: "test")
 

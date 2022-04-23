@@ -18,6 +18,10 @@ final class LibraryViewModel: ArtistListViewModel {
     private let dependencies: Dependencies
     private let applicationStateObserver: ApplicationStateObserving
 
+    private let isLoadingSubject = PassthroughSubject<Bool, Never>()
+    private let didUpdateSubject = PassthroughSubject<Result<Bool, Error>, Never>()
+    private let statusSubject = PassthroughSubject<String, Never>()
+
     private var cancelBag = Set<AnyCancellable>()
 
     private let numberFormatter: NumberFormatter = {
@@ -35,11 +39,17 @@ final class LibraryViewModel: ArtistListViewModel {
 
     weak var delegate: ArtistListViewModelDelegate?
 
-    var didStartLoading: (() -> Void)?
-    var didFinishLoading: (() -> Void)?
-    var didUpdateData: ((_ isEmpty: Bool) -> Void)?
-    var didChangeStatus: ((String) -> Void)?
-    var didReceiveError: ((Error) -> Void)?
+    var isLoading: AnyPublisher<Bool, Never> {
+        return isLoadingSubject.eraseToAnyPublisher()
+    }
+
+    var didUpdate: AnyPublisher<Result<Bool, Error>, Never> {
+        return didUpdateSubject.eraseToAnyPublisher()
+    }
+
+    var status: AnyPublisher<String, Never> {
+        return statusSubject.eraseToAnyPublisher()
+    }
 
     var itemCount: Int {
         return artists.count
@@ -65,11 +75,9 @@ final class LibraryViewModel: ArtistListViewModel {
             .sink(receiveValue: { [weak self] isLoading in
                 guard let self = self else { return }
 
-                if isLoading {
-                    self.didStartLoading?()
-                } else {
-                    self.didFinishLoading?()
-                    self.didUpdateData?(self.artists.isEmpty)
+                self.isLoadingSubject.send(isLoading)
+                if !isLoading {
+                    self.didUpdateSubject.send(.success(self.artists.isEmpty))
                 }
             })
             .store(in: &cancelBag)
@@ -78,13 +86,13 @@ final class LibraryViewModel: ArtistListViewModel {
             .sink(receiveValue: { [weak self] status in
                 guard let self = self else { return }
 
-                self.didChangeStatus?(self.stringFromStatus(status))
+                self.statusSubject.send(self.stringFromStatus(status))
             })
             .store(in: &cancelBag)
 
         dependencies.libraryUpdater.error
             .sink(receiveValue: { [weak self] error in
-                self?.didReceiveError?(error)
+                self?.didUpdateSubject.send(.failure(error))
             })
             .store(in: &cancelBag)
 
@@ -133,6 +141,6 @@ final class LibraryViewModel: ArtistListViewModel {
 
     func performSearch(withText text: String) {
         artists.predicate = text.isEmpty ? nil : NSPredicate(format: "name CONTAINS[cd] %@", text)
-        self.didUpdateData?(artists.isEmpty)
+        self.didUpdateSubject.send(.success(artists.isEmpty))
     }
 }

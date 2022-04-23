@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import Combine
 
 final class ArtistsByCountryViewModel: ArtistListViewModel {
     typealias Dependencies = HasArtistService
@@ -18,6 +19,10 @@ final class ArtistsByCountryViewModel: ArtistListViewModel {
     private let dependencies: Dependencies
     private let originalPredicate: NSPredicate
 
+    private let isLoadingSubject = PassthroughSubject<Bool, Never>()
+    private let didUpdateSubject = PassthroughSubject<Result<Bool, Error>, Never>()
+    private let statusSubject = PassthroughSubject<String, Never>()
+    
     private let numberFormatter: NumberFormatter = {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
@@ -33,11 +38,17 @@ final class ArtistsByCountryViewModel: ArtistListViewModel {
 
     weak var delegate: ArtistListViewModelDelegate?
 
-    var didStartLoading: (() -> Void)?
-    var didFinishLoading: (() -> Void)?
-    var didUpdateData: ((_ isEmpty: Bool) -> Void)?
-    var didChangeStatus: ((String) -> Void)?
-    var didReceiveError: ((Error) -> Void)?
+    var isLoading: AnyPublisher<Bool, Never> {
+        return isLoadingSubject.eraseToAnyPublisher()
+    }
+
+    var didUpdate: AnyPublisher<Result<Bool, Error>, Never> {
+        return didUpdateSubject.eraseToAnyPublisher()
+    }
+
+    var status: AnyPublisher<String, Never> {
+        return statusSubject.eraseToAnyPublisher()
+    }
 
     var itemCount: Int {
         return artists.count
@@ -82,6 +93,6 @@ final class ArtistsByCountryViewModel: ArtistListViewModel {
         let filterPredicate = NSPredicate(format: "name CONTAINS[cd] %@", text)
         let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [originalPredicate, filterPredicate])
         artists.predicate = compoundPredicate
-        self.didUpdateData?(artists.isEmpty)
+        self.didUpdateSubject.send(.success(artists.isEmpty))
     }
 }

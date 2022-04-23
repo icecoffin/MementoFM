@@ -46,6 +46,8 @@ class LibraryViewModelTests: XCTestCase {
     var userService: MockUserService!
     var dependencies: Dependencies!
 
+    private var cancelBag: Set<AnyCancellable>!
+
     var sampleArtists: [Artist] = {
         return [
             Artist(name: "Artist1", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [], country: nil),
@@ -67,6 +69,7 @@ class LibraryViewModelTests: XCTestCase {
         artistService.customMappedCollection = AnyPersistentMappedCollection(collection)
         userService = MockUserService()
         dependencies = Dependencies(libraryUpdater: libraryUpdater, artistService: artistService, userService: userService)
+        cancelBag = .init()
     }
 
     override func tearDown() {
@@ -166,9 +169,11 @@ class LibraryViewModelTests: XCTestCase {
         let viewModel = LibraryViewModel(dependencies: dependencies)
 
         var didUpdateData = false
-        viewModel.didUpdateData = { _ in
-            didUpdateData = true
-        }
+        viewModel.didUpdate
+            .sink(receiveValue: { _ in
+                didUpdateData = true
+            })
+            .store(in: &cancelBag)
 
         viewModel.performSearch(withText: "test")
 
@@ -190,49 +195,19 @@ class LibraryViewModelTests: XCTestCase {
 
     // MARK: - didStartLoading
 
-    func test_didStartLoading_isCalledOnLibraryUpdate() {
+    func test_isLoading_isChangedOnLibraryUpdate() {
         let viewModel = LibraryViewModel(dependencies: dependencies)
-        var didStartLoading = false
-        viewModel.didStartLoading = {
-            didStartLoading = true
-        }
+        var loadingStates: [Bool] = []
+        viewModel.isLoading
+            .sink(receiveValue: { isLoading in
+                loadingStates.append(isLoading)
+            })
+            .store(in: &cancelBag)
 
         libraryUpdater.simulateStartLoading()
-
-        expect(didStartLoading) == true
-    }
-
-    // MARK: - didFinishLoading
-
-    func test_didFinishLoading_isCalledWhenLibraryIsUpdated() {
-        let viewModel = LibraryViewModel(dependencies: dependencies)
-        var didFinishLoading = false
-        viewModel.didFinishLoading = {
-            didFinishLoading = true
-        }
-
         libraryUpdater.simulateFinishLoading()
 
-        expect(didFinishLoading) == true
-    }
-
-    // MARK: - didUpdateData
-
-    func test_didUpdateData_isCalledWhenLibraryIsUpdated() {
-        let viewModel = LibraryViewModel(dependencies: dependencies)
-        collection.customIsEmpty = true
-
-        var didUpdateData = false
-        var dataIsEmpty = false
-        viewModel.didUpdateData = { isEmpty in
-            didUpdateData = true
-            dataIsEmpty = isEmpty
-        }
-
-        libraryUpdater.simulateFinishLoading()
-
-        expect(didUpdateData) == true
-        expect(dataIsEmpty) == true
+        expect(loadingStates) == [true, false]
     }
 
     // MARK: - didReceiveError
@@ -240,9 +215,13 @@ class LibraryViewModelTests: XCTestCase {
     func test_didReceiveError_isCalledOnLibraryUpdateError() {
         let viewModel = LibraryViewModel(dependencies: dependencies)
         var didReceiveError = false
-        viewModel.didReceiveError = { _ in
-            didReceiveError = true
-        }
+        viewModel.didUpdate
+            .sink(receiveValue: { result in
+                if case .failure = result {
+                    didReceiveError = true
+                }
+            })
+            .store(in: &cancelBag)
 
         libraryUpdater.simulateError(NSError(domain: "MementoFM", code: 6, userInfo: nil))
 
@@ -255,9 +234,11 @@ class LibraryViewModelTests: XCTestCase {
         let viewModel = LibraryViewModel(dependencies: dependencies)
         var statuses: [String] = []
 
-        viewModel.didChangeStatus = { status in
-            statuses.append(status)
-        }
+        viewModel.status
+            .sink(receiveValue: { status in
+                statuses.append(status)
+            })
+            .store(in: &cancelBag)
 
         libraryUpdater.simulateStatusChange(.artistsFirstPage)
 

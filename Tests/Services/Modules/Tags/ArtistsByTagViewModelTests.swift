@@ -10,6 +10,7 @@ import XCTest
 @testable import MementoFM
 import Nimble
 import RealmSwift
+import Combine
 
 class ArtistsByTagViewModelTests: XCTestCase {
     class Dependencies: ArtistsByTagViewModel.Dependencies {
@@ -32,6 +33,8 @@ class ArtistsByTagViewModelTests: XCTestCase {
     var dependencies: Dependencies!
     var viewModel: ArtistsByTagViewModel!
 
+    private var cancelBag: Set<AnyCancellable>!
+
     var sampleArtists: [Artist] = {
         let tag1 = Tag(name: "Tag1", count: 1)
         let tag2 = Tag(name: "Tag2", count: 2)
@@ -53,6 +56,7 @@ class ArtistsByTagViewModelTests: XCTestCase {
         collection = MockPersistentMappedCollection<Artist>(values: sampleArtists)
         artistService.customMappedCollection = AnyPersistentMappedCollection(collection)
         dependencies = Dependencies(artistService: artistService)
+        cancelBag = .init()
 
         viewModel = ArtistsByTagViewModel(tagName: "Tag1", dependencies: dependencies)
     }
@@ -108,9 +112,11 @@ class ArtistsByTagViewModelTests: XCTestCase {
 
     func test_performSearch_callsDidUpdateData() {
         var didUpdateData = false
-        viewModel.didUpdateData = { _ in
-            didUpdateData = true
-        }
+        viewModel.didUpdate
+            .sink(receiveValue: { _ in
+                didUpdateData = true
+            })
+            .store(in: &cancelBag)
 
         viewModel.performSearch(withText: "test")
 

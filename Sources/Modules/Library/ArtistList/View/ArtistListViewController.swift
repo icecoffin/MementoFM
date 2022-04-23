@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import TPKeyboardAvoiding
+import Combine
 
 final class ArtistListViewController: UIViewController {
     private struct Constants {
@@ -20,6 +21,7 @@ final class ArtistListViewController: UIViewController {
     // MARK: - Private properties
 
     private let viewModel: ArtistListViewModel
+    private var cancelBag = Set<AnyCancellable>()
 
     private let searchController: UISearchController
     private let tableView = TPKeyboardAvoidingTableView()
@@ -94,27 +96,33 @@ final class ArtistListViewController: UIViewController {
     private func bindToViewModel() {
         searchController.searchBar.placeholder = viewModel.searchBarPlaceholder
 
-        viewModel.didStartLoading = { [unowned self] in
-            self.showLoadingView()
-        }
+        viewModel.isLoading
+            .sink(receiveValue: { [unowned self] isLoading in
+                if isLoading {
+                    self.showLoadingView()
+                } else {
+                    self.hideLoadingView()
+                }
+            })
+            .store(in: &cancelBag)
 
-        viewModel.didFinishLoading = { [unowned self] in
-            self.hideLoadingView()
-        }
+        viewModel.didUpdate
+            .sink { [unowned self] result in
+                switch result {
+                case .success(let isEmpty):
+                    self.tableView.reloadData()
+                    self.tableView.backgroundView?.isHidden = !isEmpty
+                case .failure(let error):
+                    self.showAlert(for: error)
+                }
+            }
+            .store(in: &cancelBag)
 
-        viewModel.didUpdateData = { [unowned self] isEmpty in
-            self.tableView.reloadData()
-            self.tableView.backgroundView?.isHidden = !isEmpty
-        }
-
-        viewModel.didChangeStatus = { [unowned self] status in
-            self.loadingView.update(with: status)
-        }
-
-        viewModel.didReceiveError = { [unowned self] error in
-            self.showAlert(for: error)
-            self.hideLoadingView()
-        }
+        viewModel.status
+            .sink(receiveValue: { [unowned self] status in
+                self.loadingView.update(with: status)
+            })
+            .store(in: &cancelBag)
     }
 
     private func showLoadingView() {
