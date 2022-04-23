@@ -11,14 +11,21 @@ import XCTest
 import Nimble
 
 final class IgnoredTagServiceTests: XCTestCase {
-    var persistentStore: MockPersistentStore!
-    var ignoredTagService: IgnoredTagService!
+    private var persistentStore: MockPersistentStore!
+    private var ignoredTagService: IgnoredTagService!
 
     override func setUp() {
         super.setUp()
 
         persistentStore = MockPersistentStore()
         ignoredTagService = IgnoredTagService(persistentStore: persistentStore)
+    }
+
+    override func tearDown() {
+        persistentStore = nil
+        ignoredTagService = nil
+
+        super.tearDown()
     }
 
     func test_ignoredTags_callsPersistentStore() {

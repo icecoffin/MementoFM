@@ -12,8 +12,8 @@ import Nimble
 import RealmSwift
 
 final class RealmMappedCollectionTests: XCTestCase {
-    var realm: Realm!
-    var collection: RealmMappedCollection<Tag>!
+    private var realm: Realm!
+    private var collection: RealmMappedCollection<Tag>!
 
     override func setUp() {
         super.setUp()
@@ -25,6 +25,7 @@ final class RealmMappedCollectionTests: XCTestCase {
     override func tearDown() {
         collection = nil
         realm = nil
+
         super.tearDown()
     }
 

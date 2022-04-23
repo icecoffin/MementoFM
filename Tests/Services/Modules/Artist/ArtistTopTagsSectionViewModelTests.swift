@@ -19,7 +19,7 @@ final class ArtistTopTagsSectionViewModelTests: XCTestCase {
         }
     }
 
-    var sampleArtist: Artist = {
+    private var sampleArtist: Artist = {
         let tags: [Tag] = [Tag(name: "Tag1", count: 1), Tag(name: "Tag2", count: 1)]
         return Artist(name: "Artist",
                       playcount: 1,

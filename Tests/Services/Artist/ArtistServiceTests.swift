@@ -12,14 +12,21 @@ import Nimble
 import CombineSchedulers
 
 final class ArtistServiceTests: XCTestCase {
-    var persistentStore: MockPersistentStore!
-    var scheduler: AnySchedulerOf<DispatchQueue>!
+    private var persistentStore: MockPersistentStore!
+    private var scheduler: AnySchedulerOf<DispatchQueue>!
 
     override func setUp() {
         super.setUp()
 
         persistentStore = MockPersistentStore()
         scheduler = .immediate
+    }
+
+    override func tearDown() {
+        persistentStore = nil
+        scheduler = nil
+
+        super.tearDown()
     }
 
     func test_getLibrary_callsProgress_andReturnsArtistsOnSuccess() {

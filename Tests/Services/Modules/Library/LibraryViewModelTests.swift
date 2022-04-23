@@ -73,9 +73,12 @@ final class LibraryViewModelTests: XCTestCase {
 
     override func tearDown() {
         libraryUpdater = nil
+        collection = nil
         artistService = nil
         userService = nil
         dependencies = nil
+        cancelBag = nil
+
         super.tearDown()
     }
 

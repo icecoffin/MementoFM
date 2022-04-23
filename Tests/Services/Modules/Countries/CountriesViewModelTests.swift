@@ -38,6 +38,14 @@ final class CountriesViewModelTests: XCTestCase {
         viewModel = CountriesViewModel(dependencies: dependencies)
     }
 
+    override func tearDown() {
+        countryService = nil
+        dependencies = nil
+        viewModel = nil
+
+        super.tearDown()
+    }
+
     // MARK: - loadData
 
     func test_loadData_callsArtistService() {

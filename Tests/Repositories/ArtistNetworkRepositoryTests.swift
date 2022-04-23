@@ -12,14 +12,21 @@ import Nimble
 import Alamofire
 
 final class ArtistNetworkRepositoryTests: XCTestCase {
-    var networkService: MockNetworkService!
-    var artistRepository: ArtistNetworkRepository!
+    private var networkService: MockNetworkService!
+    private var artistRepository: ArtistNetworkRepository!
 
     override func setUp() {
         super.setUp()
 
         networkService = MockNetworkService()
         artistRepository = ArtistNetworkRepository(networkService: networkService)
+    }
+
+    override func tearDown() {
+        networkService = nil
+        artistRepository = nil
+
+        super.tearDown()
     }
 
     func test_getLibraryPage_callsNetworkServiceWithCorrectParameters() {

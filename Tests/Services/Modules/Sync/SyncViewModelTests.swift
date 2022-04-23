@@ -39,6 +39,14 @@ final class SyncViewModelTests: XCTestCase {
         cancelBag = .init()
     }
 
+    override func tearDown() {
+        libraryUpdater = nil
+        dependencies = nil
+        cancelBag = nil
+
+        super.tearDown()
+    }
+
     func test_syncLibrary_cancelsPendingRequestsAndRequestsDataOnLibraryUpdater() {
         let viewModel = SyncViewModel(dependencies: dependencies)
 

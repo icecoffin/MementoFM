@@ -42,6 +42,15 @@ final class IgnoredTagsViewModelTests: XCTestCase {
         cancelBag = .init()
     }
 
+    override func tearDown() {
+        ignoredTagService = nil
+        artistService = nil
+        dependencies = nil
+        cancelBag = nil
+
+        super.tearDown()
+    }
+
     func test_init_doesNotCreateDefaultIgnoredTags_whenShouldAddDefaultTagsIsFalse() {
         let defaultIgnoredTagNames = ["tag1", "tag2"]
         ignoredTagService.defaultIgnoredTagNames = defaultIgnoredTagNames

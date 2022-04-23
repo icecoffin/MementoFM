@@ -62,7 +62,12 @@ final class ArtistsByTagViewModelTests: XCTestCase {
 
     override func tearDown() {
         artistService = nil
+        collection = nil
         dependencies = nil
+        cancelBag = nil
+        viewModel = nil
+
+        super.tearDown()
     }
 
     // MARK: - itemCount

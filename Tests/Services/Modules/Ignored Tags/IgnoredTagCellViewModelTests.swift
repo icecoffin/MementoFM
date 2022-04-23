@@ -20,6 +20,12 @@ final class IgnoredTagCellViewModelTests: XCTestCase {
         cancelBag = .init()
     }
 
+    override func tearDown() {
+        cancelBag = nil
+
+        super.tearDown()
+    }
+
     func test_text_returnsTagName() {
         let tag = IgnoredTag(uuid: "uuid", name: "name")
         let viewModel = IgnoredTagCellViewModel(tag: tag)

@@ -13,8 +13,8 @@ import RealmSwift
 import Combine
 
 final class RealmServiceTests: XCTestCase {
-    var realm: Realm!
-    var realmService: RealmService!
+    private var realm: Realm!
+    private var realmService: RealmService!
 
     override func setUp() {
         super.setUp()
@@ -28,6 +28,7 @@ final class RealmServiceTests: XCTestCase {
     override func tearDown() {
         realm = nil
         realmService = nil
+
         super.tearDown()
     }
 

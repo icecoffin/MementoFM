@@ -44,10 +44,21 @@ final class TagsViewModelTests: XCTestCase {
     }
 
     override func setUp() {
+        super.setUp()
+
         scheduler = .immediate
         tagService = MockTagService()
         dependencies = Dependencies(tagService: tagService)
         cancelBag = .init()
+    }
+
+    override func tearDown() {
+        scheduler = nil
+        tagService = nil
+        dependencies = nil
+        cancelBag = nil
+
+        super.tearDown()
     }
 
     func test_getTags_callsDidUpdateData_withIsEmptyEqualToTrue() {

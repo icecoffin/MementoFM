@@ -9,10 +9,9 @@
 import XCTest
 @testable import MementoFM
 import Nimble
-import RealmSwift
 
 final class ArtistTopTagsCalculatorTests: XCTestCase {
-    func testCalculatingTopTagsForArtist() {
+    func test_calculateTopTags_returnsCorrectValue() {
         let ignoredTags = [IgnoredTag(uuid: "uuid1", name: "Tag1"),
                            IgnoredTag(uuid: "uuid3", name: "Tag3")]
         let calculator = ArtistTopTagsCalculator(ignoredTags: ignoredTags, numberOfTopTags: 3)

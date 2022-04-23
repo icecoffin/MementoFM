@@ -11,12 +11,18 @@ import Nimble
 @testable import MementoFM
 
 final class TagServiceTests: XCTestCase {
-    var persistentStore: MockPersistentStore!
+    private var persistentStore: MockPersistentStore!
 
     override func setUp() {
         super.setUp()
 
         persistentStore = MockPersistentStore()
+    }
+
+    override func tearDown() {
+        persistentStore = nil
+
+        super.tearDown()
     }
 
     func test_getTopTags_finishesWithSuccess() {

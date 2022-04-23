@@ -39,12 +39,21 @@ final class ArtistsByCountryViewModelTests: XCTestCase {
         artistService = MockArtistService()
         dependencies = Dependencies(artistService: artistService)
         viewModel = ArtistsByCountryViewModel(country: .named(name: "Germany"), dependencies: dependencies)
+        cancelBag = .init()
 
         let artists = ModelFactory.generateArtists(inAmount: 10)
         collection = MockPersistentMappedCollection<Artist>(values: artists)
         artistService.customMappedCollection = AnyPersistentMappedCollection(collection)
+    }
 
-        cancelBag = .init()
+    override func tearDown() {
+        collection = nil
+        artistService = nil
+        dependencies = nil
+        viewModel = nil
+        cancelBag = nil
+
+        super.tearDown()
     }
 
     // MARK: - itemCount

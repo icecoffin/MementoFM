@@ -11,10 +11,10 @@ import XCTest
 import Nimble
 
 final class UserServiceTests: XCTestCase {
-    var userRepository: MockUserRepository!
-    var userDataStorage: MockUserDataStorage!
-    var persistentStore: MockPersistentStore!
-    var userService: UserService!
+    private var userRepository: MockUserRepository!
+    private var userDataStorage: MockUserDataStorage!
+    private var persistentStore: MockPersistentStore!
+    private var userService: UserService!
 
     override func setUp() {
         super.setUp()
@@ -23,6 +23,15 @@ final class UserServiceTests: XCTestCase {
         userDataStorage = MockUserDataStorage()
         persistentStore = MockPersistentStore()
         userService = UserService(persistentStore: persistentStore, repository: userRepository, userDataStorage: userDataStorage)
+    }
+
+    override func tearDown() {
+        userRepository = nil
+        userDataStorage = nil
+        persistentStore = nil
+        userService = nil
+
+        super.tearDown()
     }
 
     func test_username_readsFromUserDataStorage() {

@@ -11,7 +11,7 @@ import XCTest
 import Nimble
 
 final class LibraryArtistCellViewModelTests: XCTestCase {
-    var sampleArtist: Artist {
+    private var sampleArtist: Artist {
         return Artist(name: "Artist",
                       playcount: 10,
                       urlString: "",

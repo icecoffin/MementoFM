@@ -12,14 +12,21 @@ import Nimble
 import Alamofire
 
 final class TagNetworkRepositoryTests: XCTestCase {
-    var networkService: MockNetworkService!
-    var tagRepository: TagNetworkRepository!
+    private var networkService: MockNetworkService!
+    private var tagRepository: TagNetworkRepository!
 
     override func setUp() {
         super.setUp()
 
         networkService = MockNetworkService()
         tagRepository = TagNetworkRepository(networkService: networkService)
+    }
+
+    override func tearDown() {
+        networkService = nil
+        tagRepository = nil
+
+        super.tearDown()
     }
 
     func test_getTopTags_callsNetworkServiceWithCorrectParameters() {

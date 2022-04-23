@@ -11,7 +11,7 @@ import XCTest
 import Nimble
 
 final class SimilarArtistCellViewModelTests: XCTestCase {
-    var sampleArtist: Artist = {
+    private var sampleArtist: Artist = {
         let tags = [Tag(name: "Tag1", count: 1),
                     Tag(name: "Tag2", count: 1),
                     Tag(name: "Tag3", count: 1),
@@ -26,7 +26,7 @@ final class SimilarArtistCellViewModelTests: XCTestCase {
                       country: nil)
     }()
 
-    let commonTags = ["Tag1", "Tag3"]
+    private let commonTags = ["Tag1", "Tag3"]
 
     func test_name_returnsArtistName() {
         let viewModel = SimilarArtistCellViewModel(artist: sampleArtist, commonTags: commonTags, index: 1)

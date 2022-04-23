@@ -12,14 +12,13 @@ import Nimble
 import Combine
 
 final class LibraryUpdaterTests: XCTestCase {
-    var userService: MockUserService!
-    var artistService: MockArtistService!
-    var tagService: MockTagService!
-    var ignoredTagService: MockIgnoredTagService!
-    var trackService: MockTrackService!
-    var countryService: MockCountryService!
-    var networkService: MockNetworkService!
-
+    private var userService: MockUserService!
+    private var artistService: MockArtistService!
+    private var tagService: MockTagService!
+    private var ignoredTagService: MockIgnoredTagService!
+    private var trackService: MockTrackService!
+    private var countryService: MockCountryService!
+    private var networkService: MockNetworkService!
     private var cancelBag: Set<AnyCancellable>!
 
     override func setUp() {
@@ -37,6 +36,15 @@ final class LibraryUpdaterTests: XCTestCase {
     }
 
     override func tearDown() {
+        userService = nil
+        artistService = nil
+        tagService = nil
+        ignoredTagService = nil
+        trackService = nil
+        countryService = nil
+        networkService = nil
+        cancelBag = nil
+
         super.tearDown()
     }
 

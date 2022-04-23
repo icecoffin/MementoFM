@@ -32,6 +32,13 @@ final class SimilarArtistsLocalRequestStrategyTests: XCTestCase {
         dependencies = Dependencies(artistService: artistService)
     }
 
+    override func tearDown() {
+        artistService = nil
+        dependencies = nil
+
+        super.tearDown()
+    }
+
     func test_minNumberOfIntersectingTags_returnsCorrectValueFromStrategy() {
         let strategy = SimilarArtistsLocalRequestStrategy(dependencies: dependencies)
         expect(strategy.minNumberOfIntersectingTags) == 2

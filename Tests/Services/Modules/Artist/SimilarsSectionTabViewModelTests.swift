@@ -32,7 +32,7 @@ final class SimilarsSectionTabViewModelTests: XCTestCase {
     private var requestStrategy: MockSimilarArtistsRequestStrategy!
     private var cancelBag = Set<AnyCancellable>()
 
-    let sampleArtist: Artist = {
+    private let sampleArtist: Artist = {
         let tags = [Tag(name: "Tag1", count: 1), Tag(name: "Tag2", count: 1), Tag(name: "Tag3", count: 1)]
         return Artist(name: "Artist",
                       playcount: 1,
@@ -43,7 +43,7 @@ final class SimilarsSectionTabViewModelTests: XCTestCase {
                       country: nil)
     }()
 
-    let similarArtists: [Artist] = {
+    private let similarArtists: [Artist] = {
         let tag1 = Tag(name: "Tag1", count: 1)
         let tag2 = Tag(name: "Tag2", count: 1)
         let tag3 = Tag(name: "Tag3", count: 1)
@@ -68,6 +68,14 @@ final class SimilarsSectionTabViewModelTests: XCTestCase {
         requestStrategy.customSimilarArtists = similarArtists
         requestStrategy.minNumberOfIntersectingTags = 2
         dependencies = Dependencies(artistService: artistService)
+    }
+
+    override func tearDown() {
+        artistService = nil
+        requestStrategy = nil
+        dependencies = nil
+
+        super.tearDown()
     }
 
     func test_getSimilarArtists_updatesNumberOfSimilarArtists() {

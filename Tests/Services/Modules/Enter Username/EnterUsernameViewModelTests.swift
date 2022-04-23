@@ -28,6 +28,12 @@ final class EnterUsernameViewModelTests: XCTestCase {
         cancelBag = .init()
     }
 
+    override func tearDown() {
+        cancelBag = nil
+
+        super.tearDown()
+    }
+
     func test_canSubmitUsername_returnsFalse_forEmptyUsername() {
         let dependencies = Dependencies(userService: MockUserService())
         let viewModel = EnterUsernameViewModel(dependencies: dependencies)

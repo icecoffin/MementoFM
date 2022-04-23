@@ -12,14 +12,21 @@ import Nimble
 import Alamofire
 
 final class UserNetworkRepositoryTests: XCTestCase {
-    var networkService: MockNetworkService!
-    var userRepository: UserNetworkRepository!
+    private var networkService: MockNetworkService!
+    private var userRepository: UserNetworkRepository!
 
     override func setUp() {
         super.setUp()
 
         networkService = MockNetworkService()
         userRepository = UserNetworkRepository(networkService: networkService)
+    }
+
+    override func tearDown() {
+        networkService = nil
+        userRepository = nil
+
+        super.tearDown()
     }
 
     func test_checkUserExists_callsNetworkServiceWithCorrectParameters() {

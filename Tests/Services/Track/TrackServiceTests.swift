@@ -23,12 +23,18 @@ private final class MockRecentTracksProcessor: RecentTracksProcessing {
 }
 
 final class TrackServiceTests: XCTestCase {
-    var persistentStore: MockPersistentStore!
+    private var persistentStore: MockPersistentStore!
 
     override func setUp() {
         super.setUp()
 
         persistentStore = MockPersistentStore()
+    }
+
+    override func tearDown() {
+        persistentStore = nil
+
+        super.tearDown()
     }
 
     func test_getRecentTracks_finishesWithSuccess() {

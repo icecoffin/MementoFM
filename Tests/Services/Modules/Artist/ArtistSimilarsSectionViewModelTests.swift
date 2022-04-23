@@ -44,6 +44,15 @@ final class ArtistSimilarsSectionViewModelTests: XCTestCase {
         cancelBag = .init()
     }
 
+    override func tearDown() {
+        artistService = nil
+        tabViewModelFactory = nil
+        dependencies = nil
+        cancelBag = nil
+
+        super.tearDown()
+    }
+
     func test_currentTabViewModel_returnsFirstTabAfterInit() {
         let artist = sampleArtist
         let viewModel = ArtistSimilarsSectionViewModel(artist: artist,

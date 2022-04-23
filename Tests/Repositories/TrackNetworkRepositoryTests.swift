@@ -12,14 +12,21 @@ import Nimble
 import Alamofire
 
 final class TrackRepositoryTests: XCTestCase {
-    var networkService: MockNetworkService!
-    var trackRepository: TrackNetworkRepository!
+    private var networkService: MockNetworkService!
+    private var trackRepository: TrackNetworkRepository!
 
     override func setUp() {
         super.setUp()
 
         networkService = MockNetworkService()
         trackRepository = TrackNetworkRepository(networkService: networkService)
+    }
+
+    override func tearDown() {
+        networkService = nil
+        trackRepository = nil
+
+        super.tearDown()
     }
 
     func test_getRecentTracks_callsNetworkServiceWithCorrectParameters() {
