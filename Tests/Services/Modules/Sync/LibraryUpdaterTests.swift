@@ -20,7 +20,7 @@ class LibraryUpdaterTests: XCTestCase {
     var countryService: MockCountryService!
     var networkService: MockNetworkService!
 
-    private var cancelBag = Set<AnyCancellable>()
+    private var cancelBag: Set<AnyCancellable>!
 
     override func setUp() {
         super.setUp()
@@ -33,6 +33,7 @@ class LibraryUpdaterTests: XCTestCase {
         countryService = MockCountryService()
         networkService = MockNetworkService()
         networkService.customResponse = EmptyResponse()
+        cancelBag = .init()
     }
 
     override func tearDown() {

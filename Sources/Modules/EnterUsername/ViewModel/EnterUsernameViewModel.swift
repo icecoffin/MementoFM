@@ -24,13 +24,20 @@ final class EnterUsernameViewModel {
 
     private let dependencies: Dependencies
     private var currentUsername: String
+
+    private let isLoadingSubject = PassthroughSubject<Bool, Never>()
+    private let errorSubject = PassthroughSubject<Error, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
     // MARK: - Public properties
 
-    var didStartRequest: (() -> Void)?
-    var didFinishRequest: (() -> Void)?
-    var didReceiveError: ((Error) -> Void)?
+    var isLoading: AnyPublisher<Bool, Never> {
+        return isLoadingSubject.eraseToAnyPublisher()
+    }
+
+    var error: AnyPublisher<Error, Never> {
+        return errorSubject.eraseToAnyPublisher()
+    }
 
     weak var delegate: EnterUsernameViewModelDelegate?
 
@@ -74,19 +81,21 @@ final class EnterUsernameViewModel {
 
     func submitUsername() {
         let userService = dependencies.userService
-        didStartRequest?()
+        isLoadingSubject.send(true)
         userService.checkUserExists(withUsername: currentUsername)
             .flatMap { _ -> AnyPublisher<Void, Error> in
                 userService.username = self.currentUsername
                 return userService.clearUserData()
             }
-            .sink { completion in
-                self.didFinishRequest?()
+            .sink { [weak self] completion in
+                guard let self = self else { return }
+
+                self.isLoadingSubject.send(false)
                 switch completion {
                 case .finished:
                     self.delegate?.enterUsernameViewModelDidFinish(self)
                 case .failure(let error):
-                    self.didReceiveError?(error)
+                    self.errorSubject.send(error)
                 }
             } receiveValue: { _ in }
             .store(in: &cancelBag)

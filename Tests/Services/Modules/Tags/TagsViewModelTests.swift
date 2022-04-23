@@ -32,7 +32,7 @@ class TagsViewModelTests: XCTestCase {
     var tagService: MockTagService!
     var dependencies: Dependencies!
 
-    private var cancelBag = Set<AnyCancellable>()
+    private var cancelBag: Set<AnyCancellable>!
 
     private func sampleTags() -> [Tag] {
         return [Tag(name: "Tag1", count: 1),
@@ -48,6 +48,7 @@ class TagsViewModelTests: XCTestCase {
         scheduler = .immediate
         tagService = MockTagService()
         dependencies = Dependencies(tagService: tagService)
+        cancelBag = .init()
     }
 
     func test_getTags_callsDidUpdateData_withIsEmptyEqualToTrue() {

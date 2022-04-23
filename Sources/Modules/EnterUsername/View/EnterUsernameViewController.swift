@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Combine
 
 final class EnterUsernameViewController: UIViewController {
     // MARK: - Private properties
@@ -18,6 +19,7 @@ final class EnterUsernameViewController: UIViewController {
     private let activityIndicator = UIActivityIndicatorView(style: .medium)
 
     private let viewModel: EnterUsernameViewModel
+    private var cancelBag = Set<AnyCancellable>()
 
     // MARK: - Init
 
@@ -122,21 +124,27 @@ final class EnterUsernameViewController: UIViewController {
     }
 
     private func bindToViewModel() {
-        viewModel.didStartRequest = { [unowned self] in
-            self.disableSubmitButton()
-            self.activityIndicator.startAnimating()
-        }
+        viewModel.isLoading
+            .sink { [weak self] isLoading in
+                guard let self = self else { return }
 
-        viewModel.didFinishRequest = { [unowned self] in
-            self.enableSubmitButton()
-            self.activityIndicator.stopAnimating()
-        }
+                if isLoading {
+                    self.disableSubmitButton()
+                    self.activityIndicator.startAnimating()
+                } else {
+                    self.enableSubmitButton()
+                    self.activityIndicator.stopAnimating()
+                }
+            }
+            .store(in: &cancelBag)
 
-        viewModel.didReceiveError = { [weak self] error in
-            self?.enableSubmitButton()
-            self?.activityIndicator.stopAnimating()
-            self?.showAlert(for: error)
-        }
+        viewModel.error
+            .sink(receiveValue: { [weak self] error in
+                self?.enableSubmitButton()
+                self?.activityIndicator.stopAnimating()
+                self?.showAlert(for: error)
+            })
+            .store(in: &cancelBag)
 
         usernameTextField.placeholder = viewModel.usernameTextFieldPlaceholder
         submitButton.setTitle(viewModel.submitButtonTitle, for: .normal)
