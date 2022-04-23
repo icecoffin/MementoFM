@@ -95,7 +95,8 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
 
     // MARK: - Private methods
 
-    private func requestLibrary() -> AnyPublisher<Void, Error> {
+    private func requestLibrary() -> (progress: AnyPublisher<LibraryUpdateStatus, Error>,
+                                      result: AnyPublisher<Void, Error>) {
         if userService.didReceiveInitialCollection {
             return getLibraryUpdates()
         } else {
@@ -103,14 +104,14 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
         }
     }
 
-    private func getFullLibrary() -> AnyPublisher<Void, Error> {
+    private func getFullLibrary() -> (progress: AnyPublisher<LibraryUpdateStatus, Error>,
+                                      result: AnyPublisher<Void, Error>) {
         statusSubject.send(.artistsFirstPage)
 
         let getLibrary = artistService
             .getLibrary(for: username)
 
-        // TODO: remove side effect
-        getLibrary
+        let progress = getLibrary
             .dropFirst()
             .scan(PageProgress(current: 1, total: 0), { progress, libraryPage in
                 var newProgress = progress
@@ -118,13 +119,12 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
                 newProgress.total = libraryPage.totalPages
                 return newProgress
             })
-            .sink { _ in
-            } receiveValue: { [weak self] pageProgress in
-                self?.statusSubject.send(.artists(progress: pageProgress))
+            .map { pageProgress -> LibraryUpdateStatus in
+                return .artists(progress: pageProgress)
             }
-            .store(in: &cancelBag)
+            .eraseToAnyPublisher()
 
-        return getLibrary
+        let result = getLibrary
             .collect()
             .flatMap { [weak self] pages -> AnyPublisher<Void, Error> in
                 guard let self = self else {
@@ -138,14 +138,17 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
                 return self.artistService.saveArtists(artists)
             }
             .eraseToAnyPublisher()
+
+        return (progress, result)
     }
 
-    private func getLibraryUpdates() -> AnyPublisher<Void, Error> {
+    private func getLibraryUpdates() -> (progress: AnyPublisher<LibraryUpdateStatus, Error>,
+                                         result: AnyPublisher<Void, Error>) {
         statusSubject.send(.recentTracksFirstPage)
         let getRecentTracks = trackService
             .getRecentTracks(for: username, from: lastUpdateTimestamp)
 
-        getRecentTracks
+        let progress = getRecentTracks
             .dropFirst()
             .scan(PageProgress(current: 1, total: 0), { progress, recentTracksPage in
                 var newProgress = progress
@@ -153,13 +156,12 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
                 newProgress.total = recentTracksPage.totalPages
                 return newProgress
             })
-            .sink { _ in
-            } receiveValue: { [weak self] pageProgress in
-                self?.statusSubject.send(.recentTracks(progress: pageProgress))
+            .map { pageProgress -> LibraryUpdateStatus in
+                return .recentTracks(progress: pageProgress)
             }
-            .store(in: &cancelBag)
+            .eraseToAnyPublisher()
 
-        return getRecentTracks
+        let result = getRecentTracks
             .collect()
             .flatMap { [weak self] pages -> AnyPublisher<Void, Error> in
                 guard let self = self else {
@@ -172,6 +174,8 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
                 return self.trackService.processTracks(tracks)
             }
             .eraseToAnyPublisher()
+
+        return (progress, result)
     }
 
     private func updateLastUpdateTimestamp(date: Date = Date()) {
@@ -193,7 +197,6 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
         let artistNames = Publishers.Sequence(sequence: artists.map { $0.name })
             .setFailureType(to: Error.self)
 
-        // TODO: remove side effect
         Publishers.Zip(pages, artistNames)
             .sink { _ in
             } receiveValue: { [weak self] (pageProgress, artistName) in
@@ -222,20 +225,28 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
     func requestData() {
         isLoadingSubject.send(true)
 
-        requestLibrary()
-            .flatMap { _ -> AnyPublisher<Void, Error> in
-                return self.getArtistsTags()
+        let (progress, result) = requestLibrary()
+
+        progress
+            .sink { _ in
+            } receiveValue: { [weak self] status in
+                self?.statusSubject.send(status)
             }
-            .flatMap { _ -> AnyPublisher<Void, Error> in
-                return self.countryService.updateCountries()
+            .store(in: &cancelBag)
+
+        result.flatMap { _ -> AnyPublisher<Void, Error> in
+            return self.getArtistsTags()
+        }
+        .flatMap { _ -> AnyPublisher<Void, Error> in
+            return self.countryService.updateCountries()
+        }
+        .sink { [weak self] completion in
+            self?.isFirstUpdate = false
+            self?.isLoadingSubject.send(false)
+            if case .failure(let error) = completion {
+                self?.errorSubject.send(error)
             }
-            .sink { [weak self] completion in
-                self?.isFirstUpdate = false
-                self?.isLoadingSubject.send(false)
-                if case .failure(let error) = completion {
-                    self?.errorSubject.send(error)
-                }
-            } receiveValue: { _ in }
+        } receiveValue: { _ in }
             .store(in: &cancelBag)
     }
 
