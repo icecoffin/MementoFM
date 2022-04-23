@@ -29,7 +29,7 @@ final class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol 
 
     private var cellViewModels: [SimilarArtistCellViewModel] = []
 
-    private var didUpdateDataSubject = PassthroughSubject<Void, Error>()
+    private var didUpdateSubject = PassthroughSubject<Result<Void, Error>, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
     // MARK: - Public properties
@@ -38,8 +38,8 @@ final class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol 
 
     let canSelectSimilarArtists: Bool
 
-    var didUpdateData: AnyPublisher<Void, Error> {
-        return didUpdateDataSubject.eraseToAnyPublisher()
+    var didUpdate: AnyPublisher<Result<Void, Error>, Never> {
+        return didUpdateSubject.eraseToAnyPublisher()
     }
 
     weak var delegate: SimilarsSectionTabViewModelDelegate?
@@ -78,7 +78,7 @@ final class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol 
                 guard let self = self else { return }
 
                 self.isLoading = false
-                self.didUpdateDataSubject.send(completion: completion)
+                self.didUpdateSubject.send(completion.asResult)
             } receiveValue: { [weak self] artists in
                 self?.createCellViewModels(from: artists)
             }
@@ -125,7 +125,7 @@ final class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol 
         if !isLoading && cellViewModels.isEmpty {
             calculateSimilarArtists()
         } else {
-            didUpdateDataSubject.send()
+            didUpdateSubject.send(.success(()))
         }
     }
 }

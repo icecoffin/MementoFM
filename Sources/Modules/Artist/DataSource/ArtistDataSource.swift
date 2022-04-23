@@ -14,15 +14,15 @@ final class ArtistDataSource: NSObject {
 
     private let viewModel: ArtistViewModelProtocol
 
-    private var didUpdateDataSubject = PassthroughSubject<Void, Error>()
+    private var didUpdateSubject = PassthroughSubject<Result<Void, Error>, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
     // MARK: - Public properties
 
     let sectionDataSources: [ArtistSectionDataSource]
 
-    var didUpdateData: AnyPublisher<Void, Error> {
-        return didUpdateDataSubject.eraseToAnyPublisher()
+    var didUpdate: AnyPublisher<Result<Void, Error>, Never> {
+        return didUpdateSubject.eraseToAnyPublisher()
     }
 
     // MARK: - Init
@@ -38,12 +38,10 @@ final class ArtistDataSource: NSObject {
     // MARK: - Private properties
 
     private func bindToViewModel() {
-        viewModel.didUpdateData
-            .sink { [unowned self] completion in
-                self.didUpdateDataSubject.send(completion: completion)
-            } receiveValue: { [unowned self] in
-                self.didUpdateDataSubject.send()
-            }
+        viewModel.didUpdate
+            .sink(receiveValue: { [unowned self] result in
+                self.didUpdateSubject.send(result)
+            })
             .store(in: &cancelBag)
     }
 

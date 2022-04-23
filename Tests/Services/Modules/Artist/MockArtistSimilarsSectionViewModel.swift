@@ -11,9 +11,9 @@ import Foundation
 import Combine
 
 class MockArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtocol {
-    var didUpdateDataSubject = PassthroughSubject<Void, Error>()
-    var didUpdateData: AnyPublisher<Void, Error> {
-        return didUpdateDataSubject.eraseToAnyPublisher()
+    var didUpdateSubject = PassthroughSubject<Result<Void, Error>, Never>()
+    var didUpdate: AnyPublisher<Result<Void, Error>, Never> {
+        return didUpdateSubject.eraseToAnyPublisher()
     }
 
     var numberOfSimilarArtists = 0

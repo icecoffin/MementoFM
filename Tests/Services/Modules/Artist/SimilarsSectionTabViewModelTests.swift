@@ -78,10 +78,10 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
                                                     dependencies: dependencies)
         var expectedNumberOfSimilarArtists = 0
 
-        viewModel.didUpdateData
-            .sink(receiveCompletion: { _ in
+        viewModel.didUpdate
+            .sink(receiveValue: { _ in
                 expectedNumberOfSimilarArtists = viewModel.numberOfSimilarArtists
-            }, receiveValue: { _ in })
+            })
             .store(in: &cancelBag)
 
         viewModel.getSimilarArtists()
@@ -95,9 +95,10 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
                                                     requestStrategy: requestStrategy,
                                                     dependencies: dependencies)
         var expectedHasSimilarArtists = false
-        viewModel.didUpdateData.sink(receiveCompletion: { _ in
-            expectedHasSimilarArtists = viewModel.hasSimilarArtists
-        }, receiveValue: { _ in })
+        viewModel.didUpdate
+            .sink(receiveValue: { _ in
+                expectedHasSimilarArtists = viewModel.hasSimilarArtists
+            })
         .store(in: &cancelBag)
 
         viewModel.getSimilarArtists()
@@ -111,13 +112,14 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
                                                     requestStrategy: requestStrategy,
                                                     dependencies: dependencies)
         var expectedArtistNames: [String] = []
-        viewModel.didUpdateData.sink(receiveCompletion: { _ in
-            expectedArtistNames = (0..<viewModel.numberOfSimilarArtists).map {
-                let cellViewModel = viewModel.cellViewModel(at: IndexPath(row: $0, section: 0))
-                return cellViewModel.name
-            }
-        }, receiveValue: { _ in })
-        .store(in: &cancelBag)
+        viewModel.didUpdate
+            .sink(receiveValue: { _ in
+                expectedArtistNames = (0..<viewModel.numberOfSimilarArtists).map {
+                    let cellViewModel = viewModel.cellViewModel(at: IndexPath(row: $0, section: 0))
+                    return cellViewModel.name
+                }
+            })
+            .store(in: &cancelBag)
 
         viewModel.getSimilarArtists()
 
@@ -132,11 +134,12 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
         let delegate = TestSimilarsSectionTabViewModelDelegate()
         viewModel.delegate = delegate
 
-        viewModel.didUpdateData.sink(receiveCompletion: { _ in
-            let indexPath = IndexPath(item: 1, section: 0)
-            viewModel.selectArtist(at: indexPath)
-        }, receiveValue: { _ in })
-        .store(in: &cancelBag)
+        viewModel.didUpdate
+            .sink(receiveValue: { _ in
+                let indexPath = IndexPath(item: 1, section: 0)
+                viewModel.selectArtist(at: indexPath)
+            })
+            .store(in: &cancelBag)
 
         viewModel.getSimilarArtists()
 
@@ -151,15 +154,16 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
                                                     requestStrategy: requestStrategy,
                                                     dependencies: dependencies)
         var didReceiveError = false
-        viewModel.didUpdateData.sink(receiveCompletion: { completion in
-            switch completion {
-            case .finished:
-                fail()
-            case .failure:
-                didReceiveError = true
-            }
-        }, receiveValue: { _ in })
-        .store(in: &cancelBag)
+        viewModel.didUpdate
+            .sink(receiveValue: { result in
+                switch result {
+                case .success:
+                    fail()
+                case .failure:
+                    didReceiveError = true
+                }
+            })
+            .store(in: &cancelBag)
 
         viewModel.getSimilarArtists()
 

@@ -13,13 +13,13 @@ final class ArtistSimilarsSectionDataSource: ArtistSectionDataSource {
     // MARK: - Private properties
 
     private let viewModel: ArtistSimilarsSectionViewModel
-    private let didUpdateDataSubject = PassthroughSubject<Void, Error>()
+    private let didUpdateSubject = PassthroughSubject<Result<Void, Error>, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
     // MARK: - Public properties
 
-    var didUpdateData: AnyPublisher<Void, Error> {
-        return didUpdateDataSubject.eraseToAnyPublisher()
+    var didUpdate: AnyPublisher<Result<Void, Error>, Never> {
+        return didUpdateSubject.eraseToAnyPublisher()
     }
 
     var numberOfRows: Int {
@@ -31,12 +31,10 @@ final class ArtistSimilarsSectionDataSource: ArtistSectionDataSource {
     init(viewModel: ArtistSimilarsSectionViewModel) {
         self.viewModel = viewModel
 
-        viewModel.didUpdateData
-            .sink { [weak self] completion in
-                self?.didUpdateDataSubject.send(completion: completion)
-            } receiveValue: { [weak self] in
-                self?.didUpdateDataSubject.send()
-            }
+        viewModel.didUpdate
+            .sink(receiveValue: { [weak self] result in
+                self?.didUpdateSubject.send(result)
+            })
             .store(in: &cancelBag)
 
         viewModel.getSimilarArtists()

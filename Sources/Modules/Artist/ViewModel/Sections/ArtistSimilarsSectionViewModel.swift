@@ -12,7 +12,7 @@ import Combine
 // MARK: - ArtistSimilarsSectionViewModelProtocol
 
 protocol ArtistSimilarsSectionViewModelProtocol: AnyObject {
-    var didUpdateData: AnyPublisher<Void, Error> { get }
+    var didUpdate: AnyPublisher<Result<Void, Error>, Never> { get }
 
     var numberOfSimilarArtists: Int { get }
     var hasSimilarArtists: Bool { get }
@@ -41,15 +41,15 @@ final class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtoc
     // MARK: - Private properties
 
     private var tabViewModels: [ArtistSimilarsSectionViewModelProtocol] = []
-    private var didUpdateDataSubject = PassthroughSubject<Void, Error>()
+    private var didUpdateSubject = PassthroughSubject<Result<Void, Error>, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
     // MARK: - Public properties
 
     private(set) lazy var currentTabViewModel: ArtistSimilarsSectionViewModelProtocol = self.tabViewModels[0]
 
-    var didUpdateData: AnyPublisher<Void, Error> {
-        return didUpdateDataSubject.eraseToAnyPublisher()
+    var didUpdate: AnyPublisher<Result<Void, Error>, Never> {
+        return didUpdateSubject.eraseToAnyPublisher()
     }
 
     weak var delegate: ArtistSimilarsSectionViewModelDelegate?
@@ -91,16 +91,13 @@ final class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtoc
 
     private func setup() {
         for tabViewModel in tabViewModels {
-            tabViewModel.didUpdateData.sink { [weak self, unowned tabViewModel] completion in
-                if case .failure = completion, tabViewModel === self?.currentTabViewModel {
-                    self?.didUpdateDataSubject.send(completion: completion)
+            tabViewModel.didUpdate
+                .sink { [weak self, unowned tabViewModel] value in
+                    if tabViewModel === self?.currentTabViewModel {
+                        self?.didUpdateSubject.send(value)
+                    }
                 }
-            } receiveValue: { [weak self, unowned tabViewModel] _ in
-                if tabViewModel === self?.currentTabViewModel {
-                    self?.didUpdateDataSubject.send()
-                }
-            }
-            .store(in: &cancelBag)
+                .store(in: &cancelBag)
         }
     }
 
@@ -120,7 +117,7 @@ final class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtoc
 
     func selectTab(at index: Int) {
         currentTabViewModel = tabViewModels[index]
-        didUpdateDataSubject.send()
+        didUpdateSubject.send(.success(()))
         currentTabViewModel.getSimilarArtists()
     }
 }

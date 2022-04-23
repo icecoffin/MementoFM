@@ -10,7 +10,7 @@ import UIKit
 import Combine
 
 protocol ArtistSectionDataSource: AnyObject {
-    var didUpdateData: AnyPublisher<Void, Error> { get }
+    var didUpdate: AnyPublisher<Result<Void, Error>, Never> { get }
 
     var numberOfRows: Int { get }
 

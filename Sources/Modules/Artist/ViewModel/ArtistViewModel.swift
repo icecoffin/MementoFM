@@ -19,7 +19,7 @@ protocol ArtistViewModelDelegate: AnyObject {
 // MARK: - ArtistViewModelProtocol
 
 protocol ArtistViewModelProtocol: AnyObject {
-    var didUpdateData: AnyPublisher<Void, Error> { get }
+    var didUpdate: AnyPublisher<Result<Void, Error>, Never> { get }
 
     var title: String { get }
     var sectionDataSources: [ArtistSectionDataSource] { get }
@@ -35,15 +35,15 @@ final class ArtistViewModel: ArtistViewModelProtocol {
     private let artist: Artist
     private let dependencies: Dependencies
 
-    private var didUpdateDataSubject = PassthroughSubject<Void, Error>()
+    private var didUpdateSubject = PassthroughSubject<Result<Void, Error>, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
     weak var delegate: ArtistViewModelDelegate?
 
     // MARK: - Public properties
 
-    var didUpdateData: AnyPublisher<Void, Error> {
-        return didUpdateDataSubject.eraseToAnyPublisher()
+    var didUpdate: AnyPublisher<Result<Void, Error>, Never> {
+        return didUpdateSubject.eraseToAnyPublisher()
     }
 
     let sectionDataSources: [ArtistSectionDataSource]
@@ -68,12 +68,10 @@ final class ArtistViewModel: ArtistViewModelProtocol {
         topTagsSectionViewModel.delegate = self
         similarsSectionViewModel.delegate = self
 
-        similarsSectionDataSource.didUpdateData
-            .sink { [weak self] completion in
-                self?.didUpdateDataSubject.send(completion: completion)
-            } receiveValue: { [weak self] in
-                self?.didUpdateDataSubject.send()
-            }
+        similarsSectionDataSource.didUpdate
+            .sink(receiveValue: { [weak self] result in
+                self?.didUpdateSubject.send(result)
+            })
             .store(in: &cancelBag)
     }
 }

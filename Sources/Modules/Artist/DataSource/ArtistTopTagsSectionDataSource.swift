@@ -18,7 +18,7 @@ final class ArtistTopTagsSectionDataSource: ArtistSectionDataSource {
 
     // MARK: - Public properties
 
-    var didUpdateData: AnyPublisher<Void, Error> {
+    var didUpdate: AnyPublisher<Result<Void, Error>, Never> {
         return Empty().eraseToAnyPublisher()
     }
 

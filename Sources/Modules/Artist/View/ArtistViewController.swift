@@ -23,15 +23,17 @@ final class ArtistViewController: UIViewController {
         self.dataSource = dataSource
         super.init(nibName: nil, bundle: nil)
 
-        dataSource.didUpdateData.sink { [weak self] completion in
-            if case .failure(let error) = completion {
-                self?.tableView.reloadData()
-                self?.showAlert(for: error)
-            }
-        } receiveValue: { [weak self] in
-            self?.tableView.reloadData()
-        }
-        .store(in: &cancelBag)
+        dataSource.didUpdate
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success:
+                    self?.tableView.reloadData()
+                case .failure(let error):
+                    self?.tableView.reloadData()
+                    self?.showAlert(for: error)
+                }
+            })
+            .store(in: &cancelBag)
     }
 
     required init?(coder aDecoder: NSCoder) {

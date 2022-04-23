@@ -88,7 +88,6 @@ final class LibraryViewModel: ArtistListViewModel {
             })
             .store(in: &cancelBag)
 
-        // TODO: check weak/unowned for all sinks
         applicationStateObserver.applicationDidBecomeActive
             .sink { [weak self] _ in
                 self?.requestDataIfNeeded()

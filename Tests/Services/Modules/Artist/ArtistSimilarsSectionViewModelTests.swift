@@ -151,14 +151,14 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
                                                        dependencies: dependencies,
                                                        tabViewModelFactory: tabViewModelFactory)
 
-        var didUpdateData = false
-        viewModel.didUpdateData.sink(receiveCompletion: { _ in },
-                                     receiveValue: { didUpdateData = true })
-        .store(in: &cancelBag)
+        var didUpdate = false
+        viewModel.didUpdate
+            .sink(receiveValue: { _ in didUpdate = true })
+            .store(in: &cancelBag)
 
-        tabViewModelFactory.firstTabViewModel.didUpdateDataSubject.send()
+        tabViewModelFactory.firstTabViewModel.didUpdateSubject.send(.success(()))
 
-        expect(didUpdateData) == true
+        expect(didUpdate) == true
     }
 
     func test_didReceiveError_isCalled_whenCurrentTabViewModelReceivesError() {
@@ -168,18 +168,19 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
                                                        tabViewModelFactory: tabViewModelFactory)
 
         var didReceiveError = false
-        viewModel.didUpdateData.sink(receiveCompletion: { completion in
-            switch completion {
-            case .finished:
-                fail()
-            case .failure:
-                didReceiveError = true
-            }
-        }, receiveValue: { _ in })
-        .store(in: &cancelBag)
+        viewModel.didUpdate
+            .sink(receiveValue: { result in
+                switch result {
+                case .success:
+                    fail()
+                case .failure:
+                    didReceiveError = true
+                }
+            })
+            .store(in: &cancelBag)
 
         let error = NSError(domain: "MementoFM", code: 6, userInfo: nil)
-        tabViewModelFactory.firstTabViewModel.didUpdateDataSubject.send(completion: .failure(error))
+        tabViewModelFactory.firstTabViewModel.didUpdateSubject.send(.failure(error))
 
         expect(didReceiveError) == true
     }
