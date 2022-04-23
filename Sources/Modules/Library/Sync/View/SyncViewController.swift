@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Combine
 
 // MARK: - SyncViewController
 
@@ -17,6 +18,8 @@ final class SyncViewController: UIViewController {
 
     private let progressView = SyncProgressView()
     private let errorView = SyncErrorView()
+
+    private var cancelBag = Set<AnyCancellable>()
 
     // MARK: - Init
 
@@ -69,15 +72,19 @@ final class SyncViewController: UIViewController {
     }
 
     private func bindToViewModel() {
-        viewModel.didReceiveError = { [unowned self] error in
-            self.progressView.isHidden = true
-            self.errorView.isHidden = false
-            self.errorView.updateErrorDescription(ErrorConverter.displayMessage(for: error))
-        }
+        viewModel.error
+            .sink { [unowned self] error in
+                self.progressView.isHidden = true
+                self.errorView.isHidden = false
+                self.errorView.updateErrorDescription(ErrorConverter.displayMessage(for: error))
+            }
+            .store(in: &cancelBag)
 
-        viewModel.didChangeStatus = { [unowned self] status in
-            self.progressView.updateStatus(status)
-        }
+        viewModel.status
+            .sink(receiveValue: { [unowned self] status in
+                self.progressView.updateStatus(status)
+            })
+            .store(in: &cancelBag)
 
         viewModel.syncLibrary()
     }

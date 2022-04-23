@@ -24,14 +24,21 @@ final class SyncViewModel {
 
     private let dependencies: Dependencies
 
+    private let statusSubject = PassthroughSubject<String, Never>()
+    private let errorSubject = PassthroughSubject<Error, Never>()
     private var cancelBag = Set<AnyCancellable>()
 
     // MARK: - Public properties
 
     weak var delegate: SyncViewModelDelegate?
 
-    var didChangeStatus: ((String) -> Void)?
-    var didReceiveError: ((Error) -> Void)?
+    var status: AnyPublisher<String, Never> {
+        return statusSubject.eraseToAnyPublisher()
+    }
+
+    var error: AnyPublisher<Error, Never> {
+        return errorSubject.eraseToAnyPublisher()
+    }
 
     // MARK: - Init
 
@@ -58,13 +65,13 @@ final class SyncViewModel {
                 guard let self = self else {
                     return
                 }
-                self.didChangeStatus?(self.stringFromStatus(status))
+                self.statusSubject.send(self.stringFromStatus(status))
             })
             .store(in: &cancelBag)
 
         dependencies.libraryUpdater.error
             .sink(receiveValue: { [weak self] error in
-                self?.didReceiveError?(error)
+                self?.errorSubject.send(error)
             })
             .store(in: &cancelBag)
     }

@@ -7,8 +7,9 @@
 //
 
 import XCTest
-@testable import MementoFM
 import Nimble
+import Combine
+@testable import MementoFM
 
 class SyncViewModelTests: XCTestCase {
     class Dependencies: HasLibraryUpdater {
@@ -28,12 +29,14 @@ class SyncViewModelTests: XCTestCase {
 
     var libraryUpdater: MockLibraryUpdater!
     var dependencies: Dependencies!
+    private var cancelBag: Set<AnyCancellable>!
 
     override func setUp() {
         super.setUp()
 
         libraryUpdater = MockLibraryUpdater()
         dependencies = Dependencies(libraryUpdater: libraryUpdater)
+        cancelBag = .init()
     }
 
     func test_syncLibrary_cancelsPendingRequestsAndRequestsDataOnLibraryUpdater() {
@@ -49,9 +52,11 @@ class SyncViewModelTests: XCTestCase {
         let viewModel = SyncViewModel(dependencies: dependencies)
 
         var statuses: [String] = []
-        viewModel.didChangeStatus = { status in
-            statuses.append(status)
-        }
+        viewModel.status
+            .sink(receiveValue: { status in
+                statuses.append(status)
+            })
+            .store(in: &cancelBag)
 
         libraryUpdater.simulateStatusChange(.artistsFirstPage)
 
@@ -87,9 +92,11 @@ class SyncViewModelTests: XCTestCase {
     func test_didReceiveError_isCalled_whenLibraryUpdaterFinishesWithError() {
         let viewModel = SyncViewModel(dependencies: dependencies)
         var expectedError: Error?
-        viewModel.didReceiveError = { error in
-            expectedError = error
-        }
+        viewModel.error
+            .sink(receiveValue: { error in
+                expectedError = error
+            })
+            .store(in: &cancelBag)
 
         libraryUpdater.simulateError(NSError(domain: "MementoFM", code: 6, userInfo: nil))
         expect(expectedError).toNot(beNil())
