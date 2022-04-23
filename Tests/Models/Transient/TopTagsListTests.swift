@@ -10,7 +10,7 @@ import XCTest
 @testable import MementoFM
 import Nimble
 
-class TopTagsListTests: XCTestCase {
+final class TopTagsListTests: XCTestCase {
     func test_decodeFromJSON_setsCorrectProperties() {
         let topTagsList = makeSampleTopTagsList(fileName: "sample_top_tags_list")
 

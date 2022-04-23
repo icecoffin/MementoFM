@@ -9,7 +9,7 @@
 import Foundation
 @testable import MementoFM
 
-class MockPersistentMappedCollection<Element: TransientEntity>: PersistentMappedCollection {
+final class MockPersistentMappedCollection<Element: TransientEntity>: PersistentMappedCollection {
     var values: [Element.PersistentType.TransientType]
 
     var customCount: Int?

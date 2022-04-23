@@ -94,7 +94,7 @@ final class SyncViewController: UIViewController {
 
 // MARK: - SyncProgressView
 
-private class SyncProgressView: UIView {
+private final class SyncProgressView: UIView {
     // MARK: - Private properties
 
     private let activityIndicator = UIActivityIndicatorView(style: .large)
@@ -149,7 +149,7 @@ private class SyncProgressView: UIView {
 
 // MARK: - SyncErrorView
 
-private class SyncErrorView: UIView {
+private final class SyncErrorView: UIView {
     // MARK: - Private properties
 
     private let errorLabel = UILabel()

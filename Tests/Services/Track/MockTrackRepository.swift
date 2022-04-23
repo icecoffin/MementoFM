@@ -10,7 +10,7 @@ import Foundation
 @testable import MementoFM
 import Combine
 
-class MockTrackRepository: TrackRepository {
+final class MockTrackRepository: TrackRepository {
     var totalPages = 0
     var shouldFailWithError = false
     var trackProvider: (() -> [Track])!

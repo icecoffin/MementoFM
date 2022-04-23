@@ -10,7 +10,7 @@ import Foundation
 @testable import MementoFM
 import Combine
 
-class MockArtistSimilarsRepository: ArtistRepository {
+final class MockArtistSimilarsRepository: ArtistRepository {
     private let shouldFailWithError: Bool
     private let similarArtistProvider: (() -> [SimilarArtist])
 

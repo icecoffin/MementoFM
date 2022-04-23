@@ -10,7 +10,7 @@ import Foundation
 @testable import MementoFM
 import Combine
 
-class MockSimilarArtistsRequestStrategy: SimilarArtistsRequestStrategy {
+final class MockSimilarArtistsRequestStrategy: SimilarArtistsRequestStrategy {
     var minNumberOfIntersectingTags: Int = 0
 
     var customSimilarArtists: [Artist] = []

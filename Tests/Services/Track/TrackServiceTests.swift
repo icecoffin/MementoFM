@@ -11,7 +11,7 @@ import Nimble
 @testable import MementoFM
 import Combine
 
-final class MockRecentTracksProcessor: RecentTracksProcessing {
+private final class MockRecentTracksProcessor: RecentTracksProcessing {
     var didCallProcess = false
 
     func process(tracks: [Track], using persistentStore: PersistentStore) -> AnyPublisher<Void, Error> {
@@ -22,7 +22,7 @@ final class MockRecentTracksProcessor: RecentTracksProcessing {
     }
 }
 
-class TrackServiceTests: XCTestCase {
+final class TrackServiceTests: XCTestCase {
     var persistentStore: MockPersistentStore!
 
     override func setUp() {

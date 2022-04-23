@@ -10,7 +10,7 @@ import XCTest
 @testable import MementoFM
 import Nimble
 
-class RecentTracksProcessorTests: XCTestCase {
+final class RecentTracksProcessorTests: XCTestCase {
     var persistentStore: MockPersistentStore!
 
     override func setUp() {

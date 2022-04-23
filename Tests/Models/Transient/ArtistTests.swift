@@ -10,7 +10,7 @@ import XCTest
 import Nimble
 @testable import MementoFM
 
-class ArtistTests: XCTestCase {
+final class ArtistTests: XCTestCase {
     func test_decodeFromJSON_setsCorrectProperties() {
         let artist = makeSampleArtist()
 

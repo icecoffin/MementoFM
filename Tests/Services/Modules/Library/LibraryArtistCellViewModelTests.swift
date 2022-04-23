@@ -10,7 +10,7 @@ import XCTest
 @testable import MementoFM
 import Nimble
 
-class LibraryArtistCellViewModelTests: XCTestCase {
+final class LibraryArtistCellViewModelTests: XCTestCase {
     var sampleArtist: Artist {
         return Artist(name: "Artist",
                       playcount: 10,

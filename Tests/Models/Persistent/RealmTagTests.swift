@@ -11,7 +11,7 @@ import XCTest
 import RealmSwift
 import Nimble
 
-class RealmTagTests: XCTestCase {
+final class RealmTagTests: XCTestCase {
     func test_init_setsCorrectProperties() {
         let realmTag = RealmTag()
 

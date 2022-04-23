@@ -11,8 +11,8 @@ import Nimble
 import Combine
 @testable import MementoFM
 
-class IgnoredTagsViewModelTests: XCTestCase {
-    class Dependencies: IgnoredTagsViewModel.Dependencies {
+final class IgnoredTagsViewModelTests: XCTestCase {
+    private final class Dependencies: IgnoredTagsViewModel.Dependencies {
         let ignoredTagService: IgnoredTagServiceProtocol
         let artistService: ArtistServiceProtocol
 
@@ -22,7 +22,7 @@ class IgnoredTagsViewModelTests: XCTestCase {
         }
     }
 
-    class TestIgnoredTagsViewModelDelegate: IgnoredTagsViewModelDelegate {
+    private final class TestIgnoredTagsViewModelDelegate: IgnoredTagsViewModelDelegate {
         var didCallDidSaveChanges = false
 
         func ignoredTagsViewModelDidSaveChanges(_ viewModel: IgnoredTagsViewModel) {

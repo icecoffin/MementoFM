@@ -11,8 +11,8 @@ import Nimble
 import Combine
 @testable import MementoFM
 
-class ArtistsByCountryViewModelTests: XCTestCase {
-    class Dependencies: HasArtistService {
+final class ArtistsByCountryViewModelTests: XCTestCase {
+    private final class Dependencies: HasArtistService {
         let artistService: ArtistServiceProtocol
 
         init(artistService: ArtistServiceProtocol) {
@@ -20,18 +20,17 @@ class ArtistsByCountryViewModelTests: XCTestCase {
         }
     }
 
-    class TestArtistsByCountryViewModelDelegate: ArtistListViewModelDelegate {
+    private final class TestArtistsByCountryViewModelDelegate: ArtistListViewModelDelegate {
         var selectedArtist: Artist?
         func artistListViewModel(_ viewModel: ArtistListViewModel, didSelectArtist artist: Artist) {
             selectedArtist = artist
         }
     }
 
-    var collection: MockPersistentMappedCollection<Artist>!
-    var artistService: MockArtistService!
-    var dependencies: Dependencies!
-    var viewModel: ArtistsByCountryViewModel!
-
+    private var collection: MockPersistentMappedCollection<Artist>!
+    private var artistService: MockArtistService!
+    private var dependencies: Dependencies!
+    private var viewModel: ArtistsByCountryViewModel!
     private var cancelBag: Set<AnyCancellable>!
 
     override func setUp() {

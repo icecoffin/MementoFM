@@ -10,7 +10,7 @@ import XCTest
 @testable import MementoFM
 import Nimble
 
-class TagTests: XCTestCase {
+final class TagTests: XCTestCase {
     func test_decodeFromJSON_setsCorrectProperties() {
         let tag = makeSampleTag()
 

@@ -11,7 +11,7 @@ import XCTest
 import Nimble
 import CombineSchedulers
 
-class ArtistServiceTests: XCTestCase {
+final class ArtistServiceTests: XCTestCase {
     var persistentStore: MockPersistentStore!
     var scheduler: AnySchedulerOf<DispatchQueue>!
 

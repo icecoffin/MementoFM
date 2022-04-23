@@ -11,15 +11,15 @@ import Nimble
 import Combine
 @testable import MementoFM
 
-private class Dependencies: EnterUsernameViewModel.Dependencies {
-    let userService: UserServiceProtocol
+final class EnterUsernameViewModelTests: XCTestCase {
+    private final class Dependencies: EnterUsernameViewModel.Dependencies {
+        let userService: UserServiceProtocol
 
-    init(userService: UserServiceProtocol) {
-        self.userService = userService
+        init(userService: UserServiceProtocol) {
+            self.userService = userService
+        }
     }
-}
 
-class EnterUsernameViewModelTests: XCTestCase {
     private var cancelBag: Set<AnyCancellable>!
 
     override func setUp() {
@@ -90,7 +90,7 @@ class EnterUsernameViewModelTests: XCTestCase {
     }
 
     func test_submitUsername_notifiesDelegateOnSuccess() {
-        class TestEnterUsernameViewModelDelegate: EnterUsernameViewModelDelegate {
+        final class TestEnterUsernameViewModelDelegate: EnterUsernameViewModelDelegate {
             var didCallEnterUsernameViewModelDidFinish = false
             func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel) {
                 didCallEnterUsernameViewModelDidFinish = true
@@ -133,7 +133,7 @@ class EnterUsernameViewModelTests: XCTestCase {
     }
 
     func test_submitUsername_callsDidReceiveError() {
-        class TestEnterUsernameViewModelDelegate: EnterUsernameViewModelDelegate {
+        final class TestEnterUsernameViewModelDelegate: EnterUsernameViewModelDelegate {
             func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel) {
                 // Test that delegate is not notified
                 fail()

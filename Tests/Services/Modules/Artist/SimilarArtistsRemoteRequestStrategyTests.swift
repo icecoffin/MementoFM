@@ -10,8 +10,8 @@ import XCTest
 @testable import MementoFM
 import Nimble
 
-class SimilarArtistsRemoteRequestStrategyTests: XCTestCase {
-    class Dependencies: SimilarArtistsRequestStrategy.Dependencies {
+final class SimilarArtistsRemoteRequestStrategyTests: XCTestCase {
+    private final class Dependencies: SimilarArtistsRequestStrategy.Dependencies {
         let artistService: ArtistServiceProtocol
 
         init(artistService: ArtistServiceProtocol) {
@@ -19,11 +19,11 @@ class SimilarArtistsRemoteRequestStrategyTests: XCTestCase {
         }
     }
 
-    let sampleArtist = ModelFactory.generateArtist()
-    let similarArtists = ModelFactory.generateArtists(inAmount: 10)
+    private let sampleArtist = ModelFactory.generateArtist()
+    private let similarArtists = ModelFactory.generateArtists(inAmount: 10)
 
-    var artistService: MockArtistService!
-    var dependencies: Dependencies!
+    private var artistService: MockArtistService!
+    private var dependencies: Dependencies!
 
     override func setUp() {
         super.setUp()

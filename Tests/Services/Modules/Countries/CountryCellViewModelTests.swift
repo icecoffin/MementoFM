@@ -10,7 +10,7 @@ import XCTest
 @testable import MementoFM
 import Nimble
 
-class CountryCellViewModelTests: XCTestCase {
+final class CountryCellViewModelTests: XCTestCase {
     // MARK: - country
 
     func test_country_returnsCorrectCountryForEmptyName() {

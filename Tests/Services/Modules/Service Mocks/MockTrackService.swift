@@ -10,7 +10,7 @@ import Foundation
 @testable import MementoFM
 import Combine
 
-class MockTrackService: TrackServiceProtocol {
+final class MockTrackService: TrackServiceProtocol {
     var customRecentTracks: [Track] = []
     var user: String = ""
     var from: TimeInterval = 0

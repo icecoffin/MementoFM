@@ -10,7 +10,7 @@ import Foundation
 @testable import MementoFM
 import Combine
 
-class StubArtistEmptyRepository: ArtistRepository {
+final class StubArtistEmptyRepository: ArtistRepository {
     func getLibraryPage(withIndex index: Int, for user: String, limit: Int) -> AnyPublisher<LibraryPageResponse, Error> {
         fatalError()
     }

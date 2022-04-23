@@ -11,7 +11,7 @@ import XCTest
 import Nimble
 import Alamofire
 
-class TagNetworkRepositoryTests: XCTestCase {
+final class TagNetworkRepositoryTests: XCTestCase {
     var networkService: MockNetworkService!
     var tagRepository: TagNetworkRepository!
 

@@ -1076,16 +1076,16 @@
 			isa = PBXGroup;
 			children = (
 				651F9DFD1EC09FDC006D9474 /* AppearanceConfigurator.swift */,
+				65C10DF31F0BD0170072BF09 /* ApplicationStateObserver.swift */,
 				651F9DFF1EC09FDC006D9474 /* BlockBarButtonItem.swift */,
+				659F759A2814619200ACC306 /* Completion+AsResult.swift */,
 				651F9E011EC09FDC006D9474 /* ErrorConverter.swift */,
+				65FB48B027FF7367008BB121 /* Logger.swift */,
 				651F9E031EC09FDC006D9474 /* MappingHelpers.swift */,
 				653669EE1EE5753B00E9D56C /* NavigationControllerPopTracker.swift */,
-				65C10DF31F0BD0170072BF09 /* ApplicationStateObserver.swift */,
-				65FC807622B2E80B000207EE /* UIImage+Symbols.swift */,
-				65AF2B0A27FF62AE0079040D /* UICollectionViewLeftAlignedLayout.swift */,
-				65FB48B027FF7367008BB121 /* Logger.swift */,
 				65BB1AA32808A3E70002A17C /* PageProgress.swift */,
-				659F759A2814619200ACC306 /* Completion+AsResult.swift */,
+				65AF2B0A27FF62AE0079040D /* UICollectionViewLeftAlignedLayout.swift */,
+				65FC807622B2E80B000207EE /* UIImage+Symbols.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";

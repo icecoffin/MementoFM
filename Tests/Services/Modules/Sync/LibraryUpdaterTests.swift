@@ -11,7 +11,7 @@ import XCTest
 import Nimble
 import Combine
 
-class LibraryUpdaterTests: XCTestCase {
+final class LibraryUpdaterTests: XCTestCase {
     var userService: MockUserService!
     var artistService: MockArtistService!
     var tagService: MockTagService!

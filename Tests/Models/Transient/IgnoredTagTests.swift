@@ -11,7 +11,7 @@ import XCTest
 @testable import MementoFM
 import Nimble
 
-class IgnoredTagTests: XCTestCase {
+final class IgnoredTagTests: XCTestCase {
     func test_updatingName_setsCorrectProperties() {
         let ignoredTag = IgnoredTag(uuid: "uuid", name: "name")
 

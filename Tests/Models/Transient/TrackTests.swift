@@ -10,7 +10,7 @@ import XCTest
 @testable import MementoFM
 import Nimble
 
-class TrackTests: XCTestCase {
+final class TrackTests: XCTestCase {
     func test_decodeFromJSON_setsCorrectProperties() {
         let track = makeSampleTrack()
 

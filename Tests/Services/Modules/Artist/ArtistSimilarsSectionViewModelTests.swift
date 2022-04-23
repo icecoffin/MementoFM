@@ -11,8 +11,8 @@ import XCTest
 import Nimble
 import Combine
 
-class ArtistSimilarsSectionViewModelTests: XCTestCase {
-    class Dependencies: ArtistSimilarsSectionViewModel.Dependencies {
+final class ArtistSimilarsSectionViewModelTests: XCTestCase {
+    private final class Dependencies: ArtistSimilarsSectionViewModel.Dependencies {
         let artistService: ArtistServiceProtocol
 
         init(artistService: ArtistServiceProtocol) {
@@ -21,20 +21,19 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
     }
 
     // swiftlint:disable:next type_name
-    class TestArtistSimilarsSectionViewModelDelegate: ArtistSimilarsSectionViewModelDelegate {
+    private final class TestArtistSimilarsSectionViewModelDelegate: ArtistSimilarsSectionViewModelDelegate {
         var didCallDidSelectArtist = false
         func artistSimilarsSectionViewModel(_ viewModel: ArtistSimilarsSectionViewModel, didSelectArtist artist: Artist) {
             didCallDidSelectArtist = true
         }
     }
 
-    let sampleArtist = ModelFactory.generateArtist()
+    private let sampleArtist = ModelFactory.generateArtist()
 
-    var artistService: MockArtistService!
-    var dependencies: Dependencies!
-    var tabViewModelFactory: MockArtistSimilarsSectionTabViewModelFactory!
-
-    private var cancelBag = Set<AnyCancellable>()
+    private var artistService: MockArtistService!
+    private var dependencies: Dependencies!
+    private var tabViewModelFactory: MockArtistSimilarsSectionTabViewModelFactory!
+    private var cancelBag: Set<AnyCancellable>!
 
     override func setUp() {
         super.setUp()
@@ -42,6 +41,7 @@ class ArtistSimilarsSectionViewModelTests: XCTestCase {
         artistService = MockArtistService()
         tabViewModelFactory = MockArtistSimilarsSectionTabViewModelFactory()
         dependencies = Dependencies(artistService: artistService)
+        cancelBag = .init()
     }
 
     func test_currentTabViewModel_returnsFirstTabAfterInit() {

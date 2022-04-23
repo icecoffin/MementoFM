@@ -9,7 +9,7 @@
 import Foundation
 @testable import MementoFM
 
-class MockUserDataStorage: UserDataStoring {
+final class MockUserDataStorage: UserDataStoring {
     private var _username: String = ""
     var didGetUsername = false
     var didSetUsername = false

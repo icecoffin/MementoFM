@@ -12,7 +12,7 @@ import Nimble
 import RealmSwift
 import Combine
 
-class RealmServiceTests: XCTestCase {
+final class RealmServiceTests: XCTestCase {
     var realm: Realm!
     var realmService: RealmService!
 

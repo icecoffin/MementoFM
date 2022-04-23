@@ -10,7 +10,7 @@ import XCTest
 @testable import MementoFM
 import Nimble
 
-class LibraryPageTests: XCTestCase {
+final class LibraryPageTests: XCTestCase {
     func test_decodeFromJSON_setsCorrectProperties() {
         let libraryPage = makeSampleLibraryPage()
 

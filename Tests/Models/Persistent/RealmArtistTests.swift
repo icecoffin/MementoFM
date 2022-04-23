@@ -11,7 +11,7 @@ import XCTest
 import RealmSwift
 import Nimble
 
-class RealmArtistTests: XCTestCase {
+final class RealmArtistTests: XCTestCase {
     func test_primaryKey_isSet() {
         expect(RealmArtist.primaryKey()) == "name"
     }

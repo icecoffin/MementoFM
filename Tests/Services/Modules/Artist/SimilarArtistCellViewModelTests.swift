@@ -10,7 +10,7 @@ import XCTest
 @testable import MementoFM
 import Nimble
 
-class SimilarArtistCellViewModelTests: XCTestCase {
+final class SimilarArtistCellViewModelTests: XCTestCase {
     var sampleArtist: Artist = {
         let tags = [Tag(name: "Tag1", count: 1),
                     Tag(name: "Tag2", count: 1),

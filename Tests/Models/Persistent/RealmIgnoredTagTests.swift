@@ -11,7 +11,7 @@ import XCTest
 import RealmSwift
 import Nimble
 
-class RealmIgnoredTagTests: XCTestCase {
+final class RealmIgnoredTagTests: XCTestCase {
     func test_primaryKey_isSet() {
         expect(RealmIgnoredTag.primaryKey()) == "uuid"
     }

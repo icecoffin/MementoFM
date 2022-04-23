@@ -10,7 +10,7 @@ import Foundation
 @testable import MementoFM
 import Combine
 
-class MockUserService: UserServiceProtocol {
+final class MockUserService: UserServiceProtocol {
     var shouldFinishWithSuccess = true
 
     var username: String = ""

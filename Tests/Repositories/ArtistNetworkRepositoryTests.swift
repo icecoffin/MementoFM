@@ -11,7 +11,7 @@ import XCTest
 import Nimble
 import Alamofire
 
-class ArtistNetworkRepositoryTests: XCTestCase {
+final class ArtistNetworkRepositoryTests: XCTestCase {
     var networkService: MockNetworkService!
     var artistRepository: ArtistNetworkRepository!
 

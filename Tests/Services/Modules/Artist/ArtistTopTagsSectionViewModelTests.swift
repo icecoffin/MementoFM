@@ -10,9 +10,9 @@ import XCTest
 @testable import MementoFM
 import Nimble
 
-class ArtistTopTagsSectionViewModelTests: XCTestCase {
+final class ArtistTopTagsSectionViewModelTests: XCTestCase {
     // swiftlint:disable:next type_name
-    private class TestArtistTopTagsSectionViewModelDelegate: ArtistTopTagsSectionViewModelDelegate {
+    private final class TestArtistTopTagsSectionViewModelDelegate: ArtistTopTagsSectionViewModelDelegate {
         var selectedTagName: String = ""
         func artistTopTagsSectionViewModel(_ viewModel: ArtistTopTagsSectionViewModel, didSelectTagWithName name: String) {
             selectedTagName = name

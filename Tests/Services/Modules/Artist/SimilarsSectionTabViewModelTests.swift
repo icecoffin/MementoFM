@@ -11,8 +11,8 @@ import XCTest
 import Nimble
 import Combine
 
-class SimilarsSectionTabViewModelTests: XCTestCase {
-    class Dependencies: ArtistSimilarsSectionViewModel.Dependencies {
+final class SimilarsSectionTabViewModelTests: XCTestCase {
+    private final class Dependencies: ArtistSimilarsSectionViewModel.Dependencies {
         let artistService: ArtistServiceProtocol
 
         init(artistService: ArtistServiceProtocol) {
@@ -20,17 +20,16 @@ class SimilarsSectionTabViewModelTests: XCTestCase {
         }
     }
 
-    class TestSimilarsSectionTabViewModelDelegate: SimilarsSectionTabViewModelDelegate {
+    private final class TestSimilarsSectionTabViewModelDelegate: SimilarsSectionTabViewModelDelegate {
         var selectedArtist: Artist?
         func similarsSectionTabViewModel(_ viewModel: SimilarsSectionTabViewModel, didSelectArtist artist: Artist) {
             selectedArtist = artist
         }
     }
 
-    var artistService: MockArtistService!
-    var dependencies: Dependencies!
-    var requestStrategy: MockSimilarArtistsRequestStrategy!
-
+    private var artistService: MockArtistService!
+    private var dependencies: Dependencies!
+    private var requestStrategy: MockSimilarArtistsRequestStrategy!
     private var cancelBag = Set<AnyCancellable>()
 
     let sampleArtist: Artist = {

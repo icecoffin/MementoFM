@@ -10,7 +10,7 @@ import XCTest
 @testable import MementoFM
 import Nimble
 
-class CountryTypeTests: XCTestCase {
+final class CountryTypeTests: XCTestCase {
     func test_displayName_returnsCorrectValue_forUnknownCountry() {
         let country = CountryType.unknown
 

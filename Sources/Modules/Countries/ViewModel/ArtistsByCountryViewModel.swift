@@ -22,7 +22,7 @@ final class ArtistsByCountryViewModel: ArtistListViewModel {
     private let isLoadingSubject = PassthroughSubject<Bool, Never>()
     private let didUpdateSubject = PassthroughSubject<Result<Bool, Error>, Never>()
     private let statusSubject = PassthroughSubject<String, Never>()
-    
+
     private let numberFormatter: NumberFormatter = {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal

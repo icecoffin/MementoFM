@@ -10,7 +10,7 @@ import XCTest
 @testable import MementoFM
 import Nimble
 
-class UserServiceTests: XCTestCase {
+final class UserServiceTests: XCTestCase {
     var userRepository: MockUserRepository!
     var userDataStorage: MockUserDataStorage!
     var persistentStore: MockPersistentStore!

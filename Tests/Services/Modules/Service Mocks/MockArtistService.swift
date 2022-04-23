@@ -10,7 +10,7 @@ import Foundation
 @testable import MementoFM
 import Combine
 
-class MockArtistService: ArtistServiceProtocol {
+final class MockArtistService: ArtistServiceProtocol {
     var user: String = ""
     var limit: Int = 0
     var getLibraryShouldReturnError = false

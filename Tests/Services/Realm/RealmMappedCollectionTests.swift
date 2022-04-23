@@ -11,7 +11,7 @@ import Nimble
 @testable import MementoFM
 import RealmSwift
 
-class RealmMappedCollectionTests: XCTestCase {
+final class RealmMappedCollectionTests: XCTestCase {
     var realm: Realm!
     var collection: RealmMappedCollection<Tag>!
 

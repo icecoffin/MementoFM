@@ -10,7 +10,7 @@ import Foundation
 import Combine
 @testable import MementoFM
 
-class MockLibraryUpdater: LibraryUpdaterProtocol {
+final class MockLibraryUpdater: LibraryUpdaterProtocol {
     var isLoadingSubject = PassthroughSubject<Bool, Never>()
     var statusSubject = PassthroughSubject<LibraryUpdateStatus, Never>()
     var errorSubject = PassthroughSubject<Error, Never>()

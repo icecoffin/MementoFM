@@ -10,7 +10,7 @@ import Foundation
 @testable import MementoFM
 import Combine
 
-class MockArtistLibraryRepository: ArtistRepository {
+final class MockArtistLibraryRepository: ArtistRepository {
     private let totalPages: Int
     private let artistProvider: ((Int) -> [Artist])
     private let shouldFailWithError: Bool

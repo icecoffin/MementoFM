@@ -10,7 +10,7 @@ import Foundation
 @testable import MementoFM
 import Combine
 
-class MockPersistentStore: PersistentStore {
+final class MockPersistentStore: PersistentStore {
     var customMappedCollection: Any?
     var mappedCollectionParameters: (predicate: NSPredicate?, sortDescriptors: [NSSortDescriptor])?
     func mappedCollection<T: TransientEntity>(filteredUsing predicate: NSPredicate?,

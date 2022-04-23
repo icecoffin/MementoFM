@@ -12,8 +12,8 @@ import Nimble
 import RealmSwift
 import Combine
 
-class ArtistsByTagViewModelTests: XCTestCase {
-    class Dependencies: ArtistsByTagViewModel.Dependencies {
+final class ArtistsByTagViewModelTests: XCTestCase {
+    private final class Dependencies: ArtistsByTagViewModel.Dependencies {
         let artistService: ArtistServiceProtocol
 
         init(artistService: ArtistServiceProtocol) {
@@ -21,21 +21,20 @@ class ArtistsByTagViewModelTests: XCTestCase {
         }
     }
 
-    class TestArtistsByTagViewModelDelegate: ArtistListViewModelDelegate {
+    private final class TestArtistsByTagViewModelDelegate: ArtistListViewModelDelegate {
         var selectedArtist: Artist?
         func artistListViewModel(_ viewModel: ArtistListViewModel, didSelectArtist artist: Artist) {
             selectedArtist = artist
         }
     }
 
-    var collection: MockPersistentMappedCollection<Artist>!
-    var artistService: MockArtistService!
-    var dependencies: Dependencies!
-    var viewModel: ArtistsByTagViewModel!
-
+    private var collection: MockPersistentMappedCollection<Artist>!
+    private var artistService: MockArtistService!
+    private var dependencies: Dependencies!
+    private var viewModel: ArtistsByTagViewModel!
     private var cancelBag: Set<AnyCancellable>!
 
-    var sampleArtists: [Artist] = {
+    private var sampleArtists: [Artist] = {
         let tag1 = Tag(name: "Tag1", count: 1)
         let tag2 = Tag(name: "Tag2", count: 2)
 

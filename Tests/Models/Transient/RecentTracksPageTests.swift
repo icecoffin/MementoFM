@@ -10,7 +10,7 @@ import XCTest
 @testable import MementoFM
 import Nimble
 
-class RecentTracksPageTests: XCTestCase {
+final class RecentTracksPageTests: XCTestCase {
     func test_decodeFromJSON_setsCorrectProperties_forMultiTrackPage() {
         let recentTracksPage = makeMultipleRecentTracksPage()
 

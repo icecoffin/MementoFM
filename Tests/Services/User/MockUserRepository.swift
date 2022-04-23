@@ -10,7 +10,7 @@ import Foundation
 @testable import MementoFM
 import Combine
 
-class MockUserRepository: UserRepository {
+final class MockUserRepository: UserRepository {
     var checkedUsername: String?
     func checkUserExists(withUsername username: String) -> AnyPublisher<EmptyResponse, Error> {
         checkedUsername = username

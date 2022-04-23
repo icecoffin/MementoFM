@@ -10,7 +10,7 @@ import Foundation
 @testable import MementoFM
 import Combine
 
-class MockCountryService: CountryServiceProtocol {
+final class MockCountryService: CountryServiceProtocol {
     var didCallUpdateCountries = false
     func updateCountries() -> AnyPublisher<Void, Error> {
         didCallUpdateCountries = true

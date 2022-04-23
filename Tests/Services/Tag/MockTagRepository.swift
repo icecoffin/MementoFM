@@ -10,7 +10,7 @@ import Foundation
 @testable import MementoFM
 import Combine
 
-class MockTagRepository: TagRepository {
+final class MockTagRepository: TagRepository {
     var shouldFailWithError = false
     var tagProvider: ((String) -> [Tag])!
 

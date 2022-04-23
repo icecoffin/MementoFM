@@ -10,8 +10,8 @@ import XCTest
 @testable import MementoFM
 import Nimble
 
-class CountriesViewModelTests: XCTestCase {
-    class Dependencies: HasCountryService {
+final class CountriesViewModelTests: XCTestCase {
+    private final class Dependencies: HasCountryService {
         let countryService: CountryServiceProtocol
 
         init(countryService: CountryServiceProtocol) {
@@ -19,16 +19,16 @@ class CountriesViewModelTests: XCTestCase {
         }
     }
 
-    class TestCountriesViewModelDelegate: CountriesViewModelDelegate {
+    private final class TestCountriesViewModelDelegate: CountriesViewModelDelegate {
         var selectedCountry: CountryType?
         func countriesViewModel(_ viewModel: CountriesViewModel, didSelectCountry country: CountryType) {
             selectedCountry = country
         }
     }
 
-    var countryService: MockCountryService!
-    var dependencies: Dependencies!
-    var viewModel: CountriesViewModel!
+    private var countryService: MockCountryService!
+    private var dependencies: Dependencies!
+    private var viewModel: CountriesViewModel!
 
     override func setUp() {
         super.setUp()

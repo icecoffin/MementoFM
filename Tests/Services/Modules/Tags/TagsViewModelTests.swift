@@ -12,8 +12,8 @@ import Nimble
 import Combine
 import CombineSchedulers
 
-class TagsViewModelTests: XCTestCase {
-    class Dependencies: TagsViewModel.Dependencies {
+final class TagsViewModelTests: XCTestCase {
+    private final class Dependencies: TagsViewModel.Dependencies {
         let tagService: TagServiceProtocol
 
         init(tagService: TagServiceProtocol) {
@@ -21,17 +21,16 @@ class TagsViewModelTests: XCTestCase {
         }
     }
 
-    class TestTagsViewModelDelegate: TagsViewModelDelegate {
+    private final class TestTagsViewModelDelegate: TagsViewModelDelegate {
         var selectedTagName: String = ""
         func tagsViewModel(_ viewModel: TagsViewModel, didSelectTagWithName name: String) {
             selectedTagName = name
         }
     }
 
-    var scheduler: AnySchedulerOf<DispatchQueue>!
-    var tagService: MockTagService!
-    var dependencies: Dependencies!
-
+    private var scheduler: AnySchedulerOf<DispatchQueue>!
+    private var tagService: MockTagService!
+    private var dependencies: Dependencies!
     private var cancelBag: Set<AnyCancellable>!
 
     private func sampleTags() -> [Tag] {

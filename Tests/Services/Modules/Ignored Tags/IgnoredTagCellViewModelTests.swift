@@ -11,7 +11,7 @@ import Nimble
 import Combine
 @testable import MementoFM
 
-class IgnoredTagCellViewModelTests: XCTestCase {
+final class IgnoredTagCellViewModelTests: XCTestCase {
     private var cancelBag: Set<AnyCancellable>!
 
     override func setUp() {

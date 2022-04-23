@@ -11,7 +11,7 @@ import XCTest
 import Nimble
 import Alamofire
 
-class TrackRepositoryTests: XCTestCase {
+final class TrackRepositoryTests: XCTestCase {
     var networkService: MockNetworkService!
     var trackRepository: TrackNetworkRepository!
 

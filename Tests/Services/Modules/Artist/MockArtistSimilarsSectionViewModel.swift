@@ -10,7 +10,7 @@ import Foundation
 @testable import MementoFM
 import Combine
 
-class MockArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtocol {
+final class MockArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtocol {
     var didUpdateSubject = PassthroughSubject<Result<Void, Error>, Never>()
     var didUpdate: AnyPublisher<Result<Void, Error>, Never> {
         return didUpdateSubject.eraseToAnyPublisher()
@@ -41,7 +41,7 @@ class MockArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtocol
 }
 
 // swiftlint:disable:next type_name
-class MockArtistSimilarsSectionTabViewModelFactory: ArtistSimilarsSectionTabViewModelFactoryProtocol {
+final class MockArtistSimilarsSectionTabViewModelFactory: ArtistSimilarsSectionTabViewModelFactoryProtocol {
     var firstTabViewModel = MockArtistSimilarsSectionViewModel()
     var secondTabViewModel = MockArtistSimilarsSectionViewModel()
 

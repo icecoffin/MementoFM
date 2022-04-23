@@ -10,7 +10,7 @@ import Foundation
 @testable import MementoFM
 import Combine
 
-class MockTagService: TagServiceProtocol {
+final class MockTagService: TagServiceProtocol {
     var artists: [Artist] = []
     var didRequestTopTags = false
     var customTopTagsPages: [TopTagsPage] = []

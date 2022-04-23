@@ -11,8 +11,8 @@ import Nimble
 import Combine
 @testable import MementoFM
 
-class SyncViewModelTests: XCTestCase {
-    class Dependencies: HasLibraryUpdater {
+final class SyncViewModelTests: XCTestCase {
+    private final class Dependencies: HasLibraryUpdater {
         let libraryUpdater: LibraryUpdaterProtocol
 
         init(libraryUpdater: LibraryUpdaterProtocol) {
@@ -20,15 +20,15 @@ class SyncViewModelTests: XCTestCase {
         }
     }
 
-    class TestSyncViewModelDelegate: SyncViewModelDelegate {
+    private final class TestSyncViewModelDelegate: SyncViewModelDelegate {
         var didFinishLoading = false
         func syncViewModelDidFinishLoading(_ viewModel: SyncViewModel) {
             didFinishLoading = true
         }
     }
 
-    var libraryUpdater: MockLibraryUpdater!
-    var dependencies: Dependencies!
+    private var libraryUpdater: MockLibraryUpdater!
+    private var dependencies: Dependencies!
     private var cancelBag: Set<AnyCancellable>!
 
     override func setUp() {

@@ -10,7 +10,7 @@ import Foundation
 @testable import MementoFM
 import Combine
 
-class MockIgnoredTagService: IgnoredTagServiceProtocol {
+final class MockIgnoredTagService: IgnoredTagServiceProtocol {
     var defaultIgnoredTagNames: [String] = []
 
     var didRequestIgnoredTags = false

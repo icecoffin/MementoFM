@@ -11,7 +11,7 @@ import XCTest
 import Nimble
 import RealmSwift
 
-class ArtistTopTagsCalculatorTests: XCTestCase {
+final class ArtistTopTagsCalculatorTests: XCTestCase {
     func testCalculatingTopTagsForArtist() {
         let ignoredTags = [IgnoredTag(uuid: "uuid1", name: "Tag1"),
                            IgnoredTag(uuid: "uuid3", name: "Tag3")]

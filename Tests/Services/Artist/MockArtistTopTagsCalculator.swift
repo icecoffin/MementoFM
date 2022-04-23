@@ -9,7 +9,7 @@
 import Foundation
 @testable import MementoFM
 
-class MockArtistTopTagsCalculator: ArtistTopTagsCalculating {
+final class MockArtistTopTagsCalculator: ArtistTopTagsCalculating {
     var numberOfCalculateTopTagsCalled = 0
 
     func calculateTopTags(for artist: Artist) -> Artist {

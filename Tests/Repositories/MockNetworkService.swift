@@ -11,7 +11,7 @@ import Foundation
 import Alamofire
 import Combine
 
-class MockNetworkService: NetworkService {
+final class MockNetworkService: NetworkService {
     struct PerformRequestParameters {
         let method: HTTPMethod
         let parameters: Parameters?

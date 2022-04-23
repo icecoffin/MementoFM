@@ -10,7 +10,7 @@ import XCTest
 import Nimble
 @testable import MementoFM
 
-class TagServiceTests: XCTestCase {
+final class TagServiceTests: XCTestCase {
     var persistentStore: MockPersistentStore!
 
     override func setUp() {

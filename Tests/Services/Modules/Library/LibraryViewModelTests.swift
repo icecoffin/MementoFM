@@ -12,8 +12,8 @@ import Nimble
 import RealmSwift
 import Combine
 
-class LibraryViewModelTests: XCTestCase {
-    class Dependencies: LibraryViewModel.Dependencies {
+final class LibraryViewModelTests: XCTestCase {
+    private final class Dependencies: LibraryViewModel.Dependencies {
         let libraryUpdater: LibraryUpdaterProtocol
         let artistService: ArtistServiceProtocol
         let userService: UserServiceProtocol
@@ -25,14 +25,14 @@ class LibraryViewModelTests: XCTestCase {
         }
     }
 
-    class TestLibraryViewModelDelegate: ArtistListViewModelDelegate {
+    private final class TestLibraryViewModelDelegate: ArtistListViewModelDelegate {
         var selectedArtist: Artist?
         func artistListViewModel(_ viewModel: ArtistListViewModel, didSelectArtist artist: Artist) {
             selectedArtist = artist
         }
     }
 
-    class MockApplicationStateObserver: ApplicationStateObserving {
+    private final class MockApplicationStateObserver: ApplicationStateObserving {
         private(set) var applicationDidBecomeActiveSubject = PassthroughSubject<Void, Never>()
 
         var applicationDidBecomeActive: AnyPublisher<Void, Never> {
@@ -40,15 +40,14 @@ class LibraryViewModelTests: XCTestCase {
         }
     }
 
-    var libraryUpdater: MockLibraryUpdater!
-    var collection: MockPersistentMappedCollection<Artist>!
-    var artistService: MockArtistService!
-    var userService: MockUserService!
-    var dependencies: Dependencies!
-
+    private var libraryUpdater: MockLibraryUpdater!
+    private var collection: MockPersistentMappedCollection<Artist>!
+    private var artistService: MockArtistService!
+    private var userService: MockUserService!
+    private var dependencies: Dependencies!
     private var cancelBag: Set<AnyCancellable>!
 
-    var sampleArtists: [Artist] = {
+    private var sampleArtists: [Artist] = {
         return [
             Artist(name: "Artist1", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [], country: nil),
             Artist(name: "Artist2", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [], country: nil),
