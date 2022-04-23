@@ -153,7 +153,7 @@ final class SimilarsSectionTabViewModelTests: XCTestCase {
         expect(delegate.selectedArtist?.name) == "Artist4"
     }
 
-    func test_getSimilarArtists_callsDidReceiveError_whenErrorOccurs() {
+    func test_getSimilarArtists_emitsError() {
         requestStrategy.customSimilarArtists = []
         requestStrategy.getSimilarArtistsShouldReturnError = true
         let viewModel = SimilarsSectionTabViewModel(artist: sampleArtist,

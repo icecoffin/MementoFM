@@ -56,7 +56,7 @@ final class SyncViewModelTests: XCTestCase {
         expect(self.libraryUpdater.didRequestData) == true
     }
 
-    func test_didChangeStatus_isCalledWithCorrectStatus_whenLibraryUpdaterChangesStatus() {
+    func test_status_isUpdatedCorrectly_whenLibraryUpdaterChangesStatus() {
         let viewModel = SyncViewModel(dependencies: dependencies)
 
         var statuses: [String] = []
@@ -97,7 +97,7 @@ final class SyncViewModelTests: XCTestCase {
         expect(delegate.didFinishLoading) == true
     }
 
-    func test_didReceiveError_isCalled_whenLibraryUpdaterFinishesWithError() {
+    func test_error_isEmittedWhenLibraryUpdaterFinishesWithError() {
         let viewModel = SyncViewModel(dependencies: dependencies)
         var expectedError: Error?
         viewModel.error

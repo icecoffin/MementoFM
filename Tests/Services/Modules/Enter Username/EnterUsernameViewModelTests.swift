@@ -138,7 +138,7 @@ final class EnterUsernameViewModelTests: XCTestCase {
         expect(userService.didCallClearUserData) == true
     }
 
-    func test_submitUsername_callsDidReceiveError() {
+    func test_submitUsername_emitsError() {
         final class TestEnterUsernameViewModelDelegate: EnterUsernameViewModelDelegate {
             func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel) {
                 // Test that delegate is not notified

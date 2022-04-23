@@ -29,7 +29,7 @@ final class ArtistServiceTests: XCTestCase {
         super.tearDown()
     }
 
-    func test_getLibrary_callsProgress_andReturnsArtistsOnSuccess() {
+    func test_getLibrary_emitsLibraryPages() {
         let totalPages = 5
         let artistsPerPage = 10
 
@@ -58,7 +58,7 @@ final class ArtistServiceTests: XCTestCase {
         expect(receivedArtists) == expectedArtists
     }
 
-    func test_getLibrary_returnsErrorOnFailure() {
+    func test_getLibrary_emitsErrorOnFailure() {
         let totalPages = 5
         let artistsPerPage = 10
 

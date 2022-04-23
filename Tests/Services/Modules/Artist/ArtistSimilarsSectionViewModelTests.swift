@@ -154,7 +154,7 @@ final class ArtistSimilarsSectionViewModelTests: XCTestCase {
         expect(viewModel.currentTabViewModel).to(beIdenticalTo(tabViewModelFactory.secondTabViewModel))
     }
 
-    func test_didUpdateData_isCalled_whenTabViewModelUpdatesData() {
+    func test_didUpdate_isEmitted_whenTabViewModelUpdatesData() {
         let artist = sampleArtist
         let viewModel = ArtistSimilarsSectionViewModel(artist: artist,
                                                        dependencies: dependencies,
@@ -170,7 +170,7 @@ final class ArtistSimilarsSectionViewModelTests: XCTestCase {
         expect(didUpdate) == true
     }
 
-    func test_didReceiveError_isCalled_whenCurrentTabViewModelReceivesError() {
+    func test_didUpdate_isEmittedWithError_whenCurrentTabViewModelReceivesError() {
         let artist = sampleArtist
         let viewModel = ArtistSimilarsSectionViewModel(artist: artist,
                                                        dependencies: dependencies,

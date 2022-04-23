@@ -114,7 +114,7 @@ final class ArtistsByTagViewModelTests: XCTestCase {
         expect(predicateFormat) == "ANY topTags.name == \"Tag1\" AND name CONTAINS[cd] \"test\""
     }
 
-    func test_performSearch_callsDidUpdateData() {
+    func test_performSearch_emitsDidUpdate() {
         var didUpdateData = false
         viewModel.didUpdate
             .sink(receiveValue: { _ in

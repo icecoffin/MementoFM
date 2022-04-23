@@ -167,7 +167,7 @@ final class LibraryViewModelTests: XCTestCase {
         expect(predicateFormat) == "name CONTAINS[cd] \"test\""
     }
 
-    func test_performSearch_callsDidUpdateData() {
+    func test_performSearch_emitsDidUpdate() {
         let viewModel = LibraryViewModel(dependencies: dependencies)
 
         var didUpdateData = false
@@ -195,7 +195,7 @@ final class LibraryViewModelTests: XCTestCase {
         expect(self.libraryUpdater.didRequestData) == true
     }
 
-    // MARK: - didStartLoading
+    // MARK: - isLoading
 
     func test_isLoading_isChangedOnLibraryUpdate() {
         let viewModel = LibraryViewModel(dependencies: dependencies)
@@ -212,9 +212,9 @@ final class LibraryViewModelTests: XCTestCase {
         expect(loadingStates) == [true, false]
     }
 
-    // MARK: - didReceiveError
+    // MARK: - didUpdate
 
-    func test_didReceiveError_isCalledOnLibraryUpdateError() {
+    func test_didUpdate_isEmittedWithErrorOnLibraryUpdateError() {
         let viewModel = LibraryViewModel(dependencies: dependencies)
         var didReceiveError = false
         viewModel.didUpdate
@@ -232,7 +232,7 @@ final class LibraryViewModelTests: XCTestCase {
 
     // MARK: - didChangeStatus
 
-    func test_didChangeStatus_isCalledWithCorrectStatus_whenStatusChanges() {
+    func test_status_isEmittedWithCorrectStatus_whenStatusChanges() {
         let viewModel = LibraryViewModel(dependencies: dependencies)
         var statuses: [String] = []
 

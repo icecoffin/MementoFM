@@ -61,7 +61,7 @@ final class TagsViewModelTests: XCTestCase {
         super.tearDown()
     }
 
-    func test_getTags_callsDidUpdateData_withIsEmptyEqualToTrue() {
+    func test_getTags_emitsDidUpdateData_withIsEmptyEqualToTrue() {
         let viewModel = makeTagsViewModel()
         var expectedIsEmpty = false
         viewModel.didUpdateData
@@ -75,7 +75,7 @@ final class TagsViewModelTests: XCTestCase {
         expect(expectedIsEmpty) == true
     }
 
-    func test_getTags_callsDidUpdateData_withIsEmptyEqualToFalse() {
+    func test_getTags_emitsDidUpdateData_withIsEmptyEqualToFalse() {
         let tags = sampleTags()
         tagService.customTopTags = tags
         let viewModel = makeTagsViewModel()

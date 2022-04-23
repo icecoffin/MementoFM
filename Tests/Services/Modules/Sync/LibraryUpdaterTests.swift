@@ -80,7 +80,7 @@ final class LibraryUpdaterTests: XCTestCase {
         expect(libraryUpdater.isFirstUpdate) == false
     }
 
-    func test_requestData_callsDidReceiveError_whenFinishedWithError() {
+    func test_requestData_emitsError() {
         let libraryUpdater = makeLibraryUpdater()
 
         var didReceiveError = false

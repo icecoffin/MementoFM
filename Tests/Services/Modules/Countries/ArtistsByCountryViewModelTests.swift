@@ -109,7 +109,7 @@ final class ArtistsByCountryViewModelTests: XCTestCase {
         expect(predicateFormat) == "(country == nil OR country == \"\") AND name CONTAINS[cd] \"test\""
     }
 
-    func test_performSearch_callsDidUpdateData() {
+    func test_performSearch_callsDidUpdate() {
         var didUpdateData = false
         viewModel.didUpdate
             .sink(receiveValue: { _ in
