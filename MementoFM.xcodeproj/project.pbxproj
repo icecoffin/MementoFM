@@ -194,6 +194,7 @@
 		659F759728109FBC00ACC306 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 659F759628109FBC00ACC306 /* Alamofire */; };
 		659F75992811E46900ACC306 /* ArtistSimilarsSectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D6BE401FD9A144008519F8 /* ArtistSimilarsSectionViewModelTests.swift */; };
 		659F759B2814619200ACC306 /* Completion+AsResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659F759A2814619200ACC306 /* Completion+AsResult.swift */; };
+		659F759E28155AAB00ACC306 /* sample_top_tags_list_short.json in Resources */ = {isa = PBXBuildFile; fileRef = 659F759C28155AA100ACC306 /* sample_top_tags_list_short.json */; };
 		65A0A24B2164D7240037354E /* UIColor+AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A0A24A2164D7240037354E /* UIColor+AppColors.swift */; };
 		65A0A24D2164D7490037354E /* UIFont+AppFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A0A24C2164D7490037354E /* UIFont+AppFonts.swift */; };
 		65A4811523AFDA34002DC892 /* CountryCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A4811423AFDA34002DC892 /* CountryCellViewModel.swift */; };
@@ -418,6 +419,7 @@
 		658B26BA1FAB6D3A00E3A6EA /* MockUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserRepository.swift; sourceTree = "<group>"; };
 		659095E523D1079100A77E25 /* StubArtistEmptyRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StubArtistEmptyRepository.swift; sourceTree = "<group>"; };
 		659F759A2814619200ACC306 /* Completion+AsResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Completion+AsResult.swift"; sourceTree = "<group>"; };
+		659F759C28155AA100ACC306 /* sample_top_tags_list_short.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_top_tags_list_short.json; sourceTree = "<group>"; };
 		65A0A24A2164D7240037354E /* UIColor+AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+AppColors.swift"; sourceTree = "<group>"; };
 		65A0A24C2164D7490037354E /* UIFont+AppFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+AppFonts.swift"; sourceTree = "<group>"; };
 		65A305C21F9B383400E1D9C4 /* RealmServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmServiceTests.swift; sourceTree = "<group>"; };
@@ -640,6 +642,7 @@
 				651AA6FB1FB047AB00EEE40A /* sample_recent_tracks_page.json */,
 				65DABC4B27133D9900727F56 /* sample_single_recent_track_page.json */,
 				651AA7021FB05F8E00EEE40A /* sample_tag.json */,
+				659F759C28155AA100ACC306 /* sample_top_tags_list_short.json */,
 				651AA70A1FB063F300EEE40A /* sample_top_tags_list.json */,
 				651AA7121FB066CA00EEE40A /* sample_track.json */,
 			);
@@ -1473,6 +1476,7 @@
 				651AA7041FB0602300EEE40A /* sample_tag.json in Resources */,
 				651AA7141FB0674B00EEE40A /* sample_track.json in Resources */,
 				651AA6F71FB034C200EEE40A /* sample_library_page.json in Resources */,
+				659F759E28155AAB00ACC306 /* sample_top_tags_list_short.json in Resources */,
 				651B663D1F9C922F003C436E /* sample_artist.json in Resources */,
 				65DABC4C27133D9900727F56 /* sample_single_recent_track_page.json in Resources */,
 				651AA6FD1FB04B5300EEE40A /* sample_recent_tracks_page.json in Resources */,

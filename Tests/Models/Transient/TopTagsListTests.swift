@@ -12,9 +12,15 @@ import Nimble
 
 final class TopTagsListTests: XCTestCase {
     func test_decodeFromJSON_setsCorrectProperties() {
+        let topTagsList = makeSampleTopTagsList(fileName: "sample_top_tags_list_short")
+
+        expect(topTagsList?.tags.count) == 4
+    }
+
+    func test_decodeFromJSON_limitsTopTagsCount() {
         let topTagsList = makeSampleTopTagsList(fileName: "sample_top_tags_list")
 
-        expect(topTagsList?.tags.count) == 47
+        expect(topTagsList?.tags.count) == TopTagsList.maxTagCount
     }
 
     // MARK: - Helpers

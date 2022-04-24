@@ -252,7 +252,6 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
 
     func cancelPendingRequests() {
         statusSubject.send(.artistsFirstPage)
-        // TODO: implement cancelling publishers
         cancelBag.forEach { $0.cancel() }
     }
 }
