@@ -10,13 +10,19 @@ import Foundation
 @testable import MementoFM
 
 final class ModelFactory {
-    static func generateArtist(index: Int = 1, needsTagsUpdate: Bool = false) -> Artist {
+    static func generateArtist(
+        index: Int = 1,
+        needsTagsUpdate: Bool = false,
+        playcount: Int = 0,
+        tags: [Tag] = [],
+        topTags: [Tag] = []
+    ) -> Artist {
         return Artist(name: "Artist\(index)",
-            playcount: 0,
+            playcount: playcount,
             urlString: "http://example.com/artist\(index)",
             needsTagsUpdate: needsTagsUpdate,
-            tags: [],
-            topTags: [],
+            tags: tags,
+            topTags: topTags,
             country: nil)
     }
 
