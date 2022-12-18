@@ -15,6 +15,12 @@ protocol ArtistSimilarsSectionHeaderViewDelegate: AnyObject {
                                          didSelectSegmentWithIndex index: Int)
 }
 
+// MARK: - ArtistSectionHeaderViewModelProtocol
+
+protocol ArtistSectionHeaderViewModelProtocol {
+    var sectionHeaderText: String? { get }
+}
+
 // MARK: - ArtistSimilarsSectionHeaderView
 
 final class ArtistSimilarsSectionHeaderView: UITableViewHeaderFooterView {
@@ -76,7 +82,7 @@ final class ArtistSimilarsSectionHeaderView: UITableViewHeaderFooterView {
 
     // MARK: - Public methods
 
-    func configure(with viewModel: ArtistSimilarsSectionViewModel) {
+    func configure(with viewModel: ArtistSectionHeaderViewModelProtocol) {
         titleLabel.text = viewModel.sectionHeaderText
     }
 }

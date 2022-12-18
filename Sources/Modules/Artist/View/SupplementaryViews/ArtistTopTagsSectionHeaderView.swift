@@ -43,7 +43,7 @@ final class ArtistTopTagsSectionHeaderView: UITableViewHeaderFooterView {
 
     // MARK: - Public methods
 
-    func configure(with viewModel: ArtistTopTagsSectionViewModel) {
+    func configure(with viewModel: ArtistSectionHeaderViewModelProtocol) {
         titleLabel.text = viewModel.sectionHeaderText
     }
 }

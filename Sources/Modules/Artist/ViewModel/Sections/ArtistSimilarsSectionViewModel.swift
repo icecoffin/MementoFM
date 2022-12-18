@@ -54,10 +54,6 @@ final class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtoc
 
     weak var delegate: ArtistSimilarsSectionViewModelDelegate?
 
-    var sectionHeaderText: String? {
-        return "Similar artists from your library".unlocalized
-    }
-
     var numberOfSimilarArtists: Int {
         return currentTabViewModel.numberOfSimilarArtists
     }
@@ -128,5 +124,11 @@ extension ArtistSimilarsSectionViewModel: SimilarsSectionTabViewModelDelegate {
     func similarsSectionTabViewModel(_ viewModel: SimilarsSectionTabViewModel,
                                      didSelectArtist artist: Artist) {
         delegate?.artistSimilarsSectionViewModel(self, didSelectArtist: artist)
+    }
+}
+
+extension ArtistSimilarsSectionViewModel: ArtistSectionHeaderViewModelProtocol {
+    var sectionHeaderText: String? {
+        return "Similar artists from your library".unlocalized
     }
 }

@@ -212,6 +212,10 @@
 		65CA67CF294F7BBB00C9A989 /* SnapshotTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA67CE294F7BBB00C9A989 /* SnapshotTestHelpers.swift */; };
 		65CA67D1294F7EC700C9A989 /* SimilarArtistCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA67D0294F7EC700C9A989 /* SimilarArtistCellTests.swift */; };
 		65CA67D4294F809C00C9A989 /* TagCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA67D3294F809C00C9A989 /* TagCellTests.swift */; };
+		65CA67D9294FADB400C9A989 /* ArtistTopTagsSectionHeaderViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA67D8294FADB400C9A989 /* ArtistTopTagsSectionHeaderViewTests.swift */; };
+		65CA67DB294FADC300C9A989 /* EmptyDataSetFooterViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA67DA294FADC300C9A989 /* EmptyDataSetFooterViewTests.swift */; };
+		65CA67DD294FADD200C9A989 /* LoadingFooterViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA67DC294FADD200C9A989 /* LoadingFooterViewTests.swift */; };
+		65CA67DF294FADE200C9A989 /* ArtistSimilarsSectionHeaderViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA67DE294FADE200C9A989 /* ArtistSimilarsSectionHeaderViewTests.swift */; };
 		65D6BE3F1FD99EEC008519F8 /* ArtistTopTagsSectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D6BE3E1FD99EEC008519F8 /* ArtistTopTagsSectionViewModelTests.swift */; };
 		65DABC4A270CD43000727F56 /* UINavigationController+Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DABC49270CD43000727F56 /* UINavigationController+Transition.swift */; };
 		65DABC4C27133D9900727F56 /* sample_single_recent_track_page.json in Resources */ = {isa = PBXBuildFile; fileRef = 65DABC4B27133D9900727F56 /* sample_single_recent_track_page.json */; };
@@ -442,6 +446,10 @@
 		65CA67CE294F7BBB00C9A989 /* SnapshotTestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotTestHelpers.swift; sourceTree = "<group>"; };
 		65CA67D0294F7EC700C9A989 /* SimilarArtistCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarArtistCellTests.swift; sourceTree = "<group>"; };
 		65CA67D3294F809C00C9A989 /* TagCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCellTests.swift; sourceTree = "<group>"; };
+		65CA67D8294FADB400C9A989 /* ArtistTopTagsSectionHeaderViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistTopTagsSectionHeaderViewTests.swift; sourceTree = "<group>"; };
+		65CA67DA294FADC300C9A989 /* EmptyDataSetFooterViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDataSetFooterViewTests.swift; sourceTree = "<group>"; };
+		65CA67DC294FADD200C9A989 /* LoadingFooterViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingFooterViewTests.swift; sourceTree = "<group>"; };
+		65CA67DE294FADE200C9A989 /* ArtistSimilarsSectionHeaderViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSimilarsSectionHeaderViewTests.swift; sourceTree = "<group>"; };
 		65D6BE3E1FD99EEC008519F8 /* ArtistTopTagsSectionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistTopTagsSectionViewModelTests.swift; sourceTree = "<group>"; };
 		65D6BE401FD9A144008519F8 /* ArtistSimilarsSectionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSimilarsSectionViewModelTests.swift; sourceTree = "<group>"; };
 		65DABC49270CD43000727F56 /* UINavigationController+Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Transition.swift"; sourceTree = "<group>"; };
@@ -1391,6 +1399,10 @@
 		65CA67D6294F81A500C9A989 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				65CA67DE294FADE200C9A989 /* ArtistSimilarsSectionHeaderViewTests.swift */,
+				65CA67D8294FADB400C9A989 /* ArtistTopTagsSectionHeaderViewTests.swift */,
+				65CA67DA294FADC300C9A989 /* EmptyDataSetFooterViewTests.swift */,
+				65CA67DC294FADD200C9A989 /* LoadingFooterViewTests.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1685,6 +1697,7 @@
 			files = (
 				651889491FAEF66B006964E0 /* MockArtistLibraryRepository.swift in Sources */,
 				651169F71FD59515002C8530 /* LibraryUpdaterTests.swift in Sources */,
+				65CA67D9294FADB400C9A989 /* ArtistTopTagsSectionHeaderViewTests.swift in Sources */,
 				6518894E1FAEF769006964E0 /* MockArtistSimilarsRepository.swift in Sources */,
 				659F75992811E46900ACC306 /* ArtistSimilarsSectionViewModelTests.swift in Sources */,
 				651AA6FF1FB05CFB00EEE40A /* TagTests.swift in Sources */,
@@ -1722,8 +1735,10 @@
 				651AA6F41FB0338A00EEE40A /* LibraryPageTests.swift in Sources */,
 				656A5B351FD1BD1200A98265 /* MockLibraryUpdater.swift in Sources */,
 				653347051FB6168C0020DC82 /* MockUserService.swift in Sources */,
+				65CA67DD294FADD200C9A989 /* LoadingFooterViewTests.swift in Sources */,
 				651169F51FD59363002C8530 /* LibraryArtistCellViewModelTests.swift in Sources */,
 				6514EAE91FB6D8D900FDEA18 /* MockArtistService.swift in Sources */,
+				65CA67DB294FADC300C9A989 /* EmptyDataSetFooterViewTests.swift in Sources */,
 				651BB71F1FAD9D5200E71F50 /* MockArtistTopTagsCalculator.swift in Sources */,
 				658B26B91FAB6C2F00E3A6EA /* UserServiceTests.swift in Sources */,
 				65CA67D1294F7EC700C9A989 /* SimilarArtistCellTests.swift in Sources */,
@@ -1742,6 +1757,7 @@
 				651AA7181FB0692600EEE40A /* RealmArtistTests.swift in Sources */,
 				6544307F1FA2417200923356 /* MockTrackRepository.swift in Sources */,
 				6574CD611FB4C06E00B7ABE9 /* IgnoredTagsViewModelTests.swift in Sources */,
+				65CA67DF294FADE200C9A989 /* ArtistSimilarsSectionHeaderViewTests.swift in Sources */,
 				659F759228107CF700ACC306 /* TagServiceTests.swift in Sources */,
 				651AA7261FB0AF5C00EEE40A /* MockNetworkService.swift in Sources */,
 				651AA6F21FB032F100EEE40A /* IgnoredTagTests.swift in Sources */,

@@ -38,10 +38,6 @@ final class ArtistTopTagsSectionViewModel {
         return cellViewModels[indexPath.item]
     }
 
-    var sectionHeaderText: String? {
-        return "Top tags".unlocalized
-    }
-
     var emptyDataSetText: String {
         return "There are no tags for this artist.".unlocalized
     }
@@ -57,5 +53,13 @@ final class ArtistTopTagsSectionViewModel {
 
     func selectTag(withName name: String) {
         delegate?.artistTopTagsSectionViewModel(self, didSelectTagWithName: name)
+    }
+}
+
+// MARK: - ArtistSectionHeaderViewModelProtocol
+
+extension ArtistTopTagsSectionViewModel: ArtistSectionHeaderViewModelProtocol {
+    var sectionHeaderText: String? {
+        return "Top tags".unlocalized
     }
 }
