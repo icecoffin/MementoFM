@@ -207,6 +207,7 @@
 		65C05C0E2692046D00517784 /* UITableView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C05C0D2692046D00517784 /* UITableView+Reusable.swift */; };
 		65C05C102692049200517784 /* UICollectionView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C05C0F2692049200517784 /* UICollectionView+Reusable.swift */; };
 		65C10DF41F0BD0170072BF09 /* ApplicationStateObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C10DF31F0BD0170072BF09 /* ApplicationStateObserver.swift */; };
+		65CA67CA294F780800C9A989 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 65CA67C9294F780800C9A989 /* SnapshotTesting */; };
 		65D6BE3F1FD99EEC008519F8 /* ArtistTopTagsSectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D6BE3E1FD99EEC008519F8 /* ArtistTopTagsSectionViewModelTests.swift */; };
 		65DABC4A270CD43000727F56 /* UINavigationController+Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DABC49270CD43000727F56 /* UINavigationController+Transition.swift */; };
 		65DABC4C27133D9900727F56 /* sample_single_recent_track_page.json in Resources */ = {isa = PBXBuildFile; fileRef = 65DABC4B27133D9900727F56 /* sample_single_recent_track_page.json */; };
@@ -462,6 +463,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65B67BA92800C0CF00940A34 /* Nimble in Frameworks */,
+				65CA67CA294F780800C9A989 /* SnapshotTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1402,6 +1404,7 @@
 			name = MementoFMTests;
 			packageProductDependencies = (
 				65B67BA82800C0CF00940A34 /* Nimble */,
+				65CA67C9294F780800C9A989 /* SnapshotTesting */,
 			);
 			productName = MementoFMTests;
 			productReference = 01D4D32C1DAE4A0000BFD7FD /* MementoFMTests.xctest */;
@@ -1447,6 +1450,7 @@
 				65B67BA72800C0CF00940A34 /* XCRemoteSwiftPackageReference "Nimble" */,
 				65DC5B76280321B200AB4544 /* XCRemoteSwiftPackageReference "combine-schedulers" */,
 				659F759528109FBC00ACC306 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				65CA67C8294F780800C9A989 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 			);
 			productRefGroup = 01D4D3191DAE4A0000BFD7FD /* Products */;
 			projectDirPath = "";
@@ -1960,6 +1964,14 @@
 				minimumVersion = 9.2.1;
 			};
 		};
+		65CA67C8294F780800C9A989 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		65DC5B76280321B200AB4544 /* XCRemoteSwiftPackageReference "combine-schedulers" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/combine-schedulers";
@@ -2004,6 +2016,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 65B67BA72800C0CF00940A34 /* XCRemoteSwiftPackageReference "Nimble" */;
 			productName = Nimble;
+		};
+		65CA67C9294F780800C9A989 /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 65CA67C8294F780800C9A989 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
 		};
 		65DC5B77280321B200AB4544 /* CombineSchedulers */ = {
 			isa = XCSwiftPackageProductDependency;
