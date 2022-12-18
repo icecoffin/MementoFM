@@ -10,7 +10,7 @@ import UIKit
 import SnapshotTesting
 
 func makeAndSizeToFit<T: UIView>(width: CGFloat? = nil, _ block: (T) -> Void) -> T {
-    let view = T(frame: .zero)
+    let view = T()
 
     block(view)
 

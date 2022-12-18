@@ -216,6 +216,11 @@
 		65CA67DB294FADC300C9A989 /* EmptyDataSetFooterViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA67DA294FADC300C9A989 /* EmptyDataSetFooterViewTests.swift */; };
 		65CA67DD294FADD200C9A989 /* LoadingFooterViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA67DC294FADD200C9A989 /* LoadingFooterViewTests.swift */; };
 		65CA67DF294FADE200C9A989 /* ArtistSimilarsSectionHeaderViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA67DE294FADE200C9A989 /* ArtistSimilarsSectionHeaderViewTests.swift */; };
+		65CA67E1294FB18100C9A989 /* IgnoredTagCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA67E0294FB18100C9A989 /* IgnoredTagCellTests.swift */; };
+		65CA67E3294FB1D600C9A989 /* ArtistTagsCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA67E2294FB1D600C9A989 /* ArtistTagsCellTests.swift */; };
+		65CA67E5294FB1EB00C9A989 /* LoadingViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA67E4294FB1EB00C9A989 /* LoadingViewTests.swift */; };
+		65CA67E7294FB20100C9A989 /* CountryCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA67E6294FB20100C9A989 /* CountryCellTests.swift */; };
+		65CA67E9294FB20F00C9A989 /* SettingCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA67E8294FB20F00C9A989 /* SettingCellTests.swift */; };
 		65D6BE3F1FD99EEC008519F8 /* ArtistTopTagsSectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D6BE3E1FD99EEC008519F8 /* ArtistTopTagsSectionViewModelTests.swift */; };
 		65DABC4A270CD43000727F56 /* UINavigationController+Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DABC49270CD43000727F56 /* UINavigationController+Transition.swift */; };
 		65DABC4C27133D9900727F56 /* sample_single_recent_track_page.json in Resources */ = {isa = PBXBuildFile; fileRef = 65DABC4B27133D9900727F56 /* sample_single_recent_track_page.json */; };
@@ -450,6 +455,11 @@
 		65CA67DA294FADC300C9A989 /* EmptyDataSetFooterViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDataSetFooterViewTests.swift; sourceTree = "<group>"; };
 		65CA67DC294FADD200C9A989 /* LoadingFooterViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingFooterViewTests.swift; sourceTree = "<group>"; };
 		65CA67DE294FADE200C9A989 /* ArtistSimilarsSectionHeaderViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSimilarsSectionHeaderViewTests.swift; sourceTree = "<group>"; };
+		65CA67E0294FB18100C9A989 /* IgnoredTagCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoredTagCellTests.swift; sourceTree = "<group>"; };
+		65CA67E2294FB1D600C9A989 /* ArtistTagsCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistTagsCellTests.swift; sourceTree = "<group>"; };
+		65CA67E4294FB1EB00C9A989 /* LoadingViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewTests.swift; sourceTree = "<group>"; };
+		65CA67E6294FB20100C9A989 /* CountryCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCellTests.swift; sourceTree = "<group>"; };
+		65CA67E8294FB20F00C9A989 /* SettingCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCellTests.swift; sourceTree = "<group>"; };
 		65D6BE3E1FD99EEC008519F8 /* ArtistTopTagsSectionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistTopTagsSectionViewModelTests.swift; sourceTree = "<group>"; };
 		65D6BE401FD9A144008519F8 /* ArtistSimilarsSectionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSimilarsSectionViewModelTests.swift; sourceTree = "<group>"; };
 		65DABC49270CD43000727F56 /* UINavigationController+Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Transition.swift"; sourceTree = "<group>"; };
@@ -1390,6 +1400,10 @@
 			isa = PBXGroup;
 			children = (
 				65CA67CC294F791B00C9A989 /* ArtistCellTests.swift */,
+				65CA67E2294FB1D600C9A989 /* ArtistTagsCellTests.swift */,
+				65CA67E6294FB20100C9A989 /* CountryCellTests.swift */,
+				65CA67E0294FB18100C9A989 /* IgnoredTagCellTests.swift */,
+				65CA67E8294FB20F00C9A989 /* SettingCellTests.swift */,
 				65CA67D0294F7EC700C9A989 /* SimilarArtistCellTests.swift */,
 				65CA67D3294F809C00C9A989 /* TagCellTests.swift */,
 			);
@@ -1403,6 +1417,7 @@
 				65CA67D8294FADB400C9A989 /* ArtistTopTagsSectionHeaderViewTests.swift */,
 				65CA67DA294FADC300C9A989 /* EmptyDataSetFooterViewTests.swift */,
 				65CA67DC294FADD200C9A989 /* LoadingFooterViewTests.swift */,
+				65CA67E4294FB1EB00C9A989 /* LoadingViewTests.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1711,7 +1726,9 @@
 				656D2ED41FB1F78C0096DE27 /* ArtistNetworkRepositoryTests.swift in Sources */,
 				658B26B61FAB518600E3A6EA /* IgnoredTagServiceTests.swift in Sources */,
 				659F75912810799F00ACC306 /* TrackServiceTests.swift in Sources */,
+				65CA67E7294FB20100C9A989 /* CountryCellTests.swift in Sources */,
 				651742151FA59C17004FCFF4 /* MockTagRepository.swift in Sources */,
+				65CA67E3294FB1D600C9A989 /* ArtistTagsCellTests.swift in Sources */,
 				657A56131FDD11D90061FD26 /* SimilarsSectionTabViewModelTests.swift in Sources */,
 				651AA71C1FB0830800EEE40A /* RealmTagTests.swift in Sources */,
 				657AC74723CD002E00E3AE17 /* CountriesViewModelTests.swift in Sources */,
@@ -1725,6 +1742,7 @@
 				65CA67D4294F809C00C9A989 /* TagCellTests.swift in Sources */,
 				650B1D502440D29C00F770FA /* MockCountryService.swift in Sources */,
 				651AA71A1FB082E100EEE40A /* RealmIgnoredTagTests.swift in Sources */,
+				65CA67E9294FB20F00C9A989 /* SettingCellTests.swift in Sources */,
 				650BCE2D24048703004AD56C /* CountryCellViewModelTests.swift in Sources */,
 				657AC74B23CD080D00E3AE17 /* ArtistsByCountryViewModelTests.swift in Sources */,
 				650A931E1FACACA8001DE7A5 /* MockUserDataStorage.swift in Sources */,
@@ -1748,6 +1766,7 @@
 				653347041FB6168C0020DC82 /* MockIgnoredTagService.swift in Sources */,
 				657A56171FDD39340061FD26 /* SimilarArtistCellViewModelTests.swift in Sources */,
 				657A561B1FDD3EC10061FD26 /* SimilarArtistsRemoteRequestStrategyTests.swift in Sources */,
+				65CA67E5294FB1EB00C9A989 /* LoadingViewTests.swift in Sources */,
 				659F759328107EA900ACC306 /* ArtistServiceTests.swift in Sources */,
 				657A56191FDD3EB40061FD26 /* SimilarArtistsLocalRequestStrategyTests.swift in Sources */,
 				658B26BC1FAB6D3C00E3A6EA /* MockUserRepository.swift in Sources */,
@@ -1761,6 +1780,7 @@
 				659F759228107CF700ACC306 /* TagServiceTests.swift in Sources */,
 				651AA7261FB0AF5C00EEE40A /* MockNetworkService.swift in Sources */,
 				651AA6F21FB032F100EEE40A /* IgnoredTagTests.swift in Sources */,
+				65CA67E1294FB18100C9A989 /* IgnoredTagCellTests.swift in Sources */,
 				651AA7251FB0AF5C00EEE40A /* TrackNetworkRepositoryTests.swift in Sources */,
 				651889521FAF0A8E006964E0 /* ArtistTopTagsCalculatorTests.swift in Sources */,
 				6539536E1FC4671700B84387 /* IgnoredTagCellViewModelTests.swift in Sources */,
