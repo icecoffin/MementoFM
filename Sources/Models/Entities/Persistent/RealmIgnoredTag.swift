@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import TransientModels
 
 final class RealmIgnoredTag: Object, PersistentEntity {
     @objc dynamic var uuid = UUID().uuidString

@@ -9,6 +9,7 @@
 import XCTest
 @testable import MementoFM
 import Nimble
+import TransientModels
 
 final class ArtistTopTagsCalculatorTests: XCTestCase {
     func test_calculateTopTags_returnsCorrectValue() {

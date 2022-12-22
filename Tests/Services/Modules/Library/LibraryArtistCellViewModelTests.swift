@@ -9,6 +9,7 @@
 import XCTest
 @testable import MementoFM
 import Nimble
+import TransientModels
 
 final class LibraryArtistCellViewModelTests: XCTestCase {
     private var sampleArtist: Artist {

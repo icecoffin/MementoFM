@@ -10,6 +10,7 @@ import Foundation
 import XCTest
 @testable import MementoFM
 import Nimble
+import TransientModels
 
 final class IgnoredTagTests: XCTestCase {
     func test_updatingName_setsCorrectProperties() {

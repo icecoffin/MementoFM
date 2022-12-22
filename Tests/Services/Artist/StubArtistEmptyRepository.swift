@@ -9,6 +9,7 @@
 import Foundation
 @testable import MementoFM
 import Combine
+import TransientModels
 
 final class StubArtistEmptyRepository: ArtistRepository {
     func getLibraryPage(withIndex index: Int, for user: String, limit: Int) -> AnyPublisher<LibraryPageResponse, Error> {

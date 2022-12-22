@@ -9,6 +9,7 @@
 import XCTest
 import Nimble
 @testable import MementoFM
+import TransientModels
 
 final class TagServiceTests: XCTestCase {
     private var persistentStore: MockPersistentStore!

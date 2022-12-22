@@ -10,6 +10,7 @@ import XCTest
 @testable import MementoFM
 import Nimble
 import Combine
+import TransientModels
 
 final class LibraryUpdaterTests: XCTestCase {
     private var userService: MockUserService!

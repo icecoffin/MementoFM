@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import TransientModels
 
 // MARK: - ArtistSimilarsSectionTabViewModelFactoryProtocol
 

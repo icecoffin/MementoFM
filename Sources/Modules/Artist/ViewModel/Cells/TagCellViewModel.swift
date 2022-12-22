@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import TransientModels
 
 final class TagCellViewModel {
     // MARK: - Private properties

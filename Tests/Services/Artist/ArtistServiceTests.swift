@@ -10,6 +10,7 @@ import XCTest
 @testable import MementoFM
 import Nimble
 import CombineSchedulers
+import TransientModels
 
 final class ArtistServiceTests: XCTestCase {
     private var persistentStore: MockPersistentStore!

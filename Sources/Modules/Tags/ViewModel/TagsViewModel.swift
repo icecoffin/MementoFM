@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 import CombineSchedulers
+import TransientModels
 
 // MARK: - TagsViewModelDelegate
 

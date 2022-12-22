@@ -9,6 +9,7 @@
 import XCTest
 import Nimble
 import Combine
+import TransientModels
 @testable import MementoFM
 
 final class ArtistsByCountryViewModelTests: XCTestCase {

@@ -11,6 +11,7 @@ import XCTest
 import Nimble
 import RealmSwift
 import Combine
+import TransientModels
 
 final class LibraryViewModelTests: XCTestCase {
     private final class Dependencies: LibraryViewModel.Dependencies {

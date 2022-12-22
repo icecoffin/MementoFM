@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import TransientModels
 
 protocol TransientEntity {
     associatedtype PersistentType: PersistentEntity

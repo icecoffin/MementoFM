@@ -9,6 +9,7 @@
 import XCTest
 @testable import MementoFM
 import Nimble
+import TransientModels
 
 final class ArtistTopTagsSectionViewModelTests: XCTestCase {
     // swiftlint:disable:next type_name

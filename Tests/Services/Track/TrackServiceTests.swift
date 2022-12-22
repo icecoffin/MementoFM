@@ -10,6 +10,7 @@ import XCTest
 import Nimble
 @testable import MementoFM
 import Combine
+import TransientModels
 
 private final class MockRecentTracksProcessor: RecentTracksProcessing {
     var didCallProcess = false

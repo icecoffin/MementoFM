@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import TransientModels
 
 final class RealmTag: Object, PersistentEntity {
     @objc dynamic var name = ""

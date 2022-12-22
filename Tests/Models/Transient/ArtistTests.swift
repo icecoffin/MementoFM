@@ -9,6 +9,7 @@
 import XCTest
 import Nimble
 @testable import MementoFM
+import TransientModels
 
 final class ArtistTests: XCTestCase {
     func test_decodeFromJSON_setsCorrectProperties() {

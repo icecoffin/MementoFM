@@ -8,6 +8,7 @@
 
 import Foundation
 @testable import MementoFM
+import TransientModels
 
 final class ModelFactory {
     static func generateArtist(

@@ -11,6 +11,7 @@ import XCTest
 import Nimble
 import Combine
 import CombineSchedulers
+import TransientModels
 
 final class TagsViewModelTests: XCTestCase {
     private final class Dependencies: TagsViewModel.Dependencies {

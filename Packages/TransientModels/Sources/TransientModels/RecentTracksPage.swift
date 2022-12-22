@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct RecentTracksPage: Codable {
+public struct RecentTracksPage: Codable {
     enum RootCodingKeys: String, CodingKey {
         case tracks = "track"
         case attributes = "@attr"
@@ -19,13 +19,13 @@ struct RecentTracksPage: Codable {
         case totalPages
     }
 
-    let index: Int
-    let totalPages: Int
-    let tracks: [Track]
+    public let index: Int
+    public let totalPages: Int
+    public let tracks: [Track]
 }
 
 extension RecentTracksPage {
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: RootCodingKeys.self)
         do {
             tracks = try container.decode([Track].self, forKey: .tracks)

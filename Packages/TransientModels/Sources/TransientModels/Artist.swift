@@ -8,30 +8,48 @@
 
 import Foundation
 
-struct Artist: Equatable, Codable {
+public struct Artist: Equatable, Codable {
     enum CodingKeys: String, CodingKey {
         case name
         case playcount
         case urlString = "url"
     }
 
-    let name: String
-    let playcount: Int
-    let urlString: String
+    public let name: String
+    public let playcount: Int
+    public let urlString: String
 
-    let needsTagsUpdate: Bool
-    let tags: [Tag]
-    let topTags: [Tag]
+    public let needsTagsUpdate: Bool
+    public let tags: [Tag]
+    public let topTags: [Tag]
 
-    let country: String?
+    public let country: String?
 
-    func intersectingTopTagNames(with artist: Artist) -> [String] {
+    public init(
+        name: String,
+        playcount: Int,
+        urlString: String,
+        needsTagsUpdate: Bool,
+        tags: [Tag],
+        topTags: [Tag],
+        country: String? = nil
+    ) {
+        self.name = name
+        self.playcount = playcount
+        self.urlString = urlString
+        self.needsTagsUpdate = needsTagsUpdate
+        self.tags = tags
+        self.topTags = topTags
+        self.country = country
+    }
+
+    public func intersectingTopTagNames(with artist: Artist) -> [String] {
         let topTagNames = topTags.map({ $0.name })
         let otherTopTagNames = artist.topTags.map({ $0.name })
         return topTagNames.filter({ otherTopTagNames.contains($0) })
     }
 
-    func updatingPlaycount(to playcount: Int) -> Artist {
+    public func updatingPlaycount(to playcount: Int) -> Artist {
         return Artist(name: name,
                       playcount: playcount,
                       urlString: urlString,
@@ -41,7 +59,7 @@ struct Artist: Equatable, Codable {
                       country: country)
     }
 
-    func updatingTags(to tags: [Tag], needsTagsUpdate: Bool) -> Artist {
+    public func updatingTags(to tags: [Tag], needsTagsUpdate: Bool) -> Artist {
         return Artist(name: name,
                       playcount: playcount,
                       urlString: urlString,
@@ -51,7 +69,7 @@ struct Artist: Equatable, Codable {
                       country: country)
     }
 
-    func updatingTopTags(to topTags: [Tag]) -> Artist {
+    public func updatingTopTags(to topTags: [Tag]) -> Artist {
         return Artist(name: name,
                       playcount: playcount,
                       urlString: urlString,
@@ -61,7 +79,7 @@ struct Artist: Equatable, Codable {
                       country: country)
     }
 
-    func updatingCountry(to country: String) -> Artist {
+    public func updatingCountry(to country: String) -> Artist {
         return Artist(name: name,
                       playcount: playcount,
                       urlString: urlString,
@@ -73,7 +91,7 @@ struct Artist: Equatable, Codable {
 }
 
 extension Artist {
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         name = try container.decode(String.self, forKey: .name)
@@ -93,7 +111,7 @@ extension Artist {
 }
 
 extension Artist: Hashable {
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(name)
         hasher.combine(playcount)
         hasher.combine(urlString)

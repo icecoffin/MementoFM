@@ -9,6 +9,7 @@
 import XCTest
 import Nimble
 @testable import MementoFM
+import TransientModels
 
 final class TagCellViewModelTests: XCTestCase {
     func test_name_returnsTagName() {

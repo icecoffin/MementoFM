@@ -11,6 +11,7 @@ import Nimble
 @testable import MementoFM
 import RealmSwift
 import Combine
+import TransientModels
 
 final class RealmServiceTests: XCTestCase {
     private var realm: Realm!

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LibraryPage: Codable {
+public struct LibraryPage: Codable {
     enum RootCodingKeys: String, CodingKey {
         case artists = "artist"
         case attributes = "@attr"
@@ -19,13 +19,13 @@ struct LibraryPage: Codable {
         case totalPages
     }
 
-    let index: Int
-    let totalPages: Int
-    let artists: [Artist]
+    public let index: Int
+    public let totalPages: Int
+    public let artists: [Artist]
 }
 
 extension LibraryPage {
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let rootContainer = try decoder.container(keyedBy: RootCodingKeys.self)
 
         if let artists = try? rootContainer.decodeIfPresent([Artist].self, forKey: .artists) {

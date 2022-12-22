@@ -10,6 +10,7 @@ import XCTest
 @testable import MementoFM
 import Nimble
 import Alamofire
+@testable import TransientModels
 
 final class ArtistNetworkRepositoryTests: XCTestCase {
     private var networkService: MockNetworkService!

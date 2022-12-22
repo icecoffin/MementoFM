@@ -5,6 +5,7 @@
 
 import Foundation
 import Combine
+import TransientModels
 
 // MARK: - ArtistRepository
 

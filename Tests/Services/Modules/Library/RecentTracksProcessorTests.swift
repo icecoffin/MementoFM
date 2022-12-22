@@ -9,6 +9,7 @@
 import XCTest
 @testable import MementoFM
 import Nimble
+import TransientModels
 
 final class RecentTracksProcessorTests: XCTestCase {
     private var persistentStore: MockPersistentStore!

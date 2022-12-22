@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import TransientModels
 
 final class LibraryArtistCellViewModel {
     // MARK: - Private properties

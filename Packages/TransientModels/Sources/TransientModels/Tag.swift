@@ -8,18 +8,23 @@
 
 import Foundation
 
-struct Tag: Equatable, Codable {
+public struct Tag: Equatable, Codable {
     enum CodingKeys: String, CodingKey {
         case name
         case count
     }
 
-    let name: String
-    let count: Int
+    public let name: String
+    public let count: Int
+
+    public init(name: String, count: Int) {
+        self.name = name
+        self.count = count
+    }
 }
 
 extension Tag {
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let name = try container.decode(String.self, forKey: .name)
         self.name = name.lowercased()

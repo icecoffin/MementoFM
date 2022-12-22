@@ -10,6 +10,7 @@ import XCTest
 @testable import MementoFM
 import RealmSwift
 import Nimble
+import TransientModels
 
 final class RealmArtistTests: XCTestCase {
     func test_primaryKey_isSet() {

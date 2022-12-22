@@ -10,6 +10,7 @@ import XCTest
 import Nimble
 import Combine
 @testable import MementoFM
+import TransientModels
 
 final class IgnoredTagsViewModelTests: XCTestCase {
     private final class Dependencies: IgnoredTagsViewModel.Dependencies {

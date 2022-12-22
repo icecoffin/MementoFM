@@ -8,6 +8,10 @@
 
 import Foundation
 
-struct Track: Equatable, Codable {
-    let artist: Artist
+public struct Track: Equatable, Codable {
+    public let artist: Artist
+
+    public init(artist: Artist) {
+        self.artist = artist
+    }
 }

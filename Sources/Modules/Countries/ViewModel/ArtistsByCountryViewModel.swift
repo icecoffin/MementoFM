@@ -9,6 +9,7 @@
 import Foundation
 import RealmSwift
 import Combine
+import TransientModels
 
 final class ArtistsByCountryViewModel: ArtistListViewModel {
     typealias Dependencies = HasArtistService

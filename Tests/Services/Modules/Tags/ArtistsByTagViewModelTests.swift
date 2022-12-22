@@ -11,6 +11,7 @@ import XCTest
 import Nimble
 import RealmSwift
 import Combine
+import TransientModels
 
 final class ArtistsByTagViewModelTests: XCTestCase {
     private final class Dependencies: ArtistsByTagViewModel.Dependencies {

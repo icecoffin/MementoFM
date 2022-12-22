@@ -8,6 +8,7 @@
 
 import Foundation
 @testable import MementoFM
+import TransientModels
 
 final class MockArtistTopTagsCalculator: ArtistTopTagsCalculating {
     var numberOfCalculateTopTagsCalled = 0

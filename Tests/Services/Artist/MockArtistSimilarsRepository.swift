@@ -9,6 +9,7 @@
 import Foundation
 @testable import MementoFM
 import Combine
+import TransientModels
 
 final class MockArtistSimilarsRepository: ArtistRepository {
     private let shouldFailWithError: Bool

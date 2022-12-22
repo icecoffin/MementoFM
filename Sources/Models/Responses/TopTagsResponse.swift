@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import TransientModels
 
 struct TopTagsResponse: Codable {
     private enum CodingKeys: String, CodingKey {

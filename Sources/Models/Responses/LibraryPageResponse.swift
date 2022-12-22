@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import TransientModels
 
 struct LibraryPageResponse: Codable {
     private enum CodingKeys: String, CodingKey {

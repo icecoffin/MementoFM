@@ -9,6 +9,7 @@
 import Foundation
 @testable import MementoFM
 import Combine
+@testable import TransientModels
 
 final class MockTrackRepository: TrackRepository {
     var totalPages = 0

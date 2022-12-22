@@ -10,6 +10,7 @@ import XCTest
 @testable import MementoFM
 import Nimble
 import Combine
+import TransientModels
 
 final class ArtistSimilarsSectionViewModelTests: XCTestCase {
     private final class Dependencies: ArtistSimilarsSectionViewModel.Dependencies {

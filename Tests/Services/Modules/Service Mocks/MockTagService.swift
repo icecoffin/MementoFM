@@ -9,6 +9,7 @@
 import Foundation
 @testable import MementoFM
 import Combine
+import TransientModels
 
 final class MockTagService: TagServiceProtocol {
     var artists: [Artist] = []

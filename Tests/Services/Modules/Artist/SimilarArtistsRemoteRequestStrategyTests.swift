@@ -9,6 +9,7 @@
 import XCTest
 @testable import MementoFM
 import Nimble
+import TransientModels
 
 final class SimilarArtistsRemoteRequestStrategyTests: XCTestCase {
     private final class Dependencies: SimilarArtistsRequestStrategy.Dependencies {

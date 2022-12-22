@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import TransientModels
 
 final class TagsCoordinator: NavigationFlowCoordinator {
     var childCoordinators: [Coordinator] = []
