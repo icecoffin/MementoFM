@@ -8,9 +8,7 @@
 
 import Foundation
 
-struct Tag: Equatable, Codable, TransientEntity {
-    typealias PersistentType = RealmTag
-
+struct Tag: Equatable, Codable {
     enum CodingKeys: String, CodingKey {
         case name
         case count

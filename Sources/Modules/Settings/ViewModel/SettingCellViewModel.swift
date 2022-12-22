@@ -8,6 +8,11 @@
 
 import Foundation
 
+struct SettingConfiguration {
+    let title: String
+    let action: (() -> Void)
+}
+
 final class SettingCellViewModel {
     // MARK: - Private properties
 

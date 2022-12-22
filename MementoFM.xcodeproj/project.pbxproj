@@ -96,7 +96,6 @@
 		651F9E251EC09FDC006D9474 /* IgnoredTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DAC1EC09FDC006D9474 /* IgnoredTag.swift */; };
 		651F9E261EC09FDC006D9474 /* LibraryPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DAD1EC09FDC006D9474 /* LibraryPage.swift */; };
 		651F9E271EC09FDC006D9474 /* RecentTracksPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DAE1EC09FDC006D9474 /* RecentTracksPage.swift */; };
-		651F9E281EC09FDC006D9474 /* SettingConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DAF1EC09FDC006D9474 /* SettingConfiguration.swift */; };
 		651F9E291EC09FDC006D9474 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DB01EC09FDC006D9474 /* Tag.swift */; };
 		651F9E2A1EC09FDC006D9474 /* TopTagsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DB11EC09FDC006D9474 /* TopTagsList.swift */; };
 		651F9E2B1EC09FDC006D9474 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DB21EC09FDC006D9474 /* Track.swift */; };
@@ -339,7 +338,6 @@
 		651F9DAC1EC09FDC006D9474 /* IgnoredTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IgnoredTag.swift; sourceTree = "<group>"; };
 		651F9DAD1EC09FDC006D9474 /* LibraryPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryPage.swift; sourceTree = "<group>"; };
 		651F9DAE1EC09FDC006D9474 /* RecentTracksPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentTracksPage.swift; sourceTree = "<group>"; };
-		651F9DAF1EC09FDC006D9474 /* SettingConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingConfiguration.swift; sourceTree = "<group>"; };
 		651F9DB01EC09FDC006D9474 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		651F9DB11EC09FDC006D9474 /* TopTagsList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopTagsList.swift; sourceTree = "<group>"; };
 		651F9DB21EC09FDC006D9474 /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
@@ -847,6 +845,7 @@
 				651F9DA71EC09FDC006D9474 /* RealmArtist.swift */,
 				651F9DA81EC09FDC006D9474 /* RealmIgnoredTag.swift */,
 				651F9DA91EC09FDC006D9474 /* RealmTag.swift */,
+				6511361E1F2AE6DB0079411F /* TransientEntity.swift */,
 			);
 			path = Persistent;
 			sourceTree = "<group>";
@@ -854,12 +853,10 @@
 		651F9DAA1EC09FDC006D9474 /* Transient */ = {
 			isa = PBXGroup;
 			children = (
-				6511361E1F2AE6DB0079411F /* TransientEntity.swift */,
 				651F9DAB1EC09FDC006D9474 /* Artist.swift */,
 				651F9DAC1EC09FDC006D9474 /* IgnoredTag.swift */,
 				651F9DAD1EC09FDC006D9474 /* LibraryPage.swift */,
 				651F9DAE1EC09FDC006D9474 /* RecentTracksPage.swift */,
-				651F9DAF1EC09FDC006D9474 /* SettingConfiguration.swift */,
 				651F9DB01EC09FDC006D9474 /* Tag.swift */,
 				651F9DB11EC09FDC006D9474 /* TopTagsList.swift */,
 				651F9DB21EC09FDC006D9474 /* Track.swift */,
@@ -1598,7 +1595,6 @@
 				65241C271EC6E96300927749 /* ArtistSimilarsSectionViewModel.swift in Sources */,
 				651F9E231EC09FDC006D9474 /* RealmTag.swift in Sources */,
 				6518B12F1EC85BA6001F4B74 /* SimilarArtistCellViewModel.swift in Sources */,
-				651F9E281EC09FDC006D9474 /* SettingConfiguration.swift in Sources */,
 				65C10DF41F0BD0170072BF09 /* ApplicationStateObserver.swift in Sources */,
 				65112D6F1F2F181800CBF8BA /* NetworkConstants.swift in Sources */,
 				651F338C1FA0E24D00B178D0 /* ArtistRepository.swift in Sources */,

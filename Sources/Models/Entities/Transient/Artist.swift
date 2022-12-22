@@ -8,9 +8,7 @@
 
 import Foundation
 
-struct Artist: TransientEntity, Equatable, Codable {
-    typealias PersistentType = RealmArtist
-
+struct Artist: Equatable, Codable {
     enum CodingKeys: String, CodingKey {
         case name
         case playcount
