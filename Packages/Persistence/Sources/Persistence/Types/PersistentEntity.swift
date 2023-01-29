@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol PersistentEntity {
+public protocol PersistentEntity {
     associatedtype TransientType
 
     static func from(transient: TransientType) -> Self

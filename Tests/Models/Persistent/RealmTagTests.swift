@@ -8,9 +8,9 @@
 
 import XCTest
 @testable import MementoFM
-import RealmSwift
 import Nimble
 import TransientModels
+@testable import Persistence
 
 final class RealmTagTests: XCTestCase {
     func test_init_setsCorrectProperties() {

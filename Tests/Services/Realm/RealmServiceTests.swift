@@ -12,6 +12,7 @@ import Nimble
 import RealmSwift
 import Combine
 import TransientModels
+import Persistence
 
 final class RealmServiceTests: XCTestCase {
     private var realm: Realm!

@@ -10,6 +10,7 @@ import Foundation
 import Combine
 import CombineSchedulers
 import TransientModels
+import Persistence
 
 // MARK: - CountryServiceProtocol
 

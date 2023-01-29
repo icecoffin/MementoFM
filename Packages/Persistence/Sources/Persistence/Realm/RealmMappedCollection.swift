@@ -8,9 +8,10 @@
 
 import Foundation
 import RealmSwift
+import TransientModels
 
-final class RealmMappedCollection<Element: TransientEntity>: PersistentMappedCollection {
-    typealias Transform = (Element.PersistentType) -> Element
+public final class RealmMappedCollection<Element: TransientEntity>: PersistentMappedCollection {
+    public typealias Transform = (Element.PersistentType) -> Element
 
     // MARK: - Private properties
 
@@ -21,21 +22,21 @@ final class RealmMappedCollection<Element: TransientEntity>: PersistentMappedCol
 
     // MARK: - Public properties
 
-    var count: Int {
+    public var count: Int {
         return results.count
     }
 
-    var isEmpty: Bool {
+    public var isEmpty: Bool {
         return results.isEmpty
     }
 
-    var sortDescriptors: [NSSortDescriptor] {
+    public var sortDescriptors: [NSSortDescriptor] {
         didSet {
             refetchResults()
         }
     }
 
-    var predicate: NSPredicate? {
+    public var predicate: NSPredicate? {
         didSet {
             refetchResults()
         }
@@ -43,7 +44,7 @@ final class RealmMappedCollection<Element: TransientEntity>: PersistentMappedCol
 
     // MARK: - Init
 
-    init(realm: Realm, predicate: NSPredicate? = nil, sortDescriptors: [NSSortDescriptor]) {
+    public init(realm: Realm, predicate: NSPredicate? = nil, sortDescriptors: [NSSortDescriptor]) {
         self.realm = realm
         self.predicate = predicate
         self.sortDescriptors = sortDescriptors
@@ -71,7 +72,7 @@ final class RealmMappedCollection<Element: TransientEntity>: PersistentMappedCol
 
     // MARK: - Subscript
 
-    subscript(index: Int) -> Element.PersistentType.TransientType {
+    public subscript(index: Int) -> Element.PersistentType.TransientType {
         guard let item = results[index] as? Element.PersistentType else {
             fatalError("The provided Element.PersistentType is not a Realm Object subclass")
         }

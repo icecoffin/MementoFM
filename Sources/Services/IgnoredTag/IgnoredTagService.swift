@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 import TransientModels
+import Persistence
 
 // MARK: - IgnoredTagServiceProtocol
 

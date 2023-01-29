@@ -9,9 +9,9 @@
 import XCTest
 @testable import MementoFM
 import Nimble
-import RealmSwift
 import Combine
 import TransientModels
+import Persistence
 
 final class LibraryViewModelTests: XCTestCase {
     private final class Dependencies: LibraryViewModel.Dependencies {

@@ -7,9 +7,9 @@
 //
 
 import Foundation
-import RealmSwift
 import Combine
 import TransientModels
+import Persistence
 
 final class LibraryViewModel: ArtistListViewModel {
     typealias Dependencies = HasLibraryUpdater & HasArtistService & HasUserService

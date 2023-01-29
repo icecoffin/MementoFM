@@ -4,31 +4,33 @@
 import PackageDescription
 
 let package = Package(
-    name: "TransientModels",
+    name: "Persistence",
     platforms: [
         .iOS(.v15)
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
-            name: "TransientModels",
-            targets: ["TransientModels"]
+            name: "Persistence",
+            targets: ["Persistence"]
         )
     ],
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
+        .package(url: "https://github.com/realm/realm-swift.git", exact: "10.34.1"),
+        .package(name: "TransientModels", path: "./TransientModels")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
-            name: "TransientModels",
-            dependencies: []
-        ),
+            name: "Persistence",
+            dependencies: [
+                .product(name: "RealmSwift", package: "realm-swift"),
+                "TransientModels"
+            ]),
         .testTarget(
-            name: "TransientModelsTests",
-            dependencies: ["TransientModels"]
+            name: "PersistenceTests",
+            dependencies: ["Persistence"]
         )
     ]
 )

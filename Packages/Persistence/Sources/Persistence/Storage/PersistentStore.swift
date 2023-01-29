@@ -8,8 +8,9 @@
 
 import Foundation
 import Combine
+import TransientModels
 
-protocol PersistentStore {
+public protocol PersistentStore {
     func mappedCollection<T: TransientEntity>(filteredUsing predicate: NSPredicate?,
                                               sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<T>
 
@@ -26,7 +27,7 @@ protocol PersistentStore {
         where T.PersistentType.TransientType == T
 }
 
-extension PersistentStore {
+public extension PersistentStore {
     func objects<T: TransientEntity>(_ type: T.Type) -> [T]
         where T.PersistentType.TransientType == T {
             return objects(type, filteredBy: nil)

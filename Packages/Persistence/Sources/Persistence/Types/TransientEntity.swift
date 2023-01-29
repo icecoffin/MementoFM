@@ -9,18 +9,18 @@
 import Foundation
 import TransientModels
 
-protocol TransientEntity {
+public protocol TransientEntity {
     associatedtype PersistentType: PersistentEntity
 }
 
 extension Artist: TransientEntity {
-    typealias PersistentType = RealmArtist
+    public typealias PersistentType = RealmArtist
 }
 
 extension IgnoredTag: TransientEntity {
-    typealias PersistentType = RealmIgnoredTag
+    public typealias PersistentType = RealmIgnoredTag
 }
 
 extension Tag: TransientEntity {
-    typealias PersistentType = RealmTag
+    public typealias PersistentType = RealmTag
 }

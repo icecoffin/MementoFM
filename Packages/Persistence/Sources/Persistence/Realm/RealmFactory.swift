@@ -8,8 +8,8 @@
 
 import RealmSwift
 
-final class RealmFactory {
-    static func realm() -> Realm {
+public final class RealmFactory {
+    public static func realm() -> Realm {
         do {
             let realm = try Realm()
             return realm
@@ -18,7 +18,7 @@ final class RealmFactory {
         }
     }
 
-    static func inMemoryRealm() -> Realm {
+    public static func inMemoryRealm() -> Realm {
         do {
             let config = Realm.Configuration(inMemoryIdentifier: "InMemory")
             let realm = try Realm(configuration: config)

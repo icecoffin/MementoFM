@@ -6,7 +6,7 @@
 //  Copyright © 2017 icecoffin. All rights reserved.
 //
 
-import RealmSwift
+@testable import Persistence
 @testable import MementoFM
 
 extension RealmTag {

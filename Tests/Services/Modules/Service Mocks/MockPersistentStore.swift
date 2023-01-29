@@ -7,8 +7,9 @@
 //
 
 import Foundation
-@testable import MementoFM
 import Combine
+import Persistence
+@testable import MementoFM
 
 final class MockPersistentStore: PersistentStore {
     var customMappedCollection: Any?

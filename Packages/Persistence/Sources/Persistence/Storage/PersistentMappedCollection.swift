@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import TransientModels
 
-protocol PersistentMappedCollection {
+public protocol PersistentMappedCollection {
     associatedtype Element: TransientEntity
 
     var count: Int { get }
@@ -82,32 +83,32 @@ private final class _AnyPersistentMappedCollectionBox<ConcreteCollection: Persis
     }
 }
 
-final class AnyPersistentMappedCollection<Element: TransientEntity>: PersistentMappedCollection {
+public final class AnyPersistentMappedCollection<Element: TransientEntity>: PersistentMappedCollection {
     private let box: _AnyPersistentMappedCollectionBase<Element>
 
-    var count: Int {
+    public var count: Int {
         return box.count
     }
 
-    var isEmpty: Bool {
+    public var isEmpty: Bool {
         return box.isEmpty
     }
 
-    var sortDescriptors: [NSSortDescriptor] {
+    public var sortDescriptors: [NSSortDescriptor] {
         get { return box.sortDescriptors }
         set { box.sortDescriptors = newValue }
     }
 
-    var predicate: NSPredicate? {
+    public var predicate: NSPredicate? {
         get { return box.predicate }
         set { box.predicate = newValue }
     }
 
-    init<Concrete: PersistentMappedCollection>(_ concrete: Concrete) where Concrete.Element == Element {
+    public init<Concrete: PersistentMappedCollection>(_ concrete: Concrete) where Concrete.Element == Element {
         box = _AnyPersistentMappedCollectionBox(concrete)
     }
 
-    subscript(index: Int) -> Element.PersistentType.TransientType {
+    public subscript(index: Int) -> Element.PersistentType.TransientType {
         return box[index]
     }
 }

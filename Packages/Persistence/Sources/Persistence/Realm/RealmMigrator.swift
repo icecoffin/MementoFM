@@ -9,8 +9,10 @@
 import Foundation
 import RealmSwift
 
-final class RealmMigrator {
-    func performMigrations() {
+public final class RealmMigrator {
+    public init() { }
+
+    public func performMigrations() {
         let config = Realm.Configuration(schemaVersion: 2, migrationBlock: { _, oldSchemaVersion in
             if oldSchemaVersion < 1 {
                 // Property 'RealmArtist.imageURLString' has been removed.

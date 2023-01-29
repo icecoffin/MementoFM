@@ -10,8 +10,9 @@ import Foundation
 import RealmSwift
 import Combine
 import CombineSchedulers
+import TransientModels
 
-final class RealmService: PersistentStore {
+public final class RealmService: PersistentStore {
     // MARK: - Private properties
 
     private let mainQueueRealm: Realm
@@ -30,9 +31,9 @@ final class RealmService: PersistentStore {
 
     // MARK: - Init
 
-    init(getRealm: @escaping () -> Realm,
-         backgroundScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.global().eraseToAnyScheduler(),
-         mainScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.main.eraseToAnyScheduler()) {
+    public init(getRealm: @escaping () -> Realm,
+                backgroundScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.global().eraseToAnyScheduler(),
+                mainScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.main.eraseToAnyScheduler()) {
         self.mainQueueRealm = getRealm()
         self.getBackgroundQueueRealm = getRealm
         self.backgroundScheduler = backgroundScheduler
@@ -71,8 +72,10 @@ final class RealmService: PersistentStore {
 
     // MARK: - Realm mapped collection
 
-    func mappedCollection<T: TransientEntity>(filteredUsing predicate: NSPredicate?,
-                                              sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<T> {
+    public func mappedCollection<T: TransientEntity>(
+        filteredUsing predicate: NSPredicate?,
+        sortedBy sortDescriptors: [NSSortDescriptor]
+    ) -> AnyPersistentMappedCollection<T> {
         let realmMappedCollection = RealmMappedCollection<T>(realm: currentQueueRealm,
                                                              predicate: predicate,
                                                              sortDescriptors: sortDescriptors)
@@ -81,7 +84,7 @@ final class RealmService: PersistentStore {
 
     // MARK: - Saving objects to Realm
 
-    func save<T: TransientEntity>(_ object: T, update: Bool = true) -> AnyPublisher<Void, Error>
+    public func save<T: TransientEntity>(_ object: T, update: Bool = true) -> AnyPublisher<Void, Error>
         where T.PersistentType.TransientType == T {
             return write { realm in
                 if let realmObject = T.PersistentType.from(transient: object) as? Object {
@@ -90,7 +93,7 @@ final class RealmService: PersistentStore {
             }
     }
 
-    func save<T: TransientEntity>(_ objects: [T], update: Bool = true) -> AnyPublisher<Void, Error>
+    public func save<T: TransientEntity>(_ objects: [T], update: Bool = true) -> AnyPublisher<Void, Error>
         where T.PersistentType.TransientType == T {
             return write { realm in
                 let realmObjects = objects.compactMap({ return T.PersistentType.from(transient: $0) as? Object })
@@ -100,7 +103,7 @@ final class RealmService: PersistentStore {
 
     // MARK: - Deleting objects from Realm
 
-    func deleteObjects<T: TransientEntity>(ofType type: T.Type) -> AnyPublisher<Void, Error>
+    public func deleteObjects<T: TransientEntity>(ofType type: T.Type) -> AnyPublisher<Void, Error>
         where T.PersistentType.TransientType == T {
             guard let type = type.PersistentType.self as? Object.Type else {
                 fatalError("The provided Element.PersistentType is not a Realm Object subclass")
@@ -114,7 +117,7 @@ final class RealmService: PersistentStore {
 
     // MARK: - Obtaining objects from Realm
 
-    func objects<T: TransientEntity>(_ type: T.Type, filteredBy predicate: NSPredicate?) -> [T]
+    public func objects<T: TransientEntity>(_ type: T.Type, filteredBy predicate: NSPredicate?) -> [T]
         where T.PersistentType.TransientType == T {
             guard let type = T.PersistentType.self as? Object.Type else {
                 fatalError("The provided Element.PersistentType is not a Realm Object subclass")
@@ -127,7 +130,7 @@ final class RealmService: PersistentStore {
             return results.compactMap({ ($0 as? T.PersistentType)?.toTransient() })
     }
 
-    func object<T: TransientEntity, K>(ofType type: T.Type, forPrimaryKey key: K) -> T?
+    public func object<T: TransientEntity, K>(ofType type: T.Type, forPrimaryKey key: K) -> T?
         where T.PersistentType.TransientType == T {
             guard let type = T.PersistentType.self as? Object.Type else {
                 fatalError("The provided Element.PersistentType is not a Realm Object subclass")

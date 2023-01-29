@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Persistence
 
 protocol HasArtistService {
     var artistService: ArtistServiceProtocol { get }

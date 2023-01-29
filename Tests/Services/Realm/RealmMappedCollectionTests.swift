@@ -8,9 +8,10 @@
 
 import XCTest
 import Nimble
-@testable import MementoFM
 import RealmSwift
 import TransientModels
+import Persistence
+@testable import MementoFM
 
 final class RealmMappedCollectionTests: XCTestCase {
     private var realm: Realm!

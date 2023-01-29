@@ -10,11 +10,11 @@ import Foundation
 import RealmSwift
 import TransientModels
 
-final class RealmTag: Object, PersistentEntity {
+public final class RealmTag: Object, PersistentEntity {
     @objc dynamic var name = ""
     @objc dynamic var count = 0
 
-    static func from(transient: Tag) -> RealmTag {
+    public static func from(transient: Tag) -> RealmTag {
         let tag = transient
         let realmTag = RealmTag()
         realmTag.name = tag.name
@@ -22,7 +22,7 @@ final class RealmTag: Object, PersistentEntity {
         return realmTag
     }
 
-    func toTransient() -> Tag {
+    public func toTransient() -> Tag {
         return Tag(name: name, count: count)
     }
 }

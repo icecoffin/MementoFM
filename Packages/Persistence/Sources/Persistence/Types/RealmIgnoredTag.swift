@@ -10,15 +10,15 @@ import Foundation
 import RealmSwift
 import TransientModels
 
-final class RealmIgnoredTag: Object, PersistentEntity {
+public final class RealmIgnoredTag: Object, PersistentEntity {
     @objc dynamic var uuid = UUID().uuidString
     @objc dynamic var name = ""
 
-    override static func primaryKey() -> String? {
+    override public static func primaryKey() -> String? {
         return "uuid"
     }
 
-    static func from(transient: IgnoredTag) -> RealmIgnoredTag {
+    public static func from(transient: IgnoredTag) -> RealmIgnoredTag {
         let ignoredTag = transient
         let realmIgnoredTag = RealmIgnoredTag()
         realmIgnoredTag.uuid = ignoredTag.uuid
@@ -26,7 +26,7 @@ final class RealmIgnoredTag: Object, PersistentEntity {
         return realmIgnoredTag
     }
 
-    func toTransient() -> IgnoredTag {
+    public func toTransient() -> IgnoredTag {
         return IgnoredTag(uuid: uuid, name: name)
     }
 }

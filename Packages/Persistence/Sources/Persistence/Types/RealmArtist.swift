@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import TransientModels
 
-final class RealmArtist: Object, PersistentEntity {
+public final class RealmArtist: Object, PersistentEntity {
     @objc dynamic var name = ""
     @objc dynamic var playcount = 0
     @objc dynamic var urlString = ""
@@ -19,11 +19,11 @@ final class RealmArtist: Object, PersistentEntity {
     var tags = List<RealmTag>()
     var topTags = List<RealmTag>()
 
-    override static func primaryKey() -> String? {
+    override public static func primaryKey() -> String? {
         return "name"
     }
 
-    static func from(transient: Artist) -> RealmArtist {
+    public static func from(transient: Artist) -> RealmArtist {
         let artist = transient
         let realmArtist = RealmArtist()
         realmArtist.name = artist.name
@@ -42,7 +42,7 @@ final class RealmArtist: Object, PersistentEntity {
         return realmArtist
     }
 
-    func toTransient() -> Artist {
+    public func toTransient() -> Artist {
         return Artist(name: name,
                       playcount: playcount,
                       urlString: urlString,

@@ -10,6 +10,7 @@ import Foundation
 @testable import MementoFM
 import Combine
 import TransientModels
+import Persistence
 
 final class MockArtistService: ArtistServiceProtocol {
     var user: String = ""

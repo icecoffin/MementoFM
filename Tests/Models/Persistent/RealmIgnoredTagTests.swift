@@ -11,6 +11,7 @@ import XCTest
 import RealmSwift
 import Nimble
 import TransientModels
+@testable import Persistence
 
 final class RealmIgnoredTagTests: XCTestCase {
     func test_primaryKey_isSet() {
