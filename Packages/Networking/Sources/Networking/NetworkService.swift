@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 import Combine
 
-protocol NetworkService: AnyObject {
+public protocol NetworkService: AnyObject {
     func performRequest<T: Codable>(method: HTTPMethod,
                                     parameters: Parameters?,
                                     encoding: ParameterEncoding,
@@ -18,7 +18,7 @@ protocol NetworkService: AnyObject {
 }
 
 extension NetworkService {
-    func performRequest<T: Codable>(parameters: Parameters?) -> AnyPublisher<T, Error> {
+    public func performRequest<T: Codable>(parameters: Parameters?) -> AnyPublisher<T, Error> {
         return performRequest(method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil)
     }
 }

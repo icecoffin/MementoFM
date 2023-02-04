@@ -10,6 +10,7 @@ import Foundation
 @testable import MementoFM
 import Alamofire
 import Combine
+import Networking
 
 final class MockNetworkService: NetworkService {
     struct PerformRequestParameters {

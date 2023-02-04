@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct NetworkConstants {
-    struct LastFM {
-        static var baseURL: URL {
+public struct NetworkConstants {
+    public struct LastFM {
+        public static var baseURL: URL {
             guard let baseURL = URL(string: "https://ws.audioscrobbler.com/2.0") else {
                 fatalError("Can't construct last.fm base URL")
             }

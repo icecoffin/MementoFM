@@ -6,6 +6,7 @@
 import Foundation
 import Combine
 import TransientModels
+import Networking
 
 // MARK: - ArtistRepository
 

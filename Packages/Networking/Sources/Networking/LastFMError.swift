@@ -8,12 +8,12 @@
 
 import Foundation
 
-struct LastFMError: Error, Codable {
+public struct LastFMError: Error, Codable {
     enum CodingKeys: String, CodingKey {
         case errorCode = "error"
         case message
     }
 
-    let errorCode: Int
-    let message: String
+    public let errorCode: Int
+    public let message: String
 }

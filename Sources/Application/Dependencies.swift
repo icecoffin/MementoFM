@@ -8,6 +8,7 @@
 
 import Foundation
 import Persistence
+import Networking
 
 protocol HasArtistService {
     var artistService: ArtistServiceProtocol { get }
