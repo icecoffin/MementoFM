@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Networking
 
 final class ErrorConverter {
     static func displayMessage(for error: Error) -> String {
