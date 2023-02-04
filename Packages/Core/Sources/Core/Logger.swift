@@ -8,8 +8,8 @@
 
 import Foundation
 
-final class Logger {
-    static func debug(_ message: @autoclosure () -> Any) {
+public final class Logger {
+    public static func debug(_ message: @autoclosure () -> Any) {
         #if DEBUG
         // swiftlint:disable:next print_usage
         print("\(Date()) [DEBUG] \(message())")
