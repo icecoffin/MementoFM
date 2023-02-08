@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import PersistenceInterface
 import TransientModels
 
 public final class RealmTag: Object, PersistentEntity {
@@ -25,4 +26,8 @@ public final class RealmTag: Object, PersistentEntity {
     public func toTransient() -> Tag {
         return Tag(name: name, count: count)
     }
+}
+
+extension Tag: TransientEntity {
+    public typealias PersistentType = RealmTag
 }

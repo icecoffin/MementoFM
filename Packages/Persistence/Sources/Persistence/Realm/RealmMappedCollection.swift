@@ -8,7 +8,7 @@
 
 import Foundation
 import RealmSwift
-import TransientModels
+import PersistenceInterface
 
 public final class RealmMappedCollection<Element: TransientEntity>: PersistentMappedCollection {
     public typealias Transform = (Element.PersistentType) -> Element

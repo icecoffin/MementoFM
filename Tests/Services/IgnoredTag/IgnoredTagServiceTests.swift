@@ -10,7 +10,7 @@ import XCTest
 @testable import MementoFM
 import Nimble
 import TransientModels
-import Persistence
+import PersistenceInterface
 
 final class IgnoredTagServiceTests: XCTestCase {
     private var persistentStore: MockPersistentStore!

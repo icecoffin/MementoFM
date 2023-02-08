@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import TransientModels
 
 public protocol PersistentMappedCollection {
     associatedtype Element: TransientEntity

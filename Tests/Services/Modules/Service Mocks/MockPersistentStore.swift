@@ -8,7 +8,7 @@
 
 import Foundation
 import Combine
-import Persistence
+import PersistenceInterface
 @testable import MementoFM
 
 final class MockPersistentStore: PersistentStore {

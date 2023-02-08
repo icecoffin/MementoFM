@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import PersistenceInterface
 import TransientModels
 
 public final class RealmIgnoredTag: Object, PersistentEntity {
@@ -29,4 +30,8 @@ public final class RealmIgnoredTag: Object, PersistentEntity {
     public func toTransient() -> IgnoredTag {
         return IgnoredTag(uuid: uuid, name: name)
     }
+}
+
+extension IgnoredTag: TransientEntity {
+    public typealias PersistentType = RealmIgnoredTag
 }

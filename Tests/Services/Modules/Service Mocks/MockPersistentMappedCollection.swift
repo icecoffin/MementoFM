@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Persistence
+import PersistenceInterface
 @testable import MementoFM
 
 final class MockPersistentMappedCollection<Element: TransientEntity>: PersistentMappedCollection {

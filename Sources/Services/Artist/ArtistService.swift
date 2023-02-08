@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import CombineSchedulers
 import TransientModels
-import Persistence
+import PersistenceInterface
 
 // MARK: - ArtistServiceProtocol
 

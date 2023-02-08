@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import PersistenceInterface
 import TransientModels
 
 public final class RealmArtist: Object, PersistentEntity {
@@ -51,4 +52,8 @@ public final class RealmArtist: Object, PersistentEntity {
                       topTags: topTags.map({ $0.toTransient() }),
                       country: country)
     }
+}
+
+extension Artist: TransientEntity {
+    public typealias PersistentType = RealmArtist
 }

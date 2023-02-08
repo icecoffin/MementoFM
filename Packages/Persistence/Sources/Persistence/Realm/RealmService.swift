@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import Combine
 import CombineSchedulers
-import TransientModels
+import PersistenceInterface
 
 public final class RealmService: PersistentStore {
     // MARK: - Private properties

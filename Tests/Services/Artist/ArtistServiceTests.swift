@@ -11,7 +11,7 @@ import XCTest
 import Nimble
 import CombineSchedulers
 import TransientModels
-import Persistence
+import PersistenceInterface
 
 final class ArtistServiceTests: XCTestCase {
     private var persistentStore: MockPersistentStore!

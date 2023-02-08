@@ -10,7 +10,7 @@ import XCTest
 import Nimble
 import Combine
 import TransientModels
-import Persistence
+import PersistenceInterface
 @testable import MementoFM
 
 private final class MockRecentTracksProcessor: RecentTracksProcessing {

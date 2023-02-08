@@ -8,7 +8,6 @@
 
 import Foundation
 import Combine
-import TransientModels
 
 public protocol PersistentStore {
     func mappedCollection<T: TransientEntity>(filteredUsing predicate: NSPredicate?,

@@ -13,6 +13,7 @@ import RealmSwift
 import Combine
 import TransientModels
 import Persistence
+import PersistenceInterface
 
 final class RealmServiceTests: XCTestCase {
     private var realm: Realm!

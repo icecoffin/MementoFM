@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 import TransientModels
-import Persistence
+import PersistenceInterface
 
 final class LibraryViewModel: ArtistListViewModel {
     typealias Dependencies = HasLibraryUpdater & HasArtistService & HasUserService

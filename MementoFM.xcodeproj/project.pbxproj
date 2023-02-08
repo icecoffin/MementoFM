@@ -134,6 +134,7 @@
 		654430801FA2417400923356 /* ModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6544307D1FA2416900923356 /* ModelFactory.swift */; };
 		6555AB581ED0AC1600BDDF21 /* ArtistTagsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6555AB571ED0AC1600BDDF21 /* ArtistTagsCell.swift */; };
 		6557BD701F717D1300E08DD4 /* SimilarsSectionTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6557BD6F1F717D1300E08DD4 /* SimilarsSectionTabViewModel.swift */; };
+		655C8B1B2994322600E1C05C /* PersistenceInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 655C8B1A2994322600E1C05C /* PersistenceInterface */; };
 		655E97B91F3C6AEC003614C8 /* TagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655E97B81F3C6AEC003614C8 /* TagService.swift */; };
 		656589EF1FDB093B00859414 /* ArtistSimilarsSectionViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656589EE1FDB093B00859414 /* ArtistSimilarsSectionViewModelFactory.swift */; };
 		656A5B2E1FD1A8BF00A98265 /* RecentTracksProcessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656A5B2D1FD1A8BF00A98265 /* RecentTracksProcessorTests.swift */; };
@@ -359,6 +360,7 @@
 		6557BD6F1F717D1300E08DD4 /* SimilarsSectionTabViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimilarsSectionTabViewModel.swift; sourceTree = "<group>"; };
 		655E97B81F3C6AEC003614C8 /* TagService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagService.swift; sourceTree = "<group>"; };
 		656589EE1FDB093B00859414 /* ArtistSimilarsSectionViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSimilarsSectionViewModelFactory.swift; sourceTree = "<group>"; };
+		65682D36299431F500845EF2 /* PersistenceInterface */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PersistenceInterface; sourceTree = "<group>"; };
 		656A5B2D1FD1A8BF00A98265 /* RecentTracksProcessorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTracksProcessorTests.swift; sourceTree = "<group>"; };
 		656A5B321FD1BD0800A98265 /* SyncViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncViewModelTests.swift; sourceTree = "<group>"; };
 		656A5B341FD1BD1200A98265 /* MockLibraryUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLibraryUpdater.swift; sourceTree = "<group>"; };
@@ -432,6 +434,7 @@
 			files = (
 				6599EDBB2986CCDF00A55573 /* Persistence in Frameworks */,
 				65132923298ED33300AFD899 /* TransientModels in Frameworks */,
+				655C8B1B2994322600E1C05C /* PersistenceInterface in Frameworks */,
 				65DC5B78280321B200AB4544 /* CombineSchedulers in Frameworks */,
 				65FB48B727FF7A73008BB121 /* SnapKit in Frameworks */,
 				6590661A298DBD8400BAB009 /* Core in Frameworks */,
@@ -1281,10 +1284,11 @@
 		65C2E07F2954E74600C2A12E /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				65B17B9929858E2900E30660 /* Persistence */,
 				65400F3D298DBCE700A65B3F /* Core */,
-				65132921298ED32000AFD899 /* TransientModels */,
 				6536231129871226002E3E21 /* Networking */,
+				65B17B9929858E2900E30660 /* Persistence */,
+				65682D36299431F500845EF2 /* PersistenceInterface */,
+				65132921298ED32000AFD899 /* TransientModels */,
 			);
 			path = Packages;
 			sourceTree = "<group>";
@@ -1350,6 +1354,7 @@
 				65906619298DBD8400BAB009 /* Core */,
 				65132922298ED33300AFD899 /* TransientModels */,
 				650D748B2987128200714E73 /* Networking */,
+				655C8B1A2994322600E1C05C /* PersistenceInterface */,
 			);
 			productName = MementoFM;
 			productReference = 01D4D3181DAE4A0000BFD7FD /* MementoFM.app */;
@@ -1945,6 +1950,10 @@
 		65132922298ED33300AFD899 /* TransientModels */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TransientModels;
+		};
+		655C8B1A2994322600E1C05C /* PersistenceInterface */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PersistenceInterface;
 		};
 		65906619298DBD8400BAB009 /* Core */ = {
 			isa = XCSwiftPackageProductDependency;
