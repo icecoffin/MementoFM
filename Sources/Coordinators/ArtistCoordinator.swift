@@ -8,6 +8,7 @@
 
 import UIKit
 import TransientModels
+import Core
 
 final class ArtistCoordinator: NavigationFlowCoordinator, NavigationControllerPopObserver {
     let navigationController: UINavigationController

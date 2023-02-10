@@ -9,7 +9,7 @@
 import UIKit
 
 extension UINavigationController {
-    func poppingViewController() -> UIViewController? {
+    public func poppingViewController() -> UIViewController? {
         guard let fromViewController = transitionCoordinator?.viewController(forKey: .from),
             !viewControllers.contains(fromViewController) else {
                 return nil

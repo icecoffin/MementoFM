@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Core
 
 final class AppCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []

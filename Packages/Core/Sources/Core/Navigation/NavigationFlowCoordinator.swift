@@ -8,15 +8,15 @@
 
 import UIKit
 
-protocol NavigationFlowCoordinator: Coordinator, NavigationControllerPopObserver {
+public protocol NavigationFlowCoordinator: Coordinator, NavigationControllerPopObserver {
     var navigationController: UINavigationController { get }
 }
 
 // MARK: - NavigationControllerPopObserver
 
 extension NavigationFlowCoordinator {
-    func navigationControllerPopTracker(_ tracker: NavigationControllerPopTracker,
-                                        didPopViewController viewController: UIViewController) {
+    public func navigationControllerPopTracker(_ tracker: NavigationControllerPopTracker,
+                                               didPopViewController viewController: UIViewController) {
         if childCoordinators.isEmpty {
             didFinish?()
         } else {

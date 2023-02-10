@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol Coordinator: AnyObject {
+public protocol Coordinator: AnyObject {
     var childCoordinators: [Coordinator] { get set }
     var didFinish: (() -> Void)? { get set }
 
@@ -20,24 +20,24 @@ protocol Coordinator: AnyObject {
 }
 
 extension Coordinator {
-    func addChildCoordinator(_ coordinator: Coordinator) {
+    public func addChildCoordinator(_ coordinator: Coordinator) {
         coordinator.didFinish = { [unowned self, unowned coordinator] in
             self.removeChildCoordinator(coordinator)
         }
         childCoordinators.append(coordinator)
     }
 
-    func removeChildCoordinator(_ coordinator: Coordinator) {
+    public func removeChildCoordinator(_ coordinator: Coordinator) {
         if let index = childCoordinators.firstIndex(where: {$0 === coordinator}) {
             childCoordinators.remove(at: index)
         }
     }
 
-    func startChildren() {
+    public func startChildren() {
         childCoordinators.forEach { $0.start() }
     }
 
-    func removeAllChildren() {
+    public func removeAllChildren() {
         childCoordinators.removeAll()
     }
 }

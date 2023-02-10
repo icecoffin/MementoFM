@@ -8,6 +8,7 @@
 
 import UIKit
 import TransientModels
+import Core
 
 final class ArtistListCoordinator: NavigationFlowCoordinator {
     var childCoordinators: [Coordinator] = []

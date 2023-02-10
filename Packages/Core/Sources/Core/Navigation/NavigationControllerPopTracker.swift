@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol NavigationControllerPopObserver: AnyObject {
+public protocol NavigationControllerPopObserver: AnyObject {
     func navigationControllerPopTracker(_ tracker: NavigationControllerPopTracker,
                                         didPopViewController viewController: UIViewController)
 }
@@ -17,28 +17,28 @@ struct NavigationControllerPopObserverContainer {
     weak var value: NavigationControllerPopObserver?
 }
 
-final class NavigationControllerPopTracker: NSObject {
+public final class NavigationControllerPopTracker: NSObject {
     private let navigationController: UINavigationController
     private var viewControllerToObservers: [UIViewController: NavigationControllerPopObserverContainer] = [:]
 
-    init(navigationController: UINavigationController) {
+    public init(navigationController: UINavigationController) {
         self.navigationController = navigationController
         super.init()
 
         navigationController.delegate = self
     }
 
-    func addObserver(_ observer: NavigationControllerPopObserver,
-                     forPopTransitionOf viewController: UIViewController) {
+    public func addObserver(_ observer: NavigationControllerPopObserver,
+                            forPopTransitionOf viewController: UIViewController) {
         let wrappedObserver = NavigationControllerPopObserverContainer(value: observer)
         viewControllerToObservers[viewController] = wrappedObserver
     }
 }
 
 extension NavigationControllerPopTracker: UINavigationControllerDelegate {
-    func navigationController(_ navigationController: UINavigationController,
-                              didShow viewController: UIViewController,
-                              animated: Bool) {
+    public func navigationController(_ navigationController: UINavigationController,
+                                     didShow viewController: UIViewController,
+                                     animated: Bool) {
         guard let poppingViewController = navigationController.poppingViewController() else {
             return
         }

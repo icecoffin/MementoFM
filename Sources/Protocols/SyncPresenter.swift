@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Core
 
 protocol SyncPresenter: NavigationFlowCoordinator, SyncViewModelDelegate {
     func makeSyncViewController(dependencies: AppDependency) -> SyncViewController
