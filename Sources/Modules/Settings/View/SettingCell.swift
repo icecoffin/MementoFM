@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreUI
 
 final class SettingCell: UITableViewCell {
     // MARK: - Private properties

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreUI
 
 final class EmptyDataSetFooterView: UITableViewHeaderFooterView {
     // MARK: - Private properties

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreUI
 
 final class ArtistTopTagsSectionHeaderView: UITableViewHeaderFooterView {
     // MARK: - Private properties

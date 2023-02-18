@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreUI
 
 // MARK: - ArtistSimilarsSectionHeaderViewDelegate
 

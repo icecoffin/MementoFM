@@ -9,7 +9,7 @@
 import Foundation
 
 extension String {
-    var unlocalized: String {
+    public var unlocalized: String {
         return self
     }
 }

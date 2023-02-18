@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreUI
 
 final class CountryCell: UITableViewCell {
     // MARK: - Private properties

@@ -8,6 +8,7 @@
 
 import UIKit
 import Combine
+import CoreUI
 
 final class EnterUsernameViewController: UIViewController {
     // MARK: - Private properties

@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import CoreUI
 
 final class ArtistCell: UITableViewCell {
     // MARK: - Private properties

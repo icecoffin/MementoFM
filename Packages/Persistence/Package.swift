@@ -16,6 +16,7 @@ let package = Package(
         )
     ],
     dependencies: [
+        .package(url: "https://github.com/pointfreeco/combine-schedulers.git", exact: "0.9.1"),
         .package(url: "https://github.com/realm/realm-swift.git", exact: "10.34.1"),
         .package(name: "PersistenceInterface", path: "./PersistenceInterface"),
         .package(name: "TransientModels", path: "./TransientModels")
@@ -26,6 +27,7 @@ let package = Package(
         .target(
             name: "Persistence",
             dependencies: [
+                .product(name: "CombineSchedulers", package: "combine-schedulers"),
                 .product(name: "RealmSwift", package: "realm-swift"),
                 "PersistenceInterface",
                 "TransientModels"

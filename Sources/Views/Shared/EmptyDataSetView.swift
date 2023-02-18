@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreUI
 
 final class EmptyDataSetView: UIView {
     // MARK: - Private properties

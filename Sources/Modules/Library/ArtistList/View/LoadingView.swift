@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import CoreUI
 
 final class LoadingView: UIView {
     // MARK: - Private properties

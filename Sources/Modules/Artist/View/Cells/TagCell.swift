@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreUI
 
 final class TagCell: UICollectionViewCell {
     private struct Constants {
