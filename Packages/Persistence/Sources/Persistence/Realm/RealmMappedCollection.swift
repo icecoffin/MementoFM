@@ -72,12 +72,16 @@ public final class RealmMappedCollection<Element: TransientEntity>: PersistentMa
 
     // MARK: - Subscript
 
-    public subscript(index: Int) -> Element.PersistentType.TransientType {
+    public subscript(index: Int) -> Element {
         guard let item = results[index] as? Element.PersistentType else {
             fatalError("The provided Element.PersistentType is not a Realm Object subclass")
         }
 
-        return item.toTransient()
+        guard let transientItem = item.toTransient() as? Element else {
+            fatalError("Can't convert Realm Object to Element")
+        }
+
+        return transientItem
     }
 }
 

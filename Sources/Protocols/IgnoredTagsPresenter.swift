@@ -8,6 +8,7 @@
 
 import UIKit
 import Core
+import CoreUI
 
 protocol IgnoredTagsPresenter: NavigationFlowCoordinator, IgnoredTagsViewModelDelegate {
     func makeIgnoredTagsViewController(dependencies: IgnoredTagsViewModel.Dependencies,

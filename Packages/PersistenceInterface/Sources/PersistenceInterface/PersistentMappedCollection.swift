@@ -9,17 +9,17 @@
 import Foundation
 
 public protocol PersistentMappedCollection {
-    associatedtype Element: TransientEntity
+    associatedtype Element
 
     var count: Int { get }
     var isEmpty: Bool { get }
     var sortDescriptors: [NSSortDescriptor] { get set }
     var predicate: NSPredicate? { get set }
 
-    subscript(index: Int) -> Element.PersistentType.TransientType { get }
+    subscript(index: Int) -> Element { get }
 }
 
-private class _AnyPersistentMappedCollectionBase<Element: TransientEntity>: PersistentMappedCollection {
+private class _AnyPersistentMappedCollectionBase<Element>: PersistentMappedCollection {
     var count: Int {
         fatalError("Must override")
     }
@@ -40,7 +40,7 @@ private class _AnyPersistentMappedCollectionBase<Element: TransientEntity>: Pers
         set { fatalError("Must override") }
     }
 
-    subscript(index: Int) -> Element.PersistentType.TransientType {
+    subscript(index: Int) -> Element {
         fatalError("Must override")
     }
 
@@ -77,12 +77,12 @@ private final class _AnyPersistentMappedCollectionBox<ConcreteCollection: Persis
         self.concrete = concrete
     }
 
-    override subscript(index: Int) -> Element.PersistentType.TransientType {
+    override subscript(index: Int) -> Element {
         return concrete[index]
     }
 }
 
-public final class AnyPersistentMappedCollection<Element: TransientEntity>: PersistentMappedCollection {
+public final class AnyPersistentMappedCollection<Element>: PersistentMappedCollection {
     private let box: _AnyPersistentMappedCollectionBase<Element>
 
     public var count: Int {
@@ -107,7 +107,7 @@ public final class AnyPersistentMappedCollection<Element: TransientEntity>: Pers
         box = _AnyPersistentMappedCollectionBox(concrete)
     }
 
-    public subscript(index: Int) -> Element.PersistentType.TransientType {
+    public subscript(index: Int) -> Element {
         return box[index]
     }
 }

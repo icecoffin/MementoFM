@@ -7,32 +7,14 @@
 //
 
 import Foundation
+import Combine
 import Persistence
 import Networking
-
-protocol HasArtistService {
-    var artistService: ArtistServiceProtocol { get }
-}
-
-protocol HasUserService {
-    var userService: UserServiceProtocol { get }
-}
-
-protocol HasTagService {
-    var tagService: TagServiceProtocol { get }
-}
-
-protocol HasIgnoredTagService {
-    var ignoredTagService: IgnoredTagServiceProtocol { get }
-}
-
-protocol HasCountryService {
-    var countryService: CountryServiceProtocol { get }
-}
-
-protocol HasLibraryUpdater {
-    var libraryUpdater: LibraryUpdaterProtocol { get }
-}
+import Onboarding
+import Sync
+import TransientModels
+import SharedServicesInterface
+import SharedServices
 
 struct AppDependency: HasArtistService, HasUserService, HasTagService,
                       HasIgnoredTagService, HasCountryService, HasLibraryUpdater {
@@ -45,43 +27,66 @@ struct AppDependency: HasArtistService, HasUserService, HasTagService,
 
     let libraryUpdater: LibraryUpdaterProtocol
 
+    let onboardingDependencies: OnboardingDependencies
+
     static var `default`: AppDependency {
         let realmService = RealmService(getRealm: {
             return RealmFactory.realm()
         })
-        let userDataStorage = UserDataStorage()
         let networkService = LastFMNetworkService()
 
-        let artistRepository = ArtistNetworkRepository(networkService: networkService)
-        let artistService = ArtistService(persistentStore: realmService, repository: artistRepository)
-
-        let userRepository = UserNetworkRepository(networkService: networkService)
-        let userService = UserService(persistentStore: realmService, repository: userRepository, userDataStorage: userDataStorage)
-
-        let tagRepository = TagNetworkRepository(networkService: networkService)
-        let tagService = TagService(persistentStore: realmService, repository: tagRepository)
-
+        let artistService = ArtistService(
+            persistentStore: realmService,
+            networkService: networkService
+        )
+        let userService = UserService(
+            persistentStore: realmService,
+            networkService: networkService
+        )
+        let tagService = TagService(
+            persistentStore: realmService,
+            networkService: networkService
+        )
         let ignoredTagService = IgnoredTagService(persistentStore: realmService)
-
-        let trackRepository = TrackNetworkRepository(networkService: networkService)
-        let trackService = TrackService(persistentStore: realmService, repository: trackRepository)
-
+        let trackService = TrackService(
+            persistentStore: realmService,
+            networkService: networkService
+        )
         let countryService = CountryService(persistentStore: realmService)
 
-        let libraryUpdater = LibraryUpdater(userService: userService,
-                                            artistService: artistService,
-                                            tagService: tagService,
-                                            ignoredTagService: ignoredTagService,
-                                            trackService: trackService,
-                                            countryService: countryService,
-                                            networkService: networkService)
+        let libraryUpdater = LibraryUpdater(
+            userService: userService,
+            artistService: artistService,
+            tagService: tagService,
+            ignoredTagService: ignoredTagService,
+            trackService: trackService,
+            countryService: countryService
+        )
 
-        return AppDependency(artistService: artistService,
-                             userService: userService,
-                             tagService: tagService,
-                             ignoredTagService: ignoredTagService,
-                             trackService: trackService,
-                             countryService: countryService,
-                             libraryUpdater: libraryUpdater)
+        let syncDependencies = SyncDependencies(libraryUpdater: libraryUpdater)
+
+        let onboardingDependencies = OnboardingDependencies(
+            artistService: artistService,
+            userService: userService,
+            ignoredTagService: ignoredTagService,
+            syncCoordinatorFactory: { navigationController, popTracker in
+                SyncCoordinator(
+                    navigationController: navigationController,
+                    popTracker: popTracker,
+                    dependencies: syncDependencies
+                )
+            }
+        )
+
+        return AppDependency(
+            artistService: artistService,
+            userService: userService,
+            tagService: tagService,
+            ignoredTagService: ignoredTagService,
+            trackService: trackService,
+            countryService: countryService,
+            libraryUpdater: libraryUpdater,
+            onboardingDependencies: onboardingDependencies
+        )
     }
 }

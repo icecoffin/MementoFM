@@ -10,6 +10,7 @@ import Foundation
 import Combine
 import TransientModels
 import PersistenceInterface
+import SharedServicesInterface
 
 final class ArtistsByTagViewModel: ArtistListViewModel {
     typealias Dependencies = HasArtistService

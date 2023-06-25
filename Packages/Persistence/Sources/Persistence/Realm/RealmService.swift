@@ -43,7 +43,7 @@ public final class RealmService: PersistentStore {
     // MARK: - Private methods
 
     private func write(block: @escaping (Realm) -> Void) -> AnyPublisher<Void, Error> {
-        return Future<Void, Error>() { promise in
+        return Future<Void, Error> { promise in
             self.backgroundScheduler.schedule {
                 do {
                     try self.write(to: self.currentQueueRealm) { realm in

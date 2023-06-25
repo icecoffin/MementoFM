@@ -8,6 +8,7 @@
 
 import UIKit
 import Core
+import Onboarding
 
 final class AppCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
@@ -16,7 +17,7 @@ final class AppCoordinator: Coordinator {
     private let window: UIWindow
     private let dependencies: AppDependency
 
-    init(window: UIWindow, dependencies: AppDependency = AppDependency.default) {
+    init(window: UIWindow, dependencies: AppDependency = .default) {
         self.window = window
         self.dependencies = dependencies
     }
@@ -39,7 +40,7 @@ final class AppCoordinator: Coordinator {
     }
 
     func startOnboardingFlow() {
-        let onboardingCoordinator = OnboardingCoordinator(window: window, dependencies: dependencies)
+        let onboardingCoordinator = OnboardingCoordinator(window: window, dependencies: dependencies.onboardingDependencies)
         onboardingCoordinator.delegate = self
         addChildCoordinator(onboardingCoordinator)
         startChildren()
