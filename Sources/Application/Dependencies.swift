@@ -8,13 +8,20 @@
 
 import Foundation
 import Combine
+
 import Persistence
 import Networking
-import Onboarding
-import Sync
 import TransientModels
+
 import SharedServicesInterface
 import SharedServices
+
+import Onboarding
+import Sync
+import IgnoredTagsInterface
+import IgnoredTags
+import EnterUsername
+import Settings
 
 struct AppDependency: HasArtistService, HasUserService, HasTagService,
                       HasIgnoredTagService, HasCountryService, HasLibraryUpdater {
@@ -28,6 +35,7 @@ struct AppDependency: HasArtistService, HasUserService, HasTagService,
     let libraryUpdater: LibraryUpdaterProtocol
 
     let onboardingDependencies: OnboardingDependencies
+    let settingsDependencies: SettingsDependencies
 
     static var `default`: AppDependency {
         let realmService = RealmService(getRealm: {
@@ -63,19 +71,28 @@ struct AppDependency: HasArtistService, HasUserService, HasTagService,
             countryService: countryService
         )
 
+        let ignoredTagsDependencies = IgnoredTagsDependencies(ignoredTagService: ignoredTagService, artistService: artistService)
+        let ignoredTagsCoordinatorFactory = IgnoredTagsCoordinatorFactory(dependencies: ignoredTagsDependencies)
+
         let syncDependencies = SyncDependencies(libraryUpdater: libraryUpdater)
+        let syncCoordinatorFactory = SyncCoordinatorFactory(dependencies: syncDependencies)
+
+        let enterUsernameDependencies = EnterUsernameDependencies(userService: userService)
+        let enterUsernameCoordinatorFactory = EnterUsernameCoordinatorFactory(dependencies: enterUsernameDependencies)
 
         let onboardingDependencies = OnboardingDependencies(
             artistService: artistService,
             userService: userService,
             ignoredTagService: ignoredTagService,
-            syncCoordinatorFactory: { navigationController, popTracker in
-                SyncCoordinator(
-                    navigationController: navigationController,
-                    popTracker: popTracker,
-                    dependencies: syncDependencies
-                )
-            }
+            syncCoordinatorFactory: syncCoordinatorFactory,
+            ignoredTagsCoordinatorFactory: ignoredTagsCoordinatorFactory,
+            enterUsernameCoordinatorFactory: enterUsernameCoordinatorFactory
+        )
+
+        let settingsDependencies = SettingsDependencies(
+            syncCoordinatorFactory: syncCoordinatorFactory,
+            ignoredTagsCoordinatorFactory: ignoredTagsCoordinatorFactory,
+            enterUsernameCoordinatorFactory: enterUsernameCoordinatorFactory
         )
 
         return AppDependency(
@@ -86,7 +103,8 @@ struct AppDependency: HasArtistService, HasUserService, HasTagService,
             trackService: trackService,
             countryService: countryService,
             libraryUpdater: libraryUpdater,
-            onboardingDependencies: onboardingDependencies
+            onboardingDependencies: onboardingDependencies,
+            settingsDependencies: settingsDependencies
         )
     }
 }

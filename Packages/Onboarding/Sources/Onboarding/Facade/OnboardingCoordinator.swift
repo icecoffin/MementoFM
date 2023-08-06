@@ -10,6 +10,8 @@ import UIKit
 import Core
 import CoreUI
 import Sync
+import IgnoredTagsInterface
+import EnterUsername
 
 // MARK: - OnboardingCoordinatorDelegate
 
@@ -57,42 +59,39 @@ public final class OnboardingCoordinator: NavigationFlowCoordinator {
     // MARK: - Private methods
 
     private func showEnterUsernameViewController(alreadyHasUsername: Bool) {
-        let viewModel = EnterUsernameViewModel(dependencies: dependencies)
-        viewModel.delegate = self
-        let viewController = EnterUsernameViewController(viewModel: viewModel)
-        viewController.navigationItem.backButtonDisplayMode = .minimal
-        viewController.title = "Welcome!".unlocalized
+        var forwardButtonAction: (() -> Void)?
         if alreadyHasUsername {
-            let forwardButton = BlockBarButtonItem(image: .arrowRight, style: .plain) { [unowned self] in
+            forwardButtonAction = { [unowned self] in
                 self.showIgnoredTagsViewController(animated: true)
             }
-            viewController.navigationItem.rightBarButtonItem = forwardButton
         }
-        navigationController.pushViewController(viewController, animated: true)
+
+        let enterUsernameCoordinator = dependencies.enterUsernameCoordinatorFactory.makeEnterUsernameCoordinator(
+            navigationController: navigationController,
+            configuration: .init(
+                title: "Welcome!".unlocalized,
+                showsBackButtonTitle: false,
+                forwardButtonAction: forwardButtonAction
+            )
+        )
+        enterUsernameCoordinator.delegate = self
+        addChildCoordinator(enterUsernameCoordinator)
+        enterUsernameCoordinator.start()
     }
 
     private func showIgnoredTagsViewController(animated: Bool) {
-        let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: true)
-        viewModel.delegate = self
-        let viewController = IgnoredTagsViewController(viewModel: viewModel)
-        viewController.title = "Ignored Tags".unlocalized
-
-        let addButton = BlockBarButtonItem(image: .plus, style: .plain) { [unowned viewModel] in
-            viewModel.addNewIgnoredTag()
-        }
-
-        let doneButton = BlockBarButtonItem(image: .checkmark, style: .plain) { [unowned viewModel] in
-            viewModel.saveChanges()
-        }
-
-        viewController.navigationItem.rightBarButtonItems = [doneButton, addButton]
-
-        viewController.hidesBottomBarWhenPushed = true
-        navigationController.pushViewController(viewController, animated: animated)
+        let ignoredTagsCoordinator = dependencies.ignoredTagsCoordinatorFactory.makeIgnoredCoordinator(
+            navigationController: navigationController,
+            shouldAddDefaultTags: true,
+            showAnimated: animated
+        )
+        ignoredTagsCoordinator.delegate = self
+        addChildCoordinator(ignoredTagsCoordinator)
+        ignoredTagsCoordinator.start()
     }
 
-    private func showSyncViewController() {
-        let syncCoordinator = dependencies.syncCoordinatorFactory(navigationController, popTracker)
+    private func showSync() {
+        let syncCoordinator = dependencies.syncCoordinatorFactory.makeSyncCoordinator(navigationController: navigationController)
         syncCoordinator.delegate = self
         addChildCoordinator(syncCoordinator)
         syncCoordinator.start()
@@ -101,17 +100,9 @@ public final class OnboardingCoordinator: NavigationFlowCoordinator {
 
 // MARK: - EnterUsernameViewModelDelegate
 
-extension OnboardingCoordinator: EnterUsernameViewModelDelegate {
-    func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel) {
+extension OnboardingCoordinator: EnterUsernameCoordinatorDelegate {
+    public func enterUsernameCoordinatorDidFinish(_ coordinator: EnterUsernameCoordinator) {
         showIgnoredTagsViewController(animated: true)
-    }
-}
-
-// MARK: - IgnoredTagsViewModelDelegate
-
-extension OnboardingCoordinator: IgnoredTagsViewModelDelegate {
-    func ignoredTagsViewModelDidSaveChanges(_ viewModel: IgnoredTagsViewModel) {
-        showSyncViewController()
     }
 }
 
@@ -121,5 +112,13 @@ extension OnboardingCoordinator: SyncCoordinatorDelegate {
     public func syncCoordinatorDidFinishSync(_ coordinator: SyncCoordinator) {
         dependencies.userService.didFinishOnboarding = true
         delegate?.onboardingCoordinatorDidFinish(self)
+    }
+}
+
+// MARK: - IgnoredTagsCoordinatorDelegate
+
+extension OnboardingCoordinator: IgnoredTagsCoordinatorDelegate {
+    public func ignoredTagsCoordinatorDidSaveChanges(_ coordinator: any IgnoredTagsCoordinatorProtocol) {
+        showSync()
     }
 }

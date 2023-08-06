@@ -6,7 +6,7 @@ public protocol SyncCoordinatorDelegate: AnyObject {
     func syncCoordinatorDidFinishSync(_ coordinator: SyncCoordinator)
 }
 
-public final class SyncCoordinator: Coordinator {
+public final class SyncCoordinator: NavigationFlowCoordinator {
     // MARK: - Private properties
 
     private let dependencies: SyncDependencies
@@ -24,7 +24,6 @@ public final class SyncCoordinator: Coordinator {
 
     public init(
         navigationController: UINavigationController,
-        popTracker: NavigationControllerPopTracker,
         dependencies: SyncDependencies
     ) {
         self.navigationController = navigationController

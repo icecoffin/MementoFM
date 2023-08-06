@@ -11,6 +11,9 @@ import XCTest
 import Nimble
 import Combine
 import TransientModels
+import PersistenceInterface
+import SharedServicesInterface
+import ServiceTestingUtilities
 
 final class ArtistSimilarsSectionViewModelTests: XCTestCase {
     private final class Dependencies: ArtistSimilarsSectionViewModel.Dependencies {

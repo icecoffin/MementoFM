@@ -10,6 +10,7 @@ import XCTest
 @testable import MementoFM
 import Nimble
 import TransientModels
+import ServiceTestingUtilities
 
 final class RecentTracksProcessorTests: XCTestCase {
     private var persistentStore: MockPersistentStore!

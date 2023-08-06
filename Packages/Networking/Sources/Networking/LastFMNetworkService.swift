@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 import Combine
 import Core
+import NetworkingInterface
 
 let log = Logger.self
 
@@ -27,13 +28,19 @@ public final class LastFMNetworkService: NetworkService {
     // MARK: - Public methods
 
     public func performRequest<T: Codable>(
-        method: HTTPMethod,
-        parameters: Parameters?,
-        encoding: ParameterEncoding,
-        headers: HTTPHeaders?
+        method: NetworkingInterface.HTTPMethod,
+        parameters: [String: Any]?,
+        encoding: NetworkingInterface.ParameterEncoding,
+        headers: [String: String]?
     ) -> AnyPublisher<T, Error> {
         let publisher = AF
-            .request(baseURL, method: method, parameters: parameters, headers: headers)
+            .request(
+                baseURL,
+                method: method.alamofireValue,
+                parameters: parameters,
+                encoding: encoding.alamofireValue,
+                headers: headers.flatMap { HTTPHeaders($0) }
+            )
             .publishData()
             .value()
             .tryMap { value -> T in

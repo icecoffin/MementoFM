@@ -9,6 +9,8 @@
 import XCTest
 @testable import MementoFM
 import Nimble
+import ServiceTestingUtilities
+import SharedServicesInterface
 
 final class CountriesViewModelTests: XCTestCase {
     private final class Dependencies: HasCountryService {

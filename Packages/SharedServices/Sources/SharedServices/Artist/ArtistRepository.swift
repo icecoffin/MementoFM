@@ -5,7 +5,7 @@
 
 import Foundation
 import Combine
-import Networking
+import NetworkingInterface
 import TransientModels
 import Core
 

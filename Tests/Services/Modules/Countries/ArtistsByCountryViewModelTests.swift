@@ -11,6 +11,8 @@ import Nimble
 import Combine
 import TransientModels
 import PersistenceInterface
+import SharedServicesInterface
+import ServiceTestingUtilities
 @testable import MementoFM
 
 final class ArtistsByCountryViewModelTests: XCTestCase {

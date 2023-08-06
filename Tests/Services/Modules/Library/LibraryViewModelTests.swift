@@ -12,6 +12,8 @@ import Nimble
 import Combine
 import TransientModels
 import PersistenceInterface
+import SharedServicesInterface
+import ServiceTestingUtilities
 
 final class LibraryViewModelTests: XCTestCase {
     private final class Dependencies: LibraryViewModel.Dependencies {

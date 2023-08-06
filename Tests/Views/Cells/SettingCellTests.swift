@@ -9,6 +9,7 @@
 import XCTest
 import SnapshotTesting
 @testable import MementoFM
+@testable import Settings
 
 final class SettingCellTests: XCTestCase {
     func test_looksCorrect() {

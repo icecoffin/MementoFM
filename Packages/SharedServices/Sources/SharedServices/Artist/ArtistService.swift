@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 import CombineSchedulers
-import Networking
+import NetworkingInterface
 import TransientModels
 import SharedServicesInterface
 import PersistenceInterface

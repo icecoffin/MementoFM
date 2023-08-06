@@ -1,1 +1,8 @@
-**/__Snapshots__/**/*.png filter=lfs diff=lfs merge=lfs -text
+**/__Snapshots__/**/*.png diff=image filter=lfs diff=lfs merge=lfs -text
+*.gif diff=image
+*.jpeg diff=image
+*.jpg diff=image
+*.png diff=image
+*.bmp diff=image
+*.heic diff=image
+*.svg diff=image

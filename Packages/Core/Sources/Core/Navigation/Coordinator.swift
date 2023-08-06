@@ -12,6 +12,7 @@ public protocol Coordinator: AnyObject {
     var childCoordinators: [Coordinator] { get set }
     var didFinish: (() -> Void)? { get set }
 
+    // TODO: review protocol methods
     func start()
     func addChildCoordinator(_ coordinator: Coordinator)
     func removeChildCoordinator(_ coordinator: Coordinator)

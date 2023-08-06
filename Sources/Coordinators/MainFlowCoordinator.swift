@@ -8,6 +8,7 @@
 
 import UIKit
 import Core
+import Settings
 
 // MARK: - MainFlowCoordinatorDelegate
 
@@ -107,8 +108,10 @@ final class MainFlowCoordinator: Coordinator {
     private func makeSettingsCoordinator(with navigationController: UINavigationController) -> SettingsCoordinator {
         let tabBarItem = UITabBarItem(title: "Settings".unlocalized, image: .tabBarSettings, selectedImage: nil)
         navigationController.tabBarItem = tabBarItem
-        let settingsCoordinator = SettingsCoordinator(navigationController: navigationController,
-                                                      dependencies: dependencies)
+        let settingsCoordinator = SettingsCoordinator(
+            navigationController: navigationController,
+            dependencies: dependencies.settingsDependencies
+        )
         settingsCoordinator.delegate = self
 
         return settingsCoordinator

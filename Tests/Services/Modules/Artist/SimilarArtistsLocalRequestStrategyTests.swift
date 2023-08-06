@@ -10,6 +10,8 @@ import XCTest
 @testable import MementoFM
 import Nimble
 import TransientModels
+import SharedServicesInterface
+import ServiceTestingUtilities
 
 final class SimilarArtistsLocalRequestStrategyTests: XCTestCase {
     private final class Dependencies: SimilarArtistsRequestStrategy.Dependencies {

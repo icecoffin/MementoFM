@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 import Core
-import Networking
+import NetworkingInterface
 import TransientModels
 
 // MARK: - TrackRepository

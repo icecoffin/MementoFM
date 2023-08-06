@@ -7,9 +7,9 @@
 //
 
 import XCTest
-@testable import MementoFM
 import Nimble
 import TransientModels
+import InfrastructureTestingUtilities
 
 final class TrackTests: XCTestCase {
     func test_decodeFromJSON_setsCorrectProperties() {

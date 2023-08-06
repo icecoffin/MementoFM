@@ -8,7 +8,7 @@
 
 import Foundation
 import Combine
-import Networking
+import NetworkingInterface
 import Core
 
 // MARK: - TagRepository
