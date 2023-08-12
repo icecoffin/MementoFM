@@ -8,6 +8,7 @@
 
 import XCTest
 import SnapshotTesting
+import InfrastructureTestingUtilities
 @testable import MementoFM
 
 final class LoadingFooterViewTests: XCTestCase {

@@ -8,8 +8,8 @@
 
 import XCTest
 import SnapshotTesting
-@testable import MementoFM
 import InfrastructureTestingUtilities
+@testable import MementoFM
 
 final class ArtistTagsCellTests: XCTestCase {
     func test_looksCorrect_whenTagsAreOnOneLine() {

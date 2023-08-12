@@ -16,6 +16,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/Quick/Nimble", exact: "11.2.1"),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", exact: "1.11.1"),
         .package(path: "../TransientModels")
     ],
     targets: [
@@ -23,6 +24,7 @@ let package = Package(
             name: "InfrastructureTestingUtilities",
             dependencies: [
                 .product(name: "Nimble", package: "Nimble"),
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
                 "TransientModels"
             ]
         )

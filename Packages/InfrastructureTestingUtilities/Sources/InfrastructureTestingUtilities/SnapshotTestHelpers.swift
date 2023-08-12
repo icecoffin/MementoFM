@@ -9,7 +9,7 @@
 import UIKit
 import SnapshotTesting
 
-func makeAndSizeToFit<T: UIView>(width: CGFloat? = nil, _ block: (T) -> Void) -> T {
+public func makeAndSizeToFit<T: UIView>(width: CGFloat? = nil, _ block: (T) -> Void) -> T {
     let view = T()
 
     block(view)
@@ -23,7 +23,7 @@ func makeAndSizeToFit<T: UIView>(width: CGFloat? = nil, _ block: (T) -> Void) ->
     return view
 }
 
-func assertSnapshots(
+public func assertSnapshots(
     matching view: UIView,
     record: Bool = false,
     file: StaticString = #file,

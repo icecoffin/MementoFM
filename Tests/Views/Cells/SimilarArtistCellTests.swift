@@ -8,8 +8,8 @@
 
 import XCTest
 import SnapshotTesting
-@testable import MementoFM
 import InfrastructureTestingUtilities
+@testable import MementoFM
 
 final class SimilarArtistCellTests: XCTestCase {
     func test_looksCorrect() {

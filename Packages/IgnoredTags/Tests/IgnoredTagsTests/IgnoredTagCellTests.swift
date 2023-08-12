@@ -1,5 +1,5 @@
 //
-//  SettingCellTests.swift
+//  IgnoredTagCellTests.swift
 //  MementoFMTests
 //
 //  Created by Dani on 18.12.2022.
@@ -9,18 +9,13 @@
 import XCTest
 import SnapshotTesting
 import InfrastructureTestingUtilities
-@testable import MementoFM
-@testable import Settings
+@testable import IgnoredTags
 
-final class SettingCellTests: XCTestCase {
+final class IgnoredTagCellTests: XCTestCase {
     func test_looksCorrect() {
-        let cellViewModel = SettingCellViewModel(
-            configuration: SettingConfiguration(
-                title: "Test",
-                action: { }
-            )
-        )
-        let cell: SettingCell = makeAndSizeToFit(width: 375) { cell in
+        let tag = ModelFactory.generateIgnoredTag()
+        let cellViewModel = IgnoredTagCellViewModel(tag: tag)
+        let cell: IgnoredTagCell = makeAndSizeToFit(width: 375) { cell in
             cell.backgroundColor = .systemBackground
             cell.configure(with: cellViewModel)
         }

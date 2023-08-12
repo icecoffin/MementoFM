@@ -8,8 +8,8 @@
 
 import XCTest
 import SnapshotTesting
-@testable import MementoFM
 import InfrastructureTestingUtilities
+@testable import MementoFM
 
 final class TagCellTests: XCTestCase {
     func test_looksCorrect_whenShowsCount() {
