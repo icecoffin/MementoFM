@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 import SharedServicesInterface
+import Core
 
 // MARK: - SyncViewModelDelegate
 

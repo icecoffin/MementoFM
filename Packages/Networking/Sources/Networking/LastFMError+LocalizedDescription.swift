@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Networking
 
 extension LastFMError: LocalizedError {
     public var errorDescription: String? {

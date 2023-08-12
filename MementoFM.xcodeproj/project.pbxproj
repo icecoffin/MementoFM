@@ -13,7 +13,6 @@
 		651169F51FD59363002C8530 /* LibraryArtistCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651169F41FD59363002C8530 /* LibraryArtistCellViewModelTests.swift */; };
 		65132923298ED33300AFD899 /* TransientModels in Frameworks */ = {isa = PBXBuildFile; productRef = 65132922298ED33300AFD899 /* TransientModels */; };
 		6513540C1EDD875E0061B879 /* LibraryViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513540B1EDD875E0061B879 /* LibraryViewModelFactory.swift */; };
-		6516A53D1ECDFD830021E43C /* NSAttributedString+Join.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6516A53C1ECDFD830021E43C /* NSAttributedString+Join.swift */; };
 		65178A8A1F6ACD6D006A29E8 /* ArtistSimilarsSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65178A891F6ACD6D006A29E8 /* ArtistSimilarsSectionHeaderView.swift */; };
 		6518B12F1EC85BA6001F4B74 /* SimilarArtistCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518B12E1EC85BA6001F4B74 /* SimilarArtistCellViewModel.swift */; };
 		6518B1311EC85C07001F4B74 /* TagCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518B1301EC85C07001F4B74 /* TagCellViewModel.swift */; };
@@ -35,7 +34,6 @@
 		651F9E151EC09FDC006D9474 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D971EC09FDC006D9474 /* AppCoordinator.swift */; };
 		651F9E171EC09FDC006D9474 /* ArtistListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D991EC09FDC006D9474 /* ArtistListCoordinator.swift */; };
 		651F9E181EC09FDC006D9474 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D9A1EC09FDC006D9474 /* MainFlowCoordinator.swift */; };
-		651F9E361EC09FDC006D9474 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DC31EC09FDC006D9474 /* AboutViewController.swift */; };
 		651F9E371EC09FDC006D9474 /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DC61EC09FDC006D9474 /* ArtistViewController.swift */; };
 		651F9E381EC09FDC006D9474 /* ArtistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DC81EC09FDC006D9474 /* ArtistViewModel.swift */; };
 		651F9E401EC09FDC006D9474 /* ArtistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DD91EC09FDC006D9474 /* ArtistCell.swift */; };
@@ -54,7 +52,6 @@
 		65241C281EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C231EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift */; };
 		653F21751F6D1272009A562A /* SimilarArtistsRequestStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653F21741F6D1272009A562A /* SimilarArtistsRequestStrategy.swift */; };
 		6555AB581ED0AC1600BDDF21 /* ArtistTagsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6555AB571ED0AC1600BDDF21 /* ArtistTagsCell.swift */; };
-		6557788129A2AE4700B05E8A /* LastFMError+LocalizedDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6557788029A2AE4700B05E8A /* LastFMError+LocalizedDescription.swift */; };
 		6557BD701F717D1300E08DD4 /* SimilarsSectionTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6557BD6F1F717D1300E08DD4 /* SimilarsSectionTabViewModel.swift */; };
 		655C8B1B2994322600E1C05C /* PersistenceInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 655C8B1A2994322600E1C05C /* PersistenceInterface */; };
 		656589EF1FDB093B00859414 /* ArtistSimilarsSectionViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656589EE1FDB093B00859414 /* ArtistSimilarsSectionViewModelFactory.swift */; };
@@ -84,7 +81,6 @@
 		65A4811523AFDA34002DC892 /* CountryCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A4811423AFDA34002DC892 /* CountryCellViewModel.swift */; };
 		65A4811723AFDEAC002DC892 /* CountryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A4811623AFDEAC002DC892 /* CountryCell.swift */; };
 		65A98F282A48CF7A00D7EC25 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 65A98F272A48CF7A00D7EC25 /* Settings */; };
-		65AF2B0B27FF62AE0079040D /* UICollectionViewLeftAlignedLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AF2B0A27FF62AE0079040D /* UICollectionViewLeftAlignedLayout.swift */; };
 		65B4A0491FC7153500E01881 /* TagsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B4A0481FC7153500E01881 /* TagsViewModelTests.swift */; };
 		65B57B3F2A802F0800EE290D /* ArtistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B57B212A802C6400EE290D /* ArtistTests.swift */; };
 		65B57B402A802F0800EE290D /* RecentTracksPageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B57B232A802C6400EE290D /* RecentTracksPageTests.swift */; };
@@ -148,7 +144,6 @@
 		651169F41FD59363002C8530 /* LibraryArtistCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryArtistCellViewModelTests.swift; sourceTree = "<group>"; };
 		65132921298ED32000AFD899 /* TransientModels */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TransientModels; sourceTree = "<group>"; };
 		6513540B1EDD875E0061B879 /* LibraryViewModelFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryViewModelFactory.swift; sourceTree = "<group>"; };
-		6516A53C1ECDFD830021E43C /* NSAttributedString+Join.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Join.swift"; sourceTree = "<group>"; };
 		65178A891F6ACD6D006A29E8 /* ArtistSimilarsSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistSimilarsSectionHeaderView.swift; sourceTree = "<group>"; };
 		6518B12E1EC85BA6001F4B74 /* SimilarArtistCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimilarArtistCellViewModel.swift; sourceTree = "<group>"; };
 		6518B1301EC85C07001F4B74 /* TagCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCellViewModel.swift; sourceTree = "<group>"; };
@@ -170,7 +165,6 @@
 		651F9D971EC09FDC006D9474 /* AppCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		651F9D991EC09FDC006D9474 /* ArtistListCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistListCoordinator.swift; sourceTree = "<group>"; };
 		651F9D9A1EC09FDC006D9474 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
-		651F9DC31EC09FDC006D9474 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		651F9DC61EC09FDC006D9474 /* ArtistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistViewController.swift; sourceTree = "<group>"; };
 		651F9DC81EC09FDC006D9474 /* ArtistViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistViewModel.swift; sourceTree = "<group>"; };
 		651F9DD91EC09FDC006D9474 /* ArtistCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistCell.swift; sourceTree = "<group>"; };
@@ -194,7 +188,6 @@
 		65400F3D298DBCE700A65B3F /* Core */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Core; sourceTree = "<group>"; };
 		654363782A7EA0600072234B /* IgnoredTags */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = IgnoredTags; sourceTree = "<group>"; };
 		6555AB571ED0AC1600BDDF21 /* ArtistTagsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistTagsCell.swift; sourceTree = "<group>"; };
-		6557788029A2AE4700B05E8A /* LastFMError+LocalizedDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LastFMError+LocalizedDescription.swift"; sourceTree = "<group>"; };
 		6557BD6F1F717D1300E08DD4 /* SimilarsSectionTabViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimilarsSectionTabViewModel.swift; sourceTree = "<group>"; };
 		6564AB0229A1392E0050C42A /* CoreUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CoreUI; sourceTree = "<group>"; };
 		656589EE1FDB093B00859414 /* ArtistSimilarsSectionViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSimilarsSectionViewModelFactory.swift; sourceTree = "<group>"; };
@@ -219,7 +212,6 @@
 		65A4811623AFDEAC002DC892 /* CountryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCell.swift; sourceTree = "<group>"; };
 		65AB2DEE2A7FF756006971A4 /* InfrastructureTestingUtilities */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = InfrastructureTestingUtilities; sourceTree = "<group>"; };
 		65AB2DEF2A7FF75F006971A4 /* ServiceTestingUtilities */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ServiceTestingUtilities; sourceTree = "<group>"; };
-		65AF2B0A27FF62AE0079040D /* UICollectionViewLeftAlignedLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewLeftAlignedLayout.swift; sourceTree = "<group>"; };
 		65B17B9929858E2900E30660 /* Persistence */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Persistence; sourceTree = "<group>"; };
 		65B4A0481FC7153500E01881 /* TagsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsViewModelTests.swift; sourceTree = "<group>"; };
 		65B57B202A802C6400EE290D /* TopTagsListTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopTagsListTests.swift; sourceTree = "<group>"; };
@@ -399,7 +391,6 @@
 			children = (
 				651F9D8F1EC09FDC006D9474 /* Application */,
 				651F9D961EC09FDC006D9474 /* Coordinators */,
-				651F9D9E1EC09FDC006D9474 /* Extensions */,
 				651F9DC11EC09FDC006D9474 /* Modules */,
 				651F9DFC1EC09FDC006D9474 /* Utils */,
 				651F9E051EC09FDC006D9474 /* Views */,
@@ -429,33 +420,15 @@
 			path = Coordinators;
 			sourceTree = "<group>";
 		};
-		651F9D9E1EC09FDC006D9474 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				6516A53C1ECDFD830021E43C /* NSAttributedString+Join.swift */,
-				6557788029A2AE4700B05E8A /* LastFMError+LocalizedDescription.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		651F9DC11EC09FDC006D9474 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				651F9DC21EC09FDC006D9474 /* About */,
 				651F9DC41EC09FDC006D9474 /* Artist */,
 				651F9DD61EC09FDC006D9474 /* Library */,
 				6518F0251ECB01A300681D5E /* Tags */,
 				6570302823AE9A6300F706B4 /* Countries */,
 			);
 			path = Modules;
-			sourceTree = "<group>";
-		};
-		651F9DC21EC09FDC006D9474 /* About */ = {
-			isa = PBXGroup;
-			children = (
-				651F9DC31EC09FDC006D9474 /* AboutViewController.swift */,
-			);
-			path = About;
 			sourceTree = "<group>";
 		};
 		651F9DC41EC09FDC006D9474 /* Artist */ = {
@@ -533,7 +506,6 @@
 				651F9DFD1EC09FDC006D9474 /* AppearanceConfigurator.swift */,
 				65C10DF31F0BD0170072BF09 /* ApplicationStateObserver.swift */,
 				659F759A2814619200ACC306 /* Completion+AsResult.swift */,
-				65AF2B0A27FF62AE0079040D /* UICollectionViewLeftAlignedLayout.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -991,7 +963,6 @@
 				6555AB581ED0AC1600BDDF21 /* ArtistTagsCell.swift in Sources */,
 				651F9E611EC09FDD006D9474 /* EmptyDataSetView.swift in Sources */,
 				651C3BBA1ECF2F4E00C00AD5 /* ArtistsByTagViewModel.swift in Sources */,
-				65AF2B0B27FF62AE0079040D /* UICollectionViewLeftAlignedLayout.swift in Sources */,
 				651F9E441EC09FDC006D9474 /* LibraryViewModel.swift in Sources */,
 				651F9E111EC09FDC006D9474 /* Dependencies.swift in Sources */,
 				656589EF1FDB093B00859414 /* ArtistSimilarsSectionViewModelFactory.swift in Sources */,
@@ -1004,16 +975,13 @@
 				651F9E171EC09FDC006D9474 /* ArtistListCoordinator.swift in Sources */,
 				651CB3631EC9DEEF00BC452C /* LoadingFooterView.swift in Sources */,
 				65206EC71EC4C0CF00A83DA1 /* ArtistTopTagsSectionDataSource.swift in Sources */,
-				6557788129A2AE4700B05E8A /* LastFMError+LocalizedDescription.swift in Sources */,
 				651F9E401EC09FDC006D9474 /* ArtistCell.swift in Sources */,
 				651F9E371EC09FDC006D9474 /* ArtistViewController.swift in Sources */,
 				651F9E181EC09FDC006D9474 /* MainFlowCoordinator.swift in Sources */,
-				6516A53D1ECDFD830021E43C /* NSAttributedString+Join.swift in Sources */,
 				65178A8A1F6ACD6D006A29E8 /* ArtistSimilarsSectionHeaderView.swift in Sources */,
 				651F9E101EC09FDC006D9474 /* AppDelegate.swift in Sources */,
 				65B772891EC5C5E500892698 /* ArtistDataSource.swift in Sources */,
 				65206EC91EC4C11400A83DA1 /* ArtistSimilarsSectionDataSource.swift in Sources */,
-				651F9E361EC09FDC006D9474 /* AboutViewController.swift in Sources */,
 				651CB35E1EC9DCDA00BC452C /* TagCell.swift in Sources */,
 				6518F0291ECB01B000681D5E /* TagsViewController.swift in Sources */,
 				651F9E421EC09FDC006D9474 /* LoadingView.swift in Sources */,

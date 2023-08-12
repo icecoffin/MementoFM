@@ -10,6 +10,7 @@ import XCTest
 @testable import MementoFM
 import Nimble
 import TransientModels
+import Core
 
 final class SimilarArtistCellViewModelTests: XCTestCase {
     private var sampleArtist: Artist = {

@@ -9,7 +9,7 @@
 import Foundation
 
 extension Sequence where Iterator.Element: NSAttributedString {
-    func joined(separator: NSAttributedString) -> NSAttributedString {
+    public func joined(separator: NSAttributedString) -> NSAttributedString {
         var isFirst = true
         return self.reduce(NSMutableAttributedString()) { (result, element) in
             if isFirst {
@@ -22,7 +22,7 @@ extension Sequence where Iterator.Element: NSAttributedString {
         }
     }
 
-    func joined(separator: String) -> NSAttributedString {
+    public func joined(separator: String) -> NSAttributedString {
         return joined(separator: NSAttributedString(string: separator))
     }
 }

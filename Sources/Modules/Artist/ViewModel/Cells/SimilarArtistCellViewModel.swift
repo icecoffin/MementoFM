@@ -9,7 +9,7 @@
 import Foundation
 import TransientModels
 import UIKit.UIFont
-import CoreUI
+import Core
 
 // MARK: - SimilarArtistCellViewModelProtocol
 

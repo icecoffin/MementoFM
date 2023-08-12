@@ -10,8 +10,8 @@ import UIKit
 
 /// Swift rewrite of https://github.com/mokagio/UICollectionViewLeftAlignedLayout
 
-final class UICollectionViewLeftAlignedLayout: UICollectionViewFlowLayout {
-    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+public final class UICollectionViewLeftAlignedLayout: UICollectionViewFlowLayout {
+    override public func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         guard let originalAttributes = super.layoutAttributesForElements(in: rect) else { return nil }
 
         var updatedAttributes = originalAttributes
@@ -26,7 +26,7 @@ final class UICollectionViewLeftAlignedLayout: UICollectionViewFlowLayout {
         return updatedAttributes
     }
 
-    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    override public func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         guard let collectionView = collectionView else { return nil }
 
         let currentItemAttributes = super.layoutAttributesForItem(at: indexPath)?.copy() as? UICollectionViewLayoutAttributes

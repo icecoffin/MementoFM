@@ -9,6 +9,7 @@
 import UIKit
 import TPKeyboardAvoiding
 import Combine
+import CoreUI
 
 final class TagsViewController: UIViewController {
     // MARK: - Private properties
