@@ -29,10 +29,12 @@ final class CountryService: CountryServiceProtocol {
 
     // MARK: - Init
 
-    init(persistentStore: PersistentStore,
-         countryProvider: CountryProviding = CountryProvider(),
-         mainScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.main.eraseToAnyScheduler(),
-         backgroundScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.global().eraseToAnyScheduler()) {
+    init(
+        persistentStore: PersistentStore,
+        countryProvider: CountryProviding = CountryProvider(),
+        mainScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.main.eraseToAnyScheduler(),
+        backgroundScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.global().eraseToAnyScheduler()
+    ) {
         self.persistentStore = persistentStore
         self.countryProvider = countryProvider
         self.mainScheduler = mainScheduler
@@ -42,7 +44,7 @@ final class CountryService: CountryServiceProtocol {
     // MARK: - Public methods
 
     func updateCountries() -> AnyPublisher<Void, Error> {
-        return Future<[Artist], Error>() { promise in
+        return Future<[Artist], Error> { promise in
             self.backgroundScheduler.schedule {
                 let artists = self.persistentStore.objects(Artist.self)
                 let updatedArtists: [Artist] = artists.map {

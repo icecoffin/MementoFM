@@ -61,12 +61,18 @@ final class TagCell: UICollectionViewCell {
     func sizeForViewModel(_ viewModel: TagCellViewModel) -> CGSize {
         let text = viewModel.text
         let attributes: [NSAttributedString.Key: Any] = [.font: Constants.textLabelFont]
-        let size = text.boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude,
-                                                  height: CGFloat.greatestFiniteMagnitude),
-                                     options: [.usesLineFragmentOrigin, .usesFontLeading],
-                                     attributes: attributes,
-                                     context: nil).size
-        return CGSize(width: ceil(size.width) + Constants.textLabelLeadingTrailingOffset * 2,
-                      height: ceil(size.height) + Constants.textLabelTopBottomOffset * 2)
+        let size = text.boundingRect(
+            with: CGSize(
+                width: CGFloat.greatestFiniteMagnitude,
+                height: CGFloat.greatestFiniteMagnitude
+            ),
+            options: [.usesLineFragmentOrigin, .usesFontLeading],
+            attributes: attributes,
+            context: nil
+        ).size
+        return CGSize(
+            width: ceil(size.width) + Constants.textLabelLeadingTrailingOffset * 2,
+            height: ceil(size.height) + Constants.textLabelTopBottomOffset * 2
+        )
     }
 }

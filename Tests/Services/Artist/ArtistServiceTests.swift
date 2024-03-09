@@ -62,9 +62,11 @@ final class ArtistServiceTests: XCTestCase {
         let totalPages = 5
         let artistsPerPage = 10
 
-        let repository = MockArtistLibraryRepository(totalPages: totalPages,
-                                                     shouldFailWithError: true,
-                                                     artistProvider: { _ in return [] })
+        let repository = MockArtistLibraryRepository(
+            totalPages: totalPages,
+            shouldFailWithError: true,
+            artistProvider: { _ in return [] }
+        )
         let artistService = ArtistService(persistentStore: persistentStore, repository: repository)
 
         var didCatchError = false
@@ -132,10 +134,12 @@ final class ArtistServiceTests: XCTestCase {
     }
 
     func test_calculateTopTagsForAllArtists_callsCalculatorForEachArtist_andSavesArtists() {
-        let artistService = ArtistService(persistentStore: persistentStore,
-                                          repository: StubArtistEmptyRepository(),
-                                          mainScheduler: scheduler,
-                                          backgroundScheduler: scheduler)
+        let artistService = ArtistService(
+            persistentStore: persistentStore,
+            repository: StubArtistEmptyRepository(),
+            mainScheduler: scheduler,
+            backgroundScheduler: scheduler
+        )
 
         let artists = ModelFactory.generateArtists(inAmount: 5)
         persistentStore.customObjects = artists

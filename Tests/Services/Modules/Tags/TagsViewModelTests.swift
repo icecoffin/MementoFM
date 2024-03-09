@@ -178,8 +178,10 @@ final class TagsViewModelTests: XCTestCase {
     }
 
     private func makeTagsViewModel() -> TagsViewModel {
-        return TagsViewModel(dependencies: dependencies,
-                             backgroundScheduler: scheduler,
-                             mainScheduler: scheduler)
+        return TagsViewModel(
+            dependencies: dependencies,
+            backgroundScheduler: scheduler,
+            mainScheduler: scheduler
+        )
     }
 }

@@ -47,9 +47,11 @@ final class TagsViewModel {
 
     // MARK: - Init
 
-    init(dependencies: Dependencies,
-         backgroundScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.global().eraseToAnyScheduler(),
-         mainScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.main.eraseToAnyScheduler()) {
+    init(
+        dependencies: Dependencies,
+        backgroundScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.global().eraseToAnyScheduler(),
+        mainScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.main.eraseToAnyScheduler()
+    ) {
         self.dependencies = dependencies
         self.backgroundScheduler = backgroundScheduler
         self.mainScheduler = mainScheduler

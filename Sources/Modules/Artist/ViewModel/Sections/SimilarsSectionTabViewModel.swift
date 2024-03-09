@@ -12,8 +12,10 @@ import Combine
 // MARK: - SimilarsSectionTabViewModelDelegate
 
 protocol SimilarsSectionTabViewModelDelegate: AnyObject {
-    func similarsSectionTabViewModel(_ viewModel: SimilarsSectionTabViewModel,
-                                     didSelectArtist artist: Artist)
+    func similarsSectionTabViewModel(
+        _ viewModel: SimilarsSectionTabViewModel,
+        didSelectArtist artist: Artist
+    )
 }
 
 // MARK: - SimilarsSectionTabViewModel
@@ -58,10 +60,12 @@ final class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol 
 
     // MARK: - Init
 
-    init(artist: Artist,
-         canSelectSimilarArtists: Bool,
-         requestStrategy: SimilarArtistsRequestStrategy,
-         dependencies: Dependencies) {
+    init(
+        artist: Artist,
+        canSelectSimilarArtists: Bool,
+        requestStrategy: SimilarArtistsRequestStrategy,
+        dependencies: Dependencies
+    ) {
         self.artist = artist
         self.canSelectSimilarArtists = canSelectSimilarArtists
         self.requestStrategy = requestStrategy

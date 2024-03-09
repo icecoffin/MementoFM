@@ -17,21 +17,28 @@ extension UICollectionView {
         register(T.self, forSupplementaryViewOfKind: kind, withReuseIdentifier: T.reuseIdentifier)
     }
 
-    func dequeueReusableCell<T: UICollectionViewCell>(ofType: T.Type,
-                                                      withReuseIdentifier reuseIdentifier: String = T.reuseIdentifier,
-                                                      for indexPath: IndexPath) -> T {
+    func dequeueReusableCell<T: UICollectionViewCell>(
+        ofType: T.Type,
+        withReuseIdentifier reuseIdentifier: String = T.reuseIdentifier,
+        for indexPath: IndexPath
+    ) -> T {
         guard let cell = dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? T else {
             fatalError("Couldn't dequeue \(T.self); is it registered in the collection view?")
         }
         return cell
     }
 
-    func dequeueReusableView<T: UICollectionReusableView>(ofType: T.Type,
-                                                          kind: String,
-                                                          reuseIdentifier: String = T.reuseIdentifier,
-                                                          for indexPath: IndexPath) -> T {
-        guard let view = dequeueReusableSupplementaryView(ofKind: kind,
-                                                          withReuseIdentifier: reuseIdentifier, for: indexPath) as? T else {
+    func dequeueReusableView<T: UICollectionReusableView>(
+        ofType: T.Type,
+        kind: String,
+        reuseIdentifier: String = T.reuseIdentifier,
+        for indexPath: IndexPath
+    ) -> T {
+        guard let view = dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: reuseIdentifier,
+            for: indexPath
+        ) as? T else {
             fatalError("Couldn't dequeue \(T.self); is it registered in the collection view?")
         }
         return view

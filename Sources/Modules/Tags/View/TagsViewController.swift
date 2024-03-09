@@ -113,9 +113,11 @@ extension TagsViewController: UICollectionViewDelegateFlowLayout {
         viewModel.selectTag(at: indexPath)
     }
 
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
         let cellViewModel = viewModel.cellViewModel(at: indexPath)
         return prototypeCell.sizeForViewModel(cellViewModel)
     }

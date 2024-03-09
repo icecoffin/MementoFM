@@ -129,9 +129,11 @@ final class LibraryViewModel: ArtistListViewModel {
 
     func artistViewModel(at indexPath: IndexPath) -> LibraryArtistCellViewModel {
         let artist = artists[indexPath.row]
-        return LibraryArtistCellViewModel(artist: artist,
-                                          index: indexPath.row + 1,
-                                          numberFormatter: numberFormatter)
+        return LibraryArtistCellViewModel(
+            artist: artist,
+            index: indexPath.row + 1,
+            numberFormatter: numberFormatter
+        )
     }
 
     func selectArtist(at indexPath: IndexPath) {

@@ -77,11 +77,13 @@ final class MainFlowCoordinator: Coordinator {
         let popTracker = NavigationControllerPopTracker(navigationController: navigationController)
         let tabBarItem = UITabBarItem(title: "Library".unlocalized, image: .tabBarLibrary, selectedImage: nil)
         navigationController.tabBarItem = tabBarItem
-        return ArtistListCoordinator(navigationController: navigationController,
-                                     popTracker: popTracker,
-                                     shouldStartAnimated: false,
-                                     viewModelFactory: LibraryViewModelFactory(dependencies: dependencies),
-                                     dependencies: dependencies)
+        return ArtistListCoordinator(
+            navigationController: navigationController,
+            popTracker: popTracker,
+            shouldStartAnimated: false,
+            viewModelFactory: LibraryViewModelFactory(dependencies: dependencies),
+            dependencies: dependencies
+        )
 
     }
 
@@ -89,25 +91,31 @@ final class MainFlowCoordinator: Coordinator {
         let popTracker = NavigationControllerPopTracker(navigationController: navigationController)
         let tabBarItem = UITabBarItem(title: "Tags".unlocalized, image: .tabBarTags, selectedImage: nil)
         navigationController.tabBarItem = tabBarItem
-        return TagsCoordinator(navigationController: navigationController,
-                               popTracker: popTracker,
-                               dependencies: dependencies)
+        return TagsCoordinator(
+            navigationController: navigationController,
+            popTracker: popTracker,
+            dependencies: dependencies
+        )
     }
 
     private func makeCountriesCoordinator(with navigationController: UINavigationController) -> CountriesCoordinator {
         let popTracker = NavigationControllerPopTracker(navigationController: navigationController)
         let tabBarItem = UITabBarItem(title: "Countries".unlocalized, image: .tabBarCountries, selectedImage: nil)
         navigationController.tabBarItem = tabBarItem
-        return CountriesCoordinator(navigationController: navigationController,
-                                    popTracker: popTracker,
-                                    dependencies: dependencies)
+        return CountriesCoordinator(
+            navigationController: navigationController,
+            popTracker: popTracker,
+            dependencies: dependencies
+        )
     }
 
     private func makeSettingsCoordinator(with navigationController: UINavigationController) -> SettingsCoordinator {
         let tabBarItem = UITabBarItem(title: "Settings".unlocalized, image: .tabBarSettings, selectedImage: nil)
         navigationController.tabBarItem = tabBarItem
-        let settingsCoordinator = SettingsCoordinator(navigationController: navigationController,
-                                                      dependencies: dependencies)
+        let settingsCoordinator = SettingsCoordinator(
+            navigationController: navigationController,
+            dependencies: dependencies
+        )
         settingsCoordinator.delegate = self
 
         return settingsCoordinator

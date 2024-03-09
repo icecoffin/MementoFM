@@ -17,13 +17,15 @@ final class ModelFactory {
         tags: [Tag] = [],
         topTags: [Tag] = []
     ) -> Artist {
-        return Artist(name: "Artist\(index)",
+        return Artist(
+            name: "Artist\(index)",
             playcount: playcount,
             urlString: "http://example.com/artist\(index)",
             needsTagsUpdate: needsTagsUpdate,
             tags: tags,
             topTags: topTags,
-            country: nil)
+            country: nil
+        )
     }
 
     static func generateArtists(inAmount amount: Int, needsTagsUpdate: Bool = false) -> [Artist] {

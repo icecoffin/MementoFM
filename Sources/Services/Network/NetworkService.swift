@@ -11,10 +11,12 @@ import Alamofire
 import Combine
 
 protocol NetworkService: AnyObject {
-    func performRequest<T: Codable>(method: HTTPMethod,
-                                    parameters: Parameters?,
-                                    encoding: ParameterEncoding,
-                                    headers: HTTPHeaders?) -> AnyPublisher<T, Error>
+    func performRequest<T: Codable>(
+        method: HTTPMethod,
+        parameters: Parameters?,
+        encoding: ParameterEncoding,
+        headers: HTTPHeaders?
+    ) -> AnyPublisher<T, Error>
 }
 
 extension NetworkService {

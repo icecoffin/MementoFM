@@ -15,10 +15,12 @@ final class MockTrackRepository: TrackRepository {
     var shouldFailWithError = false
     var trackProvider: (() -> [Track])!
 
-    func getRecentTracksPage(withIndex index: Int,
-                             for user: String,
-                             from: TimeInterval,
-                             limit: Int) -> AnyPublisher<RecentTracksPageResponse, Error> {
+    func getRecentTracksPage(
+        withIndex index: Int,
+        for user: String,
+        from: TimeInterval,
+        limit: Int
+    ) -> AnyPublisher<RecentTracksPageResponse, Error> {
         if shouldFailWithError {
             return Fail(error: NSError(domain: "MementoFM", code: 1, userInfo: nil)).eraseToAnyPublisher()
         } else {

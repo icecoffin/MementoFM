@@ -11,8 +11,10 @@ import UIKit
 // MARK: - ArtistSimilarsSectionHeaderViewDelegate
 
 protocol ArtistSimilarsSectionHeaderViewDelegate: AnyObject {
-    func artistSimilarsSectionHeaderView(_ headerView: ArtistSimilarsSectionHeaderView,
-                                         didSelectSegmentWithIndex index: Int)
+    func artistSimilarsSectionHeaderView(
+        _ headerView: ArtistSimilarsSectionHeaderView,
+        didSelectSegmentWithIndex index: Int
+    )
 }
 
 // MARK: - ArtistSectionHeaderViewModelProtocol

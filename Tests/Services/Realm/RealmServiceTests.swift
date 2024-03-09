@@ -20,9 +20,13 @@ final class RealmServiceTests: XCTestCase {
         super.setUp()
 
         realm = RealmFactory.inMemoryRealm()
-        realmService = RealmService(getRealm: {
-            return RealmFactory.inMemoryRealm()
-        }, backgroundScheduler: .immediate, mainScheduler: .immediate)
+        realmService = RealmService(
+            getRealm: {
+                return RealmFactory.inMemoryRealm()
+            },
+            backgroundScheduler: .immediate,
+            mainScheduler: .immediate
+        )
     }
 
     override func tearDown() {
@@ -34,11 +38,16 @@ final class RealmServiceTests: XCTestCase {
 
     func test_saveSingleObject_writesToRealm() {
         let ignoredTag = IgnoredTag(uuid: "uuid", name: "name")
-        _ = realmService.save(ignoredTag).sink(receiveCompletion: { _ in
-            let expectedIgnoredTag = self.realm.object(ofType: RealmIgnoredTag.self,
-                                                       forPrimaryKey: ignoredTag.uuid)?.toTransient()
-            expect(expectedIgnoredTag) == ignoredTag
-        }, receiveValue: { _ in })
+        _ = realmService.save(ignoredTag).sink(
+            receiveCompletion: { _ in
+                let expectedIgnoredTag = self.realm.object(
+                    ofType: RealmIgnoredTag.self,
+                    forPrimaryKey: ignoredTag.uuid
+                )?.toTransient()
+                expect(expectedIgnoredTag) == ignoredTag
+            },
+            receiveValue: { _ in }
+        )
     }
 
     func test_saveMultipleObjets_writesToRealm() {

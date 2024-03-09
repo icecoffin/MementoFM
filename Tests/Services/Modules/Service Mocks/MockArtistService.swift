@@ -103,8 +103,10 @@ final class MockArtistService: ArtistServiceProtocol {
 
     var customMappedCollection: AnyPersistentMappedCollection<Artist>!
     var artistsParameters: (predicate: NSPredicate?, sortDescriptors: [NSSortDescriptor])?
-    func artists(filteredUsing predicate: NSPredicate?,
-                 sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<Artist> {
+    func artists(
+        filteredUsing predicate: NSPredicate?,
+        sortedBy sortDescriptors: [NSSortDescriptor]
+    ) -> AnyPersistentMappedCollection<Artist> {
         artistsParameters = (predicate: predicate, sortDescriptors: sortDescriptors)
         return customMappedCollection
     }

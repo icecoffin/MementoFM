@@ -23,10 +23,12 @@ final class LastFMNetworkService: NetworkService {
 
     // MARK: - Public methods
 
-    func performRequest<T: Codable>(method: HTTPMethod,
-                                    parameters: Parameters?,
-                                    encoding: ParameterEncoding,
-                                    headers: HTTPHeaders?) -> AnyPublisher<T, Error> {
+    func performRequest<T: Codable>(
+        method: HTTPMethod,
+        parameters: Parameters?,
+        encoding: ParameterEncoding,
+        headers: HTTPHeaders?
+    ) -> AnyPublisher<T, Error> {
         let publisher = AF
             .request(baseURL, method: method, parameters: parameters, headers: headers)
             .publishData()

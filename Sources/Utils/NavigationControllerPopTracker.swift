@@ -9,8 +9,10 @@
 import UIKit
 
 protocol NavigationControllerPopObserver: AnyObject {
-    func navigationControllerPopTracker(_ tracker: NavigationControllerPopTracker,
-                                        didPopViewController viewController: UIViewController)
+    func navigationControllerPopTracker(
+        _ tracker: NavigationControllerPopTracker,
+        didPopViewController viewController: UIViewController
+    )
 }
 
 struct NavigationControllerPopObserverContainer {
@@ -28,17 +30,21 @@ final class NavigationControllerPopTracker: NSObject {
         navigationController.delegate = self
     }
 
-    func addObserver(_ observer: NavigationControllerPopObserver,
-                     forPopTransitionOf viewController: UIViewController) {
+    func addObserver(
+        _ observer: NavigationControllerPopObserver,
+        forPopTransitionOf viewController: UIViewController
+    ) {
         let wrappedObserver = NavigationControllerPopObserverContainer(value: observer)
         viewControllerToObservers[viewController] = wrappedObserver
     }
 }
 
 extension NavigationControllerPopTracker: UINavigationControllerDelegate {
-    func navigationController(_ navigationController: UINavigationController,
-                              didShow viewController: UIViewController,
-                              animated: Bool) {
+    func navigationController(
+        _ navigationController: UINavigationController,
+        didShow viewController: UIViewController,
+        animated: Bool
+    ) {
         guard let poppingViewController = navigationController.poppingViewController() else {
             return
         }

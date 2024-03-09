@@ -17,17 +17,21 @@ extension UITableView {
         register(T.self, forHeaderFooterViewReuseIdentifier: T.reuseIdentifier)
     }
 
-    func dequeueReusableCell<T: UITableViewCell>(ofType: T.Type,
-                                                 withIdentifier identifier: String = T.reuseIdentifier) -> T {
+    func dequeueReusableCell<T: UITableViewCell>(
+        ofType: T.Type,
+        withIdentifier identifier: String = T.reuseIdentifier
+    ) -> T {
         guard let cell = dequeueReusableCell(withIdentifier: T.reuseIdentifier) as? T else {
             fatalError("Couldn't dequeue \(T.self); is it registered in the table view?")
         }
         return cell
     }
 
-    func dequeueReusableCell<T: UITableViewCell>(ofType: T.Type,
-                                                 withIdentifier identifier: String = T.reuseIdentifier,
-                                                 for indexPath: IndexPath) -> T {
+    func dequeueReusableCell<T: UITableViewCell>(
+        ofType: T.Type,
+        withIdentifier identifier: String = T.reuseIdentifier,
+        for indexPath: IndexPath
+    ) -> T {
         guard let cell = dequeueReusableCell(withIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
             fatalError("Couldn't dequeue \(T.self); is it registered in the table view?")
         }

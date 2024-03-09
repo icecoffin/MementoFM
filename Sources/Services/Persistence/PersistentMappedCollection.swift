@@ -51,7 +51,6 @@ private class _AnyPersistentMappedCollectionBase<Element: TransientEntity>: Pers
     }
 }
 
-// swiftlint:disable:next line_length
 private final class _AnyPersistentMappedCollectionBox<ConcreteCollection: PersistentMappedCollection>: _AnyPersistentMappedCollectionBase<ConcreteCollection.Element> {
     var concrete: ConcreteCollection
 

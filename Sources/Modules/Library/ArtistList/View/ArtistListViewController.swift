@@ -133,8 +133,10 @@ final class ArtistListViewController: UIViewController {
 
         loadingView.isHidden = false
 
-        UIView.animate(withDuration: Constants.loadingViewAnimationDuration,
-                       delay: Constants.loadingViewAnimationDelay) {
+        UIView.animate(
+            withDuration: Constants.loadingViewAnimationDuration,
+            delay: Constants.loadingViewAnimationDelay
+        ) {
             self.loadingView.snp.updateConstraints { make in
                 make.bottom.equalToSuperview()
             }
@@ -147,8 +149,10 @@ final class ArtistListViewController: UIViewController {
             make.bottom.equalToSuperview().offset(self.loadingView.bounds.height)
         }
 
-        UIView.animate(withDuration: Constants.loadingViewAnimationDuration,
-                       delay: Constants.loadingViewAnimationDelay) {
+        UIView.animate(
+            withDuration: Constants.loadingViewAnimationDuration,
+            delay: Constants.loadingViewAnimationDelay
+        ) {
             self.view.layoutIfNeeded()
         } completion: { _ in
             self.loadingView.isHidden = true

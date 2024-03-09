@@ -13,8 +13,10 @@ import Combine
 final class MockPersistentStore: PersistentStore {
     var customMappedCollection: Any?
     var mappedCollectionParameters: (predicate: NSPredicate?, sortDescriptors: [NSSortDescriptor])?
-    func mappedCollection<T: TransientEntity>(filteredUsing predicate: NSPredicate?,
-                                              sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<T> {
+    func mappedCollection<T: TransientEntity>(
+        filteredUsing predicate: NSPredicate?,
+        sortedBy sortDescriptors: [NSSortDescriptor]
+    ) -> AnyPersistentMappedCollection<T> {
         mappedCollectionParameters = (predicate, sortDescriptors)
         guard let customMappedCollection = customMappedCollection as? AnyPersistentMappedCollection<T> else {
             fatalError("customMappedCollection is either not set or has a wrong type (should be of \(T.self)")

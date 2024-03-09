@@ -102,8 +102,10 @@ final class ArtistSimilarsSectionDataSource: ArtistSectionDataSource {
 // MARK: - ArtistSimilarsSectionHeaderViewDelegate
 
 extension ArtistSimilarsSectionDataSource: ArtistSimilarsSectionHeaderViewDelegate {
-    func artistSimilarsSectionHeaderView(_ headerView: ArtistSimilarsSectionHeaderView,
-                                         didSelectSegmentWithIndex index: Int) {
+    func artistSimilarsSectionHeaderView(
+        _ headerView: ArtistSimilarsSectionHeaderView,
+        didSelectSegmentWithIndex index: Int
+    ) {
         viewModel.selectTab(at: index)
     }
 }

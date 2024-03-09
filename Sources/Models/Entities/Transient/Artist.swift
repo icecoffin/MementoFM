@@ -34,43 +34,51 @@ struct Artist: TransientEntity, Equatable, Codable {
     }
 
     func updatingPlaycount(to playcount: Int) -> Artist {
-        return Artist(name: name,
-                      playcount: playcount,
-                      urlString: urlString,
-                      needsTagsUpdate: needsTagsUpdate,
-                      tags: tags,
-                      topTags: topTags,
-                      country: country)
+        return Artist(
+            name: name,
+            playcount: playcount,
+            urlString: urlString,
+            needsTagsUpdate: needsTagsUpdate,
+            tags: tags,
+            topTags: topTags,
+            country: country
+        )
     }
 
     func updatingTags(to tags: [Tag], needsTagsUpdate: Bool) -> Artist {
-        return Artist(name: name,
-                      playcount: playcount,
-                      urlString: urlString,
-                      needsTagsUpdate: needsTagsUpdate,
-                      tags: tags,
-                      topTags: topTags,
-                      country: country)
+        return Artist(
+            name: name,
+            playcount: playcount,
+            urlString: urlString,
+            needsTagsUpdate: needsTagsUpdate,
+            tags: tags,
+            topTags: topTags,
+            country: country
+        )
     }
 
     func updatingTopTags(to topTags: [Tag]) -> Artist {
-        return Artist(name: name,
-                      playcount: playcount,
-                      urlString: urlString,
-                      needsTagsUpdate: needsTagsUpdate,
-                      tags: tags,
-                      topTags: topTags,
-                      country: country)
+        return Artist(
+            name: name,
+            playcount: playcount,
+            urlString: urlString,
+            needsTagsUpdate: needsTagsUpdate,
+            tags: tags,
+            topTags: topTags,
+            country: country
+        )
     }
 
     func updatingCountry(to country: String) -> Artist {
-        return Artist(name: name,
-                      playcount: playcount,
-                      urlString: urlString,
-                      needsTagsUpdate: needsTagsUpdate,
-                      tags: tags,
-                      topTags: topTags,
-                      country: country)
+        return Artist(
+            name: name,
+            playcount: playcount,
+            urlString: urlString,
+            needsTagsUpdate: needsTagsUpdate,
+            tags: tags,
+            topTags: topTags,
+            country: country
+        )
     }
 }
 

@@ -45,9 +45,11 @@ final class MockArtistSimilarsSectionTabViewModelFactory: ArtistSimilarsSectionT
     var firstTabViewModel = MockArtistSimilarsSectionViewModel()
     var secondTabViewModel = MockArtistSimilarsSectionViewModel()
 
-    func makeTabViewModels(for artist: Artist,
-                           dependencies: ArtistSimilarsSectionViewModel.Dependencies,
-                           delegate: SimilarsSectionTabViewModelDelegate) -> [ArtistSimilarsSectionViewModelProtocol] {
+    func makeTabViewModels(
+        for artist: Artist,
+        dependencies: ArtistSimilarsSectionViewModel.Dependencies,
+        delegate: SimilarsSectionTabViewModelDelegate
+    ) -> [ArtistSimilarsSectionViewModelProtocol] {
         return [firstTabViewModel, secondTabViewModel]
     }
 }

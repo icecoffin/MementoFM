@@ -66,20 +66,24 @@ struct AppDependency: HasArtistService, HasUserService, HasTagService,
 
         let countryService = CountryService(persistentStore: realmService)
 
-        let libraryUpdater = LibraryUpdater(userService: userService,
-                                            artistService: artistService,
-                                            tagService: tagService,
-                                            ignoredTagService: ignoredTagService,
-                                            trackService: trackService,
-                                            countryService: countryService,
-                                            networkService: networkService)
+        let libraryUpdater = LibraryUpdater(
+            userService: userService,
+            artistService: artistService,
+            tagService: tagService,
+            ignoredTagService: ignoredTagService,
+            trackService: trackService,
+            countryService: countryService,
+            networkService: networkService
+        )
 
-        return AppDependency(artistService: artistService,
-                             userService: userService,
-                             tagService: tagService,
-                             ignoredTagService: ignoredTagService,
-                             trackService: trackService,
-                             countryService: countryService,
-                             libraryUpdater: libraryUpdater)
+        return AppDependency(
+            artistService: artistService,
+            userService: userService,
+            tagService: tagService,
+            ignoredTagService: ignoredTagService,
+            trackService: trackService,
+            countryService: countryService,
+            libraryUpdater: libraryUpdater
+        )
     }
 }

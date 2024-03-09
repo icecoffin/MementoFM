@@ -1,14 +1,17 @@
+disabled_rules:
+  - line_length
+
 opt_in_rules: # some rules are only opt-in
   - empty_count
   - force_unwrapping
   - multiline_parameters
+  - multiline_parameters_brackets
+  - multiline_arguments
+  - multiline_arguments_brackets
 
 excluded:
-  - Pods
   - build
   - GeneratedCode
-
-line_length: 130
 
 nesting:
   type_level:

@@ -16,9 +16,11 @@ final class CountriesCoordinator: NavigationFlowCoordinator {
     private let dependencies: AppDependency
     private let popTracker: NavigationControllerPopTracker
 
-    init(navigationController: UINavigationController,
-         popTracker: NavigationControllerPopTracker,
-         dependencies: AppDependency) {
+    init(
+        navigationController: UINavigationController,
+        popTracker: NavigationControllerPopTracker,
+        dependencies: AppDependency
+    ) {
         self.navigationController = navigationController
         self.popTracker = popTracker
         self.dependencies = dependencies
@@ -39,11 +41,13 @@ final class CountriesCoordinator: NavigationFlowCoordinator {
 extension CountriesCoordinator: CountriesViewModelDelegate {
     func countriesViewModel(_ viewModel: CountriesViewModel, didSelectCountry country: CountryType) {
         let viewModelFactory = ArtistsByCountryViewModelFactory(country: country, dependencies: dependencies)
-        let artistListCoordinator = ArtistListCoordinator(navigationController: navigationController,
-                                                          popTracker: popTracker,
-                                                          shouldStartAnimated: true,
-                                                          viewModelFactory: viewModelFactory,
-                                                          dependencies: dependencies)
+        let artistListCoordinator = ArtistListCoordinator(
+            navigationController: navigationController,
+            popTracker: popTracker,
+            shouldStartAnimated: true,
+            viewModelFactory: viewModelFactory,
+            dependencies: dependencies
+        )
         addChildCoordinator(artistListCoordinator)
         artistListCoordinator.start()
     }

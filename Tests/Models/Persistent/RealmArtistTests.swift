@@ -30,13 +30,15 @@ final class RealmArtistTests: XCTestCase {
     func test_fromTransient_setsCorrectProperties() {
         let tags = ModelFactory.generateTags(inAmount: 5, for: "Test")
         let topTags = Array(tags.prefix(3))
-        let transientArtist = Artist(name: "Test",
-                                     playcount: 10,
-                                     urlString: "https://example.com",
-                                     needsTagsUpdate: false,
-                                     tags: tags,
-                                     topTags: topTags,
-                                     country: nil)
+        let transientArtist = Artist(
+            name: "Test",
+            playcount: 10,
+            urlString: "https://example.com",
+            needsTagsUpdate: false,
+            tags: tags,
+            topTags: topTags,
+            country: nil
+        )
 
         let realmArtist = RealmArtist.from(transient: transientArtist)
 

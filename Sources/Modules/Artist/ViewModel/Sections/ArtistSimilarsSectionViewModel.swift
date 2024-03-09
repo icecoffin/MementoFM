@@ -29,8 +29,10 @@ protocol ArtistSimilarsSectionViewModelProtocol: AnyObject {
 // MARK: - ArtistSimilarsSectionViewModelDelegate
 
 protocol ArtistSimilarsSectionViewModelDelegate: AnyObject {
-    func artistSimilarsSectionViewModel(_ viewModel: ArtistSimilarsSectionViewModel,
-                                        didSelectArtist artist: Artist)
+    func artistSimilarsSectionViewModel(
+        _ viewModel: ArtistSimilarsSectionViewModel,
+        didSelectArtist artist: Artist
+    )
 }
 
 // MARK: - ArtistSimilarsSectionViewModel
@@ -76,9 +78,11 @@ final class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtoc
 
     // MARK: - Init
 
-    init(artist: Artist,
-         dependencies: Dependencies,
-         tabViewModelFactory: ArtistSimilarsSectionTabViewModelFactoryProtocol = ArtistSimilarsSectionTabViewModelFactory()) {
+    init(
+        artist: Artist,
+        dependencies: Dependencies,
+        tabViewModelFactory: ArtistSimilarsSectionTabViewModelFactoryProtocol = ArtistSimilarsSectionTabViewModelFactory()
+    ) {
         tabViewModels = tabViewModelFactory.makeTabViewModels(for: artist, dependencies: dependencies, delegate: self)
         setup()
     }
@@ -121,8 +125,10 @@ final class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtoc
 // MARK: - SimilarsSectionTabViewModelDelegate
 
 extension ArtistSimilarsSectionViewModel: SimilarsSectionTabViewModelDelegate {
-    func similarsSectionTabViewModel(_ viewModel: SimilarsSectionTabViewModel,
-                                     didSelectArtist artist: Artist) {
+    func similarsSectionTabViewModel(
+        _ viewModel: SimilarsSectionTabViewModel,
+        didSelectArtist artist: Artist
+    ) {
         delegate?.artistSimilarsSectionViewModel(self, didSelectArtist: artist)
     }
 }

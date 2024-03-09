@@ -50,10 +50,12 @@ final class SimilarArtistsRemoteRequestStrategyTests: XCTestCase {
         var expectedSimilarArtists: [Artist] = []
 
         _ = strategy.getSimilarArtists(for: sampleArtist)
-            .sink(receiveCompletion: { _ in },
-                  receiveValue: { artists in
-                expectedSimilarArtists = artists
-            })
+            .sink(
+                receiveCompletion: { _ in },
+                receiveValue: { artists in
+                    expectedSimilarArtists = artists
+                }
+            )
 
         expect(expectedSimilarArtists) == similarArtists
     }

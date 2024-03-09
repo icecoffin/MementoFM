@@ -44,10 +44,12 @@ final class UICollectionViewLeftAlignedLayout: UICollectionViewFlowLayout {
         let previousFrame = layoutAttributesForItem(at: previousIndexPath)?.frame ?? .zero
         let previousFrameRightPoint = previousFrame.origin.x + previousFrame.width
         let currentFrame = currentItemAttributes?.frame ?? .zero
-        let stretchedCurrentFrame = CGRect(x: sectionInset.left,
-                                           y: currentFrame.origin.y,
-                                           width: layoutWidth,
-                                           height: currentFrame.height)
+        let stretchedCurrentFrame = CGRect(
+            x: sectionInset.left,
+            y: currentFrame.origin.y,
+            width: layoutWidth,
+            height: currentFrame.height
+        )
         // If the current frame, once left aligned to the left and stretched to the full collection view
         // width intersects the previous frame then they are on the same line
         let isFirstItemInRow = !previousFrame.intersects(stretchedCurrentFrame)
@@ -66,9 +68,11 @@ final class UICollectionViewLeftAlignedLayout: UICollectionViewFlowLayout {
         guard let collectionView = self.collectionView else { return minimumInteritemSpacing }
 
         let delegate = collectionView.delegate as? UICollectionViewDelegateFlowLayout
-        return delegate?.collectionView?(collectionView,
-                                         layout: self,
-                                         minimumInteritemSpacingForSectionAt: index) ?? minimumInteritemSpacing
+        return delegate?.collectionView?(
+            collectionView,
+            layout: self,
+            minimumInteritemSpacingForSectionAt: index
+        ) ?? minimumInteritemSpacing
     }
 
     private func evaluatedSectionInsetForItem(at index: Int) -> UIEdgeInsets {

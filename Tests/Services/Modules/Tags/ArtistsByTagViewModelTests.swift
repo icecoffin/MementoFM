@@ -45,8 +45,7 @@ final class ArtistsByTagViewModelTests: XCTestCase {
             Artist(name: "Artist4", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [tag2], country: nil),
             Artist(name: "Artist5", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [tag2], country: nil),
             Artist(name: "Artist6", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [tag2], country: nil),
-            Artist(name: "Artist7", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [],
-                   topTags: [tag1, tag2], country: nil)
+            Artist(name: "Artist7", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [tag1, tag2], country: nil)
         ]
     }()
 

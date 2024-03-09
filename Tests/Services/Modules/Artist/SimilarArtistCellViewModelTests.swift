@@ -17,13 +17,15 @@ final class SimilarArtistCellViewModelTests: XCTestCase {
                     Tag(name: "Tag3", count: 1),
                     Tag(name: "Tag4", count: 1),
                     Tag(name: "Tag5", count: 1)]
-        return Artist(name: "Artist",
-                      playcount: 10,
-                      urlString: "",
-                      needsTagsUpdate: false,
-                      tags: [],
-                      topTags: tags,
-                      country: nil)
+        return Artist(
+            name: "Artist",
+            playcount: 10,
+            urlString: "",
+            needsTagsUpdate: false,
+            tags: [],
+            topTags: tags,
+            country: nil
+        )
     }()
 
     private let commonTags = ["Tag1", "Tag3"]

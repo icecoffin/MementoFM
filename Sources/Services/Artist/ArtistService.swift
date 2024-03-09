@@ -26,8 +26,10 @@ protocol ArtistServiceProtocol: AnyObject {
 
     func calculateTopTags(for artist: Artist, using calculator: ArtistTopTagsCalculating) -> AnyPublisher<Void, Error>
 
-    func artists(filteredUsing predicate: NSPredicate?,
-                 sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<Artist>
+    func artists(
+        filteredUsing predicate: NSPredicate?,
+        sortedBy sortDescriptors: [NSSortDescriptor]
+    ) -> AnyPersistentMappedCollection<Artist>
     func getSimilarArtists(for artist: Artist, limit: Int) -> AnyPublisher<[Artist], Error>
 }
 
@@ -57,10 +59,12 @@ final class ArtistService: ArtistServiceProtocol {
 
     // MARK: - Init
 
-    init(persistentStore: PersistentStore,
-         repository: ArtistRepository,
-         mainScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.main.eraseToAnyScheduler(),
-         backgroundScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.global().eraseToAnyScheduler()) {
+    init(
+        persistentStore: PersistentStore,
+        repository: ArtistRepository,
+        mainScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.main.eraseToAnyScheduler(),
+        backgroundScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.global().eraseToAnyScheduler()
+    ) {
         self.persistentStore = persistentStore
         self.repository = repository
         self.mainScheduler = mainScheduler
@@ -119,7 +123,7 @@ final class ArtistService: ArtistServiceProtocol {
     }
 
     func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating) -> AnyPublisher<Void, Error> {
-        return Future<[Artist], Error>() { promise in
+        return Future<[Artist], Error> { promise in
             self.backgroundScheduler.schedule {
                 let artists = self.persistentStore.objects(Artist.self)
                 let updatedArtists = artists.map { return calculator.calculateTopTags(for: $0) }
@@ -138,8 +142,10 @@ final class ArtistService: ArtistServiceProtocol {
         return persistentStore.save(updatedArtist)
     }
 
-    func artists(filteredUsing predicate: NSPredicate? = nil,
-                 sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<Artist> {
+    func artists(
+        filteredUsing predicate: NSPredicate? = nil,
+        sortedBy sortDescriptors: [NSSortDescriptor]
+    ) -> AnyPersistentMappedCollection<Artist> {
         return persistentStore.mappedCollection(filteredUsing: predicate, sortedBy: sortDescriptors)
     }
 

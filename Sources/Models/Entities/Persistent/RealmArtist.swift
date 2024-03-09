@@ -42,12 +42,14 @@ final class RealmArtist: Object, PersistentEntity {
     }
 
     func toTransient() -> Artist {
-        return Artist(name: name,
-                      playcount: playcount,
-                      urlString: urlString,
-                      needsTagsUpdate: needsTagsUpdate,
-                      tags: tags.map({ $0.toTransient() }),
-                      topTags: topTags.map({ $0.toTransient() }),
-                      country: country)
+        return Artist(
+            name: name,
+            playcount: playcount,
+            urlString: urlString,
+            needsTagsUpdate: needsTagsUpdate,
+            tags: tags.map({ $0.toTransient() }),
+            topTags: topTags.map({ $0.toTransient() }),
+            country: country
+        )
     }
 }

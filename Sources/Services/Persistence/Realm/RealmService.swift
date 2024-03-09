@@ -30,9 +30,11 @@ final class RealmService: PersistentStore {
 
     // MARK: - Init
 
-    init(getRealm: @escaping () -> Realm,
-         backgroundScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.global().eraseToAnyScheduler(),
-         mainScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.main.eraseToAnyScheduler()) {
+    init(
+        getRealm: @escaping () -> Realm,
+        backgroundScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.global().eraseToAnyScheduler(),
+        mainScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.main.eraseToAnyScheduler()
+    ) {
         self.mainQueueRealm = getRealm()
         self.getBackgroundQueueRealm = getRealm
         self.backgroundScheduler = backgroundScheduler
@@ -42,7 +44,7 @@ final class RealmService: PersistentStore {
     // MARK: - Private methods
 
     private func write(block: @escaping (Realm) -> Void) -> AnyPublisher<Void, Error> {
-        return Future<Void, Error>() { promise in
+        return Future<Void, Error> { promise in
             self.backgroundScheduler.schedule {
                 do {
                     try self.write(to: self.currentQueueRealm) { realm in
@@ -71,11 +73,15 @@ final class RealmService: PersistentStore {
 
     // MARK: - Realm mapped collection
 
-    func mappedCollection<T: TransientEntity>(filteredUsing predicate: NSPredicate?,
-                                              sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<T> {
-        let realmMappedCollection = RealmMappedCollection<T>(realm: currentQueueRealm,
-                                                             predicate: predicate,
-                                                             sortDescriptors: sortDescriptors)
+    func mappedCollection<T: TransientEntity>(
+        filteredUsing predicate: NSPredicate?,
+        sortedBy sortDescriptors: [NSSortDescriptor]
+    ) -> AnyPersistentMappedCollection<T> {
+        let realmMappedCollection = RealmMappedCollection<T>(
+            realm: currentQueueRealm,
+            predicate: predicate,
+            sortDescriptors: sortDescriptors
+        )
         return AnyPersistentMappedCollection(realmMappedCollection)
     }
 

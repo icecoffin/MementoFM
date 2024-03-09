@@ -15,8 +15,10 @@ protocol NavigationFlowCoordinator: Coordinator, NavigationControllerPopObserver
 // MARK: - NavigationControllerPopObserver
 
 extension NavigationFlowCoordinator {
-    func navigationControllerPopTracker(_ tracker: NavigationControllerPopTracker,
-                                        didPopViewController viewController: UIViewController) {
+    func navigationControllerPopTracker(
+        _ tracker: NavigationControllerPopTracker,
+        didPopViewController viewController: UIViewController
+    ) {
         if childCoordinators.isEmpty {
             didFinish?()
         } else {

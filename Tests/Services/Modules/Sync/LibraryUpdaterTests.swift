@@ -171,12 +171,14 @@ final class LibraryUpdaterTests: XCTestCase {
     }
 
     private func makeLibraryUpdater() -> LibraryUpdater {
-        return LibraryUpdater(userService: userService,
-                              artistService: artistService,
-                              tagService: tagService,
-                              ignoredTagService: ignoredTagService,
-                              trackService: trackService,
-                              countryService: countryService,
-                              networkService: networkService)
+        return LibraryUpdater(
+            userService: userService,
+            artistService: artistService,
+            tagService: tagService,
+            ignoredTagService: ignoredTagService,
+            trackService: trackService,
+            countryService: countryService,
+            networkService: networkService
+        )
     }
 }

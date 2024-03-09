@@ -21,14 +21,18 @@ final class MockNetworkService: NetworkService {
 
     var performRequestParameters: PerformRequestParameters?
     var customResponse: Any?
-    func performRequest<T: Codable>(method: HTTPMethod,
-                                    parameters: Parameters?,
-                                    encoding: ParameterEncoding,
-                                    headers: HTTPHeaders?) -> AnyPublisher<T, Error> {
-        performRequestParameters = PerformRequestParameters(method: method,
-                                                            parameters: parameters,
-                                                            encoding: encoding,
-                                                            headers: headers)
+    func performRequest<T: Codable>(
+        method: HTTPMethod,
+        parameters: Parameters?,
+        encoding: ParameterEncoding,
+        headers: HTTPHeaders?
+    ) -> AnyPublisher<T, Error> {
+        performRequestParameters = PerformRequestParameters(
+            method: method,
+            parameters: parameters,
+            encoding: encoding,
+            headers: headers
+        )
 
         guard let response = customResponse as? T else {
             fatalError("Response type should be the same as performRequest response type")

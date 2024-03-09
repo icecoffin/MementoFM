@@ -77,13 +77,15 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
 
     // MARK: - Init
 
-    init(userService: UserServiceProtocol,
-         artistService: ArtistServiceProtocol,
-         tagService: TagServiceProtocol,
-         ignoredTagService: IgnoredTagServiceProtocol,
-         trackService: TrackServiceProtocol,
-         countryService: CountryServiceProtocol,
-         networkService: NetworkService) {
+    init(
+        userService: UserServiceProtocol,
+        artistService: ArtistServiceProtocol,
+        tagService: TagServiceProtocol,
+        ignoredTagService: IgnoredTagServiceProtocol,
+        trackService: TrackServiceProtocol,
+        countryService: CountryServiceProtocol,
+        networkService: NetworkService
+    ) {
         self.userService = userService
         self.artistService = artistService
         self.tagService = tagService
@@ -209,8 +211,10 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
 
         return getArtistsTags
             .flatMap { topTagsPage in
-                self.artistService.updateArtist(topTagsPage.artist,
-                                                with: topTagsPage.topTagsList.tags)
+                self.artistService.updateArtist(
+                    topTagsPage.artist,
+                    with: topTagsPage.topTagsList.tags
+                )
             }
             .flatMap { artist in
                 return self.artistService.calculateTopTags(for: artist, using: calculator)

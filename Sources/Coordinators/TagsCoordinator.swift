@@ -16,9 +16,11 @@ final class TagsCoordinator: NavigationFlowCoordinator {
     private let dependencies: AppDependency
     private let popTracker: NavigationControllerPopTracker
 
-    init(navigationController: UINavigationController,
-         popTracker: NavigationControllerPopTracker,
-         dependencies: AppDependency) {
+    init(
+        navigationController: UINavigationController,
+        popTracker: NavigationControllerPopTracker,
+        dependencies: AppDependency
+    ) {
         self.navigationController = navigationController
         self.popTracker = popTracker
         self.dependencies = dependencies
@@ -42,11 +44,13 @@ final class TagsCoordinator: NavigationFlowCoordinator {
 extension TagsCoordinator: TagsViewModelDelegate {
     func tagsViewModel(_ viewModel: TagsViewModel, didSelectTagWithName name: String) {
         let viewModelFactory = ArtistsByTagViewModelFactory(tagName: name, dependencies: dependencies)
-        let artistListCoordinator = ArtistListCoordinator(navigationController: navigationController,
-                                                          popTracker: popTracker,
-                                                          shouldStartAnimated: true,
-                                                          viewModelFactory: viewModelFactory,
-                                                          dependencies: dependencies)
+        let artistListCoordinator = ArtistListCoordinator(
+            navigationController: navigationController,
+            popTracker: popTracker,
+            shouldStartAnimated: true,
+            viewModelFactory: viewModelFactory,
+            dependencies: dependencies
+        )
         addChildCoordinator(artistListCoordinator)
         artistListCoordinator.start()
     }
@@ -56,10 +60,12 @@ extension TagsCoordinator: TagsViewModelDelegate {
 
 extension TagsCoordinator: ArtistListViewModelDelegate {
     func artistListViewModel(_ viewModel: ArtistListViewModel, didSelectArtist artist: Artist) {
-        let artistCoordinator = ArtistCoordinator(artist: artist,
-                                                  navigationController: navigationController,
-                                                  popTracker: popTracker,
-                                                  dependencies: dependencies)
+        let artistCoordinator = ArtistCoordinator(
+            artist: artist,
+            navigationController: navigationController,
+            popTracker: popTracker,
+            dependencies: dependencies
+        )
         addChildCoordinator(artistCoordinator)
         artistCoordinator.start()
     }

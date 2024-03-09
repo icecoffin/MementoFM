@@ -81,20 +81,24 @@ final class TagServiceTests: XCTestCase {
         let tags2 = ModelFactory.generateTags(inAmount: 10, for: "Artist2")
         let topTags2 = Array(tags2.prefix(5))
 
-        let artist1 = Artist(name: "Artist1",
-                             playcount: 1,
-                             urlString: "",
-                             needsTagsUpdate: false,
-                             tags: tags1,
-                             topTags: topTags1,
-                             country: nil)
-        let artist2 = Artist(name: "Artist2",
-                             playcount: 1,
-                             urlString: "",
-                             needsTagsUpdate: false,
-                             tags: tags2,
-                             topTags: topTags2,
-                             country: nil)
+        let artist1 = Artist(
+            name: "Artist1",
+            playcount: 1,
+            urlString: "",
+            needsTagsUpdate: false,
+            tags: tags1,
+            topTags: topTags1,
+            country: nil
+        )
+        let artist2 = Artist(
+            name: "Artist2",
+            playcount: 1,
+            urlString: "",
+            needsTagsUpdate: false,
+            tags: tags2,
+            topTags: topTags2,
+            country: nil
+        )
 
         let tagService = TagService(persistentStore: persistentStore, repository: MockTagRepository())
 

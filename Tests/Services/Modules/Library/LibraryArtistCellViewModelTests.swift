@@ -12,13 +12,15 @@ import Nimble
 
 final class LibraryArtistCellViewModelTests: XCTestCase {
     private var sampleArtist: Artist {
-        return Artist(name: "Artist",
-                      playcount: 10,
-                      urlString: "",
-                      needsTagsUpdate: false,
-                      tags: [],
-                      topTags: [],
-                      country: nil)
+        return Artist(
+            name: "Artist",
+            playcount: 10,
+            urlString: "",
+            needsTagsUpdate: false,
+            tags: [],
+            topTags: [],
+            country: nil
+        )
     }
 
     func test_name_returnsArtistName() {

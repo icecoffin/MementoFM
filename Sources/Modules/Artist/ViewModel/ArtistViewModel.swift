@@ -79,8 +79,10 @@ final class ArtistViewModel: ArtistViewModelProtocol {
 // MARK: - ArtistTopTagsSectionViewModelDelegate
 
 extension ArtistViewModel: ArtistTopTagsSectionViewModelDelegate {
-    func artistTopTagsSectionViewModel(_ viewModel: ArtistTopTagsSectionViewModel,
-                                       didSelectTagWithName name: String) {
+    func artistTopTagsSectionViewModel(
+        _ viewModel: ArtistTopTagsSectionViewModel,
+        didSelectTagWithName name: String
+    ) {
         delegate?.artistViewModel(self, didSelectTagWithName: name)
     }
 }
@@ -88,8 +90,10 @@ extension ArtistViewModel: ArtistTopTagsSectionViewModelDelegate {
 // MARK: - ArtistSimilarsSectionViewModelDelegate
 
 extension ArtistViewModel: ArtistSimilarsSectionViewModelDelegate {
-    func artistSimilarsSectionViewModel(_ viewModel: ArtistSimilarsSectionViewModel,
-                                        didSelectArtist artist: Artist) {
+    func artistSimilarsSectionViewModel(
+        _ viewModel: ArtistSimilarsSectionViewModel,
+        didSelectArtist artist: Artist
+    ) {
         delegate?.artistViewModel(self, didSelectArtist: artist)
     }
 }

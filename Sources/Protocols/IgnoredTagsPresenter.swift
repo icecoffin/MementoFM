@@ -9,13 +9,17 @@
 import UIKit
 
 protocol IgnoredTagsPresenter: NavigationFlowCoordinator, IgnoredTagsViewModelDelegate {
-    func makeIgnoredTagsViewController(dependencies: IgnoredTagsViewModel.Dependencies,
-                                       shouldAddDefaultTags: Bool) -> IgnoredTagsViewController
+    func makeIgnoredTagsViewController(
+        dependencies: IgnoredTagsViewModel.Dependencies,
+        shouldAddDefaultTags: Bool
+    ) -> IgnoredTagsViewController
 }
 
 extension IgnoredTagsPresenter {
-    func makeIgnoredTagsViewController(dependencies: IgnoredTagsViewModel.Dependencies,
-                                       shouldAddDefaultTags: Bool) -> IgnoredTagsViewController {
+    func makeIgnoredTagsViewController(
+        dependencies: IgnoredTagsViewModel.Dependencies,
+        shouldAddDefaultTags: Bool
+    ) -> IgnoredTagsViewController {
         let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: shouldAddDefaultTags)
         viewModel.delegate = self
         let viewController = IgnoredTagsViewController(viewModel: viewModel)

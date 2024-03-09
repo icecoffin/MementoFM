@@ -12,10 +12,12 @@ import Combine
 // MARK: - TrackRepository
 
 protocol TrackRepository: AnyObject {
-    func getRecentTracksPage(withIndex index: Int,
-                             for user: String,
-                             from: TimeInterval,
-                             limit: Int) -> AnyPublisher<RecentTracksPageResponse, Error>
+    func getRecentTracksPage(
+        withIndex index: Int,
+        for user: String,
+        from: TimeInterval,
+        limit: Int
+    ) -> AnyPublisher<RecentTracksPageResponse, Error>
 }
 
 // MARK: - TrackNetworkRepository
@@ -33,10 +35,12 @@ final class TrackNetworkRepository: TrackRepository {
 
     // MARK: - Public methods
 
-    func getRecentTracksPage(withIndex index: Int,
-                             for user: String,
-                             from: TimeInterval,
-                             limit: Int) -> AnyPublisher<RecentTracksPageResponse, Error> {
+    func getRecentTracksPage(
+        withIndex index: Int,
+        for user: String,
+        from: TimeInterval,
+        limit: Int
+    ) -> AnyPublisher<RecentTracksPageResponse, Error> {
         let parameters: [String: Any] = ["method": "user.getrecenttracks",
                                          "api_key": Keys.LastFM.apiKey,
                                          "user": user,

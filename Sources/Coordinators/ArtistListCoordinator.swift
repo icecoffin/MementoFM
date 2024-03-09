@@ -18,11 +18,13 @@ final class ArtistListCoordinator: NavigationFlowCoordinator {
     private let viewModelFactory: ArtistListViewModelFactory
     private let dependencies: AppDependency
 
-    init(navigationController: UINavigationController,
-         popTracker: NavigationControllerPopTracker,
-         shouldStartAnimated: Bool,
-         viewModelFactory: ArtistListViewModelFactory,
-         dependencies: AppDependency) {
+    init(
+        navigationController: UINavigationController,
+        popTracker: NavigationControllerPopTracker,
+        shouldStartAnimated: Bool,
+        viewModelFactory: ArtistListViewModelFactory,
+        dependencies: AppDependency
+    ) {
         self.navigationController = navigationController
         self.popTracker = popTracker
         self.shouldStartAnimated = shouldStartAnimated
@@ -59,10 +61,12 @@ final class ArtistListCoordinator: NavigationFlowCoordinator {
 
 extension ArtistListCoordinator: ArtistListViewModelDelegate {
     func artistListViewModel(_ viewModel: ArtistListViewModel, didSelectArtist artist: Artist) {
-        let artistCoordinator = ArtistCoordinator(artist: artist,
-                                                  navigationController: navigationController,
-                                                  popTracker: popTracker,
-                                                  dependencies: dependencies)
+        let artistCoordinator = ArtistCoordinator(
+            artist: artist,
+            navigationController: navigationController,
+            popTracker: popTracker,
+            dependencies: dependencies
+        )
         addChildCoordinator(artistCoordinator)
         artistCoordinator.start()
     }

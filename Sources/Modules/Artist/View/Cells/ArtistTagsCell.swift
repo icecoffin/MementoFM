@@ -73,9 +73,11 @@ final class ArtistTagsCell: UITableViewCell {
 
     // MARK: - Overrides
 
-    override func systemLayoutSizeFitting(_ targetSize: CGSize,
-                                          withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority,
-                                          verticalFittingPriority: UILayoutPriority) -> CGSize {
+    override func systemLayoutSizeFitting(
+        _ targetSize: CGSize,
+        withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority,
+        verticalFittingPriority: UILayoutPriority
+    ) -> CGSize {
         collectionView.layoutIfNeeded()
         return collectionView.collectionViewLayout.collectionViewContentSize
     }
@@ -106,9 +108,11 @@ extension ArtistTagsCell: UICollectionViewDelegateFlowLayout {
         delegate?.artistTagsCell(self, didSelectTagAt: indexPath)
     }
 
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
         if let cellViewModel = dataSource?.tagCellViewModel(at: indexPath, in: self) {
             return prototypeCell.sizeForViewModel(cellViewModel)
         } else {
@@ -116,14 +120,20 @@ extension ArtistTagsCell: UICollectionViewDelegateFlowLayout {
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        insetForSectionAt section: Int) -> UIEdgeInsets {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAt section: Int
+    ) -> UIEdgeInsets {
         if let dataSource = dataSource, dataSource.numberOfTopTags(in: self) > 0 {
             return UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
         } else {
-            return UIEdgeInsets(top: CGFloat.leastNormalMagnitude, left: CGFloat.leastNormalMagnitude,
-                                bottom: CGFloat.leastNormalMagnitude, right: CGFloat.leastNormalMagnitude)
+            return UIEdgeInsets(
+                top: CGFloat.leastNormalMagnitude,
+                left: CGFloat.leastNormalMagnitude,
+                bottom: CGFloat.leastNormalMagnitude,
+                right: CGFloat.leastNormalMagnitude
+            )
         }
     }
 }

@@ -10,8 +10,10 @@ import Foundation
 import Combine
 
 protocol PersistentStore {
-    func mappedCollection<T: TransientEntity>(filteredUsing predicate: NSPredicate?,
-                                              sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<T>
+    func mappedCollection<T: TransientEntity>(
+        filteredUsing predicate: NSPredicate?,
+        sortedBy sortDescriptors: [NSSortDescriptor]
+    ) -> AnyPersistentMappedCollection<T>
 
     func save<T: TransientEntity>(_ objects: [T], update: Bool) -> AnyPublisher<Void, Error>
         where T.PersistentType.TransientType == T
