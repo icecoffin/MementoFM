@@ -8,7 +8,6 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
 
 final class ArtistTopTagsSectionViewModelTests: XCTestCase {
     // swiftlint:disable:next type_name
@@ -36,14 +35,14 @@ final class ArtistTopTagsSectionViewModelTests: XCTestCase {
         let artist = sampleArtist
         let viewModel = ArtistTopTagsSectionViewModel(artist: artist)
 
-        expect(viewModel.numberOfTopTags) == sampleArtist.topTags.count
+        XCTAssertEqual(viewModel.numberOfTopTags, sampleArtist.topTags.count)
     }
 
     func test_hasTags_returnsTrue_whenArtistHasTags() {
         let artist = sampleArtist
         let viewModel1 = ArtistTopTagsSectionViewModel(artist: artist)
 
-        expect(viewModel1.hasTags) == true
+        XCTAssertTrue(viewModel1.hasTags)
     }
 
     func test_hasTags_returnsFalse_whenArtistHasNoTags() {
@@ -58,7 +57,7 @@ final class ArtistTopTagsSectionViewModelTests: XCTestCase {
         )
         let viewModel2 = ArtistTopTagsSectionViewModel(artist: artistWithNoTags)
 
-        expect(viewModel2.hasTags) == false
+        XCTAssertFalse(viewModel2.hasTags)
     }
 
     func test_cellViewModelAtIndexPath_returnsCorrectValue() {
@@ -68,7 +67,7 @@ final class ArtistTopTagsSectionViewModelTests: XCTestCase {
 
         let cellViewModel = viewModel.cellViewModel(at: indexPath)
 
-        expect(cellViewModel.name) == "Tag2"
+        XCTAssertEqual(cellViewModel.name, "Tag2")
     }
 
     func test_selectTagWithName_notifiesDelegateCorrectly() {
@@ -79,6 +78,6 @@ final class ArtistTopTagsSectionViewModelTests: XCTestCase {
 
         viewModel.selectTag(withName: "Tag2")
 
-        expect(delegate.selectedTagName) == "Tag2"
+        XCTAssertEqual(delegate.selectedTagName, "Tag2")
     }
 }

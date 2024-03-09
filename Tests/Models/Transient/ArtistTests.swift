@@ -7,19 +7,19 @@
 //
 
 import XCTest
-import Nimble
+
 @testable import MementoFM
 
 final class ArtistTests: XCTestCase {
     func test_decodeFromJSON_setsCorrectProperties() {
         let artist = makeSampleArtist()
 
-        expect(artist?.name) == "Tiger Army"
-        expect(artist?.playcount) == 730
-        expect(artist?.urlString) == "https://www.last.fm/music/Tiger+Army"
-        expect(artist?.needsTagsUpdate) == true
-        expect(artist?.tags).to(beEmpty())
-        expect(artist?.topTags).to(beEmpty())
+        XCTAssertEqual(artist?.name, "Tiger Army")
+        XCTAssertEqual(artist?.playcount, 730)
+        XCTAssertEqual(artist?.urlString, "https://www.last.fm/music/Tiger+Army")
+        XCTAssertEqual(artist?.needsTagsUpdate, true)
+        XCTAssertEqual(artist?.tags.isEmpty, true)
+        XCTAssertEqual(artist?.topTags.isEmpty, true)
     }
 
     func test_intersectingTopTagNames_returnsCorrectValue() {
@@ -50,7 +50,7 @@ final class ArtistTests: XCTestCase {
 
         let intersectingTopTagNames = artist1.intersectingTopTagNames(with: artist2)
 
-        expect(intersectingTopTagNames) == ["tag1", "tag3"]
+        XCTAssertEqual(intersectingTopTagNames, ["tag1", "tag3"])
     }
 
     func test_updatingPlaycount_setsCorrectProperties() {
@@ -58,12 +58,12 @@ final class ArtistTests: XCTestCase {
 
         let updatedArtist = artist?.updatingPlaycount(to: 100)
 
-        expect(updatedArtist?.name) == artist?.name
-        expect(updatedArtist?.playcount) == 100
-        expect(updatedArtist?.urlString) == artist?.urlString
-        expect(updatedArtist?.needsTagsUpdate) == artist?.needsTagsUpdate
-        expect(updatedArtist?.tags) == artist?.tags
-        expect(updatedArtist?.topTags) == artist?.topTags
+        XCTAssertEqual(updatedArtist?.name, artist?.name)
+        XCTAssertEqual(updatedArtist?.playcount, 100)
+        XCTAssertEqual(updatedArtist?.urlString, artist?.urlString)
+        XCTAssertEqual(updatedArtist?.needsTagsUpdate, artist?.needsTagsUpdate)
+        XCTAssertEqual(updatedArtist?.tags, artist?.tags)
+        XCTAssertEqual(updatedArtist?.topTags, artist?.topTags)
     }
 
     func test_updatingTags_setsCorrectProperties() {
@@ -72,12 +72,12 @@ final class ArtistTests: XCTestCase {
 
         let updatedArtist = artist?.updatingTags(to: tags, needsTagsUpdate: true)
 
-        expect(updatedArtist?.name) == artist?.name
-        expect(updatedArtist?.playcount) == artist?.playcount
-        expect(updatedArtist?.urlString) == artist?.urlString
-        expect(updatedArtist?.needsTagsUpdate) == true
-        expect(updatedArtist?.tags) == tags
-        expect(updatedArtist?.topTags) == artist?.topTags
+        XCTAssertEqual(updatedArtist?.name, artist?.name)
+        XCTAssertEqual(updatedArtist?.playcount, artist?.playcount)
+        XCTAssertEqual(updatedArtist?.urlString, artist?.urlString)
+        XCTAssertEqual(updatedArtist?.needsTagsUpdate, true)
+        XCTAssertEqual(updatedArtist?.tags, tags)
+        XCTAssertEqual(updatedArtist?.topTags, artist?.topTags)
     }
 
     func test_updatingTopTags_setsCorrectProperties() {
@@ -86,12 +86,12 @@ final class ArtistTests: XCTestCase {
 
         let updatedArtist = artist?.updatingTopTags(to: topTags)
 
-        expect(updatedArtist?.name) == artist?.name
-        expect(updatedArtist?.playcount) == artist?.playcount
-        expect(updatedArtist?.urlString) == artist?.urlString
-        expect(updatedArtist?.needsTagsUpdate) == true
-        expect(updatedArtist?.tags) == artist?.tags
-        expect(updatedArtist?.topTags) == topTags
+        XCTAssertEqual(updatedArtist?.name, artist?.name)
+        XCTAssertEqual(updatedArtist?.playcount, artist?.playcount)
+        XCTAssertEqual(updatedArtist?.urlString, artist?.urlString)
+        XCTAssertEqual(updatedArtist?.needsTagsUpdate, true)
+        XCTAssertEqual(updatedArtist?.tags, artist?.tags)
+        XCTAssertEqual(updatedArtist?.topTags, topTags)
     }
 
     // MARK: - Helpers

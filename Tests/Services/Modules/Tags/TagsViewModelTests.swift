@@ -8,7 +8,7 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
+
 import Combine
 import CombineSchedulers
 
@@ -72,7 +72,7 @@ final class TagsViewModelTests: XCTestCase {
 
         viewModel.getTags()
 
-        expect(expectedIsEmpty) == true
+        XCTAssertTrue(expectedIsEmpty)
     }
 
     func test_getTags_emitsDidUpdateData_withIsEmptyEqualToFalse() {
@@ -88,7 +88,7 @@ final class TagsViewModelTests: XCTestCase {
 
         viewModel.getTags()
 
-        expect(expectedIsEmpty) == false
+        XCTAssertFalse(expectedIsEmpty)
     }
 
     func test_numberOfTags_returnsCorrectValue() {
@@ -104,7 +104,7 @@ final class TagsViewModelTests: XCTestCase {
 
         viewModel.getTags()
 
-        expect(expectedNumberOfTags) == 2
+        XCTAssertEqual(expectedNumberOfTags, 2)
     }
 
     func func_cellViewModelAtIndexPath_returnsCorrectValue() {
@@ -121,7 +121,7 @@ final class TagsViewModelTests: XCTestCase {
 
         viewModel.getTags()
 
-        expect(expectedCellViewModel?.name) == "Tag2"
+        XCTAssertEqual(expectedCellViewModel?.name, "Tag2")
     }
 
     func test_selectTagAtIndexPath_notifiesDelegate() {
@@ -139,7 +139,7 @@ final class TagsViewModelTests: XCTestCase {
 
         viewModel.getTags()
 
-        expect(delegate.selectedTagName) == "Tag2"
+        XCTAssertEqual(delegate.selectedTagName, "Tag2")
     }
 
     func test_performSearch_filtersTagsBasedOnSearchText() {
@@ -156,7 +156,7 @@ final class TagsViewModelTests: XCTestCase {
         viewModel.getTags()
         viewModel.performSearch(withText: "1")
 
-        expect(expectedNumberOfTags) == 1
+        XCTAssertEqual(expectedNumberOfTags, 1)
     }
 
     func test_cancelSearch_returnsAllTagsWithoutFiltering() {
@@ -174,7 +174,7 @@ final class TagsViewModelTests: XCTestCase {
         viewModel.performSearch(withText: "1")
         viewModel.cancelSearch()
 
-        expect(expectedNumberOfTags) == 2
+        XCTAssertEqual(expectedNumberOfTags, 2)
     }
 
     private func makeTagsViewModel() -> TagsViewModel {

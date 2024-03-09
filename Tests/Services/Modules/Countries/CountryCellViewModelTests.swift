@@ -8,7 +8,6 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
 
 final class CountryCellViewModelTests: XCTestCase {
     // MARK: - country
@@ -16,13 +15,13 @@ final class CountryCellViewModelTests: XCTestCase {
     func test_country_returnsCorrectCountryForEmptyName() {
         let viewModel = CountryCellViewModel(name: "", count: 1, numberFormatter: NumberFormatter())
 
-        expect(viewModel.country) == .unknown
+        XCTAssertEqual(viewModel.country, .unknown)
     }
 
     func test_country_returnsCorrectCountryForNotEmptyName() {
         let viewModel = CountryCellViewModel(name: "Test", count: 1, numberFormatter: NumberFormatter())
 
-        expect(viewModel.country) == .named(name: "Test")
+        XCTAssertEqual(viewModel.country, .named(name: "Test"))
     }
 
     // MARK: - countText
@@ -32,7 +31,7 @@ final class CountryCellViewModelTests: XCTestCase {
         numberFormatter.numberStyle = .decimal
         let viewModel = CountryCellViewModel(name: "Test", count: 1, numberFormatter: numberFormatter)
 
-        expect(viewModel.countText) == "1 artist"
+        XCTAssertEqual(viewModel.countText, "1 artist")
     }
 
     func test_countText_isCorrectInPlural() {
@@ -41,6 +40,6 @@ final class CountryCellViewModelTests: XCTestCase {
         numberFormatter.locale = Locale(identifier: "en_US")
         let viewModel = CountryCellViewModel(name: "Test", count: 1234, numberFormatter: numberFormatter)
 
-        expect(viewModel.countText) == "1,234 artists"
+        XCTAssertEqual(viewModel.countText, "1,234 artists")
     }
 }

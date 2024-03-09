@@ -8,7 +8,7 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
+
 import Combine
 
 final class ArtistSimilarsSectionViewModelTests: XCTestCase {
@@ -61,7 +61,7 @@ final class ArtistSimilarsSectionViewModelTests: XCTestCase {
             tabViewModelFactory: tabViewModelFactory
         )
 
-        expect(viewModel.currentTabViewModel).to(beIdenticalTo(tabViewModelFactory.firstTabViewModel))
+        XCTAssertIdentical(viewModel.currentTabViewModel, tabViewModelFactory.firstTabViewModel)
     }
 
     func test_numberOfSimilarArtists_returnsValueFromCurrentTabViewModel() {
@@ -74,7 +74,7 @@ final class ArtistSimilarsSectionViewModelTests: XCTestCase {
 
         tabViewModelFactory.firstTabViewModel.numberOfSimilarArtists = 5
 
-        expect(viewModel.numberOfSimilarArtists) == 5
+        XCTAssertEqual(viewModel.numberOfSimilarArtists, 5)
     }
 
     func test_hasSimilarArtists_returnsValueFromCurrentTabViewModel() {
@@ -87,7 +87,7 @@ final class ArtistSimilarsSectionViewModelTests: XCTestCase {
 
         tabViewModelFactory.firstTabViewModel.hasSimilarArtists = true
 
-        expect(viewModel.hasSimilarArtists) == true
+        XCTAssertTrue(viewModel.hasSimilarArtists)
     }
 
     func test_isLoading_returnsValueFromCurrentTabViewModel() {
@@ -100,7 +100,7 @@ final class ArtistSimilarsSectionViewModelTests: XCTestCase {
 
         tabViewModelFactory.firstTabViewModel.isLoading = true
 
-        expect(viewModel.isLoading) == true
+        XCTAssertTrue(viewModel.isLoading)
     }
 
     func test_emptyDataSetText_returnsValueFromCurrentTabViewModel() {
@@ -113,7 +113,7 @@ final class ArtistSimilarsSectionViewModelTests: XCTestCase {
 
         tabViewModelFactory.firstTabViewModel.emptyDataSetText = "Test"
 
-        expect(viewModel.emptyDataSetText) == "Test"
+        XCTAssertEqual(viewModel.emptyDataSetText, "Test")
     }
 
     func test_getSimilarArtists_callsMethodOnCurrentTabViewModel() {
@@ -126,7 +126,7 @@ final class ArtistSimilarsSectionViewModelTests: XCTestCase {
 
         viewModel.getSimilarArtists()
 
-        expect(self.tabViewModelFactory.firstTabViewModel.didCallGetSimilarArtists) == true
+        XCTAssertTrue(tabViewModelFactory.firstTabViewModel.didCallGetSimilarArtists)
     }
 
     func test_cellViewModelAtIndexPath_callsMethodOnCurrentTabViewModel() {
@@ -142,7 +142,7 @@ final class ArtistSimilarsSectionViewModelTests: XCTestCase {
         let indexPath = IndexPath(row: 0, section: 0)
         _ = viewModel.cellViewModel(at: indexPath)
 
-        expect(self.tabViewModelFactory.firstTabViewModel.cellViewModelIndexPath) == indexPath
+        XCTAssertEqual(tabViewModelFactory.firstTabViewModel.cellViewModelIndexPath, indexPath)
     }
 
     func test_selectArtistAtIndexPath_callsMethodOnCurrentTabViewModel() {
@@ -156,7 +156,7 @@ final class ArtistSimilarsSectionViewModelTests: XCTestCase {
         let indexPath = IndexPath(row: 0, section: 0)
         viewModel.selectArtist(at: indexPath)
 
-        expect(self.tabViewModelFactory.firstTabViewModel.selectedArtistIndexPath) == indexPath
+        XCTAssertEqual(tabViewModelFactory.firstTabViewModel.selectedArtistIndexPath, indexPath)
     }
 
     func test_selectTabAtIndex_changesCurrentTabViewModel() {
@@ -169,7 +169,7 @@ final class ArtistSimilarsSectionViewModelTests: XCTestCase {
 
         viewModel.selectTab(at: 1)
 
-        expect(viewModel.currentTabViewModel).to(beIdenticalTo(tabViewModelFactory.secondTabViewModel))
+        XCTAssertIdentical(viewModel.currentTabViewModel, tabViewModelFactory.secondTabViewModel)
     }
 
     func test_didUpdate_isEmitted_whenTabViewModelUpdatesData() {
@@ -187,7 +187,7 @@ final class ArtistSimilarsSectionViewModelTests: XCTestCase {
 
         tabViewModelFactory.firstTabViewModel.didUpdateSubject.send(.success(()))
 
-        expect(didUpdate) == true
+        XCTAssertTrue(didUpdate)
     }
 
     func test_didUpdate_isEmittedWithError_whenCurrentTabViewModelReceivesError() {
@@ -203,7 +203,7 @@ final class ArtistSimilarsSectionViewModelTests: XCTestCase {
             .sink(receiveValue: { result in
                 switch result {
                 case .success:
-                    fail()
+                    XCTFail("Expected to receive an error")
                 case .failure:
                     didReceiveError = true
                 }
@@ -213,7 +213,7 @@ final class ArtistSimilarsSectionViewModelTests: XCTestCase {
         let error = NSError(domain: "MementoFM", code: 6, userInfo: nil)
         tabViewModelFactory.firstTabViewModel.didUpdateSubject.send(.failure(error))
 
-        expect(didReceiveError) == true
+        XCTAssertTrue(didReceiveError)
     }
 
     func test_selectArtist_onTabViewModel_notifiesDelegateCorrectly() {
@@ -236,7 +236,7 @@ final class ArtistSimilarsSectionViewModelTests: XCTestCase {
 
         viewModel.similarsSectionTabViewModel(tabViewModel, didSelectArtist: artist)
 
-        expect(delegate.didCallDidSelectArtist) == true
+        XCTAssertTrue(delegate.didCallDidSelectArtist)
     }
 
     func test_canSelectSimilarArtists_returnsValueFromCurrentTabViewModel() {
@@ -249,6 +249,6 @@ final class ArtistSimilarsSectionViewModelTests: XCTestCase {
 
         tabViewModelFactory.firstTabViewModel.canSelectSimilarArtists = true
 
-        expect(viewModel.canSelectSimilarArtists) == true
+        XCTAssertTrue(viewModel.canSelectSimilarArtists)
     }
 }

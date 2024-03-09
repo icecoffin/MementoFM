@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import Nimble
+
 import Combine
 @testable import MementoFM
 
@@ -61,13 +61,13 @@ final class ArtistsByCountryViewModelTests: XCTestCase {
     func test_itemCount_returnsCorrectValue() {
         collection.customCount = 5
 
-        expect(self.viewModel.itemCount) == 5
+        XCTAssertEqual(viewModel.itemCount, 5)
     }
 
     // MARK: - title
 
     func test_title_returnsCorrectValue() {
-        expect(self.viewModel.title) == "Germany"
+        XCTAssertEqual(viewModel.title, "Germany")
     }
 
     // MARK: - artistViewModel(at:)
@@ -76,7 +76,7 @@ final class ArtistsByCountryViewModelTests: XCTestCase {
         let indexPath = IndexPath(row: 0, section: 0)
         let artistViewModel = viewModel.artistViewModel(at: indexPath)
 
-        expect(artistViewModel.name) == "Artist1"
+        XCTAssertEqual(artistViewModel.name, "Artist1")
     }
 
     // MARK: - selectArtist(at:)
@@ -88,7 +88,7 @@ final class ArtistsByCountryViewModelTests: XCTestCase {
         let indexPath = IndexPath(row: 0, section: 0)
         viewModel.selectArtist(at: indexPath)
 
-        expect(delegate.selectedArtist?.name) == "Artist1"
+        XCTAssertEqual(delegate.selectedArtist?.name, "Artist1")
     }
 
     // MARK: - performSearch
@@ -97,7 +97,7 @@ final class ArtistsByCountryViewModelTests: XCTestCase {
         viewModel.performSearch(withText: "test")
 
         let predicateFormat = artistService.customMappedCollection.predicate?.predicateFormat
-        expect(predicateFormat) == "country == \"Germany\" AND name CONTAINS[cd] \"test\""
+        XCTAssertEqual(predicateFormat, "country == \"Germany\" AND name CONTAINS[cd] \"test\"")
     }
 
     func test_performSearch_setsCorrectPredicate_forUnknownCountry() {
@@ -106,7 +106,7 @@ final class ArtistsByCountryViewModelTests: XCTestCase {
         viewModel.performSearch(withText: "test")
 
         let predicateFormat = artistService.customMappedCollection.predicate?.predicateFormat
-        expect(predicateFormat) == "(country == nil OR country == \"\") AND name CONTAINS[cd] \"test\""
+        XCTAssertEqual(predicateFormat, "(country == nil OR country == \"\") AND name CONTAINS[cd] \"test\"")
     }
 
     func test_performSearch_callsDidUpdate() {
@@ -119,6 +119,6 @@ final class ArtistsByCountryViewModelTests: XCTestCase {
 
         viewModel.performSearch(withText: "test")
 
-        expect(didUpdateData) == true
+        XCTAssertTrue(didUpdateData)
     }
 }

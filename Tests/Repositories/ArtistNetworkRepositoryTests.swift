@@ -8,7 +8,7 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
+
 import Alamofire
 
 final class ArtistNetworkRepositoryTests: XCTestCase {
@@ -44,9 +44,9 @@ final class ArtistNetworkRepositoryTests: XCTestCase {
                                                          "limit": 10]
 
         let performRequestParameters = networkService.performRequestParameters
-        expect(performRequestParameters?.parameters as? [String: AnyHashable]) == expectedParameters
-        expect(performRequestParameters?.encoding).to(beAKindOf(URLEncoding.self))
-        expect(performRequestParameters?.headers).to(beNil())
+        XCTAssertEqual(performRequestParameters?.parameters as? [String: AnyHashable], expectedParameters)
+        XCTAssertTrue(performRequestParameters?.encoding is URLEncoding)
+        XCTAssertNil(performRequestParameters?.headers)
     }
 
     func test_getSimilarArtists_callsNetworkServiceWithCorrectParameters() {
@@ -64,8 +64,8 @@ final class ArtistNetworkRepositoryTests: XCTestCase {
                                                          "limit": 10]
 
         let performRequestParameters = networkService.performRequestParameters
-        expect(performRequestParameters?.parameters as? [String: AnyHashable]) == expectedParameters
-        expect(performRequestParameters?.encoding).to(beAKindOf(URLEncoding.self))
-        expect(performRequestParameters?.headers).to(beNil())
+        XCTAssertEqual(performRequestParameters?.parameters as? [String: AnyHashable], expectedParameters)
+        XCTAssertTrue(performRequestParameters?.encoding is URLEncoding)
+        XCTAssertNil(performRequestParameters?.headers)
     }
 }

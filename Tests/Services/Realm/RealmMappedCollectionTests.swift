@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import Nimble
+
 @testable import MementoFM
 import RealmSwift
 
@@ -34,11 +34,11 @@ final class RealmMappedCollectionTests: XCTestCase {
             let tag = RealmTag()
             realm.add(tag)
         }
-        expect(self.collection.count) == 1
+        XCTAssertEqual(collection.count, 1)
     }
 
     func test_isEmpty_returnsTrue_whenCollectionIsEmpty() {
-        expect(self.collection.isEmpty) == true
+        XCTAssertTrue(collection.isEmpty)
     }
 
     func test_isEmpty_returnsFalse_whenCollectionIsNotEmpty() {
@@ -46,7 +46,7 @@ final class RealmMappedCollectionTests: XCTestCase {
             let tag = RealmTag()
             realm.add(tag)
         }
-        expect(self.collection.isEmpty) == false
+        XCTAssertFalse(collection.isEmpty)
     }
 
     func test_subscript_returnsCorrectItemForIndex() {
@@ -57,8 +57,8 @@ final class RealmMappedCollectionTests: XCTestCase {
         }
 
         let secondTag = collection[1]
-        expect(secondTag.name) == "metal"
-        expect(secondTag.count) == 2
+        XCTAssertEqual(secondTag.name, "metal")
+        XCTAssertEqual(secondTag.count, 2)
     }
 
     func test_settingPredicate_filtersCollection() {
@@ -69,10 +69,10 @@ final class RealmMappedCollectionTests: XCTestCase {
         }
         let predicate = NSPredicate(format: "count > 1")
         collection.predicate = predicate
-        expect(self.collection.count) == 1
+        XCTAssertEqual(collection.count, 1)
 
         collection.predicate = nil
-        expect(self.collection.count) == 2
+        XCTAssertEqual(collection.count, 2)
     }
 
     func test_settingSortDescriptors_sortsCollection() {
@@ -86,8 +86,8 @@ final class RealmMappedCollectionTests: XCTestCase {
                                NSSortDescriptor(key: "count", ascending: false)]
         collection.sortDescriptors = sortDescriptors
 
-        expect(self.collection[0].count) == 3
-        expect(self.collection[0].name) == collection[1].name
-        expect(self.collection[2].name) == "rock"
+        XCTAssertEqual(collection[0].count, 3)
+        XCTAssertEqual(collection[0].name, collection[1].name)
+        XCTAssertEqual(collection[2].name, "rock")
     }
 }

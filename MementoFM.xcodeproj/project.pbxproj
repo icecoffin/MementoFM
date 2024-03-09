@@ -201,7 +201,6 @@
 		65A4811723AFDEAC002DC892 /* CountryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A4811623AFDEAC002DC892 /* CountryCell.swift */; };
 		65AF2B0B27FF62AE0079040D /* UICollectionViewLeftAlignedLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AF2B0A27FF62AE0079040D /* UICollectionViewLeftAlignedLayout.swift */; };
 		65B4A0491FC7153500E01881 /* TagsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B4A0481FC7153500E01881 /* TagsViewModelTests.swift */; };
-		65B67BA92800C0CF00940A34 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = 65B67BA82800C0CF00940A34 /* Nimble */; };
 		65B772891EC5C5E500892698 /* ArtistDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B772881EC5C5E500892698 /* ArtistDataSource.swift */; };
 		65BB1AA42808A3E70002A17C /* PageProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BB1AA32808A3E70002A17C /* PageProgress.swift */; };
 		65C05C0E2692046D00517784 /* UITableView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C05C0D2692046D00517784 /* UITableView+Reusable.swift */; };
@@ -488,7 +487,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65B67BA92800C0CF00940A34 /* Nimble in Frameworks */,
 				65CA67CA294F780800C9A989 /* SnapshotTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1466,7 +1464,6 @@
 			);
 			name = MementoFMTests;
 			packageProductDependencies = (
-				65B67BA82800C0CF00940A34 /* Nimble */,
 				65CA67C9294F780800C9A989 /* SnapshotTesting */,
 			);
 			productName = MementoFMTests;
@@ -1510,7 +1507,6 @@
 				65FB48B227FF7900008BB121 /* XCRemoteSwiftPackageReference "TPKeyboardAvoiding" */,
 				65FB48B527FF7A73008BB121 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift" */,
-				65B67BA72800C0CF00940A34 /* XCRemoteSwiftPackageReference "Nimble" */,
 				65DC5B76280321B200AB4544 /* XCRemoteSwiftPackageReference "combine-schedulers" */,
 				659F759528109FBC00ACC306 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				65CA67C8294F780800C9A989 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
@@ -2033,14 +2029,6 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		65B67BA72800C0CF00940A34 /* XCRemoteSwiftPackageReference "Nimble" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Quick/Nimble";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 9.2.1;
-			};
-		};
 		65CA67C8294F780800C9A989 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
@@ -2088,11 +2076,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 659F759528109FBC00ACC306 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
-		};
-		65B67BA82800C0CF00940A34 /* Nimble */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 65B67BA72800C0CF00940A34 /* XCRemoteSwiftPackageReference "Nimble" */;
-			productName = Nimble;
 		};
 		65CA67C9294F780800C9A989 /* SnapshotTesting */ = {
 			isa = XCSwiftPackageProductDependency;

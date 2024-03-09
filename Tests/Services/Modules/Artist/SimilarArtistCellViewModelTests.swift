@@ -8,7 +8,6 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
 
 final class SimilarArtistCellViewModelTests: XCTestCase {
     private var sampleArtist: Artist = {
@@ -32,17 +31,17 @@ final class SimilarArtistCellViewModelTests: XCTestCase {
 
     func test_name_returnsArtistName() {
         let viewModel = SimilarArtistCellViewModel(artist: sampleArtist, commonTags: commonTags, index: 1)
-        expect(viewModel.name) == "Artist"
+        XCTAssertEqual(viewModel.name, "Artist")
     }
 
     func test_playcount_returnsCorrectValue_basedOnArtistPlaycount() {
         let viewModel = SimilarArtistCellViewModel(artist: sampleArtist, commonTags: commonTags, index: 1)
-        expect(viewModel.playcount) == "10 plays"
+        XCTAssertEqual(viewModel.playcount, "10 plays")
     }
 
     func test_index_returnsCorrectValue() {
         let viewModel = SimilarArtistCellViewModel(artist: sampleArtist, commonTags: commonTags, index: 1)
-        expect(viewModel.displayIndex) == "1"
+        XCTAssertEqual(viewModel.displayIndex, "1")
     }
 
     func test_tags_returnsCorrectlyAttributedTags_basedOnCommonTags() {
@@ -56,6 +55,6 @@ final class SimilarArtistCellViewModelTests: XCTestCase {
         let expectedTags = expectedTagsArray.joined(separator: ", ")
 
         let viewModel = SimilarArtistCellViewModel(artist: sampleArtist, commonTags: commonTags, index: 1)
-        expect(viewModel.tags) == expectedTags
+        XCTAssertEqual(viewModel.tags, expectedTags)
     }
 }

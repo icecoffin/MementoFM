@@ -8,7 +8,7 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
+
 import Alamofire
 
 final class TrackRepositoryTests: XCTestCase {
@@ -47,9 +47,9 @@ final class TrackRepositoryTests: XCTestCase {
                                                          "limit": 10]
 
         let performRequestParameters = networkService.performRequestParameters
-        expect(performRequestParameters?.method) == .get
-        expect(performRequestParameters?.parameters as? [String: AnyHashable]) == expectedParameters
-        expect(performRequestParameters?.encoding).to(beAKindOf(URLEncoding.self))
-        expect(performRequestParameters?.headers).to(beNil())
+        XCTAssertEqual(performRequestParameters?.method, .get)
+        XCTAssertEqual(performRequestParameters?.parameters as? [String: AnyHashable], expectedParameters)
+        XCTAssertTrue(performRequestParameters?.encoding is URLEncoding)
+        XCTAssertNil(performRequestParameters?.headers)
     }
 }

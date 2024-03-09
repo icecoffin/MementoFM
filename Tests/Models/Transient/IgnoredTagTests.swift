@@ -9,7 +9,6 @@
 import Foundation
 import XCTest
 @testable import MementoFM
-import Nimble
 
 final class IgnoredTagTests: XCTestCase {
     func test_updatingName_setsCorrectProperties() {
@@ -17,7 +16,7 @@ final class IgnoredTagTests: XCTestCase {
 
         let updatedIgnoredTag = ignoredTag.updatingName("new name")
 
-        expect(updatedIgnoredTag.uuid) == ignoredTag.uuid
-        expect(updatedIgnoredTag.name) == "new name"
+        XCTAssertEqual(updatedIgnoredTag.uuid, ignoredTag.uuid)
+        XCTAssertEqual(updatedIgnoredTag.name, "new name")
     }
 }

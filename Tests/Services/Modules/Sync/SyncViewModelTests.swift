@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import Nimble
+
 import Combine
 @testable import MementoFM
 
@@ -52,8 +52,8 @@ final class SyncViewModelTests: XCTestCase {
 
         viewModel.syncLibrary()
 
-        expect(self.libraryUpdater.didCancelPendingRequests) == true
-        expect(self.libraryUpdater.didRequestData) == true
+        XCTAssertTrue(libraryUpdater.didCancelPendingRequests)
+        XCTAssertTrue(libraryUpdater.didRequestData)
     }
 
     func test_status_isUpdatedCorrectly_whenLibraryUpdaterChangesStatus() {
@@ -85,7 +85,7 @@ final class SyncViewModelTests: XCTestCase {
                                 "Getting recent tracks (page 1 out of 10)",
                                 "Getting tags for\nArtist\n(1 out of 10)"]
 
-        expect(statuses) == expectedStatuses
+        XCTAssertEqual(statuses, expectedStatuses)
     }
 
     func test_didFinishLoading_isCalledOnDelegate_whenLibraryUpdaterFinishesLoading() {
@@ -94,7 +94,7 @@ final class SyncViewModelTests: XCTestCase {
         viewModel.delegate = delegate
 
         libraryUpdater.simulateFinishLoading()
-        expect(delegate.didFinishLoading) == true
+        XCTAssertTrue(delegate.didFinishLoading)
     }
 
     func test_error_isEmittedWhenLibraryUpdaterFinishesWithError() {
@@ -107,6 +107,6 @@ final class SyncViewModelTests: XCTestCase {
             .store(in: &cancelBag)
 
         libraryUpdater.simulateError(NSError(domain: "MementoFM", code: 6, userInfo: nil))
-        expect(expectedError).toNot(beNil())
+        XCTAssertNotNil(expectedError)
     }
 }

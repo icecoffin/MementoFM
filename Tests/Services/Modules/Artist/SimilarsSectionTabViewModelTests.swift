@@ -8,7 +8,7 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
+
 import Combine
 
 final class SimilarsSectionTabViewModelTests: XCTestCase {
@@ -94,7 +94,7 @@ final class SimilarsSectionTabViewModelTests: XCTestCase {
 
         viewModel.getSimilarArtists()
 
-        expect(expectedNumberOfSimilarArtists) == 4
+        XCTAssertEqual(expectedNumberOfSimilarArtists, 4)
     }
 
     func test_getSimilarArtists_updatesHasSimilarArtists() {
@@ -113,7 +113,7 @@ final class SimilarsSectionTabViewModelTests: XCTestCase {
 
         viewModel.getSimilarArtists()
 
-        expect(expectedHasSimilarArtists) == true
+        XCTAssertTrue(expectedHasSimilarArtists)
     }
 
     func test_cellViewModelAtIndexPath_returnsCorrectValue() {
@@ -135,7 +135,7 @@ final class SimilarsSectionTabViewModelTests: XCTestCase {
 
         viewModel.getSimilarArtists()
 
-        expect(expectedArtistNames) == ["Artist1", "Artist4", "Artist3", "Artist2"]
+        XCTAssertEqual(expectedArtistNames, ["Artist1", "Artist4", "Artist3", "Artist2"])
     }
 
     func test_selectingArtistAtIndexPath_returnsCorrectValue() {
@@ -157,7 +157,7 @@ final class SimilarsSectionTabViewModelTests: XCTestCase {
 
         viewModel.getSimilarArtists()
 
-        expect(delegate.selectedArtist?.name) == "Artist4"
+        XCTAssertEqual(delegate.selectedArtist?.name, "Artist4")
     }
 
     func test_getSimilarArtists_emitsError() {
@@ -174,7 +174,7 @@ final class SimilarsSectionTabViewModelTests: XCTestCase {
             .sink(receiveValue: { result in
                 switch result {
                 case .success:
-                    fail()
+                    XCTFail("Expected to receive an error")
                 case .failure:
                     didReceiveError = true
                 }
@@ -183,6 +183,6 @@ final class SimilarsSectionTabViewModelTests: XCTestCase {
 
         viewModel.getSimilarArtists()
 
-        expect(didReceiveError) == true
+        XCTAssertTrue(didReceiveError)
     }
 }

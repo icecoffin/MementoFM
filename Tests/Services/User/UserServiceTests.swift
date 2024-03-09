@@ -8,7 +8,6 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
 
 final class UserServiceTests: XCTestCase {
     private var userRepository: MockUserRepository!
@@ -37,74 +36,74 @@ final class UserServiceTests: XCTestCase {
     func test_username_readsFromUserDataStorage() {
         _ = userService.username
 
-        expect(self.userDataStorage.didGetUsername) == true
+        XCTAssertTrue(userDataStorage.didGetUsername)
     }
 
     func test_setUsername_writesToUserDataStorage() {
         userService.username = "test"
 
-        expect(self.userDataStorage.didSetUsername) == true
+        XCTAssertTrue(userDataStorage.didSetUsername)
     }
 
     func test_lastUpdateTimestamp_readsFromUserDataStorage() {
         _ = userService.lastUpdateTimestamp
 
-        expect(self.userDataStorage.didGetLastUpdateTimestamp) == true
+        XCTAssertTrue(userDataStorage.didGetLastUpdateTimestamp)
     }
 
     func test_setLastUpdateTimestamp_writesToUserDataStorage() {
         userService.lastUpdateTimestamp = 100
 
-        expect(self.userDataStorage.didSetLastUpdateTimestamp) == true
+        XCTAssertTrue(userDataStorage.didSetLastUpdateTimestamp)
     }
 
     func test_didReceiveInitialCollection_readsFromUserDataStorage() {
         _ = userService.didReceiveInitialCollection
 
-        expect(self.userDataStorage.didGetDidReceiveInitialCollection) == true
+        XCTAssertTrue(userDataStorage.didGetDidReceiveInitialCollection)
     }
 
     func test_didReceiveInitialCollection_writesToUserDataStorage() {
         userService.didReceiveInitialCollection = true
 
-        expect(self.userDataStorage.didSetDidReceiveInitialCollection) == true
+        XCTAssertTrue(userDataStorage.didSetDidReceiveInitialCollection)
     }
 
     func test_didFinishOnboarding_readsFromUserDataStorage() {
         _ = userService.didFinishOnboarding
 
-        expect(self.userDataStorage.didGetDidFinishOnboarding) == true
+        XCTAssertTrue(userDataStorage.didGetDidFinishOnboarding)
     }
 
     func test_didFinishOnboarding_writesToUserDataStorage() {
         userService.didFinishOnboarding = true
 
-        expect(self.userDataStorage.didSetDidFinishOnboarding) == true
+        XCTAssertTrue(userDataStorage.didSetDidFinishOnboarding)
     }
 
     func test_clearUserData_deletesArtists() {
         _ = userService.clearUserData()
             .sink(receiveCompletion: { _ in }, receiveValue: { _ in })
 
-        expect(self.persistentStore.deletedObjectsTypeNames).to(contain(String(describing: Artist.self)))
+        XCTAssertTrue(persistentStore.deletedObjectsTypeNames.contains(String(describing: Artist.self)))
     }
 
     func test_clearUserData_deletesTags() {
         _ = userService.clearUserData()
             .sink(receiveCompletion: { _ in }, receiveValue: { _ in })
 
-        expect(self.persistentStore.deletedObjectsTypeNames).to(contain(String(describing: Tag.self)))
+        XCTAssertTrue(persistentStore.deletedObjectsTypeNames.contains(String(describing: Tag.self)))
     }
 
     func test_clearUserData_resetsUserStorage() {
         _ = userService.clearUserData()
 
-        expect(self.userDataStorage.didCallReset) == true
+        XCTAssertTrue(userDataStorage.didCallReset)
     }
 
     func test_checkingUserExists_callsUserRepository() {
         _ = userService.checkUserExists(withUsername: "test")
 
-        expect(self.userRepository.checkedUsername) == "test"
+        XCTAssertEqual(userRepository.checkedUsername, "test")
     }
 }

@@ -8,7 +8,6 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
 
 final class RecentTracksProcessorTests: XCTestCase {
     private var persistentStore: MockPersistentStore!
@@ -33,8 +32,8 @@ final class RecentTracksProcessorTests: XCTestCase {
         let recentTracksProcessor = RecentTracksProcessor()
         _ = recentTracksProcessor.process(tracks: tracks, using: persistentStore)
 
-        expect(self.persistentStore.saveParameters?.objects.count) == 2
-        expect(self.persistentStore.saveParameters?.update) == true
+        XCTAssertEqual(persistentStore.saveParameters?.objects.count, 2)
+        XCTAssertEqual(self.persistentStore.saveParameters?.update, true)
     }
 
     func test_processTracks_updatesPlaycount() {
@@ -49,8 +48,8 @@ final class RecentTracksProcessorTests: XCTestCase {
         let savedArtist1 = artists?[0]
         let savedArtist2 = artists?[1]
 
-        expect(savedArtist1?.playcount) == 2
-        expect(savedArtist2?.playcount) == 1
+        XCTAssertEqual(savedArtist1?.playcount, 2)
+        XCTAssertEqual(savedArtist2?.playcount, 1)
     }
 
     func test_processTracks_requestsArtistsForKeysFromPersistentStore() {
@@ -61,6 +60,6 @@ final class RecentTracksProcessorTests: XCTestCase {
         let recentTracksProcessor = RecentTracksProcessor()
         _ = recentTracksProcessor.process(tracks: tracks, using: persistentStore)
 
-        expect(self.persistentStore.objectPrimaryKeys.sorted()) == ["Artist1", "Artist2"]
+        XCTAssertEqual(persistentStore.objectPrimaryKeys.sorted(), ["Artist1", "Artist2"])
     }
 }

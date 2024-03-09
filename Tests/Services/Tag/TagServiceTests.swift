@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import Nimble
+
 @testable import MementoFM
 
 final class TagServiceTests: XCTestCase {
@@ -43,7 +43,7 @@ final class TagServiceTests: XCTestCase {
                 case .finished:
                     break
                 case .failure:
-                    fail()
+                    XCTFail("Unexpected failure")
                 }
             } receiveValue: { topTagsPage in
                 topTagsPages.append(topTagsPage)
@@ -52,7 +52,7 @@ final class TagServiceTests: XCTestCase {
         let expectedTags = topTagsPages
             .map { ModelFactory.generateTags(inAmount: tagsPerArtist, for: $0.artist.name) }
         let receivedTags = topTagsPages.map { $0.topTagsList.tags }
-        expect(receivedTags) == expectedTags
+        XCTAssertEqual(receivedTags, expectedTags)
     }
 
     func test_getTopTags_failsWithError() {
@@ -66,13 +66,15 @@ final class TagServiceTests: XCTestCase {
             .sink { completion in
                 switch completion {
                 case .finished:
-                    fail()
+                    XCTFail("Expected to receive an error")
                 case .failure:
                     didReceiveError = true
                 }
-            } receiveValue: { _ in fail() }
+            } receiveValue: { _ in
+                XCTFail("Expected to receive an error")
+            }
 
-        expect(didReceiveError) == true
+        XCTAssertTrue(didReceiveError)
     }
 
     func test_getAllTopTags_returnsTopTagsFromAllArtists() {
@@ -106,6 +108,6 @@ final class TagServiceTests: XCTestCase {
 
         let topTags = tagService.getAllTopTags()
         let expectedTopTags = topTags1 + topTags2
-        expect(topTags) == expectedTopTags
+        XCTAssertEqual(topTags, expectedTopTags)
     }
 }

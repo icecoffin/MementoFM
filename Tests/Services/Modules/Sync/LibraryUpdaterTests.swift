@@ -8,7 +8,7 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
+
 import Combine
 
 final class LibraryUpdaterTests: XCTestCase {
@@ -53,7 +53,7 @@ final class LibraryUpdaterTests: XCTestCase {
 
         userService.lastUpdateTimestamp = 100
 
-        expect(libraryUpdater.lastUpdateTimestamp) == 100
+        XCTAssertEqual(libraryUpdater.lastUpdateTimestamp, 100)
     }
 
     func test_requestData_startsAndFinishesLoading() {
@@ -69,7 +69,7 @@ final class LibraryUpdaterTests: XCTestCase {
 
         libraryUpdater.requestData()
 
-        expect(loadingStates) == [true, false]
+        XCTAssertEqual(loadingStates, [true, false])
     }
 
     func test_requestData_setsIsFirstUpdateToFalse() {
@@ -77,7 +77,7 @@ final class LibraryUpdaterTests: XCTestCase {
 
         libraryUpdater.requestData()
 
-        expect(libraryUpdater.isFirstUpdate) == false
+        XCTAssertFalse(libraryUpdater.isFirstUpdate)
     }
 
     func test_requestData_emitsError() {
@@ -94,7 +94,7 @@ final class LibraryUpdaterTests: XCTestCase {
 
         libraryUpdater.requestData()
 
-        expect(didReceiveError) == true
+        XCTAssertTrue(didReceiveError)
     }
 
     func test_requestData_updatesLastUpdateTimestamp() {
@@ -104,7 +104,7 @@ final class LibraryUpdaterTests: XCTestCase {
 
         libraryUpdater.requestData()
 
-        expect(self.userService.lastUpdateTimestamp) > 0
+        XCTAssertTrue(userService.lastUpdateTimestamp > 0)
     }
 
     func test_requestData_getsRecentTracksAndProcessesThem() {
@@ -114,8 +114,8 @@ final class LibraryUpdaterTests: XCTestCase {
 
         libraryUpdater.requestData()
 
-        expect(self.trackService.didCallGetRecentTracks) == true
-        expect(self.trackService.didCallProcessTracks) == true
+        XCTAssertTrue(trackService.didCallGetRecentTracks)
+        XCTAssertTrue(trackService.didCallProcessTracks)
     }
 
     func test_requestsData_requestsInitialCollectionAndSavesIt() {
@@ -124,9 +124,9 @@ final class LibraryUpdaterTests: XCTestCase {
         userService.didReceiveInitialCollection = false
         libraryUpdater.requestData()
 
-        expect(self.artistService.didRequestLibrary) == true
-        expect(self.userService.didReceiveInitialCollection) == true
-        expect(self.artistService.didCallSaveArtists) == true
+        XCTAssertTrue(artistService.didRequestLibrary)
+        XCTAssertTrue(userService.didReceiveInitialCollection)
+        XCTAssertTrue(artistService.didCallSaveArtists)
     }
 
     func test_requestData_requestsArtistsTagsDuringLibraryUpdate() {
@@ -144,10 +144,10 @@ final class LibraryUpdaterTests: XCTestCase {
 
         libraryUpdater.requestData()
 
-        expect(self.artistService.didRequestArtistsNeedingTagsUpdate) == true
-        expect(self.tagService.didRequestTopTags) == true
-        expect(self.artistService.didCallUpdateArtist) == true
-        expect(self.artistService.didCallCalculateTopTags) == true
+        XCTAssertTrue(artistService.didRequestArtistsNeedingTagsUpdate)
+        XCTAssertTrue(tagService.didRequestTopTags)
+        XCTAssertTrue(artistService.didCallUpdateArtist)
+        XCTAssertTrue(artistService.didCallCalculateTopTags)
     }
 
     func test_cancelPendingRequests_changesStatusToArtistsFirstPage() {
@@ -162,12 +162,10 @@ final class LibraryUpdaterTests: XCTestCase {
 
         libraryUpdater.cancelPendingRequests()
 
-        expect {
-            guard let status = libraryUpdateStatus, case .artistsFirstPage = status else {
-                return { .failed(reason: "libraryUpdateStatus is nil or wrong enum case") }
-            }
-            return { .succeeded }
-        }.to(succeed())
+        guard let libraryUpdateStatus, case .artistsFirstPage = libraryUpdateStatus else {
+            XCTFail("libraryUpdateStatus is nil or wrong enum case")
+            return
+        }
     }
 
     private func makeLibraryUpdater() -> LibraryUpdater {

@@ -8,7 +8,6 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
 
 final class CountriesViewModelTests: XCTestCase {
     private final class Dependencies: HasCountryService {
@@ -53,7 +52,7 @@ final class CountriesViewModelTests: XCTestCase {
 
         viewModel.loadData()
 
-        expect(self.countryService.didCallGetCountriesWithCount) == true
+        XCTAssertTrue(countryService.didCallGetCountriesWithCount)
     }
 
     func test_loadData_sortsCountriesByArtistCount() {
@@ -63,7 +62,7 @@ final class CountriesViewModelTests: XCTestCase {
 
         let indexPath = IndexPath(row: 0, section: 0)
         let cellViewModel = viewModel.cellViewModel(at: indexPath)
-        expect(cellViewModel.country) == .named(name: "Germany")
+        XCTAssertEqual(cellViewModel.country, .named(name: "Germany"))
     }
 
     // MARK: - numberOfCountries
@@ -73,7 +72,7 @@ final class CountriesViewModelTests: XCTestCase {
 
         viewModel.loadData()
 
-        expect(self.viewModel.numberOfCountries) == 2
+        XCTAssertEqual(viewModel.numberOfCountries, 2)
     }
 
     // MARK: - selectCountry
@@ -88,6 +87,6 @@ final class CountriesViewModelTests: XCTestCase {
         let indexPath = IndexPath(row: 0, section: 0)
         viewModel.selectCountry(at: indexPath)
 
-        expect(delegate.selectedCountry) == .named(name: "Germany")
+        XCTAssertEqual(delegate.selectedCountry, .named(name: "Germany"))
     }
 }

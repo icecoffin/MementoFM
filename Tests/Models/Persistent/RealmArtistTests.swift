@@ -9,22 +9,21 @@
 import XCTest
 @testable import MementoFM
 import RealmSwift
-import Nimble
 
 final class RealmArtistTests: XCTestCase {
     func test_primaryKey_isSet() {
-        expect(RealmArtist.primaryKey()) == "name"
+        XCTAssertEqual(RealmArtist.primaryKey(), "name")
     }
 
     func test_init_setsCorrectProperties() {
         let realmArtist = RealmArtist()
 
-        expect(realmArtist.name).to(beEmpty())
-        expect(realmArtist.playcount) == 0
-        expect(realmArtist.urlString).to(beEmpty())
-        expect(realmArtist.needsTagsUpdate) == true
-        expect(realmArtist.tags).to(beEmpty())
-        expect(realmArtist.topTags).to(beEmpty())
+        XCTAssertTrue(realmArtist.name.isEmpty)
+        XCTAssertEqual(realmArtist.playcount, 0)
+        XCTAssertTrue(realmArtist.urlString.isEmpty)
+        XCTAssertTrue(realmArtist.needsTagsUpdate)
+        XCTAssertTrue(realmArtist.tags.isEmpty)
+        XCTAssertTrue(realmArtist.topTags.isEmpty)
     }
 
     func test_fromTransient_setsCorrectProperties() {
@@ -42,16 +41,16 @@ final class RealmArtistTests: XCTestCase {
 
         let realmArtist = RealmArtist.from(transient: transientArtist)
 
-        expect(realmArtist.name) == transientArtist.name
-        expect(realmArtist.playcount) == transientArtist.playcount
-        expect(realmArtist.urlString) == transientArtist.urlString
-        expect(realmArtist.needsTagsUpdate) == transientArtist.needsTagsUpdate
+        XCTAssertEqual(realmArtist.name, transientArtist.name)
+        XCTAssertEqual(realmArtist.playcount, transientArtist.playcount)
+        XCTAssertEqual(realmArtist.urlString, transientArtist.urlString)
+        XCTAssertEqual(realmArtist.needsTagsUpdate, transientArtist.needsTagsUpdate)
 
         let expectedTags = Array(realmArtist.tags.map { $0.toTransient() })
-        expect(expectedTags) == transientArtist.tags
+        XCTAssertEqual(expectedTags, transientArtist.tags)
 
         let expectedTopTags = Array(realmArtist.topTags.map { $0.toTransient() })
-        expect(expectedTopTags) == transientArtist.topTags
+        XCTAssertEqual(expectedTopTags, transientArtist.topTags)
     }
 
     func test_toTransient_setsCorrectProperties() {
@@ -72,11 +71,11 @@ final class RealmArtistTests: XCTestCase {
 
         let transientArtist = realmArtist.toTransient()
 
-        expect(transientArtist.name) == realmArtist.name
-        expect(transientArtist.playcount) == realmArtist.playcount
-        expect(transientArtist.urlString) == realmArtist.urlString
-        expect(transientArtist.needsTagsUpdate) == realmArtist.needsTagsUpdate
-        expect(transientArtist.tags) == tags
-        expect(transientArtist.topTags) == topTags
+        XCTAssertEqual(transientArtist.name, realmArtist.name)
+        XCTAssertEqual(transientArtist.playcount, realmArtist.playcount)
+        XCTAssertEqual(transientArtist.urlString, realmArtist.urlString)
+        XCTAssertEqual(transientArtist.needsTagsUpdate, realmArtist.needsTagsUpdate)
+        XCTAssertEqual(transientArtist.tags, tags)
+        XCTAssertEqual(transientArtist.topTags, topTags)
     }
 }

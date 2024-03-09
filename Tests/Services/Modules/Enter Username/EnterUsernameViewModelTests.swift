@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import Nimble
+
 import Combine
 @testable import MementoFM
 
@@ -38,7 +38,7 @@ final class EnterUsernameViewModelTests: XCTestCase {
         let dependencies = Dependencies(userService: MockUserService())
         let viewModel = EnterUsernameViewModel(dependencies: dependencies)
 
-        expect(viewModel.canSubmitUsername) == false
+        XCTAssertFalse(viewModel.canSubmitUsername)
     }
 
     func test_canSubmitUsername_returnsTrue_forNewUsername() {
@@ -48,7 +48,7 @@ final class EnterUsernameViewModelTests: XCTestCase {
         dependencies.userService.username = "foo"
         viewModel.updateUsername("username")
 
-        expect(viewModel.canSubmitUsername) == true
+        XCTAssertTrue(viewModel.canSubmitUsername)
     }
 
     func test_canSubmitUsername_returnsFalse_forExistingUsername() {
@@ -58,14 +58,14 @@ final class EnterUsernameViewModelTests: XCTestCase {
         viewModel.updateUsername("username")
         dependencies.userService.username = "username"
 
-        expect(viewModel.canSubmitUsername) == false
+        XCTAssertFalse(viewModel.canSubmitUsername)
     }
 
     func test_currentUsername_returnsEmptyString_ifNoUsernameIsSet() {
         let dependencies = Dependencies(userService: MockUserService())
         let viewModel = EnterUsernameViewModel(dependencies: dependencies)
 
-        expect(viewModel.currentUsernameText).to(beEmpty())
+        XCTAssertTrue(viewModel.currentUsernameText.isEmpty)
     }
 
     func test_currentUsername_returnsCorrectValue_basedOnUserService() {
@@ -74,7 +74,7 @@ final class EnterUsernameViewModelTests: XCTestCase {
         let viewModel = EnterUsernameViewModel(dependencies: dependencies)
         dependencies.userService.username = "username"
 
-        expect(viewModel.currentUsernameText) == viewModel.currentUsernamePrefix + "username"
+        XCTAssertEqual(viewModel.currentUsernameText, viewModel.currentUsernamePrefix + "username")
     }
 
     func test_submitUsername_startsAndFinishesLoading() {
@@ -92,7 +92,7 @@ final class EnterUsernameViewModelTests: XCTestCase {
         viewModel.updateUsername("username")
         viewModel.submitUsername()
 
-        expect(loadingStates) == [true, false]
+        XCTAssertEqual(loadingStates, [true, false])
     }
 
     func test_submitUsername_notifiesDelegateOnSuccess() {
@@ -113,7 +113,7 @@ final class EnterUsernameViewModelTests: XCTestCase {
         viewModel.updateUsername("username")
         viewModel.submitUsername()
 
-        expect(delegate.didCallEnterUsernameViewModelDidFinish) == true
+        XCTAssertTrue(delegate.didCallEnterUsernameViewModelDidFinish)
     }
 
     func test_submitUsername_checksThatUsernameExists() {
@@ -124,7 +124,7 @@ final class EnterUsernameViewModelTests: XCTestCase {
         viewModel.updateUsername("username")
         viewModel.submitUsername()
 
-        expect(userService.usernameBeingChecked) == "username"
+        XCTAssertEqual(userService.usernameBeingChecked, "username")
     }
 
     func test_submitUsername_clearsUserDataOnSuccess() {
@@ -135,14 +135,13 @@ final class EnterUsernameViewModelTests: XCTestCase {
         viewModel.updateUsername("username")
         viewModel.submitUsername()
 
-        expect(userService.didCallClearUserData) == true
+        XCTAssertTrue(userService.didCallClearUserData)
     }
 
     func test_submitUsername_emitsError() {
         final class TestEnterUsernameViewModelDelegate: EnterUsernameViewModelDelegate {
             func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel) {
-                // Test that delegate is not notified
-                fail()
+                XCTFail("Delegate should not be notified")
             }
         }
 
@@ -165,6 +164,6 @@ final class EnterUsernameViewModelTests: XCTestCase {
         viewModel.updateUsername("username")
         viewModel.submitUsername()
 
-        expect(didReceiveError) == true
+        XCTAssertTrue(didReceiveError)
     }
 }

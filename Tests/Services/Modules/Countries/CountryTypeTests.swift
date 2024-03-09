@@ -8,18 +8,17 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
 
 final class CountryTypeTests: XCTestCase {
     func test_displayName_returnsCorrectValue_forUnknownCountry() {
         let country = CountryType.unknown
 
-        expect(country.displayName) == "unknown"
+        XCTAssertEqual(country.displayName, "unknown")
     }
 
     func test_displayName_returnsCorrectValue_forNamedCountry() {
         let country = CountryType.named(name: "Germany")
 
-        expect(country.displayName) == "Germany"
+        XCTAssertEqual(country.displayName, "Germany")
     }
 }

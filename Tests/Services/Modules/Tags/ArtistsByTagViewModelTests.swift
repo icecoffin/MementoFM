@@ -8,7 +8,7 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
+
 import RealmSwift
 import Combine
 
@@ -74,13 +74,13 @@ final class ArtistsByTagViewModelTests: XCTestCase {
     func test_itemCount_returnsCorrectValue() {
         collection.customCount = 4
 
-        expect(self.viewModel.itemCount) == 4
+        XCTAssertEqual(viewModel.itemCount, 4)
     }
 
     // MARK: - title
 
     func test_title_returnsCorrectValue() {
-        expect(self.viewModel.title) == "Tag1"
+        XCTAssertEqual(viewModel.title, "Tag1")
     }
 
     // MARK: - artistViewModelAtIndexPath
@@ -89,7 +89,7 @@ final class ArtistsByTagViewModelTests: XCTestCase {
         let indexPath = IndexPath(row: 1, section: 0)
         let artistViewModel = viewModel.artistViewModel(at: indexPath)
 
-        expect(artistViewModel.name) == "Artist2"
+        XCTAssertEqual(artistViewModel.name, "Artist2")
     }
 
     // MARK: - selectArtistAtIndexPath
@@ -101,7 +101,7 @@ final class ArtistsByTagViewModelTests: XCTestCase {
 
         viewModel.selectArtist(at: indexPath)
 
-        expect(delegate.selectedArtist) == sampleArtists[1]
+        XCTAssertEqual(delegate.selectedArtist, sampleArtists[1])
     }
 
     // MARK: - performSearch
@@ -110,7 +110,7 @@ final class ArtistsByTagViewModelTests: XCTestCase {
         viewModel.performSearch(withText: "test")
 
         let predicateFormat = artistService.customMappedCollection.predicate?.predicateFormat
-        expect(predicateFormat) == "ANY topTags.name == \"Tag1\" AND name CONTAINS[cd] \"test\""
+        XCTAssertEqual(predicateFormat, "ANY topTags.name == \"Tag1\" AND name CONTAINS[cd] \"test\"")
     }
 
     func test_performSearch_emitsDidUpdate() {
@@ -123,6 +123,6 @@ final class ArtistsByTagViewModelTests: XCTestCase {
 
         viewModel.performSearch(withText: "test")
 
-        expect(didUpdateData) == true
+        XCTAssertTrue(didUpdateData)
     }
 }

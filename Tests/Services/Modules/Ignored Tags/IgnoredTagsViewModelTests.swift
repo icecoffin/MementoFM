@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import Nimble
+
 import Combine
 @testable import MementoFM
 
@@ -60,8 +60,8 @@ final class IgnoredTagsViewModelTests: XCTestCase {
 
         _ = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
 
-        expect(self.ignoredTagService.didRequestIgnoredTags) == true
-        expect(self.ignoredTagService.createdDefaultIgnoredTagNames).to(beEmpty())
+        XCTAssertTrue(ignoredTagService.didRequestIgnoredTags)
+        XCTAssertTrue(ignoredTagService.createdDefaultIgnoredTagNames.isEmpty)
     }
 
     func test_init_createsDefaultIgnoredTags_whenShouldAddDefaultTagsIsTrue() {
@@ -70,8 +70,8 @@ final class IgnoredTagsViewModelTests: XCTestCase {
 
         _ = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: true)
 
-        expect(self.ignoredTagService.didRequestIgnoredTags) == true
-        expect(self.ignoredTagService.createdDefaultIgnoredTagNames) == defaultIgnoredTagNames
+        XCTAssertTrue(ignoredTagService.didRequestIgnoredTags)
+        XCTAssertEqual(ignoredTagService.createdDefaultIgnoredTagNames, defaultIgnoredTagNames)
     }
 
     func test_numberOfIgnoredTags_returnsCorrectValue() {
@@ -80,7 +80,7 @@ final class IgnoredTagsViewModelTests: XCTestCase {
 
         let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
 
-        expect(viewModel.numberOfIgnoredTags) == ignoredTags.count
+        XCTAssertEqual(viewModel.numberOfIgnoredTags, ignoredTags.count)
     }
 
     func test_cellViewModelAtIndexPath_returnsCorrectValue() {
@@ -91,11 +91,11 @@ final class IgnoredTagsViewModelTests: XCTestCase {
         let indexPath = IndexPath(row: 0, section: 0)
 
         let cellViewModel = viewModel.cellViewModel(at: indexPath)
-        expect(cellViewModel.text) == ignoredTags[0].name
+        XCTAssertEqual(cellViewModel.text, ignoredTags[0].name)
 
         cellViewModel.tagTextDidChange("text")
         let updatedCellViewModel = viewModel.cellViewModel(at: indexPath)
-        expect(updatedCellViewModel.text) == "text"
+        XCTAssertEqual(updatedCellViewModel.text, "text")
     }
 
     func test_cellViewModelAtIndexPath_returnsNewValueOnTextChange() {
@@ -110,7 +110,7 @@ final class IgnoredTagsViewModelTests: XCTestCase {
 
         let updatedCellViewModel = viewModel.cellViewModel(at: indexPath)
 
-        expect(updatedCellViewModel.text) == "text"
+        XCTAssertEqual(updatedCellViewModel.text, "text")
     }
 
     func test_addNewIgnoredTag_callsDidAddNewTag() {
@@ -128,7 +128,7 @@ final class IgnoredTagsViewModelTests: XCTestCase {
 
         viewModel.addNewIgnoredTag()
 
-        expect(expectedIndexPath) == IndexPath(row: ignoredTags.count, section: 0)
+        XCTAssertEqual(expectedIndexPath, IndexPath(row: ignoredTags.count, section: 0))
     }
 
     func test_addNewIgnoredTag_increasesNumberOfIgnoredTags() {
@@ -139,7 +139,7 @@ final class IgnoredTagsViewModelTests: XCTestCase {
 
         viewModel.addNewIgnoredTag()
 
-        expect(viewModel.numberOfIgnoredTags) == ignoredTags.count + 1
+        XCTAssertEqual(viewModel.numberOfIgnoredTags, ignoredTags.count + 1)
     }
 
     func test_deleteIgnoredTagAtIndexPath_decreasesNumberOfIgnoredTags() {
@@ -150,7 +150,7 @@ final class IgnoredTagsViewModelTests: XCTestCase {
 
         viewModel.deleteIgnoredTag(at: IndexPath(row: 0, section: 0))
 
-        expect(viewModel.numberOfIgnoredTags) == ignoredTags.count - 1
+        XCTAssertEqual(viewModel.numberOfIgnoredTags, ignoredTags.count - 1)
     }
 
     func test_saveChanges_startsAndFinishesSavingChanges() {
@@ -166,7 +166,7 @@ final class IgnoredTagsViewModelTests: XCTestCase {
 
         viewModel.saveChanges()
 
-        expect(savingChangesStates) == [true, false]
+        XCTAssertEqual(savingChangesStates, [true, false])
     }
 
     func test_saveChanges_notifiesDelegateOnSuccess() {
@@ -177,7 +177,7 @@ final class IgnoredTagsViewModelTests: XCTestCase {
 
         viewModel.saveChanges()
 
-        expect(delegate.didCallDidSaveChanges) == true
+        XCTAssertTrue(delegate.didCallDidSaveChanges)
     }
 
     func test_saveChanges_callsArtistService() {
@@ -185,7 +185,7 @@ final class IgnoredTagsViewModelTests: XCTestCase {
 
         viewModel.saveChanges()
 
-        expect(self.artistService.didCallCalculateTopTagsForAllArtists) == true
+        XCTAssertTrue(artistService.didCallCalculateTopTagsForAllArtists)
     }
 
     func test_saveChanges_updatesIgnoredTags() {
@@ -204,6 +204,6 @@ final class IgnoredTagsViewModelTests: XCTestCase {
         let expectedUpdatedIgnoredTags = [IgnoredTag(uuid: "uuid1", name: "tag1"),
                                           IgnoredTag(uuid: "uuid4", name: "tag2"),
                                           IgnoredTag(uuid: "uuid6", name: "tag3")]
-        expect(self.ignoredTagService.updatedIgnoredTags) == expectedUpdatedIgnoredTags
+        XCTAssertEqual(ignoredTagService.updatedIgnoredTags, expectedUpdatedIgnoredTags)
     }
 }

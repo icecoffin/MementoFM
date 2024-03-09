@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import Nimble
+
 @testable import MementoFM
 import Combine
 
@@ -53,13 +53,13 @@ final class TrackServiceTests: XCTestCase {
                 case .finished:
                     break
                 case .failure:
-                    fail()
+                    XCTFail("Unexpected failure")
                 }
             }, receiveValue: { recentTracksPage in
                 recentTracksPages.append(recentTracksPage)
             })
 
-        expect(recentTracksPages.count) == totalPages
+        XCTAssertEqual(recentTracksPages.count, totalPages)
     }
 
     func test_getRecentTracks_failsWithError() {
@@ -76,13 +76,15 @@ final class TrackServiceTests: XCTestCase {
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished:
-                    fail()
+                    XCTFail("Expected to receive an error")
                 case .failure:
                     didReceiveError = true
                 }
-            }, receiveValue: { _ in fail() })
+            }, receiveValue: { _ in
+                XCTFail("Expected to receive an error")
+            })
 
-        expect(didReceiveError) == true
+        XCTAssertTrue(didReceiveError)
     }
 
     func test_processTracks_callsRecentTracksProcessor() {
@@ -91,6 +93,6 @@ final class TrackServiceTests: XCTestCase {
 
         _ = trackService.processTracks([], using: processor)
 
-        expect(processor.didCallProcess) == true
+        XCTAssertTrue(processor.didCallProcess)
     }
 }

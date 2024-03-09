@@ -8,7 +8,7 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
+
 import RealmSwift
 import Combine
 
@@ -91,7 +91,7 @@ final class LibraryViewModelTests: XCTestCase {
 
         viewModel.requestDataIfNeeded()
 
-        expect(self.libraryUpdater.didRequestData) == true
+        XCTAssertTrue(libraryUpdater.didRequestData)
     }
 
     func test_requestDataIfNeeded_requestsDataAfterMinTimeInterval() {
@@ -101,7 +101,7 @@ final class LibraryViewModelTests: XCTestCase {
 
         viewModel.requestDataIfNeeded(currentTimestamp: 131, minTimeInterval: 30)
 
-        expect(self.libraryUpdater.didRequestData) == true
+        XCTAssertTrue(libraryUpdater.didRequestData)
     }
 
     func test_requestDataIfNeeded_doesNotRequestDataBeforeMinTimeInterval() {
@@ -112,7 +112,7 @@ final class LibraryViewModelTests: XCTestCase {
 
         viewModel.requestDataIfNeeded(currentTimestamp: 110, minTimeInterval: 30)
 
-        expect(self.libraryUpdater.didRequestData) == false
+        XCTAssertFalse(libraryUpdater.didRequestData)
     }
 
     // MARK: - itemCount
@@ -120,7 +120,7 @@ final class LibraryViewModelTests: XCTestCase {
     func test_itemCount_returnsCorrectValue() {
         let viewModel = LibraryViewModel(dependencies: dependencies)
 
-        expect(viewModel.itemCount) == sampleArtists.count
+        XCTAssertEqual(viewModel.itemCount, sampleArtists.count)
     }
 
     // MARK: - artistViewModelAtIndexPath
@@ -131,7 +131,7 @@ final class LibraryViewModelTests: XCTestCase {
 
         let artistViewModel = viewModel.artistViewModel(at: indexPath)
 
-        expect(artistViewModel.name) == sampleArtists[1].name
+        XCTAssertEqual(artistViewModel.name, sampleArtists[1].name)
     }
 
     // MARK: - selectArtistAtIndexPath
@@ -144,7 +144,7 @@ final class LibraryViewModelTests: XCTestCase {
 
         viewModel.selectArtist(at: indexPath)
 
-        expect(delegate.selectedArtist) == sampleArtists[1]
+        XCTAssertEqual(delegate.selectedArtist, sampleArtists[1])
     }
 
     // MARK: - performSearch
@@ -155,7 +155,7 @@ final class LibraryViewModelTests: XCTestCase {
         viewModel.performSearch(withText: "")
 
         let predicateFormat = artistService.customMappedCollection.predicate?.predicateFormat
-        expect(predicateFormat).to(beNil())
+        XCTAssertNil(predicateFormat)
     }
 
     func test_performSearch_setsCorrectPredicate_ifTextIsNotEmpty() {
@@ -164,7 +164,7 @@ final class LibraryViewModelTests: XCTestCase {
         viewModel.performSearch(withText: "test")
 
         let predicateFormat = artistService.customMappedCollection.predicate?.predicateFormat
-        expect(predicateFormat) == "name CONTAINS[cd] \"test\""
+        XCTAssertEqual(predicateFormat, "name CONTAINS[cd] \"test\"")
     }
 
     func test_performSearch_emitsDidUpdate() {
@@ -179,7 +179,7 @@ final class LibraryViewModelTests: XCTestCase {
 
         viewModel.performSearch(withText: "test")
 
-        expect(didUpdateData) == true
+        XCTAssertTrue(didUpdateData)
     }
 
     // MARK: - libraryUpdater
@@ -192,7 +192,7 @@ final class LibraryViewModelTests: XCTestCase {
 
         applicationStateObserver.applicationDidBecomeActiveSubject.send()
 
-        expect(self.libraryUpdater.didRequestData) == true
+        XCTAssertTrue(libraryUpdater.didRequestData)
     }
 
     // MARK: - isLoading
@@ -209,7 +209,7 @@ final class LibraryViewModelTests: XCTestCase {
         libraryUpdater.simulateStartLoading()
         libraryUpdater.simulateFinishLoading()
 
-        expect(loadingStates) == [true, false]
+        XCTAssertEqual(loadingStates, [true, false])
     }
 
     // MARK: - didUpdate
@@ -227,7 +227,7 @@ final class LibraryViewModelTests: XCTestCase {
 
         libraryUpdater.simulateError(NSError(domain: "MementoFM", code: 6, userInfo: nil))
 
-        expect(didReceiveError) == true
+        XCTAssertTrue(didReceiveError)
     }
 
     // MARK: - didChangeStatus
@@ -260,6 +260,6 @@ final class LibraryViewModelTests: XCTestCase {
                                 "Getting recent tracks...",
                                 "Getting recent tracks: page 1 out of 10",
                                 "Getting tags for artists: 1 out of 10"]
-        expect(statuses) == expectedStatuses
+        XCTAssertEqual(statuses, expectedStatuses)
     }
 }

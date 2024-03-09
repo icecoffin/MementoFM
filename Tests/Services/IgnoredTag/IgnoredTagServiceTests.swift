@@ -8,7 +8,6 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
 
 final class IgnoredTagServiceTests: XCTestCase {
     private var persistentStore: MockPersistentStore!
@@ -33,8 +32,8 @@ final class IgnoredTagServiceTests: XCTestCase {
         persistentStore.customObjects = ignoredTags
 
         let expectedIgnoredTags = ignoredTagService.ignoredTags()
-        expect(self.persistentStore.objectsPredicate).to(beNil())
-        expect(ignoredTags) == expectedIgnoredTags
+        XCTAssertNil(persistentStore.objectsPredicate)
+        XCTAssertEqual(ignoredTags, expectedIgnoredTags)
     }
 
     func test_createDefaultIgnoredTags_createsTagsAndSavesToPersistentStore() {
@@ -44,8 +43,8 @@ final class IgnoredTagServiceTests: XCTestCase {
 
         let saveParameters = persistentStore.saveParameters
         let expectedIgnoredTagNames = (saveParameters?.objects as? [IgnoredTag])?.compactMap { $0.name }
-        expect(ignoredTagNames) == expectedIgnoredTagNames
-        expect(saveParameters?.update) == true
+        XCTAssertEqual(ignoredTagNames, expectedIgnoredTagNames)
+        XCTAssertEqual(saveParameters?.update, true)
     }
 
     func test_updateIgnoresTags_deletesOldIgnoredTags_andSavesNewOnes() {
@@ -54,7 +53,7 @@ final class IgnoredTagServiceTests: XCTestCase {
         _ = ignoredTagService.updateIgnoredTags(ignoredTags)
             .sink(receiveCompletion: { _ in }, receiveValue: { })
 
-        expect(self.persistentStore.didCallDelete) == true
-        expect(self.persistentStore.saveParameters?.objects as? [IgnoredTag]) == ignoredTags
+        XCTAssertTrue(persistentStore.didCallDelete)
+        XCTAssertEqual(persistentStore.saveParameters?.objects as? [IgnoredTag], ignoredTags)
     }
 }

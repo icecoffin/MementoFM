@@ -8,7 +8,6 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
 
 final class LibraryArtistCellViewModelTests: XCTestCase {
     private var sampleArtist: Artist {
@@ -25,12 +24,12 @@ final class LibraryArtistCellViewModelTests: XCTestCase {
 
     func test_name_returnsArtistName() {
         let viewModel = LibraryArtistCellViewModel(artist: sampleArtist, index: 1, numberFormatter: NumberFormatter())
-        expect(viewModel.name) == "Artist"
+        XCTAssertEqual(viewModel.name, "Artist")
     }
 
     func test_playcount_returnsCorrectValue_basedOnArtistPlaycount() {
         let viewModel = LibraryArtistCellViewModel(artist: sampleArtist, index: 1, numberFormatter: NumberFormatter())
-        expect(viewModel.playcount) == "10 plays"
+        XCTAssertEqual(viewModel.playcount, "10 plays")
     }
 
     func test_displayIndex_returnsCorrectValue() {
@@ -40,6 +39,6 @@ final class LibraryArtistCellViewModelTests: XCTestCase {
 
         let viewModel = LibraryArtistCellViewModel(artist: sampleArtist, index: 1234, numberFormatter: numberFormatter)
 
-        expect(viewModel.displayIndex) == "1,234"
+        XCTAssertEqual(viewModel.displayIndex, "1,234")
     }
 }

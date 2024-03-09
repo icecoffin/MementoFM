@@ -8,13 +8,12 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
 
 final class TrackTests: XCTestCase {
     func test_decodeFromJSON_setsCorrectProperties() {
         let track = makeSampleTrack()
 
-        expect(track?.artist.name) == "Morphine"
+        XCTAssertEqual(track?.artist.name, "Morphine")
     }
 
     // MARK: - Helpers

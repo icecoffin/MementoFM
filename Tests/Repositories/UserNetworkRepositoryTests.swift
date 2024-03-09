@@ -8,7 +8,7 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
+
 import Alamofire
 
 final class UserNetworkRepositoryTests: XCTestCase {
@@ -40,8 +40,8 @@ final class UserNetworkRepositoryTests: XCTestCase {
                                                          "format": "json"]
 
         let performRequestParameters = networkService.performRequestParameters
-        expect(performRequestParameters?.parameters as? [String: AnyHashable]) == expectedParameters
-        expect(performRequestParameters?.encoding).to(beAKindOf(URLEncoding.self))
-        expect(performRequestParameters?.headers).to(beNil())
+        XCTAssertEqual(performRequestParameters?.parameters as? [String: AnyHashable], expectedParameters)
+        XCTAssertTrue(performRequestParameters?.encoding is URLEncoding)
+        XCTAssertNil(performRequestParameters?.headers)
     }
 }

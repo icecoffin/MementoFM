@@ -8,7 +8,7 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
+
 import CombineSchedulers
 
 final class ArtistServiceTests: XCTestCase {
@@ -45,17 +45,17 @@ final class ArtistServiceTests: XCTestCase {
                 case .finished:
                     break
                 case .failure:
-                    fail()
+                    XCTFail("Unexpected failure")
                 }
             }, receiveValue: { libraryPage in
                 libraryPages.append(libraryPage)
             })
 
-        expect(libraryPages.count) == totalPages
+        XCTAssertEqual(libraryPages.count, totalPages)
 
         let expectedArtists = (0..<totalPages).flatMap { _ in ModelFactory.generateArtists(inAmount: artistsPerPage) }
         let receivedArtists = libraryPages.map { $0.artists }.flatMap { $0 }
-        expect(receivedArtists) == expectedArtists
+        XCTAssertEqual(receivedArtists, expectedArtists)
     }
 
     func test_getLibrary_emitsErrorOnFailure() {
@@ -74,13 +74,15 @@ final class ArtistServiceTests: XCTestCase {
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished:
-                    fail()
+                    XCTFail("Expected to receive an error")
                 case .failure:
                     didCatchError = true
                 }
-            }, receiveValue: { _ in fail() })
+            }, receiveValue: { _ in
+                XCTFail("Expected to receive an error")
+            })
 
-        expect(didCatchError) == true
+        XCTAssertTrue(didCatchError)
     }
 
     func test_saveArtists_callsPersistentStore() {
@@ -90,8 +92,8 @@ final class ArtistServiceTests: XCTestCase {
         _ = artistService.saveArtists(artists)
 
         let saveParameters = persistentStore.saveParameters
-        expect(saveParameters?.objects as? [Artist]) == artists
-        expect(saveParameters?.update) == true
+        XCTAssertEqual(saveParameters?.objects as? [Artist], artists)
+        XCTAssertEqual(saveParameters?.update, true)
     }
 
     func test_artistsNeedingTagsUpdate_callsPersistentStoreWithCorrectParameters() {
@@ -100,7 +102,7 @@ final class ArtistServiceTests: XCTestCase {
         _ = artistService.artistsNeedingTagsUpdate()
 
         let predicate = persistentStore.objectsPredicate
-        expect(predicate?.predicateFormat) == "needsTagsUpdate == 1"
+        XCTAssertEqual(predicate?.predicateFormat, "needsTagsUpdate == 1")
     }
 
     func test_artistsWithIntersectingTopTags_callsPersistentStoreWithCorrectParameters() {
@@ -114,7 +116,7 @@ final class ArtistServiceTests: XCTestCase {
         _ = artistService.artistsWithIntersectingTopTags(for: artist)
 
         let predicate = persistentStore.objectsPredicate
-        expect(predicate?.predicateFormat) == "ANY topTags.name IN {\"Tag1\", \"Tag2\", \"Tag3\"} AND name != \"\(artist.name)\""
+        XCTAssertEqual(predicate?.predicateFormat, "ANY topTags.name IN {\"Tag1\", \"Tag2\", \"Tag3\"} AND name != \"\(artist.name)\"")
     }
 
     func test_updateArtistWithTags_updatesArtist_andCallsPersistentStoreWithCorrectParameters() {
@@ -126,11 +128,11 @@ final class ArtistServiceTests: XCTestCase {
         _ = artistService.updateArtist(artist, with: tags)
 
         let saveParameters = persistentStore.saveParameters
-        expect(saveParameters?.update) == true
+        XCTAssertEqual(saveParameters?.update, true)
 
         let updatedArtist = saveParameters?.objects.first as? Artist
-        expect(updatedArtist?.tags) == tags
-        expect(updatedArtist?.needsTagsUpdate) == false
+        XCTAssertEqual(updatedArtist?.tags, tags)
+        XCTAssertEqual(updatedArtist?.needsTagsUpdate, false)
     }
 
     func test_calculateTopTagsForAllArtists_callsCalculatorForEachArtist_andSavesArtists() {
@@ -148,9 +150,9 @@ final class ArtistServiceTests: XCTestCase {
         _ = artistService.calculateTopTagsForAllArtists(using: calculator)
             .sink(receiveCompletion: { _ in }, receiveValue: { })
 
-        expect(calculator.numberOfCalculateTopTagsCalled) == artists.count
-        expect(self.persistentStore.saveParameters?.objects as? [Artist]) == artists
-        expect(self.persistentStore.saveParameters?.update) == true
+        XCTAssertEqual(calculator.numberOfCalculateTopTagsCalled, artists.count)
+        XCTAssertEqual(persistentStore.saveParameters?.objects as? [Artist], artists)
+        XCTAssertEqual(persistentStore.saveParameters?.update, true)
     }
 
     func test_calculateTopTagsForArtist_callsCalculatorOnce_andSavesArtist() {
@@ -161,9 +163,9 @@ final class ArtistServiceTests: XCTestCase {
 
         _ = artistService.calculateTopTags(for: artist, using: calculator)
 
-        expect(calculator.numberOfCalculateTopTagsCalled) == 1
-        expect(self.persistentStore.saveParameters?.objects.first as? Artist) == artist
-        expect(self.persistentStore.saveParameters?.update) == true
+        XCTAssertEqual(calculator.numberOfCalculateTopTagsCalled, 1)
+        XCTAssertEqual(persistentStore.saveParameters?.objects.first as? Artist, artist)
+        XCTAssertEqual(persistentStore.saveParameters?.update, true)
     }
 
     func test_artists_createsCorrectMappedCollection() {
@@ -178,8 +180,8 @@ final class ArtistServiceTests: XCTestCase {
         _ = artistService.artists(filteredUsing: predicate, sortedBy: sortDescriptors)
         let parameters = persistentStore.mappedCollectionParameters
 
-        expect(parameters?.predicate) == predicate
-        expect(parameters?.sortDescriptors) == sortDescriptors
+        XCTAssertEqual(parameters?.predicate, predicate)
+        XCTAssertEqual(parameters?.sortDescriptors, sortDescriptors)
     }
 
     func test_getSimilarArtists_finishesWithSuccess() {
@@ -197,15 +199,15 @@ final class ArtistServiceTests: XCTestCase {
                 case .finished:
                     break
                 case .failure:
-                    fail()
+                    XCTFail("Expected failure")
                 }
             }, receiveValue: { _ in })
 
-        expect(repository.getSimilarArtistsParameters?.artist) == artist
-        expect(repository.getSimilarArtistsParameters?.limit) == 20
+        XCTAssertEqual(repository.getSimilarArtistsParameters?.artist, artist)
+        XCTAssertEqual(repository.getSimilarArtistsParameters?.limit, 20)
 
         let predicateFormat = "name IN {\"Artist1\", \"Artist2\", \"Artist3\"}"
-        expect(self.persistentStore.objectsPredicate?.predicateFormat) == predicateFormat
+        XCTAssertEqual(persistentStore.objectsPredicate?.predicateFormat, predicateFormat)
     }
 
     func test_getSimilarArtists_failsWithError() {
@@ -225,7 +227,7 @@ final class ArtistServiceTests: XCTestCase {
                 }
             }, receiveValue: { _ in })
 
-        expect(didReceiveError) == true
-        expect(self.persistentStore.objectsPredicate).to(beNil())
+        XCTAssertTrue(didReceiveError)
+        XCTAssertNil(persistentStore.objectsPredicate)
     }
 }

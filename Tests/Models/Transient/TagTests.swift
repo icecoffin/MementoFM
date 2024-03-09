@@ -8,14 +8,13 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
 
 final class TagTests: XCTestCase {
     func test_decodeFromJSON_setsCorrectProperties() {
         let tag = makeSampleTag()
 
-        expect(tag?.count) == 100
-        expect(tag?.name) == "psychedelic rock"
+        XCTAssertEqual(tag?.count, 100)
+        XCTAssertEqual(tag?.name, "psychedelic rock")
     }
 
     // MARK: - Helpers

@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import Nimble
+
 @testable import MementoFM
 import RealmSwift
 import Combine
@@ -44,7 +44,7 @@ final class RealmServiceTests: XCTestCase {
                     ofType: RealmIgnoredTag.self,
                     forPrimaryKey: ignoredTag.uuid
                 )?.toTransient()
-                expect(expectedIgnoredTag) == ignoredTag
+                XCTAssertEqual(expectedIgnoredTag, ignoredTag)
             },
             receiveValue: { _ in }
         )
@@ -55,7 +55,7 @@ final class RealmServiceTests: XCTestCase {
                            IgnoredTag(uuid: "uuid2", name: "name2")]
         _ = realmService.save(ignoredTags).sink(receiveCompletion: { _ in
             let expectedIgnoredTags = Array(self.realm.objects(RealmIgnoredTag.self).map({ $0.toTransient() }))
-            expect(expectedIgnoredTags) == ignoredTags
+            XCTAssertEqual(expectedIgnoredTags, ignoredTags)
         }, receiveValue: { _ in })
     }
 
@@ -64,11 +64,11 @@ final class RealmServiceTests: XCTestCase {
                            IgnoredTag(uuid: "uuid2", name: "name2")]
         _ = realmService.save(ignoredTags).flatMap { _ -> AnyPublisher<Void, Error> in
             let count = self.realm.objects(RealmIgnoredTag.self).count
-            expect(count).to(equal(ignoredTags.count))
+            XCTAssertEqual(count, ignoredTags.count)
             return self.realmService.deleteObjects(ofType: IgnoredTag.self)
         }.sink(receiveCompletion: { _ in
             let expectedCount = self.realm.objects(RealmIgnoredTag.self).count
-            expect(expectedCount) == 0
+            XCTAssertEqual(expectedCount, 0)
         }, receiveValue: { _ in })
     }
 
@@ -77,7 +77,7 @@ final class RealmServiceTests: XCTestCase {
                            IgnoredTag(uuid: "uuid2", name: "name2")]
         _ = realmService.save(ignoredTags).sink(receiveCompletion: { _ in
             let expectedIgnoredTags = self.realmService.objects(IgnoredTag.self)
-            expect(expectedIgnoredTags) == ignoredTags
+            XCTAssertEqual(expectedIgnoredTags, ignoredTags)
         }, receiveValue: { _ in })
     }
 
@@ -87,7 +87,7 @@ final class RealmServiceTests: XCTestCase {
         _ = realmService.save(ignoredTags).sink(receiveCompletion: { _ in
             let predicate = NSPredicate(format: "name contains[cd] '1'")
             let expectedIgnoredTags = self.realmService.objects(IgnoredTag.self, filteredBy: predicate)
-            expect(expectedIgnoredTags) == [IgnoredTag(uuid: "uuid1", name: "name1")]
+            XCTAssertEqual(expectedIgnoredTags, [IgnoredTag(uuid: "uuid1", name: "name1")])
         }, receiveValue: { _ in })
     }
 
@@ -95,14 +95,14 @@ final class RealmServiceTests: XCTestCase {
         let ignoredTag = IgnoredTag(uuid: "uuid", name: "name")
         _ = realmService.save(ignoredTag).sink(receiveCompletion: { _ in
             let expectedIgnoredTag = self.realmService.object(ofType: IgnoredTag.self, forPrimaryKey: "uuid")
-            expect(expectedIgnoredTag) == ignoredTag
+            XCTAssertEqual(expectedIgnoredTag, ignoredTag)
         }, receiveValue: { _ in })
     }
 
     func test_objectForPrimaryKey_returnsNilForMissingKey() {
         let missingIgnoredTag = self.realmService.object(ofType: IgnoredTag.self, forPrimaryKey: "test")
 
-        expect(missingIgnoredTag).to(beNil())
+        XCTAssertNil(missingIgnoredTag)
     }
 
     func test_mappedCollection_createsMappedCollectionWithCorrectParameters() {
@@ -112,7 +112,7 @@ final class RealmServiceTests: XCTestCase {
         let mappedCollection: AnyPersistentMappedCollection<IgnoredTag>
         mappedCollection = realmService.mappedCollection(filteredUsing: predicate, sortedBy: sortDescriptors)
 
-        expect(mappedCollection.predicate) == predicate
-        expect(mappedCollection.sortDescriptors) == sortDescriptors
+        XCTAssertEqual(mappedCollection.predicate, predicate)
+        XCTAssertEqual(mappedCollection.sortDescriptors, sortDescriptors)
     }
 }

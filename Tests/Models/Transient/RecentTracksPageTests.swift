@@ -8,23 +8,22 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
 
 final class RecentTracksPageTests: XCTestCase {
     func test_decodeFromJSON_setsCorrectProperties_forMultiTrackPage() {
         let recentTracksPage = makeMultipleRecentTracksPage()
 
-        expect(recentTracksPage?.index) == 2
-        expect(recentTracksPage?.totalPages) == 75698
-        expect(recentTracksPage?.tracks.count) == 2
+        XCTAssertEqual(recentTracksPage?.index, 2)
+        XCTAssertEqual(recentTracksPage?.totalPages, 75698)
+        XCTAssertEqual(recentTracksPage?.tracks.count, 2)
     }
 
     func test_decodeFromJSON_setsCorrectProperties_forSingleTrackPage() {
         let recentTracksPage = makeSingleRecentTrackPage()
 
-        expect(recentTracksPage?.index) == 2
-        expect(recentTracksPage?.totalPages) == 75698
-        expect(recentTracksPage?.tracks.count) == 1
+        XCTAssertEqual(recentTracksPage?.index, 2)
+        XCTAssertEqual(recentTracksPage?.totalPages, 75698)
+        XCTAssertEqual(recentTracksPage?.tracks.count, 1)
     }
 
     // MARK: - Helpers

@@ -9,22 +9,21 @@
 import XCTest
 @testable import MementoFM
 import RealmSwift
-import Nimble
 
 final class RealmTagTests: XCTestCase {
     func test_init_setsCorrectProperties() {
         let realmTag = RealmTag()
 
-        expect(realmTag.name).to(beEmpty())
-        expect(realmTag.count) == 0
+        XCTAssertTrue(realmTag.name.isEmpty)
+        XCTAssertEqual(realmTag.count, 0)
     }
 
     func test_fromTransient_setsCorrectProperties() {
         let transientTag = Tag(name: "Tag", count: 10)
         let realmTag = RealmTag.from(transient: transientTag)
 
-        expect(realmTag.name) == transientTag.name
-        expect(realmTag.count) == transientTag.count
+        XCTAssertEqual(realmTag.name, transientTag.name)
+        XCTAssertEqual(realmTag.count, transientTag.count)
     }
 
     func test_toTransient_setsCorrectProperties() {
@@ -33,7 +32,7 @@ final class RealmTagTests: XCTestCase {
         realmTag.count = 10
         let transientTag = realmTag.toTransient()
 
-        expect(transientTag.name) == realmTag.name
-        expect(transientTag.count) == realmTag.count
+        XCTAssertEqual(transientTag.name, realmTag.name)
+        XCTAssertEqual(transientTag.count, realmTag.count)
     }
 }

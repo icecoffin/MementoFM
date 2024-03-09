@@ -8,7 +8,6 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
 
 final class SimilarArtistsLocalRequestStrategyTests: XCTestCase {
     private final class Dependencies: SimilarArtistsRequestStrategy.Dependencies {
@@ -41,7 +40,7 @@ final class SimilarArtistsLocalRequestStrategyTests: XCTestCase {
 
     func test_minNumberOfIntersectingTags_returnsCorrectValueFromStrategy() {
         let strategy = SimilarArtistsLocalRequestStrategy(dependencies: dependencies)
-        expect(strategy.minNumberOfIntersectingTags) == 2
+        XCTAssertEqual(strategy.minNumberOfIntersectingTags, 2)
     }
 
     func test_getSimilarArtists_getsCorrectValueFromArtistService() {
@@ -54,6 +53,6 @@ final class SimilarArtistsLocalRequestStrategyTests: XCTestCase {
                 expectedSimilarArtists = artists
             })
 
-        expect(expectedSimilarArtists) == similarArtists
+        XCTAssertEqual(expectedSimilarArtists, similarArtists)
     }
 }

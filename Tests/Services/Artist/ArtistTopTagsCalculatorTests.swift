@@ -8,7 +8,6 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
 
 final class ArtistTopTagsCalculatorTests: XCTestCase {
     func test_calculateTopTags_returnsCorrectValue() {
@@ -26,6 +25,6 @@ final class ArtistTopTagsCalculatorTests: XCTestCase {
         let allTags = [tag1, tag2, tag3, tag4, tag5, tag6]
         let artist = ModelFactory.generateArtist().updatingTags(to: allTags, needsTagsUpdate: false)
         let expectedArtist = calculator.calculateTopTags(for: artist)
-        expect(expectedArtist.topTags) == [tag6, tag5, tag4]
+        XCTAssertEqual(expectedArtist.topTags, [tag6, tag5, tag4])
     }
 }

@@ -9,26 +9,25 @@
 import XCTest
 @testable import MementoFM
 import RealmSwift
-import Nimble
 
 final class RealmIgnoredTagTests: XCTestCase {
     func test_primaryKey_isSet() {
-        expect(RealmIgnoredTag.primaryKey()) == "uuid"
+        XCTAssertEqual(RealmIgnoredTag.primaryKey(), "uuid")
     }
 
     func test_init_setsCorrectProperties() {
         let realmIgnoredTag = RealmIgnoredTag()
 
-        expect(UUID(uuidString: realmIgnoredTag.uuid)).toNot(beNil())
-        expect(realmIgnoredTag.name).to(beEmpty())
+        XCTAssertNotNil(UUID(uuidString: realmIgnoredTag.uuid))
+        XCTAssertTrue(realmIgnoredTag.name.isEmpty)
     }
 
     func test_fromTransient_setsCorrectProperties() {
         let transientIgnoredTag = IgnoredTag(uuid: "uuid", name: "Tag")
         let realmIgnoredTag = RealmIgnoredTag.from(transient: transientIgnoredTag)
 
-        expect(realmIgnoredTag.uuid) == transientIgnoredTag.uuid
-        expect(realmIgnoredTag.name) == transientIgnoredTag.name
+        XCTAssertEqual(realmIgnoredTag.uuid, transientIgnoredTag.uuid)
+        XCTAssertEqual(realmIgnoredTag.name, transientIgnoredTag.name)
     }
 
     func test_toTransient_setsCorrectProperties() {
@@ -37,7 +36,7 @@ final class RealmIgnoredTagTests: XCTestCase {
         realmIgnoredTag.name = "Tag"
         let transientIgnoredTag = realmIgnoredTag.toTransient()
 
-        expect(transientIgnoredTag.uuid) == realmIgnoredTag.uuid
-        expect(transientIgnoredTag.name) == realmIgnoredTag.name
+        XCTAssertEqual(transientIgnoredTag.uuid, realmIgnoredTag.uuid)
+        XCTAssertEqual(transientIgnoredTag.name, realmIgnoredTag.name)
     }
 }

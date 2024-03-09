@@ -8,15 +8,14 @@
 
 import XCTest
 @testable import MementoFM
-import Nimble
 
 final class LibraryPageTests: XCTestCase {
     func test_decodeFromJSON_setsCorrectProperties() {
         let libraryPage = makeSampleLibraryPage()
 
-        expect(libraryPage?.index) == 2
-        expect(libraryPage?.totalPages) == 720
-        expect(libraryPage?.artists.count) == 2
+        XCTAssertEqual(libraryPage?.index, 2)
+        XCTAssertEqual(libraryPage?.totalPages, 720)
+        XCTAssertEqual(libraryPage?.artists.count, 2)
     }
 
     // MARK: - Helpers

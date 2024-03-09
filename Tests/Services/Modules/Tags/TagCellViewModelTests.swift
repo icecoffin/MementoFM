@@ -7,26 +7,26 @@
 //
 
 import XCTest
-import Nimble
+
 @testable import MementoFM
 
 final class TagCellViewModelTests: XCTestCase {
     func test_name_returnsTagName() {
         let viewModel = TagCellViewModel(tag: makeTag(), showCount: false)
 
-        expect(viewModel.name) == "test tag"
+        XCTAssertEqual(viewModel.name, "test tag")
     }
 
     func test_text_returnsTagNameWithCount() {
         let viewModel = TagCellViewModel(tag: makeTag(), showCount: true)
 
-        expect(viewModel.text) == "test tag (15)"
+        XCTAssertEqual(viewModel.text, "test tag (15)")
     }
 
     func test_text_returnsTagNameWhenNotShowingCount() {
         let viewModel = TagCellViewModel(tag: makeTag(), showCount: false)
 
-        expect(viewModel.text) == "test tag"
+        XCTAssertEqual(viewModel.text, "test tag")
     }
 
     private func makeTag() -> Tag {
