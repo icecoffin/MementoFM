@@ -38,6 +38,7 @@ final class CountryCellViewModelTests: XCTestCase {
     func test_countText_isCorrectInPlural() {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
+        numberFormatter.locale = Locale(identifier: "en_US")
         let viewModel = CountryCellViewModel(name: "Test", count: 1234, numberFormatter: numberFormatter)
 
         expect(viewModel.countText) == "1,234 artists"

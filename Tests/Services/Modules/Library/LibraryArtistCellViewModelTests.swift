@@ -36,6 +36,7 @@ final class LibraryArtistCellViewModelTests: XCTestCase {
     func test_displayIndex_returnsCorrectValue() {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
+        numberFormatter.locale = Locale(identifier: "en_US")
 
         let viewModel = LibraryArtistCellViewModel(artist: sampleArtist, index: 1234, numberFormatter: numberFormatter)
 
