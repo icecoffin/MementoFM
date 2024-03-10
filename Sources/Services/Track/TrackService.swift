@@ -13,16 +13,11 @@ import Combine
 
 protocol TrackServiceProtocol: AnyObject {
     func getRecentTracks(for user: String, from: TimeInterval, limit: Int) -> AnyPublisher<RecentTracksPage, Error>
-    func processTracks(_ tracks: [Track], using processor: RecentTracksProcessing) -> AnyPublisher<Void, Error>
 }
 
 extension TrackServiceProtocol {
     func getRecentTracks(for user: String, from: TimeInterval) -> AnyPublisher<RecentTracksPage, Error> {
         return getRecentTracks(for: user, from: from, limit: 200)
-    }
-
-    func processTracks(_ tracks: [Track]) -> AnyPublisher<Void, Error> {
-        return processTracks(tracks, using: RecentTracksProcessor())
     }
 }
 
@@ -31,13 +26,11 @@ extension TrackServiceProtocol {
 final class TrackService: TrackServiceProtocol {
     // MARK: - Private properties
 
-    private let persistentStore: PersistentStore
     private let repository: TrackRepository
 
     // MARK: - Init
 
-    init(persistentStore: PersistentStore, repository: TrackRepository) {
-        self.persistentStore = persistentStore
+    init(repository: TrackRepository) {
         self.repository = repository
     }
 
@@ -66,9 +59,5 @@ final class TrackService: TrackServiceProtocol {
         }
 
         return Publishers.Merge(firstPage, otherPages).eraseToAnyPublisher()
-    }
-
-    func processTracks(_ tracks: [Track], using processor: RecentTracksProcessing) -> AnyPublisher<Void, Error> {
-        return processor.process(tracks: tracks, using: persistentStore)
     }
 }

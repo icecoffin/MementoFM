@@ -43,6 +43,7 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
     private let tagService: TagServiceProtocol
     private let ignoredTagService: IgnoredTagServiceProtocol
     private let trackService: TrackServiceProtocol
+    private let recentTracksProcessor: RecentTracksProcessing
     private let countryService: CountryServiceProtocol
     private let networkService: NetworkService
 
@@ -83,6 +84,7 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
         tagService: TagServiceProtocol,
         ignoredTagService: IgnoredTagServiceProtocol,
         trackService: TrackServiceProtocol,
+        recentTracksProcessor: RecentTracksProcessing,
         countryService: CountryServiceProtocol,
         networkService: NetworkService
     ) {
@@ -91,6 +93,7 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
         self.tagService = tagService
         self.ignoredTagService = ignoredTagService
         self.trackService = trackService
+        self.recentTracksProcessor = recentTracksProcessor
         self.countryService = countryService
         self.networkService = networkService
     }
@@ -173,7 +176,7 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
 
                 let tracks = pages.map { $0.tracks }.flatMap { $0 }
                 self.updateLastUpdateTimestamp()
-                return self.trackService.processTracks(tracks)
+                return self.recentTracksProcessor.process(tracks: tracks)
             }
             .eraseToAnyPublisher()
 

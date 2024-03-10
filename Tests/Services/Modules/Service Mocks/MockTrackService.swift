@@ -24,14 +24,4 @@ final class MockTrackService: TrackServiceProtocol {
         didCallGetRecentTracks = true
         return Publishers.Sequence(sequence: customRecentTracksPages).eraseToAnyPublisher()
     }
-
-    var tracks: [Track] = []
-    var didCallProcessTracks = false
-    func processTracks(_ tracks: [Track], using processor: RecentTracksProcessing) -> AnyPublisher<Void, Error> {
-        self.tracks = tracks
-        didCallProcessTracks = true
-        return Just(())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
-    }
 }

@@ -29,8 +29,8 @@ final class RecentTracksProcessorTests: XCTestCase {
         let artist2 = ModelFactory.generateArtist(index: 2)
         let tracks = [Track(artist: artist1), Track(artist: artist1), Track(artist: artist2)]
 
-        let recentTracksProcessor = RecentTracksProcessor()
-        _ = recentTracksProcessor.process(tracks: tracks, using: persistentStore)
+        let recentTracksProcessor = RecentTracksProcessor(persistentStore: persistentStore)
+        _ = recentTracksProcessor.process(tracks: tracks)
 
         XCTAssertEqual(persistentStore.saveParameters?.objects.count, 2)
         XCTAssertEqual(self.persistentStore.saveParameters?.update, true)
@@ -41,8 +41,8 @@ final class RecentTracksProcessorTests: XCTestCase {
         let artist2 = ModelFactory.generateArtist(index: 2)
         let tracks = [Track(artist: artist1), Track(artist: artist1), Track(artist: artist2)]
 
-        let recentTracksProcessor = RecentTracksProcessor()
-        _ = recentTracksProcessor.process(tracks: tracks, using: persistentStore)
+        let recentTracksProcessor = RecentTracksProcessor(persistentStore: persistentStore)
+        _ = recentTracksProcessor.process(tracks: tracks)
 
         let artists = (persistentStore.saveParameters?.objects as? [Artist])?.sorted { $0.name < $1.name }
         let savedArtist1 = artists?[0]
@@ -57,8 +57,8 @@ final class RecentTracksProcessorTests: XCTestCase {
         let artist2 = ModelFactory.generateArtist(index: 2)
         let tracks = [Track(artist: artist1), Track(artist: artist1), Track(artist: artist2)]
 
-        let recentTracksProcessor = RecentTracksProcessor()
-        _ = recentTracksProcessor.process(tracks: tracks, using: persistentStore)
+        let recentTracksProcessor = RecentTracksProcessor(persistentStore: persistentStore)
+        _ = recentTracksProcessor.process(tracks: tracks)
 
         XCTAssertEqual(persistentStore.objectPrimaryKeys.sorted(), ["Artist1", "Artist2"])
     }

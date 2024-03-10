@@ -11,32 +11,7 @@ import XCTest
 @testable import MementoFM
 import Combine
 
-private final class MockRecentTracksProcessor: RecentTracksProcessing {
-    var didCallProcess = false
-
-    func process(tracks: [Track], using persistentStore: PersistentStore) -> AnyPublisher<Void, Error> {
-        didCallProcess = true
-        return Just(())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
-    }
-}
-
 final class TrackServiceTests: XCTestCase {
-    private var persistentStore: MockPersistentStore!
-
-    override func setUp() {
-        super.setUp()
-
-        persistentStore = MockPersistentStore()
-    }
-
-    override func tearDown() {
-        persistentStore = nil
-
-        super.tearDown()
-    }
-
     func test_getRecentTracks_finishesWithSuccess() {
         let totalPages = 5
         let limit = 20
@@ -44,7 +19,7 @@ final class TrackServiceTests: XCTestCase {
         let trackRepository = MockTrackRepository()
         trackRepository.totalPages = totalPages
         trackRepository.trackProvider = { ModelFactory.generateTracks(inAmount: limit) }
-        let trackService = TrackService(persistentStore: persistentStore, repository: trackRepository)
+        let trackService = TrackService(repository: trackRepository)
 
         var recentTracksPages: [RecentTracksPage] = []
         _ = trackService.getRecentTracks(for: "User", from: 0, limit: limit)
@@ -69,7 +44,7 @@ final class TrackServiceTests: XCTestCase {
         let trackRepository = MockTrackRepository()
         trackRepository.totalPages = totalPages
         trackRepository.shouldFailWithError = true
-        let trackService = TrackService(persistentStore: persistentStore, repository: trackRepository)
+        let trackService = TrackService(repository: trackRepository)
 
         var didReceiveError = false
         _ = trackService.getRecentTracks(for: "User", from: 0, limit: limit)
@@ -85,14 +60,5 @@ final class TrackServiceTests: XCTestCase {
             })
 
         XCTAssertTrue(didReceiveError)
-    }
-
-    func test_processTracks_callsRecentTracksProcessor() {
-        let trackService = TrackService(persistentStore: persistentStore, repository: MockTrackRepository())
-        let processor = MockRecentTracksProcessor()
-
-        _ = trackService.processTracks([], using: processor)
-
-        XCTAssertTrue(processor.didCallProcess)
     }
 }

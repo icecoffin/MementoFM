@@ -62,7 +62,8 @@ struct AppDependency: HasArtistService, HasUserService, HasTagService,
         let ignoredTagService = IgnoredTagService(persistentStore: realmService)
 
         let trackRepository = TrackNetworkRepository(networkService: networkService)
-        let trackService = TrackService(persistentStore: realmService, repository: trackRepository)
+        let trackService = TrackService(repository: trackRepository)
+        let recentTracksProcessor = RecentTracksProcessor(persistentStore: realmService)
 
         let countryService = CountryService(persistentStore: realmService)
 
@@ -72,6 +73,7 @@ struct AppDependency: HasArtistService, HasUserService, HasTagService,
             tagService: tagService,
             ignoredTagService: ignoredTagService,
             trackService: trackService,
+            recentTracksProcessor: recentTracksProcessor,
             countryService: countryService,
             networkService: networkService
         )

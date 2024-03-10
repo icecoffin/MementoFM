@@ -17,6 +17,7 @@ final class LibraryUpdaterTests: XCTestCase {
     private var tagService: MockTagService!
     private var ignoredTagService: MockIgnoredTagService!
     private var trackService: MockTrackService!
+    private var recentTracksProcessor: MockRecentTracksProcessor!
     private var countryService: MockCountryService!
     private var networkService: MockNetworkService!
     private var cancelBag: Set<AnyCancellable>!
@@ -29,6 +30,7 @@ final class LibraryUpdaterTests: XCTestCase {
         tagService = MockTagService()
         ignoredTagService = MockIgnoredTagService()
         trackService = MockTrackService()
+        recentTracksProcessor = MockRecentTracksProcessor()
         countryService = MockCountryService()
         networkService = MockNetworkService()
         networkService.customResponse = EmptyResponse()
@@ -41,6 +43,7 @@ final class LibraryUpdaterTests: XCTestCase {
         tagService = nil
         ignoredTagService = nil
         trackService = nil
+        recentTracksProcessor = nil
         countryService = nil
         networkService = nil
         cancelBag = nil
@@ -115,7 +118,7 @@ final class LibraryUpdaterTests: XCTestCase {
         libraryUpdater.requestData()
 
         XCTAssertTrue(trackService.didCallGetRecentTracks)
-        XCTAssertTrue(trackService.didCallProcessTracks)
+        XCTAssertTrue(recentTracksProcessor.didCallProcess)
     }
 
     func test_requestsData_requestsInitialCollectionAndSavesIt() {
@@ -175,6 +178,7 @@ final class LibraryUpdaterTests: XCTestCase {
             tagService: tagService,
             ignoredTagService: ignoredTagService,
             trackService: trackService,
+            recentTracksProcessor: recentTracksProcessor,
             countryService: countryService,
             networkService: networkService
         )
