@@ -8,9 +8,7 @@
 
 import Foundation
 
-struct IgnoredTag: TransientEntity, Equatable {
-    typealias PersistentType = RealmIgnoredTag
-
+struct IgnoredTag: Equatable {
     let uuid: String
     let name: String
 

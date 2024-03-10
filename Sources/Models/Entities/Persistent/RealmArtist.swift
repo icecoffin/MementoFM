@@ -53,3 +53,7 @@ final class RealmArtist: Object, PersistentEntity {
         )
     }
 }
+
+extension Artist: TransientEntity {
+    typealias PersistentType = RealmArtist
+}

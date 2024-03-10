@@ -18,10 +18,10 @@ protocol RecentTracksProcessing {
 // MARK: - RecentTracksProcessor
 
 final class RecentTracksProcessor: RecentTracksProcessing {
-    private let persistentStore: PersistentStore
+    private let artistStore: ArtistStore
 
-    init(persistentStore: PersistentStore) {
-        self.persistentStore = persistentStore
+    init(artistStore: ArtistStore) {
+        self.artistStore = artistStore
     }
 
     func process(tracks: [Track]) -> AnyPublisher<Void, Error> {
@@ -37,10 +37,10 @@ final class RecentTracksProcessor: RecentTracksProcessing {
         }
 
         let artists: [Artist] = artistNamesWithPlayCounts.map { artist, playcount in
-            let updatedArtist = persistentStore.object(ofType: Artist.self, forPrimaryKey: artist.name) ?? artist
+            let updatedArtist = artistStore.artist(for: artist.name) ?? artist
             return updatedArtist.updatingPlaycount(to: updatedArtist.playcount + playcount)
         }
 
-        return persistentStore.save(artists)
+        return artistStore.save(artists: artists)
     }
 }

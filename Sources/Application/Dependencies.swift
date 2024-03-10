@@ -50,6 +50,8 @@ struct AppDependency: HasArtistService, HasUserService, HasTagService,
         let userDataStorage = UserDataStorage()
         let networkService = LastFMNetworkService()
 
+        let artistStore = PersistentArtistStore(persistentStore: realmService)
+
         let artistRepository = ArtistNetworkRepository(networkService: networkService)
         let artistService = ArtistService(persistentStore: realmService, repository: artistRepository)
 
@@ -63,7 +65,7 @@ struct AppDependency: HasArtistService, HasUserService, HasTagService,
 
         let trackRepository = TrackNetworkRepository(networkService: networkService)
         let trackService = TrackService(repository: trackRepository)
-        let recentTracksProcessor = RecentTracksProcessor(persistentStore: realmService)
+        let recentTracksProcessor = RecentTracksProcessor(artistStore: artistStore)
 
         let countryService = CountryService(persistentStore: realmService)
 

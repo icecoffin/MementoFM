@@ -29,3 +29,7 @@ final class RealmIgnoredTag: Object, PersistentEntity {
         return IgnoredTag(uuid: uuid, name: name)
     }
 }
+
+extension IgnoredTag: TransientEntity {
+    typealias PersistentType = RealmIgnoredTag
+}

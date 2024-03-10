@@ -25,3 +25,7 @@ final class RealmTag: Object, PersistentEntity {
         return Tag(name: name, count: count)
     }
 }
+
+extension Tag: TransientEntity {
+    typealias PersistentType = RealmTag
+}
