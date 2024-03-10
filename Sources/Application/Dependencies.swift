@@ -53,7 +53,7 @@ struct AppDependency: HasArtistService, HasUserService, HasTagService,
         let artistStore = PersistentArtistStore(persistentStore: realmService)
 
         let artistRepository = ArtistNetworkRepository(networkService: networkService)
-        let artistService = ArtistService(persistentStore: realmService, repository: artistRepository)
+        let artistService = ArtistService(artistStore: artistStore, repository: artistRepository)
 
         let userRepository = UserNetworkRepository(networkService: networkService)
         let userService = UserService(artistStore: artistStore, repository: userRepository, userDataStorage: userDataStorage)

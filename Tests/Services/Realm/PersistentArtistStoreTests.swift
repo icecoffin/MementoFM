@@ -54,5 +54,6 @@ final class PersistentArtistStoreTests: XCTestCase {
         _ = artistStore.save(artists: artists)
 
         XCTAssertEqual(persistentStore.saveParameters?.objects as? [Artist], artists)
+        XCTAssertEqual(persistentStore.saveParameters?.update, true)
     }
 }

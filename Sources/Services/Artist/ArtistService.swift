@@ -52,7 +52,7 @@ extension ArtistServiceProtocol {
 final class ArtistService: ArtistServiceProtocol {
     // MARK: - Private properties
 
-    private let persistentStore: PersistentStore
+    private let artistStore: ArtistStore
     private let repository: ArtistRepository
     private let mainScheduler: AnySchedulerOf<DispatchQueue>
     private let backgroundScheduler: AnySchedulerOf<DispatchQueue>
@@ -60,12 +60,12 @@ final class ArtistService: ArtistServiceProtocol {
     // MARK: - Init
 
     init(
-        persistentStore: PersistentStore,
+        artistStore: ArtistStore,
         repository: ArtistRepository,
         mainScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.main.eraseToAnyScheduler(),
         backgroundScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.global().eraseToAnyScheduler()
     ) {
-        self.persistentStore = persistentStore
+        self.artistStore = artistStore
         self.repository = repository
         self.mainScheduler = mainScheduler
         self.backgroundScheduler = backgroundScheduler
@@ -99,39 +99,37 @@ final class ArtistService: ArtistServiceProtocol {
     }
 
     func saveArtists(_ artists: [Artist]) -> AnyPublisher<Void, Error> {
-        return persistentStore.save(artists)
+        return artistStore.save(artists: artists)
     }
 
     func artistsNeedingTagsUpdate() -> [Artist] {
         let predicate = NSPredicate(format: "needsTagsUpdate == \(true)")
-        return persistentStore.objects(Artist.self, filteredBy: predicate)
+        return artistStore.fetchAll(filteredBy: predicate)
     }
 
     func artistsWithIntersectingTopTags(for artist: Artist) -> [Artist] {
         let topTagNames = artist.topTags.map({ $0.name })
         let predicate = NSPredicate(format: "ANY topTags.name IN %@ AND name != %@", topTagNames, artist.name)
-        return self.persistentStore.objects(Artist.self, filteredBy: predicate)
+        return artistStore.fetchAll(filteredBy: predicate)
     }
 
     func updateArtist(_ artist: Artist, with tags: [Tag]) -> AnyPublisher<Artist, Error> {
         let updatedArtist = artist.updatingTags(to: tags, needsTagsUpdate: false)
-        return self.persistentStore.save(updatedArtist)
-            .map { _ in
-                return updatedArtist
-            }
+        return self.artistStore.save(artist: updatedArtist)
+            .map { _ in updatedArtist }
             .eraseToAnyPublisher()
     }
 
     func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating) -> AnyPublisher<Void, Error> {
         return Future<[Artist], Error> { promise in
             self.backgroundScheduler.schedule {
-                let artists = self.persistentStore.objects(Artist.self)
+                let artists = self.artistStore.fetchAll()
                 let updatedArtists = artists.map { return calculator.calculateTopTags(for: $0) }
                 promise(.success(updatedArtists))
             }
         }
         .flatMap { artists in
-            return self.persistentStore.save(artists)
+            return self.artistStore.save(artists: artists)
         }
         .receive(on: mainScheduler)
         .eraseToAnyPublisher()
@@ -139,14 +137,14 @@ final class ArtistService: ArtistServiceProtocol {
 
     func calculateTopTags(for artist: Artist, using calculator: ArtistTopTagsCalculating) -> AnyPublisher<Void, Error> {
         let updatedArtist = calculator.calculateTopTags(for: artist)
-        return persistentStore.save(updatedArtist)
+        return artistStore.save(artist: updatedArtist)
     }
 
     func artists(
         filteredUsing predicate: NSPredicate? = nil,
         sortedBy sortDescriptors: [NSSortDescriptor]
     ) -> AnyPersistentMappedCollection<Artist> {
-        return persistentStore.mappedCollection(filteredUsing: predicate, sortedBy: sortDescriptors)
+        return artistStore.mappedCollection(filteredUsing: predicate, sortedBy: sortDescriptors)
     }
 
     func getSimilarArtists(for artist: Artist, limit: Int) -> AnyPublisher<[Artist], Error> {
@@ -154,7 +152,7 @@ final class ArtistService: ArtistServiceProtocol {
             .map { response -> [Artist] in
                 let artistNames = response.similarArtistList.similarArtists.map({ $0.name })
                 let predicate = NSPredicate(format: "name in %@", artistNames)
-                let artists = self.persistentStore.objects(Artist.self, filteredBy: predicate)
+                let artists = self.artistStore.fetchAll(filteredBy: predicate)
                 return artists
             }
             .eraseToAnyPublisher()

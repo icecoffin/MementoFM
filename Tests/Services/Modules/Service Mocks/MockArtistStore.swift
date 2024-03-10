@@ -37,4 +37,11 @@ final class MockArtistStore: ArtistStore {
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }
+
+    var customMappedCollection: AnyPersistentMappedCollection<Artist>?
+    private(set) var mappedCollectionParameters: (predicate: NSPredicate?, sortDescriptors: [NSSortDescriptor])?
+    func mappedCollection(filteredUsing predicate: NSPredicate?, sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<Artist> {
+        mappedCollectionParameters = (predicate, sortDescriptors)
+        return customMappedCollection ?? AnyPersistentMappedCollection(MockPersistentMappedCollection<Artist>(values: []))
+    }
 }

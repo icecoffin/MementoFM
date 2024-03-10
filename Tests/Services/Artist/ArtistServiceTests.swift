@@ -12,18 +12,18 @@ import XCTest
 import CombineSchedulers
 
 final class ArtistServiceTests: XCTestCase {
-    private var persistentStore: MockPersistentStore!
+    private var artistStore: MockArtistStore!
     private var scheduler: AnySchedulerOf<DispatchQueue>!
 
     override func setUp() {
         super.setUp()
 
-        persistentStore = MockPersistentStore()
+        artistStore = MockArtistStore()
         scheduler = .immediate
     }
 
     override func tearDown() {
-        persistentStore = nil
+        artistStore = nil
         scheduler = nil
 
         super.tearDown()
@@ -36,7 +36,7 @@ final class ArtistServiceTests: XCTestCase {
         let repository = MockArtistLibraryRepository(totalPages: totalPages, shouldFailWithError: false, artistProvider: { _ in
             return ModelFactory.generateArtists(inAmount: artistsPerPage)
         })
-        let artistService = ArtistService(persistentStore: persistentStore, repository: repository)
+        let artistService = ArtistService(artistStore: artistStore, repository: repository)
 
         var libraryPages: [LibraryPage] = []
         _ = artistService.getLibrary(for: "user", limit: artistsPerPage)
@@ -67,7 +67,7 @@ final class ArtistServiceTests: XCTestCase {
             shouldFailWithError: true,
             artistProvider: { _ in return [] }
         )
-        let artistService = ArtistService(persistentStore: persistentStore, repository: repository)
+        let artistService = ArtistService(artistStore: artistStore, repository: repository)
 
         var didCatchError = false
         _ = artistService.getLibrary(for: "user", limit: artistsPerPage)
@@ -85,28 +85,25 @@ final class ArtistServiceTests: XCTestCase {
         XCTAssertTrue(didCatchError)
     }
 
-    func test_saveArtists_callsPersistentStore() {
-        let artistService = ArtistService(persistentStore: persistentStore, repository: StubArtistEmptyRepository())
+    func test_saveArtists_callsArtistStore() {
+        let artistService = ArtistService(artistStore: artistStore, repository: StubArtistEmptyRepository())
 
         let artists = ModelFactory.generateArtists(inAmount: 5)
         _ = artistService.saveArtists(artists)
 
-        let saveParameters = persistentStore.saveParameters
-        XCTAssertEqual(saveParameters?.objects as? [Artist], artists)
-        XCTAssertEqual(saveParameters?.update, true)
+        XCTAssertEqual(artistStore?.saveParameters, artists)
     }
 
-    func test_artistsNeedingTagsUpdate_callsPersistentStoreWithCorrectParameters() {
-        let artistService = ArtistService(persistentStore: persistentStore, repository: StubArtistEmptyRepository())
+    func test_artistsNeedingTagsUpdate_callsArtistStoreStoreWithCorrectParameters() {
+        let artistService = ArtistService(artistStore: artistStore, repository: StubArtistEmptyRepository())
 
         _ = artistService.artistsNeedingTagsUpdate()
 
-        let predicate = persistentStore.objectsPredicate
-        XCTAssertEqual(predicate?.predicateFormat, "needsTagsUpdate == 1")
+        XCTAssertEqual(artistStore.fetchAllParameters?.predicateFormat, "needsTagsUpdate == 1")
     }
 
-    func test_artistsWithIntersectingTopTags_callsPersistentStoreWithCorrectParameters() {
-        let artistService = ArtistService(persistentStore: persistentStore, repository: StubArtistEmptyRepository())
+    func test_artistsWithIntersectingTopTags_callsArtistStoreWithCorrectParameters() {
+        let artistService = ArtistService(artistStore: artistStore, repository: StubArtistEmptyRepository())
 
         let tags = [Tag(name: "Tag1", count: 1),
                     Tag(name: "Tag2", count: 2),
@@ -115,48 +112,45 @@ final class ArtistServiceTests: XCTestCase {
 
         _ = artistService.artistsWithIntersectingTopTags(for: artist)
 
-        let predicate = persistentStore.objectsPredicate
+        let predicate = artistStore.fetchAllParameters
         XCTAssertEqual(predicate?.predicateFormat, "ANY topTags.name IN {\"Tag1\", \"Tag2\", \"Tag3\"} AND name != \"\(artist.name)\"")
     }
 
-    func test_updateArtistWithTags_updatesArtist_andCallsPersistentStoreWithCorrectParameters() {
-        let artistService = ArtistService(persistentStore: persistentStore, repository: StubArtistEmptyRepository())
+    func test_updateArtistWithTags_updatesArtist_andCallsArtistStoreWithCorrectParameters() {
+        let artistService = ArtistService(artistStore: artistStore, repository: StubArtistEmptyRepository())
 
         let artist = ModelFactory.generateArtist(index: 1, needsTagsUpdate: true)
         let tags = ModelFactory.generateTags(inAmount: 5, for: artist.name)
 
         _ = artistService.updateArtist(artist, with: tags)
 
-        let saveParameters = persistentStore.saveParameters
-        XCTAssertEqual(saveParameters?.update, true)
-
-        let updatedArtist = saveParameters?.objects.first as? Artist
+        let saveParameters = artistStore.saveParameters
+        let updatedArtist = saveParameters?.first
         XCTAssertEqual(updatedArtist?.tags, tags)
         XCTAssertEqual(updatedArtist?.needsTagsUpdate, false)
     }
 
     func test_calculateTopTagsForAllArtists_callsCalculatorForEachArtist_andSavesArtists() {
         let artistService = ArtistService(
-            persistentStore: persistentStore,
+            artistStore: artistStore,
             repository: StubArtistEmptyRepository(),
             mainScheduler: scheduler,
             backgroundScheduler: scheduler
         )
 
         let artists = ModelFactory.generateArtists(inAmount: 5)
-        persistentStore.customObjects = artists
+        artistStore.customArtists = artists
 
         let calculator = MockArtistTopTagsCalculator()
         _ = artistService.calculateTopTagsForAllArtists(using: calculator)
             .sink(receiveCompletion: { _ in }, receiveValue: { })
 
         XCTAssertEqual(calculator.numberOfCalculateTopTagsCalled, artists.count)
-        XCTAssertEqual(persistentStore.saveParameters?.objects as? [Artist], artists)
-        XCTAssertEqual(persistentStore.saveParameters?.update, true)
+        XCTAssertEqual(artistStore.saveParameters, artists)
     }
 
     func test_calculateTopTagsForArtist_callsCalculatorOnce_andSavesArtist() {
-        let artistService = ArtistService(persistentStore: persistentStore, repository: StubArtistEmptyRepository())
+        let artistService = ArtistService(artistStore: artistStore, repository: StubArtistEmptyRepository())
 
         let artist = ModelFactory.generateArtist(index: 1)
         let calculator = MockArtistTopTagsCalculator()
@@ -164,21 +158,20 @@ final class ArtistServiceTests: XCTestCase {
         _ = artistService.calculateTopTags(for: artist, using: calculator)
 
         XCTAssertEqual(calculator.numberOfCalculateTopTagsCalled, 1)
-        XCTAssertEqual(persistentStore.saveParameters?.objects.first as? Artist, artist)
-        XCTAssertEqual(persistentStore.saveParameters?.update, true)
+        XCTAssertEqual(artistStore.saveParameters?.first, artist)
     }
 
     func test_artists_createsCorrectMappedCollection() {
-        let artistService = ArtistService(persistentStore: persistentStore, repository: StubArtistEmptyRepository())
+        let artistService = ArtistService(artistStore: artistStore, repository: StubArtistEmptyRepository())
 
         let predicate = NSPredicate(format: "name contains[cd] '1'")
         let sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
 
         let mappedCollection = MockPersistentMappedCollection<Artist>(values: [])
-        persistentStore.customMappedCollection = AnyPersistentMappedCollection(mappedCollection)
+        artistStore.customMappedCollection = AnyPersistentMappedCollection(mappedCollection)
 
         _ = artistService.artists(filteredUsing: predicate, sortedBy: sortDescriptors)
-        let parameters = persistentStore.mappedCollectionParameters
+        let parameters = artistStore.mappedCollectionParameters
 
         XCTAssertEqual(parameters?.predicate, predicate)
         XCTAssertEqual(parameters?.sortDescriptors, sortDescriptors)
@@ -190,7 +183,7 @@ final class ArtistServiceTests: XCTestCase {
         let repository = MockArtistSimilarsRepository(shouldFailWithError: false, similarArtistProvider: {
             return ModelFactory.generateSimilarArtists(inAmount: similarArtistCount)
         })
-        let artistService = ArtistService(persistentStore: persistentStore, repository: repository)
+        let artistService = ArtistService(artistStore: artistStore, repository: repository)
 
         let artist = ModelFactory.generateArtist()
         _ = artistService.getSimilarArtists(for: artist)
@@ -207,12 +200,12 @@ final class ArtistServiceTests: XCTestCase {
         XCTAssertEqual(repository.getSimilarArtistsParameters?.limit, 20)
 
         let predicateFormat = "name IN {\"Artist1\", \"Artist2\", \"Artist3\"}"
-        XCTAssertEqual(persistentStore.objectsPredicate?.predicateFormat, predicateFormat)
+        XCTAssertEqual(artistStore.fetchAllParameters?.predicateFormat, predicateFormat)
     }
 
     func test_getSimilarArtists_failsWithError() {
         let repository = MockArtistSimilarsRepository(shouldFailWithError: true, similarArtistProvider: { [] })
-        let artistService = ArtistService(persistentStore: persistentStore, repository: repository)
+        let artistService = ArtistService(artistStore: artistStore, repository: repository)
 
         let artist = ModelFactory.generateArtist()
 
@@ -228,6 +221,6 @@ final class ArtistServiceTests: XCTestCase {
             }, receiveValue: { _ in })
 
         XCTAssertTrue(didReceiveError)
-        XCTAssertNil(persistentStore.objectsPredicate)
+        XCTAssertNil(artistStore.fetchAllParameters)
     }
 }
