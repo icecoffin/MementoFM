@@ -11,10 +11,6 @@ import XCTest
 import RealmSwift
 
 final class RealmArtistTests: XCTestCase {
-    func test_primaryKey_isSet() {
-        XCTAssertEqual(RealmArtist.primaryKey(), "name")
-    }
-
     func test_init_setsCorrectProperties() {
         let realmArtist = RealmArtist()
 

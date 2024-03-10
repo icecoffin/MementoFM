@@ -12,7 +12,7 @@ import XCTest
 final class UserServiceTests: XCTestCase {
     private var userRepository: MockUserRepository!
     private var userDataStorage: MockUserDataStorage!
-    private var persistentStore: MockPersistentStore!
+    private var artistStore: MockArtistStore!
     private var userService: UserService!
 
     override func setUp() {
@@ -20,14 +20,14 @@ final class UserServiceTests: XCTestCase {
 
         userRepository = MockUserRepository()
         userDataStorage = MockUserDataStorage()
-        persistentStore = MockPersistentStore()
-        userService = UserService(persistentStore: persistentStore, repository: userRepository, userDataStorage: userDataStorage)
+        artistStore = MockArtistStore()
+        userService = UserService(artistStore: artistStore, repository: userRepository, userDataStorage: userDataStorage)
     }
 
     override func tearDown() {
         userRepository = nil
         userDataStorage = nil
-        persistentStore = nil
+        artistStore = nil
         userService = nil
 
         super.tearDown()
@@ -85,14 +85,7 @@ final class UserServiceTests: XCTestCase {
         _ = userService.clearUserData()
             .sink(receiveCompletion: { _ in }, receiveValue: { _ in })
 
-        XCTAssertTrue(persistentStore.deletedObjectsTypeNames.contains(String(describing: Artist.self)))
-    }
-
-    func test_clearUserData_deletesTags() {
-        _ = userService.clearUserData()
-            .sink(receiveCompletion: { _ in }, receiveValue: { _ in })
-
-        XCTAssertTrue(persistentStore.deletedObjectsTypeNames.contains(String(describing: Tag.self)))
+        XCTAssertEqual(artistStore.deleteAllCallCount, 1)
     }
 
     func test_clearUserData_resetsUserStorage() {

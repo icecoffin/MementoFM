@@ -11,16 +11,16 @@ import XCTest
 @testable import MementoFM
 
 final class TagServiceTests: XCTestCase {
-    private var persistentStore: MockPersistentStore!
+    private var artistStore: MockArtistStore!
 
     override func setUp() {
         super.setUp()
 
-        persistentStore = MockPersistentStore()
+        artistStore = MockArtistStore()
     }
 
     override func tearDown() {
-        persistentStore = nil
+        artistStore = nil
 
         super.tearDown()
     }
@@ -33,7 +33,7 @@ final class TagServiceTests: XCTestCase {
         tagRepository.tagProvider = { artist in
             ModelFactory.generateTags(inAmount: tagsPerArtist, for: artist)
         }
-        let tagService = TagService(persistentStore: persistentStore, repository: tagRepository)
+        let tagService = TagService(artistStore: artistStore, repository: tagRepository)
         let artists = ModelFactory.generateArtists(inAmount: artistCount)
 
         var topTagsPages: [TopTagsPage] = []
@@ -58,7 +58,7 @@ final class TagServiceTests: XCTestCase {
     func test_getTopTags_failsWithError() {
         let tagRepository = MockTagRepository()
         tagRepository.shouldFailWithError = true
-        let tagService = TagService(persistentStore: persistentStore, repository: tagRepository)
+        let tagService = TagService(artistStore: artistStore, repository: tagRepository)
 
         var didReceiveError = false
         let artists = ModelFactory.generateArtists(inAmount: 1)
@@ -102,9 +102,9 @@ final class TagServiceTests: XCTestCase {
             country: nil
         )
 
-        let tagService = TagService(persistentStore: persistentStore, repository: MockTagRepository())
+        let tagService = TagService(artistStore: artistStore, repository: MockTagRepository())
 
-        persistentStore.customObjects = [artist1, artist2]
+        artistStore.customArtists = [artist1, artist2]
 
         let topTags = tagService.getAllTopTags()
         let expectedTopTags = topTags1 + topTags2

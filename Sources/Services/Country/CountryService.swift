@@ -22,7 +22,7 @@ protocol CountryServiceProtocol {
 final class CountryService: CountryServiceProtocol {
     // MARK: - Public properties
 
-    private let persistentStore: PersistentStore
+    private let artistStore: ArtistStore
     private let countryProvider: CountryProviding
     private let mainScheduler: AnySchedulerOf<DispatchQueue>
     private let backgroundScheduler: AnySchedulerOf<DispatchQueue>
@@ -30,12 +30,12 @@ final class CountryService: CountryServiceProtocol {
     // MARK: - Init
 
     init(
-        persistentStore: PersistentStore,
+        artistStore: ArtistStore,
         countryProvider: CountryProviding = CountryProvider(),
         mainScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.main.eraseToAnyScheduler(),
         backgroundScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.global().eraseToAnyScheduler()
     ) {
-        self.persistentStore = persistentStore
+        self.artistStore = artistStore
         self.countryProvider = countryProvider
         self.mainScheduler = mainScheduler
         self.backgroundScheduler = backgroundScheduler
@@ -46,7 +46,7 @@ final class CountryService: CountryServiceProtocol {
     func updateCountries() -> AnyPublisher<Void, Error> {
         return Future<[Artist], Error> { promise in
             self.backgroundScheduler.schedule {
-                let artists = self.persistentStore.objects(Artist.self)
+                let artists = self.artistStore.fetchAll()
                 let updatedArtists: [Artist] = artists.map {
                     if let country = self.countryProvider.topCountry(for: $0) {
                         return $0.updatingCountry(to: country)
@@ -58,14 +58,14 @@ final class CountryService: CountryServiceProtocol {
             }
         }
         .flatMap { artists in
-            return self.persistentStore.save(artists)
+            return self.artistStore.save(artists: artists)
         }
         .receive(on: mainScheduler)
         .eraseToAnyPublisher()
     }
 
     func getCountriesWithCounts() -> [String: Int] {
-        let artists = persistentStore.objects(Artist.self)
+        let artists = artistStore.fetchAll()
         return artists.reduce([:]) { result, artist in
             var mutableResult = result
             let country = artist.country ?? ""

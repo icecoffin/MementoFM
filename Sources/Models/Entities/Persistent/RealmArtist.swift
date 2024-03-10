@@ -10,17 +10,13 @@ import Foundation
 import RealmSwift
 
 final class RealmArtist: Object, PersistentEntity {
-    @objc dynamic var name = ""
-    @objc dynamic var playcount = 0
-    @objc dynamic var urlString = ""
-    @objc dynamic var needsTagsUpdate = true
-    @objc dynamic var country: String?
-    var tags = List<RealmTag>()
-    var topTags = List<RealmTag>()
-
-    override static func primaryKey() -> String? {
-        return "name"
-    }
+    @Persisted(primaryKey: true) var name = ""
+    @Persisted var playcount = 0
+    @Persisted var urlString = ""
+    @Persisted var needsTagsUpdate = true
+    @Persisted var country: String?
+    @Persisted var tags: List<RealmTag>
+    @Persisted var topTags: List<RealmTag>
 
     static func from(transient: Artist) -> RealmArtist {
         let artist = transient

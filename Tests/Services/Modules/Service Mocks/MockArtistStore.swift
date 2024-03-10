@@ -13,10 +13,11 @@ final class MockArtistStore: ArtistStore {
 
     private(set) var fetchAllCallCount = 0
     private(set) var fetchAllParameters: NSPredicate?
+    var customArtists: [Artist] = []
     func fetchAll(filteredBy predicate: NSPredicate?) -> [Artist] {
         fetchAllCallCount += 1
         fetchAllParameters = predicate
-        return []
+        return customArtists
     }
 
     private(set) var deleteAllCallCount = 0

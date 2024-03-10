@@ -26,7 +26,7 @@ protocol UserServiceProtocol: AnyObject {
 final class UserService: UserServiceProtocol {
     // MARK: - Private properties
 
-    private let persistentStore: PersistentStore
+    private let artistStore: ArtistStore
     private let repository: UserRepository
     private let userDataStorage: UserDataStoring
 
@@ -69,8 +69,8 @@ final class UserService: UserServiceProtocol {
 
     // MARK: - Init
 
-    init(persistentStore: PersistentStore, repository: UserRepository, userDataStorage: UserDataStoring) {
-        self.persistentStore = persistentStore
+    init(artistStore: ArtistStore, repository: UserRepository, userDataStorage: UserDataStoring) {
+        self.artistStore = artistStore
         self.repository = repository
         self.userDataStorage = userDataStorage
     }
@@ -79,11 +79,7 @@ final class UserService: UserServiceProtocol {
 
     func clearUserData() -> AnyPublisher<Void, Error> {
         userDataStorage.reset()
-        return persistentStore.deleteObjects(ofType: Artist.self)
-            .flatMap { _ in
-                return self.persistentStore.deleteObjects(ofType: Tag.self)
-            }
-            .eraseToAnyPublisher()
+        return artistStore.deleteAll()
     }
 
     func checkUserExists(withUsername username: String) -> AnyPublisher<EmptyResponse, Error> {

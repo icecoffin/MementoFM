@@ -28,13 +28,13 @@ protocol TagServiceProtocol: AnyObject {
 final class TagService: TagServiceProtocol {
     // MARK: - Private properties
 
-    private let persistentStore: PersistentStore
+    private let artistStore: ArtistStore
     private let repository: TagRepository
 
     // MARK: - Init
 
-    init(persistentStore: PersistentStore, repository: TagRepository) {
-        self.persistentStore = persistentStore
+    init(artistStore: ArtistStore, repository: TagRepository) {
+        self.artistStore = artistStore
         self.repository = repository
     }
 
@@ -53,7 +53,7 @@ final class TagService: TagServiceProtocol {
     }
 
     func getAllTopTags() -> [Tag] {
-        let artists = self.persistentStore.objects(Artist.self)
+        let artists = artistStore.fetchAll()
         return artists.flatMap { return $0.topTags }
     }
 }

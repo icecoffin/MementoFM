@@ -56,10 +56,10 @@ struct AppDependency: HasArtistService, HasUserService, HasTagService,
         let artistService = ArtistService(persistentStore: realmService, repository: artistRepository)
 
         let userRepository = UserNetworkRepository(networkService: networkService)
-        let userService = UserService(persistentStore: realmService, repository: userRepository, userDataStorage: userDataStorage)
+        let userService = UserService(artistStore: artistStore, repository: userRepository, userDataStorage: userDataStorage)
 
         let tagRepository = TagNetworkRepository(networkService: networkService)
-        let tagService = TagService(persistentStore: realmService, repository: tagRepository)
+        let tagService = TagService(artistStore: artistStore, repository: tagRepository)
 
         let ignoredTagService = IgnoredTagService(persistentStore: realmService)
 
@@ -67,7 +67,7 @@ struct AppDependency: HasArtistService, HasUserService, HasTagService,
         let trackService = TrackService(repository: trackRepository)
         let recentTracksProcessor = RecentTracksProcessor(artistStore: artistStore)
 
-        let countryService = CountryService(persistentStore: realmService)
+        let countryService = CountryService(artistStore: artistStore)
 
         let libraryUpdater = LibraryUpdater(
             userService: userService,
