@@ -11,10 +11,6 @@ import XCTest
 import RealmSwift
 
 final class RealmIgnoredTagTests: XCTestCase {
-    func test_primaryKey_isSet() {
-        XCTAssertEqual(RealmIgnoredTag.primaryKey(), "uuid")
-    }
-
     func test_init_setsCorrectProperties() {
         let realmIgnoredTag = RealmIgnoredTag()
 

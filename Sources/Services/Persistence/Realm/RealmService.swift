@@ -76,7 +76,7 @@ final class RealmService: PersistentStore {
     func mappedCollection<T: TransientEntity>(
         filteredUsing predicate: NSPredicate?,
         sortedBy sortDescriptors: [NSSortDescriptor]
-    ) -> AnyPersistentMappedCollection<T> {
+    ) -> AnyPersistentMappedCollection<T> where T.PersistentType.TransientType == T {
         let realmMappedCollection = RealmMappedCollection<T>(
             realm: currentQueueRealm,
             predicate: predicate,

@@ -51,6 +51,7 @@ struct AppDependency: HasArtistService, HasUserService, HasTagService,
         let networkService = LastFMNetworkService()
 
         let artistStore = PersistentArtistStore(persistentStore: realmService)
+        let ignoredTagStore = PersistentIgnoredTagStore(persistentStore: realmService)
 
         let artistRepository = ArtistNetworkRepository(networkService: networkService)
         let artistService = ArtistService(artistStore: artistStore, repository: artistRepository)
@@ -61,7 +62,7 @@ struct AppDependency: HasArtistService, HasUserService, HasTagService,
         let tagRepository = TagNetworkRepository(networkService: networkService)
         let tagService = TagService(artistStore: artistStore, repository: tagRepository)
 
-        let ignoredTagService = IgnoredTagService(persistentStore: realmService)
+        let ignoredTagService = IgnoredTagService(ignoredTagStore: ignoredTagStore)
 
         let trackRepository = TrackNetworkRepository(networkService: networkService)
         let trackService = TrackService(repository: trackRepository)

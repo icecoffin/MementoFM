@@ -10,18 +10,18 @@ import XCTest
 @testable import MementoFM
 
 final class IgnoredTagServiceTests: XCTestCase {
-    private var persistentStore: MockPersistentStore!
+    private var ignoredTagStore: MockIgnoredTagStore!
     private var ignoredTagService: IgnoredTagService!
 
     override func setUp() {
         super.setUp()
 
-        persistentStore = MockPersistentStore()
-        ignoredTagService = IgnoredTagService(persistentStore: persistentStore)
+        ignoredTagStore = MockIgnoredTagStore()
+        ignoredTagService = IgnoredTagService(ignoredTagStore: ignoredTagStore)
     }
 
     override func tearDown() {
-        persistentStore = nil
+        ignoredTagStore = nil
         ignoredTagService = nil
 
         super.tearDown()
@@ -29,10 +29,10 @@ final class IgnoredTagServiceTests: XCTestCase {
 
     func test_ignoredTags_callsPersistentStore() {
         let ignoredTags = ModelFactory.generateIgnoredTags(inAmount: 5)
-        persistentStore.customObjects = ignoredTags
+        ignoredTagStore.customIgnoredTags = ignoredTags
 
         let expectedIgnoredTags = ignoredTagService.ignoredTags()
-        XCTAssertNil(persistentStore.objectsPredicate)
+        XCTAssertEqual(ignoredTagStore.fetchAllCallCount, 1)
         XCTAssertEqual(ignoredTags, expectedIgnoredTags)
     }
 
@@ -41,10 +41,9 @@ final class IgnoredTagServiceTests: XCTestCase {
 
         _ = ignoredTagService.createDefaultIgnoredTags(withNames: ignoredTagNames)
 
-        let saveParameters = persistentStore.saveParameters
-        let expectedIgnoredTagNames = (saveParameters?.objects as? [IgnoredTag])?.compactMap { $0.name }
+        let expectedIgnoredTagNames = (ignoredTagStore.saveParameters)?.compactMap { $0.name }
         XCTAssertEqual(ignoredTagNames, expectedIgnoredTagNames)
-        XCTAssertEqual(saveParameters?.update, true)
+        XCTAssertEqual(ignoredTagStore.saveCallCount, 1)
     }
 
     func test_updateIgnoresTags_deletesOldIgnoredTags_andSavesNewOnes() {
@@ -53,7 +52,7 @@ final class IgnoredTagServiceTests: XCTestCase {
         _ = ignoredTagService.updateIgnoredTags(ignoredTags)
             .sink(receiveCompletion: { _ in }, receiveValue: { })
 
-        XCTAssertTrue(persistentStore.didCallDelete)
-        XCTAssertEqual(persistentStore.saveParameters?.objects as? [IgnoredTag], ignoredTags)
+        XCTAssertEqual(ignoredTagStore.overwriteCallCount, 1)
+        XCTAssertEqual(ignoredTagStore.overwriteParameters, ignoredTags)
     }
 }

@@ -10,12 +10,8 @@ import Foundation
 import RealmSwift
 
 final class RealmIgnoredTag: Object, PersistentEntity {
-    @objc dynamic var uuid = UUID().uuidString
-    @objc dynamic var name = ""
-
-    override static func primaryKey() -> String? {
-        return "uuid"
-    }
+    @Persisted(primaryKey: true) var uuid = UUID().uuidString
+    @Persisted var name = ""
 
     static func from(transient: IgnoredTag) -> RealmIgnoredTag {
         let ignoredTag = transient

@@ -14,6 +14,7 @@ protocol PersistentStore {
         filteredUsing predicate: NSPredicate?,
         sortedBy sortDescriptors: [NSSortDescriptor]
     ) -> AnyPersistentMappedCollection<T>
+        where T.PersistentType.TransientType == T
 
     func save<T: TransientEntity>(_ objects: [T], update: Bool) -> AnyPublisher<Void, Error>
         where T.PersistentType.TransientType == T

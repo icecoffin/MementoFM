@@ -34,33 +34,28 @@ extension IgnoredTagServiceProtocol {
 final class IgnoredTagService: IgnoredTagServiceProtocol {
     // MARK: - Private properties
 
-    private let persistentStore: PersistentStore
+    private let ignoredTagStore: IgnoredTagStore
 
     // MARK: - Init
 
-    init(persistentStore: PersistentStore) {
-        self.persistentStore = persistentStore
+    init(ignoredTagStore: IgnoredTagStore) {
+        self.ignoredTagStore = ignoredTagStore
     }
 
     // MARK: - Public methods
 
     func ignoredTags() -> [IgnoredTag] {
-        return persistentStore.objects(IgnoredTag.self)
+        return ignoredTagStore.fetchAll()
     }
 
     func createDefaultIgnoredTags(withNames names: [String]) -> AnyPublisher<Void, Error> {
         let ignoredTags = names.map { name in
             return IgnoredTag(uuid: UUID().uuidString, name: name)
         }
-        return persistentStore.save(ignoredTags)
+        return ignoredTagStore.save(ignoredTags: ignoredTags)
     }
 
     func updateIgnoredTags(_ ignoredTags: [IgnoredTag]) -> AnyPublisher<Void, Error> {
-        return persistentStore
-            .deleteObjects(ofType: IgnoredTag.self)
-            .flatMap {
-                return self.persistentStore.save(ignoredTags)
-            }
-            .eraseToAnyPublisher()
+        return ignoredTagStore.overwrite(ignoredTags: ignoredTags)
     }
 }
