@@ -55,19 +55,46 @@ final class ArtistListCoordinator: NavigationFlowCoordinator {
     private func unsubscribeFromNotifications() {
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
+
+    private func openArtist(_ artist: Artist) {
+        let viewModel = ArtistViewModel(artist: artist, dependencies: dependencies)
+        viewModel.delegate = self
+        let dataSource = ArtistDataSource(viewModel: viewModel)
+
+        let viewController = ArtistViewController(dataSource: dataSource)
+        viewController.title = viewModel.title
+        viewController.navigationItem.backButtonDisplayMode = .minimal
+        viewController.hidesBottomBarWhenPushed = true
+
+        navigationController.pushViewController(viewController, animated: true)
+    }
 }
 
 // MARK: - ArtistListViewModelDelegate
 
 extension ArtistListCoordinator: ArtistListViewModelDelegate {
     func artistListViewModel(_ viewModel: ArtistListViewModel, didSelectArtist artist: Artist) {
-        let artistCoordinator = ArtistCoordinator(
-            artist: artist,
+        openArtist(artist)
+    }
+}
+
+// MARK: - ArtistViewModelDelegate
+
+extension ArtistListCoordinator: ArtistViewModelDelegate {
+    func artistViewModel(_ viewModel: ArtistViewModel, didSelectTagWithName name: String) {
+        let viewModelFactory = ArtistsByTagViewModelFactory(tagName: name, dependencies: dependencies)
+        let artistListCoordinator = ArtistListCoordinator(
             navigationController: navigationController,
             popTracker: popTracker,
+            shouldStartAnimated: true,
+            viewModelFactory: viewModelFactory,
             dependencies: dependencies
         )
-        addChildCoordinator(artistCoordinator)
-        artistCoordinator.start()
+        addChildCoordinator(artistListCoordinator)
+        artistListCoordinator.start()
+    }
+
+    func artistViewModel(_ viewModel: ArtistViewModel, didSelectArtist artist: Artist) {
+        openArtist(artist)
     }
 }
