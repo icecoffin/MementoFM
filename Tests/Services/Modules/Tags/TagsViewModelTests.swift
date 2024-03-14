@@ -107,7 +107,7 @@ final class TagsViewModelTests: XCTestCase {
         XCTAssertEqual(expectedNumberOfTags, 2)
     }
 
-    func func_cellViewModelAtIndexPath_returnsCorrectValue() {
+    func test_cellViewModelAtIndexPath_returnsCorrectValue() {
         let tags = sampleTags()
         tagService.customTopTags = tags
         let viewModel = makeTagsViewModel()

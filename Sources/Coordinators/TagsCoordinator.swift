@@ -55,18 +55,3 @@ extension TagsCoordinator: TagsViewModelDelegate {
         artistListCoordinator.start()
     }
 }
-
-// MARK: - ArtistListViewModelDelegate
-
-extension TagsCoordinator: ArtistListViewModelDelegate {
-    func artistListViewModel(_ viewModel: ArtistListViewModel, didSelectArtist artist: Artist) {
-        let artistCoordinator = ArtistCoordinator(
-            artist: artist,
-            navigationController: navigationController,
-            popTracker: popTracker,
-            dependencies: dependencies
-        )
-        addChildCoordinator(artistCoordinator)
-        artistCoordinator.start()
-    }
-}

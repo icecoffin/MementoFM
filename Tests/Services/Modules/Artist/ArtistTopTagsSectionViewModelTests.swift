@@ -31,7 +31,7 @@ final class ArtistTopTagsSectionViewModelTests: XCTestCase {
         )
     }()
 
-    func func_numberOfTopTags_returnsCorrectValue() {
+    func test_numberOfTopTags_returnsCorrectValue() {
         let artist = sampleArtist
         let viewModel = ArtistTopTagsSectionViewModel(artist: artist)
 

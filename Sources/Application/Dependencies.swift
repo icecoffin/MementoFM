@@ -38,7 +38,6 @@ struct AppDependency: HasArtistService, HasUserService, HasTagService,
     let userService: UserServiceProtocol
     let tagService: TagServiceProtocol
     let ignoredTagService: IgnoredTagServiceProtocol
-    let trackService: TrackServiceProtocol
     let countryService: CountryServiceProtocol
 
     let libraryUpdater: LibraryUpdaterProtocol
@@ -86,7 +85,6 @@ struct AppDependency: HasArtistService, HasUserService, HasTagService,
             userService: userService,
             tagService: tagService,
             ignoredTagService: ignoredTagService,
-            trackService: trackService,
             countryService: countryService,
             libraryUpdater: libraryUpdater
         )
