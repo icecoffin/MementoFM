@@ -46,8 +46,6 @@ final class AppearanceConfigurator {
     }
 
     private static func configureTableViewAppearance() {
-        if #available(iOS 15.0, *) {
-            UITableView.appearance().sectionHeaderTopPadding = 0
-        }
+        UITableView.appearance().sectionHeaderTopPadding = 0
     }
 }
