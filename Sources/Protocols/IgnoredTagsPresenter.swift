@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol IgnoredTagsPresenter: NavigationFlowCoordinator, IgnoredTagsViewModelDelegate {
+protocol IgnoredTagsPresenter: IgnoredTagsViewModelDelegate {
     func makeIgnoredTagsViewController(
         dependencies: IgnoredTagsViewModel.Dependencies,
         shouldAddDefaultTags: Bool

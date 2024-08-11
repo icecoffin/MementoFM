@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "8C910649-054D-468C-9D2A-301D7808C48B",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:MementoFM.xcodeproj",
+        "identifier" : "01D4D32B1DAE4A0000BFD7FD",
+        "name" : "MementoFMTests"
+      }
+    }
+  ],
+  "version" : 1
+}
