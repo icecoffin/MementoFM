@@ -13,7 +13,7 @@ let log = Logger.self
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
-    private var appFlowController: AppFlowController?
+    private var appCoordinator: AppCoordinator?
 
     func application(
         _ application: UIApplication,
@@ -32,11 +32,12 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         let migrator = RealmMigrator()
         migrator.performMigrations()
 
-        let appFlowController = AppFlowController(window: window)
-        appFlowController.start()
+        let appCoordinator = AppCoordinator(window: window)
+        appCoordinator.start()
+        window.makeKeyAndVisible()
 
         self.window = window
-        self.appFlowController = appFlowController
+        self.appCoordinator = appCoordinator
 
         return true
     }

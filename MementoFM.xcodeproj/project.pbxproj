@@ -40,6 +40,7 @@
 		6518B1311EC85C07001F4B74 /* TagCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518B1301EC85C07001F4B74 /* TagCellViewModel.swift */; };
 		6518F0291ECB01B000681D5E /* TagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518F0281ECB01B000681D5E /* TagsViewController.swift */; };
 		6518F02B1ECB01B800681D5E /* TagsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518F02A1ECB01B800681D5E /* TagsViewModel.swift */; };
+		6518F02D1ECB044900681D5E /* TagsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518F02C1ECB044900681D5E /* TagsCoordinator.swift */; };
 		651AA6F21FB032F100EEE40A /* IgnoredTagTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651AA6F01FB032EF00EEE40A /* IgnoredTagTests.swift */; };
 		651AA6F41FB0338A00EEE40A /* LibraryPageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651AA6F31FB0338A00EEE40A /* LibraryPageTests.swift */; };
 		651AA6F71FB034C200EEE40A /* sample_library_page.json in Resources */ = {isa = PBXBuildFile; fileRef = 651AA6F51FB033B400EEE40A /* sample_library_page.json */; };
@@ -78,7 +79,13 @@
 		651F9E101EC09FDC006D9474 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D901EC09FDC006D9474 /* AppDelegate.swift */; };
 		651F9E111EC09FDC006D9474 /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D911EC09FDC006D9474 /* Dependencies.swift */; };
 		651F9E121EC09FDC006D9474 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D921EC09FDC006D9474 /* Keys.swift */; };
-		651F9E151EC09FDC006D9474 /* AppFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D971EC09FDC006D9474 /* AppFlowController.swift */; };
+		651F9E151EC09FDC006D9474 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D971EC09FDC006D9474 /* AppCoordinator.swift */; };
+		651F9E161EC09FDC006D9474 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D981EC09FDC006D9474 /* Coordinator.swift */; };
+		651F9E171EC09FDC006D9474 /* ArtistListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D991EC09FDC006D9474 /* ArtistListCoordinator.swift */; };
+		651F9E181EC09FDC006D9474 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D9A1EC09FDC006D9474 /* MainFlowCoordinator.swift */; };
+		651F9E191EC09FDC006D9474 /* NavigationFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D9B1EC09FDC006D9474 /* NavigationFlowCoordinator.swift */; };
+		651F9E1A1EC09FDC006D9474 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D9C1EC09FDC006D9474 /* OnboardingCoordinator.swift */; };
+		651F9E1B1EC09FDC006D9474 /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9D9D1EC09FDC006D9474 /* SettingsCoordinator.swift */; };
 		651F9E1E1EC09FDC006D9474 /* String+Unlocalized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DA11EC09FDC006D9474 /* String+Unlocalized.swift */; };
 		651F9E201EC09FDC006D9474 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DA31EC09FDC006D9474 /* UIViewController+Alert.swift */; };
 		651F9E211EC09FDC006D9474 /* RealmArtist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651F9DA71EC09FDC006D9474 /* RealmArtist.swift */; };
@@ -138,18 +145,12 @@
 		65241C281EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C231EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift */; };
 		653347041FB6168C0020DC82 /* MockIgnoredTagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653347001FB616800020DC82 /* MockIgnoredTagService.swift */; };
 		653347051FB6168C0020DC82 /* MockUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653347021FB616880020DC82 /* MockUserService.swift */; };
+		653669EF1EE5753B00E9D56C /* NavigationControllerPopTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653669EE1EE5753B00E9D56C /* NavigationControllerPopTracker.swift */; };
 		6537BB152B9DE7EA00BE930E /* ArtistStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6537BB142B9DE7EA00BE930E /* ArtistStore.swift */; };
 		6537BB172B9DEC1200BE930E /* MockRecentTracksProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6537BB162B9DEC1200BE930E /* MockRecentTracksProcessor.swift */; };
 		6537BB192B9DF9C800BE930E /* MockArtistStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6537BB182B9DF9C800BE930E /* MockArtistStore.swift */; };
 		6537BB1B2B9DFC0000BE930E /* PersistentArtistStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6537BB1A2B9DFC0000BE930E /* PersistentArtistStoreTests.swift */; };
 		6539536E1FC4671700B84387 /* IgnoredTagCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6539536D1FC4671700B84387 /* IgnoredTagCellViewModelTests.swift */; };
-		653B1B232C6802E000BC6051 /* CountriesFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653B1B222C6802E000BC6051 /* CountriesFlowController.swift */; };
-		653B1B252C6802EF00BC6051 /* FlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653B1B242C6802EE00BC6051 /* FlowController.swift */; };
-		653B1B272C6805C300BC6051 /* ArtistListFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653B1B262C6805C300BC6051 /* ArtistListFlowController.swift */; };
-		653B1B292C68B09200BC6051 /* TagsFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653B1B282C68B09200BC6051 /* TagsFlowController.swift */; };
-		653B1B2B2C68B2A900BC6051 /* SettingsFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653B1B2A2C68B2A900BC6051 /* SettingsFlowController.swift */; };
-		653B1B2D2C68B71500BC6051 /* OnboardingFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653B1B2C2C68B71500BC6051 /* OnboardingFlowController.swift */; };
-		653B1B2F2C68C0D200BC6051 /* MainFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653B1B2E2C68C0D200BC6051 /* MainFlowController.swift */; };
 		653F21751F6D1272009A562A /* SimilarArtistsRequestStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653F21741F6D1272009A562A /* SimilarArtistsRequestStrategy.swift */; };
 		653F21771F6D8484009A562A /* SimilarArtistListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653F21761F6D8484009A562A /* SimilarArtistListResponse.swift */; };
 		6544307F1FA2417200923356 /* MockTrackRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6544307B1FA2414700923356 /* MockTrackRepository.swift */; };
@@ -169,6 +170,7 @@
 		656FE2342276503200DD3A8E /* MockPersistentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656FE23222764FB200DD3A8E /* MockPersistentStore.swift */; };
 		6570302323AE815700F706B4 /* CountryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6570302223AE815700F706B4 /* CountryProvider.swift */; };
 		6570302523AE81CB00F706B4 /* CountryMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6570302423AE81CB00F706B4 /* CountryMapping.swift */; };
+		6570302723AE977200F706B4 /* CountriesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6570302623AE977200F706B4 /* CountriesCoordinator.swift */; };
 		6570302C23AE9B0500F706B4 /* CountriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6570302B23AE9B0500F706B4 /* CountriesViewController.swift */; };
 		6570302E23AE9B4400F706B4 /* CountriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6570302D23AE9B4400F706B4 /* CountriesViewModel.swift */; };
 		6574CD611FB4C06E00B7ABE9 /* IgnoredTagsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6574CD601FB4C06E00B7ABE9 /* IgnoredTagsViewModelTests.swift */; };
@@ -222,6 +224,7 @@
 		65CA67E7294FB20100C9A989 /* CountryCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA67E6294FB20100C9A989 /* CountryCellTests.swift */; };
 		65CA67E9294FB20F00C9A989 /* SettingCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA67E8294FB20F00C9A989 /* SettingCellTests.swift */; };
 		65D6BE3F1FD99EEC008519F8 /* ArtistTopTagsSectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D6BE3E1FD99EEC008519F8 /* ArtistTopTagsSectionViewModelTests.swift */; };
+		65DABC4A270CD43000727F56 /* UINavigationController+Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DABC49270CD43000727F56 /* UINavigationController+Transition.swift */; };
 		65DABC4C27133D9900727F56 /* sample_single_recent_track_page.json in Resources */ = {isa = PBXBuildFile; fileRef = 65DABC4B27133D9900727F56 /* sample_single_recent_track_page.json */; };
 		65DC5B6F2801F4F200AB4544 /* TagCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DC5B6E2801F4F200AB4544 /* TagCellViewModelTests.swift */; };
 		65DC5B78280321B200AB4544 /* CombineSchedulers in Frameworks */ = {isa = PBXBuildFile; productRef = 65DC5B77280321B200AB4544 /* CombineSchedulers */; };
@@ -284,6 +287,7 @@
 		6518B1301EC85C07001F4B74 /* TagCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCellViewModel.swift; sourceTree = "<group>"; };
 		6518F0281ECB01B000681D5E /* TagsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsViewController.swift; sourceTree = "<group>"; };
 		6518F02A1ECB01B800681D5E /* TagsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsViewModel.swift; sourceTree = "<group>"; };
+		6518F02C1ECB044900681D5E /* TagsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsCoordinator.swift; sourceTree = "<group>"; };
 		651AA6F01FB032EF00EEE40A /* IgnoredTagTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoredTagTests.swift; sourceTree = "<group>"; };
 		651AA6F31FB0338A00EEE40A /* LibraryPageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryPageTests.swift; sourceTree = "<group>"; };
 		651AA6F51FB033B400EEE40A /* sample_library_page.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sample_library_page.json; sourceTree = "<group>"; };
@@ -322,7 +326,13 @@
 		651F9D901EC09FDC006D9474 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		651F9D911EC09FDC006D9474 /* Dependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
 		651F9D921EC09FDC006D9474 /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
-		651F9D971EC09FDC006D9474 /* AppFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppFlowController.swift; sourceTree = "<group>"; };
+		651F9D971EC09FDC006D9474 /* AppCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		651F9D981EC09FDC006D9474 /* Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		651F9D991EC09FDC006D9474 /* ArtistListCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistListCoordinator.swift; sourceTree = "<group>"; };
+		651F9D9A1EC09FDC006D9474 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
+		651F9D9B1EC09FDC006D9474 /* NavigationFlowCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationFlowCoordinator.swift; sourceTree = "<group>"; };
+		651F9D9C1EC09FDC006D9474 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
+		651F9D9D1EC09FDC006D9474 /* SettingsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
 		651F9DA11EC09FDC006D9474 /* String+Unlocalized.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Unlocalized.swift"; sourceTree = "<group>"; };
 		651F9DA31EC09FDC006D9474 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		651F9DA71EC09FDC006D9474 /* RealmArtist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmArtist.swift; sourceTree = "<group>"; };
@@ -384,20 +394,13 @@
 		653347001FB616800020DC82 /* MockIgnoredTagService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockIgnoredTagService.swift; sourceTree = "<group>"; };
 		653347021FB616880020DC82 /* MockUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserService.swift; sourceTree = "<group>"; };
 		653347061FB617E80020DC82 /* MockArtistService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockArtistService.swift; sourceTree = "<group>"; };
+		653669EE1EE5753B00E9D56C /* NavigationControllerPopTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationControllerPopTracker.swift; sourceTree = "<group>"; };
 		6537BB142B9DE7EA00BE930E /* ArtistStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistStore.swift; sourceTree = "<group>"; };
 		6537BB162B9DEC1200BE930E /* MockRecentTracksProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRecentTracksProcessor.swift; sourceTree = "<group>"; };
 		6537BB182B9DF9C800BE930E /* MockArtistStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockArtistStore.swift; sourceTree = "<group>"; };
 		6537BB1A2B9DFC0000BE930E /* PersistentArtistStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentArtistStoreTests.swift; sourceTree = "<group>"; };
 		6537BB1C2B9E585400BE930E /* IgnoredTagStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoredTagStore.swift; sourceTree = "<group>"; };
 		6539536D1FC4671700B84387 /* IgnoredTagCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoredTagCellViewModelTests.swift; sourceTree = "<group>"; };
-		653B1B222C6802E000BC6051 /* CountriesFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesFlowController.swift; sourceTree = "<group>"; };
-		653B1B242C6802EE00BC6051 /* FlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowController.swift; sourceTree = "<group>"; };
-		653B1B262C6805C300BC6051 /* ArtistListFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistListFlowController.swift; sourceTree = "<group>"; };
-		653B1B282C68B09200BC6051 /* TagsFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsFlowController.swift; sourceTree = "<group>"; };
-		653B1B2A2C68B2A900BC6051 /* SettingsFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFlowController.swift; sourceTree = "<group>"; };
-		653B1B2C2C68B71500BC6051 /* OnboardingFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowController.swift; sourceTree = "<group>"; };
-		653B1B2E2C68C0D200BC6051 /* MainFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowController.swift; sourceTree = "<group>"; };
-		653B1B302C6909EF00BC6051 /* MementoFM.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = MementoFM.xctestplan; sourceTree = "<group>"; };
 		653F21741F6D1272009A562A /* SimilarArtistsRequestStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimilarArtistsRequestStrategy.swift; sourceTree = "<group>"; };
 		653F21761F6D8484009A562A /* SimilarArtistListResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimilarArtistListResponse.swift; sourceTree = "<group>"; };
 		654430781FA231A700923356 /* TrackServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackServiceTests.swift; sourceTree = "<group>"; };
@@ -418,6 +421,7 @@
 		656FE23222764FB200DD3A8E /* MockPersistentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPersistentStore.swift; sourceTree = "<group>"; };
 		6570302223AE815700F706B4 /* CountryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryProvider.swift; sourceTree = "<group>"; };
 		6570302423AE81CB00F706B4 /* CountryMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryMapping.swift; sourceTree = "<group>"; };
+		6570302623AE977200F706B4 /* CountriesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesCoordinator.swift; sourceTree = "<group>"; };
 		6570302B23AE9B0500F706B4 /* CountriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesViewController.swift; sourceTree = "<group>"; };
 		6570302D23AE9B4400F706B4 /* CountriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesViewModel.swift; sourceTree = "<group>"; };
 		6574CD601FB4C06E00B7ABE9 /* IgnoredTagsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoredTagsViewModelTests.swift; sourceTree = "<group>"; };
@@ -466,6 +470,7 @@
 		65CA67E8294FB20F00C9A989 /* SettingCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCellTests.swift; sourceTree = "<group>"; };
 		65D6BE3E1FD99EEC008519F8 /* ArtistTopTagsSectionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistTopTagsSectionViewModelTests.swift; sourceTree = "<group>"; };
 		65D6BE401FD9A144008519F8 /* ArtistSimilarsSectionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSimilarsSectionViewModelTests.swift; sourceTree = "<group>"; };
+		65DABC49270CD43000727F56 /* UINavigationController+Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Transition.swift"; sourceTree = "<group>"; };
 		65DABC4B27133D9900727F56 /* sample_single_recent_track_page.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_single_recent_track_page.json; sourceTree = "<group>"; };
 		65DC5B6E2801F4F200AB4544 /* TagCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCellViewModelTests.swift; sourceTree = "<group>"; };
 		65DC8F601FD0620F007299DB /* ArtistsByTagViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistsByTagViewModelTests.swift; sourceTree = "<group>"; };
@@ -524,7 +529,6 @@
 		01D4D32F1DAE4A0000BFD7FD /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				653B1B302C6909EF00BC6051 /* MementoFM.xctestplan */,
 				01D4D3321DAE4A0000BFD7FD /* Info.plist */,
 				651B66341F9C9217003C436E /* Models */,
 				651B66371F9C9218003C436E /* Utils */,
@@ -773,7 +777,7 @@
 			isa = PBXGroup;
 			children = (
 				651F9D8F1EC09FDC006D9474 /* Application */,
-				651F9D961EC09FDC006D9474 /* Flow */,
+				651F9D961EC09FDC006D9474 /* Coordinators */,
 				651F9D9E1EC09FDC006D9474 /* Extensions */,
 				651F9DA41EC09FDC006D9474 /* Models */,
 				651F9DC11EC09FDC006D9474 /* Modules */,
@@ -795,19 +799,20 @@
 			path = Application;
 			sourceTree = "<group>";
 		};
-		651F9D961EC09FDC006D9474 /* Flow */ = {
+		651F9D961EC09FDC006D9474 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
-				651F9D971EC09FDC006D9474 /* AppFlowController.swift */,
-				653B1B262C6805C300BC6051 /* ArtistListFlowController.swift */,
-				653B1B2E2C68C0D200BC6051 /* MainFlowController.swift */,
-				653B1B2C2C68B71500BC6051 /* OnboardingFlowController.swift */,
-				653B1B2A2C68B2A900BC6051 /* SettingsFlowController.swift */,
-				653B1B282C68B09200BC6051 /* TagsFlowController.swift */,
-				653B1B222C6802E000BC6051 /* CountriesFlowController.swift */,
-				653B1B242C6802EE00BC6051 /* FlowController.swift */,
+				651F9D971EC09FDC006D9474 /* AppCoordinator.swift */,
+				651F9D981EC09FDC006D9474 /* Coordinator.swift */,
+				651F9D991EC09FDC006D9474 /* ArtistListCoordinator.swift */,
+				651F9D9A1EC09FDC006D9474 /* MainFlowCoordinator.swift */,
+				651F9D9B1EC09FDC006D9474 /* NavigationFlowCoordinator.swift */,
+				651F9D9C1EC09FDC006D9474 /* OnboardingCoordinator.swift */,
+				651F9D9D1EC09FDC006D9474 /* SettingsCoordinator.swift */,
+				6518F02C1ECB044900681D5E /* TagsCoordinator.swift */,
+				6570302623AE977200F706B4 /* CountriesCoordinator.swift */,
 			);
-			path = Flow;
+			path = Coordinators;
 			sourceTree = "<group>";
 		};
 		651F9D9E1EC09FDC006D9474 /* Extensions */ = {
@@ -820,6 +825,7 @@
 				651F9DA31EC09FDC006D9474 /* UIViewController+Alert.swift */,
 				65A0A24A2164D7240037354E /* UIColor+AppColors.swift */,
 				65A0A24C2164D7490037354E /* UIFont+AppFonts.swift */,
+				65DABC49270CD43000727F56 /* UINavigationController+Transition.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1117,6 +1123,7 @@
 				651F9E011EC09FDC006D9474 /* ErrorConverter.swift */,
 				65FB48B027FF7367008BB121 /* Logger.swift */,
 				651F9E031EC09FDC006D9474 /* MappingHelpers.swift */,
+				653669EE1EE5753B00E9D56C /* NavigationControllerPopTracker.swift */,
 				65BB1AA32808A3E70002A17C /* PageProgress.swift */,
 				65AF2B0A27FF62AE0079040D /* UICollectionViewLeftAlignedLayout.swift */,
 				65FC807622B2E80B000207EE /* UIImage+Symbols.swift */,
@@ -1597,7 +1604,7 @@
 				651F9E381EC09FDC006D9474 /* ArtistViewModel.swift in Sources */,
 				651F9E5C1EC09FDD006D9474 /* ErrorConverter.swift in Sources */,
 				651CB35F1EC9DCDA00BC452C /* ArtistTopTagsSectionHeaderView.swift in Sources */,
-				651F9E151EC09FDC006D9474 /* AppFlowController.swift in Sources */,
+				651F9E151EC09FDC006D9474 /* AppCoordinator.swift in Sources */,
 				651CB35D1EC9DCDA00BC452C /* SimilarArtistCell.swift in Sources */,
 				65241C281EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift in Sources */,
 				6518B1311EC85C07001F4B74 /* TagCellViewModel.swift in Sources */,
@@ -1605,6 +1612,7 @@
 				651F9E351EC09FDC006D9474 /* TopTagsResponse.swift in Sources */,
 				651F9E341EC09FDC006D9474 /* RecentTracksPageResponse.swift in Sources */,
 				6537BB152B9DE7EA00BE930E /* ArtistStore.swift in Sources */,
+				6570302723AE977200F706B4 /* CountriesCoordinator.swift in Sources */,
 				651F9E561EC09FDD006D9474 /* SyncPresenter.swift in Sources */,
 				65ED093B2B9E59550018ED34 /* IgnoredTagStore.swift in Sources */,
 				651F9E411EC09FDC006D9474 /* ArtistListViewController.swift in Sources */,
@@ -1618,6 +1626,7 @@
 				651F338C1FA0E24D00B178D0 /* ArtistRepository.swift in Sources */,
 				65112D701F2F181800CBF8BA /* RealmService.swift in Sources */,
 				651F9E3F1EC09FDC006D9474 /* IgnoredTagsViewModel.swift in Sources */,
+				651F9E1B1EC09FDC006D9474 /* SettingsCoordinator.swift in Sources */,
 				651F9E261EC09FDC006D9474 /* LibraryPage.swift in Sources */,
 				651F9E4A1EC09FDD006D9474 /* SettingsViewController.swift in Sources */,
 				650D97CE1F1521C1008C1DC6 /* LastFMError.swift in Sources */,
@@ -1630,14 +1639,13 @@
 				65AF2B0B27FF62AE0079040D /* UICollectionViewLeftAlignedLayout.swift in Sources */,
 				651F9E441EC09FDC006D9474 /* LibraryViewModel.swift in Sources */,
 				651F9E491EC09FDD006D9474 /* SettingCell.swift in Sources */,
-				653B1B232C6802E000BC6051 /* CountriesFlowController.swift in Sources */,
 				651F338E1FA0FB7D00B178D0 /* TagRepository.swift in Sources */,
 				6511361F1F2AE6DB0079411F /* TransientEntity.swift in Sources */,
+				65DABC4A270CD43000727F56 /* UINavigationController+Transition.swift in Sources */,
 				651F9E201EC09FDC006D9474 /* UIViewController+Alert.swift in Sources */,
 				651F9E111EC09FDC006D9474 /* Dependencies.swift in Sources */,
 				651F9E241EC09FDC006D9474 /* Artist.swift in Sources */,
 				651F33901FA0FC2500B178D0 /* TrackRepository.swift in Sources */,
-				653B1B2B2C68B2A900BC6051 /* SettingsFlowController.swift in Sources */,
 				656589EF1FDB093B00859414 /* ArtistSimilarsSectionViewModelFactory.swift in Sources */,
 				65236C2C1F91E37500BE100A /* EmptyResponse.swift in Sources */,
 				657AC74323CCF62D00E3AE17 /* ArtistsByCountryViewModel.swift in Sources */,
@@ -1655,6 +1663,7 @@
 				651CB3611EC9DEE900BC452C /* EmptyDataSetFooterView.swift in Sources */,
 				651F9E321EC09FDC006D9474 /* RealmMappedCollection.swift in Sources */,
 				65C05C102692049200517784 /* UICollectionView+Reusable.swift in Sources */,
+				651F9E171EC09FDC006D9474 /* ArtistListCoordinator.swift in Sources */,
 				651CB3631EC9DEEF00BC452C /* LoadingFooterView.swift in Sources */,
 				65206EC71EC4C0CF00A83DA1 /* ArtistTopTagsSectionDataSource.swift in Sources */,
 				651F9E401EC09FDC006D9474 /* ArtistCell.swift in Sources */,
@@ -1662,15 +1671,14 @@
 				651F9E291EC09FDC006D9474 /* Tag.swift in Sources */,
 				651F9E371EC09FDC006D9474 /* ArtistViewController.swift in Sources */,
 				651F33921FA0FD2600B178D0 /* UserRepository.swift in Sources */,
+				651F9E181EC09FDC006D9474 /* MainFlowCoordinator.swift in Sources */,
 				6516A53D1ECDFD830021E43C /* NSAttributedString+Join.swift in Sources */,
 				65178A8A1F6ACD6D006A29E8 /* ArtistSimilarsSectionHeaderView.swift in Sources */,
 				651F9E251EC09FDC006D9474 /* IgnoredTag.swift in Sources */,
 				651F9E3A1EC09FDC006D9474 /* EnterUsernameViewModel.swift in Sources */,
 				651F9E101EC09FDC006D9474 /* AppDelegate.swift in Sources */,
 				65B772891EC5C5E500892698 /* ArtistDataSource.swift in Sources */,
-				653B1B272C6805C300BC6051 /* ArtistListFlowController.swift in Sources */,
 				655116D822B171C400463BE1 /* RealmMigrator.swift in Sources */,
-				653B1B292C68B09200BC6051 /* TagsFlowController.swift in Sources */,
 				65206EC91EC4C11400A83DA1 /* ArtistSimilarsSectionDataSource.swift in Sources */,
 				651F9E5A1EC09FDD006D9474 /* BlockBarButtonItem.swift in Sources */,
 				651F9E3B1EC09FDC006D9474 /* IgnoredTagCell.swift in Sources */,
@@ -1684,22 +1692,24 @@
 				6518F0291ECB01B000681D5E /* TagsViewController.swift in Sources */,
 				65A0A24B2164D7240037354E /* UIColor+AppColors.swift in Sources */,
 				651F9E391EC09FDC006D9474 /* EnterUsernameViewController.swift in Sources */,
-				653B1B2F2C68C0D200BC6051 /* MainFlowController.swift in Sources */,
 				650B1D4D2440C53000F770FA /* CountryService.swift in Sources */,
+				651F9E1A1EC09FDC006D9474 /* OnboardingCoordinator.swift in Sources */,
 				651F9E421EC09FDC006D9474 /* LoadingView.swift in Sources */,
 				65BB1AA42808A3E70002A17C /* PageProgress.swift in Sources */,
-				653B1B252C6802EF00BC6051 /* FlowController.swift in Sources */,
 				651F9E331EC09FDC006D9474 /* LibraryPageResponse.swift in Sources */,
 				651F9E551EC09FDD006D9474 /* IgnoredTagsPresenter.swift in Sources */,
 				651F9E2C1EC09FDC006D9474 /* UserDataStorage.swift in Sources */,
 				65FC807722B2E80B000207EE /* UIImage+Symbols.swift in Sources */,
 				652167661F619E1A005B7273 /* TrackService.swift in Sources */,
 				655E97B91F3C6AEC003614C8 /* TagService.swift in Sources */,
+				651F9E191EC09FDC006D9474 /* NavigationFlowCoordinator.swift in Sources */,
+				6518F02D1ECB044900681D5E /* TagsCoordinator.swift in Sources */,
 				659F759B2814619200ACC306 /* Completion+AsResult.swift in Sources */,
 				656FE2312276265900DD3A8E /* PersistentStore.swift in Sources */,
-				653B1B2D2C68B71500BC6051 /* OnboardingFlowController.swift in Sources */,
 				653F21771F6D8484009A562A /* SimilarArtistListResponse.swift in Sources */,
+				653669EF1EE5753B00E9D56C /* NavigationControllerPopTracker.swift in Sources */,
 				651F9E211EC09FDC006D9474 /* RealmArtist.swift in Sources */,
+				651F9E161EC09FDC006D9474 /* Coordinator.swift in Sources */,
 				6570302C23AE9B0500F706B4 /* CountriesViewController.swift in Sources */,
 				651F9E431EC09FDC006D9474 /* LibraryArtistCellViewModel.swift in Sources */,
 				6570302E23AE9B4400F706B4 /* CountriesViewModel.swift in Sources */,
