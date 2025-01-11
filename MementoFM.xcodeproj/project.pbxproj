@@ -391,6 +391,7 @@
 		65236C2B1F91E37500BE100A /* EmptyResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResponse.swift; sourceTree = "<group>"; };
 		65241C221EC6E96300927749 /* ArtistSimilarsSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistSimilarsSectionViewModel.swift; sourceTree = "<group>"; };
 		65241C231EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistTopTagsSectionViewModel.swift; sourceTree = "<group>"; };
+		652F628C2D32D72300756F3A /* MementoFM.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = MementoFM.xctestplan; sourceTree = "<group>"; };
 		653347001FB616800020DC82 /* MockIgnoredTagService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockIgnoredTagService.swift; sourceTree = "<group>"; };
 		653347021FB616880020DC82 /* MockUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserService.swift; sourceTree = "<group>"; };
 		653347061FB617E80020DC82 /* MockArtistService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockArtistService.swift; sourceTree = "<group>"; };
@@ -507,6 +508,7 @@
 		01D4D30F1DAE4A0000BFD7FD = {
 			isa = PBXGroup;
 			children = (
+				652F628C2D32D72300756F3A /* MementoFM.xctestplan */,
 				651F9D8E1EC09FDC006D9474 /* Sources */,
 				651F9D871EC09FDC006D9474 /* Resources */,
 				651F9E6A1EC0A1B9006D9474 /* Supporting Files */,
