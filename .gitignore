@@ -66,6 +66,12 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 
+# Project file
+#
+# This project is managed by XcodeGen.
+
+*.xcodeproj
+
 # Custom
 
 Keys.swift

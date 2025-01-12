@@ -9,7 +9,7 @@
 import Foundation
 
 struct Keys {
-  struct LastFM {
-    static let apiKey = "YOUR_API_KEY"
-  }
+    struct LastFM {
+        static let apiKey = "YOUR_API_KEY"
+    }
 }
