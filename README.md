@@ -22,6 +22,10 @@ Have you ever tried to find a music band which is similar to the one you're curr
 $ mint bootstrap --link
 ```
 
+## XcodeGen
+
+This project uses [XcodeGen](https://github.com/yonaskolb/XcodeGen/) to generate the Xcode project on demand. The `.xcodeproj` file has been removed from the Git repository. Follow the installation instructions in the XcodeGen repository and run `xcodegen` to regenerate the project file.
+
 ## Running the app
 You'll need a Last.fm API key in order to run this app. Here's how you obtain it:
 
