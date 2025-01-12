@@ -32,7 +32,7 @@ func assertSnapshots(
 ) {
     let perceptualPrecision: Float = 0.98
     assertSnapshot(
-        matching: view,
+        of: view,
         as: .image(
             perceptualPrecision: perceptualPrecision,
             traits: .init(userInterfaceStyle: .light)
@@ -43,7 +43,7 @@ func assertSnapshots(
         line: line
     )
     assertSnapshot(
-        matching: view,
+        of: view,
         as: .image(
             perceptualPrecision: perceptualPrecision,
             traits: .init(userInterfaceStyle: .dark)

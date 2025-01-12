@@ -143,6 +143,8 @@
 		65236C2C1F91E37500BE100A /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65236C2B1F91E37500BE100A /* EmptyResponse.swift */; };
 		65241C271EC6E96300927749 /* ArtistSimilarsSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C221EC6E96300927749 /* ArtistSimilarsSectionViewModel.swift */; };
 		65241C281EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65241C231EC6E96300927749 /* ArtistTopTagsSectionViewModel.swift */; };
+		652F628F2D3415B300756F3A /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 652F628E2D3415B300756F3A /* RealmSwift */; };
+		652F62912D3415B300756F3A /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 652F628E2D3415B300756F3A /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		653347041FB6168C0020DC82 /* MockIgnoredTagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653347001FB616800020DC82 /* MockIgnoredTagService.swift */; };
 		653347051FB6168C0020DC82 /* MockUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653347021FB616880020DC82 /* MockUserService.swift */; };
 		653669EF1EE5753B00E9D56C /* NavigationControllerPopTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653669EE1EE5753B00E9D56C /* NavigationControllerPopTracker.swift */; };
@@ -234,7 +236,6 @@
 		65FB48B127FF7367008BB121 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FB48B027FF7367008BB121 /* Logger.swift */; };
 		65FB48B427FF7900008BB121 /* TPKeyboardAvoiding in Frameworks */ = {isa = PBXBuildFile; productRef = 65FB48B327FF7900008BB121 /* TPKeyboardAvoiding */; };
 		65FB48B727FF7A73008BB121 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 65FB48B627FF7A73008BB121 /* SnapKit */; };
-		65FB48C027FF8C3C008BB121 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 65FB48BF27FF8C3C008BB121 /* Realm */; };
 		65FB48C227FF8C3C008BB121 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 65FB48C127FF8C3C008BB121 /* RealmSwift */; };
 		65FC807722B2E80B000207EE /* UIImage+Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FC807622B2E80B000207EE /* UIImage+Symbols.swift */; };
 /* End PBXBuildFile section */
@@ -248,6 +249,20 @@
 			remoteInfo = MementoFM;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		652F62902D3415B300756F3A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				652F62912D3415B300756F3A /* RealmSwift in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		01D4D3181DAE4A0000BFD7FD /* MementoFM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MementoFM.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -485,7 +500,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65FB48C027FF8C3C008BB121 /* Realm in Frameworks */,
 				65FB48C227FF8C3C008BB121 /* RealmSwift in Frameworks */,
 				65DC5B78280321B200AB4544 /* CombineSchedulers in Frameworks */,
 				659F759728109FBC00ACC306 /* Alamofire in Frameworks */,
@@ -498,6 +512,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				652F628F2D3415B300756F3A /* RealmSwift in Frameworks */,
 				65CA67CA294F780800C9A989 /* SnapshotTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -513,6 +528,7 @@
 				651F9D871EC09FDC006D9474 /* Resources */,
 				651F9E6A1EC0A1B9006D9474 /* Supporting Files */,
 				01D4D32F1DAE4A0000BFD7FD /* Tests */,
+				652F628D2D3415B300756F3A /* Frameworks */,
 				01D4D3191DAE4A0000BFD7FD /* Products */,
 			);
 			indentWidth = 4;
@@ -1207,6 +1223,13 @@
 			path = Sections;
 			sourceTree = "<group>";
 		};
+		652F628D2D3415B300756F3A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		653346FF1FB6166A0020DC82 /* Service Mocks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1465,7 +1488,6 @@
 			packageProductDependencies = (
 				65FB48B327FF7900008BB121 /* TPKeyboardAvoiding */,
 				65FB48B627FF7A73008BB121 /* SnapKit */,
-				65FB48BF27FF8C3C008BB121 /* Realm */,
 				65FB48C127FF8C3C008BB121 /* RealmSwift */,
 				65DC5B77280321B200AB4544 /* CombineSchedulers */,
 				659F759628109FBC00ACC306 /* Alamofire */,
@@ -1481,6 +1503,7 @@
 				01D4D3281DAE4A0000BFD7FD /* Sources */,
 				01D4D3291DAE4A0000BFD7FD /* Frameworks */,
 				01D4D32A1DAE4A0000BFD7FD /* Resources */,
+				652F62902D3415B300756F3A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1490,6 +1513,7 @@
 			name = MementoFMTests;
 			packageProductDependencies = (
 				65CA67C9294F780800C9A989 /* SnapshotTesting */,
+				652F628E2D3415B300756F3A /* RealmSwift */,
 			);
 			productName = MementoFMTests;
 			productReference = 01D4D32C1DAE4A0000BFD7FD /* MementoFMTests.xctest */;
@@ -2053,53 +2077,58 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
+				kind = exactVersion;
+				version = 5.10.2;
 			};
 		};
 		65CA67C8294F780800C9A989 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 1.17.6;
 			};
 		};
 		65DC5B76280321B200AB4544 /* XCRemoteSwiftPackageReference "combine-schedulers" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/combine-schedulers";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.5.3;
+				kind = exactVersion;
+				version = 1.0.3;
 			};
 		};
 		65FB48B227FF7900008BB121 /* XCRemoteSwiftPackageReference "TPKeyboardAvoiding" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/michaeltyson/TPKeyboardAvoiding";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 1.3.5;
 			};
 		};
 		65FB48B527FF7A73008BB121 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
+				kind = exactVersion;
+				version = 5.7.1;
 			};
 		};
 		65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 10.25.0;
+				kind = exactVersion;
+				version = 20.0.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		652F628E2D3415B300756F3A /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
 		659F759628109FBC00ACC306 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 659F759528109FBC00ACC306 /* XCRemoteSwiftPackageReference "Alamofire" */;
@@ -2124,11 +2153,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 65FB48B527FF7A73008BB121 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		65FB48BF27FF8C3C008BB121 /* Realm */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 65FB48BE27FF8C3C008BB121 /* XCRemoteSwiftPackageReference "realm-swift" */;
-			productName = Realm;
 		};
 		65FB48C127FF8C3C008BB121 /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
