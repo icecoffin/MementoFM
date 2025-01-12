@@ -1,1 +1,1 @@
-*.png filter=lfs diff=lfs diff=image merge=lfs -text
+**/__Snapshots__/*.png filter=lfs diff=lfs diff=image merge=lfs -text
