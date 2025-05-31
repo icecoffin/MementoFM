@@ -92,9 +92,13 @@ final class ArtistsByCountryViewModel: ArtistListViewModel {
     }
 
     func performSearch(withText text: String) {
-        let filterPredicate = NSPredicate(format: "name CONTAINS[cd] %@", text)
-        let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [originalPredicate, filterPredicate])
-        artists.predicate = compoundPredicate
+        if text.isEmpty {
+            artists.predicate = originalPredicate
+        } else {
+            let filterPredicate = NSPredicate(format: "name CONTAINS[cd] %@", text)
+            let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [originalPredicate, filterPredicate])
+            artists.predicate = compoundPredicate
+        }
         self.didUpdateSubject.send(.success(artists.isEmpty))
     }
 }
