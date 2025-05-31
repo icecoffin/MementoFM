@@ -8,7 +8,6 @@
 
 import UIKit
 import SnapKit
-import TPKeyboardAvoiding
 import Combine
 
 final class ArtistListViewController: UIViewController {
@@ -24,7 +23,7 @@ final class ArtistListViewController: UIViewController {
     private var cancelBag = Set<AnyCancellable>()
 
     private let searchController: UISearchController
-    private let tableView = TPKeyboardAvoidingTableView()
+    private let tableView = UITableView()
     private let loadingView = LoadingView()
     private let emptyDataSetView = EmptyDataSetView(text: "No artists found".unlocalized)
 
@@ -64,7 +63,8 @@ final class ArtistListViewController: UIViewController {
     private func addTableView() {
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(view.keyboardLayoutGuide.snp.top)
         }
 
         tableView.register(ArtistCell.self)

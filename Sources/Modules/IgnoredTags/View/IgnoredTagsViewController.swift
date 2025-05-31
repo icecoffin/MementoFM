@@ -8,14 +8,13 @@
 
 import UIKit
 import Combine
-import TPKeyboardAvoiding
 
 final class IgnoredTagsViewController: UIViewController {
     // MARK: - Private properties
 
     private let viewModel: IgnoredTagsViewModel
 
-    private let tableView = TPKeyboardAvoidingTableView()
+    private let tableView = UITableView()
     private let loadingOverlayView = UIView()
     private let activityIndicatorView = UIActivityIndicatorView(style: .large)
     private let emptyDataSetView: EmptyDataSetView
@@ -58,7 +57,8 @@ final class IgnoredTagsViewController: UIViewController {
     private func addTableView() {
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(view.keyboardLayoutGuide.snp.top)
         }
 
         tableView.estimatedRowHeight = 48

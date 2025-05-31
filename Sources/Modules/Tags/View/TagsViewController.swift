@@ -7,13 +7,12 @@
 //
 
 import UIKit
-import TPKeyboardAvoiding
 import Combine
 
 final class TagsViewController: UIViewController {
     // MARK: - Private properties
 
-    private let collectionView: TPKeyboardAvoidingCollectionView
+    private let collectionView: UICollectionView
     private let emptyDataSetView = EmptyDataSetView(text: "No tags found".unlocalized)
     private let searchController: UISearchController
 
@@ -23,14 +22,18 @@ final class TagsViewController: UIViewController {
 
     // MARK: - Init
 
-    init(searchController: UISearchController, viewModel: TagsViewModel) {
+    init(
+        searchController: UISearchController,
+        viewModel: TagsViewModel
+    ) {
         self.searchController = searchController
         let layout = UICollectionViewLeftAlignedLayout()
         layout.sectionInset = UIEdgeInsets(top: 8, left: 16, bottom: 16, right: 16)
-        collectionView = TPKeyboardAvoidingCollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 
         self.viewModel = viewModel
         viewModel.getTags()
+
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -61,7 +64,8 @@ final class TagsViewController: UIViewController {
     private func configureView() {
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(view.keyboardLayoutGuide.snp.top)
         }
         collectionView.backgroundColor = .systemBackground
 

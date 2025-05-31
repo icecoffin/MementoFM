@@ -22,7 +22,7 @@ targets:
     sources:
       - path: Sources
         excludes:
-          - "**/Keys.example.swift"
+          - "Application/Keys.example.swift"
       - Resources
     dependencies:
       - package: Alamofire
@@ -30,7 +30,6 @@ targets:
       - package: Realm
         product: RealmSwift
       - package: SnapKit
-      - package: TPKeyboardAvoiding
     info:
       path: "Supporting Files/Info.plist"
       properties:
@@ -80,7 +79,3 @@ packages:
   SnapshotTesting:
     url: https://github.com/pointfreeco/swift-snapshot-testing
     exactVersion: 1.17.6
-  TPKeyboardAvoiding:
-    url: https://github.com/michaeltyson/TPKeyboardAvoiding
-    exactVersion: 1.3.5
-
