@@ -17,6 +17,7 @@ final class SimilarArtistCellViewModelTests: XCTestCase {
                     Tag(name: "Tag4", count: 1),
                     Tag(name: "Tag5", count: 1)]
         return Artist(
+            id: "test_id",
             name: "Artist",
             playcount: 10,
             urlString: "",

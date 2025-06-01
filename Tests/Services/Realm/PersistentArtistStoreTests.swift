@@ -20,13 +20,13 @@ final class PersistentArtistStoreTests: XCTestCase {
         super.tearDown()
     }
 
-    func test_artistForName_readsFromPersistentStore() {
+    func test_artistForID_readsFromPersistentStore() {
         let artist = ModelFactory.generateArtist()
         persistentStore.customObjectForKey = artist
 
-        let fetchedArtist = artistStore.artist(for: "test")
+        let fetchedArtist = artistStore.artist(for: "id")
 
-        XCTAssertEqual(persistentStore.objectPrimaryKeys, ["test"])
+        XCTAssertEqual(persistentStore.objectPrimaryKeys, ["id"])
         XCTAssertEqual(artist, fetchedArtist)
     }
 

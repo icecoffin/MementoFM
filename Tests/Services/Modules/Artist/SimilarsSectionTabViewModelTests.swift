@@ -35,6 +35,7 @@ final class SimilarsSectionTabViewModelTests: XCTestCase {
     private let sampleArtist: Artist = {
         let tags = [Tag(name: "Tag1", count: 1), Tag(name: "Tag2", count: 1), Tag(name: "Tag3", count: 1)]
         return Artist(
+            id: "test_id",
             name: "Artist",
             playcount: 1,
             urlString: "",
@@ -51,11 +52,11 @@ final class SimilarsSectionTabViewModelTests: XCTestCase {
         let tag3 = Tag(name: "Tag3", count: 1)
 
         return [
-            Artist(name: "Artist1", playcount: 1, urlString: "", needsTagsUpdate: false, tags: [], topTags: [tag1, tag2, tag3], country: nil),
-                Artist(name: "Artist2", playcount: 2, urlString: "", needsTagsUpdate: false, tags: [], topTags: [tag1, tag2], country: nil),
-                Artist(name: "Artist3", playcount: 3, urlString: "", needsTagsUpdate: false, tags: [], topTags: [tag1, tag2], country: nil),
-                Artist(name: "Artist4", playcount: 4, urlString: "", needsTagsUpdate: false, tags: [], topTags: [tag1, tag3], country: nil),
-                Artist(name: "Artist5", playcount: 1, urlString: "", needsTagsUpdate: false, tags: [], topTags: [tag1], country: nil)
+            Artist(id: "test_id_1", name: "Artist1", playcount: 1, urlString: "", needsTagsUpdate: false, tags: [], topTags: [tag1, tag2, tag3], country: nil),
+            Artist(id: "test_id_2", name: "Artist2", playcount: 2, urlString: "", needsTagsUpdate: false, tags: [], topTags: [tag1, tag2], country: nil),
+            Artist(id: "test_id_3", name: "Artist3", playcount: 3, urlString: "", needsTagsUpdate: false, tags: [], topTags: [tag1, tag2], country: nil),
+            Artist(id: "test_id_4", name: "Artist4", playcount: 4, urlString: "", needsTagsUpdate: false, tags: [], topTags: [tag1, tag3], country: nil),
+            Artist(id: "test_id_5", name: "Artist5", playcount: 1, urlString: "", needsTagsUpdate: false, tags: [], topTags: [tag1], country: nil)
         ]
     }()
 

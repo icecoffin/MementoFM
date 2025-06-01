@@ -10,7 +10,8 @@ import Foundation
 import RealmSwift
 
 final class RealmArtist: Object, PersistentEntity {
-    @Persisted(primaryKey: true) var name = ""
+    @Persisted(primaryKey: true) var id = ""
+    @Persisted var name = ""
     @Persisted var playcount = 0
     @Persisted var urlString = ""
     @Persisted var needsTagsUpdate = true
@@ -21,6 +22,7 @@ final class RealmArtist: Object, PersistentEntity {
     static func from(transient: Artist) -> RealmArtist {
         let artist = transient
         let realmArtist = RealmArtist()
+        realmArtist.id = artist.id
         realmArtist.name = artist.name
         realmArtist.playcount = artist.playcount
         realmArtist.urlString = artist.urlString
@@ -39,6 +41,7 @@ final class RealmArtist: Object, PersistentEntity {
 
     func toTransient() -> Artist {
         return Artist(
+            id: id,
             name: name,
             playcount: playcount,
             urlString: urlString,

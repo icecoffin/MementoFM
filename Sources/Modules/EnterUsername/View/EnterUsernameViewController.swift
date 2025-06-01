@@ -81,7 +81,7 @@ final class EnterUsernameViewController: UIViewController {
     private func addUsernameTextField() {
         stackView.addArrangedSubview(usernameTextField)
         usernameTextField.snp.makeConstraints { make in
-            make.height.equalTo(34)
+            make.height.equalTo(44)
         }
 
         usernameTextField.borderStyle = .roundedRect

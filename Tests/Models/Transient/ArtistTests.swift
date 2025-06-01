@@ -30,6 +30,7 @@ final class ArtistTests: XCTestCase {
                         Tag(name: "tag3", count: 2),
                         Tag(name: "tag4", count: 3)]
         let artist1 = Artist(
+            id: "test_id_1",
             name: "artist1",
             playcount: 1,
             urlString: "",
@@ -39,6 +40,7 @@ final class ArtistTests: XCTestCase {
             country: nil
         )
         let artist2 = Artist(
+            id: "test_id_2",
             name: "artist2",
             playcount: 1,
             urlString: "",

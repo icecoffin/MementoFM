@@ -18,6 +18,7 @@ final class ModelFactory {
         topTags: [Tag] = []
     ) -> Artist {
         return Artist(
+            id: "test_id_\(index)",
             name: "Artist\(index)",
             playcount: playcount,
             urlString: "http://example.com/artist\(index)",

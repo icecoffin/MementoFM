@@ -84,6 +84,7 @@ final class TagServiceTests: XCTestCase {
         let topTags2 = Array(tags2.prefix(5))
 
         let artist1 = Artist(
+            id: "test_id_1",
             name: "Artist1",
             playcount: 1,
             urlString: "",
@@ -93,6 +94,7 @@ final class TagServiceTests: XCTestCase {
             country: nil
         )
         let artist2 = Artist(
+            id: "test_id_2",
             name: "Artist2",
             playcount: 1,
             urlString: "",

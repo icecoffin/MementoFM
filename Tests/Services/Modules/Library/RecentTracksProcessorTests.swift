@@ -60,6 +60,6 @@ final class RecentTracksProcessorTests: XCTestCase {
         let recentTracksProcessor = RecentTracksProcessor(artistStore: artistStore)
         _ = recentTracksProcessor.process(tracks: tracks)
 
-        XCTAssertEqual(artistStore.artistForNameParameters.sorted(), ["Artist1", "Artist2"])
+        XCTAssertEqual(artistStore.artistForIDParameters.sorted(), ["test_id_1", "test_id_2"])
     }
 }

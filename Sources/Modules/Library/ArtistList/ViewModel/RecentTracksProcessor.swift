@@ -37,7 +37,7 @@ final class RecentTracksProcessor: RecentTracksProcessing {
         }
 
         let artists: [Artist] = artistNamesWithPlayCounts.map { artist, playcount in
-            let updatedArtist = artistStore.artist(for: artist.name) ?? artist
+            let updatedArtist = artistStore.artist(for: artist.id) ?? artist
             return updatedArtist.updatingPlaycount(to: updatedArtist.playcount + playcount)
         }
 

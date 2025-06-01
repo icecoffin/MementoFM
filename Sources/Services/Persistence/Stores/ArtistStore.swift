@@ -4,7 +4,7 @@ import Combine
 // MARK: - ArtistStore
 
 protocol ArtistStore {
-    func artist(for name: String) -> Artist?
+    func artist(for id: String) -> Artist?
     func deleteAll() -> AnyPublisher<Void, Error>
     func fetchAll(filteredBy predicate: NSPredicate?) -> [Artist]
     func save(artists: [Artist]) -> AnyPublisher<Void, Error>
@@ -33,8 +33,8 @@ final class PersistentArtistStore: ArtistStore {
         self.persistentStore = persistentStore
     }
 
-    func artist(for name: String) -> Artist? {
-        return persistentStore.object(ofType: Artist.self, forPrimaryKey: name)
+    func artist(for id: String) -> Artist? {
+        return persistentStore.object(ofType: Artist.self, forPrimaryKey: id)
     }
 
     func deleteAll() -> AnyPublisher<Void, Error> {

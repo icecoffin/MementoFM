@@ -3,11 +3,11 @@ import Combine
 @testable import MementoFM
 
 final class MockArtistStore: ArtistStore {
-    private(set) var artistForNameCallCount = 0
-    private(set) var artistForNameParameters: [String] = []
-    func artist(for name: String) -> Artist? {
-        artistForNameCallCount += 1
-        artistForNameParameters.append(name)
+    private(set) var artistForIDCallCount = 0
+    private(set) var artistForIDParameters: [String] = []
+    func artist(for id: String) -> Artist? {
+        artistForIDCallCount += 1
+        artistForIDParameters.append(id)
         return nil
     }
 

@@ -49,13 +49,13 @@ final class LibraryViewModelTests: XCTestCase {
 
     private var sampleArtists: [Artist] = {
         return [
-            Artist(name: "Artist1", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [], country: nil),
-            Artist(name: "Artist2", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [], country: nil),
-            Artist(name: "Artist3", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [], country: nil),
-            Artist(name: "Artist4", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [], country: nil),
-            Artist(name: "Artist5", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [], country: nil),
-            Artist(name: "Artist6", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [], country: nil),
-            Artist(name: "Artist7", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [], country: nil)
+            Artist(id: "test_id_1", name: "Artist1", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [], country: nil),
+            Artist(id: "test_id_2", name: "Artist2", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [], country: nil),
+            Artist(id: "test_id_3", name: "Artist3", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [], country: nil),
+            Artist(id: "test_id_4", name: "Artist4", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [], country: nil),
+            Artist(id: "test_id_5", name: "Artist5", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [], country: nil),
+            Artist(id: "test_id_6", name: "Artist6", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [], country: nil),
+            Artist(id: "test_id_7", name: "Artist7", playcount: 1, urlString: "", needsTagsUpdate: true, tags: [], topTags: [], country: nil)
         ]
     }()
 

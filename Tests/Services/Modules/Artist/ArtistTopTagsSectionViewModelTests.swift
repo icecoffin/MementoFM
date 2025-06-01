@@ -21,6 +21,7 @@ final class ArtistTopTagsSectionViewModelTests: XCTestCase {
     private var sampleArtist: Artist = {
         let tags: [Tag] = [Tag(name: "Tag1", count: 1), Tag(name: "Tag2", count: 1)]
         return Artist(
+            id: "test_id",
             name: "Artist",
             playcount: 1,
             urlString: "",
@@ -47,6 +48,7 @@ final class ArtistTopTagsSectionViewModelTests: XCTestCase {
 
     func test_hasTags_returnsFalse_whenArtistHasNoTags() {
         let artistWithNoTags = Artist(
+            id: "test_id",
             name: "Artist",
             playcount: 1,
             urlString: "",

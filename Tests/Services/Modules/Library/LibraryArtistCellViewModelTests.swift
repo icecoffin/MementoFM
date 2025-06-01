@@ -12,6 +12,7 @@ import XCTest
 final class LibraryArtistCellViewModelTests: XCTestCase {
     private var sampleArtist: Artist {
         return Artist(
+            id: "test_id",
             name: "Artist",
             playcount: 10,
             urlString: "",

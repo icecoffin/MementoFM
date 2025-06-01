@@ -26,6 +26,7 @@ final class RealmArtistTests: XCTestCase {
         let tags = ModelFactory.generateTags(inAmount: 5, for: "Test")
         let topTags = Array(tags.prefix(3))
         let transientArtist = Artist(
+            id: "test_id",
             name: "Test",
             playcount: 10,
             urlString: "https://example.com",

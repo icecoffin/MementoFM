@@ -29,9 +29,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         window.backgroundColor = .systemBackground
         AppearanceConfigurator.configureAppearance()
 
-        let migrator = RealmMigrator()
-        migrator.performMigrations()
-
         let appCoordinator = AppCoordinator(window: window)
         appCoordinator.start()
         window.makeKeyAndVisible()

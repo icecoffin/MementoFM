@@ -10,11 +10,13 @@ import Foundation
 
 struct Artist: Equatable, Codable {
     enum CodingKeys: String, CodingKey {
+        case id = "mbid"
         case name
         case playcount
         case urlString = "url"
     }
 
+    let id: String
     let name: String
     let playcount: Int
     let urlString: String
@@ -33,6 +35,7 @@ struct Artist: Equatable, Codable {
 
     func updatingPlaycount(to playcount: Int) -> Artist {
         return Artist(
+            id: id,
             name: name,
             playcount: playcount,
             urlString: urlString,
@@ -45,6 +48,7 @@ struct Artist: Equatable, Codable {
 
     func updatingTags(to tags: [Tag], needsTagsUpdate: Bool) -> Artist {
         return Artist(
+            id: id,
             name: name,
             playcount: playcount,
             urlString: urlString,
@@ -57,6 +61,7 @@ struct Artist: Equatable, Codable {
 
     func updatingTopTags(to topTags: [Tag]) -> Artist {
         return Artist(
+            id: id,
             name: name,
             playcount: playcount,
             urlString: urlString,
@@ -69,6 +74,7 @@ struct Artist: Equatable, Codable {
 
     func updatingCountry(to country: String) -> Artist {
         return Artist(
+            id: id,
             name: name,
             playcount: playcount,
             urlString: urlString,
@@ -84,6 +90,7 @@ extension Artist {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
+        id = try container.decode(String.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
         if let playcountString = try container.decodeIfPresent(String.self, forKey: .playcount) {
             self.playcount = int(from: playcountString)
