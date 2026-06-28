@@ -75,9 +75,13 @@ final class ArtistService: ArtistServiceProtocol {
 
     func getLibrary(for user: String, limit: Int) -> AnyPublisher<LibraryPage, Error> {
         let initialIndex = 1
-        let firstPage = repository
-            .getLibraryPage(withIndex: initialIndex, for: user, limit: limit)
-            .map { $0.libraryPage }
+        let firstPage = Future {
+            try await self.repository.getLibraryPage(
+                withIndex: initialIndex,
+                for: user,
+                limit: limit
+            ).libraryPage
+        }.eraseToAnyPublisher()
 
         let otherPages = firstPage.flatMap { libraryPage -> AnyPublisher<LibraryPage, Error> in
             if libraryPage.totalPages <= initialIndex {
@@ -86,16 +90,23 @@ final class ArtistService: ArtistServiceProtocol {
             }
 
             let publishers = (initialIndex+1...libraryPage.totalPages).map { index in
-                return self.repository.getLibraryPage(withIndex: index, for: user, limit: limit)
-                    .map { $0.libraryPage }
-                    .eraseToAnyPublisher()
+                Future {
+                    try await self.repository.getLibraryPage(
+                        withIndex: index,
+                        for: user,
+                        limit: limit
+                    ).libraryPage
+                }
+                .eraseToAnyPublisher()
             }
             return Publishers.Sequence(sequence: publishers)
                 .flatMap(maxPublishers: .max(5)) { $0 }
                 .eraseToAnyPublisher()
         }
 
-        return Publishers.Merge(firstPage, otherPages).eraseToAnyPublisher()
+        return Publishers.Merge(firstPage, otherPages)
+            .receive(on: mainScheduler)
+            .eraseToAnyPublisher()
     }
 
     func saveArtists(_ artists: [Artist]) -> AnyPublisher<Void, Error> {
@@ -148,13 +159,14 @@ final class ArtistService: ArtistServiceProtocol {
     }
 
     func getSimilarArtists(for artist: Artist, limit: Int) -> AnyPublisher<[Artist], Error> {
-        return repository.getSimilarArtists(for: artist, limit: limit)
-            .map { response -> [Artist] in
-                let artistNames = response.similarArtistList.similarArtists.map({ $0.name })
-                let predicate = NSPredicate(format: "name in %@", artistNames)
-                let artists = self.artistStore.fetchAll(filteredBy: predicate)
-                return artists
-            }
-            .eraseToAnyPublisher()
+        Future {
+            let response = try await self.repository.getSimilarArtists(for: artist, limit: limit)
+            let artistNames = response.similarArtistList.similarArtists.map({ $0.name })
+            let predicate = NSPredicate(format: "name in %@", artistNames)
+            let artists = self.artistStore.fetchAll(filteredBy: predicate)
+            return artists
+        }
+        .receive(on: mainScheduler)
+        .eraseToAnyPublisher()
     }
 }

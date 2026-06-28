@@ -17,7 +17,7 @@ protocol TrackRepository: AnyObject {
         for user: String,
         from: TimeInterval,
         limit: Int
-    ) -> AnyPublisher<RecentTracksPageResponse, Error>
+    ) async throws -> RecentTracksPageResponse
 }
 
 // MARK: - TrackNetworkRepository
@@ -40,7 +40,7 @@ final class TrackNetworkRepository: TrackRepository {
         for user: String,
         from: TimeInterval,
         limit: Int
-    ) -> AnyPublisher<RecentTracksPageResponse, Error> {
+    ) async throws -> RecentTracksPageResponse {
         let parameters: [String: Any] = ["method": "user.getrecenttracks",
                                          "api_key": Keys.LastFM.apiKey,
                                          "user": user,
@@ -50,6 +50,6 @@ final class TrackNetworkRepository: TrackRepository {
                                          "page": index,
                                          "limit": limit]
 
-        return networkService.performRequest(parameters: parameters)
+        return try await networkService.performRequest(parameters: parameters)
     }
 }

@@ -16,11 +16,16 @@ protocol NetworkService: AnyObject {
         parameters: Parameters?,
         encoding: ParameterEncoding,
         headers: HTTPHeaders?
-    ) -> AnyPublisher<T, Error>
+    ) async throws -> T
 }
 
 extension NetworkService {
-    func performRequest<T: Codable>(parameters: Parameters?) -> AnyPublisher<T, Error> {
-        return performRequest(method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil)
+    func performRequest<T: Codable>(parameters: Parameters?) async throws -> T {
+        return try await performRequest(
+            method: .get,
+            parameters: parameters,
+            encoding: URLEncoding.default,
+            headers: nil
+        )
     }
 }

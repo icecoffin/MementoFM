@@ -12,7 +12,7 @@ import Combine
 // MARK: - TagRepository
 
 protocol TagRepository: AnyObject {
-    func getTopTags(for artist: String) -> AnyPublisher<TopTagsResponse, Error>
+    func getTopTags(for artist: String) async throws -> TopTagsResponse
 }
 
 // MARK: - TagNetworkRepository
@@ -30,12 +30,12 @@ final class TagNetworkRepository: TagRepository {
 
     // MARK: - Public methods
 
-    func getTopTags(for artist: String) -> AnyPublisher<TopTagsResponse, Error> {
+    func getTopTags(for artist: String) async throws -> TopTagsResponse {
         let parameters: [String: Any] = ["method": "artist.gettoptags",
                                          "api_key": Keys.LastFM.apiKey,
                                          "artist": artist,
                                          "format": "json"]
 
-        return networkService.performRequest(parameters: parameters)
+        return try await networkService.performRequest(parameters: parameters)
     }
 }

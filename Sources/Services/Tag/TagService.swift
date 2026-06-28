@@ -42,21 +42,23 @@ final class TagService: TagServiceProtocol {
 
     func getTopTags(for artists: [Artist]) -> AnyPublisher<TopTagsPage, Error> {
         let publishers = artists.map { artist -> AnyPublisher<TopTagsPage, Error> in
-            return repository.getTopTags(for: artist.name)
-                .tryCatch { error in
-                    if Self.isMissingArtistError(error) {
-                        return Just(TopTagsResponse.empty)
-                    } else {
-                        throw error
-                    }
+            return Future {
+                try await self.repository.getTopTags(for: artist.name)
+            }
+            .tryCatch { error in
+                if Self.isMissingArtistError(error) {
+                    return Just(TopTagsResponse.empty)
+                } else {
+                    throw error
                 }
-                .eraseToAnyPublisher()
-                .map { TopTagsPage(artist: artist, topTagsList: $0.topTagsList) }
-                .eraseToAnyPublisher()
+            }
+            .map { TopTagsPage(artist: artist, topTagsList: $0.topTagsList) }
+            .eraseToAnyPublisher()
         }
 
         return Publishers.Sequence(sequence: publishers)
             .flatMap(maxPublishers: .max(5)) { $0 }
+            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
 

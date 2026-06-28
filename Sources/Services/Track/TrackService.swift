@@ -38,9 +38,14 @@ final class TrackService: TrackServiceProtocol {
 
     func getRecentTracks(for user: String, from: TimeInterval, limit: Int) -> AnyPublisher<RecentTracksPage, Error> {
         let initialIndex = 1
-        let firstPage = repository
-            .getRecentTracksPage(withIndex: initialIndex, for: user, from: from, limit: limit)
-            .map { $0.recentTracksPage }
+        let firstPage = Future {
+            try await self.repository.getRecentTracksPage(
+                withIndex: initialIndex,
+                for: user,
+                from: from,
+                limit: limit
+            ).recentTracksPage
+        }.eraseToAnyPublisher()
 
         let otherPages = firstPage.flatMap { recentTracksPage -> AnyPublisher<RecentTracksPage, Error> in
             if recentTracksPage.totalPages <= initialIndex {
@@ -49,9 +54,15 @@ final class TrackService: TrackServiceProtocol {
             }
 
             let publishers = (initialIndex+1...recentTracksPage.totalPages).map { index in
-                return self.repository.getRecentTracksPage(withIndex: index, for: user, from: from, limit: limit)
-                    .map { $0.recentTracksPage }
-                    .eraseToAnyPublisher()
+                Future {
+                    try await self.repository.getRecentTracksPage(
+                        withIndex: index,
+                        for: user,
+                        from: from,
+                        limit: limit
+                    ).recentTracksPage
+                }
+                .eraseToAnyPublisher()
             }
             return Publishers.Sequence(sequence: publishers)
                 .flatMap(maxPublishers: .max(5)) { $0 }

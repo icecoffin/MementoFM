@@ -18,7 +18,7 @@ protocol UserServiceProtocol: AnyObject {
     var didFinishOnboarding: Bool { get set }
 
     func clearUserData() -> AnyPublisher<Void, Error>
-    func checkUserExists(withUsername username: String) -> AnyPublisher<EmptyResponse, Error>
+    func checkUserExists(withUsername username: String) async throws -> EmptyResponse
 }
 
 // MARK: - UserService
@@ -82,7 +82,7 @@ final class UserService: UserServiceProtocol {
         return artistStore.deleteAll()
     }
 
-    func checkUserExists(withUsername username: String) -> AnyPublisher<EmptyResponse, Error> {
-        return repository.checkUserExists(withUsername: username)
+    func checkUserExists(withUsername username: String) async throws -> EmptyResponse {
+        return try await repository.checkUserExists(withUsername: username)
     }
 }

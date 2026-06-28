@@ -12,7 +12,7 @@ import Combine
 // MARK: - UserRepository
 
 protocol UserRepository: AnyObject {
-    func checkUserExists(withUsername username: String) -> AnyPublisher<EmptyResponse, Error>
+    func checkUserExists(withUsername username: String) async throws -> EmptyResponse
 }
 
 // MARK: - UserNetworkRepository
@@ -30,12 +30,12 @@ final class UserNetworkRepository: UserRepository {
 
     // MARK: - Public methods
 
-    func checkUserExists(withUsername username: String) -> AnyPublisher<EmptyResponse, Error> {
+    func checkUserExists(withUsername username: String) async throws -> EmptyResponse {
         let parameters: [String: Any] = ["method": "user.getInfo",
                                          "api_key": Keys.LastFM.apiKey,
                                          "user": username,
                                          "format": "json"]
 
-        return networkService.performRequest(parameters: parameters)
+        return try await networkService.performRequest(parameters: parameters)
     }
 }

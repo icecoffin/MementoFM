@@ -82,22 +82,26 @@ final class EnterUsernameViewModel {
     func submitUsername() {
         let userService = dependencies.userService
         isLoadingSubject.send(true)
-        userService.checkUserExists(withUsername: currentUsername)
-            .flatMap { _ -> AnyPublisher<Void, Error> in
-                userService.username = self.currentUsername
-                return userService.clearUserData()
-            }
-            .sink { [weak self] completion in
-                guard let self = self else { return }
 
-                self.isLoadingSubject.send(false)
-                switch completion {
-                case .finished:
-                    self.delegate?.enterUsernameViewModelDidFinish(self)
-                case .failure(let error):
-                    self.errorSubject.send(error)
-                }
-            } receiveValue: { _ in }
-            .store(in: &cancelBag)
+        Future {
+            try await userService.checkUserExists(withUsername: self.currentUsername)
+        }
+        .receive(on: DispatchQueue.main)
+        .flatMap { _ -> AnyPublisher<Void, Error> in
+            userService.username = self.currentUsername
+            return userService.clearUserData()
+        }
+        .sink { [weak self] completion in
+            guard let self = self else { return }
+
+            self.isLoadingSubject.send(false)
+            switch completion {
+            case .finished:
+                self.delegate?.enterUsernameViewModelDidFinish(self)
+            case .failure(let error):
+                self.errorSubject.send(error)
+            }
+        } receiveValue: { _ in }
+        .store(in: &cancelBag)
     }
 }
