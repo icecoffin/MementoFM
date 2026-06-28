@@ -31,7 +31,6 @@ final class CountriesCoordinator: NavigationFlowCoordinator {
         viewModel.delegate = self
         let viewController = CountriesViewController(viewModel: viewModel)
         viewController.title = "Countries".unlocalized
-        viewController.navigationItem.backButtonDisplayMode = .minimal
         navigationController.pushViewController(viewController, animated: false)
     }
 }

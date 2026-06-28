@@ -44,8 +44,6 @@ final class ArtistListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        definesPresentationContext = true
-
         configureSearchController()
         addTableView()
         addLoadingView()

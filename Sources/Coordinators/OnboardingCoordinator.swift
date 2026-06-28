@@ -44,7 +44,6 @@ final class OnboardingCoordinator: NavigationFlowCoordinator, IgnoredTagsPresent
         let viewModel = EnterUsernameViewModel(dependencies: dependencies)
         viewModel.delegate = self
         let viewController = EnterUsernameViewController(viewModel: viewModel)
-        viewController.navigationItem.backButtonDisplayMode = .minimal
         viewController.title = "Welcome!".unlocalized
         if alreadyHasUsername {
             let forwardButton = BlockBarButtonItem(image: .arrowRight, style: .plain) { [unowned self] in

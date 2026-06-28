@@ -35,7 +35,6 @@ final class SettingsCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter
         settingsViewModel.delegate = self
         let settingsViewController = SettingsViewController(viewModel: settingsViewModel)
         settingsViewController.title = "Settings".unlocalized
-        settingsViewController.navigationItem.backButtonDisplayMode = .minimal
         navigationController.pushViewController(settingsViewController, animated: false)
     }
 }

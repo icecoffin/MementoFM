@@ -42,7 +42,6 @@ final class ArtistListCoordinator: NavigationFlowCoordinator {
 
         let searchController = UISearchController(searchResultsController: nil)
         let viewController = ArtistListViewController(searchController: searchController, viewModel: viewModel)
-        viewController.navigationItem.backButtonDisplayMode = .minimal
         viewController.navigationItem.searchController = searchController
         viewController.navigationItem.hidesSearchBarWhenScrolling = false
         viewController.title = viewModel.title
@@ -63,7 +62,6 @@ final class ArtistListCoordinator: NavigationFlowCoordinator {
 
         let viewController = ArtistViewController(dataSource: dataSource)
         viewController.title = viewModel.title
-        viewController.navigationItem.backButtonDisplayMode = .minimal
         viewController.hidesBottomBarWhenPushed = true
 
         navigationController.pushViewController(viewController, animated: true)

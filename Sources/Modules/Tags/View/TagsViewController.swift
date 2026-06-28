@@ -46,8 +46,6 @@ final class TagsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        definesPresentationContext = true
-
         configureView()
         configureSearchController()
         bindToViewModel()
