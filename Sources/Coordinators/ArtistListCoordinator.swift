@@ -62,7 +62,6 @@ final class ArtistListCoordinator: NavigationFlowCoordinator {
 
         let viewController = ArtistViewController(dataSource: dataSource)
         viewController.title = viewModel.title
-        viewController.hidesBottomBarWhenPushed = true
 
         navigationController.pushViewController(viewController, animated: true)
     }
