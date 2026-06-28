@@ -30,14 +30,16 @@ func assertSnapshots(
     testName: String = #function,
     line: UInt = #line
 ) {
+    let precision: Float = 0.99
     let perceptualPrecision: Float = 0.98
     assertSnapshot(
         of: view,
         as: .image(
+            precision: precision,
             perceptualPrecision: perceptualPrecision,
             traits: .init(userInterfaceStyle: .light)
         ),
-        record: record,
+        record: record ? .all : .never,
         file: file,
         testName: testName,
         line: line
@@ -45,10 +47,11 @@ func assertSnapshots(
     assertSnapshot(
         of: view,
         as: .image(
+            precision: precision,
             perceptualPrecision: perceptualPrecision,
             traits: .init(userInterfaceStyle: .dark)
         ),
-        record: record,
+        record: record ? .all : .never,
         file: file,
         testName: testName,
         line: line
