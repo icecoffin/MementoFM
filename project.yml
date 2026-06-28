@@ -66,16 +66,16 @@ targets:
 packages:
   Alamofire:
     url: https://github.com/Alamofire/Alamofire
-    exactVersion: 5.10.2
+    exactVersion: 5.12.0
   CombineSchedulers:
     url: https://github.com/pointfreeco/combine-schedulers
-    exactVersion: 1.0.3
+    exactVersion: 1.2.0
   Realm:
     url: https://github.com/realm/realm-swift
-    exactVersion: 20.0.1
+    exactVersion: 20.0.5
   SnapKit:
     url: https://github.com/SnapKit/SnapKit
-    exactVersion: 5.7.1
+    exactVersion: 6.0.0
   SnapshotTesting:
     url: https://github.com/pointfreeco/swift-snapshot-testing
-    exactVersion: 1.17.6
+    exactVersion: 1.19.2
