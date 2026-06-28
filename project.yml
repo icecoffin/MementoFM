@@ -14,6 +14,7 @@ fileGroups:
   - Sources
   - Tests
   - Resources
+  - Supporting Files
 
 targets:
   MementoFM:
@@ -35,6 +36,16 @@ targets:
       properties:
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
         UILaunchStoryboardName: LaunchScreen
+        UIApplicationSceneManifest:
+            UIApplicationSupportsMultipleScenes: false
+            UISceneConfigurations:
+                UIWindowSceneSessionRoleApplication: [
+                    {
+                        UISceneDelegateClassName: "$(PRODUCT_MODULE_NAME).SceneDelegate",
+                        UISceneConfigurationName: "Default Configuration"
+                    }
+                ]
+
     preBuildScripts:
       - name: Run SwiftLint
         script: |
