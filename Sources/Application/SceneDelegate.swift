@@ -20,7 +20,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let window = UIWindow(windowScene: windowScene)
         window.backgroundColor = .systemBackground
-        AppearanceConfigurator.configureAppearance()
+        configureAppearance()
 
         let appCoordinator = AppCoordinator(window: window)
         appCoordinator.start()
@@ -30,5 +30,9 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         self.window = window
         self.appCoordinator = appCoordinator
+    }
+
+    private func configureAppearance() {
+        UITableView.appearance().sectionHeaderTopPadding = 0
     }
 }

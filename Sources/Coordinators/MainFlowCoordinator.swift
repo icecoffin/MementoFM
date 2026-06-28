@@ -31,10 +31,7 @@ final class MainFlowCoordinator: Coordinator {
     }
 
     func start() {
-        AppearanceConfigurator.configureAppearance()
-
         let tabBarController = UITabBarController()
-        tabBarController.tabBar.isTranslucent = false
 
         let libraryNavigationController = UINavigationController()
         libraryNavigationController.navigationBar.prefersLargeTitles = true
