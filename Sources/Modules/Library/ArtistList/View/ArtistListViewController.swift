@@ -80,10 +80,11 @@ final class ArtistListViewController: UIViewController {
     private func addLoadingView() {
         view.addSubview(loadingView)
         loadingView.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.bottom.equalTo(view.snp.bottomMargin).inset(8)
         }
 
-        loadingView.isHidden = true
+        loadingView.alpha = 0.0
     }
 
     private func configureSearchController() {
@@ -124,36 +125,20 @@ final class ArtistListViewController: UIViewController {
     }
 
     private func showLoadingView() {
-        loadingView.snp.updateConstraints { make in
-            make.bottom.equalToSuperview().offset(loadingView.bounds.height)
-        }
-        view.layoutIfNeeded()
-
-        loadingView.isHidden = false
-
         UIView.animate(
             withDuration: Constants.loadingViewAnimationDuration,
             delay: Constants.loadingViewAnimationDelay
         ) {
-            self.loadingView.snp.updateConstraints { make in
-                make.bottom.equalToSuperview()
-            }
-            self.view.layoutIfNeeded()
+            self.loadingView.alpha = 1.0
         }
     }
 
     private func hideLoadingView() {
-        self.loadingView.snp.updateConstraints { make in
-            make.bottom.equalToSuperview().offset(self.loadingView.bounds.height)
-        }
-
         UIView.animate(
             withDuration: Constants.loadingViewAnimationDuration,
             delay: Constants.loadingViewAnimationDelay
         ) {
-            self.view.layoutIfNeeded()
-        } completion: { _ in
-            self.loadingView.isHidden = true
+            self.loadingView.alpha = 0.0
         }
     }
 }

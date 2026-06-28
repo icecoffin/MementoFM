@@ -12,7 +12,19 @@ import SnapKit
 final class LoadingView: UIView {
     // MARK: - Private properties
 
-    private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+    private let glassView = {
+        let effect = UIGlassEffect()
+        effect.tintColor = UIColor { traits in
+            switch traits.userInterfaceStyle {
+            case .dark:
+                return UIColor.white.withAlphaComponent(0.12)
+            default:
+                return UIColor.black.withAlphaComponent(0.10)
+            }
+        }
+        return UIVisualEffectView(effect: effect)
+    }()
+
     private let activityIndicator = UIActivityIndicatorView(style: .medium)
     private let messageLabel = UILabel()
 
@@ -37,17 +49,18 @@ final class LoadingView: UIView {
     // MARK: - Private methods
 
     private func setup() {
-        addBlurView()
+        addGlassView()
         addActivityIndicator()
         addMessageLabel()
     }
 
-    private func addBlurView() {
-        addSubview(blurView)
-        blurView.snp.makeConstraints { make in
+    private func addGlassView() {
+        addSubview(glassView)
+        glassView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        blurView.alpha = 0.9
+
+        glassView.clipsToBounds = true
     }
 
     private func addActivityIndicator() {
@@ -57,7 +70,6 @@ final class LoadingView: UIView {
             make.leading.equalToSuperview().offset(16)
         }
 
-        activityIndicator.color = .white
         activityIndicator.startAnimating()
     }
 
@@ -70,7 +82,12 @@ final class LoadingView: UIView {
         }
 
         messageLabel.font = .secondaryContent
-        messageLabel.textColor = .white
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        glassView.layer.cornerRadius = glassView.frame.height / 2
     }
 
     // MARK: - Public methods
