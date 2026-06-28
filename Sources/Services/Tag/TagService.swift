@@ -43,6 +43,14 @@ final class TagService: TagServiceProtocol {
     func getTopTags(for artists: [Artist]) -> AnyPublisher<TopTagsPage, Error> {
         let publishers = artists.map { artist -> AnyPublisher<TopTagsPage, Error> in
             return repository.getTopTags(for: artist.name)
+                .tryCatch { error in
+                    if Self.isMissingArtistError(error) {
+                        return Just(TopTagsResponse.empty)
+                    } else {
+                        throw error
+                    }
+                }
+                .eraseToAnyPublisher()
                 .map { TopTagsPage(artist: artist, topTagsList: $0.topTagsList) }
                 .eraseToAnyPublisher()
         }
@@ -55,5 +63,14 @@ final class TagService: TagServiceProtocol {
     func getAllTopTags() -> [Tag] {
         let artists = artistStore.fetchAll()
         return artists.flatMap { return $0.topTags }
+    }
+
+    private static func isMissingArtistError(_ error: Error) -> Bool {
+        if let lastFMError = error as? LastFMError,
+           lastFMError.message == "The artist you supplied could not be found" {
+            return true
+        }
+
+        return false
     }
 }

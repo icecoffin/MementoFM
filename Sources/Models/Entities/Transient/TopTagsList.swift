@@ -24,4 +24,8 @@ extension TopTagsList {
         let tags = try container.decode([Tag].self, forKey: .tags)
         self.tags = Array(tags.prefix(Self.maxTagCount))
     }
+
+    static var empty: TopTagsList {
+        TopTagsList(tags: [])
+    }
 }

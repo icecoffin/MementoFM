@@ -16,8 +16,4 @@ struct LastFMError: Error, Codable {
 
     let errorCode: Int
     let message: String
-
-    var error: LastFMError {
-        return LastFMError(errorCode: errorCode, message: message)
-    }
 }

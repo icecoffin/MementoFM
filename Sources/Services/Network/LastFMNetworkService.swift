@@ -36,8 +36,8 @@ final class LastFMNetworkService: NetworkService {
             .tryMap { value -> T in
                 let jsonDecoder = JSONDecoder()
                 if let errorResponse = try? jsonDecoder.decode(LastFMError.self, from: value) {
-                    log.debug(errorResponse.error)
-                    throw errorResponse.error
+                    log.debug(errorResponse)
+                    throw errorResponse
                 } else {
                     do {
                         let object = try jsonDecoder.decode(T.self, from: value)
