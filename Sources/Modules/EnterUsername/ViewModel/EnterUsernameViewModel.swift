@@ -11,12 +11,14 @@ import Combine
 
 // MARK: - EnterUsernameViewModelDelegate
 
+@MainActor
 protocol EnterUsernameViewModelDelegate: AnyObject {
     func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel)
 }
 
 // MARK: - EnterUsernameViewModel
 
+@MainActor
 final class EnterUsernameViewModel {
     typealias Dependencies = HasUserService
 
@@ -79,29 +81,18 @@ final class EnterUsernameViewModel {
         currentUsername = username ?? ""
     }
 
-    func submitUsername() {
+    func submitUsername() async {
         let userService = dependencies.userService
         isLoadingSubject.send(true)
+        defer { isLoadingSubject.send(false) }
 
-        Future {
-            try await userService.checkUserExists(withUsername: self.currentUsername)
-        }
-        .receive(on: DispatchQueue.main)
-        .flatMap { _ -> AnyPublisher<Void, Error> in
+        do {
+            _ = try await userService.checkUserExists(withUsername: currentUsername)
             userService.username = self.currentUsername
-            return userService.clearUserData()
+            try await userService.clearUserData()
+            delegate?.enterUsernameViewModelDidFinish(self)
+        } catch {
+            errorSubject.send(error)
         }
-        .sink { [weak self] completion in
-            guard let self = self else { return }
-
-            self.isLoadingSubject.send(false)
-            switch completion {
-            case .finished:
-                self.delegate?.enterUsernameViewModelDidFinish(self)
-            case .failure(let error):
-                self.errorSubject.send(error)
-            }
-        } receiveValue: { _ in }
-        .store(in: &cancelBag)
     }
 }

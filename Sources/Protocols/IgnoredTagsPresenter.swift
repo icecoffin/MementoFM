@@ -8,6 +8,7 @@
 
 import UIKit
 
+@MainActor
 protocol IgnoredTagsPresenter: NavigationFlowCoordinator, IgnoredTagsViewModelDelegate {
     func makeIgnoredTagsViewController(
         dependencies: IgnoredTagsViewModel.Dependencies,
@@ -30,7 +31,9 @@ extension IgnoredTagsPresenter {
         }
 
         let doneButton = BlockBarButtonItem(image: .checkmark, style: .plain) { [unowned viewModel] in
-            viewModel.saveChanges()
+            Task {
+                await viewModel.saveChanges()
+            }
         }
 
         viewController.navigationItem.rightBarButtonItems = [doneButton, addButton]

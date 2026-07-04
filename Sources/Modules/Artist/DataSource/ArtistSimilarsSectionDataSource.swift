@@ -9,6 +9,7 @@
 import UIKit
 import Combine
 
+@MainActor
 final class ArtistSimilarsSectionDataSource: ArtistSectionDataSource {
     // MARK: - Private properties
 
@@ -37,7 +38,9 @@ final class ArtistSimilarsSectionDataSource: ArtistSectionDataSource {
             })
             .store(in: &cancelBag)
 
-        viewModel.getSimilarArtists()
+        Task {
+            await viewModel.getSimilarArtists()
+        }
     }
 
     // MARK: - Public methods
@@ -106,6 +109,8 @@ extension ArtistSimilarsSectionDataSource: ArtistSimilarsSectionHeaderViewDelega
         _ headerView: ArtistSimilarsSectionHeaderView,
         didSelectSegmentWithIndex index: Int
     ) {
-        viewModel.selectTab(at: index)
+        Task {
+            await viewModel.selectTab(at: index)
+        }
     }
 }

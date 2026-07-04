@@ -120,7 +120,9 @@ final class EnterUsernameViewController: UIViewController {
     }
 
     @objc private func submitButtonTapped(_ sender: UIButton) {
-        viewModel.submitUsername()
+        Task {
+            await viewModel.submitUsername()
+        }
     }
 
     private func bindToViewModel() {
@@ -179,7 +181,9 @@ extension EnterUsernameViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         if viewModel.canSubmitUsername {
-            viewModel.submitUsername()
+            Task {
+                await viewModel.submitUsername()
+            }
         }
         return true
     }

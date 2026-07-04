@@ -9,6 +9,7 @@ import Foundation
 
 // swiftlint:disable:next type_name
 protocol ArtistSimilarsSectionTabViewModelFactoryProtocol {
+    @MainActor
     func makeTabViewModels(
         for artist: Artist,
         dependencies: ArtistSimilarsSectionViewModel.Dependencies,
@@ -19,6 +20,7 @@ protocol ArtistSimilarsSectionTabViewModelFactoryProtocol {
 // MARK: - ArtistSimilarsSectionTabViewModelFactory
 
 final class ArtistSimilarsSectionTabViewModelFactory: ArtistSimilarsSectionTabViewModelFactoryProtocol {
+    @MainActor
     func makeTabViewModels(
         for artist: Artist,
         dependencies: ArtistSimilarsSectionViewModel.Dependencies,

@@ -17,7 +17,7 @@ protocol UserServiceProtocol: AnyObject {
     var didReceiveInitialCollection: Bool { get set }
     var didFinishOnboarding: Bool { get set }
 
-    func clearUserData() -> AnyPublisher<Void, Error>
+    func clearUserData() async throws
     func checkUserExists(withUsername username: String) async throws -> EmptyResponse
 }
 
@@ -77,9 +77,9 @@ final class UserService: UserServiceProtocol {
 
     // MARK: - Public methods
 
-    func clearUserData() -> AnyPublisher<Void, Error> {
+    func clearUserData() async throws {
         userDataStorage.reset()
-        return artistStore.deleteAll()
+        try await artistStore.deleteAll()
     }
 
     func checkUserExists(withUsername username: String) async throws -> EmptyResponse {

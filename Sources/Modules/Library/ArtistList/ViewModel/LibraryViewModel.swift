@@ -24,6 +24,8 @@ final class LibraryViewModel: ArtistListViewModel {
 
     private var cancelBag = Set<AnyCancellable>()
 
+    private var syncTask: Task<Void, Never>?
+
     private let numberFormatter: NumberFormatter = {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
@@ -72,6 +74,7 @@ final class LibraryViewModel: ArtistListViewModel {
 
     private func setup() {
         dependencies.libraryUpdater.isLoading
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] isLoading in
                 guard let self = self else { return }
 
@@ -83,6 +86,7 @@ final class LibraryViewModel: ArtistListViewModel {
             .store(in: &cancelBag)
 
         dependencies.libraryUpdater.status
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] status in
                 guard let self = self else { return }
 
@@ -91,14 +95,19 @@ final class LibraryViewModel: ArtistListViewModel {
             .store(in: &cancelBag)
 
         dependencies.libraryUpdater.error
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] error in
                 self?.didUpdateSubject.send(.failure(error))
             })
             .store(in: &cancelBag)
 
         applicationStateObserver.applicationDidBecomeActive
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                self?.requestDataIfNeeded()
+                self?.syncTask?.cancel()
+                self?.syncTask = Task {
+                    await self?.requestDataIfNeeded()
+                }
             }
             .store(in: &cancelBag)
     }
@@ -120,10 +129,10 @@ final class LibraryViewModel: ArtistListViewModel {
 
     // MARK: - Public methods
 
-    func requestDataIfNeeded(currentTimestamp: TimeInterval, minTimeInterval: TimeInterval) {
+    func requestDataIfNeeded(currentTimestamp: TimeInterval, minTimeInterval: TimeInterval) async {
         if currentTimestamp - dependencies.libraryUpdater.lastUpdateTimestamp > minTimeInterval
             || dependencies.libraryUpdater.isFirstUpdate {
-            dependencies.libraryUpdater.requestData()
+            await dependencies.libraryUpdater.requestData()
         }
     }
 

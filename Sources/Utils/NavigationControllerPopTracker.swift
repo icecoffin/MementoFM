@@ -8,6 +8,7 @@
 
 import UIKit
 
+@MainActor
 protocol NavigationControllerPopObserver: AnyObject {
     func navigationControllerPopTracker(
         _ tracker: NavigationControllerPopTracker,

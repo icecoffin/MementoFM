@@ -27,6 +27,8 @@ final class ArtistListViewController: UIViewController {
     private let loadingView = LoadingView()
     private let emptyDataSetView = EmptyDataSetView(text: "No artists found".unlocalized)
 
+    private var syncTask: Task<Void, Never>?
+
     // MARK: - Init
 
     init(searchController: UISearchController, viewModel: ArtistListViewModel) {
@@ -53,7 +55,10 @@ final class ArtistListViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        viewModel.requestDataIfNeeded()
+        syncTask?.cancel()
+        syncTask = Task {
+            await viewModel.requestDataIfNeeded()
+        }
     }
 
     // MARK: - Private methods

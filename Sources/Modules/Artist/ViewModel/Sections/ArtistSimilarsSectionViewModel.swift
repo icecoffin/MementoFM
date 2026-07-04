@@ -11,6 +11,7 @@ import Combine
 
 // MARK: - ArtistSimilarsSectionViewModelProtocol
 
+@MainActor
 protocol ArtistSimilarsSectionViewModelProtocol: AnyObject {
     var didUpdate: AnyPublisher<Result<Void, Error>, Never> { get }
 
@@ -21,13 +22,14 @@ protocol ArtistSimilarsSectionViewModelProtocol: AnyObject {
     var isLoading: Bool { get }
 
     var emptyDataSetText: String { get }
-    func getSimilarArtists()
+    func getSimilarArtists() async
     func cellViewModel(at indexPath: IndexPath) -> SimilarArtistCellViewModelProtocol
     func selectArtist(at indexPath: IndexPath)
 }
 
 // MARK: - ArtistSimilarsSectionViewModelDelegate
 
+@MainActor
 protocol ArtistSimilarsSectionViewModelDelegate: AnyObject {
     func artistSimilarsSectionViewModel(
         _ viewModel: ArtistSimilarsSectionViewModel,
@@ -37,6 +39,7 @@ protocol ArtistSimilarsSectionViewModelDelegate: AnyObject {
 
 // MARK: - ArtistSimilarsSectionViewModel
 
+@MainActor
 final class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtocol {
     typealias Dependencies = HasArtistService
 
@@ -103,8 +106,8 @@ final class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtoc
 
     // MARK: - Public methods
 
-    func getSimilarArtists() {
-        currentTabViewModel.getSimilarArtists()
+    func getSimilarArtists() async {
+        await currentTabViewModel.getSimilarArtists()
     }
 
     func cellViewModel(at indexPath: IndexPath) -> SimilarArtistCellViewModelProtocol {
@@ -115,10 +118,10 @@ final class ArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelProtoc
         currentTabViewModel.selectArtist(at: indexPath)
     }
 
-    func selectTab(at index: Int) {
+    func selectTab(at index: Int) async {
         currentTabViewModel = tabViewModels[index]
         didUpdateSubject.send(.success(()))
-        currentTabViewModel.getSimilarArtists()
+        await currentTabViewModel.getSimilarArtists()
     }
 }
 

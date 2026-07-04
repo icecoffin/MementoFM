@@ -8,6 +8,7 @@
 
 import UIKit
 
+@MainActor
 final class CountriesCoordinator: NavigationFlowCoordinator {
     let navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []

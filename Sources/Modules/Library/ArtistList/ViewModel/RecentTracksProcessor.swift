@@ -12,7 +12,7 @@ import Combine
 // MARK: - RecentTracksProcessing
 
 protocol RecentTracksProcessing {
-    func process(tracks: [Track]) -> AnyPublisher<Void, Error>
+    func process(tracks: [Track]) async throws
 }
 
 // MARK: - RecentTracksProcessor
@@ -24,7 +24,7 @@ final class RecentTracksProcessor: RecentTracksProcessing {
         self.artistStore = artistStore
     }
 
-    func process(tracks: [Track]) -> AnyPublisher<Void, Error> {
+    func process(tracks: [Track]) async throws {
         var artistNamesWithPlayCounts = [Artist: Int]()
 
         for track in tracks {
@@ -41,6 +41,6 @@ final class RecentTracksProcessor: RecentTracksProcessing {
             return updatedArtist.updatingPlaycount(to: updatedArtist.playcount + playcount)
         }
 
-        return artistStore.save(artists: artists)
+        try await artistStore.save(artists: artists)
     }
 }

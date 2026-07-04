@@ -10,6 +10,7 @@ import UIKit
 
 // MARK: - ArtistSimilarsSectionHeaderViewDelegate
 
+@MainActor
 protocol ArtistSimilarsSectionHeaderViewDelegate: AnyObject {
     func artistSimilarsSectionHeaderView(
         _ headerView: ArtistSimilarsSectionHeaderView,
@@ -19,6 +20,7 @@ protocol ArtistSimilarsSectionHeaderViewDelegate: AnyObject {
 
 // MARK: - ArtistSectionHeaderViewModelProtocol
 
+@MainActor
 protocol ArtistSectionHeaderViewModelProtocol {
     var sectionHeaderText: String? { get }
 }

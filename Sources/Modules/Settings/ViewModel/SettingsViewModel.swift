@@ -10,12 +10,14 @@ import Foundation
 
 // MARK: - SettingsViewModelDelegate
 
+@MainActor
 protocol SettingsViewModelDelegate: AnyObject {
     func settingsViewModelDidRequestOpenIgnoredTags(_ viewModel: SettingsViewModel)
     func settingsViewModelDidRequestChangeUser(_ viewModel: SettingsViewModel)
     func settingsViewModelDidRequestOpenAbout(_ viewModel: SettingsViewModel)
 }
 
+@MainActor
 final class SettingsViewModel {
     // MARK: - Private properties
 

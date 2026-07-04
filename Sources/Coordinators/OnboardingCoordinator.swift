@@ -10,12 +10,14 @@ import UIKit
 
 // MARK: - OnboardingCoordinatorDelegate
 
+@MainActor
 protocol OnboardingCoordinatorDelegate: AnyObject {
     func onboardingCoordinatorDidFinish(_ coordinator: OnboardingCoordinator)
 }
 
 // MARK: - OnboardingCoordinator
 
+@MainActor
 final class OnboardingCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter, SyncPresenter {
     var childCoordinators: [Coordinator] = []
     var didFinish: (() -> Void)?

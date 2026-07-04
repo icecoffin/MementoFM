@@ -11,6 +11,7 @@ import Foundation
 // MARK: - ArtistListViewModelFactory
 
 protocol ArtistListViewModelFactory {
+    @MainActor
     func makeViewModel() -> ArtistListViewModel
 }
 
@@ -29,6 +30,7 @@ final class LibraryViewModelFactory: ArtistListViewModelFactory {
 
     // MARK: - Public methods
 
+    @MainActor
     func makeViewModel() -> ArtistListViewModel {
         return LibraryViewModel(dependencies: dependencies)
     }
@@ -51,6 +53,7 @@ final class ArtistsByTagViewModelFactory: ArtistListViewModelFactory {
 
     // MARK: - Public methods
 
+    @MainActor
     func makeViewModel() -> ArtistListViewModel {
         return ArtistsByTagViewModel(tagName: tagName, dependencies: dependencies)
     }
@@ -73,6 +76,7 @@ final class ArtistsByCountryViewModelFactory: ArtistListViewModelFactory {
 
     // MARK: - Public methods
 
+    @MainActor
     func makeViewModel() -> ArtistListViewModel {
         return ArtistsByCountryViewModel(country: country, dependencies: dependencies)
     }

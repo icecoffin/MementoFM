@@ -8,6 +8,7 @@
 
 import UIKit
 
+@MainActor
 final class ArtistListCoordinator: NavigationFlowCoordinator {
     var childCoordinators: [Coordinator] = []
     var didFinish: (() -> Void)?
@@ -51,7 +52,7 @@ final class ArtistListCoordinator: NavigationFlowCoordinator {
         navigationController.pushViewController(viewController, animated: shouldStartAnimated)
     }
 
-    private func unsubscribeFromNotifications() {
+    nonisolated private func unsubscribeFromNotifications() {
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 

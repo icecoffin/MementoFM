@@ -11,12 +11,14 @@ import Combine
 
 // MARK: - SyncViewModelDelegate
 
+@MainActor
 protocol SyncViewModelDelegate: AnyObject {
     func syncViewModelDidFinishLoading(_ viewModel: SyncViewModel)
 }
 
 // MARK: - SyncViewModel
 
+@MainActor
 final class SyncViewModel {
     typealias Dependencies = HasLibraryUpdater
 
@@ -51,6 +53,7 @@ final class SyncViewModel {
 
     private func setup() {
         dependencies.libraryUpdater.isLoading
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] isLoading in
                 guard let self = self else { return }
 
@@ -61,6 +64,7 @@ final class SyncViewModel {
             .store(in: &cancelBag)
 
         dependencies.libraryUpdater.status
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] status in
                 guard let self = self else {
                     return
@@ -70,6 +74,7 @@ final class SyncViewModel {
             .store(in: &cancelBag)
 
         dependencies.libraryUpdater.error
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] error in
                 self?.errorSubject.send(error)
             })
@@ -103,8 +108,8 @@ final class SyncViewModel {
 
     // MARK: - Public methods
 
-    func syncLibrary() {
-        dependencies.libraryUpdater.cancelPendingRequests()
-        dependencies.libraryUpdater.requestData()
+    func syncLibrary() async {
+        dependencies.libraryUpdater.resetStatus()
+        await dependencies.libraryUpdater.requestData()
     }
 }

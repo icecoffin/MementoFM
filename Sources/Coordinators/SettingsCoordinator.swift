@@ -16,6 +16,7 @@ protocol SettingsCoordinatorDelegate: AnyObject {
 
 // MARK: - SettingsCoordinator
 
+@MainActor
 final class SettingsCoordinator: NavigationFlowCoordinator, IgnoredTagsPresenter, SyncPresenter {
     var childCoordinators: [Coordinator] = []
     var didFinish: (() -> Void)?

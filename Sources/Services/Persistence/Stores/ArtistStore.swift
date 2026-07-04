@@ -5,9 +5,9 @@ import Combine
 
 protocol ArtistStore {
     func artist(for id: String) -> Artist?
-    func deleteAll() -> AnyPublisher<Void, Error>
+    func deleteAll() async throws
     func fetchAll(filteredBy predicate: NSPredicate?) -> [Artist]
-    func save(artists: [Artist]) -> AnyPublisher<Void, Error>
+    func save(artists: [Artist]) async throws
     func mappedCollection(
         filteredUsing predicate: NSPredicate?,
         sortedBy sortDescriptors: [NSSortDescriptor]
@@ -19,8 +19,8 @@ extension ArtistStore {
         return fetchAll(filteredBy: nil)
     }
 
-    func save(artist: Artist) -> AnyPublisher<Void, Error> {
-        return save(artists: [artist])
+    func save(artist: Artist) async throws {
+        try await save(artists: [artist])
     }
 }
 
@@ -37,16 +37,16 @@ final class PersistentArtistStore: ArtistStore {
         return persistentStore.object(ofType: Artist.self, forPrimaryKey: id)
     }
 
-    func deleteAll() -> AnyPublisher<Void, Error> {
-        persistentStore.deleteObjects(ofType: Artist.self)
+    func deleteAll() async throws {
+        try await persistentStore.deleteObjects(ofType: Artist.self)
     }
 
     func fetchAll(filteredBy predicate: NSPredicate?) -> [Artist] {
         persistentStore.objects(Artist.self, filteredBy: predicate)
     }
 
-    func save(artists: [Artist]) -> AnyPublisher<Void, any Error> {
-        persistentStore.save(artists)
+    func save(artists: [Artist]) async throws {
+        try await persistentStore.save(artists)
     }
 
     func mappedCollection(

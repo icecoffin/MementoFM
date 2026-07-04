@@ -11,18 +11,21 @@ import Combine
 
 // MARK: - IgnoredTagsViewModelDelegate
 
+@MainActor
 protocol IgnoredTagsViewModelDelegate: AnyObject {
     func ignoredTagsViewModelDidSaveChanges(_ viewModel: IgnoredTagsViewModel)
 }
 
 // MARK: - IgnoredTagsViewModel
 
+@MainActor
 final class IgnoredTagsViewModel {
     typealias Dependencies = HasIgnoredTagService & HasArtistService
 
     // MARK: - Private properties
 
     private let dependencies: Dependencies
+    private let shouldAddDefaultTags: Bool
     private var ignoredTags: [IgnoredTag] {
         didSet {
             areTagsEmptySubject.send(ignoredTags.isEmpty)
@@ -69,31 +72,29 @@ final class IgnoredTagsViewModel {
 
     init(dependencies: Dependencies, shouldAddDefaultTags: Bool) {
         self.dependencies = dependencies
+        self.shouldAddDefaultTags = shouldAddDefaultTags
         self.ignoredTags = dependencies.ignoredTagService.ignoredTags()
-        if self.ignoredTags.isEmpty && shouldAddDefaultTags {
-            addDefaultTags()
-        }
     }
 
     // MARK: - Private methods
 
-    private func addDefaultTags() {
-        return dependencies.ignoredTagService.createDefaultIgnoredTags()
-            .sink(receiveCompletion: { [weak self] completion in
-                guard let self = self else { return }
-
-                switch completion {
-                case .finished:
-                    self.ignoredTags = self.dependencies.ignoredTagService.ignoredTags()
-                    self.didAddDefaultTagsSubject.send()
-                case .failure(let error):
-                    self.errorSubject.send(error)
-                }
-            }, receiveValue: { })
-            .store(in: &cancelBag)
+    private func addDefaultTags() async {
+        do {
+            try await dependencies.ignoredTagService.createDefaultIgnoredTags()
+            ignoredTags = dependencies.ignoredTagService.ignoredTags()
+            didAddDefaultTagsSubject.send()
+        } catch {
+            errorSubject.send(error)
+        }
     }
 
     // MARK: - Public methods
+
+    func viewDidLoad() async {
+        if ignoredTags.isEmpty && shouldAddDefaultTags {
+            await addDefaultTags()
+        }
+    }
 
     func cellViewModel(at indexPath: IndexPath) -> IgnoredTagCellViewModel {
         let cellViewModel = IgnoredTagCellViewModel(tag: ignoredTags[indexPath.row])
@@ -119,7 +120,7 @@ final class IgnoredTagsViewModel {
         ignoredTags.remove(at: indexPath.row)
     }
 
-    func saveChanges() {
+    func saveChanges() async {
         isSavingChangesSubject.send(true)
 
         let filteredTags = ignoredTags.reduce([]) { result, ignoredTag -> [IgnoredTag] in
@@ -136,21 +137,14 @@ final class IgnoredTagsViewModel {
         }
 
         let calculator = ArtistTopTagsCalculator(ignoredTags: filteredTags)
-        dependencies.ignoredTagService.updateIgnoredTags(filteredTags)
-            .flatMap {
-                return self.dependencies.artistService.calculateTopTagsForAllArtists(using: calculator)
-            }
-            .sink(receiveCompletion: { [weak self] completion in
-                guard let self = self else { return }
+        do {
+            try await dependencies.ignoredTagService.updateIgnoredTags(filteredTags)
+            try await dependencies.artistService.calculateTopTagsForAllArtists(using: calculator)
+            delegate?.ignoredTagsViewModelDidSaveChanges(self)
+        } catch {
+            errorSubject.send(error)
+        }
 
-                self.isSavingChangesSubject.send(false)
-                switch completion {
-                case .finished:
-                    self.delegate?.ignoredTagsViewModelDidSaveChanges(self)
-                case .failure(let error):
-                    self.errorSubject.send(error)
-                }
-            }, receiveValue: { })
-            .store(in: &cancelBag)
+        isSavingChangesSubject.send(false)
     }
 }

@@ -15,8 +15,8 @@ protocol IgnoredTagServiceProtocol: AnyObject {
     var defaultIgnoredTagNames: [String] { get }
 
     func ignoredTags() -> [IgnoredTag]
-    func createDefaultIgnoredTags(withNames names: [String]) -> AnyPublisher<Void, Error>
-    func updateIgnoredTags(_ ignoredTags: [IgnoredTag]) -> AnyPublisher<Void, Error>
+    func createDefaultIgnoredTags(withNames names: [String]) async throws
+    func updateIgnoredTags(_ ignoredTags: [IgnoredTag]) async throws
 }
 
 extension IgnoredTagServiceProtocol {
@@ -24,8 +24,8 @@ extension IgnoredTagServiceProtocol {
         return ["rock", "metal", "indie", "alternative", "seen live", "under 2000 listeners"]
     }
 
-    func createDefaultIgnoredTags() -> AnyPublisher<Void, Error> {
-        return createDefaultIgnoredTags(withNames: defaultIgnoredTagNames)
+    func createDefaultIgnoredTags() async throws {
+        try await createDefaultIgnoredTags(withNames: defaultIgnoredTagNames)
     }
 }
 
@@ -48,14 +48,14 @@ final class IgnoredTagService: IgnoredTagServiceProtocol {
         return ignoredTagStore.fetchAll()
     }
 
-    func createDefaultIgnoredTags(withNames names: [String]) -> AnyPublisher<Void, Error> {
+    func createDefaultIgnoredTags(withNames names: [String]) async throws {
         let ignoredTags = names.map { name in
             return IgnoredTag(uuid: UUID().uuidString, name: name)
         }
-        return ignoredTagStore.save(ignoredTags: ignoredTags)
+        try await ignoredTagStore.save(ignoredTags: ignoredTags)
     }
 
-    func updateIgnoredTags(_ ignoredTags: [IgnoredTag]) -> AnyPublisher<Void, Error> {
-        return ignoredTagStore.overwrite(ignoredTags: ignoredTags)
+    func updateIgnoredTags(_ ignoredTags: [IgnoredTag]) async throws {
+        try await ignoredTagStore.overwrite(ignoredTags: ignoredTags)
     }
 }

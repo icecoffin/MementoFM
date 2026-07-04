@@ -9,6 +9,7 @@
 import UIKit
 import Combine
 
+@MainActor
 final class ArtistDataSource: NSObject {
     // MARK: - Private properties
 

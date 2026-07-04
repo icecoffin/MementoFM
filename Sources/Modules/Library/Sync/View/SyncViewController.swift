@@ -21,6 +21,8 @@ final class SyncViewController: UIViewController {
 
     private var cancelBag = Set<AnyCancellable>()
 
+    private var syncTask: Task<Void, Never>?
+
     // MARK: - Init
 
     init(viewModel: SyncViewModel) {
@@ -68,7 +70,7 @@ final class SyncViewController: UIViewController {
             .sink(receiveValue: { [unowned self] in
                 self.errorView.isHidden = true
                 self.progressView.isHidden = false
-                self.viewModel.syncLibrary()
+                syncLibrary()
             })
             .store(in: &cancelBag)
     }
@@ -88,7 +90,14 @@ final class SyncViewController: UIViewController {
             })
             .store(in: &cancelBag)
 
-        viewModel.syncLibrary()
+        syncLibrary()
+    }
+
+    private func syncLibrary() {
+        syncTask?.cancel()
+        syncTask = Task {
+            await viewModel.syncLibrary()
+        }
     }
 }
 

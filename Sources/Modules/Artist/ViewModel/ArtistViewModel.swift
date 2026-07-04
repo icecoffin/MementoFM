@@ -11,6 +11,7 @@ import Combine
 
 // MARK: - ArtistViewModelDelegate
 
+@MainActor
 protocol ArtistViewModelDelegate: AnyObject {
     func artistViewModel(_ viewModel: ArtistViewModel, didSelectTagWithName name: String)
     func artistViewModel(_ viewModel: ArtistViewModel, didSelectArtist artist: Artist)
@@ -18,6 +19,7 @@ protocol ArtistViewModelDelegate: AnyObject {
 
 // MARK: - ArtistViewModelProtocol
 
+@MainActor
 protocol ArtistViewModelProtocol: AnyObject {
     var didUpdate: AnyPublisher<Result<Void, Error>, Never> { get }
 
@@ -27,6 +29,7 @@ protocol ArtistViewModelProtocol: AnyObject {
 
 // MARK: - ArtistViewModel
 
+@MainActor
 final class ArtistViewModel: ArtistViewModelProtocol {
     typealias Dependencies = HasArtistService
 

@@ -16,10 +16,10 @@ protocol PersistentStore {
     ) -> AnyPersistentMappedCollection<T>
         where T.PersistentType.TransientType == T
 
-    func save<T: TransientEntity>(_ objects: [T], update: Bool) -> AnyPublisher<Void, Error>
+    func save<T: TransientEntity>(_ objects: [T], update: Bool) async throws
         where T.PersistentType.TransientType == T
 
-    func deleteObjects<T: TransientEntity>(ofType type: T.Type) -> AnyPublisher<Void, Error>
+    func deleteObjects<T: TransientEntity>(ofType type: T.Type) async throws
         where T.PersistentType.TransientType == T
 
     func objects<T: TransientEntity>(_ type: T.Type, filteredBy predicate: NSPredicate?) -> [T]
@@ -35,13 +35,13 @@ extension PersistentStore {
             return objects(type, filteredBy: nil)
     }
 
-    func save<T: TransientEntity>(_ objects: [T]) -> AnyPublisher<Void, Error>
+    func save<T: TransientEntity>(_ objects: [T]) async throws
         where T.PersistentType.TransientType == T {
-            return save(objects, update: true)
+            try await save(objects, update: true)
     }
 
-    func save<T: TransientEntity>(_ object: T, update: Bool = true) -> AnyPublisher<Void, Error>
+    func save<T: TransientEntity>(_ object: T, update: Bool = true) async throws
         where T.PersistentType.TransientType == T {
-            return save([object], update: update)
+            try await save([object], update: update)
     }
 }

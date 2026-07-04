@@ -11,12 +11,14 @@ import Combine
 
 // MARK: - ArtistListViewModelDelegate
 
+@MainActor
 protocol ArtistListViewModelDelegate: AnyObject {
     func artistListViewModel(_ viewModel: ArtistListViewModel, didSelectArtist artist: Artist)
 }
 
 // MARK: - ArtistListViewModel
 
+@MainActor
 protocol ArtistListViewModel: AnyObject {
     var delegate: ArtistListViewModelDelegate? { get set }
 
@@ -28,15 +30,15 @@ protocol ArtistListViewModel: AnyObject {
     var title: String { get }
     var searchBarPlaceholder: String { get }
 
-    func requestDataIfNeeded(currentTimestamp: TimeInterval, minTimeInterval: TimeInterval)
+    func requestDataIfNeeded(currentTimestamp: TimeInterval, minTimeInterval: TimeInterval) async
     func artistViewModel(at indexPath: IndexPath) -> LibraryArtistCellViewModel
     func selectArtist(at indexPath: IndexPath)
     func performSearch(withText text: String)
 }
 
 extension ArtistListViewModel {
-    func requestDataIfNeeded() {
-        requestDataIfNeeded(currentTimestamp: Date().timeIntervalSince1970, minTimeInterval: 30)
+    func requestDataIfNeeded() async {
+        await requestDataIfNeeded(currentTimestamp: Date().timeIntervalSince1970, minTimeInterval: 30)
     }
 
     var searchBarPlaceholder: String {

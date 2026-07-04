@@ -16,7 +16,7 @@ protocol SimilarArtistsRequestStrategy {
 
     var minNumberOfIntersectingTags: Int { get }
 
-    func getSimilarArtists(for artist: Artist) -> AnyPublisher<[Artist], Error>
+    func getSimilarArtists(for artist: Artist) async throws -> [Artist]
 }
 
 // MARK: - SimilarArtistsLocalRequestStrategy
@@ -40,11 +40,8 @@ final class SimilarArtistsLocalRequestStrategy: SimilarArtistsRequestStrategy {
 
     // MARK: - Public methods
 
-    func getSimilarArtists(for artist: Artist) -> AnyPublisher<[Artist], Error> {
-        let similarArtists = dependencies.artistService.artistsWithIntersectingTopTags(for: artist)
-        return Just(similarArtists)
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
+    func getSimilarArtists(for artist: Artist) async throws -> [Artist] {
+        dependencies.artistService.artistsWithIntersectingTopTags(for: artist)
     }
 }
 
@@ -69,7 +66,7 @@ final class SimilarArtistsRemoteRequestStrategy: SimilarArtistsRequestStrategy {
 
     // MARK: - Public methods
 
-    func getSimilarArtists(for artist: Artist) -> AnyPublisher<[Artist], Error> {
-        return dependencies.artistService.getSimilarArtists(for: artist)
+    func getSimilarArtists(for artist: Artist) async throws -> [Artist] {
+        try await dependencies.artistService.getSimilarArtists(for: artist)
     }
 }

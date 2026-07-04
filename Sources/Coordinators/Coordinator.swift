@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 protocol Coordinator: AnyObject {
     var childCoordinators: [Coordinator] { get set }
     var didFinish: (() -> Void)? { get set }

@@ -5,8 +5,8 @@ import Combine
 
 protocol IgnoredTagStore {
     func fetchAll() -> [IgnoredTag]
-    func save(ignoredTags: [IgnoredTag]) -> AnyPublisher<Void, Error>
-    func overwrite(ignoredTags: [IgnoredTag]) -> AnyPublisher<Void, Error>
+    func save(ignoredTags: [IgnoredTag]) async throws
+    func overwrite(ignoredTags: [IgnoredTag]) async throws
 }
 
 // MARK: - PersistentIgnoredTagStore
@@ -22,14 +22,12 @@ final class PersistentIgnoredTagStore: IgnoredTagStore {
         persistentStore.objects(IgnoredTag.self)
     }
 
-    func save(ignoredTags: [IgnoredTag]) -> AnyPublisher<Void, any Error> {
-        persistentStore.save(ignoredTags)
+    func save(ignoredTags: [IgnoredTag]) async throws {
+        try await persistentStore.save(ignoredTags)
     }
 
-    func overwrite(ignoredTags: [IgnoredTag]) -> AnyPublisher<Void, Error> {
-        persistentStore
-            .deleteObjects(ofType: IgnoredTag.self)
-            .flatMap { return self.persistentStore.save(ignoredTags) }
-            .eraseToAnyPublisher()
+    func overwrite(ignoredTags: [IgnoredTag]) async throws {
+        try await persistentStore.deleteObjects(ofType: IgnoredTag.self)
+        try await persistentStore.save(ignoredTags)
     }
 }

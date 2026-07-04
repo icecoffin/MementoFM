@@ -29,8 +29,8 @@ protocol LibraryUpdaterProtocol: AnyObject {
     var isFirstUpdate: Bool { get }
     var lastUpdateTimestamp: TimeInterval { get }
 
-    func requestData()
-    func cancelPendingRequests()
+    func requestData() async
+    func resetStatus()
 }
 
 // MARK: - LibraryUpdater
@@ -54,7 +54,6 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
     private var isLoadingSubject = PassthroughSubject<Bool, Never>()
     private var statusSubject = PassthroughSubject<LibraryUpdateStatus, Never>()
     private var errorSubject = PassthroughSubject<Error, Never>()
-    private var cancelBag = Set<AnyCancellable>()
 
     // MARK: - Public methods
 
@@ -100,165 +99,123 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
 
     // MARK: - Private methods
 
-    private func requestLibrary() -> (progress: AnyPublisher<LibraryUpdateStatus, Error>,
-                                      result: AnyPublisher<Void, Error>) {
+    private func requestLibrary() async throws {
         if userService.didReceiveInitialCollection {
-            return getLibraryUpdates()
+            try await getLibraryUpdates()
         } else {
-            return getFullLibrary()
+            try await getFullLibrary()
         }
     }
 
-    private func getFullLibrary() -> (progress: AnyPublisher<LibraryUpdateStatus, Error>,
-                                      result: AnyPublisher<Void, Error>) {
+    private func getFullLibrary() async throws {
         statusSubject.send(.artistsFirstPage)
 
-        let getLibrary = artistService
-            .getLibrary(for: username)
+        var pages: [LibraryPage] = []
 
-        let progress = getLibrary
-            .dropFirst()
-            .scan(PageProgress(current: 1, total: 0), { progress, libraryPage in
-                var newProgress = progress
-                newProgress.current += 1
-                newProgress.total = libraryPage.totalPages
-                return newProgress
-            })
-            .map { pageProgress -> LibraryUpdateStatus in
-                return .artists(progress: pageProgress)
+        for try await libraryPage in artistService.getLibrary(for: username) {
+            pages.append(libraryPage)
+
+            if pages.count > 1 {
+                statusSubject.send(
+                    .artists(
+                        progress: PageProgress(
+                            current: pages.count,
+                            total: libraryPage.totalPages
+                        )
+                    )
+                )
             }
-            .eraseToAnyPublisher()
+        }
 
-        let result = getLibrary
-            .collect()
-            .flatMap { [weak self] pages -> AnyPublisher<Void, Error> in
-                guard let self = self else {
-                    return Empty()
-                        .eraseToAnyPublisher()
-                }
-
-                let artists = pages.map { $0.artists }.flatMap { $0 }
-                self.updateLastUpdateTimestamp()
-                self.userService.didReceiveInitialCollection = true
-                return self.artistService.saveArtists(artists)
-            }
-            .eraseToAnyPublisher()
-
-        return (progress, result)
+        let artists = pages.map { $0.artists }.flatMap { $0 }
+        updateLastUpdateTimestamp()
+        userService.didReceiveInitialCollection = true
+        try await artistService.saveArtists(artists)
     }
 
-    private func getLibraryUpdates() -> (progress: AnyPublisher<LibraryUpdateStatus, Error>,
-                                         result: AnyPublisher<Void, Error>) {
+    private func getLibraryUpdates() async throws {
         statusSubject.send(.recentTracksFirstPage)
-        let getRecentTracks = trackService
-            .getRecentTracks(for: username, from: lastUpdateTimestamp)
 
-        let progress = getRecentTracks
-            .dropFirst()
-            .scan(PageProgress(current: 1, total: 0), { progress, recentTracksPage in
-                var newProgress = progress
-                newProgress.current += 1
-                newProgress.total = recentTracksPage.totalPages
-                return newProgress
-            })
-            .map { pageProgress -> LibraryUpdateStatus in
-                return .recentTracks(progress: pageProgress)
+        var pages: [RecentTracksPage] = []
+
+        for try await recentTracksPage in trackService.getRecentTracks(
+            for: username,
+            from: lastUpdateTimestamp
+        ) {
+            pages.append(recentTracksPage)
+
+            if pages.count > 1 {
+                statusSubject.send(
+                    .recentTracks(
+                        progress: PageProgress(
+                            current: pages.count,
+                            total: recentTracksPage.totalPages
+                        )
+                    )
+                )
             }
-            .eraseToAnyPublisher()
+        }
 
-        let result = getRecentTracks
-            .collect()
-            .flatMap { [weak self] pages -> AnyPublisher<Void, Error> in
-                guard let self = self else {
-                    return Empty()
-                        .eraseToAnyPublisher()
-                }
-
-                let tracks = pages.map { $0.tracks }.flatMap { $0 }
-                self.updateLastUpdateTimestamp()
-                return self.recentTracksProcessor.process(tracks: tracks)
-            }
-            .eraseToAnyPublisher()
-
-        return (progress, result)
+        let tracks = pages.map { $0.tracks }.flatMap { $0 }
+        updateLastUpdateTimestamp()
+        try await recentTracksProcessor.process(tracks: tracks)
     }
 
     private func updateLastUpdateTimestamp(date: Date = Date()) {
         userService.lastUpdateTimestamp = floor(date.timeIntervalSince1970)
     }
 
-    private func getArtistsTags() -> AnyPublisher<Void, Error> {
+    private func getArtistsTags() async throws {
         let artists = artistService.artistsNeedingTagsUpdate()
-        let getArtistsTags = tagService
-            .getTopTags(for: artists)
-
-        let pages = getArtistsTags
-            .dropFirst()
-            .scan(PageProgress(current: 1, total: artists.count)) { progress, _ in
-                var newProgress = progress
-                newProgress.current += 1
-                return newProgress
-            }
-        let artistNames = Publishers.Sequence(sequence: artists.map { $0.name })
-            .setFailureType(to: Error.self)
-
-        Publishers.Zip(pages, artistNames)
-            .sink { _ in
-            } receiveValue: { [weak self] (pageProgress, artistName) in
-                self?.statusSubject.send(.tags(artistName: artistName, progress: pageProgress))
-            }
-            .store(in: &cancelBag)
-
-        let ignoredTags = self.ignoredTagService.ignoredTags()
+        let ignoredTags = ignoredTagService.ignoredTags()
         let calculator = ArtistTopTagsCalculator(ignoredTags: ignoredTags)
 
-        return getArtistsTags
-            .flatMap { topTagsPage in
-                self.artistService.updateArtist(
-                    topTagsPage.artist,
-                    with: topTagsPage.topTagsList.tags
+        var pageIndex = 0
+        for try await topTagsPage in tagService.getTopTags(for: artists) {
+            if pageIndex > 0 {
+                statusSubject.send(
+                    .tags(
+                        artistName: topTagsPage.artist.name,
+                        progress: PageProgress(
+                            current: pageIndex,
+                            total: artists.count
+                        )
+                    )
                 )
             }
-            .flatMap { artist in
-                return self.artistService.calculateTopTags(for: artist, using: calculator)
-            }
-            .collect()
-            .map { _ in }
-            .eraseToAnyPublisher()
+            pageIndex += 1
+            let updatedArtist = try await artistService.updateArtist(
+                topTagsPage.artist,
+                with: topTagsPage.topTagsList.tags
+            )
+            try await artistService.calculateTopTags(for: updatedArtist, using: calculator)
+        }
+    }
+
+    private func runUpdate() async {
+
     }
 
     // MARK: - Public methods
 
-    func requestData() {
+    func requestData() async {
         isLoadingSubject.send(true)
+        defer { isLoadingSubject.send(false) }
 
-        let (progress, result) = requestLibrary()
+        do {
+            try await requestLibrary()
+            try await getArtistsTags()
+            try await countryService.updateCountries()
 
-        progress
-            .sink { _ in
-            } receiveValue: { [weak self] status in
-                self?.statusSubject.send(status)
-            }
-            .store(in: &cancelBag)
-
-        result.flatMap { _ -> AnyPublisher<Void, Error> in
-            return self.getArtistsTags()
+            isFirstUpdate = false
+        } catch is CancellationError {
+            return
+        } catch {
+            errorSubject.send(error)
         }
-        .flatMap { _ -> AnyPublisher<Void, Error> in
-            return self.countryService.updateCountries()
-        }
-        .sink { [weak self] completion in
-            self?.isFirstUpdate = false
-            self?.isLoadingSubject.send(false)
-            if case .failure(let error) = completion {
-                self?.errorSubject.send(error)
-            }
-        } receiveValue: { _ in }
-            .store(in: &cancelBag)
     }
 
-    func cancelPendingRequests() {
+    func resetStatus() {
         statusSubject.send(.artistsFirstPage)
-        cancelBag.forEach { $0.cancel() }
     }
 }

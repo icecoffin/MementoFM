@@ -10,12 +10,14 @@ import Foundation
 
 // MARK: - ArtistTopTagsSectionViewModelDelegate
 
+@MainActor
 protocol ArtistTopTagsSectionViewModelDelegate: AnyObject {
     func artistTopTagsSectionViewModel(_ viewModel: ArtistTopTagsSectionViewModel, didSelectTagWithName name: String)
 }
 
 // MARK: - ArtistTopTagsSectionViewModel
 
+@MainActor
 final class ArtistTopTagsSectionViewModel {
     // MARK: - Private properties
 

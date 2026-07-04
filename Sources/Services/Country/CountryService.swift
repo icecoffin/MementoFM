@@ -13,7 +13,7 @@ import CombineSchedulers
 // MARK: - CountryServiceProtocol
 
 protocol CountryServiceProtocol {
-    func updateCountries() -> AnyPublisher<Void, Error>
+    func updateCountries() async throws
     func getCountriesWithCounts() -> [String: Int]
 }
 
@@ -43,8 +43,8 @@ final class CountryService: CountryServiceProtocol {
 
     // MARK: - Public methods
 
-    func updateCountries() -> AnyPublisher<Void, Error> {
-        return Future<[Artist], Error> { promise in
+    func updateCountries() async throws {
+        let updatedArtists = await withCheckedContinuation { continuation in
             self.backgroundScheduler.schedule {
                 let artists = self.artistStore.fetchAll()
                 let updatedArtists: [Artist] = artists.map {
@@ -54,14 +54,11 @@ final class CountryService: CountryServiceProtocol {
                         return $0
                     }
                 }
-                promise(.success(updatedArtists))
+                continuation.resume(returning: updatedArtists)
             }
         }
-        .flatMap { artists in
-            return self.artistStore.save(artists: artists)
-        }
-        .receive(on: mainScheduler)
-        .eraseToAnyPublisher()
+
+        try await artistStore.save(artists: updatedArtists)
     }
 
     func getCountriesWithCounts() -> [String: Int] {

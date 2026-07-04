@@ -13,37 +13,37 @@ import CombineSchedulers
 // MARK: - ArtistServiceProtocol
 
 protocol ArtistServiceProtocol: AnyObject {
-    func getLibrary(for user: String, limit: Int) -> AnyPublisher<LibraryPage, Error>
+    func getLibrary(for user: String, limit: Int) -> AsyncThrowingStream<LibraryPage, Error>
 
-    func saveArtists(_ artists: [Artist]) -> AnyPublisher<Void, Error>
+    func saveArtists(_ artists: [Artist]) async throws
 
     func artistsNeedingTagsUpdate() -> [Artist]
     func artistsWithIntersectingTopTags(for artist: Artist) -> [Artist]
 
-    func updateArtist(_ artist: Artist, with tags: [Tag]) -> AnyPublisher<Artist, Error>
+    func updateArtist(_ artist: Artist, with tags: [Tag]) async throws -> Artist
 
-    func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating) -> AnyPublisher<Void, Error>
+    func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating) async throws
 
-    func calculateTopTags(for artist: Artist, using calculator: ArtistTopTagsCalculating) -> AnyPublisher<Void, Error>
-
+    func calculateTopTags(for artist: Artist, using calculator: ArtistTopTagsCalculating) async throws
     func artists(
         filteredUsing predicate: NSPredicate?,
         sortedBy sortDescriptors: [NSSortDescriptor]
     ) -> AnyPersistentMappedCollection<Artist>
-    func getSimilarArtists(for artist: Artist, limit: Int) -> AnyPublisher<[Artist], Error>
+
+    func getSimilarArtists(for artist: Artist, limit: Int) async throws -> [Artist]
 }
 
 extension ArtistServiceProtocol {
-    func getLibrary(for user: String) -> AnyPublisher<LibraryPage, Error> {
-        return getLibrary(for: user, limit: 200)
+    func getLibrary(for user: String) -> AsyncThrowingStream<LibraryPage, Error> {
+        getLibrary(for: user, limit: 200)
     }
 
     func artists(sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<Artist> {
         return artists(filteredUsing: nil, sortedBy: sortDescriptors)
     }
 
-    func getSimilarArtists(for artist: Artist) -> AnyPublisher<[Artist], Error> {
-        return getSimilarArtists(for: artist, limit: 20)
+    func getSimilarArtists(for artist: Artist) async throws -> [Artist] {
+        try await getSimilarArtists(for: artist, limit: 20)
     }
 }
 
@@ -56,6 +56,7 @@ final class ArtistService: ArtistServiceProtocol {
     private let repository: ArtistRepository
     private let mainScheduler: AnySchedulerOf<DispatchQueue>
     private let backgroundScheduler: AnySchedulerOf<DispatchQueue>
+    private let maxConcurrentRequests = 5
 
     // MARK: - Init
 
@@ -71,46 +72,70 @@ final class ArtistService: ArtistServiceProtocol {
         self.backgroundScheduler = backgroundScheduler
     }
 
-    // MARK: - Public properties
+    // MARK: - Public methods
 
-    func getLibrary(for user: String, limit: Int) -> AnyPublisher<LibraryPage, Error> {
-        let initialIndex = 1
-        let firstPage = Future {
-            try await self.repository.getLibraryPage(
-                withIndex: initialIndex,
-                for: user,
-                limit: limit
-            ).libraryPage
-        }.eraseToAnyPublisher()
+    func getLibrary(for user: String, limit: Int) -> AsyncThrowingStream<LibraryPage, Error> {
+        AsyncThrowingStream { continuation in
+            let task = Task {
+                do {
+                    var nextIndex = 1
 
-        let otherPages = firstPage.flatMap { libraryPage -> AnyPublisher<LibraryPage, Error> in
-            if libraryPage.totalPages <= initialIndex {
-                return Empty()
-                    .eraseToAnyPublisher()
-            }
-
-            let publishers = (initialIndex+1...libraryPage.totalPages).map { index in
-                Future {
-                    try await self.repository.getLibraryPage(
-                        withIndex: index,
+                    let firstPage = try await self.repository.getLibraryPage(
+                        withIndex: nextIndex,
                         for: user,
                         limit: limit
                     ).libraryPage
-                }
-                .eraseToAnyPublisher()
-            }
-            return Publishers.Sequence(sequence: publishers)
-                .flatMap(maxPublishers: .max(5)) { $0 }
-                .eraseToAnyPublisher()
-        }
 
-        return Publishers.Merge(firstPage, otherPages)
-            .receive(on: mainScheduler)
-            .eraseToAnyPublisher()
+                    continuation.yield(firstPage)
+
+                    guard firstPage.totalPages > nextIndex else {
+                        continuation.finish()
+                        return
+                    }
+
+                    nextIndex += 1
+
+                    try await withThrowingTaskGroup(of: LibraryPage.self) { group in
+                        func enqueueNext() {
+                            guard nextIndex <= firstPage.totalPages else { return }
+
+                            let index = nextIndex
+
+                            group.addTask {
+                                try await self.repository.getLibraryPage(
+                                    withIndex: index,
+                                    for: user,
+                                    limit: limit
+                                ).libraryPage
+                            }
+
+                            nextIndex += 1
+                        }
+
+                        for _ in 0..<maxConcurrentRequests {
+                            enqueueNext()
+                        }
+
+                        while let page = try await group.next() {
+                            continuation.yield(page)
+                            enqueueNext()
+                        }
+                    }
+
+                    continuation.finish()
+                } catch {
+                    continuation.finish(throwing: error)
+                }
+            }
+
+            continuation.onTermination = { _ in
+                task.cancel()
+            }
+        }
     }
 
-    func saveArtists(_ artists: [Artist]) -> AnyPublisher<Void, Error> {
-        return artistStore.save(artists: artists)
+    func saveArtists(_ artists: [Artist]) async throws {
+        try await artistStore.save(artists: artists)
     }
 
     func artistsNeedingTagsUpdate() -> [Artist] {
@@ -124,31 +149,27 @@ final class ArtistService: ArtistServiceProtocol {
         return artistStore.fetchAll(filteredBy: predicate)
     }
 
-    func updateArtist(_ artist: Artist, with tags: [Tag]) -> AnyPublisher<Artist, Error> {
+    func updateArtist(_ artist: Artist, with tags: [Tag]) async throws -> Artist {
         let updatedArtist = artist.updatingTags(to: tags, needsTagsUpdate: false)
-        return self.artistStore.save(artist: updatedArtist)
-            .map { _ in updatedArtist }
-            .eraseToAnyPublisher()
+        try await artistStore.save(artist: updatedArtist)
+        return updatedArtist
     }
 
-    func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating) -> AnyPublisher<Void, Error> {
-        return Future<[Artist], Error> { promise in
-            self.backgroundScheduler.schedule {
+    func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating) async throws {
+        let updatedArtists = await withCheckedContinuation { continuation in
+            backgroundScheduler.schedule {
                 let artists = self.artistStore.fetchAll()
                 let updatedArtists = artists.map { return calculator.calculateTopTags(for: $0) }
-                promise(.success(updatedArtists))
+                continuation.resume(returning: updatedArtists)
             }
         }
-        .flatMap { artists in
-            return self.artistStore.save(artists: artists)
-        }
-        .receive(on: mainScheduler)
-        .eraseToAnyPublisher()
+
+        try await artistStore.save(artists: updatedArtists)
     }
 
-    func calculateTopTags(for artist: Artist, using calculator: ArtistTopTagsCalculating) -> AnyPublisher<Void, Error> {
+    func calculateTopTags(for artist: Artist, using calculator: ArtistTopTagsCalculating) async throws {
         let updatedArtist = calculator.calculateTopTags(for: artist)
-        return artistStore.save(artist: updatedArtist)
+        try await artistStore.save(artist: updatedArtist)
     }
 
     func artists(
@@ -158,15 +179,11 @@ final class ArtistService: ArtistServiceProtocol {
         return artistStore.mappedCollection(filteredUsing: predicate, sortedBy: sortDescriptors)
     }
 
-    func getSimilarArtists(for artist: Artist, limit: Int) -> AnyPublisher<[Artist], Error> {
-        Future {
-            let response = try await self.repository.getSimilarArtists(for: artist, limit: limit)
-            let artistNames = response.similarArtistList.similarArtists.map({ $0.name })
-            let predicate = NSPredicate(format: "name in %@", artistNames)
-            let artists = self.artistStore.fetchAll(filteredBy: predicate)
-            return artists
-        }
-        .receive(on: mainScheduler)
-        .eraseToAnyPublisher()
+    func getSimilarArtists(for artist: Artist, limit: Int) async throws -> [Artist] {
+        let response = try await repository.getSimilarArtists(for: artist, limit: limit)
+        let artistNames = response.similarArtistList.similarArtists.map({ $0.name })
+        let predicate = NSPredicate(format: "name in %@", artistNames)
+        let artists = artistStore.fetchAll(filteredBy: predicate)
+        return artists
     }
 }

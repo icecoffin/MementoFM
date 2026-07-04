@@ -90,6 +90,10 @@ final class IgnoredTagsViewController: UIViewController {
     }
 
     private func bindToViewModel() {
+        Task {
+            await viewModel.viewDidLoad()
+        }
+
         viewModel.isSavingChanges
             .sink(receiveValue: { [unowned self] isSaving in
                 if isSaving {

@@ -43,24 +43,23 @@ final class RealmService: PersistentStore {
 
     // MARK: - Private methods
 
-    private func write(block: @escaping (Realm) -> Void) -> AnyPublisher<Void, Error> {
-        return Future<Void, Error> { promise in
+    private func write(block: @escaping (Realm) -> Void) async throws {
+        try await withCheckedThrowingContinuation { continuation in
             self.backgroundScheduler.schedule {
                 do {
                     try self.write(to: self.currentQueueRealm) { realm in
                         block(realm)
-                        promise(.success(()))
+                        continuation.resume()
                     }
                 } catch {
-                    promise(.failure(error))
+                    continuation.resume(throwing: error)
                 }
             }
         }
-        .receive(on: mainScheduler)
-        .map {
-            self.currentQueueRealm.refresh()
+
+        await MainActor.run {
+            _ = self.mainQueueRealm.refresh()
         }
-        .eraseToAnyPublisher()
     }
 
     private func write(to realm: Realm, block: (Realm) -> Void) throws {
@@ -87,18 +86,18 @@ final class RealmService: PersistentStore {
 
     // MARK: - Saving objects to Realm
 
-    func save<T: TransientEntity>(_ object: T, update: Bool = true) -> AnyPublisher<Void, Error>
+    func save<T: TransientEntity>(_ object: T, update: Bool = true) async throws
         where T.PersistentType.TransientType == T {
-            return write { realm in
+            try await write { realm in
                 if let realmObject = T.PersistentType.from(transient: object) as? Object {
                     realm.add(realmObject, update: .modified)
                 }
             }
     }
 
-    func save<T: TransientEntity>(_ objects: [T], update: Bool = true) -> AnyPublisher<Void, Error>
+    func save<T: TransientEntity>(_ objects: [T], update: Bool = true) async throws
         where T.PersistentType.TransientType == T {
-            return write { realm in
+            try await write { realm in
                 let realmObjects = objects.compactMap({ return T.PersistentType.from(transient: $0) as? Object })
                 realm.add(realmObjects, update: .modified)
             }
@@ -106,13 +105,13 @@ final class RealmService: PersistentStore {
 
     // MARK: - Deleting objects from Realm
 
-    func deleteObjects<T: TransientEntity>(ofType type: T.Type) -> AnyPublisher<Void, Error>
+    func deleteObjects<T: TransientEntity>(ofType type: T.Type) async throws
         where T.PersistentType.TransientType == T {
             guard let type = type.PersistentType.self as? Object.Type else {
                 fatalError("The provided Element.PersistentType is not a Realm Object subclass")
             }
 
-            return write { realm in
+            try await write { realm in
                 let realmObjects = realm.objects(type)
                 realm.delete(realmObjects)
             }

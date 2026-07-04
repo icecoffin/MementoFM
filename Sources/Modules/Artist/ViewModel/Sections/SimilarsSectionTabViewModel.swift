@@ -11,6 +11,7 @@ import Combine
 
 // MARK: - SimilarsSectionTabViewModelDelegate
 
+@MainActor
 protocol SimilarsSectionTabViewModelDelegate: AnyObject {
     func similarsSectionTabViewModel(
         _ viewModel: SimilarsSectionTabViewModel,
@@ -20,6 +21,7 @@ protocol SimilarsSectionTabViewModelDelegate: AnyObject {
 
 // MARK: - SimilarsSectionTabViewModel
 
+@MainActor
 final class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol {
     typealias Dependencies = HasArtistService
 
@@ -75,18 +77,18 @@ final class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol 
 
     // MARK: - Private methods
 
-    private func calculateSimilarArtists() {
+    private func calculateSimilarArtists() async {
         isLoading = true
-        requestStrategy.getSimilarArtists(for: artist)
-            .sink { [weak self] completion in
-                guard let self = self else { return }
 
-                self.isLoading = false
-                self.didUpdateSubject.send(completion.asResult)
-            } receiveValue: { [weak self] artists in
-                self?.createCellViewModels(from: artists)
-            }
-            .store(in: &cancelBag)
+        do {
+            let artists = try await self.requestStrategy.getSimilarArtists(for: artist)
+            self.isLoading = false
+            self.createCellViewModels(from: artists)
+            self.didUpdateSubject.send(.success(()))
+        } catch {
+            self.isLoading = false
+            self.didUpdateSubject.send(.failure(error))
+        }
     }
 
     private func createCellViewModels(from artists: [Artist]) {
@@ -125,9 +127,9 @@ final class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol 
         delegate?.similarsSectionTabViewModel(self, didSelectArtist: cellViewModel.artist)
     }
 
-    func getSimilarArtists() {
+    func getSimilarArtists() async {
         if !isLoading && cellViewModels.isEmpty {
-            calculateSimilarArtists()
+            await calculateSimilarArtists()
         } else {
             didUpdateSubject.send(.success(()))
         }

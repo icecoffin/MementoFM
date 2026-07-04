@@ -10,10 +10,12 @@ import Foundation
 
 // MARK: - CountriesViewModelDelegate
 
+@MainActor
 protocol CountriesViewModelDelegate: AnyObject {
     func countriesViewModel(_ viewModel: CountriesViewModel, didSelectCountry country: CountryType)
 }
 
+@MainActor
 final class CountriesViewModel {
     typealias Dependencies = HasCountryService
 

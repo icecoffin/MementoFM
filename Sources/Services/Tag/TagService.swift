@@ -19,7 +19,7 @@ struct TopTagsPage {
 // MARK: - TagServiceProtocol
 
 protocol TagServiceProtocol: AnyObject {
-    func getTopTags(for artists: [Artist]) -> AnyPublisher<TopTagsPage, Error>
+    func getTopTags(for artists: [Artist]) -> AsyncThrowingStream<TopTagsPage, Error>
     func getAllTopTags() -> [Tag]
 }
 
@@ -30,6 +30,7 @@ final class TagService: TagServiceProtocol {
 
     private let artistStore: ArtistStore
     private let repository: TagRepository
+    private let maxConcurrentRequests = 5
 
     // MARK: - Init
 
@@ -40,26 +41,50 @@ final class TagService: TagServiceProtocol {
 
     // MARK: - Public methods
 
-    func getTopTags(for artists: [Artist]) -> AnyPublisher<TopTagsPage, Error> {
-        let publishers = artists.map { artist -> AnyPublisher<TopTagsPage, Error> in
-            return Future {
-                try await self.repository.getTopTags(for: artist.name)
-            }
-            .tryCatch { error in
-                if Self.isMissingArtistError(error) {
-                    return Just(TopTagsResponse.empty)
-                } else {
-                    throw error
+    func getTopTags(for artists: [Artist]) -> AsyncThrowingStream<TopTagsPage, Error> {
+        AsyncThrowingStream { continuation in
+            let task = Task {
+                do {
+                    try await withThrowingTaskGroup(of: TopTagsPage.self) { group in
+                        var iterator = artists.makeIterator()
+
+                        func enqueueNext() {
+                            guard let artist = iterator.next() else { return }
+
+                            group.addTask {
+                                do {
+                                    let response = try await self.repository.getTopTags(for: artist.name)
+                                    return TopTagsPage(artist: artist, topTagsList: response.topTagsList)
+                                } catch {
+                                    if Self.isMissingArtistError(error) {
+                                        return TopTagsPage(artist: artist, topTagsList: .empty)
+                                    } else {
+                                        throw error
+                                    }
+                                }
+                            }
+                        }
+
+                        for _ in 0..<maxConcurrentRequests {
+                            enqueueNext()
+                        }
+
+                        while let page = try await group.next() {
+                            continuation.yield(page)
+                            enqueueNext()
+                        }
+                    }
+
+                    continuation.finish()
+                } catch {
+                    continuation.finish(throwing: error)
                 }
             }
-            .map { TopTagsPage(artist: artist, topTagsList: $0.topTagsList) }
-            .eraseToAnyPublisher()
-        }
 
-        return Publishers.Sequence(sequence: publishers)
-            .flatMap(maxPublishers: .max(5)) { $0 }
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
+            continuation.onTermination = { _ in
+                task.cancel()
+            }
+        }
     }
 
     func getAllTopTags() -> [Tag] {

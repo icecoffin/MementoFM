@@ -8,6 +8,7 @@
 
 import UIKit
 
+@MainActor
 protocol NavigationFlowCoordinator: Coordinator, NavigationControllerPopObserver {
     var navigationController: UINavigationController { get }
 }

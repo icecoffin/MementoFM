@@ -9,6 +9,7 @@
 import UIKit
 import Combine
 
+@MainActor
 protocol ArtistSectionDataSource: AnyObject {
     var didUpdate: AnyPublisher<Result<Void, Error>, Never> { get }
 
