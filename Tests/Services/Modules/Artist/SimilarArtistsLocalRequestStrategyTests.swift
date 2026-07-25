@@ -43,15 +43,11 @@ final class SimilarArtistsLocalRequestStrategyTests: XCTestCase {
         XCTAssertEqual(strategy.minNumberOfIntersectingTags, 2)
     }
 
-    func test_getSimilarArtists_getsCorrectValueFromArtistService() {
+    func test_getSimilarArtists_getsCorrectValueFromArtistService() async throws {
         artistService.customArtistsWithIntersectingTopTags = similarArtists
         let strategy = SimilarArtistsLocalRequestStrategy(dependencies: dependencies)
-        var expectedSimilarArtists: [Artist] = []
 
-        _ = strategy.getSimilarArtists(for: sampleArtist)
-            .sink(receiveCompletion: { _ in }, receiveValue: { artists in
-                expectedSimilarArtists = artists
-            })
+        let expectedSimilarArtists = try await strategy.getSimilarArtists(for: sampleArtist)
 
         XCTAssertEqual(expectedSimilarArtists, similarArtists)
     }

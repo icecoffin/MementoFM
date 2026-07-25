@@ -7,11 +7,11 @@
 //
 
 import XCTest
-@testable import MementoFM
-
 import RealmSwift
 import Combine
+@testable import MementoFM
 
+@MainActor
 final class ArtistsByTagViewModelTests: XCTestCase {
     private final class Dependencies: ArtistsByTagViewModel.Dependencies {
         let artistService: ArtistServiceProtocol

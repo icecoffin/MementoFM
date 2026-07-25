@@ -12,6 +12,7 @@ import XCTest
 import RealmSwift
 import Combine
 
+@MainActor
 final class RealmServiceTests: XCTestCase {
     private var realm: Realm!
     private var realmService: RealmService!
@@ -22,7 +23,7 @@ final class RealmServiceTests: XCTestCase {
         realm = RealmFactory.inMemoryRealm()
         realmService = RealmService(
             getRealm: {
-                return RealmFactory.inMemoryRealm()
+                RealmFactory.inMemoryRealm()
             },
             backgroundScheduler: .immediate,
             mainScheduler: .immediate
@@ -36,71 +37,70 @@ final class RealmServiceTests: XCTestCase {
         super.tearDown()
     }
 
-    func test_saveSingleObject_writesToRealm() {
+    func test_saveSingleObject_writesToRealm() async throws {
         let ignoredTag = IgnoredTag(uuid: "uuid", name: "name")
-        _ = realmService.save(ignoredTag).sink(
-            receiveCompletion: { _ in
-                let expectedIgnoredTag = self.realm.object(
-                    ofType: RealmIgnoredTag.self,
-                    forPrimaryKey: ignoredTag.uuid
-                )?.toTransient()
-                XCTAssertEqual(expectedIgnoredTag, ignoredTag)
-            },
-            receiveValue: { _ in }
-        )
+        _ = try await realmService.save(ignoredTag)
+
+        let expectedIgnoredTag = realm.object(
+            ofType: RealmIgnoredTag.self,
+            forPrimaryKey: ignoredTag.uuid
+        )?.toTransient()
+        XCTAssertEqual(expectedIgnoredTag, ignoredTag)
     }
 
-    func test_saveMultipleObjets_writesToRealm() {
+    func test_saveMultipleObjets_writesToRealm() async throws {
         let ignoredTags = [IgnoredTag(uuid: "uuid1", name: "name1"),
                            IgnoredTag(uuid: "uuid2", name: "name2")]
-        _ = realmService.save(ignoredTags).sink(receiveCompletion: { _ in
-            let expectedIgnoredTags = Array(self.realm.objects(RealmIgnoredTag.self).map({ $0.toTransient() }))
-            XCTAssertEqual(expectedIgnoredTags, ignoredTags)
-        }, receiveValue: { _ in })
+        try await realmService.save(ignoredTags)
+
+        let expectedIgnoredTags = Array(realm.objects(RealmIgnoredTag.self).map({ $0.toTransient() }))
+        XCTAssertEqual(expectedIgnoredTags, ignoredTags)
+
     }
 
-    func test_deleteObjects_deletesFromRealm() {
+    func test_deleteObjects_deletesFromRealm() async throws {
         let ignoredTags = [IgnoredTag(uuid: "uuid1", name: "name1"),
                            IgnoredTag(uuid: "uuid2", name: "name2")]
-        _ = realmService.save(ignoredTags).flatMap { _ -> AnyPublisher<Void, Error> in
-            let count = self.realm.objects(RealmIgnoredTag.self).count
-            XCTAssertEqual(count, ignoredTags.count)
-            return self.realmService.deleteObjects(ofType: IgnoredTag.self)
-        }.sink(receiveCompletion: { _ in
-            let expectedCount = self.realm.objects(RealmIgnoredTag.self).count
-            XCTAssertEqual(expectedCount, 0)
-        }, receiveValue: { _ in })
+        try await realmService.save(ignoredTags)
+        let count = realm.objects(RealmIgnoredTag.self).count
+
+        XCTAssertEqual(count, ignoredTags.count)
+
+        try await realmService.deleteObjects(ofType: IgnoredTag.self)
+
+        let expectedCount = realm.objects(RealmIgnoredTag.self).count
+        XCTAssertEqual(expectedCount, 0)
     }
 
-    func test_objects_returnsObjectsFromRealm() {
+    func test_objects_returnsObjectsFromRealm() async throws {
         let ignoredTags = [IgnoredTag(uuid: "uuid1", name: "name1"),
                            IgnoredTag(uuid: "uuid2", name: "name2")]
-        _ = realmService.save(ignoredTags).sink(receiveCompletion: { _ in
-            let expectedIgnoredTags = self.realmService.objects(IgnoredTag.self)
-            XCTAssertEqual(expectedIgnoredTags, ignoredTags)
-        }, receiveValue: { _ in })
+        _ = try await realmService.save(ignoredTags)
+
+        let expectedIgnoredTags = realmService.objects(IgnoredTag.self)
+        XCTAssertEqual(expectedIgnoredTags, ignoredTags)
     }
 
-    func test_objects_returnsObjectsFromRealm_filteredByPredicate() {
+    func test_objects_returnsObjectsFromRealm_filteredByPredicate() async throws {
         let ignoredTags = [IgnoredTag(uuid: "uuid1", name: "name1"),
                            IgnoredTag(uuid: "uuid2", name: "name2")]
-        _ = realmService.save(ignoredTags).sink(receiveCompletion: { _ in
-            let predicate = NSPredicate(format: "name contains[cd] '1'")
-            let expectedIgnoredTags = self.realmService.objects(IgnoredTag.self, filteredBy: predicate)
-            XCTAssertEqual(expectedIgnoredTags, [IgnoredTag(uuid: "uuid1", name: "name1")])
-        }, receiveValue: { _ in })
+        _ = try await realmService.save(ignoredTags)
+
+        let predicate = NSPredicate(format: "name contains[cd] '1'")
+        let expectedIgnoredTags = realmService.objects(IgnoredTag.self, filteredBy: predicate)
+        XCTAssertEqual(expectedIgnoredTags, [IgnoredTag(uuid: "uuid1", name: "name1")])
     }
 
-    func test_objectForPrimaryKey_returnsExistingObject() {
+    func test_objectForPrimaryKey_returnsExistingObject() async throws {
         let ignoredTag = IgnoredTag(uuid: "uuid", name: "name")
-        _ = realmService.save(ignoredTag).sink(receiveCompletion: { _ in
-            let expectedIgnoredTag = self.realmService.object(ofType: IgnoredTag.self, forPrimaryKey: "uuid")
-            XCTAssertEqual(expectedIgnoredTag, ignoredTag)
-        }, receiveValue: { _ in })
+        _ = try await realmService.save(ignoredTag)
+
+        let expectedIgnoredTag = realmService.object(ofType: IgnoredTag.self, forPrimaryKey: "uuid")
+        XCTAssertEqual(expectedIgnoredTag, ignoredTag)
     }
 
     func test_objectForPrimaryKey_returnsNilForMissingKey() {
-        let missingIgnoredTag = self.realmService.object(ofType: IgnoredTag.self, forPrimaryKey: "test")
+        let missingIgnoredTag = realmService.object(ofType: IgnoredTag.self, forPrimaryKey: "test")
 
         XCTAssertNil(missingIgnoredTag)
     }

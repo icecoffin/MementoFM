@@ -15,14 +15,11 @@ final class MockSimilarArtistsRequestStrategy: SimilarArtistsRequestStrategy {
 
     var customSimilarArtists: [Artist] = []
     var getSimilarArtistsShouldReturnError = false
-    func getSimilarArtists(for artist: Artist) -> AnyPublisher<[Artist], Error> {
+    func getSimilarArtists(for artist: Artist) async throws -> [Artist] {
         if getSimilarArtistsShouldReturnError {
-            return Fail(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
-                .eraseToAnyPublisher()
+            throw NSError(domain: "MementoFM", code: 6, userInfo: nil)
         } else {
-            return Just(customSimilarArtists)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+            return customSimilarArtists
         }
     }
 }

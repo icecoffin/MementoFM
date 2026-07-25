@@ -25,7 +25,7 @@ final class TagServiceTests: XCTestCase {
         super.tearDown()
     }
 
-    func test_getTopTags_finishesWithSuccess() {
+    func test_getTopTags_finishesWithSuccess() async throws {
         let artistCount = 5
         let tagsPerArtist = 5
 
@@ -36,18 +36,7 @@ final class TagServiceTests: XCTestCase {
         let tagService = TagService(artistStore: artistStore, repository: tagRepository)
         let artists = ModelFactory.generateArtists(inAmount: artistCount)
 
-        var topTagsPages: [TopTagsPage] = []
-        _ = tagService.getTopTags(for: artists)
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure:
-                    XCTFail("Unexpected failure")
-                }
-            } receiveValue: { topTagsPage in
-                topTagsPages.append(topTagsPage)
-            }
+        let topTagsPages = try await tagService.getTopTags(for: artists).collect()
 
         let expectedTags = topTagsPages
             .map { ModelFactory.generateTags(inAmount: tagsPerArtist, for: $0.artist.name) }
@@ -55,26 +44,18 @@ final class TagServiceTests: XCTestCase {
         XCTAssertEqual(receivedTags, expectedTags)
     }
 
-    func test_getTopTags_failsWithError() {
+    func test_getTopTags_failsWithError() async throws {
         let tagRepository = MockTagRepository()
         tagRepository.shouldFailWithError = true
         let tagService = TagService(artistStore: artistStore, repository: tagRepository)
 
-        var didReceiveError = false
         let artists = ModelFactory.generateArtists(inAmount: 1)
-        _ = tagService.getTopTags(for: artists)
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    XCTFail("Expected to receive an error")
-                case .failure:
-                    didReceiveError = true
-                }
-            } receiveValue: { _ in
-                XCTFail("Expected to receive an error")
-            }
-
-        XCTAssertTrue(didReceiveError)
+        do {
+            _ = try await tagService.getTopTags(for: artists).collect()
+            XCTFail("Expected to receive an error")
+        } catch {
+            // Success
+        }
     }
 
     func test_getAllTopTags_returnsTopTagsFromAllArtists() {

@@ -36,21 +36,20 @@ final class IgnoredTagServiceTests: XCTestCase {
         XCTAssertEqual(ignoredTags, expectedIgnoredTags)
     }
 
-    func test_createDefaultIgnoredTags_createsTagsAndSavesToPersistentStore() {
+    func test_createDefaultIgnoredTags_createsTagsAndSavesToPersistentStore() async throws {
         let ignoredTagNames = ["tag1", "tag2"]
 
-        _ = ignoredTagService.createDefaultIgnoredTags(withNames: ignoredTagNames)
+        _ = try await ignoredTagService.createDefaultIgnoredTags(withNames: ignoredTagNames)
 
         let expectedIgnoredTagNames = (ignoredTagStore.saveParameters)?.compactMap { $0.name }
         XCTAssertEqual(ignoredTagNames, expectedIgnoredTagNames)
         XCTAssertEqual(ignoredTagStore.saveCallCount, 1)
     }
 
-    func test_updateIgnoresTags_deletesOldIgnoredTags_andSavesNewOnes() {
+    func test_updateIgnoresTags_deletesOldIgnoredTags_andSavesNewOnes() async throws {
         let ignoredTags = ModelFactory.generateIgnoredTags(inAmount: 3)
 
-        _ = ignoredTagService.updateIgnoredTags(ignoredTags)
-            .sink(receiveCompletion: { _ in }, receiveValue: { })
+        _ = try await ignoredTagService.updateIgnoredTags(ignoredTags)
 
         XCTAssertEqual(ignoredTagStore.overwriteCallCount, 1)
         XCTAssertEqual(ignoredTagStore.overwriteParameters, ignoredTags)

@@ -17,11 +17,15 @@ final class MockTrackService: TrackServiceProtocol {
     var limit: Int = 0
     var didCallGetRecentTracks = false
     var customRecentTracksPages: [RecentTracksPage] = []
-    func getRecentTracks(for user: String, from: TimeInterval, limit: Int) -> AnyPublisher<RecentTracksPage, Error> {
+    func getRecentTracks(
+        for user: String,
+        from: TimeInterval,
+        limit: Int
+    ) -> AsyncThrowingStream<RecentTracksPage, any Error> {
         self.user = user
         self.from = from
         self.limit = limit
         didCallGetRecentTracks = true
-        return Publishers.Sequence(sequence: customRecentTracksPages).eraseToAnyPublisher()
+        return AsyncThrowingStream(elements: customRecentTracksPages)
     }
 }

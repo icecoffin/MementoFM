@@ -9,6 +9,7 @@
 import Foundation
 import RealmSwift
 import Combine
+import CombineSchedulers
 
 final class LibraryViewModel: ArtistListViewModel {
     typealias Dependencies = HasLibraryUpdater & HasArtistService & HasUserService
@@ -17,6 +18,7 @@ final class LibraryViewModel: ArtistListViewModel {
 
     private let dependencies: Dependencies
     private let applicationStateObserver: ApplicationStateObserving
+    private let mainScheduler: AnySchedulerOf<DispatchQueue>
 
     private let isLoadingSubject = PassthroughSubject<Bool, Never>()
     private let didUpdateSubject = PassthroughSubject<Result<Bool, Error>, Never>()
@@ -63,9 +65,14 @@ final class LibraryViewModel: ArtistListViewModel {
 
     // MARK: - Init
 
-    init(dependencies: Dependencies, applicationStateObserver: ApplicationStateObserving = ApplicationStateObserver()) {
+    init(
+        dependencies: Dependencies,
+        applicationStateObserver: ApplicationStateObserving = ApplicationStateObserver(),
+        mainScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.main.eraseToAnyScheduler()
+    ) {
         self.dependencies = dependencies
         self.applicationStateObserver = applicationStateObserver
+        self.mainScheduler = mainScheduler
 
         setup()
     }
@@ -74,7 +81,7 @@ final class LibraryViewModel: ArtistListViewModel {
 
     private func setup() {
         dependencies.libraryUpdater.isLoading
-            .receive(on: DispatchQueue.main)
+            .receive(on: mainScheduler)
             .sink(receiveValue: { [weak self] isLoading in
                 guard let self = self else { return }
 
@@ -86,7 +93,7 @@ final class LibraryViewModel: ArtistListViewModel {
             .store(in: &cancelBag)
 
         dependencies.libraryUpdater.status
-            .receive(on: DispatchQueue.main)
+            .receive(on: mainScheduler)
             .sink(receiveValue: { [weak self] status in
                 guard let self = self else { return }
 
@@ -95,14 +102,14 @@ final class LibraryViewModel: ArtistListViewModel {
             .store(in: &cancelBag)
 
         dependencies.libraryUpdater.error
-            .receive(on: DispatchQueue.main)
+            .receive(on: mainScheduler)
             .sink(receiveValue: { [weak self] error in
                 self?.didUpdateSubject.send(.failure(error))
             })
             .store(in: &cancelBag)
 
         applicationStateObserver.applicationDidBecomeActive
-            .receive(on: DispatchQueue.main)
+            .receive(on: mainScheduler)
             .sink { [weak self] _ in
                 self?.syncTask?.cancel()
                 self?.syncTask = Task {

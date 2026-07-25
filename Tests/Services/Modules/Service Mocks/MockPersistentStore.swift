@@ -25,23 +25,20 @@ final class MockPersistentStore: PersistentStore {
     }
 
     var saveParameters: (objects: [Any], update: Bool)?
-    func save<T: TransientEntity>(_ objects: [T], update: Bool) -> AnyPublisher<Void, Error>
-    where T.PersistentType.TransientType == T {
+    func save<T: TransientEntity>(
+        _ objects: [T],
+        update: Bool
+    ) async throws where T.PersistentType.TransientType == T {
         saveParameters = (objects: objects, update: update)
-        return Just(())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
     }
 
     var didCallDelete = false
     var deletedObjectsTypeNames: [String] = []
-    func deleteObjects<T: TransientEntity>(ofType type: T.Type) -> AnyPublisher<Void, Error>
-    where T.PersistentType.TransientType == T {
+    func deleteObjects<T: TransientEntity>(
+        ofType type: T.Type
+    ) async throws where T.PersistentType.TransientType == T {
         didCallDelete = true
         deletedObjectsTypeNames.append(String(describing: type))
-        return Just(())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
     }
 
     var customObjects: [Any] = []

@@ -9,6 +9,7 @@
 import XCTest
 @testable import MementoFM
 
+@MainActor
 final class CountriesViewModelTests: XCTestCase {
     private final class Dependencies: HasCountryService {
         let countryService: CountryServiceProtocol

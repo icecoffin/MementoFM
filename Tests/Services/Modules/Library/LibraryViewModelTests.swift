@@ -7,11 +7,12 @@
 //
 
 import XCTest
-@testable import MementoFM
-
 import RealmSwift
 import Combine
+import CombineSchedulers
+@testable import MementoFM
 
+@MainActor
 final class LibraryViewModelTests: XCTestCase {
     private final class Dependencies: LibraryViewModel.Dependencies {
         let libraryUpdater: LibraryUpdaterProtocol
@@ -44,6 +45,7 @@ final class LibraryViewModelTests: XCTestCase {
     private var collection: MockPersistentMappedCollection<Artist>!
     private var artistService: MockArtistService!
     private var userService: MockUserService!
+    private var scheduler: AnySchedulerOf<DispatchQueue>!
     private var dependencies: Dependencies!
     private var cancelBag: Set<AnyCancellable>!
 
@@ -67,6 +69,7 @@ final class LibraryViewModelTests: XCTestCase {
         artistService = MockArtistService()
         artistService.customMappedCollection = AnyPersistentMappedCollection(collection)
         userService = MockUserService()
+        scheduler = .immediate
         dependencies = Dependencies(libraryUpdater: libraryUpdater, artistService: artistService, userService: userService)
         cancelBag = .init()
     }
@@ -76,6 +79,7 @@ final class LibraryViewModelTests: XCTestCase {
         collection = nil
         artistService = nil
         userService = nil
+        scheduler = nil
         dependencies = nil
         cancelBag = nil
 
@@ -84,33 +88,33 @@ final class LibraryViewModelTests: XCTestCase {
 
     // MARK: - requestDataIfNeeded
 
-    func test_requestDataIfNeeded_requestsDataOnFirstUpdate() {
+    func test_requestDataIfNeeded_requestsDataOnFirstUpdate() async {
         let viewModel = LibraryViewModel(dependencies: dependencies)
 
         libraryUpdater.isFirstUpdate = true
 
-        viewModel.requestDataIfNeeded()
+        await viewModel.requestDataIfNeeded()
 
         XCTAssertTrue(libraryUpdater.didRequestData)
     }
 
-    func test_requestDataIfNeeded_requestsDataAfterMinTimeInterval() {
+    func test_requestDataIfNeeded_requestsDataAfterMinTimeInterval() async {
         let viewModel = LibraryViewModel(dependencies: dependencies)
 
         libraryUpdater.lastUpdateTimestamp = 100
 
-        viewModel.requestDataIfNeeded(currentTimestamp: 131, minTimeInterval: 30)
+        await viewModel.requestDataIfNeeded(currentTimestamp: 131, minTimeInterval: 30)
 
         XCTAssertTrue(libraryUpdater.didRequestData)
     }
 
-    func test_requestDataIfNeeded_doesNotRequestDataBeforeMinTimeInterval() {
+    func test_requestDataIfNeeded_doesNotRequestDataBeforeMinTimeInterval() async {
         let viewModel = LibraryViewModel(dependencies: dependencies)
 
         libraryUpdater.lastUpdateTimestamp = 100
         libraryUpdater.isFirstUpdate = false
 
-        viewModel.requestDataIfNeeded(currentTimestamp: 110, minTimeInterval: 30)
+        await viewModel.requestDataIfNeeded(currentTimestamp: 110, minTimeInterval: 30)
 
         XCTAssertFalse(libraryUpdater.didRequestData)
     }
@@ -184,13 +188,19 @@ final class LibraryViewModelTests: XCTestCase {
 
     // MARK: - libraryUpdater
 
-    func test_libraryUpdater_requestsDataOnApplicationDidBecomeActive() {
+    func test_libraryUpdater_requestsDataOnApplicationDidBecomeActive() async {
         let applicationStateObserver = MockApplicationStateObserver()
-        let viewModel = LibraryViewModel(dependencies: dependencies, applicationStateObserver: applicationStateObserver)
+        let viewModel = LibraryViewModel(
+            dependencies: dependencies,
+            applicationStateObserver: applicationStateObserver,
+            mainScheduler: scheduler
+        )
         // Suppress 'unused variable' warning
         _ = viewModel.delegate
 
         applicationStateObserver.applicationDidBecomeActiveSubject.send()
+
+        await Task.yield()
 
         XCTAssertTrue(libraryUpdater.didRequestData)
     }
@@ -198,7 +208,10 @@ final class LibraryViewModelTests: XCTestCase {
     // MARK: - isLoading
 
     func test_isLoading_isChangedOnLibraryUpdate() {
-        let viewModel = LibraryViewModel(dependencies: dependencies)
+        let viewModel = LibraryViewModel(
+            dependencies: dependencies,
+            mainScheduler: scheduler
+        )
         var loadingStates: [Bool] = []
         viewModel.isLoading
             .sink(receiveValue: { isLoading in
@@ -215,7 +228,10 @@ final class LibraryViewModelTests: XCTestCase {
     // MARK: - didUpdate
 
     func test_didUpdate_isEmittedWithErrorOnLibraryUpdateError() {
-        let viewModel = LibraryViewModel(dependencies: dependencies)
+        let viewModel = LibraryViewModel(
+            dependencies: dependencies,
+            mainScheduler: scheduler
+        )
         var didReceiveError = false
         viewModel.didUpdate
             .sink(receiveValue: { result in
@@ -233,7 +249,10 @@ final class LibraryViewModelTests: XCTestCase {
     // MARK: - didChangeStatus
 
     func test_status_isEmittedWithCorrectStatus_whenStatusChanges() {
-        let viewModel = LibraryViewModel(dependencies: dependencies)
+        let viewModel = LibraryViewModel(
+            dependencies: dependencies,
+            mainScheduler: scheduler
+        )
         var statuses: [String] = []
 
         viewModel.status

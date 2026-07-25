@@ -12,21 +12,15 @@ final class MockIgnoredTagStore: IgnoredTagStore {
 
     private(set) var saveCallCount = 0
     private(set) var saveParameters: [IgnoredTag]?
-    func save(ignoredTags: [IgnoredTag]) -> AnyPublisher<Void, any Error> {
+    func save(ignoredTags: [IgnoredTag]) async throws {
         saveCallCount += 1
         saveParameters = ignoredTags
-        return Just(())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
     }
 
     private(set) var overwriteCallCount = 0
     private(set) var overwriteParameters: [IgnoredTag]?
-    func overwrite(ignoredTags: [IgnoredTag]) -> AnyPublisher<Void, any Error> {
+    func overwrite(ignoredTags: [IgnoredTag]) async throws {
         overwriteCallCount += 1
         overwriteParameters = ignoredTags
-        return Just(())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
     }
 }

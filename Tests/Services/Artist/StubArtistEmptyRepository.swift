@@ -11,11 +11,11 @@ import Foundation
 import Combine
 
 final class StubArtistEmptyRepository: ArtistRepository {
-    func getLibraryPage(withIndex index: Int, for user: String, limit: Int) -> AnyPublisher<LibraryPageResponse, Error> {
+    func getLibraryPage(withIndex index: Int, for user: String, limit: Int) async throws -> LibraryPageResponse {
         fatalError()
     }
 
-    func getSimilarArtists(for artist: Artist, limit: Int) -> AnyPublisher<SimilarArtistListResponse, Error> {
+    func getSimilarArtists(for artist: Artist, limit: Int) async throws -> SimilarArtistListResponse {
         fatalError()
     }
 }

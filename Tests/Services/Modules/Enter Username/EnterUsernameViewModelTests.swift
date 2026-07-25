@@ -7,10 +7,10 @@
 //
 
 import XCTest
-
 import Combine
 @testable import MementoFM
 
+@MainActor
 final class EnterUsernameViewModelTests: XCTestCase {
     private final class Dependencies: EnterUsernameViewModel.Dependencies {
         let userService: UserServiceProtocol
@@ -77,7 +77,7 @@ final class EnterUsernameViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.currentUsernameText, viewModel.currentUsernamePrefix + "username")
     }
 
-    func test_submitUsername_startsAndFinishesLoading() {
+    func test_submitUsername_startsAndFinishesLoading() async {
         let userService = MockUserService()
         let dependencies = Dependencies(userService: userService)
         let viewModel = EnterUsernameViewModel(dependencies: dependencies)
@@ -90,12 +90,12 @@ final class EnterUsernameViewModelTests: XCTestCase {
         .store(in: &cancelBag)
 
         viewModel.updateUsername("username")
-        viewModel.submitUsername()
+        await viewModel.submitUsername()
 
         XCTAssertEqual(loadingStates, [true, false])
     }
 
-    func test_submitUsername_notifiesDelegateOnSuccess() {
+    func test_submitUsername_notifiesDelegateOnSuccess() async {
         final class TestEnterUsernameViewModelDelegate: EnterUsernameViewModelDelegate {
             var didCallEnterUsernameViewModelDidFinish = false
             func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel) {
@@ -111,34 +111,34 @@ final class EnterUsernameViewModelTests: XCTestCase {
         viewModel.delegate = delegate
 
         viewModel.updateUsername("username")
-        viewModel.submitUsername()
+        await viewModel.submitUsername()
 
         XCTAssertTrue(delegate.didCallEnterUsernameViewModelDidFinish)
     }
 
-    func test_submitUsername_checksThatUsernameExists() {
+    func test_submitUsername_checksThatUsernameExists() async {
         let userService = MockUserService()
         let dependencies = Dependencies(userService: userService)
         let viewModel = EnterUsernameViewModel(dependencies: dependencies)
 
         viewModel.updateUsername("username")
-        viewModel.submitUsername()
+        await viewModel.submitUsername()
 
         XCTAssertEqual(userService.usernameBeingChecked, "username")
     }
 
-    func test_submitUsername_clearsUserDataOnSuccess() {
+    func test_submitUsername_clearsUserDataOnSuccess() async {
         let userService = MockUserService()
         let dependencies = Dependencies(userService: userService)
         let viewModel = EnterUsernameViewModel(dependencies: dependencies)
 
         viewModel.updateUsername("username")
-        viewModel.submitUsername()
+        await viewModel.submitUsername()
 
         XCTAssertTrue(userService.didCallClearUserData)
     }
 
-    func test_submitUsername_emitsError() {
+    func test_submitUsername_emitsError() async {
         final class TestEnterUsernameViewModelDelegate: EnterUsernameViewModelDelegate {
             func enterUsernameViewModelDidFinish(_ viewModel: EnterUsernameViewModel) {
                 XCTFail("Delegate should not be notified")
@@ -162,7 +162,7 @@ final class EnterUsernameViewModelTests: XCTestCase {
         viewModel.delegate = delegate
 
         viewModel.updateUsername("username")
-        viewModel.submitUsername()
+        await viewModel.submitUsername()
 
         XCTAssertTrue(didReceiveError)
     }

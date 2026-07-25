@@ -40,6 +40,7 @@ final class MockArtistSimilarsSectionViewModel: ArtistSimilarsSectionViewModelPr
     }
 }
 
+@MainActor
 // swiftlint:disable:next type_name
 final class MockArtistSimilarsSectionTabViewModelFactory: ArtistSimilarsSectionTabViewModelFactoryProtocol {
     var firstTabViewModel = MockArtistSimilarsSectionViewModel()

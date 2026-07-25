@@ -19,23 +19,17 @@ final class MockUserService: UserServiceProtocol {
     var didFinishOnboarding: Bool = false
 
     var didCallClearUserData = false
-    func clearUserData() -> AnyPublisher<Void, Error> {
+    func clearUserData() async throws {
         didCallClearUserData = true
-        return Just(())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
     }
 
     var usernameBeingChecked = ""
-    func checkUserExists(withUsername username: String) -> AnyPublisher<EmptyResponse, Error> {
+    func checkUserExists(withUsername username: String) async throws -> EmptyResponse {
         usernameBeingChecked = username
         if shouldFinishWithSuccess {
-            return Just(EmptyResponse())
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+            return EmptyResponse()
         } else {
-            return Fail(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
-                .eraseToAnyPublisher()
+            throw NSError(domain: "MementoFM", code: 6, userInfo: nil)
         }
     }
 }

@@ -30,8 +30,8 @@ final class PersistentArtistStoreTests: XCTestCase {
         XCTAssertEqual(artist, fetchedArtist)
     }
 
-    func test_deleteAll_deletesFromPersistentStore() {
-        _ = artistStore.deleteAll()
+    func test_deleteAll_deletesFromPersistentStore() async throws {
+        _ = try await artistStore.deleteAll()
 
         XCTAssertTrue(persistentStore.didCallDelete)
         XCTAssertEqual(persistentStore.deletedObjectsTypeNames, ["Artist"])
@@ -48,10 +48,10 @@ final class PersistentArtistStoreTests: XCTestCase {
         XCTAssertEqual(fetchedArtists, artists)
     }
 
-    func test_saveArtists_writesToPersistentStore() {
+    func test_saveArtists_writesToPersistentStore() async throws {
         let artists = ModelFactory.generateArtists(inAmount: 5)
 
-        _ = artistStore.save(artists: artists)
+        _ = try await artistStore.save(artists: artists)
 
         XCTAssertEqual(persistentStore.saveParameters?.objects as? [Artist], artists)
         XCTAssertEqual(persistentStore.saveParameters?.update, true)

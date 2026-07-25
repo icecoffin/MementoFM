@@ -14,10 +14,10 @@ final class MockTagService: TagServiceProtocol {
     var artists: [Artist] = []
     var didRequestTopTags = false
     var customTopTagsPages: [TopTagsPage] = []
-    func getTopTags(for artists: [Artist]) -> AnyPublisher<TopTagsPage, Error> {
+    func getTopTags(for artists: [Artist]) -> AsyncThrowingStream<TopTagsPage, any Error> {
         self.artists = artists
         didRequestTopTags = true
-        return Publishers.Sequence(sequence: customTopTagsPages).eraseToAnyPublisher()
+        return AsyncThrowingStream(elements: customTopTagsPages)
     }
 
     var customTopTags: [Tag] = []

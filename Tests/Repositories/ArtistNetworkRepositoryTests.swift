@@ -29,12 +29,12 @@ final class ArtistNetworkRepositoryTests: XCTestCase {
         super.tearDown()
     }
 
-    func test_getLibraryPage_callsNetworkServiceWithCorrectParameters() {
+    func test_getLibraryPage_callsNetworkServiceWithCorrectParameters() async throws {
         let libraryPage = LibraryPage(index: 1, totalPages: 1, artists: [])
         let response = LibraryPageResponse(libraryPage: libraryPage)
         networkService.customResponse = response
 
-        _ = artistRepository.getLibraryPage(withIndex: 1, for: "User", limit: 10)
+        _ = try await artistRepository.getLibraryPage(withIndex: 1, for: "User", limit: 10)
 
         let expectedParameters: [String: AnyHashable] = ["method": "library.getartists",
                                                          "api_key": Keys.LastFM.apiKey,
@@ -49,13 +49,13 @@ final class ArtistNetworkRepositoryTests: XCTestCase {
         XCTAssertNil(performRequestParameters?.headers)
     }
 
-    func test_getSimilarArtists_callsNetworkServiceWithCorrectParameters() {
+    func test_getSimilarArtists_callsNetworkServiceWithCorrectParameters() async throws {
         let similarArtistList = SimilarArtistList(similarArtists: [])
         let response = SimilarArtistListResponse(similarArtistList: similarArtistList)
         networkService.customResponse = response
 
         let artist = ModelFactory.generateArtist()
-        _ = artistRepository.getSimilarArtists(for: artist, limit: 10)
+        _ = try await artistRepository.getSimilarArtists(for: artist, limit: 10)
 
         let expectedParameters: [String: AnyHashable] = ["method": "artist.getsimilar",
                                                          "api_key": Keys.LastFM.apiKey,

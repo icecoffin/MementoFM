@@ -19,23 +19,19 @@ final class MockArtistSimilarsRepository: ArtistRepository {
         self.similarArtistProvider = similarArtistProvider
     }
 
-    func getLibraryPage(withIndex index: Int, for user: String, limit: Int) -> AnyPublisher<LibraryPageResponse, Error> {
+    func getLibraryPage(withIndex index: Int, for user: String, limit: Int) async throws -> LibraryPageResponse {
         fatalError()
     }
 
     var getSimilarArtistsParameters: (artist: Artist, limit: Int)?
-    func getSimilarArtists(for artist: Artist, limit: Int) -> AnyPublisher<SimilarArtistListResponse, Error> {
+    func getSimilarArtists(for artist: Artist, limit: Int) async throws -> SimilarArtistListResponse {
         getSimilarArtistsParameters = (artist, limit)
         if shouldFailWithError {
-            return Fail(error: NSError(domain: "MementoFM", code: 1, userInfo: nil))
-                .eraseToAnyPublisher()
+            throw NSError(domain: "MementoFM", code: 1, userInfo: nil)
         } else {
             let similarArtists = similarArtistProvider()
             let similarArtistList = SimilarArtistList(similarArtists: similarArtists)
-            let response = SimilarArtistListResponse(similarArtistList: similarArtistList)
-            return Just(response)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+            return SimilarArtistListResponse(similarArtistList: similarArtistList)
         }
     }
 }

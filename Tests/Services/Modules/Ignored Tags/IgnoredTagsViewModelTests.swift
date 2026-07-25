@@ -7,10 +7,10 @@
 //
 
 import XCTest
-
 import Combine
 @testable import MementoFM
 
+@MainActor
 final class IgnoredTagsViewModelTests: XCTestCase {
     private final class Dependencies: IgnoredTagsViewModel.Dependencies {
         let ignoredTagService: IgnoredTagServiceProtocol
@@ -51,24 +51,26 @@ final class IgnoredTagsViewModelTests: XCTestCase {
         super.tearDown()
     }
 
-    func test_init_doesNotCreateDefaultIgnoredTags_whenShouldAddDefaultTagsIsFalse() {
+    func test_viewDidLoad_doesNotCreateDefaultIgnoredTags_whenShouldAddDefaultTagsIsFalse() async {
         let defaultIgnoredTagNames = ["tag1", "tag2"]
         ignoredTagService.defaultIgnoredTagNames = defaultIgnoredTagNames
 
         let ignoredTags = ModelFactory.generateIgnoredTags(inAmount: 10)
         ignoredTagService.customIgnoredTags = ignoredTags
 
-        _ = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
+        let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
+        await viewModel.viewDidLoad()
 
         XCTAssertTrue(ignoredTagService.didRequestIgnoredTags)
         XCTAssertTrue(ignoredTagService.createdDefaultIgnoredTagNames.isEmpty)
     }
 
-    func test_init_createsDefaultIgnoredTags_whenShouldAddDefaultTagsIsTrue() {
+    func test_viewDidLoad_createsDefaultIgnoredTags_whenShouldAddDefaultTagsIsTrue() async {
         let defaultIgnoredTagNames = ["tag1", "tag2"]
         ignoredTagService.defaultIgnoredTagNames = defaultIgnoredTagNames
 
-        _ = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: true)
+        let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: true)
+        await viewModel.viewDidLoad()
 
         XCTAssertTrue(ignoredTagService.didRequestIgnoredTags)
         XCTAssertEqual(ignoredTagService.createdDefaultIgnoredTagNames, defaultIgnoredTagNames)
@@ -153,7 +155,7 @@ final class IgnoredTagsViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.numberOfIgnoredTags, ignoredTags.count - 1)
     }
 
-    func test_saveChanges_startsAndFinishesSavingChanges() {
+    func test_saveChanges_startsAndFinishesSavingChanges() async {
         let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
 
         var savingChangesStates: [Bool] = []
@@ -164,31 +166,31 @@ final class IgnoredTagsViewModelTests: XCTestCase {
             })
             .store(in: &cancelBag)
 
-        viewModel.saveChanges()
+        await viewModel.saveChanges()
 
         XCTAssertEqual(savingChangesStates, [true, false])
     }
 
-    func test_saveChanges_notifiesDelegateOnSuccess() {
+    func test_saveChanges_notifiesDelegateOnSuccess() async {
         let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
 
         let delegate = TestIgnoredTagsViewModelDelegate()
         viewModel.delegate = delegate
 
-        viewModel.saveChanges()
+        await viewModel.saveChanges()
 
         XCTAssertTrue(delegate.didCallDidSaveChanges)
     }
 
-    func test_saveChanges_callsArtistService() {
+    func test_saveChanges_callsArtistService() async {
         let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
 
-        viewModel.saveChanges()
+        await viewModel.saveChanges()
 
         XCTAssertTrue(artistService.didCallCalculateTopTagsForAllArtists)
     }
 
-    func test_saveChanges_updatesIgnoredTags() {
+    func test_saveChanges_updatesIgnoredTags() async {
         ignoredTagService.customIgnoredTags = [IgnoredTag(uuid: "uuid1", name: "tag1"),
                                                IgnoredTag(uuid: "uuid2", name: "tag1"),
                                                IgnoredTag(uuid: "uuid3", name: "tag1"),
@@ -199,7 +201,7 @@ final class IgnoredTagsViewModelTests: XCTestCase {
 
         let viewModel = IgnoredTagsViewModel(dependencies: dependencies, shouldAddDefaultTags: false)
 
-        viewModel.saveChanges()
+        await viewModel.saveChanges()
 
         let expectedUpdatedIgnoredTags = [IgnoredTag(uuid: "uuid1", name: "tag1"),
                                           IgnoredTag(uuid: "uuid4", name: "tag2"),

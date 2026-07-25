@@ -9,6 +9,7 @@
 import XCTest
 @testable import MementoFM
 
+@MainActor
 final class ArtistTopTagsSectionViewModelTests: XCTestCase {
     // swiftlint:disable:next type_name
     private final class TestArtistTopTagsSectionViewModelDelegate: ArtistTopTagsSectionViewModelDelegate {

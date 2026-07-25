@@ -7,10 +7,11 @@
 //
 
 import XCTest
-
 import Combine
+import CombineSchedulers
 @testable import MementoFM
 
+@MainActor
 final class SyncViewModelTests: XCTestCase {
     private final class Dependencies: HasLibraryUpdater {
         let libraryUpdater: LibraryUpdaterProtocol
@@ -28,6 +29,7 @@ final class SyncViewModelTests: XCTestCase {
     }
 
     private var libraryUpdater: MockLibraryUpdater!
+    private var scheduler: AnySchedulerOf<DispatchQueue>!
     private var dependencies: Dependencies!
     private var cancelBag: Set<AnyCancellable>!
 
@@ -35,29 +37,31 @@ final class SyncViewModelTests: XCTestCase {
         super.setUp()
 
         libraryUpdater = MockLibraryUpdater()
+        scheduler = .immediate
         dependencies = Dependencies(libraryUpdater: libraryUpdater)
         cancelBag = .init()
     }
 
     override func tearDown() {
         libraryUpdater = nil
+        scheduler = nil
         dependencies = nil
         cancelBag = nil
 
         super.tearDown()
     }
 
-    func test_syncLibrary_cancelsPendingRequestsAndRequestsDataOnLibraryUpdater() {
-        let viewModel = SyncViewModel(dependencies: dependencies)
+    func test_syncLibrary_cancelsPendingRequestsAndRequestsDataOnLibraryUpdater() async {
+        let viewModel = SyncViewModel(dependencies: dependencies, mainScheduler: scheduler)
 
-        viewModel.syncLibrary()
+        await viewModel.syncLibrary()
 
-        XCTAssertTrue(libraryUpdater.didCancelPendingRequests)
+        XCTAssertTrue(libraryUpdater.didResetStatus)
         XCTAssertTrue(libraryUpdater.didRequestData)
     }
 
     func test_status_isUpdatedCorrectly_whenLibraryUpdaterChangesStatus() {
-        let viewModel = SyncViewModel(dependencies: dependencies)
+        let viewModel = SyncViewModel(dependencies: dependencies, mainScheduler: scheduler)
 
         var statuses: [String] = []
         viewModel.status
@@ -89,7 +93,7 @@ final class SyncViewModelTests: XCTestCase {
     }
 
     func test_didFinishLoading_isCalledOnDelegate_whenLibraryUpdaterFinishesLoading() {
-        let viewModel = SyncViewModel(dependencies: dependencies)
+        let viewModel = SyncViewModel(dependencies: dependencies, mainScheduler: scheduler)
         let delegate = TestSyncViewModelDelegate()
         viewModel.delegate = delegate
 
@@ -98,7 +102,7 @@ final class SyncViewModelTests: XCTestCase {
     }
 
     func test_error_isEmittedWhenLibraryUpdaterFinishesWithError() {
-        let viewModel = SyncViewModel(dependencies: dependencies)
+        let viewModel = SyncViewModel(dependencies: dependencies, mainScheduler: scheduler)
         var expectedError: Error?
         viewModel.error
             .sink(receiveValue: { error in

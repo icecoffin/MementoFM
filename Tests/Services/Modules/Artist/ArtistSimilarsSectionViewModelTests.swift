@@ -7,10 +7,10 @@
 //
 
 import XCTest
+import Combine
 @testable import MementoFM
 
-import Combine
-
+@MainActor
 final class ArtistSimilarsSectionViewModelTests: XCTestCase {
     private final class Dependencies: ArtistSimilarsSectionViewModel.Dependencies {
         let artistService: ArtistServiceProtocol
@@ -116,7 +116,7 @@ final class ArtistSimilarsSectionViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.emptyDataSetText, "Test")
     }
 
-    func test_getSimilarArtists_callsMethodOnCurrentTabViewModel() {
+    func test_getSimilarArtists_callsMethodOnCurrentTabViewModel() async {
         let artist = sampleArtist
         let viewModel = ArtistSimilarsSectionViewModel(
             artist: artist,
@@ -124,7 +124,7 @@ final class ArtistSimilarsSectionViewModelTests: XCTestCase {
             tabViewModelFactory: tabViewModelFactory
         )
 
-        viewModel.getSimilarArtists()
+        await viewModel.getSimilarArtists()
 
         XCTAssertTrue(tabViewModelFactory.firstTabViewModel.didCallGetSimilarArtists)
     }
@@ -159,7 +159,7 @@ final class ArtistSimilarsSectionViewModelTests: XCTestCase {
         XCTAssertEqual(tabViewModelFactory.firstTabViewModel.selectedArtistIndexPath, indexPath)
     }
 
-    func test_selectTabAtIndex_changesCurrentTabViewModel() {
+    func test_selectTabAtIndex_changesCurrentTabViewModel() async {
         let artist = sampleArtist
         let viewModel = ArtistSimilarsSectionViewModel(
             artist: artist,
@@ -167,7 +167,7 @@ final class ArtistSimilarsSectionViewModelTests: XCTestCase {
             tabViewModelFactory: tabViewModelFactory
         )
 
-        viewModel.selectTab(at: 1)
+        await viewModel.selectTab(at: 1)
 
         XCTAssertIdentical(viewModel.currentTabViewModel, tabViewModelFactory.secondTabViewModel)
     }

@@ -59,7 +59,7 @@ final class LibraryUpdaterTests: XCTestCase {
         XCTAssertEqual(libraryUpdater.lastUpdateTimestamp, 100)
     }
 
-    func test_requestData_startsAndFinishesLoading() {
+    func test_requestData_startsAndFinishesLoading() async {
         let libraryUpdater = makeLibraryUpdater()
 
         var loadingStates: [Bool] = []
@@ -70,20 +70,20 @@ final class LibraryUpdaterTests: XCTestCase {
             })
             .store(in: &cancelBag)
 
-        libraryUpdater.requestData()
+        await libraryUpdater.requestData()
 
         XCTAssertEqual(loadingStates, [true, false])
     }
 
-    func test_requestData_setsIsFirstUpdateToFalse() {
+    func test_requestData_setsIsFirstUpdateToFalse() async {
         let libraryUpdater = makeLibraryUpdater()
 
-        libraryUpdater.requestData()
+        await libraryUpdater.requestData()
 
         XCTAssertFalse(libraryUpdater.isFirstUpdate)
     }
 
-    func test_requestData_emitsError() {
+    func test_requestData_emitsError() async {
         let libraryUpdater = makeLibraryUpdater()
 
         var didReceiveError = false
@@ -95,44 +95,44 @@ final class LibraryUpdaterTests: XCTestCase {
 
         artistService.getLibraryShouldReturnError = true
 
-        libraryUpdater.requestData()
+        await libraryUpdater.requestData()
 
         XCTAssertTrue(didReceiveError)
     }
 
-    func test_requestData_updatesLastUpdateTimestamp() {
+    func test_requestData_updatesLastUpdateTimestamp() async {
         let libraryUpdater = makeLibraryUpdater()
 
         userService.didReceiveInitialCollection = true
 
-        libraryUpdater.requestData()
+        await libraryUpdater.requestData()
 
         XCTAssertTrue(userService.lastUpdateTimestamp > 0)
     }
 
-    func test_requestData_getsRecentTracksAndProcessesThem() {
+    func test_requestData_getsRecentTracksAndProcessesThem() async {
         let libraryUpdater = makeLibraryUpdater()
 
         userService.didReceiveInitialCollection = true
 
-        libraryUpdater.requestData()
+        await libraryUpdater.requestData()
 
         XCTAssertTrue(trackService.didCallGetRecentTracks)
         XCTAssertTrue(recentTracksProcessor.didCallProcess)
     }
 
-    func test_requestsData_requestsInitialCollectionAndSavesIt() {
+    func test_requestsData_requestsInitialCollectionAndSavesIt() async {
         let libraryUpdater = makeLibraryUpdater()
 
         userService.didReceiveInitialCollection = false
-        libraryUpdater.requestData()
+        await libraryUpdater.requestData()
 
         XCTAssertTrue(artistService.didRequestLibrary)
         XCTAssertTrue(userService.didReceiveInitialCollection)
         XCTAssertTrue(artistService.didCallSaveArtists)
     }
 
-    func test_requestData_requestsArtistsTagsDuringLibraryUpdate() {
+    func test_requestData_requestsArtistsTagsDuringLibraryUpdate() async {
         artistService.customArtistsNeedingTagsUpdate = ModelFactory.generateArtists(inAmount: 10)
         ignoredTagService.customIgnoredTags = ModelFactory.generateIgnoredTags(inAmount: 10)
 
@@ -145,7 +145,7 @@ final class LibraryUpdaterTests: XCTestCase {
         let topTagsList = TopTagsList(tags: ModelFactory.generateTags(inAmount: 10, for: artist.name))
         tagService.customTopTagsPages = [TopTagsPage(artist: artist, topTagsList: topTagsList)]
 
-        libraryUpdater.requestData()
+        await libraryUpdater.requestData()
 
         XCTAssertTrue(artistService.didRequestArtistsNeedingTagsUpdate)
         XCTAssertTrue(tagService.didRequestTopTags)
@@ -153,7 +153,7 @@ final class LibraryUpdaterTests: XCTestCase {
         XCTAssertTrue(artistService.didCallCalculateTopTags)
     }
 
-    func test_cancelPendingRequests_changesStatusToArtistsFirstPage() {
+    func test_resetStatus_changesStatusToArtistsFirstPage() {
         let libraryUpdater = makeLibraryUpdater()
         var libraryUpdateStatus: LibraryUpdateStatus!
 
@@ -163,7 +163,7 @@ final class LibraryUpdaterTests: XCTestCase {
             })
             .store(in: &cancelBag)
 
-        libraryUpdater.cancelPendingRequests()
+        libraryUpdater.resetStatus()
 
         guard let libraryUpdateStatus, case .artistsFirstPage = libraryUpdateStatus else {
             XCTFail("libraryUpdateStatus is nil or wrong enum case")

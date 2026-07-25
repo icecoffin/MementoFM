@@ -35,9 +35,9 @@ final class MockLibraryUpdater: LibraryUpdaterProtocol {
         didRequestData = true
     }
 
-    var didCancelPendingRequests = false
-    func cancelPendingRequests() {
-        didCancelPendingRequests = true
+    var didResetStatus = false
+    func resetStatus() {
+        didResetStatus = true
     }
 
     func simulateStartLoading() {

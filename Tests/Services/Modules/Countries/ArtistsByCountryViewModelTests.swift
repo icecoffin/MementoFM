@@ -7,10 +7,10 @@
 //
 
 import XCTest
-
 import Combine
 @testable import MementoFM
 
+@MainActor
 final class ArtistsByCountryViewModelTests: XCTestCase {
     private final class Dependencies: HasArtistService {
         let artistService: ArtistServiceProtocol

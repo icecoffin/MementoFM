@@ -29,12 +29,12 @@ final class TagNetworkRepositoryTests: XCTestCase {
         super.tearDown()
     }
 
-    func test_getTopTags_callsNetworkServiceWithCorrectParameters() {
+    func test_getTopTags_callsNetworkServiceWithCorrectParameters() async throws {
         let topTagsList = TopTagsList(tags: [])
         let response = TopTagsResponse(topTagsList: topTagsList)
         networkService.customResponse = response
 
-        _ = tagRepository.getTopTags(for: "Artist")
+        _ = try await tagRepository.getTopTags(for: "Artist")
 
         let expectedParameters: [String: AnyHashable] = ["method": "artist.gettoptags",
                                                          "api_key": Keys.LastFM.apiKey,

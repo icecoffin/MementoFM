@@ -24,25 +24,25 @@ final class RecentTracksProcessorTests: XCTestCase {
         super.tearDown()
     }
 
-    func test_processTracks_savesToPersistentStore() {
+    func test_processTracks_savesToPersistentStore() async throws {
         let artist1 = ModelFactory.generateArtist(index: 1)
         let artist2 = ModelFactory.generateArtist(index: 2)
         let tracks = [Track(artist: artist1), Track(artist: artist1), Track(artist: artist2)]
 
         let recentTracksProcessor = RecentTracksProcessor(artistStore: artistStore)
-        _ = recentTracksProcessor.process(tracks: tracks)
+        _ = try await recentTracksProcessor.process(tracks: tracks)
 
         XCTAssertEqual(artistStore.saveCallCount, 1)
         XCTAssertEqual(artistStore.saveParameters?.count, 2)
     }
 
-    func test_processTracks_updatesPlaycount() {
+    func test_processTracks_updatesPlaycount() async throws {
         let artist1 = ModelFactory.generateArtist(index: 1)
         let artist2 = ModelFactory.generateArtist(index: 2)
         let tracks = [Track(artist: artist1), Track(artist: artist1), Track(artist: artist2)]
 
         let recentTracksProcessor = RecentTracksProcessor(artistStore: artistStore)
-        _ = recentTracksProcessor.process(tracks: tracks)
+        _ = try await recentTracksProcessor.process(tracks: tracks)
 
         let artists = artistStore.saveParameters?.sorted { $0.name < $1.name }
         let savedArtist1 = artists?[0]
@@ -52,13 +52,13 @@ final class RecentTracksProcessorTests: XCTestCase {
         XCTAssertEqual(savedArtist2?.playcount, 1)
     }
 
-    func test_processTracks_requestsArtistsForKeysFromPersistentStore() {
+    func test_processTracks_requestsArtistsForKeysFromPersistentStore() async throws {
         let artist1 = ModelFactory.generateArtist(index: 1)
         let artist2 = ModelFactory.generateArtist(index: 2)
         let tracks = [Track(artist: artist1), Track(artist: artist1), Track(artist: artist2)]
 
         let recentTracksProcessor = RecentTracksProcessor(artistStore: artistStore)
-        _ = recentTracksProcessor.process(tracks: tracks)
+        _ = try await recentTracksProcessor.process(tracks: tracks)
 
         XCTAssertEqual(artistStore.artistForIDParameters.sorted(), ["test_id_1", "test_id_2"])
     }

@@ -12,11 +12,8 @@ import Combine
 
 final class MockUserRepository: UserRepository {
     var checkedUsername: String?
-    func checkUserExists(withUsername username: String) -> AnyPublisher<EmptyResponse, Error> {
+    func checkUserExists(withUsername username: String) async throws -> EmptyResponse {
         checkedUsername = username
-
-        return Just(EmptyResponse())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
+        return EmptyResponse()
     }
 }

@@ -10,6 +10,7 @@ import XCTest
 import SnapshotTesting
 @testable import MementoFM
 
+@MainActor
 final class ArtistTopTagsSectionHeaderViewTests: XCTestCase {
     func test_looksCorrect() {
         let view: ArtistTopTagsSectionHeaderView = makeAndSizeToFit(width: 375) { view in

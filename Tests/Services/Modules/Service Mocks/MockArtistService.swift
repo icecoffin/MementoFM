@@ -16,27 +16,22 @@ final class MockArtistService: ArtistServiceProtocol {
     var getLibraryShouldReturnError = false
     var didRequestLibrary = false
     var customLibraryPages: [LibraryPage] = []
-    func getLibrary(for user: String, limit: Int) -> AnyPublisher<LibraryPage, Error> {
+    func getLibrary(for user: String, limit: Int) -> AsyncThrowingStream<LibraryPage, any Error> {
         self.user = user
         self.limit = limit
         didRequestLibrary = true
         if getLibraryShouldReturnError {
-            return Fail(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
-                .eraseToAnyPublisher()
+            return AsyncThrowingStream(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
         } else {
-            return Publishers.Sequence(sequence: customLibraryPages)
-                .eraseToAnyPublisher()
+            return AsyncThrowingStream(elements: customLibraryPages)
         }
     }
 
     var savingArtists = [Artist]()
     var didCallSaveArtists = false
-    func saveArtists(_ artists: [Artist]) -> AnyPublisher<Void, Error> {
+    func saveArtists(_ artists: [Artist]) async throws {
         savingArtists = artists
         didCallSaveArtists = true
-        return Just(())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
     }
 
     var customArtistsNeedingTagsUpdate: [Artist] = []
@@ -57,47 +52,38 @@ final class MockArtistService: ArtistServiceProtocol {
     var updatingTags: [Tag] = []
     var updateArtistShouldReturnError: Bool = false
     var didCallUpdateArtist: Bool = false
-    func updateArtist(_ artist: Artist, with tags: [Tag]) -> AnyPublisher<Artist, Error> {
+    func updateArtist(_ artist: Artist, with tags: [Tag]) async throws -> Artist {
         updatingArtist = artist
         updatingTags = tags
         didCallUpdateArtist = true
         if updateArtistShouldReturnError {
-            return Fail(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
-                .eraseToAnyPublisher()
+            throw NSError(domain: "MementoFM", code: 6, userInfo: nil)
         } else {
-            return Just(artist)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+            return artist
         }
     }
 
     var didCallCalculateTopTagsForAllArtists: Bool = false
     var calculateTopTagsForAllShouldReturnError: Bool = false
-    func calculateTopTagsForAllArtists(using calculator: ArtistTopTagsCalculating) -> AnyPublisher<Void, Error> {
+    func calculateTopTagsForAllArtists(using calculator: any ArtistTopTagsCalculating) async throws {
         didCallCalculateTopTagsForAllArtists = true
         if calculateTopTagsShouldReturnError {
-            return Fail(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
-                .eraseToAnyPublisher()
+            throw NSError(domain: "MementoFM", code: 6, userInfo: nil)
         } else {
-            return Just(())
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+            return
         }
     }
 
     var customCalculateTopTagsArtist: Artist?
     var calculateTopTagsShouldReturnError: Bool = false
     var didCallCalculateTopTags: Bool = false
-    func calculateTopTags(for artist: Artist, using calculator: ArtistTopTagsCalculating) -> AnyPublisher<Void, Error> {
+    func calculateTopTags(for artist: Artist, using calculator: any ArtistTopTagsCalculating) async throws {
         customCalculateTopTagsArtist = artist
         didCallCalculateTopTags = true
         if calculateTopTagsShouldReturnError {
-            return Fail(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
-                .eraseToAnyPublisher()
+            throw NSError(domain: "MementoFM", code: 6, userInfo: nil)
         } else {
-            return Just(())
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+            return
         }
     }
 
@@ -115,16 +101,13 @@ final class MockArtistService: ArtistServiceProtocol {
     var expectedSimilarArtistsLimit: Int = 0
     var getSimilarArtistsShouldReturnError: Bool = false
     var customSimilarArtists: [Artist] = []
-    func getSimilarArtists(for artist: Artist, limit: Int) -> AnyPublisher<[Artist], Error> {
+    func getSimilarArtists(for artist: Artist, limit: Int) async throws -> [Artist] {
         expectedSimilarArtistsArtist = artist
         expectedSimilarArtistsLimit = limit
         if getSimilarArtistsShouldReturnError {
-            return Fail(error: NSError(domain: "MementoFM", code: 6, userInfo: nil))
-                .eraseToAnyPublisher()
+            throw NSError(domain: "MementoFM", code: 6, userInfo: nil)
         } else {
-            return Just(customSimilarArtists)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+            return customSimilarArtists
         }
     }
 }

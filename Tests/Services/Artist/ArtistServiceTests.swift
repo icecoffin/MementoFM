@@ -29,7 +29,7 @@ final class ArtistServiceTests: XCTestCase {
         super.tearDown()
     }
 
-    func test_getLibrary_emitsLibraryPages() {
+    func test_getLibrary_emitsLibraryPages() async throws {
         let totalPages = 5
         let artistsPerPage = 10
 
@@ -38,18 +38,7 @@ final class ArtistServiceTests: XCTestCase {
         })
         let artistService = ArtistService(artistStore: artistStore, repository: repository)
 
-        var libraryPages: [LibraryPage] = []
-        _ = artistService.getLibrary(for: "user", limit: artistsPerPage)
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure:
-                    XCTFail("Unexpected failure")
-                }
-            }, receiveValue: { libraryPage in
-                libraryPages.append(libraryPage)
-            })
+        let libraryPages = try await artistService.getLibrary(for: "user", limit: artistsPerPage).collect()
 
         XCTAssertEqual(libraryPages.count, totalPages)
 
@@ -58,7 +47,7 @@ final class ArtistServiceTests: XCTestCase {
         XCTAssertEqual(receivedArtists, expectedArtists)
     }
 
-    func test_getLibrary_emitsErrorOnFailure() {
+    func test_getLibrary_emitsErrorOnFailure() async {
         let totalPages = 5
         let artistsPerPage = 10
 
@@ -69,27 +58,20 @@ final class ArtistServiceTests: XCTestCase {
         )
         let artistService = ArtistService(artistStore: artistStore, repository: repository)
 
-        var didCatchError = false
-        _ = artistService.getLibrary(for: "user", limit: artistsPerPage)
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    XCTFail("Expected to receive an error")
-                case .failure:
-                    didCatchError = true
-                }
-            }, receiveValue: { _ in
-                XCTFail("Expected to receive an error")
-            })
+        do {
+            _ = try await artistService.getLibrary(for: "user", limit: artistsPerPage).collect()
+            XCTFail("Expected to receive an error")
 
-        XCTAssertTrue(didCatchError)
+        } catch {
+            // Success
+        }
     }
 
-    func test_saveArtists_callsArtistStore() {
+    func test_saveArtists_callsArtistStore() async throws {
         let artistService = ArtistService(artistStore: artistStore, repository: StubArtistEmptyRepository())
 
         let artists = ModelFactory.generateArtists(inAmount: 5)
-        _ = artistService.saveArtists(artists)
+        _ = try await artistService.saveArtists(artists)
 
         XCTAssertEqual(artistStore?.saveParameters, artists)
     }
@@ -116,13 +98,13 @@ final class ArtistServiceTests: XCTestCase {
         XCTAssertEqual(predicate?.predicateFormat, "ANY topTags.name IN {\"Tag1\", \"Tag2\", \"Tag3\"} AND name != \"\(artist.name)\"")
     }
 
-    func test_updateArtistWithTags_updatesArtist_andCallsArtistStoreWithCorrectParameters() {
+    func test_updateArtistWithTags_updatesArtist_andCallsArtistStoreWithCorrectParameters() async throws {
         let artistService = ArtistService(artistStore: artistStore, repository: StubArtistEmptyRepository())
 
         let artist = ModelFactory.generateArtist(index: 1, needsTagsUpdate: true)
         let tags = ModelFactory.generateTags(inAmount: 5, for: artist.name)
 
-        _ = artistService.updateArtist(artist, with: tags)
+        _ = try await artistService.updateArtist(artist, with: tags)
 
         let saveParameters = artistStore.saveParameters
         let updatedArtist = saveParameters?.first
@@ -130,7 +112,7 @@ final class ArtistServiceTests: XCTestCase {
         XCTAssertEqual(updatedArtist?.needsTagsUpdate, false)
     }
 
-    func test_calculateTopTagsForAllArtists_callsCalculatorForEachArtist_andSavesArtists() {
+    func test_calculateTopTagsForAllArtists_callsCalculatorForEachArtist_andSavesArtists() async throws {
         let artistService = ArtistService(
             artistStore: artistStore,
             repository: StubArtistEmptyRepository(),
@@ -142,20 +124,19 @@ final class ArtistServiceTests: XCTestCase {
         artistStore.customArtists = artists
 
         let calculator = MockArtistTopTagsCalculator()
-        _ = artistService.calculateTopTagsForAllArtists(using: calculator)
-            .sink(receiveCompletion: { _ in }, receiveValue: { })
+        _ = try await artistService.calculateTopTagsForAllArtists(using: calculator)
 
         XCTAssertEqual(calculator.numberOfCalculateTopTagsCalled, artists.count)
         XCTAssertEqual(artistStore.saveParameters, artists)
     }
 
-    func test_calculateTopTagsForArtist_callsCalculatorOnce_andSavesArtist() {
+    func test_calculateTopTagsForArtist_callsCalculatorOnce_andSavesArtist() async throws {
         let artistService = ArtistService(artistStore: artistStore, repository: StubArtistEmptyRepository())
 
         let artist = ModelFactory.generateArtist(index: 1)
         let calculator = MockArtistTopTagsCalculator()
 
-        _ = artistService.calculateTopTags(for: artist, using: calculator)
+        _ = try await artistService.calculateTopTags(for: artist, using: calculator)
 
         XCTAssertEqual(calculator.numberOfCalculateTopTagsCalled, 1)
         XCTAssertEqual(artistStore.saveParameters?.first, artist)
@@ -177,7 +158,7 @@ final class ArtistServiceTests: XCTestCase {
         XCTAssertEqual(parameters?.sortDescriptors, sortDescriptors)
     }
 
-    func test_getSimilarArtists_finishesWithSuccess() {
+    func test_getSimilarArtists_finishesWithSuccess() async throws {
         let similarArtistCount = 3
 
         let repository = MockArtistSimilarsRepository(shouldFailWithError: false, similarArtistProvider: {
@@ -186,15 +167,7 @@ final class ArtistServiceTests: XCTestCase {
         let artistService = ArtistService(artistStore: artistStore, repository: repository)
 
         let artist = ModelFactory.generateArtist()
-        _ = artistService.getSimilarArtists(for: artist)
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure:
-                    XCTFail("Expected failure")
-                }
-            }, receiveValue: { _ in })
+        _ = try await artistService.getSimilarArtists(for: artist)
 
         XCTAssertEqual(repository.getSimilarArtistsParameters?.artist, artist)
         XCTAssertEqual(repository.getSimilarArtistsParameters?.limit, 20)
@@ -203,24 +176,17 @@ final class ArtistServiceTests: XCTestCase {
         XCTAssertEqual(artistStore.fetchAllParameters?.predicateFormat, predicateFormat)
     }
 
-    func test_getSimilarArtists_failsWithError() {
+    func test_getSimilarArtists_failsWithError() async throws {
         let repository = MockArtistSimilarsRepository(shouldFailWithError: true, similarArtistProvider: { [] })
         let artistService = ArtistService(artistStore: artistStore, repository: repository)
 
         let artist = ModelFactory.generateArtist()
 
-        var didReceiveError = false
-        _ = artistService.getSimilarArtists(for: artist)
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure:
-                    didReceiveError = true
-                }
-            }, receiveValue: { _ in })
-
-        XCTAssertTrue(didReceiveError)
-        XCTAssertNil(artistStore.fetchAllParameters)
+        do {
+            _ = try await artistService.getSimilarArtists(for: artist)
+            XCTFail("Expected to throw an error")
+        } catch {
+            XCTAssertNil(artistStore.fetchAllParameters)
+        }
     }
 }

@@ -29,13 +29,17 @@ final class TrackRepositoryTests: XCTestCase {
         super.tearDown()
     }
 
-    func test_getRecentTracks_callsNetworkServiceWithCorrectParameters() {
+    func test_getRecentTracks_callsNetworkServiceWithCorrectParameters() async throws {
         let recentTracksPage = RecentTracksPage(index: 1, totalPages: 1, tracks: [])
         let response = RecentTracksPageResponse(recentTracksPage: recentTracksPage)
         networkService.customResponse = response
 
-        _ = trackRepository
-            .getRecentTracksPage(withIndex: 1, for: "User", from: TimeInterval(1509982044), limit: 10)
+        _ = try await trackRepository.getRecentTracksPage(
+            withIndex: 1,
+            for: "User",
+            from: TimeInterval(1509982044),
+            limit: 10
+        )
 
         let expectedParameters: [String: AnyHashable] = ["method": "user.getrecenttracks",
                                                          "api_key": Keys.LastFM.apiKey,

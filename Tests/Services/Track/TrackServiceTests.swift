@@ -12,7 +12,7 @@ import XCTest
 import Combine
 
 final class TrackServiceTests: XCTestCase {
-    func test_getRecentTracks_finishesWithSuccess() {
+    func test_getRecentTracks_finishesWithSuccess() async throws {
         let totalPages = 5
         let limit = 20
 
@@ -21,23 +21,16 @@ final class TrackServiceTests: XCTestCase {
         trackRepository.trackProvider = { ModelFactory.generateTracks(inAmount: limit) }
         let trackService = TrackService(repository: trackRepository)
 
-        var recentTracksPages: [RecentTracksPage] = []
-        _ = trackService.getRecentTracks(for: "User", from: 0, limit: limit)
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure:
-                    XCTFail("Unexpected failure")
-                }
-            }, receiveValue: { recentTracksPage in
-                recentTracksPages.append(recentTracksPage)
-            })
+        let recentTracksPages = try await trackService.getRecentTracks(
+            for: "User",
+            from: 0,
+            limit: limit
+        ).collect()
 
         XCTAssertEqual(recentTracksPages.count, totalPages)
     }
 
-    func test_getRecentTracks_failsWithError() {
+    func test_getRecentTracks_failsWithError() async throws {
         let totalPages = 5
         let limit = 20
 
@@ -46,19 +39,11 @@ final class TrackServiceTests: XCTestCase {
         trackRepository.shouldFailWithError = true
         let trackService = TrackService(repository: trackRepository)
 
-        var didReceiveError = false
-        _ = trackService.getRecentTracks(for: "User", from: 0, limit: limit)
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    XCTFail("Expected to receive an error")
-                case .failure:
-                    didReceiveError = true
-                }
-            }, receiveValue: { _ in
-                XCTFail("Expected to receive an error")
-            })
-
-        XCTAssertTrue(didReceiveError)
+        do {
+            _ = try await trackService.getRecentTracks(for: "User", from: 0, limit: limit).collect()
+            XCTFail("Expected to receive an error")
+        } catch {
+            // Success
+        }
     }
 }

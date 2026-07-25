@@ -4,11 +4,7 @@ import Combine
 
 final class MockRecentTracksProcessor: RecentTracksProcessing {
     var didCallProcess = false
-
-    func process(tracks: [Track]) -> AnyPublisher<Void, Error> {
+    func process(tracks: [Track]) async throws {
         didCallProcess = true
-        return Just(())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
     }
 }

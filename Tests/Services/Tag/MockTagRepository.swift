@@ -14,16 +14,13 @@ final class MockTagRepository: TagRepository {
     var shouldFailWithError = false
     var tagProvider: ((String) -> [Tag])!
 
-    func getTopTags(for artist: String) -> AnyPublisher<TopTagsResponse, Error> {
+    func getTopTags(for artist: String) async throws -> TopTagsResponse {
         if shouldFailWithError {
-            return Fail(error: NSError(domain: "MementoFM", code: 1, userInfo: nil)).eraseToAnyPublisher()
+            throw NSError(domain: "MementoFM", code: 1, userInfo: nil)
         } else {
             let tags = tagProvider(artist)
             let topTagsList = TopTagsList(tags: tags)
-            let response = TopTagsResponse(topTagsList: topTagsList)
-            return Just(response)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+            return TopTagsResponse(topTagsList: topTagsList)
         }
     }
 }

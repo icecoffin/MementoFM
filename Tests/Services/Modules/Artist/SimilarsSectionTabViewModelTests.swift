@@ -7,10 +7,10 @@
 //
 
 import XCTest
+import Combine
 @testable import MementoFM
 
-import Combine
-
+@MainActor
 final class SimilarsSectionTabViewModelTests: XCTestCase {
     private final class Dependencies: ArtistSimilarsSectionViewModel.Dependencies {
         let artistService: ArtistServiceProtocol
@@ -78,7 +78,7 @@ final class SimilarsSectionTabViewModelTests: XCTestCase {
         super.tearDown()
     }
 
-    func test_getSimilarArtists_updatesNumberOfSimilarArtists() {
+    func test_getSimilarArtists_updatesNumberOfSimilarArtists() async {
         let viewModel = SimilarsSectionTabViewModel(
             artist: sampleArtist,
             canSelectSimilarArtists: true,
@@ -93,12 +93,12 @@ final class SimilarsSectionTabViewModelTests: XCTestCase {
             })
             .store(in: &cancelBag)
 
-        viewModel.getSimilarArtists()
+        await viewModel.getSimilarArtists()
 
         XCTAssertEqual(expectedNumberOfSimilarArtists, 4)
     }
 
-    func test_getSimilarArtists_updatesHasSimilarArtists() {
+    func test_getSimilarArtists_updatesHasSimilarArtists() async {
         let viewModel = SimilarsSectionTabViewModel(
             artist: sampleArtist,
             canSelectSimilarArtists: true,
@@ -112,12 +112,12 @@ final class SimilarsSectionTabViewModelTests: XCTestCase {
             })
         .store(in: &cancelBag)
 
-        viewModel.getSimilarArtists()
+        await viewModel.getSimilarArtists()
 
         XCTAssertTrue(expectedHasSimilarArtists)
     }
 
-    func test_cellViewModelAtIndexPath_returnsCorrectValue() {
+    func test_cellViewModelAtIndexPath_returnsCorrectValue() async {
         let viewModel = SimilarsSectionTabViewModel(
             artist: sampleArtist,
             canSelectSimilarArtists: true,
@@ -134,12 +134,12 @@ final class SimilarsSectionTabViewModelTests: XCTestCase {
             })
             .store(in: &cancelBag)
 
-        viewModel.getSimilarArtists()
+        await viewModel.getSimilarArtists()
 
         XCTAssertEqual(expectedArtistNames, ["Artist1", "Artist4", "Artist3", "Artist2"])
     }
 
-    func test_selectingArtistAtIndexPath_returnsCorrectValue() {
+    func test_selectingArtistAtIndexPath_returnsCorrectValue() async {
         let viewModel = SimilarsSectionTabViewModel(
             artist: sampleArtist,
             canSelectSimilarArtists: true,
@@ -156,12 +156,12 @@ final class SimilarsSectionTabViewModelTests: XCTestCase {
             })
             .store(in: &cancelBag)
 
-        viewModel.getSimilarArtists()
+        await viewModel.getSimilarArtists()
 
         XCTAssertEqual(delegate.selectedArtist?.name, "Artist4")
     }
 
-    func test_getSimilarArtists_emitsError() {
+    func test_getSimilarArtists_emitsError() async {
         requestStrategy.customSimilarArtists = []
         requestStrategy.getSimilarArtistsShouldReturnError = true
         let viewModel = SimilarsSectionTabViewModel(
@@ -182,7 +182,7 @@ final class SimilarsSectionTabViewModelTests: XCTestCase {
             })
             .store(in: &cancelBag)
 
-        viewModel.getSimilarArtists()
+        await viewModel.getSimilarArtists()
 
         XCTAssertTrue(didReceiveError)
     }

@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import CombineSchedulers
 
 // MARK: - SyncViewModelDelegate
 
@@ -25,6 +26,7 @@ final class SyncViewModel {
     // MARK: - Private properties
 
     private let dependencies: Dependencies
+    private let mainScheduler: AnySchedulerOf<DispatchQueue>
 
     private let statusSubject = PassthroughSubject<String, Never>()
     private let errorSubject = PassthroughSubject<Error, Never>()
@@ -44,8 +46,12 @@ final class SyncViewModel {
 
     // MARK: - Init
 
-    init(dependencies: Dependencies) {
+    init(
+        dependencies: Dependencies,
+        mainScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.main.eraseToAnyScheduler()
+    ) {
         self.dependencies = dependencies
+        self.mainScheduler = mainScheduler
         setup()
     }
 
@@ -53,7 +59,7 @@ final class SyncViewModel {
 
     private func setup() {
         dependencies.libraryUpdater.isLoading
-            .receive(on: DispatchQueue.main)
+            .receive(on: mainScheduler)
             .sink(receiveValue: { [weak self] isLoading in
                 guard let self = self else { return }
 
@@ -64,7 +70,7 @@ final class SyncViewModel {
             .store(in: &cancelBag)
 
         dependencies.libraryUpdater.status
-            .receive(on: DispatchQueue.main)
+            .receive(on: mainScheduler)
             .sink(receiveValue: { [weak self] status in
                 guard let self = self else {
                     return
@@ -74,7 +80,7 @@ final class SyncViewModel {
             .store(in: &cancelBag)
 
         dependencies.libraryUpdater.error
-            .receive(on: DispatchQueue.main)
+            .receive(on: mainScheduler)
             .sink(receiveValue: { [weak self] error in
                 self?.errorSubject.send(error)
             })

@@ -21,18 +21,12 @@ final class MockIgnoredTagService: IgnoredTagServiceProtocol {
     }
 
     var createdDefaultIgnoredTagNames: [String] = []
-    func createDefaultIgnoredTags(withNames names: [String]) -> AnyPublisher<Void, Error> {
+    func createDefaultIgnoredTags(withNames names: [String]) async throws {
         createdDefaultIgnoredTagNames = names
-        return Just(())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
     }
 
     var updatedIgnoredTags: [IgnoredTag] = []
-    func updateIgnoredTags(_ ignoredTags: [IgnoredTag]) -> AnyPublisher<Void, Error> {
+    func updateIgnoredTags(_ ignoredTags: [IgnoredTag]) async throws {
         updatedIgnoredTags = ignoredTags
-        return Just(())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
     }
 }

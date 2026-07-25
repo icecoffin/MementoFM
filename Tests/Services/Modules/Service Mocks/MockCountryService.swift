@@ -12,11 +12,8 @@ import Combine
 
 final class MockCountryService: CountryServiceProtocol {
     var didCallUpdateCountries = false
-    func updateCountries() -> AnyPublisher<Void, Error> {
+    func updateCountries() async throws {
         didCallUpdateCountries = true
-        return Just(())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
     }
 
     var customCountriesWithCount: [String: Int] = [:]

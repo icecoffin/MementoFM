@@ -81,21 +81,20 @@ final class UserServiceTests: XCTestCase {
         XCTAssertTrue(userDataStorage.didSetDidFinishOnboarding)
     }
 
-    func test_clearUserData_deletesArtists() {
-        _ = userService.clearUserData()
-            .sink(receiveCompletion: { _ in }, receiveValue: { _ in })
+    func test_clearUserData_deletesArtists() async throws {
+        _ = try await userService.clearUserData()
 
         XCTAssertEqual(artistStore.deleteAllCallCount, 1)
     }
 
-    func test_clearUserData_resetsUserStorage() {
-        _ = userService.clearUserData()
+    func test_clearUserData_resetsUserStorage() async throws {
+        _ = try await userService.clearUserData()
 
         XCTAssertTrue(userDataStorage.didCallReset)
     }
 
-    func test_checkingUserExists_callsUserRepository() {
-        _ = userService.checkUserExists(withUsername: "test")
+    func test_checkingUserExists_callsUserRepository() async throws {
+        _ = try await userService.checkUserExists(withUsername: "test")
 
         XCTAssertEqual(userRepository.checkedUsername, "test")
     }

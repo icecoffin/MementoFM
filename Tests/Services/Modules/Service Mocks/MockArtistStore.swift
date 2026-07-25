@@ -21,26 +21,23 @@ final class MockArtistStore: ArtistStore {
     }
 
     private(set) var deleteAllCallCount = 0
-    func deleteAll() -> AnyPublisher<Void, any Error> {
+    func deleteAll() async throws {
         deleteAllCallCount += 1
-        return Just(())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
     }
 
     private(set) var saveCallCount = 0
     private(set) var saveParameters: [Artist]?
-    func save(artists: [Artist]) -> AnyPublisher<Void, any Error> {
+    func save(artists: [Artist]) async throws {
         saveCallCount += 1
         saveParameters = artists
-        return Just(())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
     }
 
     var customMappedCollection: AnyPersistentMappedCollection<Artist>?
     private(set) var mappedCollectionParameters: (predicate: NSPredicate?, sortDescriptors: [NSSortDescriptor])?
-    func mappedCollection(filteredUsing predicate: NSPredicate?, sortedBy sortDescriptors: [NSSortDescriptor]) -> AnyPersistentMappedCollection<Artist> {
+    func mappedCollection(
+        filteredUsing predicate: NSPredicate?,
+        sortedBy sortDescriptors: [NSSortDescriptor]
+    ) -> AnyPersistentMappedCollection<Artist> {
         mappedCollectionParameters = (predicate, sortDescriptors)
         return customMappedCollection ?? AnyPersistentMappedCollection(MockPersistentMappedCollection<Artist>(values: []))
     }

@@ -29,10 +29,10 @@ final class UserNetworkRepositoryTests: XCTestCase {
         super.tearDown()
     }
 
-    func test_checkUserExists_callsNetworkServiceWithCorrectParameters() {
+    func test_checkUserExists_callsNetworkServiceWithCorrectParameters() async throws {
         networkService.customResponse = EmptyResponse()
 
-        _ = userRepository.checkUserExists(withUsername: "User")
+        _ = try await userRepository.checkUserExists(withUsername: "User")
 
         let expectedParameters: [String: AnyHashable] = ["method": "user.getInfo",
                                                          "api_key": Keys.LastFM.apiKey,

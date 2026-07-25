@@ -26,7 +26,7 @@ final class MockNetworkService: NetworkService {
         parameters: Parameters?,
         encoding: ParameterEncoding,
         headers: HTTPHeaders?
-    ) -> AnyPublisher<T, Error> {
+    ) async throws -> T {
         performRequestParameters = PerformRequestParameters(
             method: method,
             parameters: parameters,
@@ -38,8 +38,6 @@ final class MockNetworkService: NetworkService {
             fatalError("Response type should be the same as performRequest response type")
         }
 
-        return Just(response)
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
+        return response
     }
 }
