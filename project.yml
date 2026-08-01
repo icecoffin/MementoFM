@@ -10,6 +10,7 @@ settings:
 fileGroups:
   - .periphery.yml
   - .swiftlint.yml
+  - mise.toml
   - project.yml
   - README.md
   - Sources
