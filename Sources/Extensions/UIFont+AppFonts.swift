@@ -9,11 +9,6 @@
 import UIKit
 
 extension UIFont {
-//    static let tabBarItem = UIFont.systemFont(ofSize: 10)
-//
-//    static let navigationBarTitle = UIFont.systemFont(ofSize: 16, weight: .semibold)
-//    static let navigationBarLargeTitle = UIFont.systemFont(ofSize: 36, weight: .semibold)
-
     static let header = UIFont.systemFont(ofSize: 18, weight: .semibold)
     static let title = UIFont.systemFont(ofSize: 16, weight: .medium)
     static let subtitle = UIFont.systemFont(ofSize: 12)

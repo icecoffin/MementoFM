@@ -24,7 +24,6 @@ final class CountryService: CountryServiceProtocol {
 
     private let artistStore: ArtistStore
     private let countryProvider: CountryProviding
-//    private let mainScheduler: AnySchedulerOf<DispatchQueue>
     private let backgroundScheduler: AnySchedulerOf<DispatchQueue>
 
     // MARK: - Init
@@ -32,12 +31,10 @@ final class CountryService: CountryServiceProtocol {
     init(
         artistStore: ArtistStore,
         countryProvider: CountryProviding = CountryProvider(),
-//        mainScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.main.eraseToAnyScheduler(),
         backgroundScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.global().eraseToAnyScheduler()
     ) {
         self.artistStore = artistStore
         self.countryProvider = countryProvider
-//        self.mainScheduler = mainScheduler
         self.backgroundScheduler = backgroundScheduler
     }
 

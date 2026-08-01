@@ -21,7 +21,6 @@ protocol ArtistTopTagsSectionViewModelDelegate: AnyObject {
 final class ArtistTopTagsSectionViewModel {
     // MARK: - Private properties
 
-//    private let artist: Artist
     private let cellViewModels: [TagCellViewModel]
 
     weak var delegate: ArtistTopTagsSectionViewModelDelegate?
@@ -47,7 +46,6 @@ final class ArtistTopTagsSectionViewModel {
     // MARK: - Init
 
     required init(artist: Artist) {
-//        self.artist = artist
         cellViewModels = artist.topTags.map({ TagCellViewModel(tag: $0, showCount: false) })
     }
 

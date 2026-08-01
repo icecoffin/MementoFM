@@ -14,7 +14,6 @@ extension UIImage {
     static let tabBarCountries = UIImage(systemName: "map")
     static let tabBarSettings = UIImage(systemName: "gear")
 
-//    static let arrowLeft = UIImage(systemName: "arrow.left")
     static let arrowRight = UIImage(systemName: "arrow.right")
 
     static let plus = UIImage(systemName: "plus")

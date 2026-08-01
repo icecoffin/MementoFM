@@ -45,7 +45,6 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
     private let trackService: TrackServiceProtocol
     private let recentTracksProcessor: RecentTracksProcessing
     private let countryService: CountryServiceProtocol
-//    private let networkService: NetworkService
 
     private var username: String {
         return userService.username

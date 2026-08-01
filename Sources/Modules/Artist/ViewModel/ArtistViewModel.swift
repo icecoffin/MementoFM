@@ -23,7 +23,6 @@ protocol ArtistViewModelDelegate: AnyObject {
 protocol ArtistViewModelProtocol: AnyObject {
     var didUpdate: AnyPublisher<Result<Void, Error>, Never> { get }
 
-//    var title: String { get }
     var sectionDataSources: [ArtistSectionDataSource] { get }
 }
 
@@ -36,7 +35,6 @@ final class ArtistViewModel: ArtistViewModelProtocol {
     // MARK: - Private properties
 
     private let artist: Artist
-//    private let dependencies: Dependencies
 
     private var didUpdateSubject = PassthroughSubject<Result<Void, Error>, Never>()
     private var cancelBag = Set<AnyCancellable>()
@@ -59,7 +57,6 @@ final class ArtistViewModel: ArtistViewModelProtocol {
 
     init(artist: Artist, dependencies: Dependencies) {
         self.artist = artist
-//        self.dependencies = dependencies
 
         let topTagsSectionViewModel = ArtistTopTagsSectionViewModel(artist: artist)
         let similarsSectionViewModel = ArtistSimilarsSectionViewModel(artist: artist, dependencies: dependencies)

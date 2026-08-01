@@ -29,7 +29,7 @@ final class EnterUsernameViewModel {
 
     private let isLoadingSubject = PassthroughSubject<Bool, Never>()
     private let errorSubject = PassthroughSubject<Error, Never>()
-//    private var cancelBag = Set<AnyCancellable>()
+    private var cancelBag = Set<AnyCancellable>()
 
     // MARK: - Public properties
 

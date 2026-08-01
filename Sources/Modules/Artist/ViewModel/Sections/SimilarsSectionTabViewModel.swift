@@ -23,18 +23,15 @@ protocol SimilarsSectionTabViewModelDelegate: AnyObject {
 
 @MainActor
 final class SimilarsSectionTabViewModel: ArtistSimilarsSectionViewModelProtocol {
-//    typealias Dependencies = HasArtistService
 
     // MARK: - Private properties
 
     private let artist: Artist
     private let requestStrategy: SimilarArtistsRequestStrategy
-//    private let dependencies: Dependencies
 
     private var cellViewModels: [SimilarArtistCellViewModel] = []
 
     private var didUpdateSubject = PassthroughSubject<Result<Void, Error>, Never>()
-//    private var cancelBag = Set<AnyCancellable>()
 
     // MARK: - Public properties
 

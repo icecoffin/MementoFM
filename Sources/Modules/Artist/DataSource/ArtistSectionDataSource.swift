@@ -11,8 +11,6 @@ import Combine
 
 @MainActor
 protocol ArtistSectionDataSource: AnyObject {
-//    var didUpdate: AnyPublisher<Result<Void, Error>, Never> { get }
-
     var numberOfRows: Int { get }
 
     func registerReusableViews(in tableView: UITableView)
