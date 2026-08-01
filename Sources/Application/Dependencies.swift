@@ -76,8 +76,7 @@ struct AppDependency: HasArtistService, HasUserService, HasTagService,
             ignoredTagService: ignoredTagService,
             trackService: trackService,
             recentTracksProcessor: recentTracksProcessor,
-            countryService: countryService,
-            networkService: networkService
+            countryService: countryService
         )
 
         return AppDependency(

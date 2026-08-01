@@ -31,7 +31,7 @@ final class TagsViewModel {
     private let mainScheduler: AnySchedulerOf<DispatchQueue>
 
     private var didUpdateDataSubject = PassthroughSubject<Bool, Never>()
-    private var cancelBag = Set<AnyCancellable>()
+//    private var cancelBag = Set<AnyCancellable>()
 
     // MARK: - Public properties
 

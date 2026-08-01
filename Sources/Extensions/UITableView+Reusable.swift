@@ -21,7 +21,7 @@ extension UITableView {
         ofType: T.Type,
         withIdentifier identifier: String = T.reuseIdentifier
     ) -> T {
-        guard let cell = dequeueReusableCell(withIdentifier: T.reuseIdentifier) as? T else {
+        guard let cell = dequeueReusableCell(withIdentifier: identifier) as? T else {
             fatalError("Couldn't dequeue \(T.self); is it registered in the table view?")
         }
         return cell
@@ -32,7 +32,7 @@ extension UITableView {
         withIdentifier identifier: String = T.reuseIdentifier,
         for indexPath: IndexPath
     ) -> T {
-        guard let cell = dequeueReusableCell(withIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
+        guard let cell = dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? T else {
             fatalError("Couldn't dequeue \(T.self); is it registered in the table view?")
         }
         return cell

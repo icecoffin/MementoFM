@@ -39,9 +39,4 @@ extension PersistentStore {
         where T.PersistentType.TransientType == T {
             try await save(objects, update: true)
     }
-
-    func save<T: TransientEntity>(_ object: T, update: Bool = true) async throws
-        where T.PersistentType.TransientType == T {
-            try await save([object], update: update)
-    }
 }

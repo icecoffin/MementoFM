@@ -25,8 +25,4 @@ extension TopTagsResponse {
             self.topTagsList = TopTagsList(tags: [])
         }
     }
-
-    static var empty: TopTagsResponse {
-        TopTagsResponse(topTagsList: .empty)
-    }
 }

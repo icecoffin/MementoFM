@@ -116,7 +116,6 @@ final class ArtistServiceTests: XCTestCase {
         let artistService = ArtistService(
             artistStore: artistStore,
             repository: StubArtistEmptyRepository(),
-            mainScheduler: scheduler,
             backgroundScheduler: scheduler
         )
 

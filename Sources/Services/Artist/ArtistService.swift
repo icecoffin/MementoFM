@@ -54,7 +54,7 @@ final class ArtistService: ArtistServiceProtocol {
 
     private let artistStore: ArtistStore
     private let repository: ArtistRepository
-    private let mainScheduler: AnySchedulerOf<DispatchQueue>
+//    private let mainScheduler: AnySchedulerOf<DispatchQueue>
     private let backgroundScheduler: AnySchedulerOf<DispatchQueue>
     private let maxConcurrentRequests = 5
 
@@ -63,12 +63,12 @@ final class ArtistService: ArtistServiceProtocol {
     init(
         artistStore: ArtistStore,
         repository: ArtistRepository,
-        mainScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.main.eraseToAnyScheduler(),
+//        mainScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.main.eraseToAnyScheduler(),
         backgroundScheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue.global().eraseToAnyScheduler()
     ) {
         self.artistStore = artistStore
         self.repository = repository
-        self.mainScheduler = mainScheduler
+//        self.mainScheduler = mainScheduler
         self.backgroundScheduler = backgroundScheduler
     }
 

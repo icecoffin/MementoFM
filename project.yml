@@ -8,6 +8,7 @@ settings:
   ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
 
 fileGroups:
+  - .periphery.yml
   - .swiftlint.yml
   - project.yml
   - README.md
@@ -15,6 +16,16 @@ fileGroups:
   - Tests
   - Resources
   - Supporting Files
+
+schemes:
+  MementoFMTests:
+    build:
+      targets:
+        MementoFM: test
+        MementoFMTests: test
+    test:
+      targets:
+        - MementoFMTests
 
 targets:
   MementoFM:
@@ -25,6 +36,9 @@ targets:
         excludes:
           - "Application/Keys.example.swift"
       - Resources
+    scheme:
+        testTargets:
+          - MementoFMTests
     dependencies:
       - package: Alamofire
       - package: CombineSchedulers
@@ -45,7 +59,6 @@ targets:
                         UISceneConfigurationName: "Default Configuration"
                     }
                 ]
-
     preBuildScripts:
       - name: Run SwiftLint
         script: |
@@ -73,6 +86,12 @@ targets:
       - package: Realm
         product: RealmSwift
       - package: SnapshotTesting
+
+aggregateTargets:
+  Periphery:
+    buildScripts:
+      - script: |
+          /opt/homebrew/bin/periphery scan --format xcode
 
 packages:
   Alamofire:

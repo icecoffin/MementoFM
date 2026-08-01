@@ -30,16 +30,14 @@ final class ArtistSimilarsSectionTabViewModelFactory: ArtistSimilarsSectionTabVi
         let localTabViewModel = SimilarsSectionTabViewModel(
             artist: artist,
             canSelectSimilarArtists: true,
-            requestStrategy: localRequestStrategy,
-            dependencies: dependencies
+            requestStrategy: localRequestStrategy
         )
 
         let remoteRequestStrategy = SimilarArtistsRemoteRequestStrategy(dependencies: dependencies)
         let lastFMTabViewModel = SimilarsSectionTabViewModel(
             artist: artist,
             canSelectSimilarArtists: false,
-            requestStrategy: remoteRequestStrategy,
-            dependencies: dependencies
+            requestStrategy: remoteRequestStrategy
         )
         localTabViewModel.delegate = delegate
         return [localTabViewModel, lastFMTabViewModel]

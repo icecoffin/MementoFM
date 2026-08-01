@@ -45,7 +45,7 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
     private let trackService: TrackServiceProtocol
     private let recentTracksProcessor: RecentTracksProcessing
     private let countryService: CountryServiceProtocol
-    private let networkService: NetworkService
+//    private let networkService: NetworkService
 
     private var username: String {
         return userService.username
@@ -84,8 +84,7 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
         ignoredTagService: IgnoredTagServiceProtocol,
         trackService: TrackServiceProtocol,
         recentTracksProcessor: RecentTracksProcessing,
-        countryService: CountryServiceProtocol,
-        networkService: NetworkService
+        countryService: CountryServiceProtocol
     ) {
         self.userService = userService
         self.artistService = artistService
@@ -94,7 +93,6 @@ final class LibraryUpdater: LibraryUpdaterProtocol {
         self.trackService = trackService
         self.recentTracksProcessor = recentTracksProcessor
         self.countryService = countryService
-        self.networkService = networkService
     }
 
     // MARK: - Private methods

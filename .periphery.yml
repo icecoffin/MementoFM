@@ -1,0 +1,4 @@
+project: MementoFM.xcodeproj
+retain_public: true
+schemes:
+- MementoFMTests

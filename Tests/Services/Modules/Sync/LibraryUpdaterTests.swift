@@ -179,8 +179,7 @@ final class LibraryUpdaterTests: XCTestCase {
             ignoredTagService: ignoredTagService,
             trackService: trackService,
             recentTracksProcessor: recentTracksProcessor,
-            countryService: countryService,
-            networkService: networkService
+            countryService: countryService
         )
     }
 }

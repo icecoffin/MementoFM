@@ -230,8 +230,7 @@ final class ArtistSimilarsSectionViewModelTests: XCTestCase {
         let tabViewModel = SimilarsSectionTabViewModel(
             artist: artist,
             canSelectSimilarArtists: true,
-            requestStrategy: requestStrategy,
-            dependencies: dependencies
+            requestStrategy: requestStrategy
         )
 
         viewModel.similarsSectionTabViewModel(tabViewModel, didSelectArtist: artist)

@@ -82,8 +82,7 @@ final class SimilarsSectionTabViewModelTests: XCTestCase {
         let viewModel = SimilarsSectionTabViewModel(
             artist: sampleArtist,
             canSelectSimilarArtists: true,
-            requestStrategy: requestStrategy,
-            dependencies: dependencies
+            requestStrategy: requestStrategy
         )
         var expectedNumberOfSimilarArtists = 0
 
@@ -102,8 +101,7 @@ final class SimilarsSectionTabViewModelTests: XCTestCase {
         let viewModel = SimilarsSectionTabViewModel(
             artist: sampleArtist,
             canSelectSimilarArtists: true,
-            requestStrategy: requestStrategy,
-            dependencies: dependencies
+            requestStrategy: requestStrategy
         )
         var expectedHasSimilarArtists = false
         viewModel.didUpdate
@@ -121,8 +119,7 @@ final class SimilarsSectionTabViewModelTests: XCTestCase {
         let viewModel = SimilarsSectionTabViewModel(
             artist: sampleArtist,
             canSelectSimilarArtists: true,
-            requestStrategy: requestStrategy,
-            dependencies: dependencies
+            requestStrategy: requestStrategy
         )
         var expectedArtistNames: [String] = []
         viewModel.didUpdate
@@ -143,8 +140,7 @@ final class SimilarsSectionTabViewModelTests: XCTestCase {
         let viewModel = SimilarsSectionTabViewModel(
             artist: sampleArtist,
             canSelectSimilarArtists: true,
-            requestStrategy: requestStrategy,
-            dependencies: dependencies
+            requestStrategy: requestStrategy
         )
         let delegate = TestSimilarsSectionTabViewModelDelegate()
         viewModel.delegate = delegate
@@ -167,8 +163,7 @@ final class SimilarsSectionTabViewModelTests: XCTestCase {
         let viewModel = SimilarsSectionTabViewModel(
             artist: sampleArtist,
             canSelectSimilarArtists: true,
-            requestStrategy: requestStrategy,
-            dependencies: dependencies
+            requestStrategy: requestStrategy
         )
         var didReceiveError = false
         viewModel.didUpdate
