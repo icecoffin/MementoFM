@@ -15,11 +15,18 @@ Have you ever tried to find a music band which is similar to the one you're curr
 
 (Originally there were also photos of the artists but then Last.fm started to return placeholders instead of actual photos. Turns out they don't allow to use those photos anymore.)
 
-## Mint
+## mise
 
-[Mint](https://github.com/yonaskolb/Mint) is used to install dependencies like SwiftLint:
+[mise](https://mise.jdx.dev/) is used to install development tools like SwiftLint. Tool versions are defined in `.mise.toml`.
+
+```sh
+$ mise install
 ```
-$ mint bootstrap --link
+
+To run SwiftLint manually:
+
+```sh
+$ mise exec -- swiftlint
 ```
 
 ## XcodeGen

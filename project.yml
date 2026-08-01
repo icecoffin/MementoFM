@@ -62,16 +62,13 @@ targets:
     preBuildScripts:
       - name: Run SwiftLint
         script: |
-          if [ -d ~/.mint/bin ]; then
-            echo "Adding ~/.mint/bin to PATH"
-            export PATH=~/.mint/bin:$PATH
-          fi
+           export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
 
-          if which swiftlint > /dev/null; then
-            swiftlint
-          else
-            echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
-          fi
+           if command -v mise >/dev/null 2>&1; then
+             mise exec -- swiftlint
+           else
+             echo "warning: mise not found; skipping SwiftLint"
+           fi
         basedOnDependencyAnalysis: false
 
   MementoFMTests:
